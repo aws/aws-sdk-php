@@ -17,7 +17,7 @@
 namespace Aws\DynamoDb\Model;
 
 use Aws\Common\ToArrayInterface;
-use Aws\DynamoDb\Enum\Types;
+use Aws\DynamoDb\Enum\Type;
 use Aws\Common\Exception\InvalidArgumentException;
 
 /**
@@ -72,10 +72,10 @@ class Attribute implements ToArrayInterface
         // Create the attribute to return
         if (is_int($value) || is_float($value)) {
             // Handle numeric values
-            $attribute = new Attribute((string) $value, Types::NUMBER);
+            $attribute = new Attribute((string) $value, Type::NUMBER);
         } elseif (is_bool($value)) {
             // Handle boolean values
-            $attribute = new Attribute($value ? '1' : '0', Types::NUMBER);
+            $attribute = new Attribute($value ? '1' : '0', Type::NUMBER);
         } elseif (is_array($value) || $value instanceof \Traversable) {
             // Handle arrays
             $setType = null;
@@ -98,7 +98,7 @@ class Attribute implements ToArrayInterface
             }
 
             // Make sure the type is changed to be the appropriate array type
-            $attribute->type = (Types::STRING === $setType) ? Types::STRING_SET : Types::NUMBER_SET;
+            $attribute->type = (Type::STRING === $setType) ? Type::STRING_SET : Type::NUMBER_SET;
         } else {
             $attribute = new Attribute((string) $value);
         }
@@ -113,11 +113,11 @@ class Attribute implements ToArrayInterface
      * @param string $type The DynamoDB attribute type (N, S, NS, SS)
      * @throws InvalidArgumentException
      */
-    public function __construct($value, $type = Types::STRING)
+    public function __construct($value, $type = Type::STRING)
     {
         if (!is_string($value) && !is_array($value)) {
             throw new InvalidArgumentException('An attribute value may only be a string or array.');
-        } elseif (!in_array($type, Types::values())) {
+        } elseif (!in_array($type, Type::values())) {
             throw new InvalidArgumentException('An attribute type must be a valid DynamoDB type.');
         }
 

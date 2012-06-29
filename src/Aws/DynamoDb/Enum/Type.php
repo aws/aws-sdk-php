@@ -21,10 +21,15 @@ use Aws\Common\Enum;
 /**
  * Contains enumerable DynamoDB attribute type values
  */
-class Types extends Enum
+class Type extends Enum
 {
-    const NUMBER     = 'N';
-    const STRING     = 'S';
-    const NUMBER_SET = 'NS';
-    const STRING_SET = 'SS';
+    const N          = 'N';
+    const S          = 'S';
+    const NS         = 'NS';
+    const SS         = 'SS';
+
+    const NUMBER     = self::N;
+    const STRING     = self::S;
+    const NUMBER_SET = self::NS;
+    const STRING_SET = self::SS;
 }

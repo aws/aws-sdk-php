@@ -21,7 +21,7 @@ use Aws\Common\Enum;
 /**
  * Contains enumerable DynamoDB condition values
  */
-class Conditions extends Enum
+class Condition extends Enum
 {
     const EQ           = 'EQ';
     const NE           = 'NE';
@@ -36,4 +36,11 @@ class Conditions extends Enum
     const BEGINS_WITH  = 'BEGINS_WITH';
     const IN           = 'IN';
     const BETWEEN      = 'BETWEEN';
+
+    const EQUAL                 = self::EQ;
+    const NOT_EQUAL             = self::NE;
+    const LESS_THAN             = self::LT;
+    const LESS_THAN_OR_EQUAL    = self::LE;
+    const GREATER_THAN          = self::GT;
+    const GREATER_THAN_OR_EQUAL = self::GE;
 }

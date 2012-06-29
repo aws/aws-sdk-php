@@ -19,12 +19,13 @@ namespace Aws\DynamoDb\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable DynamoDB table status values
+ * Contains enumerable DynamoDB return value values
  */
-class TableStatus extends Enum
+class ReturnValue extends Enum
 {
-    const CREATING = 'CREATING';
-    const ACTIVE   = 'ACTIVE';
-    const DELETING = 'DELETING';
-    const UPDATING = 'UPDATING';
+    const NONE        = 'NONE';
+    const ALL_OLD     = 'ALL_OLD';
+    const ALL_NEW     = 'ALL_NEW';
+    const UPDATED_OLD = 'UPDATED_OLD';
+    const UPDATED_NEW = 'UPDATED_NEW';
 }

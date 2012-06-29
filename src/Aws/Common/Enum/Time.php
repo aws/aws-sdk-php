@@ -14,18 +14,33 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Enum;
+namespace Aws\Common\Enum;
 
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable DynamoDB return value values
+ * Contains enumerable time values
  */
-class ReturnValues extends Enum
+class Time extends Enum
 {
-    const NONE        = 'NONE';
-    const ALL_OLD     = 'ALL_OLD';
-    const ALL_NEW     = 'ALL_NEW';
-    const UPDATED_OLD = 'UPDATED_OLD';
-    const UPDATED_NEW = 'UPDATED_NEW';
+    const SECOND  = 1;
+    const SECONDS = self::SECOND;
+
+    const MINUTE  = 60;
+    const MINUTES = self::MINUTE;
+
+    const HOUR    = 3600;
+    const HOURS   = self::HOUR;
+
+    const DAY     = 86400;
+    const DAYS    = self::DAY;
+
+    const WEEK    = 604800;
+    const WEEKS   = self::WEEK;
+
+    const MONTH   = 2592000;
+    const MONTHS  = self::MONTH;
+
+    const YEAR    = 31557600;
+    const YEARS   = self::YEAR;
 }

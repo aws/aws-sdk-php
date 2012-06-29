@@ -21,7 +21,7 @@ use Aws\Common\Enum;
 /**
  * Contains enumerable DynamoDB action values
  */
-class Actions extends Enum
+class Action extends Enum
 {
     const PUT    = 'PUT';
     const ADD    = 'ADD';

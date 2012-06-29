@@ -5,7 +5,7 @@ namespace Aws\Tests\DynamoDb;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureV4;
 use Aws\DynamoDb\Model\Attribute;
-use Aws\DynamoDb\Enum\Types;
+use Aws\DynamoDb\Enum\Type;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
 
@@ -17,7 +17,7 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testFormatValueProducesCorrectArrayStructure()
     {
         $client = $this->getServiceBuilder()->get('dynamo_db', true);
-        $expected = array(Types::NUMBER => '100');
+        $expected = array(Type::NUMBER => '100');
         $actual = $client->formatValue(100);
 
         $this->assertSame($expected, $actual);
@@ -30,8 +30,8 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('dynamo_db', true);
         $expected = array(
-            'number' => array(Types::NUMBER => '100'),
-            'string' => array(Types::STRING => 'foo'),
+            'number' => array(Type::NUMBER => '100'),
+            'string' => array(Type::STRING => 'foo'),
         );
 
         $actual = $client->formatAttributes(array(

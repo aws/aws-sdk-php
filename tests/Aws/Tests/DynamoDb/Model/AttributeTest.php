@@ -2,7 +2,7 @@
 
 namespace Aws\Tests\DynamoDb\Model;
 
-use Aws\DynamoDb\Enum\Types;
+use Aws\DynamoDb\Enum\Type;
 use Aws\DynamoDb\Model\Attribute;
 
 class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
@@ -16,11 +16,11 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testConstructorAndGettersWorkAsExpected()
     {
-        $attribute = new Attribute('100', Types::NUMBER);
+        $attribute = new Attribute('100', Type::NUMBER);
 
         $this->assertInstanceOf('Aws\DynamoDb\Model\Attribute', $attribute);
         $this->assertSame('100', $attribute->getValue());
-        $this->assertSame(Types::NUMBER, $attribute->getType());
+        $this->assertSame(Type::NUMBER, $attribute->getType());
     }
 
     /**
@@ -29,7 +29,7 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testConstructorFailsOnBadValue()
     {
-        $attribute = new Attribute(100, Types::NUMBER);
+        $attribute = new Attribute(100, Type::NUMBER);
     }
 
     /**
@@ -46,9 +46,9 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testGetFormattedProducesCorrectArrayStructure()
     {
-        $attribute   = new Attribute('100', Types::NUMBER);
-        $putArray    = array(Types::NUMBER => '100');
-        $updateArray = array('Value' => array(Types::NUMBER => '100'));
+        $attribute   = new Attribute('100', Type::NUMBER);
+        $putArray    = array(Type::NUMBER => '100');
+        $updateArray = array('Value' => array(Type::NUMBER => '100'));
 
         $this->assertSame($putArray, $attribute->getFormatted());
         $this->assertSame($putArray, $attribute->getFormatted(Attribute::FORMAT_PUT));
