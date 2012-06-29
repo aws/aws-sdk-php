@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="aws-sdk-for-php" default="package">
+
+    <property name="dir.output" value="${project.basedir}/build/artifacts" />
+    <property name="coverage" value="false" />
+    <property name="mock" value="false" />
+    <property name="min" value="false" />
+    <property name="sdk_url" value="http://aws.amazon.com/sdkforphp/" />
+
+    <fileset id="src_files" dir="${project.basedir}/src" includes="**/*.php" />
+
+    <target name="test" description="Run unit tests" depends="test-init">
+        <exec passthru="true" command="phpunit" />
+    </target>
+
+    <target name="integration" description="Run integration tests">
+        <if>
+            <available file="phpunit.functional.xml" />
+            <then>
+                <if>
+                    <equals arg1="${mock}" arg2="true" />
+                    <then>
+                        <echo>php -d mock=true `which phpunit` -c phpunit.functional.xml</echo>
+                        <exec passthru="true" command="php -d mock=true `which phpunit` -c phpunit.functional.xml" />
+                    </then>
+                    <else>
+                        <exec passthru="true" command="phpunit -c phpunit.functional.xml" />
+                    </else>
+                </if>
+            </then>
+            <else>
+                <fail>You must copy phpunit.functional.dist to phpunit.functional.xml and modify the appropriate property settings</fail>
+            </else>
+        </if>
+    </target>
+
+    <target name="package" description="Create a phar with an autoloader">
+        <phingcall target="test-init" />
+        <pharpackage destfile="build/aws.phar" stub="build/phar-stub.php" signature="md5" basedir=".">
+            <fileset dir=".">
+                <!-- Add AWS classes -->
+                <include name="src/**/*.php" />
+                <include name="src/**/*.json" />
+                <!-- Include the Symfony2 class loader component -->
+                <include name="vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php" />
+                <!-- Install Guzzle and its dependencies -->
+                <include name="vendor/guzzle/guzzle/src/**/*.php" />
+                <include name="vendor/symfony/event-dispatcher/**/*.php" />
+                <include name="vendor/doctrine/common/lib/Doctrine/Common/Cache/*.php" />
+                <include name="vendor/monolog/monolog/src/**/*.php" />
+            </fileset>
+            <metadata>
+                <element name="link" value="${sdk_url}" />
+            </metadata>
+        </pharpackage>
+        <exec command="php -d aws_phar=aws.phar `which phpunit`" passthru="true" />
+    </target>
+
+    <target name="package-min" description="Builds a minimal phar package">
+        <phingcall target="test-init" />
+        <pharpackage destfile="build/aws.min.phar" stub="build/phar-stub-min.php" signature="md5" basedir=".">
+            <fileset dir=".">
+                <include name="src/**/*.php" />
+                <include name="src/**/*.json" />
+            </fileset>
+            <metadata>
+                <element name="link" value="${sdk_url}" />
+            </metadata>
+        </pharpackage>
+        <exec command="php -d aws_phar=aws.min.phar `which phpunit`" passthru="true" />
+    </target>
+
+    <target name="test-init" description="Initialize test dependencies">
+        <if>
+            <available file="composer.phar" />
+            <then>
+                <echo>Composer is installed</echo>
+            </then>
+            <else>
+                <echo message="Installing composer" />
+                <exec command="curl -s http://getcomposer.org/installer | php" passthru="true" />
+                <exec command="php composer.phar install --dev" passthru="true" />
+            </else>
+        </if>
+        <copy file="phpunit.xml.dist" tofile="phpunit.xml" overwrite="false" />
+        <copy file="phpunit.functional.xml.dist" tofile="phpunit.functional.xml" overwrite="false" />
+        <copy file="test_services.json.dist" tofile="test_services.json" overwrite="false" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${dir.output}"/>
+    </target>
+
+    <target name="prepare" depends="clean,test-init">
+        <mkdir dir="${dir.output}"/>
+        <mkdir dir="${dir.output}/logs" />
+    </target>
+
+    <target name="clean-dependencies">
+        <delete dir="${project.basedir}/vendor"/>
+        <delete file="composer.lock" />
+    </target>
+
+    <target name="update-dependencies">
+        <exec command="php composer.phar update --dev" passthru="true" />
+    </target>
+
+    <target name="coverage">
+        <mkdir dir="${dir.output}/logs" />
+        <exec passthru="true" command="phpunit --coverage-html=${dir.output}/coverage --coverage-clover=${dir.output}/logs/clover.xml" />
+    </target>
+
+    <target name="phpdepend">
+        <delete dir="${dir.output}/pdepend" includeemptydirs="true" verbose="true" failonerror="true" />
+        <mkdir dir="${dir.output}/pdepend" />
+        <phpdepend>
+            <fileset refid="src_files" />
+            <analyzer type="coderank-mode" value="method"/>
+            <logger type="jdepend-chart" outfile="${dir.output}/pdepend/jdepend-chart.svg" />
+            <logger type="overview-pyramid" outfile="${dir.output}/pdepend/overview-pyramid.svg" />
+            <logger type="jdepend-chart" outfile="${dir.output}/pdepend/jdepend-chart.png" />
+            <logger type="overview-pyramid" outfile="${dir.output}/pdepend/overview-pyramid.png" />
+            <logger type="jdepend-xml" outfile="${dir.output}/pdepend/jdepend.xml" />
+            <logger type="phpunit-xml" outfile="${dir.output}/pdepend/phpunit.xml" />
+            <logger type="summary-xml" outfile="${dir.output}/pdepend/summary.xml" />
+        </phpdepend>
+    </target>
+
+    <target name="phpcs">
+        <delete dir="${dir.output}/phpcs" includeemptydirs="true" verbose="true" failonerror="true" />
+        <mkdir dir="${dir.output}/phpcs" />
+        <!-- <phpcodesniffer></phpcodesniffer> -->
+    </target>
+
+    <target name="phpmd">
+        <delete dir="${dir.output}/phpmd" includeemptydirs="true" verbose="true" failonerror="true" />
+        <mkdir dir="${dir.output}/phpmd" />
+        <phpmd>
+            <fileset refid="src_files" />
+            <formatter type="html" outfile="${dir.output}/phpmd/phpmd.html"/>
+            <formatter type="xml" outfile="${dir.output}/phpmd/phpmd.xml"/>
+        </phpmd>
+    </target>
+
+    <target name="phpcpd">
+        <delete dir="${dir.output}/phpcpd" includeemptydirs="true" verbose="true" failonerror="true" />
+        <mkdir dir="${dir.output}/phpcpd" />
+        <phpcpd>
+            <fileset refid="src_files" />
+            <formatter type="pmd" outfile="${dir.output}/phpcpd/pmd.xml" />
+            <formatter type="default" outfile="${dir.output}/phpcpd/default.xml" />
+        </phpcpd>
+    </target>
+
+    <target name="phploc">
+        <exec command="phploc --log-csv ${dir.output}/logs/phploc.csv ." dir="${project.basedir}/src" passthru="true" />
+    </target>
+
+    <target name="phplint">
+        <phplint>
+            <fileset refid="src_files" />
+        </phplint>
+    </target>
+
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
+        <exec executable="phpcb">
+            <arg value="--log" />
+            <arg path="${dir.output}/logs" />
+            <arg value="--source" />
+            <arg path="${project.basedir}/src" />
+            <arg value="--output" />
+            <arg path="${dir.output}/code-browser" />
+        </exec>
+    </target>
+
+    <target name="install-build-deps">
+        <exec command="pear install --alldeps pear.phpunit.de/PHPUnit" passthru="true" />
+        <exec command="pear install --alldeps phpunit/PHP_CodeBrowser" passthru="true" />
+        <exec command="pear install --alldeps phpunit/phploc" passthru="true" />
+        <exec command="pear install --alldeps pear.pdepend.org/PHP_Depend-beta" passthru="true" />
+        <exec command="pear install --alldeps pear.phpmd.org/PHP_PMD" passthru="true" />
+        <exec command="pear install --alldeps pear.phpunit.de/phpcpd" passthru="true" />
+        <exec command="pear install --alldeps PHP_CodeSniffer" passthru="true" />
+        <exec command="pear install --alldeps pear.phing.info/phing" passthru="true" />
+    </target>
+
+    <target name="all" depends="clean, prepare, test-init, build, report"/>
+    <target name="build" depends="phplint, prepare, test-init, test, package, package-min"/>
+    <target name="report" depends="coverage, phploc, phpcs, phpmd, phpcpd, phpdepend, phpcb"/>
+
+</project>

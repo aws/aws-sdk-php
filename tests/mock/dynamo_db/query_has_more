@@ -1,0 +1,37 @@
+HTTP/1.1 200 OK
+x-amzn-RequestId: 8966d095-71e9-11e0-a498-71d736f27375
+content-type: application/x-amz-json-1.0
+
+{
+    "Count": 2,
+    "Items": [{
+        "AttributeName1": {
+            "S": "AttributeValue1"
+        },
+        "AttributeName2": {
+            "N": "AttributeValue2"
+        },
+        "AttributeName3": {
+            "S": "AttributeValue3"
+        }
+    }, {
+        "AttributeName1": {
+            "S": "AttributeValue3"
+        },
+        "AttributeName2": {
+            "N": "AttributeValue4"
+        },
+        "AttributeName3": {
+            "S": "AttributeValue3"
+        }
+    }],
+    "LastEvaluatedKey": {
+        "HashKeyElement": {
+            "AttributeValue3": "S"
+        },
+        "RangeKeyElement": {
+            "AttributeValue4": "N"
+        }
+    },
+    "ConsumedCapacityUnits": 1
+}

@@ -1,0 +1,37 @@
+HTTP/1.1 200 OK
+x-amzn-RequestId: 8966d095-71e9-11e0-a498-71d736f27375
+content-type: application/x-amz-json-1.0
+
+{"Responses":
+    {"Table1":
+        {"Items":
+        [{"AttributeName1": {"S":"AttributeValue"},
+        "AttributeName2": {"N":"AttributeValue"},
+        "AttributeName3": {"SS":["AttributeValue", "AttributeValue", "AttributeValue"]}
+        },
+        {"AttributeName1": {"S": "AttributeValue"},
+        "AttributeName2": {"S": "AttributeValue"},
+        "AttributeName3": {"NS": ["AttributeValue", "AttributeValue", "AttributeValue"]}
+        }],
+    "ConsumedCapacityUnits":1},
+    "Table2":
+        {"Items":
+        [{"AttributeName1": {"S":"AttributeValue"},
+        "AttributeName2": {"N":"AttributeValue"},
+        "AttributeName3": {"SS":["AttributeValue", "AttributeValue", "AttributeValue"]}
+        },
+        {"AttributeName1": {"S": "AttributeValue"},
+        "AttributeName2": {"S": "AttributeValue"},
+        "AttributeName3": {"NS": ["AttributeValue", "AttributeValue","AttributeValue"]}
+        }],
+    "ConsumedCapacityUnits":1}
+    },
+    "UnprocessedKeys":
+        {"Table3":
+        {"Keys":
+            [{"HashKeyElement": {"S":"KeyValue1"}, "RangeKeyElement":{"N":"KeyValue2"}},
+            {"HashKeyElement": {"S":"KeyValue3"}, "RangeKeyElement":{"N":"KeyValue4"}},
+            {"HashKeyElement": {"S":"KeyValue5"}, "RangeKeyElement":{"N":"KeyValue6"}}],
+        "AttributesToGet":["AttributeName1", "AttributeName2", "AttributeName3"]}
+        }
+}
