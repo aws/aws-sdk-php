@@ -61,7 +61,6 @@ class DynamoDbClient extends AbstractClient
      * - credentials:        Service credential object (optional)
      * - service.name:       Set to explicitly override the service name
      * - service.region:     Set to explicitly override the region name
-     * - disable_inflection: Set to true to disable automatic parameter inflection
      *
      * @param array|Collection $config Configuration data. You must either
      *     supply a {@see Guzzle\Common\Credentials\CredentialsInterface}

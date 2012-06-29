@@ -17,8 +17,8 @@
 namespace Aws\Common\Waiter;
 
 use Aws\Common\Exception\InvalidArgumentException;
-use Guzzle\Inflection\Inflector;
-use Guzzle\Inflection\InflectorInterface;
+use Guzzle\Common\Inflection\Inflector;
+use Guzzle\Common\Inflection\InflectorInterface;
 
 /**
  * Factory for creating {@see WaiterInterface} objects using a convention of

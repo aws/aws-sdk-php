@@ -4,7 +4,7 @@ namespace Aws\Tests\Common\Signature;
 
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Credentials\Credentials;
-use Guzzle\Http\Parser\ParserRegistry;
+use Guzzle\Parser\ParserRegistry;
 use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\Message\Request;
 
