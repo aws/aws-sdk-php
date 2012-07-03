@@ -154,7 +154,7 @@
                 "ReturnValues": {
                     "location": "json",
                     "default": "NONE",
-                    "type": "choice:NONE, ALL_OLD"
+                    "type": "choice:NONE,ALL_OLD"
                 }
             }
         },
@@ -273,6 +273,11 @@
                 "AttributeUpdates": {
                     "location": "json",
                     "type": "array"
+                },
+                "ReturnValues": {
+                    "location": "json",
+                    "default": "NONE",
+                    "type": "choice:NONE,ALL_OLD,UPDATED_OLD,ALL_NEW,UPDATED_NEW"
                 }
             }
         },
@@ -283,6 +288,7 @@
                     "static": "BatchWriteItem"
                 },
                 "RequestItems": {
+                    "location": "json",
                     "type": "array",
                     "required": "true"
                 }
