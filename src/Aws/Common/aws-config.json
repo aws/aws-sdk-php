@@ -10,6 +10,13 @@
             "class": "Aws\\DynamoDb\\DynamoDbClient"
         },
 
+        "dynamo_db.session_handler": {
+            "class": "Aws\\DynamoDb\\Session\\SessionHandler",
+            "params": {
+                "dynamo_db_client": "{dynamo_db}"
+            }
+        },
+
         "sts": {
             "extends": "default_settings",
             "class": "Aws\\Sts\\StsClient"

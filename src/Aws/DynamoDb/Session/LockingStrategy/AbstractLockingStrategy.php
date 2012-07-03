@@ -1,0 +1,112 @@
+<?php
+/**
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+namespace Aws\DynamoDb\Session\LockingStrategy;
+
+use Aws\DynamoDb\Session\SessionHandlerConfig;
+use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Exception\DynamoDbException;
+
+/**
+ * Base class for session locking strategies. Includes write and delete logic
+ */
+abstract class AbstractLockingStrategy implements LockingStrategyInterface
+{
+    /**
+     * @var DynamoDbClient The DynamoDB client
+     */
+    protected $client;
+
+    /**
+     * @var SessionHandlerConfig The session handler config options
+     */
+    protected $config;
+
+    /**
+     * @param DynamoDbClient       $client The DynamoDB client
+     * @param SessionHandlerConfig $config The session handler config options
+     */
+    public function __construct(DynamoDbClient $client, SessionHandlerConfig $config)
+    {
+        $this->client = $client;
+        $this->config = $config;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doWrite($id, $data, $isDataChanged)
+    {
+        // Prepare the attributes
+        $expires = time() + $this->config->get('session_lifetime');
+        $attributes = array(
+            'expires' => array(
+                'Value' => array(
+                    'N' => (string) $expires
+                )
+            )
+        );
+        if ($isDataChanged) {
+            $attributes['data'] = array(
+                'Value' => array(
+                    'S' => $data
+                )
+            );
+        }
+        $attributes = array_merge($attributes, $this->getExtraAttributes());
+
+        // Perform the UpdateItem command
+        try {
+            return (bool) $this->client->getCommand('UpdateItem', array(
+                'TableName' => $this->config->get('table_name'),
+                'Key' => array(
+                    'HashKeyElement' => array(
+                        'S' => $id
+                    )
+                ),
+                'AttributeUpdates' => $attributes
+            ))->execute();
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doDestroy($id)
+    {
+        try {
+            return (bool) $this->client->getCommand('DeleteItem', array(
+                'TableName' => $this->config->get('table_name'),
+                'Key' => array(
+                    'HashKeyElement' => array(
+                        'S' => $id
+                    )
+                )
+            ))->execute();
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Allows the specific strategy to add additional attributes to update
+     *
+     * @return array
+     */
+    abstract protected function getExtraAttributes();
+}
