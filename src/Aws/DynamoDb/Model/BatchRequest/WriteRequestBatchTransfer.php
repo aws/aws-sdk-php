@@ -70,7 +70,7 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
             ->execute();
 
         // Re-queue any unsuccessful batched requests
-        if (isset($result['UnprocessedItems'])) {
+        if (count($result['UnprocessedItems'])) {
             $exception = new UnprocessedWriteRequestsException('There were unprocessed'
                 . ' items in the batch_write_item operation.');
 
