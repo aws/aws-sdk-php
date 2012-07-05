@@ -100,7 +100,7 @@ class WriteRequestBatch extends AbstractBatchDecorator
     public function flush()
     {
         // Flush the queue
-        while (count($this->decoratedBatch)) {
+        while (!$this->decoratedBatch->isEmpty()) {
             try {
                 $this->decoratedBatch->flush();
             } catch (BatchTransferException $eTransfer) {

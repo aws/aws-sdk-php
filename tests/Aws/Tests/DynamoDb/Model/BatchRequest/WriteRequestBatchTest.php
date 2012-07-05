@@ -27,8 +27,8 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $batch = $this->getMock('Guzzle\Common\Batch\BatchInterface');
         $batch->expects($this->any())
-            ->method('count')
-            ->will($this->onConsecutiveCalls(1, 0));
+            ->method('isEmpty')
+            ->will($this->onConsecutiveCalls(false, true));
         $batch->expects($this->any())
             ->method('flush')
             ->will($will);
@@ -72,29 +72,33 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
         $data   = array();
 
         // Exception when not a write request or command
-        $data[] = array(null, 0);
+        $data[] = array(null, true);
 
         // Works with a delete_item command
-        $data[] = array($client->getCommand('DeleteItem')
-            ->set('TableName', 'foo')
-            ->set('Key', array(
-                'HashKeyElement' => array('S' => 'bar')
-            )), 1
+        $data[] = array(
+            $client->getCommand('DeleteItem')
+                ->set('TableName', 'foo')
+                ->set('Key', array(
+                    'HashKeyElement' => array('S' => 'bar')
+                )),
+            false
         );
 
         // Works with a put_item command
-        $data[] = array($client->getCommand('PutItem')
-            ->set('TableName', 'foo')
-            ->set('Item', array(
-                'id' => array('S' => 'bar')
-            )), 1
+        $data[] = array(
+            $client->getCommand('PutItem')
+                ->set('TableName', 'foo')
+                ->set('Item', array(
+                    'id' => array('S' => 'bar')
+                )),
+            false
         );
 
         // Exception with a arbitrary command
-        $data[] = array($client->getCommand('ListTables'), 0);
+        $data[] = array($client->getCommand('ListTables'), true);
 
         // Works with a write request
-        $data[] = array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface'), 1);
+        $data[] = array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface'), false);
 
         return $data;
     }
@@ -102,7 +106,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @dataProvider getAddItemData
      */
-    public function testAddItem($item, $count)
+    public function testAddItem($item, $empty)
     {
         $batch = WriteRequestBatch::factory($this->getMockedClient());
 
@@ -112,7 +116,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
             // Silently fail
         }
 
-        $this->assertEquals($count, $batch->count());
+        $this->assertSame($empty, $batch->isEmpty());
     }
 
     public function testFlush()
@@ -132,6 +136,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
         $exceptionUnprocessed->addItem($item);
         $exceptionBatchTransfer = new \Guzzle\Common\Exception\BatchTransferException(
             array($item),
+            array(),
             $exceptionUnprocessed,
             $this->getMock('Guzzle\Common\Batch\BatchTransferInterface'),
             $this->getMock('Guzzle\Common\Batch\BatchDivisorInterface')
@@ -161,6 +166,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
 
         $exceptionBatchTransfer = new \Guzzle\Common\Exception\BatchTransferException(
             array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface')),
+            array(),
             $exceptionResponse,
             $this->getMock('Guzzle\Common\Batch\BatchTransferInterface'),
             new \Guzzle\Common\Batch\BatchSizeDivisor(5)
@@ -183,6 +189,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $exceptionBatchTransfer = new \Guzzle\Common\Exception\BatchTransferException(
             array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface')),
+            array(),
             $this->getMock('\Exception'),
             $this->getMock('Guzzle\Common\Batch\BatchTransferInterface'),
             $this->getMock('Guzzle\Common\Batch\BatchDivisorInterface')

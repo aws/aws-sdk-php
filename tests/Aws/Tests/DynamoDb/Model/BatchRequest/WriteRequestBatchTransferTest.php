@@ -37,12 +37,12 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @return array Data for getTransferBatchesData
+     * @return array Data for testTransfersBatches
      */
     public function getTransferBatchesData()
     {
         return array(
-            array(array(), 'all-items-transferred'),
+            array(array('UnprocessedItems' => array()), 'all-items-transferred'),
             array(array('UnprocessedItems' => array('foo' => array(array('foo')))), 'some-unprocessed-items')
         );
     }
