@@ -41,6 +41,7 @@ class ThrottlingErrorChecker
     /**
      * @param RequestInterface $request  Request sent
      * @param Response|null    $response Response received
+     *
      * @return bool|null
      */
     public function __invoke(RequestInterface $request, Response $response = null)

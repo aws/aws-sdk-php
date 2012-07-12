@@ -13,7 +13,7 @@ class TableNotExistsTest extends AbstractWaiter
     public function testReturnsFalseUntilTableDoesNotExist()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, array('dynamo_db/describe_table', 'dynamo_db/describe_table_not_found'));
+        $this->setMockResponse($client, array('dynamodb/describe_table', 'dynamodb/describe_table_not_found'));
         $client->waitUntil('table_not_exists', 'foo', array(
             'interval' => 0
         ));

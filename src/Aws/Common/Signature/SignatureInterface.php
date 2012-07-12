@@ -33,5 +33,5 @@ interface SignatureInterface
      * @param RequestInterface     $request     Request to add a signature to
      * @param CredentialsInterface $credentials Signing credentials
      */
-    function signRequest(RequestInterface $request, CredentialsInterface $credentials);
+    public function signRequest(RequestInterface $request, CredentialsInterface $credentials);
 }

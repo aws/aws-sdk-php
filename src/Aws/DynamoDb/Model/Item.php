@@ -245,7 +245,7 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      * Get an {@see ArrayIterator} object that allows iteration over each
      * attribute
      *
-     * @return ArrayIterator
+     * @return \ArrayIterator
      */
     public function getIterator()
     {

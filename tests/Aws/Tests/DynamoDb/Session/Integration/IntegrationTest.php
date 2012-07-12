@@ -4,7 +4,6 @@ namespace Aws\Tests\DynamoDb\Session;
 
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
-use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
 use Aws\DynamoDb\Model\BatchRequest\PutRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\Item;
@@ -45,7 +44,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function setUp()
     {
         $this->table  = self::getResourcePrefix() . 'php-sessions-test';
-        $this->client = self::getServiceBuilder()->get('dynamo_db');
+        $this->client = self::getServiceBuilder()->get('dynamodb');
     }
 
     /**
@@ -54,8 +53,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testCreatesTable()
     {
         $sh = SessionHandler::factory(array(
-            'dynamo_db_client' => $this->client,
-            'table_name'       => $this->table,
+            'dynamodb_client' => $this->client,
+            'table_name'      => $this->table,
         ));
 
         self::log("Creating sessions table {$this->table}");
@@ -75,8 +74,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         session_id('example');
         $sh = SessionHandler::factory(array(
-            'dynamo_db_client' => $this->client,
-            'table_name'       => $this->table,
+            'dynamodb_client' => $this->client,
+            'table_name'      => $this->table,
         ));
 
         self::log('Start with an empty session, add data, and commit');
@@ -138,24 +137,24 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Create 4 instances of the session handler');
         $shNull1 = SessionHandler::factory(array(
-            'dynamo_db_client' => $this->client,
-            'table_name'       => $this->table
+            'dynamodb_client' => $this->client,
+            'table_name'      => $this->table
         ));
 
         $shNull2 = SessionHandler::factory(array(
-            'dynamo_db_client' => $this->client,
-            'table_name'       => $this->table
+            'dynamodb_client' => $this->client,
+            'table_name'      => $this->table
         ));
 
         $shPessimistic1 = SessionHandler::factory(array(
-            'dynamo_db_client'   => $this->client,
+            'dynamodb_client'    => $this->client,
             'table_name'         => $this->table,
             'locking_strategy'   => 'pessimistic',
             'max_lock_wait_time' => 6,
         ));
 
         $shPessimistic2 = SessionHandler::factory(array(
-            'dynamo_db_client'   => $this->client,
+            'dynamodb_client'    => $this->client,
             'table_name'         => $this->table,
             'locking_strategy'   => 'pessimistic',
             'max_lock_wait_time' => 6,
@@ -214,9 +213,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Create a session handler to use with a lower batch size');
         $sh = SessionHandler::factory(array(
-            'dynamo_db_client' => $this->client,
-            'table_name'       => $this->table,
-            'gc_batch_size'    => 3 // Smaller batches to test batching works
+            'dynamodb_client' => $this->client,
+            'table_name'      => $this->table,
+            'gc_batch_size'   => 3 // Smaller batches to test batching works
         ));
 
         self::log('Run the garbage collection');
@@ -252,7 +251,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     protected static function deleteSessionsTable()
     {
         $table  = self::getResourcePrefix() . 'php-sessions-test';
-        $client = self::getServiceBuilder()->get('dynamo_db');
+        $client = self::getServiceBuilder()->get('dynamodb');
 
         self::log("# Attempting to delete {$table}");
 

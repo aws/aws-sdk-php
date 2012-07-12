@@ -27,6 +27,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setConfigDefaults(array(
                 'scheme'   => 'https',
                 'region'   => 'us-east-1',
+                'service'  => 'dynamodb',
                 'base_url' => '{scheme}://dynamodb.{region}.amazonaws.com'
             ))
             ->setConfigRequirements(array('base_url'))
@@ -41,7 +42,9 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = ClientBuilder::factory('Aws\\DynamoDb')
             ->setConfigDefaults(array(
-                'base_url' => '{scheme}://dynamodb.{region}.amazonaws.com'
+                'scheme'  => 'https',
+                'region'  => 'us-west-1',
+                'service' => 'dynamodb'
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
@@ -64,7 +67,8 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = ClientBuilder::factory('Aws\\DynamoDb')
             ->setConfigDefaults(array(
-                'base_url' => '{scheme}://dynamodb.{region}.amazonaws.com'
+                'region'  => 'us-east-1',
+                'service' => 's3'
             ))
             ->build();
 
@@ -127,5 +131,31 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         }
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage You must specify a [base_url] or a [region, service, and optional scheme]
+     */
+    public function testEnsuresBaseUrlOrServiceAndRegionAreSet()
+    {
+        $builder = ClientBuilder::factory('Aws\\DynamoDb')
+            ->setConfig(array('region'  => 'us-west-1'))
+            ->build();
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage A signature has not been provided
+     */
+    public function testEnsuresSignatureIsProvided()
+    {
+        $builder = ClientBuilder::factory('Aws\\DynamoDb')
+            ->setConfig(array(
+                'region'  => 'us-west-1',
+                'service' => 'dynamodb',
+                'scheme'  => 'http'
+            ))
+            ->build();
     }
 }

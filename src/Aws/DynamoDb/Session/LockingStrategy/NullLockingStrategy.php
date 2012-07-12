@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Session\LockingStrategy;
 
+use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\Exception\DynamoDbException;
 
 /**
@@ -39,7 +40,8 @@ class NullLockingStrategy extends AbstractLockingStrategy
                         'S' => $id
                     )
                 ),
-                'ConsistentRead' => (bool) $this->config->get('consistent_read')
+                'ConsistentRead' => (bool) $this->config->get('consistent_read'),
+                Ua::OPTION       => Ua::SESSION
             ))->execute();
 
             // Get the item values

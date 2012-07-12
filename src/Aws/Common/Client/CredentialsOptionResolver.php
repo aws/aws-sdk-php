@@ -19,18 +19,17 @@ namespace Aws\Common\Client;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Credentials\RefreshableInstanceProfileCredentials;
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Collection;
 
 /**
  * Configures credentials for a configuration collection.
  *
- * If an 'access_key_id' and 'secret_access_key' are provided, then this
- * resolver will instantiate a default credentials object for the config.
- *
- * If a 'credential' option is provided, then this resolver will ensure that the
- * 'credential' option is valid and implements
- * {@see Aws\Common\Credentials\CredentialsInterface}.
+ * If an 'key' and 'secret' are provided, then this resolver will instantiate
+ * a default credentials object for the config. If a 'credential' option is
+ * provided, then this resolver will ensure that the 'credential' option is
+ * valid and implements {@see CredentialsInterface}.
  *
  * If none of the above are provided, then this resolver will add credentials
  * to the configuration that attempt to get credentials from an Amazon EC2
@@ -39,16 +38,13 @@ use Guzzle\Common\Collection;
 class CredentialsOptionResolver extends AbstractMissingFunctionOptionResolver
 {
     /**
-     * @param string $missingFunction Provide a callable function to call if the
-     *                                'credentials' parameter is not set.
-     * @param string $mustImplement   Provide the name of a class or interface
-     *                                that the 'signature' option must extend if
-     *                                set
+     * @param string $missingFunction Provide a callable function to call if the 'credentials' parameter is not set.
+     * @param string $mustImplement   Provide the name of a class or interface that the 'signature' option must extend
      */
     public function __construct(
         $missingFunction = null,
-        $mustImplement = 'Aws\\Common\\Credentials\\CredentialsInterface')
-    {
+        $mustImplement = 'Aws\\Common\\Credentials\\CredentialsInterface'
+    ) {
         if ($missingFunction) {
             $this->setMissingFunction($missingFunction);
         } else {
@@ -62,11 +58,11 @@ class CredentialsOptionResolver extends AbstractMissingFunctionOptionResolver
      */
     public function resolve(Collection $config, AwsClientInterface $client = null)
     {
-        $credentials = $config->get('credentials');
+        $credentials = $config->get(Options::CREDENTIALS);
 
         if (!$credentials && $this->missingFunction) {
             $credentials = call_user_func($this->missingFunction, $config);
-            $config->set('credentials', $credentials);
+            $config->set(Options::CREDENTIALS, $credentials);
         }
 
         // Ensure that the credentials are valid
@@ -84,7 +80,7 @@ class CredentialsOptionResolver extends AbstractMissingFunctionOptionResolver
      */
     protected function defaultMissingFunction(Collection $config)
     {
-        if ($config->get('access_key_id') && $config->get('secret_access_key')) {
+        if ($config->get(Options::KEY) && $config->get(Options::SECRET)) {
             // Credentials were not provided, so create them using keys
             return Credentials::factory($config->getAll());
         }

@@ -97,10 +97,10 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     public function testFactoryCreatesBasicCredentials()
     {
         $credentials = Credentials::factory(array(
-            'access_key_id'     => 'foo',
-            'secret_access_key' => 'baz',
-            'token'             => 'bar',
-            'token.ttd'         => 123
+            'key'       => 'foo',
+            'secret'    => 'baz',
+            'token'     => 'bar',
+            'token.ttd' => 123
         ));
 
         $this->assertInstanceOf('Aws\\Common\\Credentials\\Credentials', $credentials);
@@ -137,29 +137,14 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     public function testFactoryCreatesCacheWhenSetToTrue()
     {
         $credentials = Credentials::factory(array(
-            'access_key_id'     => 'foo',
-            'secret_access_key' => 'bar',
+            'key'               => 'foo',
+            'secret'            => 'bar',
             'credentials.cache' => true
         ));
 
         $this->assertInstanceOf('Aws\\Common\\Credentials\\CacheableCredentials', $credentials);
         $this->assertInstanceOf('Guzzle\\Common\\Cache\\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
         $this->assertEquals('credentials_foo', $this->readAttribute($credentials, 'cacheKey'));
-    }
-
-    /**
-     * @covers Aws\Common\Credentials\Credentials::factory
-     */
-    public function testFactoryCreatesCacheUsingCacheAdapterFactoryWhenSetToString()
-    {
-        $credentials = Credentials::factory(array(
-            'credentials.cache'          => true,
-            'credentials.cache.adapter'  => 'Guzzle\\Common\\Cache\\DoctrineCacheAdapter',
-            'credentials.cache.provider' => 'Doctrine\\Common\\Cache\\ArrayCache',
-        ));
-
-        $this->assertInstanceOf('Aws\\Common\\Credentials\\CacheableCredentials', $credentials);
-        $this->assertInstanceOf('Guzzle\\Common\\Cache\\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
     }
 
     /**
@@ -177,28 +162,11 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
-     */
-    public function testFactoryUsesExplicitlyProvidedCacheAdapter()
-    {
-        $cache = new DoctrineCacheAdapter(new ArrayCache());
-        $credentials = Credentials::factory(array(
-            'credentials.cache'         => true,
-            'credentials.cache.adapter' => $cache
-        ));
-        $this->assertInstanceOf('Aws\\Common\\Credentials\\CacheableCredentials', $credentials);
-        $this->assertInstanceOf('Guzzle\\Common\\Cache\\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
-    }
-
-    /**
-     * @covers Aws\Common\Credentials\Credentials::factory
      * @expectedException Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage Unable to utilize caching with the specified options
      */
     public function testFactoryBailsWhenCacheCannotBeDetermined()
     {
-        Credentials::factory(array(
-            'credentials.cache'         => true,
-            'credentials.cache.adapter' => new \stdClass()
-        ));
+        Credentials::factory(array('credentials.cache' => 'foo'));
     }
 }

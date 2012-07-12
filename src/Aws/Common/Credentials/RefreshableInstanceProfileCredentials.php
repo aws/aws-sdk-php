@@ -62,14 +62,10 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
             $result = json_decode($json, true);
 
         } catch (\Exception $e) {
-
-            $message = 'Error retrieving credentials from the instance profile '
-                . 'metadata server.  When you are not running inside of Amazon '
-                . 'EC2, you must provide your AWS access key ID and secret '
-                . 'access key into the "access_key_id" and "secret_access_key" '
-                . 'options when creating a client or provide an instantiated '
-                . 'Aws\\Common\\Credentials\\CredentialsInterface object.';
-
+            $message = 'Error retrieving credentials from the instance profile metadata server.  When you are not'
+                . ' running inside of Amazon EC2, you must provide your AWS access key ID and secret access key in'
+                . ' the "key" and "secret" options when creating a client or provide an instantiated'
+                . ' Aws\\Common\\Credentials\\CredentialsInterface object.';
             throw new InstanceProfileCredentialsException($message, $e->getCode(), $e);
         }
 

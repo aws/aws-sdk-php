@@ -36,5 +36,5 @@ interface ExceptionParserInterface
      *
      * @return array
      */
-    function parse(Response $response);
+    public function parse(Response $response);
 }

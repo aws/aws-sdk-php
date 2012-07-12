@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Session\LockingStrategy;
 
+use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Session\SessionHandlerConfig;
 use Aws\DynamoDb\Exception\DynamoDbException;
@@ -75,7 +76,8 @@ class PessimisticLockingStrategy extends AbstractLockingStrategy
                     )
                 )
             ),
-            'ReturnValues' => 'ALL_NEW'
+            'ReturnValues' => 'ALL_NEW',
+            Ua::OPTION     => Ua::SESSION
         ));
 
         // Acquire the lock and fetch the item data

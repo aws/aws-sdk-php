@@ -21,10 +21,9 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\CredentialsOptionResolver;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Signature\SignatureInterface;
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
-use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * Client to interact with the AWS Security Token Service
@@ -35,27 +34,53 @@ use Guzzle\Service\Description\ServiceDescription;
 class StsClient extends AbstractClient
 {
     /**
-     * @var string Default base URL of Amazon STS
+     * @inheritdoc
      */
-    const DEFAULT_BASE_URL = 'https://sts.amazonaws.com';
+    protected $directory = __DIR__;
 
     /**
-     * Factory method to create a new StsClient using an array of configuration
-     * options.  The following array keys and values are available options:
-     * - access_key_id:     AWS Access Key ID
-     * - secret_access_key: AWS secret access key
-     * - credentials:       Service credential object (optional)
-     * - base_url:          Set to override the default base URL
-     * - service.name:      Set to explicitly override the service name used in signatures.
-     * - service.region:    Set to explicitly override the region name used in signatures.
+     * Factory method to create a new Amazon STS client using an array of configuration options.
      *
-     * @param array|Collection $config Configuration data. You must either
-     *     supply a {@see Guzzle\Common\Credentials\CredentialsInterface}
-     *     object in the 'credentials' key or supply both your AWS access key
-     *     ID and AWS secret access key in the 'access_key_id' and
-     *     'secret_access_key' options.
+     * The following array keys and values are available options:
      *
-     * @return StsClient
+     * - Credential options (`key`, `secret`, and optional `token` OR `credentials` is required)
+     *     - key: AWS Access Key ID
+     *     - secret: AWS secret access key
+     *     - credentials: You can optionally provide a custom `Aws\Common\Credentials\CredentialsInterface` object
+     *     - token: Custom AWS security token to use with request authentication
+     *     - token.ttd: UNIX timestamp for when the custom credentials expire
+     *     - credentials.cache: Used to cache credentials when using providers that require HTTP requests. Set the true
+     *           to use the default APC cache or provide a `Guzzle\Common\Cache\CacheAdapterInterface` object.
+     *     - credentials.cache.key: Optional custom cache key to use with the credentials
+     *     - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
+     *           credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
+     * - Region and Endpoint options (a `region` and optional `scheme` OR a `base_url` is required)
+     *     - region: Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
+     *     - scheme: URI Scheme of the base URL (e.g. 'https', 'http').
+     *     - base_url: Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
+     *     - endpoint_provider: Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
+     * - Generic client options
+     *     - ssl.cert: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
+     *           option should be used when you encounter curl error code 60.
+     *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
+     *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
+     *           See: http://www.php.net/manual/en/function.curl-setopt.php
+     *     - service.description.cache: Optional `Guzzle\Common\Cache\CacheAdapterInterface` object to use to cache
+     *           service descriptions
+     *     - service.description.cache.ttl: Optional TTL used for the service description cache
+     * - Signature options
+     *     - signature: You can optionally provide a custom signature implementation used to sign requests
+     *     - signature.service: Set to explicitly override the service name used in signatures
+     *     - signature.region:  Set to explicitly override the region name used in signatures
+     * - Exponential backoff options
+     *     - client.backoff.logger: `Guzzle\Common\Log\LogAdapterInterface` object used to log backoff retries. Use
+     *           'debug' to emit PHP warnings when a retry is issued.
+     *     - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See
+     *           `Guzzle\Http\Plugin\ExponentialBackoffLogger` for formatting information.
+     *
+     * @param array|Collection $config Client configuration data
+     *
+     * @return self
      */
     public static function factory($config = array())
     {
@@ -63,25 +88,17 @@ class StsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                'base_url' => self::DEFAULT_BASE_URL
+                Options::SERVICE => 'sts',
+                Options::SCHEME  => 'https',
+                Options::REGION  => 'us-east-1'
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 // Always need long term credentials
-                if ($config->get('access_key_id') && $config->get('secret_access_key') && !$config->get('token')) {
+                if ($config->get(Options::KEY) && $config->get(Options::SECRET) && !$config->get(Options::TOKEN)) {
                     return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
                 }
             }))
             ->setSignature(new SignatureV4())
             ->build();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
-    {
-        parent::__construct($credentials, $signature, $config);
-        // Add the service description to the client
-        $this->setDescription(ServiceDescription::factory(__DIR__ . '/Resources/client.json'));
     }
 }

@@ -26,5 +26,5 @@ interface ToArrayInterface
      *
      * @return array
      */
-    function toArray();
+    public function toArray();
 }

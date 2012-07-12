@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Waiter;
 
+use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Waiter\AbstractResourceWaiter;
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
 
@@ -36,7 +37,8 @@ class TableNotExists extends AbstractResourceWaiter
         try {
 
             $this->client->getCommand('DescribeTable', array(
-                'TableName' => $this->resourceId
+                'TableName' => $this->resourceId,
+                Ua::OPTION  => Ua::WAITER
             ))->execute();
 
             return false;

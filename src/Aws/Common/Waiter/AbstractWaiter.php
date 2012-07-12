@@ -86,7 +86,7 @@ abstract class AbstractWaiter implements WaiterInterface
     }
 
     /**
-     * {@inheridoc}
+     * {@inheritdoc}
      */
     public function wait()
     {

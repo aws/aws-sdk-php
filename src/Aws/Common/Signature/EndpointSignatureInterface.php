@@ -29,7 +29,7 @@ interface EndpointSignatureInterface extends SignatureInterface
      *
      * @return self
      */
-    function setServiceName($service);
+    public function setServiceName($service);
 
     /**
      * Set the region name instead of inferring it from a request URL
@@ -38,5 +38,5 @@ interface EndpointSignatureInterface extends SignatureInterface
      *
      * @return self
      */
-    function setRegionName($region);
+    public function setRegionName($region);
 }

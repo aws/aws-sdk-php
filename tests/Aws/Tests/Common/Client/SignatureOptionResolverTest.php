@@ -13,7 +13,7 @@ class SignatureOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
      * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage An explicitly provided "signature" option must implement SignatureInterface
+     * @expectedExceptionMessage An explicitly provided signature option must implement SignatureInterface
      */
     public function testEnsuresProvidedSignatureIsValid()
     {
@@ -36,8 +36,8 @@ class SignatureOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
     public function testAppliesServiceAndRegionNameWhenUsingEndpointSignatures()
     {
         $config = new Collection(array(
-            'service.name' => 'foo',
-            'region.name'  => 'bar'
+            'signature.service' => 'foo',
+            'signature.region'  => 'bar'
         ));
         $resolver = new SignatureOptionResolver(function($config) {
             return new SignatureV4();

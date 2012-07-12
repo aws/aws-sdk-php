@@ -16,8 +16,6 @@
 
 namespace Aws\Common\Credentials;
 
-use Aws\Common\Exception\InvalidArgumentException;
-
 /**
  * Abstract credentials decorator
  */

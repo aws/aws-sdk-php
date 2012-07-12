@@ -16,6 +16,7 @@
 
 namespace Aws\Common\InstanceMetadata;
 
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Client\AbstractClient;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Message\RequestFactory;
@@ -41,9 +42,9 @@ class InstanceMetadataClient extends AbstractClient
     public static function factory($config = array())
     {
         $config = Inspector::prepareConfig($config, array(
-            'base_url'       => 'http://169.254.169.254/{version}/',
-            'version'        => 'latest',
-            'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept', 'header.Expect')
+            Options::BASE_URL => 'http://169.254.169.254/{version}/',
+            'version'         => 'latest',
+            'curl.blacklist'  => array(CURLOPT_ENCODING, 'header.Accept', 'header.Expect')
         ), array('base_url', 'version'));
 
         return new self($config);
@@ -55,7 +56,7 @@ class InstanceMetadataClient extends AbstractClient
     public function __construct(Collection $config)
     {
         $this->setConfig($config);
-        $this->setBaseUrl($config->get('base_url'));
+        $this->setBaseUrl($config->get(Options::BASE_URL));
         $this->defaultHeaders = new Collection();
         $this->setRequestFactory(RequestFactory::getInstance());
     }

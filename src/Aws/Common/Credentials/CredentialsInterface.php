@@ -28,28 +28,28 @@ interface CredentialsInterface extends \Serializable
      *
      * @return string
      */
-    function getAccessKeyId();
+    public function getAccessKeyId();
 
     /**
      * Returns the AWS secret access key for this credentials object.
      *
      * @return string
      */
-    function getSecretKey();
+    public function getSecretKey();
 
     /**
      * Get the associated security token if available
      *
      * @return string|null
      */
-    function getSecurityToken();
+    public function getSecurityToken();
 
     /**
      * Get the UNIX timestamp in which the credentials will expire
      *
      * @return int|null
      */
-    function getExpiration();
+    public function getExpiration();
 
     /**
      * Set the AWS access key ID for this credentials object.
@@ -58,7 +58,7 @@ interface CredentialsInterface extends \Serializable
      *
      * @return self
      */
-    function setAccessKeyId($key);
+    public function setAccessKeyId($key);
 
     /**
      * Set the AWS secret access key for this credentials object.
@@ -67,7 +67,7 @@ interface CredentialsInterface extends \Serializable
      *
      * @return CredentialsInterface
      */
-    function setSecretKey($secret);
+    public function setSecretKey($secret);
 
     /**
      * Set the security token to use with this credentials object
@@ -76,7 +76,7 @@ interface CredentialsInterface extends \Serializable
      *
      * @return self
      */
-    function setSecurityToken($token);
+    public function setSecurityToken($token);
 
     /**
      * Set the UNIX timestamp in which the credentials will expire
@@ -85,12 +85,12 @@ interface CredentialsInterface extends \Serializable
      *
      * @return self
      */
-    function setExpiration($timestamp);
+    public function setExpiration($timestamp);
 
     /**
      * Check if the credentials are expired
      *
      * @return bool
      */
-    function isExpired();
+    public function isExpired();
 }

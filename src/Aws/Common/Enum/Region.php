@@ -27,9 +27,11 @@ use Aws\Common\Enum;
 class Region extends Enum
 {
     const US_EAST_1           = 'us-east-1';
+    const VIRGINIA            = self::US_EAST_1;
     const NORTHERN_VIRGINIA   = self::US_EAST_1;
 
     const US_WEST_1           = 'us-west-1';
+    const CALIFORNIA          = self::US_WEST_1;
     const NORTHERN_CALIFORNIA = self::US_WEST_1;
 
     const US_WEST_2           = 'us-west-2';

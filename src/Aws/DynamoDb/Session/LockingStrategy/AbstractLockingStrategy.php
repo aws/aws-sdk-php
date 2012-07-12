@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Session\LockingStrategy;
 
+use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\Session\SessionHandlerConfig;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
@@ -77,7 +78,8 @@ abstract class AbstractLockingStrategy implements LockingStrategyInterface
                         'S' => $id
                     )
                 ),
-                'AttributeUpdates' => $attributes
+                'AttributeUpdates' => $attributes,
+                Ua::OPTION => Ua::SESSION
             ))->execute();
         } catch (DynamoDbException $e) {
             return false;
@@ -96,7 +98,8 @@ abstract class AbstractLockingStrategy implements LockingStrategyInterface
                     'HashKeyElement' => array(
                         'S' => $id
                     )
-                )
+                ),
+                Ua::OPTION => Ua::SESSION
             ))->execute();
         } catch (DynamoDbException $e) {
             return false;

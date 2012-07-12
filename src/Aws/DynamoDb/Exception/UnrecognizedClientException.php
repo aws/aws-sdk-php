@@ -16,8 +16,6 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ServiceResponseException;
-
 /**
  * Unrecognized client exception
  */

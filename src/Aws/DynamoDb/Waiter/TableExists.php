@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Waiter;
 
+use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Waiter\AbstractResourceWaiter;
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
 
@@ -34,9 +35,9 @@ class TableExists extends AbstractResourceWaiter
     protected function doWait()
     {
         try {
-
             $result = $this->client->getCommand('DescribeTable', array(
-                'TableName' => $this->resourceId
+                'TableName' => $this->resourceId,
+                Ua::OPTION  => Ua::WAITER
             ))->execute();
 
             // If a status was specified, check if the table has that status

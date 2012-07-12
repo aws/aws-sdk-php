@@ -30,5 +30,5 @@ interface ExceptionFactoryInterface
      *
      * @return \Exception|AwsExceptionInterface
      */
-    function fromResponse(Response $response);
+    public function fromResponse(Response $response);
 }

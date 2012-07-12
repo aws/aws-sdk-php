@@ -15,8 +15,8 @@ class CredentialsOptionResolverTestTest extends \Guzzle\Tests\GuzzleTestCase
     {
         // Create a config object that has no credential object
         $config = new Collection(array(
-            'access_key_id'     => 'abc',
-            'secret_access_key' => '123'
+            'key'    => 'abc',
+            'secret' => '123'
         ));
 
         $resolver = new CredentialsOptionResolver();

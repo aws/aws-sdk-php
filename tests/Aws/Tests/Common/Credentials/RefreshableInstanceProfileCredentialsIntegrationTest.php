@@ -68,7 +68,9 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
      */
     public function testClientsUseInstanceProfileCredentialsByDefault()
     {
-        $client = DynamoDbClient::factory();
+        $client = DynamoDbClient::factory(array(
+            'region' => 'us-east-1'
+        ));
         $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $client->getCredentials());
     }
 
@@ -90,7 +92,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
 
         if ($this->useMocks()) {
             $this->setMockResponse($client, array('metadata/iam_security_credentials', 'metadata/iam_security_credentials_webapp'));
-            $this->setMockResponse($dynamo, 'dynamo_db/list_tables_final');
+            $this->setMockResponse($dynamo, 'dynamodb/list_tables_final');
         }
 
         // Expire the credentials

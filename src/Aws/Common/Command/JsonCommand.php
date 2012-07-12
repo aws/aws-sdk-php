@@ -67,11 +67,7 @@ class JsonCommand extends DynamicCommand
         }
 
         // Convert '[]' to '{}'
-        if (empty($json)) {
-            $jsonString = '{}';
-        } else {
-            $jsonString = json_encode($json);
-        }
+        $jsonString = empty($json) ? '{}' : json_encode($json);
 
         // Set the body and ensure that the Expect header is never sent
         $this->request

@@ -3,14 +3,17 @@
 namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Aws;
-use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Client\ExponentialBackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
+use Aws\Common\Client\DefaultClient;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
 use Guzzle\Common\Collection;
+use Guzzle\Common\Cache\DoctrineCacheAdapter;
 use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Doctrine\Common\Cache\ArrayCache;
 
 class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -46,6 +49,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Client\AbstractClient::__construct
+     * @covers Aws\Common\Client\AbstractClient::resolveOptions
      */
     public function testConstructorCallsResolvers()
     {
@@ -63,7 +67,10 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->getMockForAbstractClass();
 
         // Ensure that lazy resolvers were triggered
-        $this->assertInstanceOf('Guzzle\\Http\\Plugin\\ExponentialBackoffPlugin', $client->getConfig(AwsClientInterface::EXPONENTIAL_BACKOFF_OPTION));
+        $this->assertInstanceOf(
+            'Guzzle\\Http\\Plugin\\ExponentialBackoffPlugin',
+            $client->getConfig(Options::BACKOFF)
+        );
         // Ensure that the client removed the option
         $this->assertNull($config->get('client.resolvers'));
     }
@@ -150,5 +157,42 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         try {
             $client->fooBar();
         } catch (\Exception $e) {}
+    }
+
+    /**
+     * @covers Aws\Common\Client\AbstractClient::addServiceDescriptionFromConfig
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage service.description.cache must be an instance of Guzzle\Common\Cache\CacheAdapterInterface
+     */
+    public function testEnsuresCustomServiceDescriptionCacheValidity()
+    {
+        $signature = new SignatureV4();
+        $credentials = new Credentials('test', '123');
+        $config = new Collection(array(
+            'service.description'       => 'abc',
+            'service.description.cache' => 'foo'
+        ));
+        $this->getMockBuilder('Aws\Common\Client\AbstractClient')
+            ->setConstructorArgs(array($credentials, $signature, $config))
+            ->getMockForAbstractClass();
+    }
+
+    /**
+     * @covers Aws\Common\Client\AbstractClient::addServiceDescriptionFromConfig
+     */
+    public function testCachesServiceDescriptions()
+    {
+        $signature = new SignatureV4();
+        $credentials = new Credentials('test', '123');
+        $cache = new DoctrineCacheAdapter(new ArrayCache());
+        // Note: You must use a service description file to benefit from caching
+        $config = new Collection(array(
+            'service.description'           => __DIR__ . '/../../../../../src/Aws/S3/Resources/client.json',
+            'service.description.cache'     => $cache,
+            'service.description.cache.ttl' => 500
+        ));
+        $client = new DefaultClient($credentials, $signature, $config);
+        $data = $this->readAttribute($cache->getCacheObject(), 'data');
+        $this->assertGreaterThan(0, count($data));
     }
 }

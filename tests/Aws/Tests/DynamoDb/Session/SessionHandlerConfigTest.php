@@ -15,7 +15,7 @@ class SessionHandlerConfigTest extends AbstractSessionTestCase
         return array(
             array(
                 array(
-                    'dynamo_db_client' => $this->getMockedClient()
+                    'dynamodb_client' => $this->getMockedClient()
                 ),
                 'Aws\DynamoDb\Session\SessionHandlerConfig'
             ),
@@ -43,7 +43,7 @@ class SessionHandlerConfigTest extends AbstractSessionTestCase
     public function testAddDefaultsPerformsMergeProperly()
     {
         $config = new SessionHandlerConfig(array(
-            'dynamo_db_client' => $this->getMockedClient()
+            'dynamodb_client' => $this->getMockedClient()
         ));
 
         $this->assertNull($config->get('foo_bar'));

@@ -2,8 +2,11 @@
 
 namespace Aws\Tests\DynamoDb\Model\BatchRequest;
 
+use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
+use Aws\DynamoDb\Model\BatchRequest\UnprocessedRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
-use Guzzle\Common\Batch\NotifyingBatch;
+use Guzzle\Common\Batch\FlushingBatch;
+use Guzzle\Common\Exception\BatchTransferException;
 
 /**
  * @covers Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch
@@ -21,9 +24,11 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @return \Guzzle\Common\Batch\BatchInterface
+     * @param \PHPUnit_Framework_MockObject_Stub_Return $will
+     *
+     * @return FlushingBatch
      */
-    public function getMockedBatchForFlushTests($will)
+    protected function getWriteRequestBatchWithMockedBatch($will)
     {
         $batch = $this->getMock('Guzzle\Common\Batch\BatchInterface');
         $batch->expects($this->any())
@@ -32,8 +37,9 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
         $batch->expects($this->any())
             ->method('flush')
             ->will($will);
+        $batch = new FlushingBatch(new WriteRequestBatch($batch), 5);
 
-        return new \Guzzle\Common\Batch\FlushingBatch($batch, 5);
+        return $batch;
     }
 
     public function testFactoryCreatesCorrectBatch()
@@ -45,30 +51,21 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
         }
 
         $this->assertEquals(array(
-            'Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch',
             'Guzzle\Common\Batch\FlushingBatch',
+            'Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch',
         ), $decorators);
     }
 
     public function testFactoryCanAddNotifyingBatchDecorator()
     {
         $batch = WriteRequestBatch::factory($this->getMockedClient(), 10, function () {});
-        $found = false;
-        foreach ($batch->getDecorators() as $decorator) {
-            if ($decorator instanceof NotifyingBatch) {
-                $found = true;
-                break;
-            }
-        }
-
-        if (!$found) {
-            $this->fail('Did not find a notifying batch decorator');
-        }
+        $decorators = array_map('get_class', $batch->getDecorators());
+        $this->assertContains('Guzzle\Common\Batch\NotifyingBatch', $decorators);
     }
 
     public function getAddItemData()
     {
-        $client = $this->getServiceBuilder()->get('dynamo_db');
+        $client = $this->getServiceBuilder()->get('dynamodb');
         $data   = array();
 
         // Exception when not a write request or command
@@ -106,7 +103,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @dataProvider getAddItemData
      */
-    public function testAddItem($item, $empty)
+    public function testAddItem($item, $isEmpty)
     {
         $batch = WriteRequestBatch::factory($this->getMockedClient());
 
@@ -116,25 +113,39 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
             // Silently fail
         }
 
-        $this->assertSame($empty, $batch->isEmpty());
+        $this->assertSame($isEmpty, $batch->isEmpty());
+    }
+
+    public function testAddPutRequestByArgs()
+    {
+        $batch = WriteRequestBatch::factory($this->getMockedClient());
+        $this->assertTrue($batch->isEmpty());
+        $batch->addItemToPut('foo', array('bar' => 'baz'));
+        $this->assertFalse($batch->isEmpty());
+    }
+
+    public function testAddDeleteRequestByArgs()
+    {
+        $batch = WriteRequestBatch::factory($this->getMockedClient());
+        $this->assertTrue($batch->isEmpty());
+        $batch->addKeyToDelete('foo', 'bar', 'baz');
+        $this->assertFalse($batch->isEmpty());
     }
 
     public function testFlush()
     {
-        $batch = $this->getMockedBatchForFlushTests($this->returnValue(null));
+        $batch = $this->getWriteRequestBatchWithMockedBatch($this->returnValue(array()));
 
-        $writeRequestBatch = new WriteRequestBatch($batch);
-
-        $this->assertEquals(array(), $writeRequestBatch->flush());
+        $this->assertEquals(array(), $batch->flush());
     }
 
     public function testFlushUnprocessedItems()
     {
         // Prepare the unprocessed items exception
-        $item = new \Aws\DynamoDb\Model\BatchRequest\UnprocessedRequest(array('foo'), 'foo');
-        $exceptionUnprocessed = new \Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
+        $item = new UnprocessedRequest(array('foo'), 'foo');
+        $exceptionUnprocessed = new UnprocessedWriteRequestsException;
         $exceptionUnprocessed->addItem($item);
-        $exceptionBatchTransfer = new \Guzzle\Common\Exception\BatchTransferException(
+        $exceptionBatchTransfer = new BatchTransferException(
             array($item),
             array(),
             $exceptionUnprocessed,
@@ -142,44 +153,9 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
             $this->getMock('Guzzle\Common\Batch\BatchDivisorInterface')
         );
 
-        $batch = $this->getMockedBatchForFlushTests($this->throwException($exceptionBatchTransfer));
+        $batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
 
-        $writeRequestBatch = new WriteRequestBatch($batch);
-
-        $this->assertEquals(array(), $writeRequestBatch->flush());
-    }
-
-    public function testFlushRequestTooLarge()
-    {
-        $exceptionResponse = $this->getMockBuilder('\Guzzle\Http\Exception\ClientErrorResponseException')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $response = $this->getMockBuilder('\Guzzle\Http\Message\Response')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $response->expects($this->any())
-            ->method('getStatusCode')
-            ->will($this->returnValue(413));
-        $exceptionResponse->expects($this->any())
-            ->method('getResponse')
-            ->will($this->returnValue($response));
-
-        $exceptionBatchTransfer = new \Guzzle\Common\Exception\BatchTransferException(
-            array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface')),
-            array(),
-            $exceptionResponse,
-            $this->getMock('Guzzle\Common\Batch\BatchTransferInterface'),
-            new \Guzzle\Common\Batch\BatchSizeDivisor(5)
-        );
-
-        $batch = $this->getMockedBatchForFlushTests($this->throwException($exceptionBatchTransfer));
-        $batch->expects($this->any())
-            ->method('setThreshold')
-            ->will($this->returnValue(null));
-
-        $writeRequestBatch = new WriteRequestBatch($batch);
-
-        $this->assertEquals(array(), $writeRequestBatch->flush());
+        $this->assertEquals(array(), $batch->flush());
     }
 
     /**
@@ -195,9 +171,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
             $this->getMock('Guzzle\Common\Batch\BatchDivisorInterface')
         );
 
-        $batch = $this->getMockedBatchForFlushTests($this->throwException($exceptionBatchTransfer));
-
-        $writeRequestBatch = new WriteRequestBatch($batch);
-        $writeRequestBatch->flush();
+        $batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
+        $batch->flush();
     }
 }

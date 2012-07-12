@@ -70,7 +70,7 @@
         <exec command="php -d aws_phar=aws.min.phar `which phpunit`" passthru="true" />
     </target>
 
-    <target name="test-init" description="Initialize test dependencies">
+    <target name="composer-init" description="Downloads a local copy of composer.phar if necessary">
         <if>
             <available file="composer.phar" />
             <then>
@@ -82,12 +82,15 @@
                 <exec command="php composer.phar install --dev" passthru="true" />
             </else>
         </if>
+    </target>
+
+    <target name="test-init" description="Initialize test dependencies" depends="composer-init">
         <copy file="phpunit.xml.dist" tofile="phpunit.xml" overwrite="false" />
         <copy file="phpunit.functional.xml.dist" tofile="phpunit.functional.xml" overwrite="false" />
         <copy file="test_services.json.dist" tofile="test_services.json" overwrite="false" />
     </target>
 
-    <target name="clean">
+    <target name="clean" description="Deletes build artifacts">
         <delete dir="${dir.output}"/>
     </target>
 
@@ -96,18 +99,22 @@
         <mkdir dir="${dir.output}/logs" />
     </target>
 
-    <target name="clean-dependencies">
+    <target name="clean-dependencies" description="Deletes all dependencies downloaded by Composer">
         <delete dir="${project.basedir}/vendor"/>
         <delete file="composer.lock" />
     </target>
 
-    <target name="update-dependencies">
+    <target name="update-dependencies" depends="composer-init" description="Updates Composer dependencies">
         <exec command="php composer.phar update --dev" passthru="true" />
     </target>
 
     <target name="coverage">
         <mkdir dir="${dir.output}/logs" />
         <exec passthru="true" command="phpunit --coverage-html=${dir.output}/coverage --coverage-clover=${dir.output}/logs/clover.xml" />
+    </target>
+
+    <target name="view-coverage">
+        <exec passthru="true" command="open ${dir.output}/coverage/index.html" />
     </target>
 
     <target name="phpdepend">
@@ -187,5 +194,15 @@
     <target name="all" depends="clean, prepare, test-init, build, report"/>
     <target name="build" depends="phplint, prepare, test-init, test, package, package-min"/>
     <target name="report" depends="coverage, phploc, phpcs, phpmd, phpcpd, phpdepend, phpcb"/>
+
+    <target name="update-cabundle" description="Downloads a new copy of the mozilla.org CA Cert bundle provided by curl.haxx.se">
+        <delete dir="vendor/mozilla/cacert" file="cacert.pem" />
+        <phingcall target="update-dependencies" />
+    </target>
+
+    <target name="update-regions" description="Downloads a new copy of the AWS regions and endpoints file used by the SDK">
+        <delete dir="vendor/aws/regions" file="endpoints.xml" />
+        <phingcall target="update-dependencies" />
+    </target>
 
 </project>

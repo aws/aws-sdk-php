@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Session;
 
+use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Session\LockingStrategy\LockingStrategyInterface;
 use Aws\DynamoDb\Session\LockingStrategy\LockingStrategyFactory;
@@ -90,7 +91,7 @@ class SessionHandler
      *
      * The configuration array accepts the following array keys and values:
      * - locking_strategy:         Locking strategy for session locking logic
-     * - dynamo_db_client:         Client for doing DynamoDB operations
+     * - dynamodb_client:         Client for doing DynamoDB operations
      * - table_name:               Name of the table in which to store sessions
      * - hash_key:                 Name of the hash key in the sessions table
      * - session_lifetime:         Lifetime of inactive sessions
@@ -109,7 +110,7 @@ class SessionHandler
     {
         // Setup session handler configuration and get the client
         $config = new SessionHandlerConfig($config);
-        $client = $config->get('dynamo_db_client');
+        $client = $config->get('dynamodb_client');
 
         // Make sure locking strategy has been provided or provide a default
         $strategy = $config->get('locking_strategy');
@@ -224,7 +225,8 @@ class SessionHandler
             'ProvisionedThroughput' => array(
                 'ReadCapacityUnits'  => (int) $readCapacityUnits,
                 'WriteCapacityUnits' => (int) $writeCapacityUnits,
-            )
+            ),
+            Ua::OPTION => Ua::SESSION
         ))->execute();
 
         $this->client->waitUntil('table_exists', $tableName, array(
@@ -397,14 +399,15 @@ class SessionHandler
                 'lock' => array(
                     'ComparisonOperator' => 'NULL',
                 )
-            )
+            ),
+            Ua::OPTION => Ua::SESSION
         ));
 
         // Perform scan and batch delete operations as needed
         foreach ($this->client->getIterator($tableScan) as $item) {
             // @codeCoverageIgnoreStart
             $key = new Key($item[$this->config->get('hash_key')]['S']);
-            $deleteBatch->add(new DeleteRequest($key, $tableName));
+            $deleteBatch->addRequest(new DeleteRequest($key, $tableName));
             // @codeCoverageIgnoreEnd
         }
 

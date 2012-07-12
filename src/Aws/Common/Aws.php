@@ -17,8 +17,6 @@
 namespace Aws\Common;
 
 use Guzzle\Service\Builder\ServiceBuilder;
-use Guzzle\Service\Exception\ServiceBuilderException;
-use Guzzle\Service\Exception\ServiceNotFoundException;
 
 /**
  * Base class for interacting with web service clients
@@ -37,8 +35,7 @@ class Aws extends ServiceBuilder
      *
      * 1. Use the default configuration file shipped with the SDK that wires
      *   class names with service short names and specify global parameters to
-     *   add to every definition (e.g. access_key_id, secret_access_key,
-     *   credentials, etc)
+     *   add to every definition (e.g. key, secret, credentials, etc)
      *
      * 2. Use a custom configuration file that extends the default config and
      *   supplies credentials for each service.
@@ -50,17 +47,14 @@ class Aws extends ServiceBuilder
      *    and not provide any credentials so that you are using InstanceProfile
      *    credentials.
      *
-     * @param array|string|\SimpleXMLElement $data An instantiated
-     *     SimpleXMLElement containing configuration data, the full path to an
-     *     .xml or .js|.json file, or when using the default configuration file,
-     *     an associative array of data to use as global parameters to pass to
-     *     each service as it is instantiated.
-     * @param array $globalParameters Array of global parameters to
-     *     pass to every service as it is instantiated.
-     *
+     * @param array|string|\SimpleXMLElement $config           An instantiated SimpleXMLElement containing configuration
+     *                                                         data, the full path to an .xml or .js|.json file, or when
+     *                                                         using the default configuration file, an associative
+     *                                                         array of data to use as global parameters to pass to each
+     *                                                         service as it is instantiated.
+     * @param array                          $globalParameters Array of global parameters to pass to every service as it
+     *                                                         is instantiated.
      * @return Aws
-     * @throws ServiceBuilderException if a file cannot be opened
-     * @throws ServiceNotFoundException when trying to extend a missing client
      */
     public static function factory($config = null, array $globalParameters = null)
     {

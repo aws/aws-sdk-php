@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Client;
 
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureInterface;
@@ -23,10 +24,14 @@ use Aws\Common\Exception\Parser\ExceptionParserInterface;
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Aws\Common\Exception\NamespaceExceptionFactory;
 use Aws\Common\Exception\ExceptionListener;
-use Guzzle\Service\Inspector;
-use Guzzle\Service\Client;
+use Aws\Common\Region\EndpointProviderInterface;
+use Aws\Common\Region\CachingEndpointProvider;
+use Aws\Common\Region\XmlEndpointProvider;
 use Guzzle\Common\Collection;
+use Guzzle\Common\Cache\DoctrineCacheAdapter;
 use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Guzzle\Service\Client;
+use Guzzle\Service\Inspector;
 
 /**
  * Builder for creating AWS service clients
@@ -43,9 +48,7 @@ class ClientBuilder
     /**
      * @var array Default client requirements
      */
-    protected static $commonConfigRequirements = array(
-        'base_url'
-    );
+    protected static $commonConfigRequirements = array(Options::REGION);
 
     /**
      * @var string The namespace of the client
@@ -93,13 +96,18 @@ class ClientBuilder
     protected $exceptionParser;
 
     /**
+     * @var EndpointProviderInterface Default region/service endpoint provider
+     */
+    protected static $defaultEndpointProvider;
+
+    /**
      * Factory method for creating the client builder
      *
      * @param string $namespace The namespace of the client
      *
      * @return ClientBuilder
      */
-    public static function factory($namespace)
+    public static function factory($namespace = null)
     {
         return new static($namespace);
     }
@@ -109,7 +117,7 @@ class ClientBuilder
      *
      * @param string $namespace The namespace of the client
      */
-    public function __construct($namespace)
+    public function __construct($namespace = null)
     {
         $this->clientNamespace = $namespace;
     }
@@ -237,17 +245,23 @@ class ClientBuilder
      * client with credentials prepared and plugins attached.
      *
      * @return AwsClientInterface
-     *
-     * @throws \Aws\Common\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function build()
     {
         // Resolve config
+        /** @var $config Collection */
         $config = Inspector::prepareConfig(
             $this->config,
             array_merge(self::$commonConfigDefaults, $this->configDefaults),
             (self::$commonConfigRequirements + $this->configRequirements)
         );
+
+        // If no base_url was explicitly set, then grab one using the default endpoint provider
+        if (!$config->get(Options::BASE_URL)) {
+            $this->addBaseUrlToConfig($config);
+        }
+
         $this->resolveSslOptions($config);
 
         // Resolve credentials
@@ -258,7 +272,7 @@ class ClientBuilder
 
         // Resolve signature
         if (!$this->signatureResolver) {
-            if (!$this->signature) {
+            if (!$config->hasKey(Options::SIGNATURE) && !$this->signature) {
                 throw new InvalidArgumentException('A signature has not been provided.');
             }
             $signature = $this->signature;
@@ -272,28 +286,62 @@ class ClientBuilder
         if (!$this->hasExponentialBackoffOptionResolver()) {
             $this->addClientResolver($this->getDefaultExponentialBackoffResolver());
         }
-        $config->set('client.resolvers', $this->clientResolvers);
+        $config->set(Options::RESOLVERS, $this->clientResolvers);
 
         // Determine service and class name
-        $serviceName = substr($this->clientNamespace, strrpos($this->clientNamespace, '\\') + 1);
-        $clientClass = $this->clientNamespace . '\\' . $serviceName . 'Client';
+        $clientClass = 'Aws\Common\Client\DefaultClient';
+        if ($this->clientNamespace) {
+            $serviceName = substr($this->clientNamespace, strrpos($this->clientNamespace, '\\') + 1);
+            $clientClass = $this->clientNamespace . '\\' . $serviceName . 'Client';
+        }
 
         // Construct the client
         /** @var $client AwsClientInterface */
-        $client = new $clientClass($config->get('credentials'), $config->get('signature'), $config);
+        $client = new $clientClass($config->get(Options::CREDENTIALS), $config->get(Options::SIGNATURE), $config);
 
         // Add exception marshaling so that more descriptive exception are thrown
-        $exceptionFactory = new NamespaceExceptionFactory(
-            $this->exceptionParser ?: new DefaultXmlExceptionParser(),
-            "{$this->clientNamespace}\\Exception",
-            "{$this->clientNamespace}\\Exception\\{$serviceName}Exception"
-        );
-        $client->addSubscriber(new ExceptionListener($exceptionFactory));
+        if ($this->clientNamespace) {
+            $exceptionFactory = new NamespaceExceptionFactory(
+                $this->exceptionParser ?: new DefaultXmlExceptionParser(),
+                "{$this->clientNamespace}\\Exception",
+                "{$this->clientNamespace}\\Exception\\{$serviceName}Exception"
+            );
+            $client->addSubscriber(new ExceptionListener($exceptionFactory));
+        }
+
+        // Add the UserAgentPlugin to append to the User-Agent header of requests
+        $client->addSubscriber(new UserAgentListener());
 
         // Filters used for the cache plugin
-        $client->getConfig()->set('params.cache.key_filter', 'header=date,x-amz-date,x-amz-security-token,x-amzn-authorization');
+        $client->getConfig()->set(
+            'params.cache.key_filter',
+            'header=date,x-amz-date,x-amz-security-token,x-amzn-authorization'
+        );
 
         return $client;
+    }
+
+    /**
+     * Add a base URL to the client of a region, scheme, and service were provided instead
+     *
+     * @param Collection $config Config object
+     *
+     * @throws InvalidArgumentException if required parameters are not set
+     */
+    protected function addBaseUrlToConfig(Collection $config)
+    {
+        $region = $config->get(Options::REGION);
+        $service = $config->get(Options::SERVICE);
+
+        if (!$region || !$service) {
+            throw new InvalidArgumentException(
+                'You must specify a [base_url] or a [region, service, and optional scheme]'
+            );
+        }
+
+        $provider = $config->get(Options::ENDPOINT_PROVIDER) ?: $this->getDefaultEndpointProvider();
+        $endpoint = $provider->getEndpoint($service, $region);
+        $config->set(Options::BASE_URL, $endpoint->getBaseUrl($config->get(Options::SCHEME)));
     }
 
     /**
@@ -303,9 +351,8 @@ class ClientBuilder
      */
     protected function resolveSslOptions(Collection $config)
     {
-        $certSetting = $config->get('ssl.cert');
+        $certSetting = $config->get(Options::SSL_CERT);
         if ($certSetting) {
-
             // If set to TRUE, then use the default CA cert file
             if ($certSetting === 'true' || $certSetting === true) {
                 $certSetting = dirname(dirname(dirname(dirname(__DIR__))))
@@ -368,7 +415,6 @@ class ClientBuilder
      * @param array|Collection $array The array data
      *
      * @return array
-     *
      * @throws InvalidArgumentException if the arg is not an array or Collection
      */
     protected function processArray($array)
@@ -378,10 +424,32 @@ class ClientBuilder
         }
 
         if (!is_array($array)) {
-            throw new InvalidArgumentException('The config must be provided as '
-                . 'an array or Collection.');
+            throw new InvalidArgumentException('The config must be provided as an array or Collection.');
         }
 
         return $array;
+    }
+
+    /**
+     * Get the default {@see EndpointProviderInterface} object
+     *
+     * @return EndpointProviderInterface
+     */
+    protected function getDefaultEndpointProvider()
+    {
+        // @codeCoverageIgnoreStart
+        if (!self::$defaultEndpointProvider) {
+            self::$defaultEndpointProvider = new XmlEndpointProvider();
+            // If APC is installed and Doctrine is present, then use APC caching
+            if (class_exists('Doctrine\Common\Cache\ApcCache') && extension_loaded('apc')) {
+                self::$defaultEndpointProvider = new CachingEndpointProvider(
+                    self::$defaultEndpointProvider,
+                    new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache())
+                );
+            }
+        }
+        // @codeCoverageIgnoreEnd
+
+        return self::$defaultEndpointProvider;
     }
 }

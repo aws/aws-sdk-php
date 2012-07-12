@@ -16,6 +16,9 @@
 
 namespace Aws\Common\Waiter;
 
+/**
+ * WaiterInterface used to wait on something to be in a particular state
+ */
 interface WaiterInterface
 {
     /**
@@ -25,7 +28,7 @@ interface WaiterInterface
      *
      * @return self
      */
-    function setMaxAttempts($maxAttempts);
+    public function setMaxAttempts($maxAttempts);
 
     /**
      * Set the maximum number of failures to allow while waiting
@@ -34,7 +37,7 @@ interface WaiterInterface
      *
      * @return self
      */
-    function setMaxFailures($maxFailures);
+    public function setMaxFailures($maxFailures);
 
     /**
      * Set the amount of time to interval between attempts
@@ -43,7 +46,7 @@ interface WaiterInterface
      *
      * @return self
      */
-    function setInterval($interval);
+    public function setInterval($interval);
 
     /**
      * Set config options associated with the waiter
@@ -52,12 +55,12 @@ interface WaiterInterface
      *
      * @return self
      */
-    function setConfig(array $config);
+    public function setConfig(array $config);
 
     /**
      * Begin the waiting loop
      *
      * @throw RuntimeException if the method never resolves to true
      */
-    function wait();
+    public function wait();
 }

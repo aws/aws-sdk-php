@@ -13,14 +13,14 @@ class TableExistsTest extends AbstractWaiter
     public function testReturnsTrueIfTableExists()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, 'dynamo_db/describe_table');
+        $this->setMockResponse($client, 'dynamodb/describe_table');
         $client->waitUntil('table_exists', 'foo');
     }
 
     public function testReturnsTrueIfTableExistsAndHasStatusMatching()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, 'dynamo_db/describe_table');
+        $this->setMockResponse($client, 'dynamodb/describe_table');
         $client->waitUntil('table_exists', 'foo', array(
             'status' => 'ACTIVE'
         ));
@@ -29,7 +29,7 @@ class TableExistsTest extends AbstractWaiter
     public function testBuffersResourceNotFoundExceptions()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, array('dynamo_db/describe_table_not_found', 'dynamo_db/describe_table'));
+        $this->setMockResponse($client, array('dynamodb/describe_table_not_found', 'dynamodb/describe_table'));
         $client->waitUntil('table_exists', 'foobazbar', array(
             'interval' => 0
         ));

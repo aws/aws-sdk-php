@@ -4,7 +4,9 @@
         "php": ">=5.3.2",
         "ext-curl": "*",
         "guzzle/guzzle": "2.8.*",
-        "mozilla/cacert": "*"
+        "mozilla/cacert": "*",
+        "aws/regions": "*",
+        "symfony/event-dispatcher": "2.1.*"
     },
     "repositories": [
         {
@@ -17,9 +19,20 @@
                     "type": "file"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "aws/regions",
+                "version": "1.0.0",
+                "dist": {
+                    "url": "http://aws-sdk-configurations.amazonwebservices.com/endpoints.xml",
+                    "type": "file"
+                }
+            }
         }
     ],
-    "minimum-stability": "beta",
+    "minimum-stability": "dev",
     "require-dev": {
         "symfony/class-loader": "*",
         "doctrine/common": "*",

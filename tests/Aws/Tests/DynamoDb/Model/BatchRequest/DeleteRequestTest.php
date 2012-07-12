@@ -33,4 +33,38 @@ class DeleteRequestTest extends \Guzzle\Tests\GuzzleTestCase
             )
         ), $deleteRequest->toArray());
     }
+
+    public function getTestCasesForCreateFromCommandTest()
+    {
+        /** @var $client \Aws\DynamoDb\DynamoDbClient */
+        $client = self::getServiceBuilder()->get('dynamodb');
+
+        return array(
+            array(
+                $client->getCommand('ListTables'),
+                'Aws\Common\Exception\InvalidArgumentException'
+            ),
+            array(
+                $client->getCommand('DeleteItem', array(
+                    'TableName' => 'foo',
+                    'Key' => 'foo'
+                )),
+                'Aws\DynamoDb\Model\BatchRequest\DeleteRequest'
+            )
+        );
+    }
+
+    /**
+     * @dataProvider getTestCasesForCreateFromCommandTest
+     */
+    public function testCanCreateFromCommand($command, $expectedObjectType)
+    {
+        try {
+            $result = DeleteRequest::fromCommand($command);
+        } catch (\InvalidArgumentException $e) {
+            $result = $e;
+        }
+
+        $this->assertEquals($expectedObjectType, get_class($result));
+    }
 }

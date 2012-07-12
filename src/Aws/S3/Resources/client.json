@@ -1,0 +1,1190 @@
+{
+    "types": {
+        "s3.canned_acl": {
+            "class": "Guzzle.Common.Validation.Choice",
+            "options": "private,public-read,public-read-write,authenticated-read,bucket-owner-read,bucket-owner-full-control"
+        },
+        "s3.storage_class": {
+            "class": "Guzzle.Common.Validation.Choice",
+            "options": "STANDARD,REDUCED_REDUNDANCY"
+        },
+        "s3.server_side_encryption": {
+            "class": "Guzzle.Common.Validation.Choice",
+            "options": "AES256"
+        },
+        "s3.bucket_request_payment": {
+            "class": "Guzzle.Common.Validation.Choice",
+            "options": "Requester,BucketOwner"
+        }
+    },
+
+    "commands": {
+
+        "Default": {
+            "class": "Aws.S3.Command.DefaultCommand",
+            "result_type": "mixed",
+            "result_doc": "Returns the Amazon S3 result",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/dev/Welcome.html"
+        },
+
+        "AbstractRequiresBucket": {
+            "extends": "Default",
+            "params": {
+                "bucket": {
+                    "doc": "The name of the bucket. Buckets partition the namespace of objects stored in Amazon S3 at the top level. Within a bucket, you can use any names for your objects, but bucket names must be unique across all of Amazon S3.",
+                    "required": "true",
+                    "type": "string"
+                },
+                "bucket.path_style": {
+                    "doc": "Set to true to force a path style bucket request",
+                    "default": false,
+                    "type": "bool"
+                }
+            }
+        },
+
+        "AbstractRequiresKey": {
+            "extends": "AbstractRequiresBucket",
+            "uri": "{+key}",
+            "params": {
+                "key": {
+                    "doc": "The name that you assign to an object. You use the object key to retrieve the object.",
+                    "type": "string",
+                    "required": "true"
+                }
+            }
+        },
+
+        "AbstractHasAclHeaders": {
+            "x-amz-acl": {
+                "location": "header",
+                "filters": "strtolower",
+                "doc": "The canned ACL to apply to the bucket/object.",
+                "type": "s3.canned_acl"
+            },
+            "x-amz-grant-read": {
+                "type": "string",
+                "location": "header"
+            },
+            "x-amz-grant-write": {
+                "type": "string",
+                "location": "header"
+            },
+            "x-amz-grant-read-acp": {
+                "type": "string",
+                "location": "header"
+            },
+            "x-amz-grant-write-acp": {
+                "type": "string",
+                "location": "header"
+            },
+            "x-amz-grant-full-control": {
+                "type": "string",
+                "location": "header"
+            },
+            "acl": {
+                "doc": "Use this parameter to add a complex ACL hto the object instead of using a canned ACL",
+                "type": "Aws.S3.Model.Acl"
+            }
+        },
+
+        "ListBuckets": {
+            "extends": "Default",
+            "method": "GET",
+            "doc": "This implementation of the GET operation returns a list of all buckets owned by the authenticated sender of the request.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
+            "result": "SimpleXMLElement containing the list of buckets",
+            "result_type": "SimpleXMLElement"
+        },
+
+        "HeadBucket": {
+            "extends": "AbstractRequiresBucket",
+            "method": "HEAD",
+            "doc": "This operation is useful to determine if a bucket exists and you have permission to access it.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response"
+        },
+
+        "CreateBucket": {
+            "extends": ["AbstractHasAclHeaders", "AbstractRequiresBucket"],
+            "method": "PUT",
+            "class": "Aws.S3.Command.CreateBucket",
+            "doc": "Create an Amazon S3 Bucket",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "LocationConstraint": {
+                    "type": "string",
+                    "doc": "Use this option to specify the bucket region and build the bucket configuration for you."
+                },
+                "body": {
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
+                    "type": "string",
+                    "location": "body"
+                }
+            }
+        },
+
+        "DeleteBucket": {
+            "extends": "AbstractRequiresBucket",
+            "method": "DELETE",
+            "doc": "This implementation of the DELETE operation deletes the bucket named in the URI. All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response"
+        },
+
+        "ListObjects": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation returns some or all (up to 1000) of the objects in a bucket. You can use the request parameters as selection criteria to return a subset of the objects in a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "delimiter": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "marker": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "max-keys": {
+                    "type": "integer",
+                    "location": "query"
+                },
+                "prefix": {
+                    "type": "string",
+                    "location": "query"
+                }
+            }
+        },
+
+        "GetBucketAcl": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of a bucket. To use GET to return the ACL of the bucket, you must have READ_ACP access to the bucket. If READ_ACP permission is granted to the anonymous user, you can return the ACL of the bucket without using an authorization header.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:acl",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "GetBucketLifecycle": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "Returns the lifecycle configuration information set on the bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:lifecycle",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "GetBucketPolicy": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html",
+            "doc_url": "This implementation of the GET operation uses the policy subresource to return the policy of a specified bucket. To use this operation, you must have GetPolicy permissions on the specified bucket, and you must be the bucket owner.",
+            "result": "Returns an array containing the parsed bucket policy",
+            "result_type": "array",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:policy",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/json"
+                }
+            }
+        },
+
+        "GetBucketLocation": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the location subresource to return a bucket's Region. You set the bucket's Region using the LocationContraint request parameter in a PUT Bucket request.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:location",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "GetBucketLogging": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the logging subresource to return the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:logging",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "GetBucketNotification": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the notification subresource to return the notification configuration of a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:notification",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "GetBucketObjectVersions": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "You can use the versions subresource to list metadata about all of the versions of objects in a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "static": "_guzzle_blank_",
+                    "location": "query:versions"
+                },
+                "delimiter": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "key-marker": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "max-keys": {
+                    "type": "integer",
+                    "location": "query"
+                },
+                "prefix": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "version-id-marker": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "GetBucketRequestPayment": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the requestPayment subresource to return the request payment configuration of a bucket. To use this version of the operation, you must be the bucket owner.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "command.content_type": {
+                    "static": "application/xml"
+                },
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:requestPayment",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "GetBucketVersioning": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the versioning subresource to return the versioning state of a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "command.content_type": {
+                    "static": "application/xml"
+                },
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:versioning",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "GetBucketWebsite": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This implementation of the GET operation returns the website configuration from the website subresource.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:website",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "DeleteBucketLifecycle": {
+            "extends": "AbstractRequiresBucket",
+            "method": "DELETE",
+            "doc": "Deletes the lifecycle configuration from the specified bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "location": "query:lifecycle",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "DeleteBucketPolicy": {
+            "extends": "AbstractRequiresBucket",
+            "method": "DELETE",
+            "doc": "This implementation of the DELETE operation uses the policy subresource to delete the policy on a specified bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "location": "query:policy",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "DeleteBucketWebsite": {
+            "extends": "AbstractRequiresBucket",
+            "method": "DELETE",
+            "doc": "This operation removes the website configuration for a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "location": "query:website",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "DeleteObject": {
+            "extends" : "AbstractRequiresKey",
+            "method": "DELETE",
+            "doc": "The DELETE operation removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn't a null version, Amazon S3 does not remove any objects.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "x-amz-mfa": {
+                    "doc": "The value is the concatenation of the authentication device's serial number, a space, and the value displayed on your authentication device.",
+                    "type": "string",
+                    "location": "header"
+                },
+                "versionId": {
+                    "type": "string",
+                    "location": "query"
+                }
+            }
+        },
+
+        "DeleteMultipleObjects": {
+            "extends" : "AbstractRequiresBucket",
+            "method": "POST",
+            "class": "Aws.S3.Command.DeleteMultipleObjects",
+            "doc": "The Multi-Object Delete operation enables you to delete multiple objects from a bucket using a single HTTP request.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "body": {
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
+                    "location": "body"
+                },
+                "sub_resource": {
+                    "location": "query:delete",
+                    "static": "_guzzle_blank_"
+                },
+                "quiet": {
+                    "type": "bool",
+                    "filters": "Aws.Common.Command.Filters::booleanString"
+                },
+                "objects": {
+                    "type": "array",
+                    "doc": "Array of associative arrays, each containing a Key and VersionId key."
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": "application/xml"
+                },
+                "x-amz-mfa": {
+                    "doc": "The value is the concatenation of the authentication device's serial number, a space, and the value displayed on your authentication device.",
+                    "type": "string",
+                    "location": "header"
+                },
+                "use_md5": {
+                    "static": true
+                }
+            }
+        },
+
+        "HeadObject": {
+            "extends" : "AbstractRequiresKey",
+            "method": "HEAD",
+            "doc": "The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you're only interested in an object's metadata. To use HEAD, you must have READ access to the object.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "versionId": {
+                    "doc": "An object version ID",
+                    "type": "string",
+                    "location": "query"
+                },
+                "Range": {
+                    "doc": "Downloads the specified range bytes of an object.",
+                    "type": "string",
+                    "location": "header"
+                },
+                "If-Modified-Since": {
+                    "doc": "Return the object only if it has been modified since the specified time, otherwise return a 304 (not modified).",
+                    "type": "string",
+                    "location": "header"
+                },
+                "If-Unmodified-Since": {
+                    "doc": "Return the object only if it has not been modified since the specified time, otherwise return a 412 (precondition failed).",
+                    "type": "string",
+                    "location": "header"
+                },
+                "If-Match": {
+                    "doc": "Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).",
+                    "type": "string",
+                    "location": "header"
+                },
+                "If-None-Match": {
+                    "doc": "Return the object only if its entity tag (ETag) is different from the one specified, otherwise return a 304 (not modified).",
+                    "type": "string",
+                    "location": "header"
+                }
+            }
+        },
+
+        "GetObject": {
+            "extends" : "HeadObject",
+            "method": "GET",
+            "class": "Aws.S3.Command.GetObject",
+            "doc": "This implementation of the GET operation retrieves objects from Amazon S3.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "response_body": {
+                    "doc": "Optional location used to store the body of the response. Can be a resource returned from fopen or a Guzzle EntityBody object.",
+                    "type": "any_match:type:resource;class:Guzzle.Http.EntityBodyInterface"
+                },
+                "validate_md5": {
+                    "type": "bool",
+                    "doc": "Set to true to validate any Content-MD5 in the response",
+                    "default": true
+                },
+                "response-content-type": {
+                    "doc": "Sets the Content-Type header of the response.",
+                    "location": "query"
+                },
+                "response-content-language": {
+                    "doc": "Sets the Content-Language header of the response.",
+                    "location": "query"
+                },
+                "response-expires": {
+                    "doc": "Sets the Expires header of the response.",
+                    "location": "query"
+                },
+                "response-cache-control": {
+                    "doc": "Sets the Cache-Control header of the response.",
+                    "location": "query"
+                },
+                "response-content-disposition": {
+                    "doc": "Sets the Content-Disposition header of the response.",
+                    "location": "query"
+                },
+                "response-content-encoding": {
+                    "doc": "Sets the Content-Encoding header of the response.",
+                    "location": "query"
+                }
+            }
+        },
+
+        "GetObjectTorrent": {
+            "extends": "AbstractRequiresKey",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the torrent subresource to return torrent files from a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETtorrent.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "location": "query:torrent",
+                    "static": "_guzzle_blank_"
+                }
+            }
+        },
+
+        "AbstractUploadObject": {
+            "extends": ["AbstractHasAclHeaders", "AbstractRequiresKey"],
+            "params": {
+                "Expires": {
+                    "type": "string",
+                    "filters": "Aws.Common.Command.Filters::getTimestamp",
+                    "location": "header"
+                },
+                "Cache-Control": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "Content-Disposition": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "Content-Encoding": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "Content-Length": {
+                    "location": "header"
+                },
+                "x-amz-server-side-encryption": {
+                    "location": "header",
+                    "filters": "strtoupper",
+                    "type": "s3.server_side_encryption"
+                },
+                "x-amz-storage-class": {
+                    "location": "header",
+                    "filters": "strtoupper",
+                    "type": "s3.storage_class"
+                },
+                "metadata": {
+                    "filters": "Aws.S3.Command.Filters::prependAmzMeta",
+                    "type": "array"
+                }
+            }
+        },
+
+        "PutObject": {
+            "method": "PUT",
+            "extends": "AbstractUploadObject",
+            "class": "Aws.S3.Command.PutObject",
+            "doc": "This implementation of the PUT operation adds an object to a bucket. You must have WRITE permissions on a bucket to add an object to it.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "Content-MD5": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "This header can be used as a message integrity check to verify that the data is the same data that was originally sent."
+                },
+                "body": {
+                    "location": "body",
+                    "type": "any_match:type:string;type:resource;class:Guzzle.Http.EntityBodyInterface",
+                    "doc": "The data to store in Amazon S3. Can be a string, file resource, or Guzzle EntityBody class."
+                },
+                "use_md5": {
+                    "doc": "Set to true to add a Content-MD5 header based on the body",
+                    "type": "bool"
+                },
+                "use_expect": {
+                    "doc": "Set whether or not to send an Expect: 100-Continue header",
+                    "type": "bool"
+                }
+            }
+        },
+
+        "UploadPart": {
+            "extends" : "PutObject",
+            "class": "Aws.S3.Command.DefaultTransferObject",
+            "doc": "This operation uploads a part in a multipart upload.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "PartNumber": {
+                    "location": "query:partNumber",
+                    "required": true
+                },
+                "UploadId": {
+                    "location": "query:uploadId",
+                    "required": true
+                }
+            }
+        },
+
+        "InitiateMultipartUpload": {
+            "extends" : "AbstractUploadObject",
+            "class": "Aws.S3.Command.DefaultUploadObject",
+            "method": "POST",
+            "doc": "This operation initiates a multipart upload and returns an upload ID. This upload ID is used to associate all the parts in the specific multipart upload.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "location": "query:uploads",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "ListMultipartUploads": {
+            "extends": "AbstractRequiresBucket",
+            "method": "GET",
+            "doc": "This operation lists in-progress multipart uploads.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "static": "_guzzle_blank",
+                    "location": "query:uploads"
+                },
+                "delimiter": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "max-uploads": {
+                    "type": "integer",
+                    "location": "query"
+                },
+                "key-marker": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "prefix": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "upload-id-marker": {
+                    "type": "string",
+                    "location": "query"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "CompleteMultipartUpload": {
+            "extends" : "AbstractRequiresBucket",
+            "method": "POST",
+            "class": "Aws.S3.Command.CompleteMultipartUpload",
+            "doc": "This operation completes a multipart upload by assembling previously uploaded parts.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "body": {
+                    "location": "body",
+                    "doc": "The complete body of the request. This value can be built for you if you use the `parts` parameter and/or the addPart() method."
+                },
+                "key": {
+                    "type": "string",
+                    "required": "true"
+                },
+                "UploadId": {
+                    "type": "string",
+                    "required": "true",
+                    "location": "query:uploadId"
+                },
+                "parts": {
+                    "type": "array"
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": "application/xml"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "AbortMultipartUpload": {
+            "extends" : "AbstractRequiresKey",
+            "method": "DELETE",
+            "doc": "This operation aborts a multipart upload. After a multipart upload is aborted, no additional parts can be uploaded using that upload ID. The storage consumed by any previously uploaded parts will be freed. However, if any part uploads are currently in progress, those part uploads might or might not succeed. As a result, it might be necessary to abort a given multipart upload multiple times in order to completely free all storage consumed by all parts.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "UploadId": {
+                    "doc": "Upload ID identifying the multipart upload that is being aborted.",
+                    "type": "string",
+                    "required": "true",
+                    "location": "query:uploadId"
+                }
+            }
+        },
+
+        "ListParts": {
+            "extends" : "AbstractRequiresKey",
+            "method": "GET",
+            "doc": "This operation lists the parts that have been uploaded for a specific multipart upload.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "UploadId": {
+                    "doc": "Upload ID identifying the multipart upload whose parts are being listed.",
+                    "type": "string",
+                    "required": "true",
+                    "location": "query:uploadId"
+                },
+                "max-parts" : {
+                    "type": "integer",
+                    "location": "query"
+                },
+                "part-number-marker": {
+                    "type": "string",
+                    "location": "query"
+                }
+            }
+        },
+
+        "GetObjectAcl": {
+            "extends" : "AbstractRequiresKey",
+            "method": "GET",
+            "doc": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of an object. To use this operation, you must have READ_ACP access to the object.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "versionId": {
+                    "doc": "An object version ID",
+                    "type": "string",
+                    "location": "query"
+                },
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:acl",
+                    "static": "_guzzle_blank_"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "AbstractPutAcl": {
+            "extends": "AbstractHasAclHeaders",
+            "method": "PUT",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "location": "query:acl",
+                    "static": "_guzzle_blank_"
+                },
+                "acl": {
+                    "doc": "Access control policy object to apply. Setting this value will send an XML based ACL.",
+                    "type": "Aws.S3.Model.Acl",
+                    "location": "body"
+                }
+            }
+        },
+
+        "PutObjectAcl": {
+            "extends" : ["AbstractPutAcl", "AbstractRequiresKey"],
+            "doc": "This implementation of the PUT operation uses the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html"
+        },
+
+        "PutBucketAcl": {
+            "extends" : ["AbstractPutAcl", "AbstractRequiresBucket"],
+            "doc": "This implementation of the PUT operation uses the acl subresource to set the permissions on an existing bucket using access control lists (ACL).",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html"
+        },
+
+        "PutBucketLifecycle": {
+            "class": "Aws.S3.Command.PutBucketLifecycle",
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "Sets lifecycle configuration for your bucket. It lifecycle configuration exists, it replaces it.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:lifecycle",
+                    "static": "_guzzle_blank_"
+                },
+                "body": {
+                    "location": "body",
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command."
+                },
+                "rules": {
+                    "type": "array",
+                    "doc": "Associative array of rules (with 'Prefix', 'Status', 'ExpirationDays', and 'ID' keys). Can use these rules to more easily build up a LifecycleConfiguration. Use the addRule() method of the command to incrementally add rules."
+                }
+            }
+        },
+
+        "PutBucketPolicy": {
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "This implementation of the PUT operation uses the policy subresource to add to or replace a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:policy",
+                    "static": "_guzzle_blank_"
+                },
+                "policy": {
+                    "type": "string",
+                    "location": "body",
+                    "doc": "The body is a JSON string containing the policy contents containing the policy statements."
+                }
+            }
+        },
+
+        "PutBucketNotification": {
+            "class": "Aws.S3.Command.PutBucketNotification",
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "This implementation of the PUT operation uses the notification subresource to enable notifications of specified events for a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:notification",
+                    "static": "_guzzle_blank_"
+                },
+                "body": {
+                    "type": "string",
+                    "location": "body",
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command."
+                },
+                "topics": {
+                    "type": "array",
+                    "doc": "Array of associative arrays of topic configurations (with 'Topic' and 'Event' keys) that can be used to build the NotificationConfiguration."
+                }
+            }
+        },
+
+        "DeleteBucketNotification": {
+            "extends" : "PutBucketNotification",
+            "params": {
+                "body": {
+                    "type": "string",
+                    "location": "body",
+                    "doc": "Payload used to delete a bucket notification.",
+                    "static": "<NotificationConfiguration></NotificationConfiguration>"
+                },
+                "topics": {
+                    "static": false
+                }
+            }
+        },
+
+        "PutBucketRequestPayment": {
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "This implementation of the PUT operation uses the requestPayment subresource to set the request payment configuration of a bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:requestPayment",
+                    "static": "_guzzle_blank_"
+                },
+                "Payer": {
+                    "type": "s3.bucket_request_payment",
+                    "location": "body",
+                    "prepend": "<RequestPaymentConfiguration xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Payer>",
+                    "append": "</Payer></RequestPaymentConfiguration>",
+                    "required": "true",
+                    "doc": "Specifies who pays for the download and request fees."
+                }
+            }
+        },
+
+        "PutBucketVersioning": {
+            "class": "Aws.S3.Command.PutBucketVersioning",
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "This implementation of the PUT operation uses the versioning subresource to set the versioning state of an existing bucket.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:versioning",
+                    "static": "_guzzle_blank_"
+                },
+                "Status": {
+                    "doc": "Sets the versioning state of the bucket.",
+                    "type": "choice:Suspended,Enabled"
+                },
+                "MfaDelete": {
+                    "doc": "Specifies whether MFA Delete is enabled in the bucket versioning configuration.",
+                    "type": "choice:Disabled,Enabled"
+                },
+                "body": {
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
+                    "location": "body"
+                }
+            }
+        },
+
+        "PutBucketWebsite": {
+            "class": "Aws.S3.Command.PutBucketWebsite",
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "This implementation of the PUT operation uses the website subresource to set the website configuration.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:website",
+                    "static": "_guzzle_blank_"
+                },
+                "body": {
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
+                    "location": "body"
+                },
+                "IndexDocumentSuffix": {
+                    "doc": "A suffix that is appended to a request that is for a directory on the website endpoint (e.g. if the suffix is index.html and you make a request to samplebucket/images/ the data that is returned will be for the object with the key name images/index.html)",
+                    "type": "string"
+                },
+                "ErrorDocumentKey": {
+                    "doc": "The object key name to use when a 4XX class error occurs",
+                    "type": "string"
+                }
+            }
+        },
+
+        "PutBucketLogging": {
+            "class": "Aws.S3.Command.PutBucketLogging",
+            "extends" : "AbstractRequiresBucket",
+            "method": "PUT",
+            "doc": "This implementation of the PUT operation uses the logging subresource to set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters.",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "type": "string",
+                    "location": "query:logging",
+                    "static": "_guzzle_blank_"
+                },
+                "body": {
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
+                    "location": "body"
+                },
+                "TargetBucket": {
+                    "doc": "Specifies the bucket where you want Amazon S3 to store server access logs.",
+                    "type": "string"
+                },
+                "TargetPrefix": {
+                    "doc": "This element lets you specify a prefix for the keys that the log files will be stored under.",
+                    "type": "string"
+                },
+                "TargetGrants": {
+                    "doc": "Container for granting information. Array of Grant objects.",
+                    "type": "array"
+                }
+            }
+        },
+
+        "AbstractCopyObject": {
+            "method": "PUT",
+            "extends": "AbstractRequiresBucket",
+            "params": {
+                "x-amz-copy-source": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "The name of the source bucket and the source object key name separated by a slash ('/').",
+                    "required": true
+                },
+                "x-amz-copy-source-if-match": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "Perform a copy if the source object entity tag (ETag) matches the specified value. If the value does not match, Amazon S3 returns an HTTP status code 412 precondition failed error."
+                },
+                "x-amz-copy-source-if-none-match": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "Perform a copy if the source object entity tag (ETag) is different than the value specified using this header. If the values match, Amazon S3 returns an HTTP status code 412 precondition failed error."
+                },
+                "x-amz-copy-source-if-unmodified-since": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "Perform a copy if the source object is not modified after the time specified using this header. If the source object is modified, Amazon S3 returns an HTTP status code 412 precondition failed error."
+                },
+                "x-amz-copy-source-if-modified-since": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "Perform a copy if the source object is modified after the time specified using this header. If the source object is not modified, Amazon S3 returns an HTTP status code 412 precondition failed error."
+                }
+            }
+        },
+
+        "PutObjectCopy": {
+            "extends": ["AbstractCopyObject", "AbstractHasAclHeaders"],
+            "params": {
+                "x-amz-storage-class": {
+                    "location": "header",
+                    "filters": "strtoupper",
+                    "type": "s3.storage_class"
+                },
+                "x-amz-server-side-encryption": {
+                    "location": "header",
+                    "filters": "strtoupper",
+                    "type": "s3.server_side_encryption"
+                },
+                "x-amz-metadata-directive": {
+                    "type": "s3.metadata_directive",
+                    "location": "header"
+                }
+            }
+        },
+
+        "UploadPartCopy": {
+            "extends": ["AbstractCopyObject"],
+            "params": {
+                "x-amz-copy-source-range": {
+                    "type": "string",
+                    "location": "header",
+                    "doc": "The range of bytes to copy from the source object. The range value must use the form bytes=first-last, where the first and last are the zero-based byte offsets to copy. For example, bytes=0-9 indicates that you want to copy the first ten bytes of the source."
+                },
+                "PartNumber": {
+                    "location": "query:partNumber",
+                    "required": true
+                },
+                "UploadId": {
+                    "location": "query:uploadId",
+                    "required": true
+                }
+            }
+        },
+
+        "PutBucketTagging": {
+            "extends": "AbstractRequiresBucket",
+            "method": "PUT",
+            "class": "Aws.S3.Command.PutBucketTagging",
+            "doc": "Apply a set of Tags on a bucket",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "static": "_guzzle_blank_",
+                    "location": "query:tagging"
+                },
+                "body": {
+                    "doc": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
+                    "location": "body"
+                },
+                "TagSet": {
+                    "doc": "Associative array of tags where the key is the tag key and the value is the tag value",
+                    "type": "array"
+                }
+            }
+        },
+
+        "GetBucketTagging": {
+            "method": "GET",
+            "extends": "AbstractRequiresBucket",
+            "doc": "Gets the TagSet associated with a bucket",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html",
+            "result": "Returns a SimpleXMLElement containing the response data",
+            "result_type": "SimpleXMLElement",
+            "params": {
+                "sub_resource": {
+                    "static": "_guzzle_blank_",
+                    "location": "query:tagging"
+                },
+                "command.content_type": {
+                    "static": "application/xml"
+                }
+            }
+        },
+
+        "DeleteBucketTagging": {
+            "method": "DELETE",
+            "extends": "AbstractRequiresBucket",
+            "doc": "Deletes the TagSet associated with a Bucket",
+            "doc_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html",
+            "result": "Guzzle response object",
+            "result_type": "Guzzle.Http.Message.Response",
+            "params": {
+                "sub_resource": {
+                    "static": "_guzzle_blank_",
+                    "location": "query:tagging"
+                }
+            }
+        }
+    }
+}

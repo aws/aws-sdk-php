@@ -32,7 +32,7 @@ class LockingStrategyFactoryTest extends AbstractSessionTestCase
         $config->expects($this->any())
             ->method('get')
             ->will($this->returnCallback(function ($key) use ($client) {
-                return ($key === 'dynamo_db_client') ? $client : null;
+                return ($key === 'dynamodb_client') ? $client : null;
             }));
 
         $factory = new LockingStrategyFactory('Aws\DynamoDb\Session\LockingStrategy');

@@ -4,7 +4,6 @@ namespace Aws\Tests\DynamoDb;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureV4;
-use Aws\DynamoDb\Model\Attribute;
 use Aws\DynamoDb\Enum\Type;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
@@ -16,7 +15,7 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFormatValueProducesCorrectArrayStructure()
     {
-        $client = $this->getServiceBuilder()->get('dynamo_db', true);
+        $client = $this->getServiceBuilder()->get('dynamodb', true);
         $expected = array(Type::NUMBER => '100');
         $actual = $client->formatValue(100);
 
@@ -28,7 +27,7 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFormatAttributesProducesCorrectArrayStructure()
     {
-        $client = $this->getServiceBuilder()->get('dynamo_db', true);
+        $client = $this->getServiceBuilder()->get('dynamodb', true);
         $expected = array(
             'number' => array(Type::NUMBER => '100'),
             'string' => array(Type::STRING => 'foo'),
@@ -50,7 +49,7 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFormatAttributesWorksWithTypesAsKeys()
     {
-        $client = $this->getServiceBuilder()->get('dynamo_db', true);
+        $client = $this->getServiceBuilder()->get('dynamodb', true);
         $expected = array(
             'N'  => array('N' => '1'),
             'S'  => array('S' => 'S'),
@@ -88,13 +87,13 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testFactoryInitializesClient()
     {
         $client = DynamoDbClient::factory(array(
-            'access_key_id'     => 'foo',
-            'secret_access_key' => 'bar'
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-east-1'
         ));
 
         $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
-        $this->assertEquals('{scheme}://dynamodb.{region}.amazonaws.com', $client->getBaseUrl(false));
         $this->assertEquals('https://dynamodb.us-east-1.amazonaws.com', $client->getBaseUrl());
     }
 
@@ -104,8 +103,9 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testHasCustomRetryDelay()
     {
         $client = DynamoDbClient::factory(array(
-            'access_key_id'     => 'foo',
-            'secret_access_key' => 'bar'
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-west-1'
         ));
 
         $this->assertEquals(0, $client->calculateRetryDelay(1));

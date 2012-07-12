@@ -10,21 +10,22 @@ use Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface;
  */
 class UnprocessedWriteRequestsExceptionTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testCanAddAndGetItems()
+    public function testCanAddItemsToException()
     {
         $exception    = new UnprocessedWriteRequestsException();
-        $unprocessed1 = $this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface');
-        $unprocessed2 = $this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface');
+        $interface    = 'Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface';
+        $unprocessed1 = $this->getMock($interface);
+        $unprocessed2 = $this->getMock($interface);
 
-        $exception->addItem($unprocessed1)->addItem($unprocessed2);
+        $exception
+            ->addItem($unprocessed1)
+            ->addItem($unprocessed2);
 
         try {
             throw $exception;
         } catch (UnprocessedWriteRequestsException $e) {
-            $items = $e->getItems();
+            $this->assertEquals(2, count($e));
+            $this->assertInstanceOf('\ArrayIterator', $e->getIterator());
         }
-
-        $this->assertSame($items[0], $unprocessed1);
-        $this->assertSame($items[1], $unprocessed2);
     }
 }

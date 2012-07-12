@@ -68,7 +68,7 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
     }
 
     /**
-     * {@inheridoc}
+     * {@inheritdoc}
      */
     public function wait()
     {

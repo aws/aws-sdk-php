@@ -17,15 +17,19 @@
 namespace Aws\Common\Client;
 
 use Aws\Common\Aws;
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
-use Aws\Common\Waiter\WaiterFactoryInterface;
 use Aws\Common\Waiter\WaiterClassFactory;
+use Aws\Common\Waiter\WaiterFactoryInterface;
 use Guzzle\Common\Collection;
+use Guzzle\Common\Cache\CacheAdapterInterface;
 use Guzzle\Service\Client;
+use Guzzle\Service\Description\ServiceDescription;
+use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 
 /**
  * Abstract AWS client
@@ -53,6 +57,11 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     protected $waiterFactory;
 
     /**
+     * @var string The directory of the client set by the child class
+     */
+    protected $directory;
+
+    /**
      * @param CredentialsInterface $credentials AWS credentials
      * @param SignatureInterface   $signature   Signature implementation
      * @param Collection           $config      Configuration options
@@ -60,25 +69,19 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
     {
         // Bootstrap with Guzzle
-        parent::__construct($config->get('base_url'), $config);
+        parent::__construct($config->get(Options::BASE_URL), $config);
         $this->credentials = $credentials;
         $this->signature = $signature;
-
-        // Add the event listener so that requests are signed before they are sent
-        $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
-
-        // Resolve any config options on the client that require a client to
-        // be instantiated in order to resolve config options
-        $resolvers = $config->get('client.resolvers');
-        if ($resolvers) {
-            foreach ($resolvers as $resolver) {
-                $resolver->resolve($config, $this);
-            }
-            $config->remove('client.resolvers');
-        }
-
         // Make sure the user agent is prefixed by the SDK version
         $this->setUserAgent('aws-sdk-php/' . Aws::VERSION, true);
+        // Set the service description on the client
+        $this->addServiceDescriptionFromConfig();
+        // Add the event listener so that requests are signed before they are sent
+        $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
+        // Resolve any config options on the client that require a client to be instantiated
+        $this->resolveOptions();
+        // Add a resource iterator factory that uses the Iterator directory
+        $this->addDefaultResourceIterator();
     }
 
     /**
@@ -152,9 +155,65 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     {
         if (!$this->waiterFactory) {
             $clientClass = get_class($this);
-            $this->waiterFactory = new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter');
+            $this->waiterFactory = new WaiterClassFactory(
+                substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter'
+            );
         }
 
         return $this->waiterFactory;
+    }
+
+    /**
+     * Execute any option resolvers
+     */
+    protected function resolveOptions()
+    {
+        $config = $this->getConfig();
+        if ($resolvers = $config->get(Options::RESOLVERS)) {
+            foreach ($resolvers as $resolver) {
+                $resolver->resolve($config, $this);
+            }
+            $config->remove(Options::RESOLVERS);
+        }
+    }
+
+    /**
+     * Add a service description to the client
+     */
+    protected function addServiceDescriptionFromConfig()
+    {
+        // Set the service description
+        $description = $this->directory
+            ? "{$this->directory}/Resources/client.json"
+            : $this->getConfig(Options::SERVICE_DESCRIPTION);
+
+        if ($description) {
+            $options = array();
+            if ($adapter = $this->getConfig(Options::SERVICE_DESCRIPTION_CACHE)) {
+                if (!($adapter instanceof CacheAdapterInterface)) {
+                    throw new InvalidArgumentException(
+                        Options::SERVICE_DESCRIPTION_CACHE . ' must be an instance of'
+                        . ' Guzzle\Common\Cache\CacheAdapterInterface'
+                    );
+                }
+                $options['cache.adapter'] = $adapter;
+            }
+            if ($ttl = $this->getConfig(Options::SERVICE_DESCRIPTION_CACHE_TTL)) {
+                $options['cache.description.ttl'] = $ttl;
+            }
+
+            $this->setDescription(ServiceDescription::factory($description, $options));
+        }
+    }
+
+    /**
+     * Add a default resource iterator factory to the client
+     */
+    protected function addDefaultResourceIterator()
+    {
+        $clientClass = get_class($this);
+        $this->resourceIteratorFactory = new ResourceIteratorClassFactory(
+            substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Iterator'
+        );
     }
 }

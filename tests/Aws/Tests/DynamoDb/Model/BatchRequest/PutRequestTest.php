@@ -57,4 +57,38 @@ class PutRequestTest extends \Guzzle\Tests\GuzzleTestCase
             )
         ), $putRequest->toArray());
     }
+
+    public function getTestCasesForCreateFromCommandTest()
+    {
+        /** @var $client \Aws\DynamoDb\DynamoDbClient */
+        $client = self::getServiceBuilder()->get('dynamodb');
+
+        return array(
+            array(
+                $client->getCommand('ListTables'),
+                'Aws\Common\Exception\InvalidArgumentException'
+            ),
+            array(
+                $client->getCommand('PutItem', array(
+                    'TableName' => 'foo',
+                    'Item' => array('foo' => array('S' => 'bar'))
+                )),
+                'Aws\DynamoDb\Model\BatchRequest\PutRequest'
+            )
+        );
+    }
+
+    /**
+     * @dataProvider getTestCasesForCreateFromCommandTest
+     */
+    public function testCanCreateFromCommand($command, $expectedObjectType)
+    {
+        try {
+            $result = PutRequest::fromCommand($command);
+        } catch (\InvalidArgumentException $e) {
+            $result = $e;
+        }
+
+        $this->assertEquals($expectedObjectType, get_class($result));
+    }
 }

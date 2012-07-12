@@ -22,12 +22,25 @@ use Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface;
 /**
  * This exception may contain unprocessed write request items
  */
-class UnprocessedWriteRequestsException extends RuntimeException
+class UnprocessedWriteRequestsException extends RuntimeException implements \IteratorAggregate, \Countable
 {
     /**
      * @var array Unprocessed write requests
      */
     private $items = array();
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $unprocessedItems = array())
+    {
+        parent::__construct('There were unprocessed items in the DynamoDb '
+            . 'BatchWriteItem operation.');
+
+        foreach ($unprocessedItems as $unprocessedItem) {
+            $this->addItem($unprocessedItem);
+        }
+    }
 
     /**
      * Adds an unprocessed write request to the collection
@@ -44,12 +57,22 @@ class UnprocessedWriteRequestsException extends RuntimeException
     }
 
     /**
-     * Returns the collection of unprocessed write requests
+     * Get the total number of request exceptions
      *
-     * @return array
+     * @return int
      */
-    public function getItems()
+    public function count()
     {
-        return $this->items;
+        return count($this->items);
+    }
+
+    /**
+     * Allows array-like iteration over the request exceptions
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->items);
     }
 }

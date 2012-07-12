@@ -27,23 +27,18 @@ use Guzzle\Service\ClientInterface;
 interface AwsClientInterface extends ClientInterface
 {
     /**
-     * @var string Option key holding an exponential backoff plugin
-     */
-    const EXPONENTIAL_BACKOFF_OPTION = 'client.exponential_backoff';
-
-    /**
      * Returns the AWS credentials associated with the client
      *
      * @return CredentialsInterface
      */
-    function getCredentials();
+    public function getCredentials();
 
     /**
      * Returns the signature implementation used with the client
      *
      * @return SignatureInterface
      */
-    function getSignature();
+    public function getSignature();
 
     /**
      * Set the waiter factory to use with the client
@@ -52,7 +47,7 @@ interface AwsClientInterface extends ClientInterface
      *
      * @return self
      */
-    function setWaiterFactory(WaiterFactoryInterface $waiterFactory);
+    public function setWaiterFactory(WaiterFactoryInterface $waiterFactory);
 
     /**
      * Wait until a resource is available or an associated waiter returns true
@@ -63,5 +58,5 @@ interface AwsClientInterface extends ClientInterface
      *
      * @return self
      */
-    function waitUntil($waiter, $value = null, array $options = array());
+    public function waitUntil($waiter, $value = null, array $options = array());
 }

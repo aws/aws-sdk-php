@@ -30,7 +30,7 @@ interface ResourceWaiterInterface extends WaiterInterface
      *
      * @return self
      */
-    function setClient(AwsClientInterface $client);
+    public function setClient(AwsClientInterface $client);
 
     /**
      * Set the way in which a resource is uniquely identified
@@ -39,5 +39,5 @@ interface ResourceWaiterInterface extends WaiterInterface
      *
      * @return self
      */
-    function setResourceId($resourceId);
+    public function setResourceId($resourceId);
 }

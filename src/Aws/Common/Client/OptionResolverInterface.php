@@ -33,5 +33,5 @@ interface OptionResolverInterface
      *
      * @throws InvalidArgumentException if the provided configuration is invalid
      */
-    function resolve(Collection $config, AwsClientInterface $client = null);
+    public function resolve(Collection $config, AwsClientInterface $client = null);
 }

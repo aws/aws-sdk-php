@@ -16,14 +16,13 @@
 
 namespace Aws\Common\Credentials;
 
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Common\FromConfigInterface;
 use Guzzle\Common\Cache\CacheAdapterInterface;
 use Guzzle\Common\Cache\DoctrineCacheAdapter;
-use Guzzle\Common\Cache\CacheAdapterFactory;
-use Doctrine\Common\Cache\ApcCache;
 
 /**
  * Basic implementation of the AWSCredentials interface that allows callers to
@@ -59,17 +58,13 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     public static function getConfigDefaults()
     {
         return array(
-            'access_key_id'              => null,
-            'secret_access_key'          => null,
-            'token'                      => null,
-            'token.ttd'                  => null,
-            'token.refresh_duration'     => 43200,
-            'credentials.cache'          => null,
-            'credentials.cache.key'      => null,
-            'credentials.cache.adapter'  => null,
-            'credentials.cache.provider' => null,
-            'credentials.client'         => null,
-            'credentials.refresh_with'   => null
+            Options::KEY                   => null,
+            Options::SECRET                => null,
+            Options::TOKEN                 => null,
+            Options::TOKEN_TTD             => null,
+            Options::CREDENTIALS_CACHE     => null,
+            Options::CREDENTIALS_CACHE_KEY => null,
+            Options::CREDENTIALS_CLIENT    => null
         );
     }
 
@@ -81,6 +76,8 @@ class Credentials implements CredentialsInterface, FromConfigInterface
      * @param array $config Options to use when instantiating the credentials
      *
      * @return CredentialsInterface
+     * @throws InvalidArgumentException If the caching options are invalid
+     * @throws RuntimeException If using the default cache and APC is disabled
      */
     public static function factory($config = array())
     {
@@ -92,72 +89,44 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         }
 
         // Start tracking the cache key
-        $cacheKey = $config['credentials.cache.key'];
+        $cacheKey = $config[Options::CREDENTIALS_CACHE_KEY];
 
         // Ensure that the client is actually a client
-        if ($config['credentials.client'] && !($config['credentials.client'] instanceof ClientInterface)) {
+        $client = $config[Options::CREDENTIALS_CLIENT];
+        if ($client && !($client instanceof ClientInterface)) {
             throw new InvalidArgumentException(
                 'The "credentials.client" credentials option must be an instance of Guzzle\Service\ClientInterface'
             );
         }
 
-        if (!$config['access_key_id'] || !$config['secret_access_key']) {
-
+        if (!$config[Options::KEY] || !$config[Options::SECRET]) {
             // No keys were provided, so create a new credentials object that is
             // automatically expired and uses instance profile credentials.
-            $credentials = new RefreshableInstanceProfileCredentials(
-                new static('', '', '', 1),
-                $config['credentials.client']
-            );
-
+            $credentials = new RefreshableInstanceProfileCredentials(new static('', '', '', 1), $client);
             // If no cache key was set, use the crc32 hostname of the server
             $cacheKey = $cacheKey ?: 'credentials_' . crc32(gethostname());
-
         } else {
-
             // If no cache key was set, use the access key ID
-            $cacheKey = $cacheKey ?: 'credentials_' . $config['access_key_id'];
+            $cacheKey = $cacheKey ?: 'credentials_' . $config['key'];
             // Instantiate using short or long term credentials
-            $credentials = new static(
-                $config['access_key_id'],
-                $config['secret_access_key'],
-                $config['token'],
-                $config['token.ttd']
-            );
+            $credentials = new static($config['key'], $config['secret'], $config['token'], $config['token.ttd']);
         }
 
         // Check if the credentials are refreshable, and if so, configure caching
-        if ($cacheKey && $config['credentials.cache']) {
-
-            if ($config['credentials.cache'] instanceof CacheAdapterInterface) {
-                // The user explicitly provided a cache adapter
-                $cache = $config['credentials.cache'];
-            } elseif ($config['credentials.cache.adapter'] instanceof CacheAdapterInterface) {
-                $cache = $config['credentials.cache.adapter'];
-            } elseif (!$config['credentials.cache.adapter']) {
+        $cache = $config[Options::CREDENTIALS_CACHE];
+        if ($cacheKey && $cache) {
+            if ($cache === 'true' || $cache === true) {
                 // If no cache adapter was provided, then create one for the user
-                // @codeCoverageIgnoreStart
-                if (extension_loaded('apc')) {
-                    $cache = new DoctrineCacheAdapter(new ApcCache());
+                if (extension_loaded('apc') && class_exists('Doctrine\Common\Cache\ApcCache')) {
+                    $cache = new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache());
                 } else {
+                    // @codeCoverageIgnoreStart
                     throw new RuntimeException('PHP has not been compiled with APC. Unable to cache credentials.');
+                    // @codeCoverageIgnoreEnd
                 }
-                // @codeCoverageIgnoreEnd
-            } elseif (is_string($config['credentials.cache.adapter'])) {
-                // Create a cache adapter using Guzzle's cache adapter factory
-                // need to remove the credentials.* prefix
-                $cacheOptions = array();
-                foreach ($config as $key => $value) {
-                    if (strpos($key, 'cache')) {
-                        $key = str_replace('credentials.', '', $key);
-                        $cacheOptions[$key] = $value;
-                    }
-                }
-                $cache = CacheAdapterFactory::factory($cacheOptions);
-            } else {
+            } elseif (!($cache instanceof CacheAdapterInterface)) {
                 throw new InvalidArgumentException('Unable to utilize caching with the specified options');
             }
-
             // Decorate the credentials with a cache
             $credentials = new CacheableCredentials($credentials, $cache, $cacheKey);
         }
@@ -188,10 +157,10 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     public function serialize()
     {
         return json_encode(array(
-            'key'       => $this->key,
-            'secret'    => $this->secret,
-            'token'     => $this->token,
-            'token.ttd' => $this->ttd
+            Options::KEY       => $this->key,
+            Options::SECRET    => $this->secret,
+            Options::TOKEN     => $this->token,
+            Options::TOKEN_TTD => $this->ttd
         ));
     }
 
@@ -201,10 +170,10 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     public function unserialize($serialized)
     {
         $data = json_decode($serialized, true);
-        $this->key = $data['key'];
-        $this->secret = $data['secret'];
-        $this->token = $data['token'];
-        $this->ttd = $data['token.ttd'];
+        $this->key    = $data[Options::KEY];
+        $this->secret = $data[Options::SECRET];
+        $this->token  = $data[Options::TOKEN];
+        $this->ttd    = $data[Options::TOKEN_TTD];
     }
 
     /**

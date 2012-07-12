@@ -12,8 +12,9 @@ class StsClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testFactoryInitializesClient()
     {
         $client = StsClient::factory(array(
-            'access_key_id'     => 'foo',
-            'secret_access_key' => 'bar'
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-west-1'
         ));
 
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());

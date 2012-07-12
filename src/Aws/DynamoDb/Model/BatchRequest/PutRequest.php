@@ -18,6 +18,7 @@ namespace Aws\DynamoDb\Model\BatchRequest;
 
 use Aws\DynamoDb\Model\Item;
 use Aws\Common\Exception\InvalidArgumentException;
+use Guzzle\Service\Command\AbstractCommand;
 
 /**
  * Represents a batch put request. It is composed of a table name and item
@@ -30,11 +31,40 @@ class PutRequest extends AbstractWriteRequest
     protected $item;
 
     /**
-     * Constructs a nee put request
+     * Factory that creates a PutRequest from a PutItem command
+     *
+     * @param AbstractCommand $command The command to create the request from
+     *
+     * @return PutRequest
+     *
+     * @throws InvalidArgumentException if the command is not a PutItem command
+     */
+    public static function fromCommand(AbstractCommand $command)
+    {
+        if ($command->getName() !== 'PutItem') {
+            throw new InvalidArgumentException();
+        }
+
+        // Get relevant data for a PutRequest
+        $table = $command->get('TableName');
+        $item  = $command->get('Item');
+
+        // Create an Item object from the 'item' command data
+        if (!($item instanceof Item)) {
+            $item = new Item($item, $table);
+        }
+
+        // Return an instantiated PutRequest object
+        return new PutRequest($item, $table);
+    }
+
+    /**
+     * Constructs a new put request
      *
      * @param Item   $item      The item to put into DynamoDB
      * @param string $tableName The name of the table which has the item
-     * @throw InvalidArgumentException If the table name is not provided
+     *
+     * @throw InvalidArgumentException if the table name is not provided
      */
     public function __construct(Item $item, $tableName = null)
     {

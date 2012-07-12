@@ -20,7 +20,7 @@ class SessionHandlerTest extends AbstractSessionTestCase
         $client   = $this->getMockedClient();
         $strategy = $this->getMock('Aws\DynamoDb\Session\LockingStrategy\LockingStrategyInterface');
         $this->handler = SessionHandler::factory(array(
-            'dynamo_db_client' => $client,
+            'dynamodb_client'  => $client,
             'locking_strategy' => $strategy,
         ));
 
@@ -53,12 +53,12 @@ class SessionHandlerTest extends AbstractSessionTestCase
         $strategy = $this->getMock('Aws\DynamoDb\Session\LockingStrategy\LockingStrategyInterface');
 
         $sh1 = SessionHandler::factory(array(
-            'dynamo_db_client' => $client
+            'dynamodb_client' => $client
         ));
         $this->assertInstanceOf('Aws\DynamoDb\Session\SessionHandler', $sh1);
 
         $sh2 = SessionHandler::factory(array(
-            'dynamo_db_client' => $client,
+            'dynamodb_client'  => $client,
             'locking_strategy' => $strategy
         ));
         $this->assertInstanceOf('Aws\DynamoDb\Session\SessionHandler', $sh2);
@@ -69,8 +69,8 @@ class SessionHandlerTest extends AbstractSessionTestCase
         ini_set('session.gc_probability', '0');
 
         $handler = SessionHandler::factory(array(
-            'dynamo_db_client' => $this->getMockedClient(),
-            'automatic_gc'     => true
+            'dynamodb_client' => $this->getMockedClient(),
+            'automatic_gc'    => true
         ));
 
         $this->assertTrue($handler->register());

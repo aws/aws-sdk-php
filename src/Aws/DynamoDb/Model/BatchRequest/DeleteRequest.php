@@ -16,7 +16,9 @@
 
 namespace Aws\DynamoDb\Model\BatchRequest;
 
+use Aws\Common\Exception\InvalidArgumentException;
 use Aws\DynamoDb\Model\Key;
+use Guzzle\Service\Command\AbstractCommand;
 
 /**
  * Represents a batch delete request. It is composed of a table name and key
@@ -27,6 +29,34 @@ class DeleteRequest extends AbstractWriteRequest
      * @var Key The key of the item to delete
      */
     protected $key;
+
+    /**
+     * Factory that creates a DeleteRequest from a DeleteItem command
+     *
+     * @param AbstractCommand $command The command to create the request from
+     *
+     * @return PutRequest
+     *
+     * @throws InvalidArgumentException if the command is not a DeleteItem command
+     */
+    public static function fromCommand(AbstractCommand $command)
+    {
+        if ($command->getName() !== 'DeleteItem') {
+            throw new InvalidArgumentException();
+        }
+
+        // Get relevant data for a DeleteRequest
+        $table = $command->get('TableName');
+        $key   = $command->get('Key');
+
+        // Create a Key object from the 'key' command data
+        if (!($key instanceof Key)) {
+            $key = new Key($key);
+        }
+
+        // Return an instantiated DeleteRequest object
+        return new DeleteRequest($key, $table);
+    }
 
     /**
      * Constructs a new delete request

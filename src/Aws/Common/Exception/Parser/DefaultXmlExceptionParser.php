@@ -36,31 +36,50 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
             'parsed'     => null
         );
 
-        $body = $response->getBody(true);
-
-        if (!$body) {
-            $data['message'] = $response->getStatusCode() . ' ' . $response->getReasonPhrase();
-            if ($requestId = $response->getHeader('x-amz-request-id')) {
-                $data['request_id'] = $requestId;
-                $data['message'] .= " (Request-ID: $requestId)";
-            }
+        if ($body = $response->getBody(true)) {
+            $this->parseBody(new \SimpleXMLElement($body), $data);
         } else {
-            $xml = new \SimpleXMLElement($body);
-            $data['parsed'] = $xml;
-
-            $tempXml = $xml->xpath('//Code[1]');
-            $data['code'] = (string) $tempXml[0];
-
-            $tempXml = $xml->xpath('//Message[1]');
-            $data['message'] = (string) $tempXml[0];
-
-            $tempXml = $xml->xpath('//RequestId[1]');
-            if (empty($tempXml)) {
-                $tempXml = $xml->xpath('//RequestID[1]');
-            }
-            $data['request_id'] = (string) $tempXml[0];
+            $this->parseHeaders($response, $data);
         }
 
         return $data;
+    }
+
+    /**
+     * Parses additional exception information from the response headers
+     *
+     * @param Response $response The response from the request
+     * @param array    $data     The current set of exception data
+     */
+    protected function parseHeaders(Response $response, array &$data)
+    {
+        $data['message'] = $response->getStatusCode() . ' ' . $response->getReasonPhrase();
+        if ($requestId = $response->getHeader('x-amz-request-id')) {
+            $data['request_id'] = $requestId;
+            $data['message'] .= " (Request-ID: $requestId)";
+        }
+    }
+
+    /**
+     * Parses additional exception information from the response body
+     *
+     * @param \SimpleXMLElement $body The response body as XML
+     * @param array             $data The current set of exception data
+     */
+    protected function parseBody(\SimpleXMLElement $body, array &$data)
+    {
+        $data['parsed'] = $body;
+
+        $tempXml = $body->xpath('//Code[1]');
+        $data['code'] = (string) $tempXml[0];
+
+        $tempXml = $body->xpath('//Message[1]');
+        $data['message'] = (string) $tempXml[0];
+
+        $tempXml = $body->xpath('//RequestId[1]');
+        if (empty($tempXml)) {
+            $tempXml = $body->xpath('//RequestID[1]');
+        }
+        $data['request_id'] = (string) $tempXml[0];
     }
 }

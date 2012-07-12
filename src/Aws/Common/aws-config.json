@@ -5,21 +5,26 @@
             "params": {}
         },
 
-        "dynamo_db": {
+        "dynamodb": {
             "extends": "default_settings",
             "class": "Aws\\DynamoDb\\DynamoDbClient"
         },
 
-        "dynamo_db.session_handler": {
+        "dynamodb.session_handler": {
             "class": "Aws\\DynamoDb\\Session\\SessionHandler",
             "params": {
-                "dynamo_db_client": "{dynamo_db}"
+                "dynamodb_client": "{dynamodb}"
             }
         },
 
         "sts": {
             "extends": "default_settings",
             "class": "Aws\\Sts\\StsClient"
+        },
+
+        "s3": {
+            "extends": "default_settings",
+            "class": "Aws\\S3\\S3Client"
         }
     }
 }

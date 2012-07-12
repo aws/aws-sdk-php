@@ -21,7 +21,7 @@ class ItemMarshallerPluginTest extends \Guzzle\Tests\GuzzleTestCase
     public function testMarshalsGetItemResponses()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, 'dynamo_db/get_item');
+        $this->setMockResponse($client, 'dynamodb/get_item');
         $result = $client->getItem(array(
             'TableName' => 'foo',
             'Key' => array(
@@ -38,7 +38,7 @@ class ItemMarshallerPluginTest extends \Guzzle\Tests\GuzzleTestCase
     public function testMarshalsBatchGetItem()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, 'dynamo_db/batch_get_item_final');
+        $this->setMockResponse($client, 'dynamodb/batch_get_item_final');
 
         // Note: This is a dummy request that might not match exactly the
         // request that would return the mock response
@@ -65,7 +65,7 @@ class ItemMarshallerPluginTest extends \Guzzle\Tests\GuzzleTestCase
     public function testMarshalsScan()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, 'dynamo_db/scan_final');
+        $this->setMockResponse($client, 'dynamodb/scan_final');
         $result = $client->scan(array(
             'TableName' => 'foo'
         ));
@@ -80,7 +80,7 @@ class ItemMarshallerPluginTest extends \Guzzle\Tests\GuzzleTestCase
     public function testMarshalsQuery()
     {
         $client = $this->getClient();
-        $this->setMockResponse($client, 'dynamo_db/query_final');
+        $this->setMockResponse($client, 'dynamodb/query_final');
         $result = $client->query(array(
             'TableName'     => 'foo',
             'HashKeyValue' => array(
@@ -98,10 +98,11 @@ class ItemMarshallerPluginTest extends \Guzzle\Tests\GuzzleTestCase
     protected function getClient()
     {
         $client = DynamoDbClient::factory(array(
-            'access_key_id'     => 'foo',
-            'secret_access_key' => 'bar',
-            'token'             => 'baz',
-            'token.ttd'         => time() + 1000
+            'key'       => 'foo',
+            'secret'    => 'bar',
+            'region'    => 'us-west-1',
+            'token'     => 'baz',
+            'token.ttd' => time() + 1000
         ));
         $client->addSubscriber(new ItemMarshallerPlugin());
 

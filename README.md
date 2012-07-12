@@ -1,6 +1,6 @@
 # AWS SDK for PHP
 
-The AWS SDK for PHP enables PHP developers to build solutions with Amazon Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Elastic Compute Cloud (Amazon EC2), Amazon DynamoDB, and more. With the AWS SDK for PHP, developers can get started in minutes with a single, downloadable phar, or by using [Composer](http://getcomposer.org).
+The AWS SDK for PHP enables PHP developers to build solutions with Amazon Simple Storage Service (Amazon S3), Amazon DynamoDB, and more. With the AWS SDK for PHP, developers can get started in minutes with a single, downloadable phar, or by using [Composer](http://getcomposer.org).
 
 ## Version 2
 
@@ -97,8 +97,8 @@ You can quickly get up and running by using a web service client's factory metho
 
     // Instantiate the DynamoDB client with your AWS credentials
     $client = DynamoDbClient::factory(array(
-        'access_key_id'     => 'your-aws-access-key-id',
-        'secret_access_key' => 'your-aws-secret-access-key'
+        'key'    => 'your-aws-access-key-id',
+        'secret' => 'your-aws-secret-access-key'
     ));
 
     $table = 'posts';
@@ -157,12 +157,12 @@ Note: Unlike the prior SDK, service clients throw exceptions for failed requests
 
     // Create a service building using shared credentials for each service
     $aws = Aws::factory(array(
-        'access_key_id'     => 'your-aws-access-key-id',
-        'secret_access_key' => 'your-aws-secret-access-key'
+        'key'    => 'your-aws-access-key-id',
+        'secret' => 'your-aws-secret-access-key'
     ));
 
     // Retrieve the DynamoDB client by its short name from the service builder
-    $client = $aws->get('dynamo_db');
+    $client = $aws->get('dynamodb');
 
     // Get an item from the "posts" table using the command syntax
     try {
@@ -192,7 +192,7 @@ Excerpt from src/Aws/Common/aws-config.json:
             "default_settings": {
                 "params": {}
             },
-            "dynamo_db": {
+            "dynamodb": {
                 "extends": "default_settings",
                 "class": "Aws\\DynamoDb\\DynamoDbClient"
             },
@@ -205,7 +205,7 @@ Excerpt from src/Aws/Common/aws-config.json:
 
 The aws-config.json file provides default configuration settings for associating client classes with service names.  This file tells the ``Aws\Common\Aws`` service builder which class the instantiate when you reference a client by name.
 
-None of the service configurations have defined ``access_key_id`` or ``secret_access_key`` settings.  Unless you wish to use IAM Instance Profile credentials, you will need to supply credentials to the service builder in order to use access credentials with each client. For example, the code sample in _Using the Service Builder_ is using the default aws-config.json file and merging shared credentials into each client by passing an array into the first argument of ``Aws\Common\Aws::factory()``.
+None of the service configurations have defined ``key`` or ``secret`` settings.  Unless you wish to use IAM Instance Profile credentials, you will need to supply credentials to the service builder in order to use access credentials with each client. For example, the code sample in _Using the Service Builder_ is using the default aws-config.json file and merging shared credentials into each client by passing an array into the first argument of ``Aws\Common\Aws::factory()``.
 
 ### Using a custom configuration file
 
@@ -218,8 +218,8 @@ Let's say you want to use the default ``aws-config.json`` settings, but you want
         "services": {
             "default_settings": {
                 "params": {
-                    "access_key_id": "your-aws-access-key-id",
-                    "secret_access_key": "your-aws-secret-access-key"
+                    "key": "your-aws-access-key-id",
+                    "secret": "your-aws-secret-access-key"
                 }
             }
         }
@@ -240,18 +240,18 @@ You can create custom named services if you need to use multiple accounts with t
      {
          "extends": ["/path/to/src/Aws/Common/aws-config.json"],
          "services": {
-             "lorem.dynamo_db": {
-                 "extends": "dynamo_db",
+             "lorem.dynamodb": {
+                 "extends": "dynamodb",
                  "params": {
-                     "access_key_id": "foo",
-                     "secret_access_key": "baz"
+                     "key": "foo",
+                     "secret": "baz"
                  }
              },
-             "ipsum.dynamo_db": {
-                 "extends": "dynamo_db",
+             "ipsum.dynamodb": {
+                 "extends": "dynamodb",
                  "params": {
-                     "access_key_id": "abc",
-                     "secret_access_key": "123"
+                     "key": "abc",
+                     "secret": "123"
                  }
               }
          }

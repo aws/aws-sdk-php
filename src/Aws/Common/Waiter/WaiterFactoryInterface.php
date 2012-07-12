@@ -28,5 +28,5 @@ interface WaiterFactoryInterface
      *
      * @return WaiterInterface
      */
-    function factory($waiter);
+    public function factory($waiter);
 }

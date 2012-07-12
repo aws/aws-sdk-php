@@ -41,7 +41,7 @@ class SessionHandlerConfig
         $this->data = $data;
 
         // Make sure the DynamoDB client has been provided
-        if (!($this->get('dynamo_db_client') instanceof DynamoDbClient)) {
+        if (!($this->get('dynamodb_client') instanceof DynamoDbClient)) {
             throw new InvalidArgumentException('The DynamoDB Session Handler '
                 . 'must be provided an instance of the DynamoDbClient.');
         }

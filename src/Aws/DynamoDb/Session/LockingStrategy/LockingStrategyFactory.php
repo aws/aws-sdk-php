@@ -80,6 +80,6 @@ class LockingStrategyFactory
         }
 
         // Call the factory on the locking strategy class to create it
-        return new $classPath($config->get('dynamo_db_client'), $config);
+        return new $classPath($config->get('dynamodb_client'), $config);
     }
 }
