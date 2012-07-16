@@ -290,6 +290,9 @@ class ClientBuilder
         );
         $client->addSubscriber(new ExceptionListener($exceptionFactory));
 
+        // Filters used for the cache plugin
+        $client->getConfig()->set('params.cache.key_filter', 'header=date,x-amz-date,x-amz-security-token,x-amzn-authorization');
+
         return $client;
     }
 

@@ -36,20 +36,30 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
             'parsed'     => null
         );
 
-        $xml = new \SimpleXMLElement($response->getBody(true));
-        $data['parsed'] = $xml;
+        $body = $response->getBody(true);
 
-        $tempXml = $xml->xpath('//Code[1]');
-        $data['code'] = (string) $tempXml[0];
+        if (!$body) {
+            $data['message'] = $response->getStatusCode() . ' ' . $response->getReasonPhrase();
+            if ($requestId = $response->getHeader('x-amz-request-id')) {
+                $data['request_id'] = $requestId;
+                $data['message'] .= " (Request-ID: $requestId)";
+            }
+        } else {
+            $xml = new \SimpleXMLElement($body);
+            $data['parsed'] = $xml;
 
-        $tempXml = $xml->xpath('//Message[1]');
-        $data['message'] = (string) $tempXml[0];
+            $tempXml = $xml->xpath('//Code[1]');
+            $data['code'] = (string) $tempXml[0];
 
-        $tempXml = $xml->xpath('//RequestId[1]');
-        if (empty($tempXml)) {
-            $tempXml = $xml->xpath('//RequestID[1]');
+            $tempXml = $xml->xpath('//Message[1]');
+            $data['message'] = (string) $tempXml[0];
+
+            $tempXml = $xml->xpath('//RequestId[1]');
+            if (empty($tempXml)) {
+                $tempXml = $xml->xpath('//RequestID[1]');
+            }
+            $data['request_id'] = (string) $tempXml[0];
         }
-        $data['request_id'] = (string) $tempXml[0];
 
         return $data;
     }

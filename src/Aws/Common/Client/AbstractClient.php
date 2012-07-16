@@ -96,6 +96,16 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
+     * Get the signature implementation used with the client
+     *
+     * @return SignatureInterface
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
      * Wait until a resource is available or an associated waiter returns true
      *
      * @param string $waiter  Name of the waiter in snake_case

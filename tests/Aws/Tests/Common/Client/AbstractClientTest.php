@@ -16,6 +16,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @covers Aws\Common\Client\AbstractClient::__construct
      * @covers Aws\Common\Client\AbstractClient::getCredentials
+     * @covers Aws\Common\Client\AbstractClient::getSignature
      */
     public function testConstructorConfiguresClient()
     {
@@ -27,6 +28,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->setConstructorArgs(array($credentials, $signature, $config))
             ->getMockForAbstractClass();
 
+        $this->assertSame($signature, $client->getSignature());
         $this->assertSame($credentials, $client->getCredentials());
         $this->assertSame($config, $client->getConfig());
 

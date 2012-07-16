@@ -17,6 +17,7 @@
 namespace Aws\Common\Client;
 
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Waiter\WaiterFactoryInterface;
 use Guzzle\Service\ClientInterface;
 
@@ -36,6 +37,13 @@ interface AwsClientInterface extends ClientInterface
      * @return CredentialsInterface
      */
     function getCredentials();
+
+    /**
+     * Returns the signature implementation used with the client
+     *
+     * @return SignatureInterface
+     */
+    function getSignature();
 
     /**
      * Set the waiter factory to use with the client

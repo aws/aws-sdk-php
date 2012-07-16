@@ -45,11 +45,7 @@ class DefaultXmlExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testParsesResponses($xml)
     {
-        $response = Response::fromMessage(
-            "HTTP/1.1 400 Bad Request\r\n\r\n" .
-            $xml
-        );
-
+        $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\n\r\n{$xml}");
         $parser = new DefaultXmlExceptionParser();
         $result = $parser->parse($response);
         $this->assertInternalType('array', $result);
@@ -58,5 +54,23 @@ class DefaultXmlExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('Error message', $result['message']);
         $this->assertEquals('xyz', $result['request_id']);
         $this->assertInstanceOf('SimpleXMLElement', $result['parsed']);
+    }
+
+    public function testParsesResponsesWithNoBodyAndNoRequestId()
+    {
+        $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\n\r\n");
+        $parser = new DefaultXmlExceptionParser();
+        $result = $parser->parse($response);
+        $this->assertEquals('400 Bad Request', $result['message']);
+        $this->assertNull($result['parsed']);
+    }
+
+    public function testParsesResponsesWithNoBody()
+    {
+        $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\nX-Amz-Request-ID: Foo\r\n\r\n");
+        $parser = new DefaultXmlExceptionParser();
+        $result = $parser->parse($response);
+        $this->assertEquals('400 Bad Request (Request-ID: Foo)', $result['message']);
+        $this->assertEquals('Foo', $result['request_id']);
     }
 }

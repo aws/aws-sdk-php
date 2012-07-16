@@ -26,41 +26,45 @@ use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
 use Aws\DynamoDb\Model\Attribute;
 use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
 use Guzzle\Common\Collection;
-use Guzzle\Service\Inspector;
 use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * Client for interacting with Amazon DynamoDB
  *
- * @method array batchGetItem(array $args = array()) {@command dynamo_db batch_get_item}
- * @method array batchWriteItem(array $args = array()) {@command dynamo_db batch_write_item}
- * @method array createTable(array $args = array()) {@command dynamo_db create_table}
- * @method array deleteItem(array $args = array()) {@command dynamo_db delete_item}
- * @method array deleteTable(array $args = array()) {@command dynamo_db delete_table}
- * @method array describeTable(array $args = array()) {@command dynamo_db describe_table}
- * @method array getItem(array $args = array()) {@command dynamo_db get_item}
- * @method array listTables(array $args = array()) {@command dynamo_db list_tables}
- * @method array putItem(array $args = array()) {@command dynamo_db put_item}
- * @method array query(array $args = array()) {@command dynamo_db query}
- * @method array scan(array $args = array()) {@command dynamo_db scan}
- * @method array updateItem(array $arg = array()) {@command dynamo_db update_item}
- * @method array updateTable(array $args = array()) {@command dynamo_db update_table}
+ * @method array batchGetItem(array $args = array()) {@command dynamo_db BatchGetItem}
+ * @method array batchWriteItem(array $args = array()) {@command dynamo_db BatchWriteItem}
+ * @method array createTable(array $args = array()) {@command dynamo_db CreateTable}
+ * @method array deleteItem(array $args = array()) {@command dynamo_db DeleteItem}
+ * @method array deleteTable(array $args = array()) {@command dynamo_db DeleteTable}
+ * @method array describeTable(array $args = array()) {@command dynamo_db DescribeTable}
+ * @method array getItem(array $args = array()) {@command dynamo_db GetItem}
+ * @method array listTables(array $args = array()) {@command dynamo_db ListTables}
+ * @method array putItem(array $args = array()) {@command dynamo_db PutItem}
+ * @method array query(array $args = array()) {@command dynamo_db Query}
+ * @method array scan(array $args = array()) {@command dynamo_db Scan}
+ * @method array updateItem(array $arg = array()) {@command dynamo_db UpdateItem}
+ * @method array updateTable(array $args = array()) {@command dynamo_db UpdateTable}
  */
 class DynamoDbClient extends AbstractClient
 {
+    /**
+     * @var string Default base URL
+     */
+    const DEFAULT_BASE_URL = '{scheme}://dynamodb.{region}.amazonaws.com';
+
     /**
      * Factory method to create a new DynamoDbClient using an array of
      * configuration data.
      *
      * The configuration array accepts the following array keys and values:
-     * - base_url:           Set to override the default base URL
-     * - region:             Region endpoint. Defaults to 'us-east-1'
-     * - scheme:             One of 'http' or 'https'. Defaults to 'https'
-     * - access_key_id:      AWS Access Key ID
-     * - secret_access_key:  AWS secret access key
-     * - credentials:        Service credential object (optional)
-     * - service.name:       Set to explicitly override the service name
-     * - service.region:     Set to explicitly override the region name
+     * - access_key_id:     AWS Access Key ID
+     * - secret_access_key: AWS secret access key
+     * - credentials:       Service credential object (optional)
+     * - region:            Region name. Defaults to 'us-east-1'.
+     * - scheme:            Scheme of the base URL. Default is 'https'. Use 'http' for an insecure connection.
+     * - base_url:          Set to override the default base URL
+     * - service.name:      Set to explicitly override the service name used in signatures.
+     * - service.region:    Set to explicitly override the region name used in signatures.
      *
      * @param array|Collection $config Configuration data. You must either
      *     supply a {@see Guzzle\Common\Credentials\CredentialsInterface}
@@ -83,7 +87,7 @@ class DynamoDbClient extends AbstractClient
             ->setConfigDefaults(array(
                 'scheme'   => 'https',
                 'region'   => 'us-east-1',
-                'base_url' => '{scheme}://dynamodb.{region}.amazonaws.com'
+                'base_url' => self::DEFAULT_BASE_URL
             ))
             ->setSignature(new SignatureV4())
             ->addClientResolver($exponentialBackoffResolver)
@@ -97,10 +101,6 @@ class DynamoDbClient extends AbstractClient
     public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
     {
         parent::__construct($credentials, $signature, $config);
-
-        // Filters used for the cache plugin
-        $config->set('params.cache.key_filter', 'header=date,x-amz-date,x-amz-security-token,x-amzn-authorization');
-
         // Add the service description to the client
         $this->setDescription(ServiceDescription::factory(__DIR__ . '/Resources/client.json'));
     }

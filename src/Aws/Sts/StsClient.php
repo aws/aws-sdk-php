@@ -24,14 +24,13 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
-use Guzzle\Service\Inspector;
 use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * Client to interact with the AWS Security Token Service
  *
- * @method array getSessionToken(array $args = array()) {@command sts get_session_token}
- * @method array getFederationToken(array $args = array()) {@command sts get_federation_token}
+ * @method array getSessionToken(array $args = array()) {@command sts GetSessionToken}
+ * @method array getFederationToken(array $args = array()) {@command sts GetFederationToken}
  */
 class StsClient extends AbstractClient
 {
@@ -43,12 +42,12 @@ class StsClient extends AbstractClient
     /**
      * Factory method to create a new StsClient using an array of configuration
      * options.  The following array keys and values are available options:
-     * - base_url:          Set to override the default base URL
      * - access_key_id:     AWS Access Key ID
      * - secret_access_key: AWS secret access key
      * - credentials:       Service credential object (optional)
-     * - service.name:      Set to explicitly override the service name
-     * - service.region:    Set to explicitly override the region name
+     * - base_url:          Set to override the default base URL
+     * - service.name:      Set to explicitly override the service name used in signatures.
+     * - service.region:    Set to explicitly override the region name used in signatures.
      *
      * @param array|Collection $config Configuration data. You must either
      *     supply a {@see Guzzle\Common\Credentials\CredentialsInterface}
@@ -82,10 +81,6 @@ class StsClient extends AbstractClient
     public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
     {
         parent::__construct($credentials, $signature, $config);
-
-        // Filters used for the cache plugin
-        $config->set('params.cache.key_filter', 'header=date,x-amz-date,x-amz-security-token,authorization');
-
         // Add the service description to the client
         $this->setDescription(ServiceDescription::factory(__DIR__ . '/Resources/client.json'));
     }
