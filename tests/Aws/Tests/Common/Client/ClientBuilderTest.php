@@ -93,4 +93,39 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $method->invoke($builder, $config);
         $this->assertEquals('/foo/bar', $config->get('curl.CURLOPT_CAINFO'));
     }
+
+    public function getDataForProcessArrayTest()
+    {
+        return array(
+            array(
+                array('foo' => 'bar', 'bar' => 'baz'),
+                array('foo' => 'bar', 'bar' => 'baz'),
+            ),
+            array(
+                new Collection(array('foo' => 'bar', 'bar' => 'baz')),
+                array('foo' => 'bar', 'bar' => 'baz'),
+            ),
+            array(
+                'foo',
+                null
+            )
+        );
+    }
+
+    /**
+     * @dataProvider getDataForProcessArrayTest
+     */
+    public function testProcessArrayProcessesCorrectly($input, $expected)
+    {
+        $builder = ClientBuilder::factory('Aws\\DynamoDb');
+
+        try {
+            $builder->setConfig($input);
+            $actual = $this->readAttribute($builder, 'config');
+        } catch (\InvalidArgumentException $e) {
+            $actual = null;
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
 }

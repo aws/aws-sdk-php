@@ -117,13 +117,13 @@ class ClientBuilder
     /**
      * Sets the config options
      *
-     * @param array $config The config options
+     * @param array|Collection $config The config options
      *
      * @return ClientBuilder
      */
-    public function setConfig(array $config)
+    public function setConfig($config)
     {
-        $this->config = $config;
+        $this->config = $this->processArray($config);
 
         return $this;
     }
@@ -131,13 +131,13 @@ class ClientBuilder
     /**
      * Sets the config options' defaults
      *
-     * @param array $defaults The default values
+     * @param array|Collection $defaults The default values
      *
      * @return ClientBuilder
      */
-    public function setConfigDefaults(array $defaults)
+    public function setConfigDefaults($defaults)
     {
-        $this->configDefaults = $defaults;
+        $this->configDefaults = $this->processArray($defaults);
 
         return $this;
     }
@@ -145,13 +145,13 @@ class ClientBuilder
     /**
      * Sets the required config options
      *
-     * @param array $required The required config options
+     * @param array|Collection $required The required config options
      *
      * @return ClientBuilder
      */
-    public function setConfigRequirements(array $required)
+    public function setConfigRequirements($required)
     {
-        $this->configRequirements = $required;
+        $this->configRequirements = $this->processArray($required);
 
         return $this;
     }
@@ -360,5 +360,28 @@ class ClientBuilder
         }
 
         return $hasExponentialBackoff;
+    }
+
+    /**
+     * Ensures that an array (e.g. for config data) is actually in array form
+     *
+     * @param array|Collection $array The array data
+     *
+     * @return array
+     *
+     * @throws InvalidArgumentException if the arg is not an array or Collection
+     */
+    protected function processArray($array)
+    {
+        if ($array instanceof Collection) {
+            $array = $array->getAll();
+        }
+
+        if (!is_array($array)) {
+            throw new InvalidArgumentException('The config must be provided as '
+                . 'an array or Collection.');
+        }
+
+        return $array;
     }
 }
