@@ -16,17 +16,18 @@
 
 namespace Aws\DynamoDb\Model\BatchRequest;
 
-use Aws\DynamoDb\Model\Key;
-use Aws\DynamoDb\Model\Item;
-use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Exception\InvalidArgumentException;
-use Guzzle\Service\Command\AbstractCommand;
+use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
+use Aws\DynamoDb\Model\Item;
+use Aws\DynamoDb\Model\Key;
+use Guzzle\Common\Batch\AbstractBatchDecorator;
 use Guzzle\Common\Batch\BatchBuilder;
 use Guzzle\Common\Batch\BatchSizeDivisor;
-use Guzzle\Common\Batch\AbstractBatchDecorator;
+use Guzzle\Common\Batch\FlushingBatch;
 use Guzzle\Common\Exception\BatchTransferException;
 use Guzzle\Http\Exception\ClientErrorResponseException;
+use Guzzle\Service\Command\AbstractCommand;
 
 /**
  * The BatchWriteItemQueue is a BatchDecorator for Guzzle that implements a
@@ -52,7 +53,13 @@ class WriteRequestBatch extends AbstractBatchDecorator
     const BATCH_SIZE_STEP = 2;
 
     /**
-     * Factory for creating a DynamoDB BatchWriteItemQueue
+     * @var FlushingBatch The FlushingBatch decorator wrapping this object
+     */
+    protected $autoFlushDecorator;
+
+    /**
+     * Factory for creating a DynamoDB BatchWriteItemQueue and automatically
+     * wrapping it with the FlushingBatch decorator
      *
      * @param AwsClientInterface $client    Client used to transfer requests
      * @param int                $batchSize Size of each batch
@@ -60,18 +67,24 @@ class WriteRequestBatch extends AbstractBatchDecorator
      *
      * @return WriteRequestBatch
      */
-    public static function factory(AwsClientInterface $client, $batchSize = self::MAX_BATCH_SIZE, $notify = null)
-    {
-        $batch = BatchBuilder::factory()
+    public static function factory(
+        AwsClientInterface $client,
+        $batchSize = self::MAX_BATCH_SIZE,
+        $notify = null
+    ) {
+        $builder = BatchBuilder::factory()
             ->createBatchesWith(new BatchSizeDivisor($batchSize))
-            ->transferWith(new WriteRequestBatchTransfer($client))
-            ->autoFlushAt($batchSize);
+            ->transferWith(new WriteRequestBatchTransfer($client));
 
         if ($notify) {
-            $batch->notify($notify);
+            $builder->notify($notify);
         }
 
-        return new self($batch->build());
+        $writeRequestBatch = new self($builder->build());
+        $flushingBatch = new FlushingBatch($writeRequestBatch, $batchSize);
+        $writeRequestBatch->autoFlushDecorator = $flushingBatch;
+
+        return $flushingBatch;
     }
 
     /**
@@ -84,8 +97,8 @@ class WriteRequestBatch extends AbstractBatchDecorator
         }
 
         if (!($item instanceof WriteRequestInterface)) {
-            throw new InvalidArgumentException('All items in the batch must be'
-                . ' a type of WriteRequestInterface.');
+            throw new InvalidArgumentException('All items in the batch must be '
+                . 'a type of WriteRequestInterface.');
         }
 
         return $this->decoratedBatch->add($item);
@@ -213,7 +226,7 @@ class WriteRequestBatch extends AbstractBatchDecorator
                 $divisor->setSize($newSize);
 
                 // Set the auto-flush threshold to the new batch size
-                $this->setThreshold($newSize);
+                $this->autoFlushDecorator->setThreshold($newSize);
 
                 $handled = true;
             }

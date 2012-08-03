@@ -53,7 +53,7 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
                 . ' allowed batch size for the BatchWriteItem operation.');
         }
 
-        // Convert the request items into the format required by the dynamo client
+        // Convert the request items into the format required by the client
         $requestItems = array();
         foreach ($batch as $requestItem) {
             /** @var $requestItem AbstractWriteRequest */
@@ -71,8 +71,8 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
 
         // Re-queue any unsuccessful batched requests
         if (count($result['UnprocessedItems'])) {
-            $exception = new UnprocessedWriteRequestsException('There were unprocessed'
-                . ' items in the batch_write_item operation.');
+            $exception = new UnprocessedWriteRequestsException('There were '
+                . 'unprocessed items in the batch_write_item operation.');
 
             foreach ($result['UnprocessedItems'] as $table => $unprocessed) {
                 foreach ($unprocessed as $data) {

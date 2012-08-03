@@ -4,11 +4,14 @@ namespace Aws\Tests\DynamoDb\Integration;
 
 use Aws\Common\Waiter\CallableWaiter;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Exception\ResourceNotFoundException;
+use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
+use Aws\DynamoDb\Model\BatchRequest\PutRequest;
+use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\Item;
 use Aws\DynamoDb\Model\Key;
-use Aws\DynamoDb\Exception\ResourceNotFoundException;
-use Guzzle\Http\Exception\ClientErrorResponseException;
 use Guzzle\Common\Batch\BatchBuilder;
+use Guzzle\Http\Exception\ClientErrorResponseException;
 
 /**
  * @group integration
@@ -278,10 +281,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Waiting until at least 3 items are in the table');
         $client = $this->client;
+        $table  = $this->table;
         $waiter = new CallableWaiter();
-        $waiter->setCallable(function () use ($client) {
+        $waiter->setCallable(function () use ($client, $table) {
                 $result = $client->scan(array(
-                    'TableName' => $this->table
+                    'TableName' => $table
                 ));
                 return count($result['Items']) >= 3;
             })
@@ -450,5 +454,69 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $elapsed = microtime(true) - $s;
 
         self::log("Got the item {$total} times with {$retries} retries in {$elapsed} seconds");
+    }
+
+    public function testWriteRequestBatchProcessWorksAsExpected()
+    {
+        // Set up
+        $table = self::getResourcePrefix() . '-php-test-batch-write';
+        self::log("Creating table {$table}...");
+        $this->client->createTable(array(
+            'TableName' => $table,
+            'KeySchema' => array(
+                'HashKeyElement' => array(
+                    'AttributeName' => 'foo',
+                    'AttributeType' => 'S'
+                ),
+            ),
+            'ProvisionedThroughput' => array(
+                'ReadCapacityUnits'  => 20,
+                'WriteCapacityUnits' => 20
+            )
+        ));
+        $this->client->waitUntil('table_exists', $table, array(
+            'status' => 'active'
+        ));
+        self::log("Table created.");
+
+        // Test
+        $numItems = 30;
+        self::log("Testing the WriteRequestBatch with {$numItems} items.");
+
+        self::log("Put {$numItems} items into the table.");
+        $writeBatch = WriteRequestBatch::factory($this->client);
+        for ($i = 1; $i <= $numItems; $i++) {
+            $writeBatch->add(new PutRequest(Item::fromArray(array(
+                'foo'  => "example_{$i}",
+                'time' => time()
+            )), $table));
+        }
+        $writeBatch->flush();
+
+        self::log("Assert that all {$numItems} items made it into the table.");
+        $scanner = $this->client->getIterator('Scan', array(
+            'TableName' => $table
+        ));
+        $this->assertEquals($numItems, iterator_count($scanner), 'Not all of the items were inserted.');
+
+        self::log("Remove {$numItems} items from the table");
+        $deleteBatch = WriteRequestBatch::factory($this->client);
+        for ($i = 1; $i <= $numItems; $i++) {
+            $deleteBatch->add(new DeleteRequest(new Key("example_{$i}"), $table));
+        }
+        $deleteBatch->flush();
+
+        self::log("Assert that all {$numItems} items are deleted from the table");
+        $scanner = $this->client->getIterator('Scan', array(
+            'TableName' => $table
+        ));
+        $this->assertEquals(0, iterator_count($scanner), 'Not all of the items were deleted.');
+
+        // Tear down
+        self::log("Deleting table {$table}...");
+        $this->client->deleteTable(array(
+            'TableName' => $table
+        ));
+        $this->client->waitUntil('table_not_exists', $table);
     }
 }

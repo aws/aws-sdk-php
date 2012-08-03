@@ -2,12 +2,14 @@
 
 namespace Aws\Tests\DynamoDb\Session;
 
-use Aws\DynamoDb\Session\SessionHandler;
 use Aws\DynamoDb\DynamoDbClient;
-use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
-use Aws\DynamoDb\Model\BatchRequest\PutRequest;
-use Aws\DynamoDb\Model\Item;
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
+use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
+use Aws\DynamoDb\Model\BatchRequest\PutRequest;
+use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
+use Aws\DynamoDb\Model\Item;
+use Aws\DynamoDb\Model\Key;
+use Aws\DynamoDb\Session\SessionHandler;
 use Aws\Common\Enum\Time;
 
 /**
@@ -149,14 +151,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'dynamo_db_client'   => $this->client,
             'table_name'         => $this->table,
             'locking_strategy'   => 'pessimistic',
-            'max_lock_wait_time' => 5,
+            'max_lock_wait_time' => 6,
         ));
 
         $shPessimistic2 = SessionHandler::factory(array(
             'dynamo_db_client'   => $this->client,
             'table_name'         => $this->table,
             'locking_strategy'   => 'pessimistic',
-            'max_lock_wait_time' => 5,
+            'max_lock_wait_time' => 6,
         ));
 
         self::log('Store some session data for reading');
@@ -190,6 +192,10 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testGarbageCollection()
     {
+        $currentCount = iterator_count($this->client->getIterator('Scan', array(
+            'TableName' => $this->table
+        )));
+
         self::log('Put 10 expired items into the sessions table');
         $writeBatch = WriteRequestBatch::factory($this->client);
         for ($i = 1; $i <= 10; $i++) {
@@ -204,7 +210,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->getCommand('Scan', array(
             'TableName' => $this->table
         ))->execute();
-        $this->assertEquals(10, $result['Count'], 'Not all of the items were inserted.');
+        $this->assertEquals(10 + $currentCount, $result['Count'], 'Not all of the items were inserted.');
 
         self::log('Create a session handler to use with a lower batch size');
         $sh = SessionHandler::factory(array(
