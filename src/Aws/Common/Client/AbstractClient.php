@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Client;
 
+use Aws\Common\Aws;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
@@ -75,6 +76,9 @@ abstract class AbstractClient extends Client implements AwsClientInterface
             }
             $config->remove('client.resolvers');
         }
+
+        // Make sure the user agent is prefixed by the SDK version
+        $this->setUserAgent('aws-sdk-php/' . Aws::VERSION, true);
     }
 
     /**

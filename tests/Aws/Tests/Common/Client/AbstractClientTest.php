@@ -2,6 +2,7 @@
 
 namespace Aws\Tests\Common\Client;
 
+use Aws\Common\Aws;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Client\ExponentialBackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
@@ -36,6 +37,11 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertGreaterThan(0, array_filter($client->getEventDispatcher()->getListeners('request.before_send'), function($e) {
             return $e[0] instanceof SignatureListener;
         }));
+
+        // Ensure that the user agent string is correct
+        $expectedUserAgent = 'aws-sdk-php/' . Aws::VERSION . ' Guzzle';
+        $actualUserAgent = $client->getDefaultHeaders()->get('User-Agent');
+        $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
     }
 
     /**

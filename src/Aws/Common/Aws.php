@@ -28,7 +28,7 @@ class Aws extends ServiceBuilder
     /**
      * @var string Current version of the SDK
      */
-    const VERSION = '0.0.1';
+    const VERSION = '2.0.0';
 
     /**
      * Create a new service locator for the AWS SDK
@@ -65,14 +65,14 @@ class Aws extends ServiceBuilder
     public static function factory($config = null, array $globalParameters = null)
     {
         if (!$config) {
-            // If nothing is passed in, then use the default config file with
-            // Instance profile credentials
-            $config = __DIR__ . DIRECTORY_SEPARATOR . 'aws-config.json';
+            // If nothing is passed in, then use the default configuration file
+            // with Instance profile credentials
+            $config = self::getDefaultServiceDefinition();
         } elseif (is_array($config)) {
             // If an array was passed, then use the default configuration file
             // with global parameter overrides in the first argument
             $globalParameters = $config;
-            $config = __DIR__ . DIRECTORY_SEPARATOR . 'aws-config.json';
+            $config = self::getDefaultServiceDefinition();
         }
 
         return parent::factory($config, $globalParameters);
@@ -85,6 +85,6 @@ class Aws extends ServiceBuilder
      */
     public static function getDefaultServiceDefinition()
     {
-        return __DIR__ . '/aws-config.json';
+        return __DIR__ . DIRECTORY_SEPARATOR . 'aws-config.json';
     }
 }
