@@ -14,26 +14,31 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Enum;
+namespace Aws\DynamoDb\Model;
 
-use Aws\Common\Enum;
+use Aws\DynamoDb\Enum\Type;
 
 /**
- * Contains enumerable DynamoDB attribute type values
+ * Class representing a DynamoDB binary attribute.
  */
-class Type extends Enum
+class Binary extends AbstractAttribute
 {
-    const N  = 'N';
-    const S  = 'S';
-    const B  = 'B';
-    const NS = 'NS';
-    const SS = 'SS';
-    const BS = 'BS';
+    /**
+     * Instantiates a DynamoDB binary attribute.
+     *
+     * @param string $value The DynamoDB attribute value
+     */
+    public function __construct($value)
+    {
+        $this->setValue($value);
+        $this->setType(Type::BINARY);
+    }
 
-    const NUMBER     = self::N;
-    const STRING     = self::S;
-    const BINARY     = self::B;
-    const NUMBER_SET = self::NS;
-    const STRING_SET = self::SS;
-    const BINARY_SET = self::BS;
+    /**
+     * {@inheritdoc}
+     */
+    public function setValue($value)
+    {
+        return parent::setValue(base64_encode((string) $value));
+    }
 }

@@ -16,7 +16,6 @@
 
 namespace Aws\DynamoDb\Model;
 
-use Aws\Common\ToArrayInterface;
 use Aws\DynamoDb\Enum\Type;
 use Aws\Common\Exception\InvalidArgumentException;
 
@@ -24,21 +23,12 @@ use Aws\Common\Exception\InvalidArgumentException;
  * Class representing a DynamoDB item attribute. Contains helpers for building
  * attributes and arrays of attributes.
  */
-class Attribute implements ToArrayInterface
+class Attribute extends AbstractAttribute
 {
-    const FORMAT_PUT = 'put';
-    const FORMAT_UPDATE = 'update';
-    const FORMAT_EXPECTED = 'expected';
-
     /**
-     * @var string The DynamoDB attribute type (e.g. N, S, NS, SS).
+     * @var string The suffix for all string types
      */
-    protected $type;
-
-    /**
-     * @var string|array The DynamoDB attribute value.
-     */
-    protected $value;
+    const SET_SUFFIX = 'S';
 
     /**
      * Creates a DynamoDB attribute, validates it, and prepares the type and
@@ -51,22 +41,31 @@ class Attribute implements ToArrayInterface
      * depth of array processing
      *
      * @return Attribute
+     *
      * @throws InvalidArgumentException
      */
     public static function factory($value, $depth = 0)
     {
-        // Do some validation on the value up-front
-        if ($value instanceof self) {
+        // Handle deep recursion
+        if ($depth > 1) {
+            throw new InvalidArgumentException('Sets must be at most one level deep.');
+        }
+
+        // Handle specific, allowed object types
+        if ($value instanceof Attribute) {
             return $value;
-        } elseif ($depth > 1) {
-            throw new InvalidArgumentException('Number and string sets must be at most one level deep.');
-        } elseif ($value === null || $value === array() || $value === '') {
-            // Empty values are not allowed. Zero and false are OK.
-            throw new InvalidArgumentException('The value must not be semantically empty.');
-        } elseif (is_resource($value)) {
-            throw new InvalidArgumentException('The value must be able to be converted to string or array.');
-        } elseif (is_object($value) && !method_exists($value, '__toString') && !$value instanceof \Traversable) {
-            throw new InvalidArgumentException('The value must be able to be converted to string or array.');
+        } elseif ($value instanceof \Traversable) {
+            $value = iterator_to_array($value);
+        } elseif (is_object($value) && method_exists($value, '__toString')) {
+            $value = (string) $value;
+        }
+
+        // Ensure that the value is valid
+        if ($value === null || $value === array() || $value === '') {
+            // Note: "Empty" values are not allowed except for zero and false.
+            throw new InvalidArgumentException('The value must not be empty.');
+        } elseif (is_resource($value) || is_object($value)) {
+            throw new InvalidArgumentException('The value must be able to be converted to string.');
         }
 
         // Create the attribute to return
@@ -97,8 +96,8 @@ class Attribute implements ToArrayInterface
                 $attribute->value[] = (string) $subAttribute->value;
             }
 
-            // Make sure the type is changed to be the appropriate array type
-            $attribute->type = (Type::STRING === $setType) ? Type::STRING_SET : Type::NUMBER_SET;
+            // Make sure the type is changed to be a set type
+            $attribute->type = $setType . self::SET_SUFFIX;
         } else {
             $attribute = new Attribute((string) $value);
         }
@@ -110,80 +109,11 @@ class Attribute implements ToArrayInterface
      * Instantiates a DynamoDB attribute.
      *
      * @param string|array $value The DynamoDB attribute value
-     * @param string $type The DynamoDB attribute type (N, S, NS, SS)
-     * @throws InvalidArgumentException
+     * @param string $type The DynamoDB attribute type (N, S, B, NS, SS, BS)
      */
     public function __construct($value, $type = Type::STRING)
     {
-        if (!is_string($value) && !is_array($value)) {
-            throw new InvalidArgumentException('An attribute value may only be a string or array.');
-        } elseif (!in_array($type, Type::values())) {
-            throw new InvalidArgumentException('An attribute type must be a valid DynamoDB type.');
-        }
-
-        $this->value = $value;
-        $this->type = $type;
-    }
-
-    /**
-     * Convert the attribute to a string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return implode(', ', (array) $this->value);
-    }
-
-    /**
-     * Returns the attribute formatted in the DynamoDB-specific array format.
-     *
-     * @param string $format Format of the attribute
-     *
-     * @return array
-     */
-    public function getFormatted($format = self::FORMAT_PUT)
-    {
-        switch ($format) {
-            case self::FORMAT_EXPECTED:
-                // no break
-            case self::FORMAT_UPDATE:
-                $formatted = array('Value' => array($this->type => $this->value));
-                break;
-            case self::FORMAT_PUT:
-                // no break
-            default:
-                $formatted = array($this->type => $this->value);
-        }
-
-        return $formatted;
-    }
-
-    /**
-     * Returns the attribute type.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Returns the attribute value.
-     *
-     * @return array|string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return $this->getFormatted();
+        $this->setValue($value);
+        $this->setType($type);
     }
 }

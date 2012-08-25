@@ -5,55 +5,12 @@ namespace Aws\Tests\DynamoDb\Model;
 use Aws\DynamoDb\Enum\Type;
 use Aws\DynamoDb\Model\Attribute;
 
+/**
+ * @covers Aws\DynamoDb\Model\Attribute
+ */
 class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
 {
     const INVALID = 'INVALID';
-
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::__construct
-     * @covers Aws\DynamoDb\Model\Attribute::getValue
-     * @covers Aws\DynamoDb\Model\Attribute::getType
-     */
-    public function testConstructorAndGettersWorkAsExpected()
-    {
-        $attribute = new Attribute('100', Type::NUMBER);
-
-        $this->assertInstanceOf('Aws\DynamoDb\Model\Attribute', $attribute);
-        $this->assertSame('100', $attribute->getValue());
-        $this->assertSame(Type::NUMBER, $attribute->getType());
-    }
-
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::__construct
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     */
-    public function testConstructorFailsOnBadValue()
-    {
-        $attribute = new Attribute(100, Type::NUMBER);
-    }
-
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::__construct
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     */
-    public function testConstructorFailsOnBadType()
-    {
-        $attribute = new Attribute('100', 'foo');
-    }
-
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::getFormatted
-     */
-    public function testGetFormattedProducesCorrectArrayStructure()
-    {
-        $attribute   = new Attribute('100', Type::NUMBER);
-        $putArray    = array(Type::NUMBER => '100');
-        $updateArray = array('Value' => array(Type::NUMBER => '100'));
-
-        $this->assertSame($putArray, $attribute->getFormatted());
-        $this->assertSame($putArray, $attribute->getFormatted(Attribute::FORMAT_PUT));
-        $this->assertSame($updateArray, $attribute->getFormatted(Attribute::FORMAT_UPDATE));
-    }
 
     public function dataForAttributeFactory()
     {
@@ -112,7 +69,6 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\DynamoDb\Model\Attribute::factory
      * @dataProvider dataForAttributeFactory
      */
     public function testAttributeFactoryProducesExpectedResults($value, $expected)
@@ -126,9 +82,6 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($expected, json_encode($attribute->getFormatted()));
     }
 
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::factory
-     */
     public function testFactoryUsesValueIfAlreadyAttribute()
     {
         $a = Attribute::factory(array(
@@ -136,23 +89,5 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         $this->assertSame($a, Attribute::factory($a));
-    }
-
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::__toString
-     */
-    public function testCanBeCastToString()
-    {
-        $a = new Attribute(array('baz', 'bar'), 'SS');
-        $this->assertEquals('baz, bar', (string) $a);
-    }
-
-    /**
-     * @covers Aws\DynamoDb\Model\Attribute::toArray
-     */
-    public function testCanBeCastToArray()
-    {
-        $a = new Attribute(array('baz', 'bar'), 'SS');
-        $this->assertEquals(array('SS' => array('baz', 'bar')), $a->toArray());
     }
 }
