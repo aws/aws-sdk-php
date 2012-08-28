@@ -63,7 +63,7 @@ class ExponentialBackoffOptionResolver extends AbstractMissingFunctionOptionReso
         // Ensure that the plugin implements the correct interface
         if ($plugin && !($plugin instanceof ExponentialBackoffPlugin)) {
             throw new InvalidArgumentException(
-                Options::BACKOFF . ' must be an instance of Guzzle\\Http\\Plugin\\ExpontialBackoffPlugin'
+                Options::BACKOFF . ' must be an instance of Guzzle\\Http\\Plugin\\ExponentialBackoffPlugin'
             );
         }
 

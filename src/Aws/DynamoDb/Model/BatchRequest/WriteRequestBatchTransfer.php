@@ -22,7 +22,7 @@ use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
 use Guzzle\Common\Batch\BatchTransferInterface;
 use Guzzle\Common\Exception\ExceptionCollection;
-use Guzzle\Http\Message\EntityEnclosingRequest;
+use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Service\Command\CommandInterface;
 
 /**
@@ -55,6 +55,30 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
      */
     public function transfer(array $batch)
     {
+        // Create a container exception for any unprocessed items
+        $unprocessed = new UnprocessedWriteRequestsException();
+
+        // Execute the transfer logic
+        $this->performTransfer($batch, $unprocessed);
+
+        // Throw an exception containing the unprocessed items if there are any
+        if (count($unprocessed)) {
+            throw $unprocessed;
+        }
+    }
+
+    /**
+     * Transfer a batch of requests and collect any unprocessed items
+     *
+     * @param array                             $batch               A batch of write requests
+     * @param UnprocessedWriteRequestsException $unprocessedRequests Collection of unprocessed items
+     *
+     * @throws \Guzzle\Common\Exception\ExceptionCollection
+     */
+    protected function performTransfer(
+        array $batch,
+        UnprocessedWriteRequestsException $unprocessedRequests
+    ) {
         // Do nothing if the batch is empty
         if (empty($batch)) {
             return;
@@ -86,17 +110,80 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
         // Execute the commands and handle exceptions
         try {
             $commands = $this->client->execute($commands);
+            $this->getUnprocessedRequestsFromCommands($commands, $unprocessedRequests);
         } catch (ExceptionCollection $exceptions) {
-            $this->handleRequestTooLargeExceptions($exceptions);
-        }
+            // Create a container exception for any unhandled (true) exceptions
+            $unhandledExceptions = new ExceptionCollection();
 
-        // Throw exception to make sure any unsuccessful requests get re-queued
-        $this->handleUnprocessedItemsFromCommands($commands);
+            // Loop through caught exceptions and handle RequestTooLarge scenarios
+            /** @var $e DynamoDbException */
+            foreach ($exceptions as $e) {
+                if ($e instanceof DynamoDbException && $e->getStatusCode() === 413) {
+                    $request = $e->getResponse()->getRequest();
+                    $this->retryLargeRequest($request, $unprocessedRequests);
+                } else {
+                    $unhandledExceptions->add($e);
+                }
+            }
+
+            // If there were unhandled exceptions, throw them
+            if (count($unhandledExceptions)) {
+                throw $unhandledExceptions;
+            }
+        }
     }
 
     /**
-     * Collects and creates unprocessed request objects from data collected from
-     * erroneous cases.
+     * Handles unprocessed items from the executed commands. Unprocessed items
+     * can be collected and thrown in an UnprocessedWriteRequestsException
+     *
+     * @param array                             $commands            Array of commands
+     * @param UnprocessedWriteRequestsException $unprocessedRequests Collection of unprocessed items
+     */
+    protected function getUnprocessedRequestsFromCommands(
+        array $commands,
+        UnprocessedWriteRequestsException $unprocessedRequests
+    ) {
+        /** @var $command CommandInterface */
+        foreach ($commands as $command) {
+            if ($command instanceof CommandInterface && $command->isExecuted()) {
+                $result = $command->getResult();
+                $items = $this->convertResultsToUnprocessedRequests($result['UnprocessedItems']);
+                foreach ($items as $request) {
+                    $unprocessedRequests->addItem($request);
+                }
+            }
+        }
+    }
+
+    /**
+     * Handles exceptions caused by the request being too large (over 1 MB). The
+     * response will have a status code of 413. In this case the batch should be
+     * split up into smaller batches and retried.
+     *
+     * @param EntityEnclosingRequestInterface   $request             The failed request
+     * @param UnprocessedWriteRequestsException $unprocessedRequests Collection of unprocessed items
+     */
+    protected function retryLargeRequest(
+        EntityEnclosingRequestInterface $request,
+        UnprocessedWriteRequestsException $unprocessedRequests
+    ) {
+        // Collect the items out from the request object
+        $items = json_decode($request->getBody(true), true);
+        $items = $this->convertResultsToUnprocessedRequests($items['RequestItems']);
+
+        // Divide batch into smaller batches and transfer them via recursion
+        // NOTE: Dividing the batch into 3 (instead of 2) batches resulted in less recursion during testing
+        if ($items) {
+            $newBatches = array_chunk($items, ceil(count($items) / 3));
+            foreach ($newBatches as $newBatch) {
+                $this->performTransfer($newBatch, $unprocessedRequests);
+            }
+        }
+    }
+
+    /**
+     * Collects and creates unprocessed request objects from data collected from erroneous cases
      *
      * @param array $items Data formatted under "RequestItems" or "UnprocessedItems" keys
      *
@@ -112,76 +199,5 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
         }
 
         return $unprocessed;
-    }
-
-    /**
-     * Handles unprocessed items from the executed commands. Unprocessed items
-     * can be collected and thrown in an UnprocessedWriteRequestsException
-     *
-     * @param array $commands Array of commands
-     *
-     * @throw UnprocessedWriteRequestsException if there are unprocessed items
-     */
-    protected function handleUnprocessedItemsFromCommands(array $commands)
-    {
-        $unprocessed = array();
-
-        /** @var $command CommandInterface */
-        foreach ($commands as $command) {
-            if ($command instanceof CommandInterface && $command->isExecuted()) {
-                $result = $command->getResult();
-                $items = $this->convertResultsToUnprocessedRequests($result['UnprocessedItems']);
-                foreach ($items as $request) {
-                    $unprocessed[] = $request;
-                }
-            }
-        }
-
-        // Throw exception to make sure any unprocessed requests get re-queued
-        if (count($unprocessed)) {
-            throw new UnprocessedWriteRequestsException($unprocessed);
-        }
-    }
-
-    /**
-     * Handles exceptions caused by the request being too large (over 1 MB). The
-     * response will have a status code of 413. In this case the batch should be
-     * split up into smaller batches and retried.
-     *
-     * @param ExceptionCollection $exceptions The collection of exceptions from the batch execution
-     *
-     * @throw ExceptionCollection if there were exceptions that weren't handled
-     */
-    protected function handleRequestTooLargeExceptions(ExceptionCollection $exceptions)
-    {
-        // The exception collection to be returned
-        $unhandledExceptions = new ExceptionCollection();
-
-        /** @var $e DynamoDbException */
-        foreach ($exceptions as $e) {
-            if ($e instanceof DynamoDbException && $e->getStatusCode() === 413) {
-                // Get the items that were not successful
-                /** @var $request EntityEnclosingRequest */
-                $request = $e->getResponse()->getRequest();
-                $items = json_decode($request->getBody(true), true);
-                $items = $this->convertResultsToUnprocessedRequests($items['RequestItems']);
-
-                // Divide these up into 3 smaller batches and transfer them
-                // NOTE: Dividing by 3 (instead of 2) resulted in fewer
-                // recursive calls during testing
-                if ($items) {
-                    $newBatches = array_chunk($items, ceil(count($items) / 3));
-                    foreach ($newBatches as $newBatch) {
-                        $this->transfer($newBatch);
-                    }
-                }
-            } else {
-                $unhandledExceptions->add($e);
-            }
-        }
-
-        if (count($unhandledExceptions)) {
-            throw $unhandledExceptions;
-        }
     }
 }

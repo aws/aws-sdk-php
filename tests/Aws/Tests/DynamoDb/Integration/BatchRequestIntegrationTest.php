@@ -18,7 +18,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         // Set up
         /** @var $client DynamoDbClient */
-        $client = self::getServiceBuilder()->get('dynamo_db');
+        $client = self::getServiceBuilder()->get('dynamodb');
         $table = self::getResourcePrefix() . '-php-test-batch-write';
         self::log("Creating table {$table}...");
         $client->createTable(array(
@@ -87,8 +87,8 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         // Set up
         /** @var $client DynamoDbClient */
-        $client = self::getServiceBuilder()->get('dynamo_db');
-        $table = self::getResourcePrefix() . '-php-test-batch-write-big';
+        $client = self::getServiceBuilder()->get('dynamodb');
+        $table = self::getResourcePrefix() . '-php-test-batch-write-big-5';
         self::log("Creating table {$table}...");
         $client->createTable(array(
             'TableName' => $table,

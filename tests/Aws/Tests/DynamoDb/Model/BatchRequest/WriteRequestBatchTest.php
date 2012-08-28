@@ -116,22 +116,6 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($isEmpty, $batch->isEmpty());
     }
 
-    public function testAddPutRequestByArgs()
-    {
-        $batch = WriteRequestBatch::factory($this->getMockedClient());
-        $this->assertTrue($batch->isEmpty());
-        $batch->addItemToPut('foo', array('bar' => 'baz'));
-        $this->assertFalse($batch->isEmpty());
-    }
-
-    public function testAddDeleteRequestByArgs()
-    {
-        $batch = WriteRequestBatch::factory($this->getMockedClient());
-        $this->assertTrue($batch->isEmpty());
-        $batch->addKeyToDelete('foo', 'bar', 'baz');
-        $this->assertFalse($batch->isEmpty());
-    }
-
     public function testFlush()
     {
         $batch = $this->getWriteRequestBatchWithMockedBatch($this->returnValue(array()));

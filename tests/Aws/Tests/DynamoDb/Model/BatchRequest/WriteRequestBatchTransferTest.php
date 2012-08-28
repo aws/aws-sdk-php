@@ -64,11 +64,13 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $exceptionCollectionWithDummy->add(new \RuntimeException);
 
         return array(
+            // No unprocessed items
             array(
                 array('UnprocessedItems' => array()),
                 null,
                 'all-items-transferred'
             ),
+            // Some unprocessed items
             array(
                 array('UnprocessedItems' => array('foo' => array(array('foo')))),
                 null,

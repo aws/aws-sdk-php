@@ -63,8 +63,9 @@ class WriteRequestBatch extends AbstractBatchDecorator
         }
 
         $batch = new self($builder->build());
+        $batch = new FlushingBatch($batch, $batchSize);
 
-        return new FlushingBatch($batch, $batchSize);
+        return $batch;
     }
 
     /**
@@ -72,86 +73,22 @@ class WriteRequestBatch extends AbstractBatchDecorator
      */
     public function add($item)
     {
-        if ($item instanceof WriteRequestInterface) {
-            return $this->addRequest($item);
-        } elseif ($item instanceof AbstractCommand) {
-            return $this->addCommand($item);
-        } else {
+        if ($item instanceof AbstractCommand) {
+            // Convert PutItem and DeleteItem into the correct format
+            $name = $item->getName();
+            if (in_array($name, array('PutItem', 'DeleteItem'))) {
+                $class = __NAMESPACE__ . '\\' . str_replace('Item', 'Request', $name);
+                $item  = $class::fromCommand($item);
+            } else {
+                throw new InvalidArgumentException('The command provided was not a PutItem or DeleteItem command.');
+            }
+        }
+
+        if (!($item instanceof WriteRequestInterface)) {
             throw new InvalidArgumentException('The item are are trying to add to the batch queue is invalid.');
         }
-    }
 
-    /**
-     * Adds a command to the batch queue by extracting the put or delete request data
-     *
-     * @param AbstractCommand $command The command. Should be a PutItem or DeleteItem command
-     *
-     * @return self
-     *
-     * @throws InvalidArgumentException
-     */
-    public function addCommand(AbstractCommand $command)
-    {
-        // Convert PutItem and DeleteItem into the correct format
-        $name = $command->getName();
-        if (in_array($name, array('PutItem', 'DeleteItem'))) {
-            $class   = __NAMESPACE__ . '\\' . str_replace('Item', 'Request', $name);
-            $request = $class::fromCommand($command);
-        } else {
-            throw new InvalidArgumentException('The command provided was not a PutItem or DeleteItem command.');
-        }
-
-        return $this->addRequest($request);
-    }
-
-    /**
-     * Adds an item to be put to the batch queue
-     *
-     * @param string    $table The DynamoDB table name
-     * @param Key|array $item  The item to be put
-     *
-     * @return self
-     */
-    public function addItemToPut($table, $item)
-    {
-        if (!($item instanceof Item)) {
-            $item = Item::fromArray($item);
-        }
-
-        return $this->addRequest(new PutRequest($item, $table));
-    }
-
-    /**
-     * Adds a key to be deleted to the batch queue
-     *
-     * @param string      $table    The DynamoDB table name
-     * @param Key|string  $hashKey  The hash key or key object
-     * @param string|null $rangeKey The range key
-     *
-     * @return self
-     */
-    public function addKeyToDelete($table, $hashKey, $rangeKey = null)
-    {
-        $key = $hashKey;
-        if (!($key instanceof Key)) {
-            $key = new Key($hashKey, $rangeKey);
-        }
-
-        return $this->addRequest(new DeleteRequest($key, $table));
-    }
-
-    /**
-     * Adds a WriteRequest to the batch queue
-     *
-     * @param WriteRequestInterface $request A request object to be added
-     *
-     * @return self
-     */
-    public function addRequest(WriteRequestInterface $request)
-    {
-        $this->decoratedBatch->add($request);
-
-        return $this;
+        return $this->decoratedBatch->add($item);
     }
 
     /**

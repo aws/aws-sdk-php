@@ -407,7 +407,7 @@ class SessionHandler
         foreach ($this->client->getIterator($tableScan) as $item) {
             // @codeCoverageIgnoreStart
             $key = new Key($item[$this->config->get('hash_key')]['S']);
-            $deleteBatch->addRequest(new DeleteRequest($key, $tableName));
+            $deleteBatch->add(new DeleteRequest($key, $tableName));
             // @codeCoverageIgnoreEnd
         }
 
