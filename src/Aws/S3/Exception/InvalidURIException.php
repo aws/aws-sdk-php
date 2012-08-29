@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Couldn't parse the specified URI.
  */
-class InvalidURIException extends S3Exception implements ClientExceptionInterface {};
+class InvalidURIException extends S3Exception {}

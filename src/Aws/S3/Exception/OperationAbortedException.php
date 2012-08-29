@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * A conflicting conditional operation is currently in progress against this resource. Please try again.
  */
-class OperationAbortedException extends S3Exception implements ClientExceptionInterface {};
+class OperationAbortedException extends S3Exception {}

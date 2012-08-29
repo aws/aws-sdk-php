@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Cross location logging not allowed. Buckets in one geographic location cannot log information to a bucket in another location.
  */
-class CrossLocationLoggingProhibitedException extends S3Exception implements ClientExceptionInterface {};
+class CrossLocationLoggingProhibitedException extends S3Exception {}

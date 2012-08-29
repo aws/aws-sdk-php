@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * There is a problem with your AWS account that prevents the operation from completing successfully. Please use Contact Us.
  */
-class AccountProblemException extends S3Exception implements ClientExceptionInterface {};
+class AccountProblemException extends S3Exception {}

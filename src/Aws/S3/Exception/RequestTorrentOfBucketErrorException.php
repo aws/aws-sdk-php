@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Requesting the torrent file of a bucket is not permitted.
  */
-class RequestTorrentOfBucketErrorException extends S3Exception implements ClientExceptionInterface {};
+class RequestTorrentOfBucketErrorException extends S3Exception {}

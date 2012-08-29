@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * There is no such thing as a logging status sub-resource for a key.
  */
-class NoLoggingStatusForKeyException extends S3Exception implements ClientExceptionInterface {};
+class NoLoggingStatusForKeyException extends S3Exception {}

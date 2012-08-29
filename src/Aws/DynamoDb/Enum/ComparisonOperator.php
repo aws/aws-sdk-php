@@ -14,9 +14,26 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Bucket POST must be of the enclosure-type multipart/form-data.
+ * Contains enumerable ComparisonOperator values
  */
-class RequestIsNotMultiPartContentException extends S3Exception {}
+class ComparisonOperator extends Enum
+{
+    const EQ = 'EQ';
+    const NE = 'NE';
+    const IN = 'IN';
+    const LE = 'LE';
+    const LT = 'LT';
+    const GE = 'GE';
+    const GT = 'GT';
+    const BETWEEN = 'BETWEEN';
+    const NOT_NULL = 'NOT_NULL';
+    const NULL = 'NULL';
+    const CONTAINS = 'CONTAINS';
+    const NOT_CONTAINS = 'NOT_CONTAINS';
+    const BEGINS_WITH = 'BEGINS_WITH';
+}

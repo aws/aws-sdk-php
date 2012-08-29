@@ -19,12 +19,12 @@ namespace Aws\DynamoDb\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable DynamoDB table status values
+ * Contains enumerable TableStatus values
  */
 class TableStatus extends Enum
 {
     const CREATING = 'CREATING';
-    const ACTIVE   = 'ACTIVE';
-    const DELETING = 'DELETING';
     const UPDATING = 'UPDATING';
+    const DELETING = 'DELETING';
+    const ACTIVE = 'ACTIVE';
 }

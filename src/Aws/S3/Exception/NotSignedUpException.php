@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your account is not signed up for the Amazon S3 service. You must sign up before you can use Amazon S3. You can sign up at the following URL: http://aws.amazon.com/s3
  */
-class NotSignedUpException extends S3Exception implements ClientExceptionInterface {};
+class NotSignedUpException extends S3Exception {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint.
  */
-class PermanentRedirectException extends S3Exception implements ClientExceptionInterface {};
+class PermanentRedirectException extends S3Exception {}

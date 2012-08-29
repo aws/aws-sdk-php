@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The SOAP request body is invalid.
  */
-class InvalidSOAPRequestException extends S3Exception implements ClientExceptionInterface {};
+class InvalidSOAPRequestException extends S3Exception {}

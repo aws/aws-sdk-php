@@ -14,9 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Bucket POST must be of the enclosure-type multipart/form-data.
+ * Contains enumerable ScalarAttributeType values
  */
-class RequestIsNotMultiPartContentException extends S3Exception {}
+class ScalarAttributeType extends Enum
+{
+    const S = 'S';
+    const N = 'N';
+    const B = 'B';
+}

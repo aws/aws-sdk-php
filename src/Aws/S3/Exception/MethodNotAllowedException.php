@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The specified method is not allowed against this resource.
  */
-class MethodNotAllowedException extends S3Exception implements ClientExceptionInterface {};
+class MethodNotAllowedException extends S3Exception {}

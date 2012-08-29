@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your proposed upload exceeds the maximum allowed object size.
  */
-class EntityTooLargeException extends S3Exception implements ClientExceptionInterface {};
+class EntityTooLargeException extends S3Exception {}

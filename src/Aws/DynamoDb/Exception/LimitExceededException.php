@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
- * Too many operations for a given subscriber.
+ * This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.
  */
-class LimitExceededException extends DynamoDbException implements ClientExceptionInterface {};
+class LimitExceededException extends DynamoDbException {}

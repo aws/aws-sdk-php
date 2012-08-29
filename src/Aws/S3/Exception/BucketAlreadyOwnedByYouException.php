@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your previous request to create the named bucket succeeded and you already own it.
  */
-class BucketAlreadyOwnedByYouException extends S3Exception implements ClientExceptionInterface {};
+class BucketAlreadyOwnedByYouException extends S3Exception {}

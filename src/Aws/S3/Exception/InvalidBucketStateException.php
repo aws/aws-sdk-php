@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The request is not valid with the current state of the bucket.
  */
-class InvalidBucketStateException extends S3Exception implements ClientExceptionInterface {};
+class InvalidBucketStateException extends S3Exception {}

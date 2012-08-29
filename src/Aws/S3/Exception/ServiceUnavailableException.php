@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ServerExceptionInterface;
-
 /**
  * Please reduce your request rate.
  */
-class ServiceUnavailableException extends S3Exception implements ServerExceptionInterface {};
+class ServiceUnavailableException extends S3Exception {}

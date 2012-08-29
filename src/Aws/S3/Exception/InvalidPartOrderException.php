@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The list of parts was not in ascending order.Parts list must specified in order by part number.
  */
-class InvalidPartOrderException extends S3Exception implements ClientExceptionInterface {};
+class InvalidPartOrderException extends S3Exception {}

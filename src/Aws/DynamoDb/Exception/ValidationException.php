@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * One or more required parameter values were missing.
  */
-class ValidationException extends DynamoDbException implements ClientExceptionInterface {};
+class ValidationException extends DynamoDbException {}

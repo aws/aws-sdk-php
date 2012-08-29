@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
- * The resource which is being attempted to be changed is in use.
+ * This exception is thrown when the resource which is being attempted to be changed is in use.
  */
-class ResourceInUseException extends DynamoDbException implements ClientExceptionInterface {};
+class ResourceInUseException extends DynamoDbException {}

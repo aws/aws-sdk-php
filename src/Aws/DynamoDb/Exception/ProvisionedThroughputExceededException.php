@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
- * You exceeded your maximum allowed provisioned throughput.
+ * This exception is thrown when the level of provisioned throughput defined for the table is exceeded.
  */
-class ProvisionedThroughputExceededException extends DynamoDbException implements ClientExceptionInterface {};
+class ProvisionedThroughputExceededException extends DynamoDbException {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The specified bucket does not exist.
  */
-class NoSuchBucketException extends S3Exception implements ClientExceptionInterface {};
+class NoSuchBucketException extends S3Exception {}

@@ -19,21 +19,23 @@ namespace Aws\DynamoDb\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable DynamoDB attribute type values
+ * Contains all enumerable DynamoDB attribute type values
  */
 class Type extends Enum
 {
-    const N  = 'N';
     const S  = 'S';
+    const N  = 'N';
     const B  = 'B';
-    const NS = 'NS';
+
     const SS = 'SS';
+    const NS = 'NS';
     const BS = 'BS';
 
-    const NUMBER     = self::N;
     const STRING     = self::S;
+    const NUMBER     = self::N;
     const BINARY     = self::B;
-    const NUMBER_SET = self::NS;
+
     const STRING_SET = self::SS;
+    const NUMBER_SET = self::NS;
     const BINARY_SET = self::BS;
 }

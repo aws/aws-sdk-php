@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * You are being redirected to the bucket while DNS updates.
  */
-class TemporaryRedirectException extends S3Exception implements ClientExceptionInterface {};
+class TemporaryRedirectException extends S3Exception {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * This request does not support content.
  */
-class UnexpectedContentException extends S3Exception implements ClientExceptionInterface {};
+class UnexpectedContentException extends S3Exception {}

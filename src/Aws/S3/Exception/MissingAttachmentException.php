@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * A SOAP attachment was expected, but none were found.
  */
-class MissingAttachmentException extends S3Exception implements ClientExceptionInterface {};
+class MissingAttachmentException extends S3Exception {}

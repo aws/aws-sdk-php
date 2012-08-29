@@ -19,6 +19,6 @@ namespace Aws\DynamoDb\Exception;
 use Aws\Common\Exception\ServiceResponseException;
 
 /**
- * Default Amazon DynamoDB exception class
+ * Default service exception class
  */
 class DynamoDbException extends ServiceResponseException {}

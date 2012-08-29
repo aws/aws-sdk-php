@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Indicates that the version ID specified in the request does not match an existing version.
  */
-class NoSuchVersionException extends S3Exception implements ClientExceptionInterface {};
+class NoSuchVersionException extends S3Exception {}

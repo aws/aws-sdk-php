@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The provided token is malformed or otherwise invalid.
  */
-class InvalidTokenException extends S3Exception implements ClientExceptionInterface {};
+class InvalidTokenException extends S3Exception {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your key is too long.
  */
-class KeyTooLongException extends S3Exception implements ClientExceptionInterface {};
+class KeyTooLongException extends S3Exception {}

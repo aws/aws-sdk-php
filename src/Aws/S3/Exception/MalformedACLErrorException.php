@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The XML you provided was not well-formed or did not validate against our published schema.
  */
-class MalformedACLErrorException extends S3Exception implements ClientExceptionInterface {};
+class MalformedACLErrorException extends S3Exception {}

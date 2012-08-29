@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * You have attempted to create more buckets than allowed.
  */
-class TooManyBucketsException extends S3Exception implements ClientExceptionInterface {};
+class TooManyBucketsException extends S3Exception {}

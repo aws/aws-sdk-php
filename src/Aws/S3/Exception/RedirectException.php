@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Temporary redirect.
  */
-class RedirectException extends S3Exception implements ClientExceptionInterface {};
+class RedirectException extends S3Exception {}

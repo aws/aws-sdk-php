@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
- * The conditional request failed.
+ * This exception is thrown when an expected value does not match what was found in the system.
  */
-class ConditionalCheckFailedException extends DynamoDbException implements ClientExceptionInterface {};
+class ConditionalCheckFailedException extends DynamoDbException {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * This request does not support credentials.
  */
-class CredentialsNotSupportedException extends S3Exception implements ClientExceptionInterface {};
+class CredentialsNotSupportedException extends S3Exception {}

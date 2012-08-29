@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The provided token has expired.
  */
-class ExpiredTokenException extends S3Exception implements ClientExceptionInterface {};
+class ExpiredTokenException extends S3Exception {}

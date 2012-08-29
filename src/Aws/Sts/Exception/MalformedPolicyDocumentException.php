@@ -14,16 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\Sts\Exception;
 
 /**
- * Contains enumerable DynamoDB action values
+ * The request was rejected because the policy document was malformed. The error message describes the specific error.
  */
-class Action extends Enum
-{
-    const PUT    = 'PUT';
-    const ADD    = 'ADD';
-    const DELETE = 'DELETE';
-}
+class MalformedPolicyDocumentException extends StsException {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ServerExceptionInterface;
-
 /**
  * Please reduce your request rate.
  */
-class SlowDownException extends S3Exception implements ServerExceptionInterface {};
+class SlowDownException extends S3Exception {}

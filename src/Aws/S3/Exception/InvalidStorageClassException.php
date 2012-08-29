@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The storage class you specified is not valid.
  */
-class InvalidStorageClassException extends S3Exception implements ClientExceptionInterface {};
+class InvalidStorageClassException extends S3Exception {}

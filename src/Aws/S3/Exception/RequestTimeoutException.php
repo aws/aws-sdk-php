@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your socket connection to the server was not read from or written to within the timeout period.
  */
-class RequestTimeoutException extends S3Exception implements ClientExceptionInterface {};
+class RequestTimeoutException extends S3Exception {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * All access to this object has been disabled.
  */
-class InvalidPayerException extends S3Exception implements ClientExceptionInterface {};
+class InvalidPayerException extends S3Exception {}

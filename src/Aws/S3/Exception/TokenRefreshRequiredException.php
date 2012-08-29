@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The provided token must be refreshed.
  */
-class TokenRefreshRequiredException extends S3Exception implements ClientExceptionInterface {};
+class TokenRefreshRequiredException extends S3Exception {}

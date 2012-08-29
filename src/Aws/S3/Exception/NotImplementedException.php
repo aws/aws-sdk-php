@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ServerExceptionInterface;
-
 /**
  * A header you provided implies functionality that is not implemented.
  */
-class NotImplementedException extends S3Exception implements ServerExceptionInterface {};
+class NotImplementedException extends S3Exception {}

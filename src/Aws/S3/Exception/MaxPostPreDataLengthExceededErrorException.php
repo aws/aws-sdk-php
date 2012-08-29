@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your POST request fields preceding the upload file were too large.
  */
-class MaxPostPreDataLengthExceededErrorException extends S3Exception implements ClientExceptionInterface {};
+class MaxPostPreDataLengthExceededErrorException extends S3Exception {}

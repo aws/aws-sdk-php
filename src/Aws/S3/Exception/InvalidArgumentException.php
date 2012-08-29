@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Invalid Argument
  */
-class InvalidArgumentException extends S3Exception implements ClientExceptionInterface {};
+class InvalidArgumentException extends S3Exception {}

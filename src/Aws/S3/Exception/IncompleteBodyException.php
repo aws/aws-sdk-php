@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * You did not provide the number of bytes specified by the Content-Length HTTP header
  */
-class IncompleteBodyException extends S3Exception implements ClientExceptionInterface {};
+class IncompleteBodyException extends S3Exception {}

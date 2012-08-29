@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * POST requires exactly one file upload per request.
  */
-class IncorrectNumberOfFilesInPostRequestException extends S3Exception implements ClientExceptionInterface {};
+class IncorrectNumberOfFilesInPostRequestException extends S3Exception {}

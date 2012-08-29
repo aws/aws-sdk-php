@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The specified key does not exist.
  */
-class NoSuchKeyException extends S3Exception implements ClientExceptionInterface {};
+class NoSuchKeyException extends S3Exception {}

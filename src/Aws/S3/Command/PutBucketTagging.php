@@ -16,8 +16,6 @@
 
 namespace Aws\S3\Command;
 
-use Aws\Common\Exception\InvalidArgumentException;
-
 /**
  * Apply a set of tags to a bucket
  *

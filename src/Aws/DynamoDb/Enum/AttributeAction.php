@@ -14,8 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception;
+namespace Aws\DynamoDb\Enum;
 
-interface ServerExceptionInterface extends AwsExceptionInterface
+use Aws\Common\Enum;
+
+/**
+ * Contains enumerable AttributeAction values
+ */
+class AttributeAction extends Enum
 {
+    const ADD = 'ADD';
+    const PUT = 'PUT';
+    const DELETE = 'DELETE';
 }

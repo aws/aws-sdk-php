@@ -16,10 +16,8 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The Tag provided was not a valid tag. This can occur if the Tag did not pass input validation. See the
  * CostAllocation docs for a description of valid tags.
  */
-class InvalidTagErrorException extends S3Exception implements ClientExceptionInterface {};
+class InvalidTagErrorException extends S3Exception {}

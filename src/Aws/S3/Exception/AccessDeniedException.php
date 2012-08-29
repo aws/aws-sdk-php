@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Access Denied
  */
-class AccessDeniedException extends S3Exception implements ClientExceptionInterface {};
+class AccessDeniedException extends S3Exception {}

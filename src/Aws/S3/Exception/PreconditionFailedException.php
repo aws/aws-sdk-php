@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * At least one of the preconditions you specified did not hold.
  */
-class PreconditionFailedException extends S3Exception implements ClientExceptionInterface {};
+class PreconditionFailedException extends S3Exception {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * You must specify the Anonymous role.
  */
-class InvalidAddressingHeaderException extends S3Exception implements ClientExceptionInterface {};
+class InvalidAddressingHeaderException extends S3Exception {}

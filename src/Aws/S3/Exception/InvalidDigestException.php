@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The Content-MD5 you specified was an invalid.
  */
-class InvalidDigestException extends S3Exception implements ClientExceptionInterface {};
+class InvalidDigestException extends S3Exception {}

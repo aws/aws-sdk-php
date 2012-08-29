@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your proposed upload is smaller than the minimum allowed object size.
  */
-class EntityTooSmallException extends S3Exception implements ClientExceptionInterface {};
+class EntityTooSmallException extends S3Exception {}

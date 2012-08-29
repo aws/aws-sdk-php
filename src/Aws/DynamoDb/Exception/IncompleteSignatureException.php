@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The request signature does not conform to AWS standards.
  */
-class IncompleteSignatureException extends DynamoDbException implements ClientExceptionInterface {};
+class IncompleteSignatureException extends DynamoDbException {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select a different name and try again.
  */
-class BucketAlreadyExistsException extends S3Exception implements ClientExceptionInterface {};
+class BucketAlreadyExistsException extends S3Exception {}

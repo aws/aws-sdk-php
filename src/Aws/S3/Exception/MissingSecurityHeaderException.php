@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your request was missing a required header.
  */
-class MissingSecurityHeaderException extends S3Exception implements ClientExceptionInterface {};
+class MissingSecurityHeaderException extends S3Exception {}

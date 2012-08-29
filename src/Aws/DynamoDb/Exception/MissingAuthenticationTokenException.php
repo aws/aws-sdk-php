@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Request must contain a valid (registered) AWS Access Key ID.
  */
-class MissingAuthenticationTokenException extends DynamoDbException implements ClientExceptionInterface {};
+class MissingAuthenticationTokenException extends DynamoDbException {}

@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The provided security credentials are not valid.
  */
-class InvalidSecurityException extends S3Exception implements ClientExceptionInterface {};
+class InvalidSecurityException extends S3Exception {}

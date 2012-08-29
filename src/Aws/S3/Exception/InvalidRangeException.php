@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The requested range cannot be satisfied.
  */
-class InvalidRangeException extends S3Exception implements ClientExceptionInterface {};
+class InvalidRangeException extends S3Exception {}

@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Access denied.
  */
-class AccessDeniedException extends DynamoDbException implements ClientExceptionInterface {};
+class AccessDeniedException extends DynamoDbException {}

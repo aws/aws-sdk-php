@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The body of your POST request is not well-formed multipart/form-data.
  */
-class MalformedPOSTRequestException extends S3Exception implements ClientExceptionInterface {};
+class MalformedPOSTRequestException extends S3Exception {}

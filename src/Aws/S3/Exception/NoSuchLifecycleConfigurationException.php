@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The lifecycle configuration does not exist.
  */
-class NoSuchLifecycleConfigurationException extends S3Exception implements ClientExceptionInterface {};
+class NoSuchLifecycleConfigurationException extends S3Exception {}

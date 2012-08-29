@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The resource which is being requested does not exist.
  */
-class ResourceNotFoundException extends DynamoDbException implements ClientExceptionInterface {};
+class ResourceNotFoundException extends DynamoDbException {}

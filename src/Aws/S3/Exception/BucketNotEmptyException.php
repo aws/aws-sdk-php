@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The bucket you tried to delete is not empty.
  */
-class BucketNotEmptyException extends S3Exception implements ClientExceptionInterface {};
+class BucketNotEmptyException extends S3Exception {}

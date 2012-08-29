@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The difference between the request time and the server's time is too large.
  */
-class RequestTimeTooSkewedException extends S3Exception implements ClientExceptionInterface {};
+class RequestTimeTooSkewedException extends S3Exception {}

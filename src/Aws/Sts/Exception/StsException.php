@@ -19,6 +19,6 @@ namespace Aws\Sts\Exception;
 use Aws\Common\Exception\ServiceResponseException;
 
 /**
- * Default Amazon STS exception class
+ * Default service exception class
  */
 class StsException extends ServiceResponseException {}

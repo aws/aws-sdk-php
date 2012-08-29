@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ServerExceptionInterface;
-
 /**
  * We encountered an internal error. Please try again.
  */
-class InternalErrorException extends S3Exception implements ServerExceptionInterface {};
+class InternalErrorException extends S3Exception {}

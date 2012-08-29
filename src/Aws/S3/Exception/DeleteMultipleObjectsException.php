@@ -16,12 +16,10 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Exception thrown when errors occur in a DeleteMultipleObjects request
  */
-class DeleteMultipleObjectsException extends S3Exception implements ClientExceptionInterface
+class DeleteMultipleObjectsException extends S3Exception
 {
     /**
      * @var array Array of errors

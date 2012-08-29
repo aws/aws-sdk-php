@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. For more information, see REST Authentication and SOAP Authentication for details.
  */
-class SignatureDoesNotMatchException extends S3Exception implements ClientExceptionInterface {};
+class SignatureDoesNotMatchException extends S3Exception {}

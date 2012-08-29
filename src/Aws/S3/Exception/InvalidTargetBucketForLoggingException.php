@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The target bucket for logging does not exist, is not owned by you, or does not have the appropriate grants for the log-delivery group.
  */
-class InvalidTargetBucketForLoggingException extends S3Exception implements ClientExceptionInterface {};
+class InvalidTargetBucketForLoggingException extends S3Exception {}

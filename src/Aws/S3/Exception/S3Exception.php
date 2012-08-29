@@ -19,6 +19,6 @@ namespace Aws\S3\Exception;
 use Aws\Common\Exception\ServiceResponseException;
 
 /**
- * Default Amazon S3 exception class
+ * Default service exception class
  */
 class S3Exception extends ServiceResponseException {}

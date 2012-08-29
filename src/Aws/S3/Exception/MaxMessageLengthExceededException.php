@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Your request was too big.
  */
-class MaxMessageLengthExceededException extends S3Exception implements ClientExceptionInterface {};
+class MaxMessageLengthExceededException extends S3Exception {}

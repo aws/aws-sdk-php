@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The bucket POST must contain the specified field name. If it is specified, please check the order of the fields.
  */
-class UserKeyMustBeSpecifiedException extends S3Exception implements ClientExceptionInterface {};
+class UserKeyMustBeSpecifiedException extends S3Exception {}

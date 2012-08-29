@@ -16,9 +16,7 @@
 
 namespace Aws\DynamoDb\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Rate of requests exceeds the allowed throughput.
  */
-class ThrottlingException extends DynamoDbException implements ClientExceptionInterface {};
+class ThrottlingException extends DynamoDbException {}

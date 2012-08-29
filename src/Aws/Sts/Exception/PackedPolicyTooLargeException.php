@@ -14,8 +14,10 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception;
+namespace Aws\Sts\Exception;
 
-interface ClientExceptionInterface extends AwsExceptionInterface
-{
-}
+/**
+ * The request was rejected because the policy document was too large. The error message describes how big the policy d
+ * ocument is, in packed form, as a percentage of what the API allows.
+ */
+class PackedPolicyTooLargeException extends StsException {}

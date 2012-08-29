@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The specified bucket is not valid.
  */
-class InvalidBucketNameException extends S3Exception implements ClientExceptionInterface {};
+class InvalidBucketNameException extends S3Exception {}

@@ -17,7 +17,7 @@ class ExponentialBackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
      * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage client.backoff must be an instance of Guzzle\Http\Plugin\ExpontialBackoffPlugin
+     * @expectedExceptionMessage client.backoff must be an instance of Guzzle\Http\Plugin\ExponentialBackoffPlugin
      */
     public function testEnsuresProvidedPluginIsValid()
     {

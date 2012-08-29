@@ -16,9 +16,7 @@
 
 namespace Aws\S3\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * SOAP requests must be made over an HTTPS connection.
  */
-class InvalidRequestException extends S3Exception implements ClientExceptionInterface {};
+class InvalidRequestException extends S3Exception {}
