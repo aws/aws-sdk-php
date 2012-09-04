@@ -14,34 +14,25 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Command;
+namespace Aws\Common\Client;
 
-use Guzzle\Service\Command\DynamicCommand;
+use Aws\Common\Aws;
+use Guzzle\Service\Builder\JsonServiceBuilderFactory;
+use Guzzle\Service\Builder\ServiceBuilderAbstractFactory as ParentFactory;
 
 /**
- * Adds AWS JSON body functionality to dynamically generated HTTP requests
+ * {@inheritdoc}
+ * Adds an alias for _aws to point to the default builder configuration
  */
-class JsonCommand extends DynamicCommand
+class ServiceBuilderAbstractFactory extends ParetFactory
 {
-    /**
-     * Ensure that the customized JsonBodyVisitor is used
-     */
-    protected function init()
-    {
-        parent::init();
-        $this->visitors['json'] = JsonBodyVisitor::getInstance();
-    }
-
     /**
      * {@inheritdoc}
      */
-    protected function build()
+    protected function getJsonFactory()
     {
-        parent::build();
+        $factory = new JsonServiceBuilderFactory();
 
-        // Always use an empty JSON body
-        if (!$this->request->getBody()) {
-            $this->request->setBody('{}');
-        }
+        return $factory->addAlias('_aws', Aws::getDefaultServiceDefinition());
     }
 }

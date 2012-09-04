@@ -17,6 +17,7 @@
 namespace Aws\Common;
 
 use Guzzle\Service\Builder\ServiceBuilder;
+use Guzzle\Service\Builder\ServiceBuilderAbstractFactory;
 
 /**
  * Base class for interacting with web service clients
@@ -69,7 +70,9 @@ class Aws extends ServiceBuilder
             $config = self::getDefaultServiceDefinition();
         }
 
-        return parent::factory($config, $globalParameters);
+        $factory = new ServiceBuilderAbstractFactory();
+
+        return $factory->build($config, $globalParameters);
     }
 
     /**
