@@ -30,6 +30,11 @@ class Aws extends ServiceBuilder
     const VERSION = '2.0.0';
 
     /**
+     * @var ServiceBuilderAbstractFactory
+     */
+    protected static $defaultFactory;
+
+    /**
      * Create a new service locator for the AWS SDK
      *
      * You can configure the service locator is four different ways:
@@ -70,9 +75,12 @@ class Aws extends ServiceBuilder
             $config = self::getDefaultServiceDefinition();
         }
 
-        $factory = new ServiceBuilderAbstractFactory();
+        if (!self::$defaultFactory) {
+            self::$defaultFactory = new ServiceBuilderAbstractFactory();
+            self::$defaultFactory->getJsonFactory()->addAlias('_aws', self::getDefaultServiceDefinition());
+        }
 
-        return $factory->build($config, $globalParameters);
+        return self::$defaultFactory->build($config, $globalParameters);
     }
 
     /**
