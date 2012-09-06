@@ -14,14 +14,19 @@ class WaiterClassFactoryTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testEnsuresClassExists()
     {
-        $f = new WaiterClassFactory('Foo');
-        $f->factory('bar');
+        $factory = new WaiterClassFactory();
+        $factory->registerNamespace('Foo');
+        $factory->factory('bar');
     }
 
     public function testCreatesWaiter()
     {
-        $f = new WaiterClassFactory('Aws\\Common\\InstanceMetadata\\Waiter');
-        $this->assertInstanceOf('Aws\\Common\InstanceMetadata\\Waiter\\ServiceAvailable', $f->factory('service_available'));
-        $this->assertInstanceOf('Aws\\Common\InstanceMetadata\\Waiter\\ServiceAvailable', $f->factory('ServiceAvailable'));
+        $factory = new WaiterClassFactory();
+        $factory->registerNamespace('Aws\Common\InstanceMetadata\Waiter');
+        $factory->registerNamespace('Foo\Bar');
+
+        $expectedClass = 'Aws\Common\InstanceMetadata\Waiter\ServiceAvailable';
+        $this->assertInstanceOf($expectedClass, $factory->factory('service_available'));
+        $this->assertInstanceOf($expectedClass, $factory->factory('ServiceAvailable'));
     }
 }
