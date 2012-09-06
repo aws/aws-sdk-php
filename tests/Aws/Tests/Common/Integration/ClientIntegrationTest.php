@@ -14,10 +14,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     public function testGenericClientCanAccessDynamoDb()
     {
-        $signature = new SignatureV4();
-        $signature->setServiceName('dynamodb');
-        $signature->setRegionName('us-east-1');
-
         /** @var $dynamodb DynamoDbClient */
         $dynamodb = $this->getServiceBuilder()->get('dynamodb', true);
         $credentials = $dynamodb->getCredentials();
@@ -28,7 +24,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         /** @var $client DefaultClient */
         $client = DefaultClient::factory(array(
             'credentials'         => $credentials,
-            'signature'           => $signature,
+            'signature'           => new SignatureV4(),
             'service.description' => $description,
             'service'             => 'dynamodb',
             'region'              => 'us-east-1',

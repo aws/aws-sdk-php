@@ -24,6 +24,7 @@ use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Client\ExponentialBackoffOptionResolver;
 use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
 use Aws\DynamoDb\Model\Attribute;
+use Aws\DynamoDb\Session\SessionHandler;
 use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
 use Guzzle\Common\Collection;
 
@@ -158,5 +159,23 @@ class DynamoDbClient extends AbstractClient
     public function calculateRetryDelay($retries)
     {
         return $retries == 1 ? 0 : (50 * (int) pow(2, $retries - 2)) / 1000;
+    }
+
+    /**
+     * Convenience method for instantiating and registering the DynamoDB
+     * Session handler with this DynamoDB client object.
+     *
+     * @param array $config Array of options for the session handler factory
+     *
+     * @return SessionHandler
+     */
+    public function registerSessionHandler(array $config = array())
+    {
+        $config = array_replace(array('dynamodb_client' => $this), $config);
+
+        $handler = SessionHandler::factory($config);
+        $handler->register();
+
+        return $handler;
     }
 }
