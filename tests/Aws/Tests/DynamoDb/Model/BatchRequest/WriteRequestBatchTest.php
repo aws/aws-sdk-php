@@ -5,8 +5,8 @@ namespace Aws\Tests\DynamoDb\Model\BatchRequest;
 use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
 use Aws\DynamoDb\Model\BatchRequest\UnprocessedRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
-use Guzzle\Common\Batch\FlushingBatch;
-use Guzzle\Common\Exception\BatchTransferException;
+use Guzzle\Batch\FlushingBatch;
+use Guzzle\Batch\Exception\BatchTransferException;
 
 /**
  * @covers Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch
@@ -30,7 +30,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
      */
     protected function getWriteRequestBatchWithMockedBatch($will)
     {
-        $batch = $this->getMock('Guzzle\Common\Batch\BatchInterface');
+        $batch = $this->getMock('Guzzle\Batch\BatchInterface');
         $batch->expects($this->any())
             ->method('isEmpty')
             ->will($this->onConsecutiveCalls(false, true));
@@ -51,7 +51,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
         }
 
         $this->assertEquals(array(
-            'Guzzle\Common\Batch\FlushingBatch',
+            'Guzzle\Batch\FlushingBatch',
             'Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch',
         ), $decorators);
     }
@@ -60,7 +60,7 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $batch = WriteRequestBatch::factory($this->getMockedClient(), 10, function () {});
         $decorators = array_map('get_class', $batch->getDecorators());
-        $this->assertContains('Guzzle\Common\Batch\NotifyingBatch', $decorators);
+        $this->assertContains('Guzzle\Batch\NotifyingBatch', $decorators);
     }
 
     public function getAddItemData()
@@ -133,8 +133,8 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
             array($item),
             array(),
             $exceptionUnprocessed,
-            $this->getMock('Guzzle\Common\Batch\BatchTransferInterface'),
-            $this->getMock('Guzzle\Common\Batch\BatchDivisorInterface')
+            $this->getMock('Guzzle\Batch\BatchTransferInterface'),
+            $this->getMock('Guzzle\Batch\BatchDivisorInterface')
         );
 
         $batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
@@ -143,16 +143,16 @@ class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException \Guzzle\Common\Exception\BatchTransferException
+     * @expectedException \Guzzle\Batch\Exception\BatchTransferException
      */
     public function testFlushRandomExceptionFails()
     {
-        $exceptionBatchTransfer = new \Guzzle\Common\Exception\BatchTransferException(
+        $exceptionBatchTransfer = new \Guzzle\Batch\Exception\BatchTransferException(
             array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface')),
             array(),
             $this->getMock('\Exception'),
-            $this->getMock('Guzzle\Common\Batch\BatchTransferInterface'),
-            $this->getMock('Guzzle\Common\Batch\BatchDivisorInterface')
+            $this->getMock('Guzzle\Batch\BatchTransferInterface'),
+            $this->getMock('Guzzle\Batch\BatchDivisorInterface')
         );
 
         $batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));

@@ -58,3 +58,11 @@ if (!isset($_SERVER['PREFIX']) || $_SERVER['PREFIX'] == 'hostname') {
 }
 
 Guzzle\Tests\GuzzleTestCase::setServiceBuilder(Aws\Common\Aws::factory($_SERVER['CONFIG']));
+
+Guzzle\Tests\GuzzleTestCase::getServiceBuilder()->getEventDispatcher()->addListener('service_builder.create_client', function ($e) {
+    if ($e['client'] instanceof Guzzle\Service\Client) {
+        $e['client']->addSubscriber(new Guzzle\Plugin\Log\LogPlugin(new Guzzle\Log\ClosureLogAdapter(function ($m) {
+            //fwrite(STDERR, $m . "\n");
+        }), "{request}\n{response}"));
+    }
+});

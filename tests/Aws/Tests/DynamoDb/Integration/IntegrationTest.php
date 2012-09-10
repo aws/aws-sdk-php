@@ -10,7 +10,8 @@ use Aws\DynamoDb\Model\BatchRequest\PutRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\Item;
 use Aws\DynamoDb\Model\Key;
-use Guzzle\Common\Batch\BatchBuilder;
+use Guzzle\Batch\BatchBuilder;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 
 /**
  * @group integration
@@ -43,30 +44,16 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("# Attempting to delete {$table}");
 
         try {
-
-            $result = $client->describeTable(array(
-                'TableName' => $table
-            ));
-
+            $result = $client->describeTable(array('TableName' => $table));
             self::log('Table exists. Waiting until the status is ACTIVE');
-
             // Wait until the table is active
-            $client->waitUntil('table_exists', $table, array(
-                'status' => 'ACTIVE'
-            ));
-
+            $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
             self::log('Deleting the table');
-
             // Delete the table to clear out its contents
-            $client->deleteTable(array(
-                'TableName' => $table
-            ));
-
+            $client->deleteTable(array('TableName' => $table));
             self::log('Waiting until the table does not exist');
-
             // Wait until the table does not exist
             $client->waitUntil('table_not_exists', $table);
-
         } catch (ResourceNotFoundException $e) {
             // The table does not exist so we are good
         }
@@ -95,9 +82,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testCreatesTable()
     {
+        self::log("Waiting until {$this->table} does not exist");
+        $this->client->waitUntil('table_not_exists', $this->table);
+
         self::log("Attempting to create {$this->table}");
+
         $this->client->createTable(array(
-            'TableName' => self::getResourcePrefix() . 'phptest',
+            'TableName' => $this->table,
             'KeySchema' => array(
                 'HashKeyElement' => array(
                     'AttributeName' => 'foo',
@@ -109,8 +100,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 )
             ),
             'ProvisionedThroughput' => array(
-                'ReadCapacityUnits'  => 10,
-                'WriteCapacityUnits' => 5
+                'ReadCapacityUnits'  => 20,
+                'WriteCapacityUnits' => 20
             )
         ));
 
@@ -130,8 +121,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals('S', $result['Table']['KeySchema']['HashKeyElement']['AttributeType']);
         $this->assertEquals('bar', $result['Table']['KeySchema']['RangeKeyElement']['AttributeName']);
         $this->assertEquals('N', $result['Table']['KeySchema']['RangeKeyElement']['AttributeType']);
-        $this->assertEquals(10, $result['Table']['ProvisionedThroughput']['ReadCapacityUnits']);
-        $this->assertEquals(5, $result['Table']['ProvisionedThroughput']['WriteCapacityUnits']);
+        $this->assertEquals(20, $result['Table']['ProvisionedThroughput']['ReadCapacityUnits']);
+        $this->assertEquals(20, $result['Table']['ProvisionedThroughput']['WriteCapacityUnits']);
     }
 
     /**
@@ -413,17 +404,10 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testImplementsCustomExponentialBackoffStrategy()
     {
         self::log('Getting an item a bunch of times in parallel');
-
-        $total = 300;
-        $retries = 0;
-
-        $batch = BatchBuilder::factory()
-            ->transferCommands(100)
-            ->bufferExceptions()
-            ->build();
-
+        $batch = BatchBuilder::factory()->transferCommands(100)->build();
         $s = microtime(true);
 
+        $total = 300;
         for ($i = 0; $i < $total; $i++) {
             $command = $this->client->getCommand('GetItem', array(
                 'TableName' => $this->table,
@@ -432,26 +416,15 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                     'RangeKeyElement' => 10
                 ))
             ));
-            $command->prepare()->getEventDispatcher()->addListener('request.sent', function ($event) use (&$retries) {
-                if ($event['response'] && !$event['response']->isSuccessful()) {
-                    $retries++;
-                }
-            });
             $batch->add($command);
         }
 
-        $batch->flush();
-        foreach ($batch->getExceptions() as $e) {
-            self::log($e->getMessage());
-            self::log($e->getPrevious()->getMessage());
-            foreach ($e->getBatch() as $command) {
-                if (!$command->getResponse()->isSuccessful()) {
-                    self::log($command->getResponse());
-                }
-            }
+        $retries = 0;
+        foreach ($batch->flush() as $command) {
+            $retries += $command->getRequest()->getParams()->get(BackoffPlugin::RETRY_PARAM);
         }
-        $elapsed = microtime(true) - $s;
 
+        $elapsed = microtime(true) - $s;
         self::log("Got the item {$total} times with {$retries} retries in {$elapsed} seconds");
     }
 }

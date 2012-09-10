@@ -26,7 +26,7 @@ use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Waiter\WaiterClassFactory;
 use Aws\Common\Waiter\WaiterFactoryInterface;
 use Guzzle\Common\Collection;
-use Guzzle\Common\Cache\CacheAdapterInterface;
+use Guzzle\Cache\CacheAdapterInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
@@ -193,7 +193,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
                 if (!($adapter instanceof CacheAdapterInterface)) {
                     throw new InvalidArgumentException(
                         Options::SERVICE_DESCRIPTION_CACHE . ' must be an instance of'
-                        . ' Guzzle\Common\Cache\CacheAdapterInterface'
+                        . ' Guzzle\Cache\CacheAdapterInterface'
                     );
                 }
                 $options['cache.adapter'] = $adapter;

@@ -17,13 +17,16 @@
 namespace Aws\DynamoDb;
 
 use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
+use Guzzle\Http\Exception\HttpException;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Backoff\BackoffStrategyInterface;
+use Guzzle\Plugin\Backoff\AbstractBackoffStrategy;
 
 /**
  * Custom DynamoDB exponential backoff error checking logic
  */
-class ThrottlingErrorChecker
+class ThrottlingErrorChecker extends AbstractBackoffStrategy
 {
     /**
      * @var DefaultJsonExceptionParser Parser used to parse exception responses
@@ -33,27 +36,35 @@ class ThrottlingErrorChecker
     /**
      * Create the internal parser
      */
-    public function __construct()
+    public function __construct(BackoffStrategyInterface $next = null)
     {
         $this->parser = new DefaultJsonExceptionParser();
+        if ($next) {
+            $this->setNext($next);
+        }
     }
 
     /**
-     * @param RequestInterface $request  Request sent
-     * @param Response|null    $response Response received
-     *
-     * @return bool|null
+     * {@inheridoc}
      */
-    public function __invoke(RequestInterface $request, Response $response = null)
+    public function makesDecision()
     {
-        static $codes = array(
-            'ProvisionedThroughputExceededException' => 1,
-            'ThrottlingException'                    => 1,
-        );
+        return true;
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDelay(
+        $retries,
+        RequestInterface $request,
+        Response $response = null,
+        HttpException $e = null
+    ) {
         if ($response && $response->isClientError()) {
             $parts = $this->parser->parse($response);
-            return $parts['type'] == 'client' && isset($codes[$parts['code']]) ?: null;
+            return $parts['code'] == 'ProvisionedThroughputExceededException'
+                || $parts['code'] == 'ThrottlingException' ? true : null;
         }
     }
 }

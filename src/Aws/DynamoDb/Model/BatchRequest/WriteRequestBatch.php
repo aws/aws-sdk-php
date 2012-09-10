@@ -20,11 +20,11 @@ use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
 use Aws\DynamoDb\Model\Item;
-use Guzzle\Common\Batch\AbstractBatchDecorator;
-use Guzzle\Common\Batch\BatchBuilder;
-use Guzzle\Common\Batch\BatchSizeDivisor;
-use Guzzle\Common\Batch\FlushingBatch;
-use Guzzle\Common\Exception\BatchTransferException;
+use Guzzle\Batch\AbstractBatchDecorator;
+use Guzzle\Batch\BatchBuilder;
+use Guzzle\Batch\BatchSizeDivisor;
+use Guzzle\Batch\FlushingBatch;
+use Guzzle\Batch\Exception\BatchTransferException;
 use Guzzle\Service\Command\AbstractCommand;
 
 /**

@@ -3,23 +3,39 @@
 namespace Aws\Tests\DynamoDb\Integration;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
 use Aws\DynamoDb\Model\BatchRequest\PutRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\Item;
 use Aws\DynamoDb\Model\Key;
 
+/**
+ * @group integration
+ */
 class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
-    /**
-     * @group integration
-     */
     public function testWriteRequestBatchProcessWorksAsExpected()
     {
         // Set up
         /** @var $client DynamoDbClient */
         $client = self::getServiceBuilder()->get('dynamodb');
         $table = self::getResourcePrefix() . '-php-test-batch-write';
+
+        try {
+            $result = $client->describeTable(array('TableName' => $table));
+            self::log('Table exists. Waiting until the status is ACTIVE');
+            // Wait until the table is active
+            $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
+            self::log('Deleting the table');
+            // Delete the table to clear out its contents
+            $client->deleteTable(array('TableName' => $table));
+            self::log('Waiting until the table does not exist');
+            // Wait until the table does not exist
+            $client->waitUntil('table_not_exists', $table);
+        } catch (ResourceNotFoundException $e) {
+        }
+
         self::log("Creating table {$table}...");
         $client->createTable(array(
             'TableName' => $table,
@@ -34,9 +50,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'WriteCapacityUnits' => 20
             )
         ));
-        $client->waitUntil('table_exists', $table, array(
-            'status' => 'active'
-        ));
+        $client->waitUntil('table_exists', $table, array('status' => 'active'));
         self::log("Table created.");
 
         // Test
@@ -71,17 +85,10 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
             'TableName' => $table
         ));
         $this->assertEquals(0, iterator_count($scanner), 'Not all of the items were deleted.');
-
-        // Tear down
-        self::log("Deleting table {$table}...");
-        $client->deleteTable(array(
-            'TableName' => $table
-        ));
-        $client->waitUntil('table_not_exists', $table);
     }
 
     /**
-     * @group integration
+     * @depends testWriteRequestBatchProcessWorksAsExpected
      */
     public function testWriteRequestBatchCanHandleLargeBatches()
     {
@@ -89,24 +96,6 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
         /** @var $client DynamoDbClient */
         $client = self::getServiceBuilder()->get('dynamodb');
         $table = self::getResourcePrefix() . '-php-test-batch-write-big-5';
-        self::log("Creating table {$table}...");
-        $client->createTable(array(
-            'TableName' => $table,
-            'KeySchema' => array(
-                'HashKeyElement' => array(
-                    'AttributeName' => 'ID',
-                    'AttributeType' => 'N'
-                ),
-            ),
-            'ProvisionedThroughput' => array(
-                'ReadCapacityUnits'  => 500,
-                'WriteCapacityUnits' => 500
-            )
-        ));
-        $client->waitUntil('table_exists', $table, array(
-            'status' => 'active'
-        ));
-        self::log("Table created.");
 
         // Test
         $numItems = 30;
@@ -130,9 +119,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Tear down
         self::log("Deleting table {$table}...");
-        $client->deleteTable(array(
-            'TableName' => $table
-        ));
+        $client->deleteTable(array('TableName' => $table));
         $client->waitUntil('table_not_exists', $table);
     }
 }

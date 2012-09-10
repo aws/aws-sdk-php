@@ -108,11 +108,17 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-west-1'
         ));
 
-        $this->assertEquals(0, $client->calculateRetryDelay(1));
-        $this->assertEquals(0.05, $client->calculateRetryDelay(2));
-        $this->assertEquals(0.1, $client->calculateRetryDelay(3));
-        $this->assertEquals(0.2, $client->calculateRetryDelay(4));
-        $this->assertEquals(0.4, $client->calculateRetryDelay(5));
-        $this->assertEquals(0.8, $client->calculateRetryDelay(6));
+        $this->assertEquals(0, $client->calculateRetryDelay(0));
+        $this->assertEquals(0.05, $client->calculateRetryDelay(1));
+        $this->assertEquals(0.1, $client->calculateRetryDelay(2));
+        $this->assertEquals(0.2, $client->calculateRetryDelay(3));
+        $this->assertEquals(0.4, $client->calculateRetryDelay(4));
+        $this->assertEquals(0.8, $client->calculateRetryDelay(5));
+        $this->assertEquals(1.6, $client->calculateRetryDelay(6));
+        $this->assertEquals(3.2, $client->calculateRetryDelay(7));
+        $this->assertEquals(6.4, $client->calculateRetryDelay(8));
+        $this->assertEquals(12.8, $client->calculateRetryDelay(9));
+        $this->assertEquals(25.6, $client->calculateRetryDelay(10));
+        $this->assertEquals(51.2, $client->calculateRetryDelay(11));
     }
 }

@@ -43,5 +43,7 @@ class JsonCommand extends DynamicCommand
         if (!$this->request->getBody()) {
             $this->request->setBody('{}');
         }
+
+        $this->request->removeHeader('Expect');
     }
 }

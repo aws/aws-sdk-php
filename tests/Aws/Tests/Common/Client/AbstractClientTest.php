@@ -4,15 +4,15 @@ namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Aws;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Client\ExponentialBackoffOptionResolver;
+use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\DefaultClient;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
 use Guzzle\Common\Collection;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Doctrine\Common\Cache\ArrayCache;
 
 class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
@@ -57,8 +57,8 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $signature = new SignatureV4();
         $credentials = new Credentials('test', '123');
         $config->set('client.resolvers', array(
-            new ExponentialBackoffOptionResolver(function() {
-                return new ExponentialBackoffPlugin();
+            new BackoffOptionResolver(function() {
+                return BackoffPlugin::getExponentialBackoffInstance();
             })
         ));
 
@@ -68,7 +68,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Ensure that lazy resolvers were triggered
         $this->assertInstanceOf(
-            'Guzzle\\Http\\Plugin\\ExponentialBackoffPlugin',
+            'Guzzle\\Plugin\\Backoff\\BackoffPlugin',
             $client->getConfig(Options::BACKOFF)
         );
         // Ensure that the client removed the option
@@ -162,7 +162,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @covers Aws\Common\Client\AbstractClient::addServiceDescriptionFromConfig
      * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage service.description.cache must be an instance of Guzzle\Common\Cache\CacheAdapterInterface
+     * @expectedExceptionMessage service.description.cache must be an instance of Guzzle\Cache\CacheAdapterInterface
      */
     public function testEnsuresCustomServiceDescriptionCacheValidity()
     {

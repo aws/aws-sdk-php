@@ -18,7 +18,7 @@ namespace Aws\S3\Command;
 
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Http\EntityBody;
-use Guzzle\Http\Plugin\Md5ValidatorPlugin;
+use Guzzle\Plugin\Md5Validator\Md5ValidatorPlugin;
 use Guzzle\Common\Exception\InvalidArgumentException;
 
 /**

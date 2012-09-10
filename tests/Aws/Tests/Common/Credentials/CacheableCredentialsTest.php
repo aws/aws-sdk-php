@@ -4,7 +4,7 @@ namespace Aws\Tests\Common\Credentials;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CacheableCredentials;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
+use Guzzle\Cache\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\ArrayCache;
 
 /**

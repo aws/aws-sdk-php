@@ -21,11 +21,15 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Client\ExponentialBackoffOptionResolver;
+use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
 use Aws\DynamoDb\Model\Attribute;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Common\Collection;
+use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
+use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
+use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
+use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
 
 /**
  * Client for interacting with Amazon DynamoDB
@@ -63,7 +67,7 @@ class DynamoDbClient extends AbstractClient
      *     - token: Custom AWS security token to use with request authentication
      *     - token.ttd: UNIX timestamp for when the custom credentials expire
      *     - credentials.cache: Used to cache credentials when using providers that require HTTP requests. Set the true
-     *           to use the default APC cache or provide a `Guzzle\Common\Cache\CacheAdapterInterface` object.
+     *           to use the default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
      *     - credentials.cache.key: Optional custom cache key to use with the credentials
      *     - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
      *           credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
@@ -78,7 +82,7 @@ class DynamoDbClient extends AbstractClient
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Common\Cache\CacheAdapterInterface` object to use to cache
+     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
      *           service descriptions
      *     - service.description.cache.ttl: Optional TTL used for the service description cache
      * - Signature options
@@ -86,10 +90,10 @@ class DynamoDbClient extends AbstractClient
      *     - signature.service: Set to explicitly override the service name used in signatures
      *     - signature.region:  Set to explicitly override the region name used in signatures
      * - Exponential backoff options
-     *     - client.backoff.logger: `Guzzle\Common\Log\LogAdapterInterface` object used to log backoff retries. Use
+     *     - client.backoff.logger: `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use
      *           'debug' to emit PHP warnings when a retry is issued.
      *     - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See
-     *           `Guzzle\Http\Plugin\ExponentialBackoffLogger` for formatting information.
+     *           `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
      *
      * @param array|Collection $config Client configuration data
      *
@@ -97,9 +101,24 @@ class DynamoDbClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        // Configure the exponential backoff plugin for DynamoDB throttling
-        $exponentialBackoffResolver = new ExponentialBackoffOptionResolver(function ($config, $client) {
-            return new ExponentialBackoffPlugin(15, new ThrottlingErrorChecker(), array($client, 'calculateRetryDelay'));
+        // Configure the custom exponential backoff plugin for DynamoDB throttling
+        $exponentialBackoffResolver = new BackoffOptionResolver(function ($config, $client) {
+            return new BackoffPlugin(
+                // Use the custom error checking strategy
+                new ThrottlingErrorChecker(
+                    // Retry HTTP 500 and 503 responses
+                    new HttpBackoffStrategy(null,
+                        // Truncate the number of backoffs to 11
+                        new TruncatedBackoffStrategy(11,
+                            // Retry transient curl errors
+                            new CurlBackoffStrategy(null,
+                                // Use the custom retry delay method instead of default exponential backoff
+                                new CallbackBackoffStrategy(array($client, 'calculateRetryDelay'), false)
+                            )
+                        )
+                    )
+                )
+            );
         });
 
         // Construct the DynamoDB client with the client builder
@@ -157,6 +176,6 @@ class DynamoDbClient extends AbstractClient
      */
     public function calculateRetryDelay($retries)
     {
-        return $retries == 1 ? 0 : (50 * (int) pow(2, $retries - 2)) / 1000;
+        return $retries == 0 ? 0 : (50 * (int) pow(2, $retries - 1)) / 1000;
     }
 }

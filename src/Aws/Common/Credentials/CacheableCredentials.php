@@ -16,7 +16,7 @@
 
 namespace Aws\Common\Credentials;
 
-use Guzzle\Common\Cache\CacheAdapterInterface;
+use Guzzle\Cache\CacheAdapterInterface;
 
 /**
  * Credentials decorator used to implement caching credentials

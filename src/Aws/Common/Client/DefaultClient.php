@@ -36,7 +36,7 @@ class DefaultClient extends AbstractClient
      *     - token: Custom AWS security token to use with request authentication
      *     - token.ttd: UNIX timestamp for when the custom credentials expire
      *     - credentials.cache: Used to cache credentials when using providers that require HTTP requests. Set the true
-     *           to use the default APC cache or provide a `Guzzle\Common\Cache\CacheAdapterInterface` object.
+     *           to use the default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
      *     - credentials.cache.key: Optional custom cache key to use with the credentials
      *     - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
      *           credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
@@ -51,17 +51,17 @@ class DefaultClient extends AbstractClient
      *     - signature.service: Set to explicitly override the service name used in signatures
      *     - signature.region:  Set to explicitly override the region name used in signatures
      * - Exponential backoff options
-     *     - client.backoff.logger: `Guzzle\Common\Log\LogAdapterInterface` object used to log backoff retries. Use
+     *     - client.backoff.logger: `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use
      *           'debug' to emit PHP warnings when a retry is issued.
      *     - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See
-     *           `Guzzle\Http\Plugin\ExponentialBackoffLogger` for formatting information.
+     *           `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
      * - Generic client options
      *     - ssl.cert: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
      *           option should be used when you encounter curl error code 60.
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Common\Cache\CacheAdapterInterface` object to use to cache
+     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
      *           service descriptions
      *     - service.description.cache.ttl: Optional TTL used for the service description cache
      *

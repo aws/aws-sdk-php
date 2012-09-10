@@ -18,8 +18,8 @@ namespace Aws\DynamoDb\Session\LockingStrategy;
 
 use Aws\DynamoDb\Session\SessionHandlerConfig;
 use Aws\Common\Exception\InvalidArgumentException;
-use Guzzle\Common\Inflection\Inflector;
-use Guzzle\Common\Inflection\InflectorInterface;
+use Guzzle\Inflection\Inflector;
+use Guzzle\Inflection\InflectorInterface;
 
 /**
  * Factory for instantiating locking strategies

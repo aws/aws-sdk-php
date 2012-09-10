@@ -19,9 +19,9 @@ namespace Aws\S3\Model;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Service\Command\AbstractCommand;
-use Guzzle\Common\Batch\BatchBuilder;
-use Guzzle\Common\Batch\BatchSizeDivisor;
-use Guzzle\Common\Batch\AbstractBatchDecorator;
+use Guzzle\Batch\BatchBuilder;
+use Guzzle\Batch\BatchSizeDivisor;
+use Guzzle\Batch\AbstractBatchDecorator;
 
 /**
  * The DeleteObjectsBatch is a BatchDecorator for Guzzle that implements a

@@ -29,7 +29,6 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
 
         // If the table does not exist, then create it
         if (!in_array(self::getTableName(), $tables)) {
-
             self::log('Table does not exist. Creating now.');
             $client->createTable(array(
                 'TableName' => self::getTableName(),
@@ -48,8 +47,10 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                     'WriteCapacityUnits' => 5
                 )
             ));
-
             // Wait until the table is created and active
+            $client->waitUntil('TableExists', self::getTableName());
+        } else {
+            // Wait until the table is active
             $client->waitUntil('TableExists', self::getTableName());
         }
 
