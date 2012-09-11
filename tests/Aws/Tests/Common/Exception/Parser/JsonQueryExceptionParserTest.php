@@ -7,8 +7,9 @@ use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\Common\Exception\Parser\JsonQueryExceptionParser
+ * @covers Aws\Common\Exception\Parser\AbstractJsonExceptionParser
  */
-class DefaultJsonExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
+class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testParsesClientErrorResponses()
     {

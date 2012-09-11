@@ -14,23 +14,12 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception\Parser;
-
-use Guzzle\Http\Message\Response;
+namespace Aws\Glacier\Iterator;
 
 /**
- * Parses JSON encoded exception responses from REST services
+ * Iterate over a Glacier ListParts command
  */
-class JsonRestExceptionParser extends AbstractJsonExceptionParser
+class ListPartsIterator extends AbstractGlacierResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, array $json)
-    {
-        $data = array_replace($data, $json);
-        $data['type'] = strtolower($data['type']);
-
-        return $data;
-    }
+    protected $resultsKey = 'Parts';
 }

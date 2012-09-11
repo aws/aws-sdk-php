@@ -53,10 +53,5 @@ abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
      *
      * @return array
      */
-    protected function doParse(array $data, array $json)
-    {
-        $data = array_replace($data, $json);
-
-        return $data;
-    }
+    abstract protected function doParse(array $data, array $json);
 }
