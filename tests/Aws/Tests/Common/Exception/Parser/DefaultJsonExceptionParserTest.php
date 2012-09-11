@@ -2,11 +2,11 @@
 
 namespace Aws\Tests\Common\Exception\Parser;
 
-use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Http\Message\Response;
 
 /**
- * @covers Aws\Common\Exception\Parser\DefaultJsonExceptionParser
+ * @covers Aws\Common\Exception\Parser\JsonQueryExceptionParser
  */
 class DefaultJsonExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -18,7 +18,7 @@ class DefaultJsonExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
             '{ "__type": "foo", "message": "lorem ipsum" }'
         );
 
-        $parser = new DefaultJsonExceptionParser();
+        $parser = new JsonQueryExceptionParser();
         $this->assertEquals(array(
             'code'       => 'foo',
             'message'    => 'lorem ipsum',
@@ -39,7 +39,7 @@ class DefaultJsonExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
             '{ "__Type": "abc#baz", "Message": "dolor" }'
         );
 
-        $parser = new DefaultJsonExceptionParser();
+        $parser = new JsonQueryExceptionParser();
         $this->assertEquals(array(
             'code'       => 'baz',
             'message'    => 'dolor',

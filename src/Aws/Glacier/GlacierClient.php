@@ -14,38 +14,40 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb;
+namespace Aws\Glacier;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Client\ExponentialBackoffOptionResolver;
-use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\DynamoDb\Model\Attribute;
-use Aws\DynamoDb\Session\SessionHandler;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
 use Guzzle\Common\Collection;
+use Guzzle\Common\Event;
 
 /**
- * Client for interacting with Amazon DynamoDB
+ * Client to interact with Amazon Glacier
  *
- * @method array batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
- * @method array batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
- * @method array createTable(array $args = array()) {@command dynamodb CreateTable}
- * @method array deleteItem(array $args = array()) {@command dynamodb DeleteItem}
- * @method array deleteTable(array $args = array()) {@command dynamodb DeleteTable}
- * @method array describeTable(array $args = array()) {@command dynamodb DescribeTable}
- * @method array getItem(array $args = array()) {@command dynamodb GetItem}
- * @method array listTables(array $args = array()) {@command dynamodb ListTables}
- * @method array putItem(array $args = array()) {@command dynamodb PutItem}
- * @method array query(array $args = array()) {@command dynamodb Query}
- * @method array scan(array $args = array()) {@command dynamodb Scan}
- * @method array updateItem(array $arg = array()) {@command dynamodb UpdateItem}
- * @method array updateTable(array $args = array()) {@command dynamodb UpdateTable}
+ * @method array abortMultipartUpload (array $args = array()) {@command glacier AbortMultipartUpload}
+ * @method array completeMultipartUpload (array $args = array()) {@command glacier CompleteMultipartUpload}
+ * @method array createVault (array $args = array()) {@command glacier CreateVault}
+ * @method array deleteArchive (array $args = array()) {@command glacier DeleteArchive}
+ * @method array deleteVault (array $args = array()) {@command glacier DeleteVault}
+ * @method array deleteVaultNotifications (array $args = array()) {@command glacier DeleteVaultNotifications}
+ * @method array describeJob (array $args = array()) {@command glacier DescribeJob}
+ * @method array describeVault (array $args = array()) {@command glacier DescribeVault}
+ * @method array getJobOutput (array $args = array()) {@command glacier GetJobOutput}
+ * @method array getVaultNotifications (array $args = array()) {@command glacier GetVaultNotifications}
+ * @method array initiateJob (array $args = array()) {@command glacier InitiateJob}
+ * @method array initiateMultipartUpload (array $args = array()) {@command glacier InitiateMultipartUpload}
+ * @method array listJobs (array $args = array()) {@command glacier ListJobs}
+ * @method array listMultipartUploads (array $args = array()) {@command glacier ListMultipartUploads}
+ * @method array listParts (array $args = array()) {@command glacier ListParts}
+ * @method array listVaults (array $args = array()) {@command glacier ListVaults}
+ * @method array setVaultNotifications (array $args = array()) {@command glacier SetVaultNotifications}
+ * @method array uploadArchive (array $args = array()) {@command glacier UploadArchive}
+ * @method array uploadMultipartPart (array $args = array()) {@command glacier UploadMultipartPart}
  */
-class DynamoDbClient extends AbstractClient
+class GlacierClient extends AbstractClient
 {
     /**
      * @inheritdoc
@@ -98,84 +100,26 @@ class DynamoDbClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        // Configure the exponential backoff plugin for DynamoDB throttling
-        $exponentialBackoffResolver = new ExponentialBackoffOptionResolver(function ($config, $client) {
-            return new ExponentialBackoffPlugin(15, new ThrottlingErrorChecker(), array($client, 'calculateRetryDelay'));
-        });
-
-        // Construct the DynamoDB client with the client builder
-        return ClientBuilder::factory(__NAMESPACE__)
+        // Setup Glacier client
+        $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE => 'dynamodb',
-                Options::SCHEME  => 'https'
+                Options::SERVICE => 'glacier',
+                Options::SCHEME  => 'https',
             ))
             ->setSignature(new SignatureV4())
-            ->addClientResolver($exponentialBackoffResolver)
-            ->setExceptionParser(new JsonQueryExceptionParser())
+            ->setExceptionParser(new JsonRestExceptionParser())
             ->build();
-    }
 
-    /**
-     * Formats a value as a DynamoDB attribute.
-     *
-     * @param mixed  $value  The value to format for DynamoDB.
-     * @param string $format The type of format (e.g. put, update).
-     *
-     * @return array The formatted value.
-     */
-    public function formatValue($value, $format = Attribute::FORMAT_PUT)
-    {
-        return Attribute::factory($value)->getFormatted($format);
-    }
+        $client->setDefaultHeaders(array(
+            'x-amz-glacier-version' => '2012-06-01'
+        ));
 
-    /**
-     * Formats an array of values as DynamoDB attributes.
-     *
-     * @param array  $values The values to format for DynamoDB.
-     * @param string $format The type of format (e.g. put, update).
-     *
-     * @return array The formatted values.
-     */
-    public function formatAttributes(array $values, $format = Attribute::FORMAT_PUT)
-    {
-        $formatted = array();
+        // Set default value for "accountId" for all requests
+        $client->getEventDispatcher()->addListener('client.command.create', function(Event $event) {
+            $event['command']['accountId'] = '-';
+        });
 
-        foreach ($values as $key => $value) {
-            $formatted[$key] = $this->formatValue($value, $format);
-        }
-
-        return $formatted;
-    }
-
-    /**
-     * Calculate the amount of time needed for an exponential backoff to wait
-     * before retrying a request
-     *
-     * @param int $retries Number of retries
-     *
-     * @return float Returns the amount of time to wait in seconds
-     */
-    public function calculateRetryDelay($retries)
-    {
-        return $retries == 1 ? 0 : (50 * (int) pow(2, $retries - 2)) / 1000;
-    }
-
-    /**
-     * Convenience method for instantiating and registering the DynamoDB
-     * Session handler with this DynamoDB client object.
-     *
-     * @param array $config Array of options for the session handler factory
-     *
-     * @return SessionHandler
-     */
-    public function registerSessionHandler(array $config = array())
-    {
-        $config = array_replace(array('dynamodb_client' => $this), $config);
-
-        $handler = SessionHandler::factory($config);
-        $handler->register();
-
-        return $handler;
+        return $client;
     }
 }

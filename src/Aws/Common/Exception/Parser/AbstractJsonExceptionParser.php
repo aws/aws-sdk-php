@@ -21,7 +21,7 @@ use Guzzle\Http\Message\Response;
 /**
  * Parses JSON encoded exception responses
  */
-class DefaultJsonExceptionParser implements ExceptionParserInterface
+abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
 {
     /**
      * {@inheritdoc}
@@ -39,10 +39,23 @@ class DefaultJsonExceptionParser implements ExceptionParserInterface
         if (null !== $json = json_decode($response->getBody(true), true)) {
             $data['parsed'] = $json;
             $json = array_change_key_case($json);
-            $parts = explode('#', $json['__type']);
-            $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
-            $data['message'] = $json['message'];
+            $data = $this->doParse($data, $json);
         }
+
+        return $data;
+    }
+
+    /**
+     * Pull relevant exception data out of the parsed json
+     *
+     * @param array $data The exception data
+     * @param array $json The JSON data
+     *
+     * @return array
+     */
+    protected function doParse(array $data, array $json)
+    {
+        $data = array_replace($data, $json);
 
         return $data;
     }

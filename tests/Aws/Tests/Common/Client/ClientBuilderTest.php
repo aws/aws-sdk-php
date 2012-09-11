@@ -6,7 +6,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Client\ExponentialBackoffOptionResolver;
-use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Client\CredentialsOptionResolver;
 use Aws\Common\Client\SignatureOptionResolver;
 use Aws\Common\Credentials\Credentials;
@@ -32,7 +32,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ))
             ->setConfigRequirements(array('base_url'))
             ->setSignature(new SignatureV4())
-            ->setExceptionParser(new DefaultJsonExceptionParser())
+            ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);

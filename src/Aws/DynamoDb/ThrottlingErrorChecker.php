@@ -16,7 +16,7 @@
 
 namespace Aws\DynamoDb;
 
-use Aws\Common\Exception\Parser\DefaultJsonExceptionParser;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
@@ -26,7 +26,7 @@ use Guzzle\Http\Message\Response;
 class ThrottlingErrorChecker
 {
     /**
-     * @var DefaultJsonExceptionParser Parser used to parse exception responses
+     * @var JsonQueryExceptionParser Parser used to parse exception responses
      */
     protected $parser;
 
@@ -35,7 +35,7 @@ class ThrottlingErrorChecker
      */
     public function __construct()
     {
-        $this->parser = new DefaultJsonExceptionParser();
+        $this->parser = new JsonQueryExceptionParser();
     }
 
     /**
