@@ -140,7 +140,7 @@ class SignatureV4 extends AbstractEndpointSignature
                 $headers[$key] = array();
             }
             foreach ($values as $value) {
-                $headers[$key][] = $value;
+                $headers[$key][] = preg_replace('/\s+/', ' ', trim($value));
             }
         }
 
@@ -154,7 +154,7 @@ class SignatureV4 extends AbstractEndpointSignature
                 sort($values);
             }
             $value = implode(',', $values);
-            $canon .= $key . ':' . trim($value) . "\n";
+            $canon .= $key . ':' . $value . "\n";
         }
 
         // Create the signed headers

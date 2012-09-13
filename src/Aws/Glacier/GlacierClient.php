@@ -18,6 +18,7 @@ namespace Aws\Glacier;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\ExpectHeaderListener;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
@@ -104,13 +105,15 @@ class GlacierClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
+                'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
                 Options::SERVICE => 'glacier',
-                Options::SCHEME  => 'https',
+                Options::SCHEME  => 'https'
             ))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonRestExceptionParser())
             ->build();
 
+        // Add the Glacier version header required for all operations
         $client->setDefaultHeaders(array(
             'x-amz-glacier-version' => '2012-06-01'
         ));
@@ -119,6 +122,12 @@ class GlacierClient extends AbstractClient
         $client->getEventDispatcher()->addListener('client.command.create', function(Event $event) {
             $event['command']['accountId'] = '-';
         });
+
+        // Set Expect header only for upload operations
+        $client->addSubscriber(new ExpectHeaderListener(array('UploadArchive', 'UploadMultipartPart')));
+
+        // Set x-amz-content-sha256 header for upload operations
+        $client->addSubscriber(new PayloadHashListener());
 
         return $client;
     }
