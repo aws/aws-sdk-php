@@ -78,7 +78,7 @@ class SessionHandlerConfig
      */
     public function addDefaults(array $defaults)
     {
-        $this->data = array_merge($defaults, $this->data);
+        $this->data = array_replace($defaults, $this->data);
 
         return $this;
     }
