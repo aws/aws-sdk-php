@@ -84,7 +84,7 @@ class BackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
     private function getMocks()
     {
         $config = new Collection();
-        $plugin = BackoffPlugin::getExponentialBackoffInstance();
+        $plugin = BackoffPlugin::getExponentialBackoff();
         $resolver = new BackoffOptionResolver(function($config, $client = null) use ($plugin) {
             return $plugin;
         });

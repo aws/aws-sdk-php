@@ -6,6 +6,7 @@ use Aws\Common\ToArrayInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\LocationVisitor\JsonBodyVisitor as ParentJson;
+use Guzzle\Service\Description\ApiParam;
 
 /**
  * Adds AWS JSON bodies that can contain nested ToArrayInterface objects
@@ -34,25 +35,47 @@ class JsonBodyVisitor extends ParentJson
     /**
      * {@inheritdoc}
      */
-    public function visit(CommandInterface $command, RequestInterface $request, $key, $value)
+    public function visit(ApiParam $param, RequestInterface $request, $value)
     {
-        $json = isset($this->data[$command]) ? $this->data[$command] : array();
+        $json = isset($this->data[$request]) ? $this->data[$request] : array();
 
-        // Account for the fact that PHP 5.3 does not have JsonSerializable
-        // We may remove the ToArrayInterface in the future and just rely
-        // on JsonSerializable.
         if ($value instanceof ToArrayInterface) {
             $value = $value->toArray();
-        } elseif (is_array($value)) {
-            // Convert nested ToArray objects
-            array_walk_recursive($value, function (&$value) {
-                if ($value instanceof ToArrayInterface) {
-                    $value = $value->toArray();
-                }
-            });
         }
 
-        $json[$key] = $value;
-        $this->data[$command] = $json;
+        $json[$param->getLocationKey() ?: $param->getName()] = $param && is_array($value)
+            ? $this->resolveRecursively($value, $param)
+            : $value;
+
+        $this->data[$request] = $json;
+    }
+
+    /**
+     * Map nested parameters into the location_key based parameters
+     *
+     * @param array    $value Value to map
+     * @param ApiParam $param Parameter that holds information about the current key
+     *
+     * @return array Returns the mapped array
+     */
+    protected function resolveRecursively(array $value, ApiParam $param)
+    {
+        foreach ($value as $name => $v) {
+            if ($sub = $param->getProperty($name)) {
+                $key = $sub->getLocationKey() ?: $name;
+                if ($v instanceof ToArrayInterface) {
+                    $value[$sub->getLocationKey() ?: $name] = $this->resolveRecursively($v->toArray(), $sub);
+                } elseif (is_array($v)) {
+                    $value[$sub->getLocationKey() ?: $name] = $this->resolveRecursively($v, $sub);
+                } elseif ($name != $key) {
+                    $value[$sub->getLocationKey() ?: $name] = $v;
+                    unset($value[$name]);
+                }
+            } elseif ($v instanceof ToArrayInterface) {
+                $value[$name] = $v->toArray();
+            }
+        }
+
+        return $value;
     }
 }

@@ -53,7 +53,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 return new SignatureV4();
             }))
             ->addClientResolver(new BackoffOptionResolver(function() {
-                return BackoffPlugin::getExponentialBackoffInstance();
+                return BackoffPlugin::getExponentialBackoff();
             }))
             ->build();
 

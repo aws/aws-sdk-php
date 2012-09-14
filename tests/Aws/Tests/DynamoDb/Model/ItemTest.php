@@ -51,13 +51,13 @@ class ItemTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('bar', $item['foo']);
 
         $this->assertEquals('NS', $item->get('baz')->getType());
-        $this->assertEquals(array(1, 2, 3), $item['baz']);
+        $this->assertEquals(array(1, 2, 3), $item['baz']->getValue());
 
         $this->assertEquals('SS', $item->get('list')->getType());
-        $this->assertEquals(array('foo', 'bar'), $item['list']);
+        $this->assertEquals(array('foo', 'bar'), $item['list']->getValue());
 
         $this->assertEquals('N', $item->get('test')->getType());
-        $this->assertEquals(2, $item['test']);
+        $this->assertEquals(2, $item['test']->getValue());
     }
 
     /**
@@ -74,7 +74,7 @@ class ItemTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(2, count($item));
         $this->assertEquals(2, count($item->getIterator()));
         $this->assertEquals('bar', $item['foo']);
-        $this->assertEquals(array('yo', 'to'), $item['baz']);
+        $this->assertEquals(array('yo', 'to'), $item['baz']->getValue());
         $this->assertFalse($item->offsetExists('dingo'));
 
         $item->offsetSet('test', 'Cool');

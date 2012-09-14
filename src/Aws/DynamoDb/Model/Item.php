@@ -16,18 +16,13 @@
 
 namespace Aws\DynamoDb\Model;
 
-use Aws\Common\ToArrayInterface;
+use Aws\Common\AbstractToArray;
 
 /**
  * Amazon DynamoDB item model
  */
-class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Countable
+class Item extends AbstractToArray implements \Countable
 {
-    /**
-     * @var array
-     */
-    protected $attributes = array();
-
     /**
      * @var string
      */
@@ -95,9 +90,7 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function get($name)
     {
-        if (isset($this->attributes[$name])) {
-            return $this->attributes[$name];
-        }
+        return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
     /**
@@ -107,7 +100,7 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function keys()
     {
-        return array_keys($this->attributes);
+        return array_keys($this->data);
     }
 
     /**
@@ -119,7 +112,7 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function has($attribute)
     {
-        return isset($this->attributes[$attribute]);
+        return isset($this->data[$attribute]);
     }
 
     /**
@@ -129,7 +122,7 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function all()
     {
-        return $this->attributes;
+        return $this->data;
     }
 
     /**
@@ -142,7 +135,7 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function add($name, Attribute $attribute)
     {
-        $this->attributes[$name] = $attribute;
+        $this->data[$name] = $attribute;
 
         return $this;
     }
@@ -175,60 +168,9 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function remove($name)
     {
-        unset($this->attributes[$name]);
+        unset($this->data[$name]);
 
         return $this;
-    }
-
-    /**
-     * Check if the item has a specific attribute
-     *
-     * @param string $offset Name of the attribute
-     *
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return $this->has($offset);
-    }
-
-    /**
-     * Set an attribute by name
-     *
-     * @param string|Attribute $offset Name of the attribute to retrieve
-     * @param mixed            $value  Value to set
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (!($value instanceof Attribute)) {
-            $value = Attribute::factory($value);
-        }
-
-        $this->add($offset, $value);
-    }
-
-    /**
-     * Remove an attribute from the item
-     *
-     * @param string $offset Name of the attribute to remove
-     */
-    public function offsetUnset($offset)
-    {
-        $this->remove($offset);
-    }
-
-    /**
-     * Get an attribute value by name
-     *
-     * @param string $offset Name of the attribute to retrieve
-     *
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        if (isset($this->attributes[$offset])) {
-            return $this->attributes[$offset]->getValue();
-        }
     }
 
     /**
@@ -238,32 +180,6 @@ class Item implements ToArrayInterface, \ArrayAccess, \IteratorAggregate, \Count
      */
     public function count()
     {
-        return count($this->attributes);
-    }
-
-    /**
-     * Get an {@see ArrayIterator} object that allows iteration over each
-     * attribute
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->attributes);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $item = array();
-
-        /* @var $attribute Attribute */
-        foreach ($this->attributes as $name => $attribute) {
-            $item[$name] = $attribute->toArray();
-        }
-
-        return $item;
+        return count($this->data);
     }
 }

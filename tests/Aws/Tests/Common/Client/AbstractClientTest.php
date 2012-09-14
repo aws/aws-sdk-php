@@ -58,7 +58,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $credentials = new Credentials('test', '123');
         $config->set('client.resolvers', array(
             new BackoffOptionResolver(function() {
-                return BackoffPlugin::getExponentialBackoffInstance();
+                return BackoffPlugin::getExponentialBackoff();
             })
         ));
 

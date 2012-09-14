@@ -16,23 +16,13 @@
 
 namespace Aws\DynamoDb\Model;
 
-use Aws\Common\ToArrayInterface;
+use Aws\Common\AbstractToArray;
 
 /**
  * Class representing a DynamoDB key
  */
-class Key implements ToArrayInterface
+class Key extends AbstractToArray
 {
-    /**
-     * @var Attribute
-     */
-    protected $hashKey;
-
-    /**
-     * @var Attribute
-     */
-    protected $rangeKey;
-
     /**
      * @param mixed $hashKey  Hash key element value, or a raw key array
      * @param mixed $rangeKey Optional range key element value
@@ -63,7 +53,7 @@ class Key implements ToArrayInterface
      */
     public function getHashKey()
     {
-        return $this->hashKey->getValue();
+        return isset($this['HashKeyElement']) ? $this['HashKeyElement']->getValue() : null;
     }
 
     /**
@@ -73,7 +63,7 @@ class Key implements ToArrayInterface
      */
     public function getRangeKey()
     {
-        return $this->rangeKey ? $this->rangeKey->getValue() : null;
+        return isset($this['RangeKeyElement']) ? $this['RangeKeyElement']->getValue() : null;
     }
 
     /**
@@ -85,7 +75,7 @@ class Key implements ToArrayInterface
      */
     public function setHashKey($hashKey)
     {
-        $this->hashKey = Attribute::factory($hashKey);
+        $this['HashKeyElement'] = Attribute::factory($hashKey);
 
         return $this;
     }
@@ -99,24 +89,8 @@ class Key implements ToArrayInterface
      */
     public function setRangeKey($rangeKey)
     {
-        $this->rangeKey = Attribute::factory($rangeKey);
+        $this['RangeKeyElement'] = Attribute::factory($rangeKey);
 
         return $this;
-    }
-
-    /**
-     * Convert to an array
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $key = array('HashKeyElement' => $this->hashKey->toArray());
-
-        if ($this->rangeKey) {
-            $key['RangeKeyElement'] = $this->rangeKey->toArray();
-        }
-
-        return $key;
     }
 }

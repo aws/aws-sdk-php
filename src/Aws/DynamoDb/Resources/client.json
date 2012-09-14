@@ -1,29 +1,14 @@
 {
     "commands": {
         "Default": {
-            "class": "Aws.Common.Command.JsonCommand",
+            "class": "Aws\\Common\\Command\\JsonCommand",
             "method": "POST",
             "result_type": "array",
             "result_doc": "Returns a json_decoded array of the response body",
             "doc_url": "http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/",
             "params": {
-                "Version": {
-                    "default": "20111205",
-                    "required": "true"
-                },
-                "Operation": {
-                    "required": "true",
-                    "type": "string",
-                    "doc": "Operation to take on the service"
-                },
-                "XAmzTarget": {
-                    "location": "header:X-Amz-Target",
-                    "type": "string",
-                    "required": "true",
-                    "static": "DynamoDB_{Version}.{Operation}"
-                },
-                "ContentType": {
-                    "location": "header:Content-Type",
+                "Content-Type": {
+                    "location": "header",
                     "static": "application/x-amz-json-1.0"
                 }
             }
@@ -31,8 +16,10 @@
         "ListTables": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static" : "ListTables"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.ListTables"
                 },
                 "Limit": {
                     "doc": "A number of maximum table names to return.",
@@ -48,8 +35,10 @@
         "Scan": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static" : "Scan"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.Scan"
                 },
                 "TableName": {
                     "location": "json",
@@ -57,10 +46,10 @@
                 },
                 "ExclusiveStartKey": {
                     "location": "json",
-                    "type": "array"
+                    "type": "object"
                 },
                 "AttributesToGet": {
-                    "type": "array",
+                    "type": "object",
                     "location": "json"
                 },
                 "Count": {
@@ -69,7 +58,7 @@
                 },
                 "ScanFilter": {
                     "location": "json",
-                    "type": "array"
+                    "type": "object"
                 },
                 "Limit": {
                     "type": "integer",
@@ -83,59 +72,67 @@
                 "TableName": {
                     "location": "json",
                     "type": "string",
-                    "required": "true"
+                    "required": true
                 },
                 "ProvisionedThroughput": {
-                    "type": "type:array",
+                    "type": "array",
                     "location": "json",
-                    "required": "true"
+                    "required": true
                 }
             }
         },
         "CreateTable": {
             "extends": "AbstractTableOperation",
             "params": {
-                "Operation": {
-                    "static" : "CreateTable"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.CreateTable"
                 },
                 "KeySchema": {
-                    "type": "type:array",
+                    "type": "array",
                     "location": "json",
-                    "required": "true"
+                    "required": true
                 }
             }
         },
         "UpdateTable": {
             "extends": "AbstractTableOperation",
             "params": {
-                "Operation": {
-                    "static" : "UpdateTable"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.UpdateTable"
                 }
             }
         },
         "DeleteTable": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static": "DeleteTable"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.DeleteTable"
                 },
                 "TableName": {
                     "location": "json",
                     "type": "string",
-                    "required": "true"
+                    "required": true
                 }
             }
         },
         "DescribeTable": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static": "DescribeTable"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.DescribeTable"
                 },
                 "TableName": {
                     "location": "json",
                     "type": "string",
-                    "required": "true"
+                    "required": true
                 }
             }
         },
@@ -145,11 +142,11 @@
                 "TableName": {
                     "location": "json",
                     "type": "string",
-                    "required": "true"
+                    "required": true
                 },
                 "Expected": {
                     "location": "json",
-                    "type": "type:array"
+                    "type": "array"
                 },
                 "ReturnValues": {
                     "location": "json",
@@ -161,43 +158,49 @@
         "PutItem": {
             "extends": "AbstractItem",
             "params": {
-                "Operation": {
-                    "static": "PutItem"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.PutItem"
                 },
                 "Item": {
                     "location": "json",
-                    "type": "any_match:type:array; class:Aws.DynamoDb.Model.Item",
-                    "required": "true"
+                    "type": "object",
+                    "required": true
                 }
             }
         },
         "DeleteItem": {
             "extends": "AbstractItem",
             "params": {
-                "Operation": {
-                    "static": "DeleteItem"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.DeleteItem"
                 },
                 "Key": {
                     "location": "json",
-                    "type": "any_match:type:array; class:Aws.DynamoDb.Model.Key",
-                    "required": "true"
+                    "type": "object",
+                    "required": true
                 }
             }
         },
         "GetItem": {
             "extends": "AbstractItem",
             "params": {
-                "Operation": {
-                    "static": "GetItem"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.GetItem"
                 },
                 "Key": {
                     "location": "json",
-                    "type": "any_match:type:array; class:class:Aws.DynamoDb.Model.Key",
-                    "required": "true"
+                    "type": "object",
+                    "required": true
                 },
                 "AttributesToGet": {
                     "location": "json",
-                    "type": "type:array"
+                    "type": "object"
                 },
                 "ConsistentRead": {
                     "location": "json",
@@ -208,25 +211,29 @@
         "BatchGetItem": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static": "BatchGetItem"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.BatchGetItem"
                 },
                 "RequestItems": {
                     "location": "json",
-                    "required": "true"
+                    "required": true
                 }
             }
         },
         "Query": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static": "Query"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.Query"
                 },
                 "TableName": {
                     "location": "json",
                     "type": "string",
-                    "required": "true"
+                    "required": true
                 },
                 "Limit": {
                     "type": "integer",
@@ -234,7 +241,7 @@
                 },
                 "AttributesToGet": {
                     "location": "json",
-                    "type": "type:array"
+                    "type": "object"
                 },
                 "ConsistentRead": {
                     "location": "json",
@@ -243,7 +250,7 @@
                 "HashKeyValue": {
                     "location": "json",
                     "type": "array",
-                    "required": "true"
+                    "required": true
                 },
                 "RangeKeyCondition": {
                     "location": "json",
@@ -262,13 +269,15 @@
         "UpdateItem": {
             "extends": "AbstractItem",
             "params": {
-                "Operation": {
-                    "static": "UpdateItem"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.UpdateItem"
                 },
                 "Key": {
                     "location": "json",
                     "type": "array",
-                    "required": "true"
+                    "required": true
                 },
                 "AttributeUpdates": {
                     "location": "json",
@@ -284,13 +293,15 @@
         "BatchWriteItem": {
             "extends": "Default",
             "params": {
-                "Operation": {
-                    "static": "BatchWriteItem"
+                "target": {
+                    "location": "header",
+                    "required": true,
+                    "static" : "DynamoDB_20111205.BatchWriteItem"
                 },
                 "RequestItems": {
                     "location": "json",
                     "type": "array",
-                    "required": "true"
+                    "required": true
                 }
             }
         }

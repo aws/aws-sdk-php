@@ -39,11 +39,10 @@ class BinarySet extends AbstractAttribute
      */
     public function setValue($value)
     {
-        $encoded = array();
-        foreach ($value as $attributeValue) {
-            $encoded[] = base64_encode((string) $attributeValue);
+        foreach ($value as &$attributeValue) {
+            $attributeValue = base64_encode((string) $attributeValue);
         }
 
-        return parent::setValue($encoded);
+        return parent::setValue($value);
     }
 }

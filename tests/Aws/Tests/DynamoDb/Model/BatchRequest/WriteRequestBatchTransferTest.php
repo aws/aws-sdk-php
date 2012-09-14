@@ -108,7 +108,7 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
             ->will($this->returnValue(array('foo')));
 
         // Prep the mock command execution and results
-        $command = $this->getMock('Aws\Common\Command\JsonCommand');
+        $command = $this->getMock('Aws\Common\Command\JsonCommand', array(), array(array()));
         $command->expects($this->any())
             ->method('set')
             ->will($this->returnValue($command));

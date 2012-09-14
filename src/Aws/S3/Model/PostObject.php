@@ -20,7 +20,6 @@ use Aws\Common\Exception\InvalidArgumentException;
 use Aws\S3\S3Client;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
-use Guzzle\Service\Inspector;
 
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
@@ -102,7 +101,7 @@ class PostObject extends Collection
     public function prepareData()
     {
         // Validate required options
-        $options = Inspector::prepareConfig($this->data, array(
+        $options = Collection::fromConfig($this->data, array(
             'ttd' => '+1 hour',
             'key' => '^${filename}',
         ));

@@ -1,9 +1,15 @@
 {
     "commands": {
 
-        "StsDefault": {
+        "GetSessionToken": {
             "method": "GET",
+            "description": "The GetSessionToken action returns a set of temporary credentials for an AWS account or IAM user.",
             "params": {
+                "Action": {
+                    "required": true,
+                    "location": "query",
+                    "static": "GetSessionToken"
+                },
                 "Version": {
                     "type": "string",
                     "required": true,
@@ -14,54 +20,57 @@
                     "required": false,
                     "location": "query",
                     "type": "integer",
-                    "range": {"minimum": "3600", "maximum": "129600"},
-                    "doc": "The duration, in seconds, that the credentials should remain valid. Acceptable durations for IAM user sessions range from 3600s (one hour) to 129600s (36 hours), with 43200s (12 hours) as the default. Sessions for AWS account owners are restricted to a maximum of 3600s (one hour)."
-                }
-            }
-        },
-
-        "GetSessionToken": {
-            "extends": "StsDefault",
-            "doc": "The GetSessionToken action returns a set of temporary credentials for an AWS account or IAM user.",
-            "params": {
-                "Action": {
-                    "required": true,
-                    "location": "query",
-                    "default": "GetSessionToken"
+                    "min": 3600,
+                    "max": 129600,
+                    "description": "The duration, in seconds, that the credentials should remain valid. Acceptable durations for IAM user sessions range from 3600s (one hour) to 129600s (36 hours), with 43200s (12 hours) as the default. Sessions for AWS account owners are restricted to a maximum of 3600s (one hour)."
                 },
                 "SerialNumber": {
                     "location": "query",
-                    "doc": "The identification number of the Multi-Factor Authentication (MFA) device for the user",
+                    "description": "The identification number of the Multi-Factor Authentication (MFA) device for the user",
                     "type": "string"
                 },
                 "TokenCode": {
                     "location": "query",
-                    "doc": "The value provided by the MFA device",
+                    "description": "The value provided by the MFA device",
                     "type": "string"
                 }
             }
         },
 
         "GetFederationToken": {
-            "extends": "StsDefault",
-            "doc": "The GetFederationToken action returns a set of temporary credentials for a federated user with the user name and policy specified in the request.",
+            "method": "GET",
+            "description": "The GetFederationToken action returns a set of temporary credentials for a federated user with the user name and policy specified in the request.",
             "params": {
                 "Action": {
                     "required": true,
                     "location": "query",
-                    "default": "GetFederationToken"
+                    "static": "GetFederationToken"
+                },
+                "Version": {
+                    "type": "string",
+                    "required": true,
+                    "default": "2011-06-15",
+                    "location": "query"
+                },
+                "DurationSeconds": {
+                    "required": false,
+                    "location": "query",
+                    "type": "integer",
+                    "min": 3600,
+                    "max": 129600,
+                    "description": "The duration, in seconds, that the credentials should remain valid. Acceptable durations for IAM user sessions range from 3600s (one hour) to 129600s (36 hours), with 43200s (12 hours) as the default. Sessions for AWS account owners are restricted to a maximum of 3600s (one hour)."
                 },
                 "Name": {
                     "required": true,
                     "type": "string",
                     "location": "query",
-                    "doc": "The name of the federated user associated with the credentials. For information about limitations on user names, go to Limitations on IAM Entities in Using AWS Identity and Access Management."
+                    "description": "The name of the federated user associated with the credentials. For information about limitations on user names, go to Limitations on IAM Entities in Using AWS Identity and Access Management."
                 },
                 "Policy": {
-                    "type": "any_match: type:array; class:Aws.Common.ToArrayInterface",
+                    "type": ["array", "object"],
                     "filters": "json_encode",
                     "location": "query",
-                    "doc": "A policy specifying the permissions to associate with the credentials. The caller can delegate their own permissions by specifying a policy, and both policies will be checked when a service call is made."
+                    "description": "A policy specifying the permissions to associate with the credentials. The caller can delegate their own permissions by specifying a policy, and both policies will be checked when a service call is made."
                 }
             }
         }
