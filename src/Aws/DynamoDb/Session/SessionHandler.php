@@ -91,7 +91,7 @@ class SessionHandler
      *
      * The configuration array accepts the following array keys and values:
      * - locking_strategy:         Locking strategy for session locking logic
-     * - dynamodb_client:         Client for doing DynamoDB operations
+     * - dynamodb_client:          Client for doing DynamoDB operations
      * - table_name:               Name of the table in which to store sessions
      * - hash_key:                 Name of the hash key in the sessions table
      * - session_lifetime:         Lifetime of inactive sessions

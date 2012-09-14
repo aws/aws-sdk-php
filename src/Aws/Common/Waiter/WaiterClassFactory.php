@@ -28,9 +28,9 @@ use Guzzle\Inflection\InflectorInterface;
 class WaiterClassFactory implements WaiterFactoryInterface
 {
     /**
-     * @var string Base namespace used to look for classes
+     * @var array List of namespaces used to look for classes
      */
-    protected $baseNamespace;
+    protected $namespaces;
 
     /**
      * @var InflectorInterface Inflector used to inflect class names
@@ -38,13 +38,27 @@ class WaiterClassFactory implements WaiterFactoryInterface
     protected $inflector;
 
     /**
-     * @param string             $baseNamespace Base namespace of all waiter objects
-     * @param InflectorInterface $inflector     Inflector used to resolve class names
+     * @param array|string       $namespaces Namespaces of waiter objects
+     * @param InflectorInterface $inflector  Inflector used to resolve class names
      */
-    public function __construct($baseNamespace, InflectorInterface $inflector = null)
+    public function __construct($namespaces = array(), InflectorInterface $inflector = null)
     {
-        $this->baseNamespace = $baseNamespace;
+        $this->namespaces = (array) $namespaces;
         $this->inflector = $inflector ?: Inflector::getDefault();
+    }
+
+    /**
+     * Registers a namespace to check for Waiters
+     *
+     * @param string $namespace Namespace which contains Waiter classes
+     *
+     * @return self
+     */
+    public function registerNamespace($namespace)
+    {
+        array_unshift($this->namespaces, $namespace);
+
+        return $this;
     }
 
     /**
@@ -52,11 +66,20 @@ class WaiterClassFactory implements WaiterFactoryInterface
      */
     public function factory($waiter)
     {
-        // Determine the name of the class to load
-        $className = $this->baseNamespace . '\\' . $this->inflector->camel($waiter);
+        $waiterName = $this->inflector->camel($waiter);
 
-        if (!class_exists($className)) {
-            throw new InvalidArgumentException("Waiter was not found matching {$waiter}: {$className}");
+        // Determine the name of the class to load
+        $className = null;
+        foreach ($this->namespaces as $namespace) {
+            $potentialClassName = $namespace . '\\' . $waiterName;
+            if (class_exists($potentialClassName)) {
+                $className = $potentialClassName;
+                break;
+            }
+        }
+
+        if (!$className) {
+            throw new InvalidArgumentException("Waiter was not found matching {$waiterName}.");
         }
 
         return new $className();

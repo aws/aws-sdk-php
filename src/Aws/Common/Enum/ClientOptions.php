@@ -60,7 +60,7 @@ class ClientOptions extends Enum
     const CREDENTIALS_CACHE_KEY = 'credentials.cache.key';
 
     /**
-     * @var string Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if yourcredentials require
+     * @var string Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your credentials require
      *             a HTTP request (e.g. RefreshableInstanceProfileCredentials)
      */
     const CREDENTIALS_CLIENT = 'credentials.client';

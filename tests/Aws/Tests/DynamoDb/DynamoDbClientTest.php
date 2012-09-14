@@ -4,8 +4,9 @@ namespace Aws\Tests\DynamoDb;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureV4;
-use Aws\DynamoDb\Enum\Type;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Enum\Type;
+use Aws\DynamoDb\Session\SessionHandler;
 use Guzzle\Common\Collection;
 
 class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
@@ -120,5 +121,19 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(12.8, $client->calculateRetryDelay(9));
         $this->assertEquals(25.6, $client->calculateRetryDelay(10));
         $this->assertEquals(51.2, $client->calculateRetryDelay(11));
+    }
+
+    /**
+     * @covers Aws\DynamoDb\DynamoDbClient::registerSessionHandler
+     */
+    public function testCanRegisterSessionHandlerFromClient()
+    {
+        $client = DynamoDbClient::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-west-1'
+        ));
+
+        $this->assertInstanceOf('Aws\DynamoDb\Session\SessionHandler', $client->registerSessionHandler());
     }
 }
