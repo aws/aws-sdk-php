@@ -1,309 +1,1875 @@
 {
-    "commands": {
-        "Default": {
-            "class": "Aws\\Common\\Command\\JsonCommand",
-            "method": "POST",
-            "result_type": "array",
-            "result_doc": "Returns a json_decoded array of the response body",
-            "doc_url": "http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/",
-            "params": {
-                "Content-Type": {
-                    "location": "header",
-                    "static": "application/x-amz-json-1.0"
-                }
-            }
+  "commands":{
+    "BatchGetItem":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
         },
-        "ListTables": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.ListTables"
-                },
-                "Limit": {
-                    "doc": "A number of maximum table names to return.",
-                    "type": "integer",
-                    "location": "json"
-                },
-                "ExclusiveStartTableName": {
-                    "location": "json",
-                    "type": "string"
-                }
-            }
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
         },
-        "Scan": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.Scan"
-                },
-                "TableName": {
-                    "location": "json",
-                    "type": "string"
-                },
-                "ExclusiveStartKey": {
-                    "location": "json",
-                    "type": "object"
-                },
-                "AttributesToGet": {
-                    "type": "object",
-                    "location": "json"
-                },
-                "Count": {
-                    "location": "json",
-                    "type": "bool"
-                },
-                "ScanFilter": {
-                    "location": "json",
-                    "type": "object"
-                },
-                "Limit": {
-                    "type": "integer",
-                    "location": "json"
-                }
-            }
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.BatchGetItem"
         },
-        "AbstractTableOperation": {
-            "extends": "Default",
-            "params": {
-                "TableName": {
-                    "location": "json",
-                    "type": "string",
-                    "required": true
-                },
-                "ProvisionedThroughput": {
-                    "type": "array",
-                    "location": "json",
-                    "required": true
+        "RequestItems":{
+          "name":"RequestItems",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "min":1,
+          "max":100,
+          "additional_properties":{
+            "type":"object",
+            "properties":{
+              "Keys":{
+                "name":"Keys",
+                "required":true,
+                "type":"array",
+                "min":1,
+                "max":100,
+                "items":{
+                  "description":"The primary key that uniquely identifies each item in a table. A primary key can be a one attribute (hash) primary key or a two attribute (hash-and-range) primary key.",
+                  "type":"object",
+                  "properties":{
+                    "HashKeyElement":{
+                      "name":"HashKeyElement",
+                      "required":true,
+                      "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+                      "type":"object",
+                      "properties":{
+                        "S":{
+                          "name":"S",
+                          "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                          "type":"string"
+                        },
+                        "N":{
+                          "name":"N",
+                          "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                          "type":"string"
+                        },
+                        "SS":{
+                          "name":"SS",
+                          "description":"A set of strings.",
+                          "type":"array",
+                          "items":{
+                            "type":"string"
+                          }
+                        },
+                        "NS":{
+                          "name":"NS",
+                          "description":"A set of numbers.",
+                          "type":"array",
+                          "items":{
+                            "type":"string"
+                          }
+                        }
+                      }
+                    },
+                    "RangeKeyElement":{
+                      "name":"RangeKeyElement",
+                      "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+                      "type":"object",
+                      "properties":{
+                        "S":{
+                          "name":"S",
+                          "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                          "type":"string"
+                        },
+                        "N":{
+                          "name":"N",
+                          "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                          "type":"string"
+                        },
+                        "SS":{
+                          "name":"SS",
+                          "description":"A set of strings.",
+                          "type":"array",
+                          "items":{
+                            "type":"string"
+                          }
+                        },
+                        "NS":{
+                          "name":"NS",
+                          "description":"A set of numbers.",
+                          "type":"array",
+                          "items":{
+                            "type":"string"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
-            }
-        },
-        "CreateTable": {
-            "extends": "AbstractTableOperation",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.CreateTable"
-                },
-                "KeySchema": {
-                    "type": "array",
-                    "location": "json",
-                    "required": true
+              },
+              "AttributesToGet":{
+                "name":"AttributesToGet",
+                "type":"array",
+                "min":1,
+                "items":{
+                  "type":"string"
                 }
+              }
             }
-        },
-        "UpdateTable": {
-            "extends": "AbstractTableOperation",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.UpdateTable"
-                }
-            }
-        },
-        "DeleteTable": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.DeleteTable"
-                },
-                "TableName": {
-                    "location": "json",
-                    "type": "string",
-                    "required": true
-                }
-            }
-        },
-        "DescribeTable": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.DescribeTable"
-                },
-                "TableName": {
-                    "location": "json",
-                    "type": "string",
-                    "required": true
-                }
-            }
-        },
-        "AbstractItem": {
-            "extends": "Default",
-            "params": {
-                "TableName": {
-                    "location": "json",
-                    "type": "string",
-                    "required": true
-                },
-                "Expected": {
-                    "location": "json",
-                    "type": "array"
-                },
-                "ReturnValues": {
-                    "location": "json",
-                    "default": "NONE",
-                    "type": "choice:NONE,ALL_OLD"
-                }
-            }
-        },
-        "PutItem": {
-            "extends": "AbstractItem",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.PutItem"
-                },
-                "Item": {
-                    "location": "json",
-                    "type": "object",
-                    "required": true
-                }
-            }
-        },
-        "DeleteItem": {
-            "extends": "AbstractItem",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.DeleteItem"
-                },
-                "Key": {
-                    "location": "json",
-                    "type": "object",
-                    "required": true
-                }
-            }
-        },
-        "GetItem": {
-            "extends": "AbstractItem",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.GetItem"
-                },
-                "Key": {
-                    "location": "json",
-                    "type": "object",
-                    "required": true
-                },
-                "AttributesToGet": {
-                    "location": "json",
-                    "type": "object"
-                },
-                "ConsistentRead": {
-                    "location": "json",
-                    "type": "type:bool"
-                }
-            }
-        },
-        "BatchGetItem": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.BatchGetItem"
-                },
-                "RequestItems": {
-                    "location": "json",
-                    "required": true
-                }
-            }
-        },
-        "Query": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.Query"
-                },
-                "TableName": {
-                    "location": "json",
-                    "type": "string",
-                    "required": true
-                },
-                "Limit": {
-                    "type": "integer",
-                    "location": "json"
-                },
-                "AttributesToGet": {
-                    "location": "json",
-                    "type": "object"
-                },
-                "ConsistentRead": {
-                    "location": "json",
-                    "type": "type:bool"
-                },
-                "HashKeyValue": {
-                    "location": "json",
-                    "type": "array",
-                    "required": true
-                },
-                "RangeKeyCondition": {
-                    "location": "json",
-                    "type": "array"
-                },
-                "ScanIndexForward": {
-                    "location": "json",
-                    "type": "bool"
-                },
-                "ExclusiveStartKey": {
-                    "location": "json",
-                    "type": "array"
-                }
-            }
-        },
-        "UpdateItem": {
-            "extends": "AbstractItem",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.UpdateItem"
-                },
-                "Key": {
-                    "location": "json",
-                    "type": "array",
-                    "required": true
-                },
-                "AttributeUpdates": {
-                    "location": "json",
-                    "type": "array"
-                },
-                "ReturnValues": {
-                    "location": "json",
-                    "default": "NONE",
-                    "type": "choice:NONE,ALL_OLD,UPDATED_OLD,ALL_NEW,UPDATED_NEW"
-                }
-            }
-        },
-        "BatchWriteItem": {
-            "extends": "Default",
-            "params": {
-                "target": {
-                    "location": "header",
-                    "required": true,
-                    "static" : "DynamoDB_20111205.BatchWriteItem"
-                },
-                "RequestItems": {
-                    "location": "json",
-                    "type": "array",
-                    "required": true
-                }
-            }
+          }
         }
+      },
+      "name":"BatchGetItem",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "BatchWriteItem":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.BatchWriteItem"
+        },
+        "RequestItems":{
+          "name":"RequestItems",
+          "required":true,
+          "description":"A map of table name to list-of-write-requests. Used as input to the BatchWriteItem API call",
+          "type":"object",
+          "location":"json",
+          "min":1,
+          "max":25,
+          "additional_properties":{
+            "type":"array",
+            "min":1,
+            "max":25,
+            "items":{
+              "description":"This structure is a Union of PutRequest and DeleteRequest. It can contain exactly one of PutRequest or DeleteRequest. Never Both. This is enforced in the code.",
+              "type":"object",
+              "properties":{
+                "PutRequest":{
+                  "name":"PutRequest",
+                  "type":"object",
+                  "properties":{
+                    "Item":{
+                      "name":"Item",
+                      "required":true,
+                      "description":"The item to put",
+                      "type":"object",
+                      "additional_properties":{
+                        "description":"AttributeValue can be String, Number, StringSet, NumberSet.",
+                        "type":"object",
+                        "properties":{
+                          "S":{
+                            "name":"S",
+                            "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                            "type":"string"
+                          },
+                          "N":{
+                            "name":"N",
+                            "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                            "type":"string"
+                          },
+                          "SS":{
+                            "name":"SS",
+                            "description":"A set of strings.",
+                            "type":"array",
+                            "items":{
+                              "type":"string"
+                            }
+                          },
+                          "NS":{
+                            "name":"NS",
+                            "description":"A set of numbers.",
+                            "type":"array",
+                            "items":{
+                              "type":"string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "DeleteRequest":{
+                  "name":"DeleteRequest",
+                  "type":"object",
+                  "properties":{
+                    "Key":{
+                      "name":"Key",
+                      "required":true,
+                      "description":"The item's key to be delete",
+                      "type":"object",
+                      "properties":{
+                        "HashKeyElement":{
+                          "name":"HashKeyElement",
+                          "required":true,
+                          "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+                          "type":"object",
+                          "properties":{
+                            "S":{
+                              "name":"S",
+                              "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                              "type":"string"
+                            },
+                            "N":{
+                              "name":"N",
+                              "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                              "type":"string"
+                            },
+                            "SS":{
+                              "name":"SS",
+                              "description":"A set of strings.",
+                              "type":"array",
+                              "items":{
+                                "type":"string"
+                              }
+                            },
+                            "NS":{
+                              "name":"NS",
+                              "description":"A set of numbers.",
+                              "type":"array",
+                              "items":{
+                                "type":"string"
+                              }
+                            }
+                          }
+                        },
+                        "RangeKeyElement":{
+                          "name":"RangeKeyElement",
+                          "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+                          "type":"object",
+                          "properties":{
+                            "S":{
+                              "name":"S",
+                              "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                              "type":"string"
+                            },
+                            "N":{
+                              "name":"N",
+                              "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                              "type":"string"
+                            },
+                            "SS":{
+                              "name":"SS",
+                              "description":"A set of strings.",
+                              "type":"array",
+                              "items":{
+                                "type":"string"
+                              }
+                            },
+                            "NS":{
+                              "name":"NS",
+                              "description":"A set of numbers.",
+                              "type":"array",
+                              "items":{
+                                "type":"string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "name":"BatchWriteItem",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "CreateTable":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.CreateTable"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table you want to create. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "KeySchema":{
+          "name":"KeySchema",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "HashKeyElement":{
+              "name":"HashKeyElement",
+              "required":true,
+              "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "AttributeName":{
+                  "name":"AttributeName",
+                  "required":true,
+                  "description":"The AttributeName of the KeySchemaElement.",
+                  "type":"string",
+                  "min":1,
+                  "max":255
+                },
+                "AttributeType":{
+                  "name":"AttributeType",
+                  "required":true,
+                  "description":"The AttributeType of the KeySchemaElement which can be a String or a Number.",
+                  "type":"string",
+                  "enum":[
+                    "S",
+                    "N"
+                  ]
+                }
+              }
+            },
+            "RangeKeyElement":{
+              "name":"RangeKeyElement",
+              "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "AttributeName":{
+                  "name":"AttributeName",
+                  "required":true,
+                  "description":"The AttributeName of the KeySchemaElement.",
+                  "type":"string",
+                  "min":1,
+                  "max":255
+                },
+                "AttributeType":{
+                  "name":"AttributeType",
+                  "required":true,
+                  "description":"The AttributeType of the KeySchemaElement which can be a String or a Number.",
+                  "type":"string",
+                  "enum":[
+                    "S",
+                    "N"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "ProvisionedThroughput":{
+          "name":"ProvisionedThroughput",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "ReadCapacityUnits":{
+              "name":"ReadCapacityUnits",
+              "required":true,
+              "description":"ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.",
+              "min":1
+            },
+            "WriteCapacityUnits":{
+              "name":"WriteCapacityUnits",
+              "required":true,
+              "description":"WriteCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the WriteCapacityUnits.",
+              "min":1
+            }
+          }
+        }
+      },
+      "name":"CreateTable",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceInUseException"
+        },
+        {
+          "reason":"This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.",
+          "class":"LimitExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "DeleteItem":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.DeleteItem"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table in which you want to delete an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "Key":{
+          "name":"Key",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "HashKeyElement":{
+              "name":"HashKeyElement",
+              "required":true,
+              "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            },
+            "RangeKeyElement":{
+              "name":"RangeKeyElement",
+              "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Expected":{
+          "name":"Expected",
+          "type":"object",
+          "location":"json",
+          "additional_properties":{
+            "description":"Allows you to provide an attribute name, and whether or not Amazon DynamoDB should check to see if the attribute value already exists; or if the attribute value exists and has a particular value before changing it.",
+            "type":"object",
+            "properties":{
+              "Value":{
+                "name":"Value",
+                "description":"Specify whether or not a value already exists and has a specific content for the attribute name-value pair.",
+                "type":"object",
+                "properties":{
+                  "S":{
+                    "name":"S",
+                    "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                    "type":"string"
+                  },
+                  "N":{
+                    "name":"N",
+                    "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                    "type":"string"
+                  },
+                  "SS":{
+                    "name":"SS",
+                    "description":"A set of strings.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  },
+                  "NS":{
+                    "name":"NS",
+                    "description":"A set of numbers.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  }
+                }
+              },
+              "Exists":{
+                "name":"Exists",
+                "description":"Specify whether or not a value already exists for the attribute name-value pair.",
+                "type":"bool",
+                "filters":[
+                  "Aws\\Common\\Command\\Filters\\booleanString"
+                ]
+              }
+            }
+          }
+        },
+        "ReturnValues":{
+          "name":"ReturnValues",
+          "type":"string",
+          "location":"json",
+          "enum":[
+            "NONE",
+            "ALL_OLD",
+            "UPDATED_OLD",
+            "ALL_NEW",
+            "UPDATED_NEW"
+          ]
+        }
+      },
+      "name":"DeleteItem",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when an expected value does not match what was found in the system.",
+          "class":"ConditionalCheckFailedException"
+        },
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "DeleteTable":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.DeleteTable"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table you want to delete. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        }
+      },
+      "name":"DeleteTable",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceInUseException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.",
+          "class":"LimitExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "DescribeTable":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.DescribeTable"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table you want to describe. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        }
+      },
+      "name":"DescribeTable",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "GetItem":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.GetItem"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table in which you want to get an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "Key":{
+          "name":"Key",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "HashKeyElement":{
+              "name":"HashKeyElement",
+              "required":true,
+              "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            },
+            "RangeKeyElement":{
+              "name":"RangeKeyElement",
+              "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AttributesToGet":{
+          "name":"AttributesToGet",
+          "type":"array",
+          "location":"json",
+          "min":1,
+          "items":{
+            "type":"string"
+          }
+        },
+        "ConsistentRead":{
+          "name":"ConsistentRead",
+          "type":"bool",
+          "location":"json",
+          "filters":[
+            "Aws\\Common\\Command\\Filters\\booleanString"
+          ]
+        }
+      },
+      "name":"GetItem",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "ListTables":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.ListTables"
+        },
+        "ExclusiveStartTableName":{
+          "name":"ExclusiveStartTableName",
+          "description":"The name of the table that starts the list. If you already ran a ListTables operation and received a LastEvaluatedTableName value in the response, use that value here to continue the list.",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "Limit":{
+          "name":"Limit",
+          "type":"numeric",
+          "location":"json",
+          "min":1,
+          "max":100
+        }
+      },
+      "name":"ListTables",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "PutItem":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.PutItem"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table in which you want to put an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "Item":{
+          "name":"Item",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "additional_properties":{
+            "description":"AttributeValue can be String, Number, StringSet, NumberSet.",
+            "type":"object",
+            "properties":{
+              "S":{
+                "name":"S",
+                "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                "type":"string"
+              },
+              "N":{
+                "name":"N",
+                "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                "type":"string"
+              },
+              "SS":{
+                "name":"SS",
+                "description":"A set of strings.",
+                "type":"array",
+                "items":{
+                  "type":"string"
+                }
+              },
+              "NS":{
+                "name":"NS",
+                "description":"A set of numbers.",
+                "type":"array",
+                "items":{
+                  "type":"string"
+                }
+              }
+            }
+          }
+        },
+        "Expected":{
+          "name":"Expected",
+          "type":"object",
+          "location":"json",
+          "additional_properties":{
+            "description":"Allows you to provide an attribute name, and whether or not Amazon DynamoDB should check to see if the attribute value already exists; or if the attribute value exists and has a particular value before changing it.",
+            "type":"object",
+            "properties":{
+              "Value":{
+                "name":"Value",
+                "description":"Specify whether or not a value already exists and has a specific content for the attribute name-value pair.",
+                "type":"object",
+                "properties":{
+                  "S":{
+                    "name":"S",
+                    "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                    "type":"string"
+                  },
+                  "N":{
+                    "name":"N",
+                    "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                    "type":"string"
+                  },
+                  "SS":{
+                    "name":"SS",
+                    "description":"A set of strings.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  },
+                  "NS":{
+                    "name":"NS",
+                    "description":"A set of numbers.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  }
+                }
+              },
+              "Exists":{
+                "name":"Exists",
+                "description":"Specify whether or not a value already exists for the attribute name-value pair.",
+                "type":"bool",
+                "filters":[
+                  "Aws\\Common\\Command\\Filters\\booleanString"
+                ]
+              }
+            }
+          }
+        },
+        "ReturnValues":{
+          "name":"ReturnValues",
+          "type":"string",
+          "location":"json",
+          "enum":[
+            "NONE",
+            "ALL_OLD",
+            "UPDATED_OLD",
+            "ALL_NEW",
+            "UPDATED_NEW"
+          ]
+        }
+      },
+      "name":"PutItem",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when an expected value does not match what was found in the system.",
+          "class":"ConditionalCheckFailedException"
+        },
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "Query":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.Query"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table in which you want to query. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "AttributesToGet":{
+          "name":"AttributesToGet",
+          "type":"array",
+          "location":"json",
+          "min":1,
+          "items":{
+            "type":"string"
+          }
+        },
+        "Limit":{
+          "name":"Limit",
+          "description":"The maximum number of items to return. If Amazon DynamoDB hits this limit while querying the table, it stops the query and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the query. Also, if the result set size exceeds 1MB before Amazon DynamoDB hits this limit, it stops the query and returns the matching values, and a LastEvaluatedKey to apply in a subsequent operation to continue the query.",
+          "type":"numeric",
+          "location":"json",
+          "min":1
+        },
+        "ConsistentRead":{
+          "name":"ConsistentRead",
+          "type":"bool",
+          "location":"json",
+          "filters":[
+            "Aws\\Common\\Command\\Filters\\booleanString"
+          ]
+        },
+        "Count":{
+          "name":"Count",
+          "description":"If set to true, Amazon DynamoDB returns a total number of items that match the query parameters, instead of a list of the matching items and their attributes. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.",
+          "type":"bool",
+          "location":"json",
+          "filters":[
+            "Aws\\Common\\Command\\Filters\\booleanString"
+          ]
+        },
+        "HashKeyValue":{
+          "name":"HashKeyValue",
+          "required":true,
+          "description":"Attribute value of the hash component of the composite primary key.",
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "S":{
+              "name":"S",
+              "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+              "type":"string"
+            },
+            "N":{
+              "name":"N",
+              "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+              "type":"string"
+            },
+            "SS":{
+              "name":"SS",
+              "description":"A set of strings.",
+              "type":"array",
+              "items":{
+                "type":"string"
+              }
+            },
+            "NS":{
+              "name":"NS",
+              "description":"A set of numbers.",
+              "type":"array",
+              "items":{
+                "type":"string"
+              }
+            }
+          }
+        },
+        "RangeKeyCondition":{
+          "name":"RangeKeyCondition",
+          "description":"A container for the attribute values and comparison operators to use for the query.",
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "AttributeValueList":{
+              "name":"AttributeValueList",
+              "type":"array",
+              "items":{
+                "description":"AttributeValue can be String, Number, StringSet, NumberSet.",
+                "type":"object",
+                "properties":{
+                  "S":{
+                    "name":"S",
+                    "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                    "type":"string"
+                  },
+                  "N":{
+                    "name":"N",
+                    "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                    "type":"string"
+                  },
+                  "SS":{
+                    "name":"SS",
+                    "description":"A set of strings.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  },
+                  "NS":{
+                    "name":"NS",
+                    "description":"A set of numbers.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  }
+                }
+              }
+            },
+            "ComparisonOperator":{
+              "name":"ComparisonOperator",
+              "required":true,
+              "type":"string",
+              "enum":[
+                "EQ",
+                "NE",
+                "IN",
+                "LE",
+                "LT",
+                "GE",
+                "GT",
+                "BETWEEN",
+                "NOT_NULL",
+                "NULL",
+                "CONTAINS",
+                "NOT_CONTAINS",
+                "BEGINS_WITH"
+              ]
+            }
+          }
+        },
+        "ScanIndexForward":{
+          "name":"ScanIndexForward",
+          "description":"Specifies forward or backward traversal of the index. Amazon DynamoDB returns results reflecting the requested order, determined by the range key. The default value is true (forward).",
+          "type":"bool",
+          "location":"json",
+          "filters":[
+            "Aws\\Common\\Command\\Filters\\booleanString"
+          ]
+        },
+        "ExclusiveStartKey":{
+          "name":"ExclusiveStartKey",
+          "description":"Primary key of the item from which to continue an earlier query. An earlier query might provide this value as the LastEvaluatedKey if that query operation was interrupted before completing the query; either because of the result set size or the Limit parameter. The LastEvaluatedKey can be passed back in a new query request to continue the operation from that point.",
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "HashKeyElement":{
+              "name":"HashKeyElement",
+              "required":true,
+              "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            },
+            "RangeKeyElement":{
+              "name":"RangeKeyElement",
+              "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "name":"Query",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "Scan":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.Scan"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table in which you want to scan. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "AttributesToGet":{
+          "name":"AttributesToGet",
+          "type":"array",
+          "location":"json",
+          "min":1,
+          "items":{
+            "type":"string"
+          }
+        },
+        "Limit":{
+          "name":"Limit",
+          "description":"The maximum number of items to return. If Amazon DynamoDB hits this limit while scanning the table, it stops the scan and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the scan. Also, if the scanned data set size exceeds 1 MB before Amazon DynamoDB hits this limit, it stops the scan and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the scan.",
+          "type":"numeric",
+          "location":"json",
+          "min":1
+        },
+        "Count":{
+          "name":"Count",
+          "description":"If set to true, Amazon DynamoDB returns a total number of items for the Scan operation, even if the operation has no matching items for the assigned filter. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.",
+          "type":"bool",
+          "location":"json",
+          "filters":[
+            "Aws\\Common\\Command\\Filters\\booleanString"
+          ]
+        },
+        "ScanFilter":{
+          "name":"ScanFilter",
+          "description":"Evaluates the scan results and returns only the desired values.",
+          "type":"object",
+          "location":"json",
+          "additional_properties":{
+            "type":"object",
+            "properties":{
+              "AttributeValueList":{
+                "name":"AttributeValueList",
+                "type":"array",
+                "items":{
+                  "description":"AttributeValue can be String, Number, StringSet, NumberSet.",
+                  "type":"object",
+                  "properties":{
+                    "S":{
+                      "name":"S",
+                      "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                      "type":"string"
+                    },
+                    "N":{
+                      "name":"N",
+                      "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                      "type":"string"
+                    },
+                    "SS":{
+                      "name":"SS",
+                      "description":"A set of strings.",
+                      "type":"array",
+                      "items":{
+                        "type":"string"
+                      }
+                    },
+                    "NS":{
+                      "name":"NS",
+                      "description":"A set of numbers.",
+                      "type":"array",
+                      "items":{
+                        "type":"string"
+                      }
+                    }
+                  }
+                }
+              },
+              "ComparisonOperator":{
+                "name":"ComparisonOperator",
+                "required":true,
+                "type":"string",
+                "enum":[
+                  "EQ",
+                  "NE",
+                  "IN",
+                  "LE",
+                  "LT",
+                  "GE",
+                  "GT",
+                  "BETWEEN",
+                  "NOT_NULL",
+                  "NULL",
+                  "CONTAINS",
+                  "NOT_CONTAINS",
+                  "BEGINS_WITH"
+                ]
+              }
+            }
+          }
+        },
+        "ExclusiveStartKey":{
+          "name":"ExclusiveStartKey",
+          "description":"Primary key of the item from which to continue an earlier scan. An earlier scan might provide this value if that scan operation was interrupted before scanning the entire table; either because of the result set size or the Limit parameter. The LastEvaluatedKey can be passed back in a new scan request to continue the operation from that point.",
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "HashKeyElement":{
+              "name":"HashKeyElement",
+              "required":true,
+              "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            },
+            "RangeKeyElement":{
+              "name":"RangeKeyElement",
+              "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "name":"Scan",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "UpdateItem":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.UpdateItem"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table in which you want to update an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "Key":{
+          "name":"Key",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "HashKeyElement":{
+              "name":"HashKeyElement",
+              "required":true,
+              "description":"A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            },
+            "RangeKeyElement":{
+              "name":"RangeKeyElement",
+              "description":"A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.",
+              "type":"object",
+              "properties":{
+                "S":{
+                  "name":"S",
+                  "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                  "type":"string"
+                },
+                "N":{
+                  "name":"N",
+                  "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                  "type":"string"
+                },
+                "SS":{
+                  "name":"SS",
+                  "description":"A set of strings.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                },
+                "NS":{
+                  "name":"NS",
+                  "description":"A set of numbers.",
+                  "type":"array",
+                  "items":{
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AttributeUpdates":{
+          "name":"AttributeUpdates",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "additional_properties":{
+            "description":"Specifies the attribute to update and how to perform the update. Possible values: PUT (default), ADD or DELETE.",
+            "type":"object",
+            "properties":{
+              "Value":{
+                "name":"Value",
+                "type":"object",
+                "properties":{
+                  "S":{
+                    "name":"S",
+                    "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                    "type":"string"
+                  },
+                  "N":{
+                    "name":"N",
+                    "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                    "type":"string"
+                  },
+                  "SS":{
+                    "name":"SS",
+                    "description":"A set of strings.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  },
+                  "NS":{
+                    "name":"NS",
+                    "description":"A set of numbers.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  }
+                }
+              },
+              "Action":{
+                "name":"Action",
+                "type":"string",
+                "enum":[
+                  "ADD",
+                  "PUT",
+                  "DELETE"
+                ]
+              }
+            }
+          }
+        },
+        "Expected":{
+          "name":"Expected",
+          "type":"object",
+          "location":"json",
+          "additional_properties":{
+            "description":"Allows you to provide an attribute name, and whether or not Amazon DynamoDB should check to see if the attribute value already exists; or if the attribute value exists and has a particular value before changing it.",
+            "type":"object",
+            "properties":{
+              "Value":{
+                "name":"Value",
+                "description":"Specify whether or not a value already exists and has a specific content for the attribute name-value pair.",
+                "type":"object",
+                "properties":{
+                  "S":{
+                    "name":"S",
+                    "description":"Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).",
+                    "type":"string"
+                  },
+                  "N":{
+                    "name":"N",
+                    "description":"Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.",
+                    "type":"string"
+                  },
+                  "SS":{
+                    "name":"SS",
+                    "description":"A set of strings.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  },
+                  "NS":{
+                    "name":"NS",
+                    "description":"A set of numbers.",
+                    "type":"array",
+                    "items":{
+                      "type":"string"
+                    }
+                  }
+                }
+              },
+              "Exists":{
+                "name":"Exists",
+                "description":"Specify whether or not a value already exists for the attribute name-value pair.",
+                "type":"bool",
+                "filters":[
+                  "Aws\\Common\\Command\\Filters\\booleanString"
+                ]
+              }
+            }
+          }
+        },
+        "ReturnValues":{
+          "name":"ReturnValues",
+          "type":"string",
+          "location":"json",
+          "enum":[
+            "NONE",
+            "ALL_OLD",
+            "UPDATED_OLD",
+            "ALL_NEW",
+            "UPDATED_NEW"
+          ]
+        }
+      },
+      "name":"UpdateItem",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when an expected value does not match what was found in the system.",
+          "class":"ConditionalCheckFailedException"
+        },
+        {
+          "reason":"This exception is thrown when the level of provisioned throughput defined for the table is exceeded.",
+          "class":"ProvisionedThroughputExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
+    },
+    "UpdateTable":{
+      "params":{
+        "Content-Type":{
+          "name":"Content-Type",
+          "location":"header",
+          "static":"application\/x-amz-json-1.0"
+        },
+        "command.content_type":{
+          "name":"command.content_type",
+          "static":"application\/json"
+        },
+        "X-Amz-Target":{
+          "name":"X-Amz-Target",
+          "location":"header",
+          "static":"DynamoDB_20111205.UpdateTable"
+        },
+        "TableName":{
+          "name":"TableName",
+          "required":true,
+          "description":"The name of the table you want to update. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).",
+          "type":"string",
+          "location":"json",
+          "pattern":"\/[a-zA-Z0-9_.-]+\/",
+          "min":3,
+          "max":255
+        },
+        "ProvisionedThroughput":{
+          "name":"ProvisionedThroughput",
+          "required":true,
+          "type":"object",
+          "location":"json",
+          "properties":{
+            "ReadCapacityUnits":{
+              "name":"ReadCapacityUnits",
+              "required":true,
+              "description":"ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.",
+              "min":1
+            },
+            "WriteCapacityUnits":{
+              "name":"WriteCapacityUnits",
+              "required":true,
+              "description":"WriteCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the WriteCapacityUnits.",
+              "min":1
+            }
+          }
+        }
+      },
+      "name":"UpdateTable",
+      "method":"POST",
+      "uri":"\/",
+      "class":"Aws\\Common\\Command\\JsonCommand",
+      "result_description":"Returns a json_decoded array of the response body",
+      "result_type":"array",
+      "errors":[
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceInUseException"
+        },
+        {
+          "reason":"This exception is thrown when the resource which is being attempted to be changed is in use.",
+          "class":"ResourceNotFoundException"
+        },
+        {
+          "reason":"This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.",
+          "class":"LimitExceededException"
+        },
+        {
+          "reason":"This exception is thrown when the service has a problem when trying to process the request.",
+          "class":"InternalServerError"
+        }
+      ]
     }
+  }
 }
