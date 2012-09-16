@@ -29,7 +29,7 @@ class AwsQueryVisitor extends AbstractVisitor
      * @param array    $query  Built up query string values
      * @param string   $prefix String to prepend to sub query values
      */
-    protected function customResolver(array $value, Parameter $param, array &$query, $prefix = '')
+    protected function customResolver($value, Parameter $param, array &$query, $prefix = '')
     {
         if ($param->getType() == 'object') {
             foreach ($value as $name => $v) {
@@ -43,9 +43,7 @@ class AwsQueryVisitor extends AbstractVisitor
                 }
             }
         } elseif ($param->getType() == 'array') {
-
             $offset = $param->getData('offset') ?: 0;
-
             foreach ($value as $index => $v) {
                 $index += $offset;
                 if (is_array($v) && $items = $param->getItems()) {

@@ -5,10 +5,15 @@ return array (
     'description' => 'Amazon DynamoDB is a fast, highly scalable, highly available, cost-effective non-relational database service.',
     'operations' => array(
         'BatchGetItem' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -16,8 +21,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.BatchGetItem',
                 ),
                 'RequestItems' => array(
@@ -143,11 +148,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
@@ -159,29 +159,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'BatchWriteItem' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -189,8 +180,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.BatchWriteItem',
                 ),
                 'RequestItems' => array(
@@ -371,11 +362,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
@@ -387,29 +373,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'CreateTable' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -417,8 +394,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.CreateTable',
                 ),
                 'TableName' => array(
@@ -501,11 +478,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
@@ -517,29 +489,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceInUseException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.',
-                    'class' => 'LimitExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'DeleteItem' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -547,8 +510,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.DeleteItem',
                 ),
                 'TableName' => array(
@@ -731,11 +694,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when an expected value does not match what was found in the system.',
@@ -751,33 +709,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when an expected value does not match what was found in the system.',
-                    'class' => 'ConditionalCheckFailedException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'DeleteTable' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -785,8 +730,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.DeleteTable',
                 ),
                 'TableName' => array(
@@ -798,11 +743,6 @@ return array (
                     'max' => 255,
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
@@ -818,33 +758,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceInUseException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.',
-                    'class' => 'LimitExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'DescribeTable' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -852,8 +779,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.DescribeTable',
                 ),
                 'TableName' => array(
@@ -865,11 +792,6 @@ return array (
                     'max' => 255,
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
@@ -877,25 +799,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'GetItem' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -903,8 +820,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.GetItem',
                 ),
                 'TableName' => array(
@@ -1029,11 +946,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
@@ -1045,29 +957,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'ListTables' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -1075,8 +978,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.ListTables',
                 ),
                 'ExclusiveStartTableName' => array(
@@ -1093,29 +996,23 @@ return array (
                     'max' => 100,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'PutItem' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'array',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'errorResponses' => array(
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-        ),
-        'PutItem' => array(
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -1123,8 +1020,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.PutItem',
                 ),
                 'TableName' => array(
@@ -1259,11 +1156,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when an expected value does not match what was found in the system.',
@@ -1279,33 +1171,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when an expected value does not match what was found in the system.',
-                    'class' => 'ConditionalCheckFailedException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'Query' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -1313,8 +1192,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.Query',
                 ),
                 'TableName' => array(
@@ -1582,11 +1461,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
@@ -1598,29 +1472,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'Scan' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -1628,8 +1493,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.Scan',
                 ),
                 'TableName' => array(
@@ -1838,11 +1703,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
@@ -1854,29 +1714,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'UpdateItem' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -1884,8 +1735,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.UpdateItem',
                 ),
                 'TableName' => array(
@@ -2131,11 +1982,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when an expected value does not match what was found in the system.',
@@ -2151,33 +1997,20 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when an expected value does not match what was found in the system.',
-                    'class' => 'ConditionalCheckFailedException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the level of provisioned throughput defined for the table is exceeded.',
-                    'class' => 'ProvisionedThroughputExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),
         'UpdateTable' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'array',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
                 'command.content_type' => array(
@@ -2185,8 +2018,8 @@ return array (
                     'default' => 'application/json',
                 ),
                 'X-Amz-Target' => array(
-                    'location' => 'header',
                     'static' => true,
+                    'location' => 'header',
                     'default' => 'DynamoDB_20111205.UpdateTable',
                 ),
                 'TableName' => array(
@@ -2215,11 +2048,6 @@ return array (
                     ),
                 ),
             ),
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
             'errorResponses' => array(
                 array(
                     'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
@@ -2235,25 +2063,7 @@ return array (
                 ),
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
-                ),
-            ),
-            'errors' => array(
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceInUseException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the resource which is being attempted to be changed is in use.',
-                    'class' => 'ResourceNotFoundException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.',
-                    'class' => 'LimitExceededException',
-                ),
-                array(
-                    'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
-                    'class' => 'InternalServerError',
+                    'class' => 'InternalServerErrorException',
                 ),
             ),
         ),

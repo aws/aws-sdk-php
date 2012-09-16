@@ -3,11 +3,15 @@
 namespace Aws\Tests\Common\Command;
 
 use Aws\Common\Command\AwsQueryVisitor;
+use Guzzle\Service\Client;
+use Aws\Common\Command\QueryCommand;
+use Guzzle\Service\Description\Operation;
 use Guzzle\Service\Description\Parameter;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 
 /**
  * @covers Aws\Common\Command\AwsQueryVisitor
+ * @covers Aws\Common\Command\QueryCommand
  */
 class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -94,5 +98,22 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
             'IpPermissions.1.IpRanges.1.CidrIp' => 'test',
             'IpPermissions.1.Foo.member.10' => 'test',
         ), $fields);
+    }
+
+    public function testAppliesTopLevelScalarParams()
+    {
+        $operation = new Operation(array(
+            'parameters' => array(
+                'Foo' => array(
+                    'location' => 'aws.query',
+                    'type'     => 'string',
+                )
+            )
+        ));
+        $command = new QueryCommand(array('Foo' => 'test'), $operation);
+        $command->setClient(new Client());
+        $request = $command->prepare();
+        $fields = $request->getPostFields()->getAll();
+        $this->assertEquals(array('Foo' => 'test'), $fields);
     }
 }

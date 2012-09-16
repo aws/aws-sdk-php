@@ -36,6 +36,16 @@ class DefaultXmlExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
                 '  <Resource>Foo</Resource>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</Error>'
+            ),
+            array(
+                '<ErrorResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">' .
+                '  <Error>' .
+                '    <Type>Error code text</Type>' .
+                '    <Code>Error code text</Code>' .
+                '    <Message>Error message</Message>' .
+                '  </Error>' .
+                '  <RequestId>xyz</RequestId>' .
+                '</ErrorResponse>'
             )
         );
     }

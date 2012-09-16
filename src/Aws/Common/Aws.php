@@ -75,10 +75,12 @@ class Aws extends ServiceBuilder
             $config = self::getDefaultServiceDefinition();
         }
 
+        // @codeCoverageIgnoreStart
         if (!self::$defaultFactory) {
             self::$defaultFactory = new ServiceBuilderAbstractFactory();
             self::$defaultFactory->getJsonFactory()->addAlias('_aws', self::getDefaultServiceDefinition());
         }
+        // @codeCoverageIgnoreEnd
 
         return self::$defaultFactory->build($config, $globalParameters);
     }

@@ -42,4 +42,12 @@ class ThrottlingErrorCheckerTest extends \Guzzle\Tests\GuzzleTestCase
         $checker->setNext(new ExponentialBackoffStrategy());
         $this->assertEquals(8, $checker->getBackoffPeriod(3, $request, $response));
     }
+
+    public function testBehavesProperlyAsChainLink()
+    {
+        $s = new ExponentialBackoffStrategy();
+        $checker = new ThrottlingErrorChecker($s);
+        $this->assertTrue($checker->makesDecision());
+        $this->assertSame($s, $checker->getNext());
+    }
 }

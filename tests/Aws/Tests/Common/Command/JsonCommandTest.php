@@ -9,7 +9,6 @@ use Guzzle\Service\Description\Operation;
 
 /**
  * @covers Aws\Common\Command\JsonCommand
- * @covers Aws\Common\Command\JsonBodyVisitor
  */
 class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements \IteratorAggregate, ToArrayInterface
 {
@@ -54,6 +53,14 @@ class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements \IteratorA
         $json = json_decode((string) $request->getBody(), true);
         $this->assertEquals(array('baz' => 'bar'), $json['test']);
         $this->assertEquals(array('baz' => array('baz' => 'bar')), $json['foo']);
+    }
+
+    public function testEnsuresThatBodyIsAlwaysSet()
+    {
+        $command = new JsonCommand();
+        $command->setClient(new Client());
+        $request = $command->prepare();
+        $this->assertEquals('{}', (string) $request->getBody());
     }
 
     public function toArray()
