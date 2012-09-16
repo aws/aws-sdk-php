@@ -238,6 +238,34 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testCreatesTable
      */
+    public function testBase64EncodesBinaryData()
+    {
+        self::log("Checking to ensure binary data is base64 encoded before being sent over the wire");
+        $cmd = $this->client->getCommand('PutItem', array(
+            'TableName' => $this->table,
+            'Item'      => array(
+                'foo' => array('S' => 'f'),
+                'bar' => array('N' => '1'),
+                'v'   => array('B' => 'a'),
+                'd'   => array('BS' => array('a', 'b'))
+            )
+        ));
+
+        try {
+            $cmd->execute();
+        } catch (\Aws\Common\Exception\ServiceResponseException $e) {
+            echo $e->getResponse()->getRequest() . "\n" . $e->getResponse() . "\n";
+            die();
+        }
+        $this->assertContains(
+            '"Item":{"foo":{"S":"f"},"bar":{"N":"1"},"v":{"B":"YQ=="},"d":{"BS":["YQ==","Yg=="]}}}',
+            (string) $cmd->getRequest()->getBody()
+        );
+    }
+
+    /**
+     * @depends testCreatesTable
+     */
     public function testIteratesOverScan()
     {
         self::log('Adding 3 items to the table');

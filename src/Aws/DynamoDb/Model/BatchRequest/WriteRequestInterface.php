@@ -21,7 +21,7 @@ use Aws\Common\ToArrayInterface;
 /**
  * An interface used to describe a batch write request
  */
-interface WriteRequestInterface extends ToArrayInterface
+interface WriteRequestInterface extends \IteratorAggregate, ToArrayInterface
 {
     /**
      * Returns the table name that the write request is for.

@@ -1,16 +1,16 @@
 {
-    "commands": {
+    "operations": {
 
         "Default": {
             "class": "Aws\\S3\\Command\\DefaultCommand",
-            "result_type": "mixed",
-            "result_description": "Returns the Amazon S3 result",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/dev/Welcome.html"
+            "responseClass": "mixed",
+            "responseNotes": "Returns the Amazon S3 result",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/dev/Welcome.html"
         },
 
         "AbstractRequiresBucket": {
             "extends": "Default",
-            "params": {
+            "parameters": {
                 "bucket": {
                     "description": "The name of the bucket. Buckets partition the namespace of objects stored in Amazon S3 at the top level. Within a bucket, you can use any names for your objects, but bucket names must be unique across all of Amazon S3.",
                     "required": true,
@@ -27,7 +27,7 @@
         "AbstractRequiresKey": {
             "extends": "AbstractRequiresBucket",
             "uri": "{+key}",
-            "params": {
+            "parameters": {
                 "key": {
                     "description": "The name that you assign to an object. You use the object key to retrieve the object.",
                     "type": "string",
@@ -68,37 +68,37 @@
             "acl": {
                 "description": "Use this parameter to add a complex ACL hto the object instead of using a canned ACL",
                 "type": "object",
-                "instance_of": "Aws\\S3\\Model\\Acl"
+                "instanceOf": "Aws\\S3\\Model\\Acl"
             }
         },
 
         "ListBuckets": {
             "extends": "Default",
-            "method": "GET",
-            "description": "This implementation of the GET operation returns a list of all buckets owned by the authenticated sender of the request.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
-            "result_description": "SimpleXMLElement containing the list of buckets",
-            "result_type": "SimpleXMLElement"
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation returns a list of all buckets owned by the authenticated sender of the request.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
+            "responseNotes": "SimpleXMLElement containing the list of buckets",
+            "responseClass": "SimpleXMLElement"
         },
 
         "HeadBucket": {
             "extends": "AbstractRequiresBucket",
-            "method": "HEAD",
-            "description": "This operation is useful to determine if a bucket exists and you have permission to access it.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response"
+            "httpMethod": "HEAD",
+            "summary": "This operation is useful to determine if a bucket exists and you have permission to access it.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response"
         },
 
         "CreateBucket": {
             "extends": ["AbstractHasAclHeaders", "AbstractRequiresBucket"],
-            "method": "PUT",
+            "httpMethod": "PUT",
             "class": "Aws\\S3\\Command\\CreateBucket",
-            "description": "Create an Amazon S3 Bucket",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "summary": "Create an Amazon S3 Bucket",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "LocationConstraint": {
                     "type": "string",
                     "description": "Use this option to specify the bucket region and build the bucket configuration for you."
@@ -113,21 +113,21 @@
 
         "DeleteBucket": {
             "extends": "AbstractRequiresBucket",
-            "method": "DELETE",
-            "description": "This implementation of the DELETE operation deletes the bucket named in the URI. All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response"
+            "httpMethod": "DELETE",
+            "summary": "This implementation of the DELETE operation deletes the bucket named in the URI. All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response"
         },
 
         "ListObjects": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation returns some or all (up to 1000) of the objects in a bucket. You can use the request parameters as selection criteria to return a subset of the objects in a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation returns some or all (up to 1000) of the objects in a bucket. You can use the request parameters as selection criteria to return a subset of the objects in a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "delimiter": {
                     "type": "string",
                     "location": "query"
@@ -149,136 +149,148 @@
 
         "GetBucketAcl": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of a bucket. To use GET to return the ACL of the bucket, you must have READ_ACP access to the bucket. If READ_ACP permission is granted to the anonymous user, you can return the ACL of the bucket without using an authorization header.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of a bucket. To use GET to return the ACL of the bucket, you must have READ_ACP access to the bucket. If READ_ACP permission is granted to the anonymous user, you can return the ACL of the bucket without using an authorization header.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "acl",
-                    "static": "_guzzle_blank_"
+                    "rename": "acl",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "GetBucketLifecycle": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "Returns the lifecycle configuration information set on the bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "Returns the lifecycle configuration information set on the bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "lifecycle",
-                    "static": "_guzzle_blank_"
+                    "rename": "lifecycle",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "GetBucketPolicy": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html",
-            "description_url": "This implementation of the GET operation uses the policy subresource to return the policy of a specified bucket. To use this operation, you must have GetPolicy permissions on the specified bucket, and you must be the bucket owner.",
-            "result_description": "Returns an array containing the parsed bucket policy",
-            "result_type": "array",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html",
+            "documentationUrl": "This implementation of the GET operation uses the policy subresource to return the policy of a specified bucket. To use this operation, you must have GetPolicy permissions on the specified bucket, and you must be the bucket owner.",
+            "responseNotes": "Returns an array containing the parsed bucket policy",
+            "responseClass": "array",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "policy",
-                    "static": "_guzzle_blank_"
+                    "rename": "policy",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/json"
+                    "default": "application/json",
+                    "static": true
                 }
             }
         },
 
         "GetBucketLocation": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the location subresource to return a bucket's Region. You set the bucket's Region using the LocationContraint request parameter in a PUT Bucket request.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the location subresource to return a bucket's Region. You set the bucket's Region using the LocationContraint request parameter in a PUT Bucket request.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "location",
-                    "static": "_guzzle_blank_"
+                    "rename": "location",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "GetBucketLogging": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the logging subresource to return the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the logging subresource to return the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "logging",
-                    "static": "_guzzle_blank_"
+                    "rename": "logging",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "GetBucketNotification": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the notification subresource to return the notification configuration of a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the notification subresource to return the notification configuration of a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "notification",
-                    "static": "_guzzle_blank_"
+                    "rename": "notification",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "GetBucketObjectVersions": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "You can use the versions subresource to list metadata about all of the versions of objects in a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "You can use the versions subresource to list metadata about all of the versions of objects in a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
-                    "static": "_guzzle_blank_",
+                    "default": "_guzzle_blank_",
                     "location": "query",
-                    "location_key": "versions"
+                    "rename": "versions"
                 },
                 "delimiter": {
                     "type": "string",
@@ -301,124 +313,128 @@
                     "location": "query"
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "GetBucketRequestPayment": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the requestPayment subresource to return the request payment configuration of a bucket. To use this version of the operation, you must be the bucket owner.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the requestPayment subresource to return the request payment configuration of a bucket. To use this version of the operation, you must be the bucket owner.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 },
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "requestPayment",
-                    "static": "_guzzle_blank_"
+                    "rename": "requestPayment",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 }
             }
         },
 
         "GetBucketVersioning": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the versioning subresource to return the versioning state of a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the versioning subresource to return the versioning state of a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 },
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "versioning",
-                    "static": "_guzzle_blank_"
+                    "rename": "versioning",
+                    "default": "_guzzle_blank_"
                 }
             }
         },
 
         "GetBucketWebsite": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This implementation of the GET operation returns the website configuration from the website subresource.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation returns the website configuration from the website subresource.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "website",
-                    "static": "_guzzle_blank_"
+                    "rename": "website",
+                    "default": "_guzzle_blank_"
                 }
             }
         },
 
         "DeleteBucketLifecycle": {
             "extends": "AbstractRequiresBucket",
-            "method": "DELETE",
-            "description": "Deletes the lifecycle configuration from the specified bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "DELETE",
+            "summary": "Deletes the lifecycle configuration from the specified bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "lifecycle",
-                    "static": "_guzzle_blank_"
+                    "rename": "lifecycle",
+                    "default": "_guzzle_blank_"
                 }
             }
         },
 
         "DeleteBucketPolicy": {
             "extends": "AbstractRequiresBucket",
-            "method": "DELETE",
-            "description": "This implementation of the DELETE operation uses the policy subresource to delete the policy on a specified bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "DELETE",
+            "summary": "This implementation of the DELETE operation uses the policy subresource to delete the policy on a specified bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "policy",
-                    "static": "_guzzle_blank_"
+                    "rename": "policy",
+                    "default": "_guzzle_blank_"
                 }
             }
         },
 
         "DeleteBucketWebsite": {
             "extends": "AbstractRequiresBucket",
-            "method": "DELETE",
-            "description": "This operation removes the website configuration for a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "DELETE",
+            "summary": "This operation removes the website configuration for a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "website",
-                    "static": "_guzzle_blank_"
+                    "rename": "website",
+                    "default": "_guzzle_blank_"
                 }
             }
         },
 
         "DeleteObject": {
             "extends" : "AbstractRequiresKey",
-            "method": "DELETE",
-            "description": "The DELETE operation removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn't a null version, Amazon S3 does not remove any objects.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "DELETE",
+            "summary": "The DELETE operation removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn't a null version, Amazon S3 does not remove any objects.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "x-amz-mfa": {
                     "description": "The value is the concatenation of the authentication device's serial number, a space, and the value displayed on your authentication device.",
                     "type": "string",
@@ -433,21 +449,21 @@
 
         "DeleteMultipleObjects": {
             "extends" : "AbstractRequiresBucket",
-            "method": "POST",
+            "httpMethod": "POST",
             "class": "Aws\\S3\\Command\\DeleteMultipleObjects",
-            "description": "The Multi-Object Delete operation enables you to delete multiple objects from a bucket using a single HTTP request.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "summary": "The Multi-Object Delete operation enables you to delete multiple objects from a bucket using a single HTTP request.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "body": {
                     "description": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
                     "location": "body"
                 },
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "delete",
-                    "static": "_guzzle_blank_"
+                    "rename": "delete",
+                    "default": "_guzzle_blank_"
                 },
                 "quiet": {
                     "type": "boolean",
@@ -459,7 +475,8 @@
                 },
                 "Content-Type": {
                     "location": "header",
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 },
                 "x-amz-mfa": {
                     "description": "The value is the concatenation of the authentication device's serial number, a space, and the value displayed on your authentication device.",
@@ -467,19 +484,19 @@
                     "location": "header"
                 },
                 "use_md5": {
-                    "static": true
+                    "default": true
                 }
             }
         },
 
         "HeadObject": {
             "extends" : "AbstractRequiresKey",
-            "method": "HEAD",
-            "description": "The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you're only interested in an object's metadata. To use HEAD, you must have READ access to the object.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "HEAD",
+            "summary": "The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you're only interested in an object's metadata. To use HEAD, you must have READ access to the object.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "versionId": {
                     "description": "An object version ID",
                     "type": "string",
@@ -515,13 +532,13 @@
 
         "GetObject": {
             "extends" : "HeadObject",
-            "method": "GET",
+            "httpMethod": "GET",
             "class": "Aws\\S3\\Command\\GetObject",
-            "description": "This implementation of the GET operation retrieves objects from Amazon S3.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "summary": "This implementation of the GET operation retrieves objects from Amazon S3.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "response_body": {
                     "description": "Optional location used to store the body of the response. Can be a resource returned from fopen or a Guzzle EntityBody object."
                 },
@@ -559,23 +576,23 @@
 
         "GetObjectTorrent": {
             "extends": "AbstractRequiresKey",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the torrent subresource to return torrent files from a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETtorrent.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the torrent subresource to return torrent files from a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETtorrent.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "torrent",
-                    "static": "_guzzle_blank_"
+                    "rename": "torrent",
+                    "default": "_guzzle_blank_"
                 }
             }
         },
 
         "AbstractUploadObject": {
             "extends": ["AbstractHasAclHeaders", "AbstractRequiresKey"],
-            "params": {
+            "parameters": {
                 "Expires": {
                     "type": "string",
                     "filters": "Aws\\Common\\Command\\Filters::getTimestamp",
@@ -620,14 +637,14 @@
         },
 
         "PutObject": {
-            "method": "PUT",
+            "httpMethod": "PUT",
             "extends": "AbstractUploadObject",
             "class": "Aws\\S3\\Command\\PutObject",
-            "description": "This implementation of the PUT operation adds an object to a bucket. You must have WRITE permissions on a bucket to add an object to it.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "summary": "This implementation of the PUT operation adds an object to a bucket. You must have WRITE permissions on a bucket to add an object to it.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "Content-MD5": {
                     "type": "string",
                     "location": "header",
@@ -651,19 +668,19 @@
         "UploadPart": {
             "extends" : "PutObject",
             "class": "Aws\\S3\\Command\\DefaultTransferObject",
-            "description": "This operation uploads a part in a multipart upload.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "summary": "This operation uploads a part in a multipart upload.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "PartNumber": {
                     "location": "query",
-                    "location_key": "partNumber",
+                    "rename": "partNumber",
                     "required": true
                 },
                 "UploadId": {
                     "location": "query",
-                    "location_key": "uploadId",
+                    "rename": "uploadId",
                     "required": true
                 }
             }
@@ -672,35 +689,38 @@
         "InitiateMultipartUpload": {
             "extends" : "AbstractUploadObject",
             "class": "Aws\\S3\\Command\\DefaultUploadObject",
-            "method": "POST",
-            "description": "This operation initiates a multipart upload and returns an upload ID. This upload ID is used to associate all the parts in the specific multipart upload.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "POST",
+            "summary": "This operation initiates a multipart upload and returns an upload ID. This upload ID is used to associate all the parts in the specific multipart upload.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "uploads",
-                    "static": "_guzzle_blank_"
+                    "rename": "uploads",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "ListMultipartUploads": {
             "extends": "AbstractRequiresBucket",
-            "method": "GET",
-            "description": "This operation lists in-progress multipart uploads.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This operation lists in-progress multipart uploads.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
-                    "static": "_guzzle_blank",
+                    "default": "_guzzle_blank",
                     "location": "query",
-                    "location_key": "uploads"
+                    "rename": "uploads",
+                    "static": true
                 },
                 "delimiter": {
                     "type": "string",
@@ -723,20 +743,21 @@
                     "location": "query"
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "CompleteMultipartUpload": {
             "extends" : "AbstractRequiresBucket",
-            "method": "POST",
+            "httpMethod": "POST",
             "class": "Aws\\S3\\Command\\CompleteMultipartUpload",
-            "description": "This operation completes a multipart upload by assembling previously uploaded parts.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "summary": "This operation completes a multipart upload by assembling previously uploaded parts.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "body": {
                     "location": "body",
                     "description": "The complete body of the request. This value can be built for you if you use the `parts` parameter and/or the addPart() method."
@@ -749,53 +770,55 @@
                     "type": "string",
                     "required": true,
                     "location": "query",
-                    "location_key": "uploadId"
+                    "rename": "uploadId"
                 },
                 "parts": {
                     "type": "array"
                 },
                 "Content-Type": {
                     "location": "header",
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "AbortMultipartUpload": {
             "extends" : "AbstractRequiresKey",
-            "method": "DELETE",
-            "description": "This operation aborts a multipart upload. After a multipart upload is aborted, no additional parts can be uploaded using that upload ID. The storage consumed by any previously uploaded parts will be freed. However, if any part uploads are currently in progress, those part uploads might or might not succeed. As a result, it might be necessary to abort a given multipart upload multiple times in order to completely free all storage consumed by all parts.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "DELETE",
+            "summary": "This operation aborts a multipart upload. After a multipart upload is aborted, no additional parts can be uploaded using that upload ID. The storage consumed by any previously uploaded parts will be freed. However, if any part uploads are currently in progress, those part uploads might or might not succeed. As a result, it might be necessary to abort a given multipart upload multiple times in order to completely free all storage consumed by all parts.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "UploadId": {
                     "description": "Upload ID identifying the multipart upload that is being aborted.",
                     "type": "string",
                     "required": true,
                     "location": "query",
-                    "location_key": "uploadId"
+                    "rename": "uploadId"
                 }
             }
         },
 
         "ListParts": {
             "extends" : "AbstractRequiresKey",
-            "method": "GET",
-            "description": "This operation lists the parts that have been uploaded for a specific multipart upload.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This operation lists the parts that have been uploaded for a specific multipart upload.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "UploadId": {
                     "description": "Upload ID identifying the multipart upload whose parts are being listed.",
                     "type": "string",
                     "required": true,
                     "location": "query",
-                    "location_key": "uploadId"
+                    "rename": "uploadId"
                 },
                 "max-parts" : {
                     "type": "integer",
@@ -810,12 +833,12 @@
 
         "GetObjectAcl": {
             "extends" : "AbstractRequiresKey",
-            "method": "GET",
-            "description": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of an object. To use this operation, you must have READ_ACP access to the object.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "httpMethod": "GET",
+            "summary": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of an object. To use this operation, you must have READ_ACP access to the object.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "versionId": {
                     "description": "An object version ID",
                     "type": "string",
@@ -824,30 +847,33 @@
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "acl",
-                    "static": "_guzzle_blank_"
+                    "rename": "acl",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "AbstractPutAcl": {
             "extends": "AbstractHasAclHeaders",
-            "method": "PUT",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "location": "query",
-                    "location_key": "acl",
-                    "static": "_guzzle_blank_"
+                    "rename": "acl",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "acl": {
                     "description": "Access control policy object to apply. Setting this value will send an XML based ACL.",
                     "type": "object",
-                    "instance_of": "Aws\\S3\\Model\\Acl",
+                    "instanceOf": "Aws\\S3\\Model\\Acl",
                     "location": "body"
                 }
             }
@@ -855,30 +881,31 @@
 
         "PutObjectAcl": {
             "extends" : ["AbstractPutAcl", "AbstractRequiresKey"],
-            "description": "This implementation of the PUT operation uses the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html"
+            "summary": "This implementation of the PUT operation uses the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html"
         },
 
         "PutBucketAcl": {
             "extends" : ["AbstractPutAcl", "AbstractRequiresBucket"],
-            "description": "This implementation of the PUT operation uses the acl subresource to set the permissions on an existing bucket using access control lists (ACL).",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html"
+            "summary": "This implementation of the PUT operation uses the acl subresource to set the permissions on an existing bucket using access control lists (ACL).",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html"
         },
 
         "PutBucketLifecycle": {
             "class": "Aws\\S3\\Command\\PutBucketLifecycle",
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "Sets lifecycle configuration for your bucket. It lifecycle configuration exists, it replaces it.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "Sets lifecycle configuration for your bucket. It lifecycle configuration exists, it replaces it.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "lifecycle",
-                    "static": "_guzzle_blank_"
+                    "rename": "lifecycle",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "body": {
                     "location": "body",
@@ -893,17 +920,18 @@
 
         "PutBucketPolicy": {
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "This implementation of the PUT operation uses the policy subresource to add to or replace a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "This implementation of the PUT operation uses the policy subresource to add to or replace a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "policy",
-                    "static": "_guzzle_blank_"
+                    "rename": "policy",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "policy": {
                     "type": "string",
@@ -916,17 +944,17 @@
         "PutBucketNotification": {
             "class": "Aws\\S3\\Command\\PutBucketNotification",
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "This implementation of the PUT operation uses the notification subresource to enable notifications of specified events for a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "This implementation of the PUT operation uses the notification subresource to enable notifications of specified events for a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "notification",
-                    "static": "_guzzle_blank_"
+                    "rename": "notification",
+                    "default": "_guzzle_blank_"
                 },
                 "body": {
                     "type": "string",
@@ -942,32 +970,32 @@
 
         "DeleteBucketNotification": {
             "extends" : "PutBucketNotification",
-            "params": {
+            "parameters": {
                 "body": {
                     "type": "string",
                     "location": "body",
                     "description": "Payload used to delete a bucket notification.",
-                    "static": "<NotificationConfiguration></NotificationConfiguration>"
+                    "default": "<NotificationConfiguration></NotificationConfiguration>"
                 },
                 "topics": {
-                    "static": false
+                    "default": false
                 }
             }
         },
 
         "PutBucketRequestPayment": {
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "This implementation of the PUT operation uses the requestPayment subresource to set the request payment configuration of a bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "This implementation of the PUT operation uses the requestPayment subresource to set the request payment configuration of a bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "requestPayment",
-                    "static": "_guzzle_blank_"
+                    "rename": "requestPayment",
+                    "default": "_guzzle_blank_"
                 },
                 "Payer": {
                     "type": "string",
@@ -984,17 +1012,18 @@
         "PutBucketVersioning": {
             "class": "Aws\\S3\\Command\\PutBucketVersioning",
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "This implementation of the PUT operation uses the versioning subresource to set the versioning state of an existing bucket.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "This implementation of the PUT operation uses the versioning subresource to set the versioning state of an existing bucket.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "versioning",
-                    "static": "_guzzle_blank_"
+                    "rename": "versioning",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "Status": {
                     "description": "Sets the versioning state of the bucket.",
@@ -1014,17 +1043,18 @@
         "PutBucketWebsite": {
             "class": "Aws\\S3\\Command\\PutBucketWebsite",
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "This implementation of the PUT operation uses the website subresource to set the website configuration.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "This implementation of the PUT operation uses the website subresource to set the website configuration.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "website",
-                    "static": "_guzzle_blank_"
+                    "rename": "website",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "body": {
                     "description": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
@@ -1044,17 +1074,18 @@
         "PutBucketLogging": {
             "class": "Aws\\S3\\Command\\PutBucketLogging",
             "extends" : "AbstractRequiresBucket",
-            "method": "PUT",
-            "description": "This implementation of the PUT operation uses the logging subresource to set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters.",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "httpMethod": "PUT",
+            "summary": "This implementation of the PUT operation uses the logging subresource to set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters.",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
                     "type": "string",
                     "location": "query",
-                    "location_key": "logging",
-                    "static": "_guzzle_blank_"
+                    "rename": "logging",
+                    "default": "_guzzle_blank_",
+                    "static": true
                 },
                 "body": {
                     "description": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
@@ -1076,9 +1107,9 @@
         },
 
         "AbstractCopyObject": {
-            "method": "PUT",
+            "httpMethod": "PUT",
             "extends": "AbstractRequiresBucket",
-            "params": {
+            "parameters": {
                 "x-amz-copy-source": {
                     "type": "string",
                     "location": "header",
@@ -1110,7 +1141,7 @@
 
         "PutObjectCopy": {
             "extends": ["AbstractCopyObject", "AbstractHasAclHeaders"],
-            "params": {
+            "parameters": {
                 "x-amz-storage-class": {
                     "location": "header",
                     "filters": "strtoupper",
@@ -1132,7 +1163,7 @@
 
         "UploadPartCopy": {
             "extends": ["AbstractCopyObject"],
-            "params": {
+            "parameters": {
                 "x-amz-copy-source-range": {
                     "type": "string",
                     "location": "header",
@@ -1140,12 +1171,12 @@
                 },
                 "PartNumber": {
                     "location": "query",
-                    "location_key": "partNumber",
+                    "rename": "partNumber",
                     "required": true
                 },
                 "UploadId": {
                     "location": "query",
-                    "location_key": "uploadId",
+                    "rename": "uploadId",
                     "required": true
                 }
             }
@@ -1153,17 +1184,18 @@
 
         "PutBucketTagging": {
             "extends": "AbstractRequiresBucket",
-            "method": "PUT",
+            "httpMethod": "PUT",
             "class": "Aws\\S3\\Command\\PutBucketTagging",
-            "description": "Apply a set of Tags on a bucket",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "summary": "Apply a set of Tags on a bucket",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
-                    "static": "_guzzle_blank_",
+                    "default": "_guzzle_blank_",
                     "location": "query",
-                    "location_key": "tagging"
+                    "rename": "tagging",
+                    "static": true
                 },
                 "body": {
                     "description": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
@@ -1177,36 +1209,39 @@
         },
 
         "GetBucketTagging": {
-            "method": "GET",
+            "httpMethod": "GET",
             "extends": "AbstractRequiresBucket",
-            "description": "Gets the TagSet associated with a bucket",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html",
-            "result_description": "Returns a SimpleXMLElement containing the response data",
-            "result_type": "SimpleXMLElement",
-            "params": {
+            "summary": "Gets the TagSet associated with a bucket",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html",
+            "responseNotes": "Returns a SimpleXMLElement containing the response data",
+            "responseClass": "SimpleXMLElement",
+            "parameters": {
                 "sub_resource": {
-                    "static": "_guzzle_blank_",
+                    "default": "_guzzle_blank_",
                     "location": "query",
-                    "location_key": "tagging"
+                    "rename": "tagging",
+                    "static": true
                 },
                 "command.content_type": {
-                    "static": "application/xml"
+                    "default": "application/xml",
+                    "static": true
                 }
             }
         },
 
         "DeleteBucketTagging": {
-            "method": "DELETE",
+            "httpMethod": "DELETE",
             "extends": "AbstractRequiresBucket",
-            "description": "Deletes the TagSet associated with a Bucket",
-            "description_url": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html",
-            "result_description": "Guzzle response object",
-            "result_type": "Guzzle\\Http\\Message\\Response",
-            "params": {
+            "summary": "Deletes the TagSet associated with a Bucket",
+            "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html",
+            "responseNotes": "Guzzle response object",
+            "responseClass": "Guzzle\\Http\\Message\\Response",
+            "parameters": {
                 "sub_resource": {
-                    "static": "_guzzle_blank_",
+                    "default": "_guzzle_blank_",
                     "location": "query",
-                    "location_key": "tagging"
+                    "rename": "tagging",
+                    "static": true
                 }
             }
         }

@@ -4,7 +4,6 @@ namespace Aws\Tests\DynamoDb\Integration;
 
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Exception\DynamoDbException;
-use Guzzle\Service\Inspector;
 
 /**
  * @group performance
@@ -89,9 +88,6 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
         }
 
         self::log('Initialization process completed');
-
-        // Disable type validation for the purpose of this perf test
-        Inspector::getInstance()->setTypeValidation(false);
     }
 
     /**

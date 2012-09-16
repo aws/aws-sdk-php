@@ -18,8 +18,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $dynamodb = $this->getServiceBuilder()->get('dynamodb', true);
         $credentials = $dynamodb->getCredentials();
         $dynamodb = new \ReflectionClass('Aws\DynamoDb\DynamoDbClient');
-        $description = dirname($dynamodb->getFileName()) . DIRECTORY_SEPARATOR
-            . 'Resources' . DIRECTORY_SEPARATOR . 'client.json';
+        $description = require dirname($dynamodb->getFileName()) . '/Resources/client.php';
 
         /** @var $client DefaultClient */
         $client = DefaultClient::factory(array(

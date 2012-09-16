@@ -19,7 +19,7 @@ namespace Aws\Common;
 /**
  * Abstract implementation of ToArray
  */
-abstract class AbstractToArray implements ToArrayInterface
+abstract class AbstractToArray implements \IteratorAggregate, ToArrayInterface
 {
     /**
      * @var array Data

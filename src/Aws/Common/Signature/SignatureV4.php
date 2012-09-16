@@ -164,7 +164,12 @@ class SignatureV4 extends AbstractEndpointSignature
 
         // Create the payload if this request has an entity body
         if ($request instanceof EntityEnclosingRequestInterface) {
-            $canon .= $this->base16(hash('sha256', (string) $request->getBody(), true));
+            $canon .= $this->base16(hash(
+                'sha256',
+                $request->getMethod() == 'POST' && count($request->getPostFields())
+                    ? (string) $request->getPostFields() : (string) $request->getBody(),
+                true
+            ));
         } else {
             $canon .= self::DEFAULT_PAYLOAD;
         }

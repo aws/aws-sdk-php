@@ -167,7 +167,8 @@ class S3Client extends AbstractClient
             ->setConfigDefaults(array(
                 'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
                 Options::SCHEME  => 'https',
-                Options::SERVICE => 's3'
+                Options::SERVICE => 's3',
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.json'
             ))
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())

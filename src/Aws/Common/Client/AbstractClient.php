@@ -183,25 +183,22 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     protected function addServiceDescriptionFromConfig()
     {
         // Set the service description
-        $description = $this->directory
-            ? "{$this->directory}/Resources/client.json"
-            : $this->getConfig(Options::SERVICE_DESCRIPTION);
+        $description = $this->getConfig(Options::SERVICE_DESCRIPTION) || !$this->directory
+            ? $this->getConfig(Options::SERVICE_DESCRIPTION)
+            : require "{$this->directory}/Resources/client.php";
 
         if ($description) {
             $options = array();
             if ($adapter = $this->getConfig(Options::SERVICE_DESCRIPTION_CACHE)) {
                 if (!($adapter instanceof CacheAdapterInterface)) {
-                    throw new InvalidArgumentException(
-                        Options::SERVICE_DESCRIPTION_CACHE . ' must be an instance of'
-                        . ' Guzzle\Cache\CacheAdapterInterface'
-                    );
+                    throw new InvalidArgumentException(Options::SERVICE_DESCRIPTION_CACHE . ' must be an instance of '
+                        . 'Guzzle\Cache\CacheAdapterInterface');
                 }
                 $options['cache.adapter'] = $adapter;
             }
             if ($ttl = $this->getConfig(Options::SERVICE_DESCRIPTION_CACHE_TTL)) {
                 $options['cache.description.ttl'] = $ttl;
             }
-
             $this->setDescription(ServiceDescription::factory($description, $options));
         }
     }

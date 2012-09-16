@@ -38,7 +38,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public static function fromArray(array $attributes, $tableName = null)
     {
-        foreach ($attributes as $key => &$value) {
+        foreach ($attributes as &$value) {
             $value = Attribute::factory($value);
         }
 
@@ -90,7 +90,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function get($name)
     {
-        return isset($this->data[$name]) ? $this->data[$name] : null;
+        return $this->offsetGet($name);
     }
 
     /**
@@ -112,7 +112,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function has($attribute)
     {
-        return isset($this->data[$attribute]);
+        return $this->offsetExists($attribute);
     }
 
     /**
@@ -135,7 +135,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function add($name, Attribute $attribute)
     {
-        $this->data[$name] = $attribute;
+        $this->offsetSet($name, $attribute);
 
         return $this;
     }
@@ -168,7 +168,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function remove($name)
     {
-        unset($this->data[$name]);
+        $this->offsetUnset($name);
 
         return $this;
     }

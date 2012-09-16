@@ -3,7 +3,7 @@
 namespace Aws\Tests\Common\Command;
 
 use Aws\Common\Command\AwsQueryVisitor;
-use Guzzle\Service\Description\ApiParam;
+use Guzzle\Service\Description\Parameter;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 
 /**
@@ -13,22 +13,22 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testNormalizesQuery()
     {
-        $param = new ApiParam(array(
-            'name'          => 'IpPermissions',
-            'location'      => 'aws.query',
-            'location_args' => array('offset' => 1),
+        $param = new Parameter(array(
+            'name'     => 'IpPermissions',
+            'location' => 'aws.query',
+            'data'     => array('offset' => 1),
             'type'          => 'array',
             'items'         => array(
-                'location_args' => array('offset' => 1),
-                'type'          => 'object',
-                'properties'    => array(
+                'data'       => array('offset' => 1),
+                'type'       => 'object',
+                'properties' => array(
                     'IpProtocol' => array('type' => 'string'),
                     'FromPort'   => array('type' => 'numeric'),
                     'ToPort'     => array('type' => 'numeric'),
                     'Groups'     => array(
-                        'type'          => 'array',
-                        'location_args' => array('offset' => 1),
-                        'items' => array(
+                        'type'   => 'array',
+                        'data'   => array('offset' => 1),
+                        'items'  => array(
                             'type'       => 'object',
                             'properties' => array(
                                 'UserId'    => array('type' => 'string'),
@@ -38,8 +38,8 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                         )
                     ),
                     'IpRanges' => array(
-                        'type'          => 'array',
-                        'location_args' => array('offset' => 1),
+                        'type' => 'array',
+                        'data' => array('offset' => 1),
                         'items' => array(
                             'type'       => 'object',
                             'properties' => array(
@@ -48,10 +48,10 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                         )
                     ),
                     'Foo' => array(
-                        'type'          => 'array',
-                        'location_key'  => 'Foo.member',
-                        'location_args' => array('offset' => 10),
-                        'items' => array('type' => 'string')
+                        'type'   => 'array',
+                        'rename' => 'Foo.member',
+                        'data'   => array('offset' => 10),
+                        'items'  => array('type' => 'string')
                     )
                 )
             )

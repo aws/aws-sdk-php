@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Command;
 
+use Aws\Common\ToArrayInterface;
 use Guzzle\Service\Command\DynamicCommand;
 
 /**
@@ -24,19 +25,17 @@ use Guzzle\Service\Command\DynamicCommand;
 class JsonCommand extends DynamicCommand
 {
     /**
-     * Ensure that the customized JsonBodyVisitor is used
-     */
-    protected function init()
-    {
-        parent::init();
-        $this->visitors['json'] = JsonBodyVisitor::getInstance();
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function build()
     {
+        // Convert toArray objects before normalizing
+        array_walk_recursive($this->data, function (&$value) {
+            if ($value instanceof ToArrayInterface) {
+                $value = $value->toArray();
+            }
+        });
+
         parent::build();
 
         // Always use an empty JSON body
