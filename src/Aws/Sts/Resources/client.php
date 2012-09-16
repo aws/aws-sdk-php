@@ -1,5 +1,8 @@
 <?php
 return array (
+    'name' => 'sts',
+    'apiVersion' => '2011-06-15',
+    'description' => 'AWS Security Token Service',
     'operations' => array(
         'GetFederationToken' => array(
             'parameters' => array(

@@ -1,5 +1,8 @@
 <?php
 return array (
+    'name' => 'dynamo_db',
+    'apiVersion' => '2011-12-05',
+    'description' => 'Amazon DynamoDB is a fast, highly scalable, highly available, cost-effective non-relational database service.',
     'operations' => array(
         'BatchGetItem' => array(
             'parameters' => array(
