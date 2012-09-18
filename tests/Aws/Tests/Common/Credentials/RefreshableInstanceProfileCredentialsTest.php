@@ -5,7 +5,7 @@ namespace Aws\Tests\Common\Credentials;
 use Aws\Common\InstanceMetadata\InstanceMetadataClient;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\RefreshableInstanceProfileCredentials;
-use Guzzle\Http\Plugin\MockPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 
 class RefreshableInstanceProfileCredentialsTest extends \Guzzle\Tests\GuzzleTestCase

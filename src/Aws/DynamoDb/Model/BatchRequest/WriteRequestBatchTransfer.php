@@ -20,7 +20,7 @@ use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
-use Guzzle\Common\Batch\BatchTransferInterface;
+use Guzzle\Batch\BatchTransferInterface;
 use Guzzle\Common\Exception\ExceptionCollection;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Service\Command\CommandInterface;

@@ -128,7 +128,7 @@ class S3Client extends AbstractClient
      *     - token: Custom AWS security token to use with request authentication
      *     - token.ttd: UNIX timestamp for when the custom credentials expire
      *     - credentials.cache: Used to cache credentials when using providers that require HTTP requests. Set the true
-     *           to use the default APC cache or provide a `Guzzle\Common\Cache\CacheAdapterInterface` object.
+     *           to use the default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
      *     - credentials.cache.key: Optional custom cache key to use with the credentials
      *     - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
      *           credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
@@ -143,7 +143,7 @@ class S3Client extends AbstractClient
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Common\Cache\CacheAdapterInterface` object to use to cache
+     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
      *           service descriptions
      *     - service.description.cache.ttl: Optional TTL used for the service description cache
      * - Amazon S3 specific options
@@ -151,10 +151,10 @@ class S3Client extends AbstractClient
      * - Signature options
      *     - signature: You can optionally provide a custom signature implementation used to sign requests
      * - Exponential backoff options
-     *     - client.backoff.logger: `Guzzle\Common\Log\LogAdapterInterface` object used to log backoff retries. Use
+     *     - client.backoff.logger: `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use
      *           'debug' to emit PHP warnings when a retry is issued.
      *     - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See
-     *           `Guzzle\Http\Plugin\ExponentialBackoffLogger` for formatting information.
+     *           `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
      *
      * @param array|Collection $config Client configuration data
      *
@@ -167,7 +167,8 @@ class S3Client extends AbstractClient
             ->setConfigDefaults(array(
                 'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
                 Options::SCHEME  => 'https',
-                Options::SERVICE => 's3'
+                Options::SERVICE => 's3',
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.json'
             ))
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())

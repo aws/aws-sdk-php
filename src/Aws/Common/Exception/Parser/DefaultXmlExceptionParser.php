@@ -70,16 +70,29 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
     {
         $data['parsed'] = $body;
 
-        $tempXml = $body->xpath('//Code[1]');
-        $data['code'] = (string) $tempXml[0];
-
-        $tempXml = $body->xpath('//Message[1]');
-        $data['message'] = (string) $tempXml[0];
-
-        $tempXml = $body->xpath('//RequestId[1]');
-        if (empty($tempXml)) {
-            $tempXml = $body->xpath('//RequestID[1]');
+        $namespaces = $body->getDocNamespaces();
+        if (isset($namespaces[''])) {
+            // Account for the default namespace being defined and PHP not being able to handle it :(
+            $body->registerXPathNamespace('ns', $namespaces['']);
+            $prefix = 'ns:';
+        } else {
+            $prefix = '';
         }
-        $data['request_id'] = (string) $tempXml[0];
+
+        if ($tempXml = $body->xpath("//{$prefix}Code[1]")) {
+            $data['code'] = (string) $tempXml[0];
+        }
+
+        if ($tempXml = $body->xpath("//{$prefix}Message[1]")) {
+            $data['message'] = (string) $tempXml[0];
+        }
+
+        $tempXml = $body->xpath("//{$prefix}RequestId[1]");
+        if (empty($tempXml)) {
+            $tempXml = $body->xpath("//{$prefix}RequestID[1]");
+        }
+        if (isset($tempXml[0])) {
+            $data['request_id'] = (string) $tempXml[0];
+        }
     }
 }

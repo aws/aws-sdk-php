@@ -3,7 +3,7 @@
 namespace Aws\Tests\DynamoDb\Waiter;
 
 use Guzzle\Http\Message\Response;
-use Guzzle\Http\Plugin\MockPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\S3\Waiter\BucketExists

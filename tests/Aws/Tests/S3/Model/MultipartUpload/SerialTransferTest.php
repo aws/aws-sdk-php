@@ -5,7 +5,7 @@ namespace Aws\Tests\S3\Model;
 use Aws\S3\Model\MultipartUpload\TransferState;
 use Aws\S3\Model\MultipartUpload\SerialTransfer;
 use Guzzle\Http\EntityBody;
-use Guzzle\Http\Plugin\MockPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Service\ClientInterface;
 
 /**

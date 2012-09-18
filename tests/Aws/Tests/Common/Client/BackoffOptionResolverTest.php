@@ -2,26 +2,26 @@
 
 namespace Aws\Tests\Common\Client;
 
-use Aws\Common\Client\ExponentialBackoffOptionResolver;
+use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\InstanceMetadata\InstanceMetadataClient as Client;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Message\RequestFactory;
 
 /**
- * @covers Aws\Common\Client\ExponentialBackoffOptionResolver
+ * @covers Aws\Common\Client\BackoffOptionResolver
  */
-class ExponentialBackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
+class BackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
      * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage client.backoff must be an instance of Guzzle\Http\Plugin\ExponentialBackoffPlugin
+     * @expectedExceptionMessage client.backoff must be an instance of Guzzle\Plugin\Backoff\BackoffPlugin
      */
     public function testEnsuresProvidedPluginIsValid()
     {
-        $resolver = new ExponentialBackoffOptionResolver();
+        $resolver = new BackoffOptionResolver();
         $resolver->resolve(new Collection(array(
             Options::BACKOFF => new \stdClass()
         )));
@@ -30,7 +30,7 @@ class ExponentialBackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesDefaultPluginForConfig()
     {
         list($config, $plugin, $resolver) = $this->getMocks();
-        // Ensure that an ExponentialBackoff plugin is on the client
+        // Ensure that an backoff plugin is on the client
         $config->set('resolvers', array($resolver));
         $client = Client::factory();
         $resolver->resolve($config, $client);
@@ -59,9 +59,9 @@ class ExponentialBackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false);
         $resolver->resolve($config, $client);
         $listeners = $plugin->getEventDispatcher()->getListeners();
-        $this->assertArrayHasKey('plugins.exponential_backoff.retry', $listeners);
+        $this->assertArrayHasKey('plugins.backoff.retry', $listeners);
 
-        $plugin->dispatch('plugins.exponential_backoff.retry', array(
+        $plugin->dispatch('plugins.backoff.retry', array(
             'request'  => RequestFactory::getInstance()->create('GET', 'http://www.example.com'),
             'response' => new Response(503),
             'retries'  => 3,
@@ -77,15 +77,15 @@ class ExponentialBackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false);
         $resolver->resolve($config, $client);
         $listeners = $plugin->getEventDispatcher()->getListeners();
-        $logger = $listeners['plugins.exponential_backoff.retry'][0][0];
-        $this->assertEquals('[{ts}] {url}', $this->readAttribute($logger, 'template'));
+        $logger = $listeners['plugins.backoff.retry'][0][0];
+        $this->assertEquals('[{ts}] {url}', $this->readAttribute($this->readAttribute($logger, 'formatter'), 'template'));
     }
 
     private function getMocks()
     {
         $config = new Collection();
-        $plugin = new ExponentialBackoffPlugin();
-        $resolver = new ExponentialBackoffOptionResolver(function($config, $client = null) use ($plugin) {
+        $plugin = BackoffPlugin::getExponentialBackoff();
+        $resolver = new BackoffOptionResolver(function($config, $client = null) use ($plugin) {
             return $plugin;
         });
 

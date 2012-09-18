@@ -20,7 +20,6 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Client\AbstractClient;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Message\RequestFactory;
-use Guzzle\Service\Inspector;
 
 /**
  * Client used for interacting with the Amazon EC2 instance metadata server
@@ -41,7 +40,7 @@ class InstanceMetadataClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        $config = Inspector::prepareConfig($config, array(
+        $config = Collection::fromConfig($config, array(
             Options::BASE_URL => 'http://169.254.169.254/{version}/',
             'version'         => 'latest',
             'curl.blacklist'  => array(CURLOPT_ENCODING, 'header.Accept', 'header.Expect')

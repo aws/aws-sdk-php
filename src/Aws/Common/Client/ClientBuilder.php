@@ -28,10 +28,9 @@ use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Region\CachingEndpointProvider;
 use Aws\Common\Region\XmlEndpointProvider;
 use Guzzle\Common\Collection;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Client;
-use Guzzle\Service\Inspector;
 
 /**
  * Builder for creating AWS service clients
@@ -251,7 +250,7 @@ class ClientBuilder
     {
         // Resolve config
         /** @var $config Collection */
-        $config = Inspector::prepareConfig(
+        $config = Collection::fromConfig(
             $this->config,
             array_merge(self::$commonConfigDefaults, $this->configDefaults),
             (self::$commonConfigRequirements + $this->configRequirements)
@@ -283,8 +282,8 @@ class ClientBuilder
         $this->signatureResolver->resolve($config);
 
         // Add other client resolvers, like exponential backoff
-        if (!$this->hasExponentialBackoffOptionResolver()) {
-            $this->addClientResolver($this->getDefaultExponentialBackoffResolver());
+        if (!$this->hasBackoffOptionResolver()) {
+            $this->addClientResolver($this->getDefaultBackoffResolver());
         }
         $config->set(Options::RESOLVERS, $this->clientResolvers);
 
@@ -381,12 +380,12 @@ class ClientBuilder
     /**
      * Returns the default exponential backoff plugin for a client
      *
-     * @return ExponentialBackoffOptionResolver
+     * @return BackoffOptionResolver
      */
-    protected function getDefaultExponentialBackoffResolver()
+    protected function getDefaultBackoffResolver()
     {
-        return new ExponentialBackoffOptionResolver(function() {
-            return new ExponentialBackoffPlugin();
+        return new BackoffOptionResolver(function() {
+            return BackoffPlugin::getExponentialBackoff();
         });
     }
 
@@ -395,18 +394,15 @@ class ClientBuilder
      *
      * @return bool
      */
-    protected function hasExponentialBackoffOptionResolver()
+    protected function hasBackoffOptionResolver()
     {
-        $hasExponentialBackoff = false;
-
         foreach ($this->clientResolvers as $resolver) {
-            if ($resolver instanceof ExponentialBackoffOptionResolver) {
-                $hasExponentialBackoff = true;
-                break;
+            if ($resolver instanceof BackoffOptionResolver) {
+                return true;
             }
         }
 
-        return $hasExponentialBackoff;
+        return false;
     }
 
     /**

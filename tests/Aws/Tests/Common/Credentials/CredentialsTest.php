@@ -3,7 +3,7 @@
 namespace Aws\Tests\Common\Credentials;
 
 use Aws\Common\Credentials\Credentials;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
+use Guzzle\Cache\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\ArrayCache;
 
 class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
@@ -128,7 +128,7 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     public function testFactoryCreatesInstanceProfileWhenNoKeysAreProvided()
     {
         $credentials = Credentials::factory();
-        $this->assertInstanceOf('Aws\\Common\\Credentials\\RefreshableInstanceProfileCredentials', $credentials);
+        $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $credentials);
     }
 
     /**
@@ -142,8 +142,8 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
             'credentials.cache' => true
         ));
 
-        $this->assertInstanceOf('Aws\\Common\\Credentials\\CacheableCredentials', $credentials);
-        $this->assertInstanceOf('Guzzle\\Common\\Cache\\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
+        $this->assertInstanceOf('Aws\Common\Credentials\CacheableCredentials', $credentials);
+        $this->assertInstanceOf('Guzzle\Cache\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
         $this->assertEquals('credentials_foo', $this->readAttribute($credentials, 'cacheKey'));
     }
 
@@ -156,8 +156,8 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
         $credentials = Credentials::factory(array(
             'credentials.cache' => $cache
         ));
-        $this->assertInstanceOf('Aws\\Common\\Credentials\\CacheableCredentials', $credentials);
-        $this->assertInstanceOf('Guzzle\\Common\\Cache\\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
+        $this->assertInstanceOf('Aws\Common\Credentials\CacheableCredentials', $credentials);
+        $this->assertInstanceOf('Guzzle\Cache\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
     }
 
     /**

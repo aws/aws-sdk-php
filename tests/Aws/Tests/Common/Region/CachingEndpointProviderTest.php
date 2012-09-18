@@ -4,7 +4,7 @@ namespace Aws\Tests\Common\Region;
 
 use Aws\Common\Region\CachingEndpointProvider;
 use Aws\Common\Region\XmlEndpointProvider;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
+use Guzzle\Cache\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\ArrayCache;
 
 /**

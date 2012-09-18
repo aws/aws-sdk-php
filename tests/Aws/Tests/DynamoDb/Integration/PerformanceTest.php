@@ -4,7 +4,6 @@ namespace Aws\Tests\DynamoDb\Integration;
 
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Exception\DynamoDbException;
-use Guzzle\Service\Inspector;
 
 /**
  * @group performance
@@ -29,7 +28,6 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
 
         // If the table does not exist, then create it
         if (!in_array(self::getTableName(), $tables)) {
-
             self::log('Table does not exist. Creating now.');
             $client->createTable(array(
                 'TableName' => self::getTableName(),
@@ -48,8 +46,10 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                     'WriteCapacityUnits' => 5
                 )
             ));
-
             // Wait until the table is created and active
+            $client->waitUntil('TableExists', self::getTableName());
+        } else {
+            // Wait until the table is active
             $client->waitUntil('TableExists', self::getTableName());
         }
 
@@ -88,9 +88,6 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
         }
 
         self::log('Initialization process completed');
-
-        // Disable type validation for the purpose of this perf test
-        Inspector::getInstance()->setTypeValidation(false);
     }
 
     /**

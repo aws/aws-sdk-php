@@ -5,13 +5,13 @@ namespace Aws\Tests\Common\Client;
 use Aws\Common\Client\ClientBuilder;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Client\ExponentialBackoffOptionResolver;
+use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Client\CredentialsOptionResolver;
 use Aws\Common\Client\SignatureOptionResolver;
 use Aws\Common\Credentials\Credentials;
 use Guzzle\Common\Collection;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 
 /**
  * Note: The tests for the build method do not mock anything
@@ -52,8 +52,8 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setSignatureResolver(new SignatureOptionResolver(function () {
                 return new SignatureV4();
             }))
-            ->addClientResolver(new ExponentialBackoffOptionResolver(function() {
-                return new ExponentialBackoffPlugin();
+            ->addClientResolver(new BackoffOptionResolver(function() {
+                return BackoffPlugin::getExponentialBackoff();
             }))
             ->build();
 

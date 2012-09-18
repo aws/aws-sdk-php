@@ -21,8 +21,8 @@ use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Common\FromConfigInterface;
-use Guzzle\Common\Cache\CacheAdapterInterface;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
+use Guzzle\Cache\CacheAdapterInterface;
+use Guzzle\Cache\DoctrineCacheAdapter;
 
 /**
  * Basic implementation of the AWSCredentials interface that allows callers to

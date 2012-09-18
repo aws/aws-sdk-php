@@ -5,7 +5,7 @@ namespace Aws\Tests\Common\Credentials;
 use Aws\Common\InstanceMetadata\InstanceMetadataClient;
 use Aws\Common\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
-use Guzzle\Common\Cache\DoctrineCacheAdapter;
+use Guzzle\Cache\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\ArrayCache;
 
 /**
@@ -110,7 +110,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
         ));
 
         $this->assertInstanceOf('Aws\Common\Credentials\CacheableCredentials', $credentials);
-        $this->assertInstanceOf('Guzzle\Common\Cache\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
+        $this->assertInstanceOf('Guzzle\Cache\DoctrineCacheAdapter', $this->readAttribute($credentials, 'cache'));
     }
 
     public function testCredentialsCanInjectCacheAndUsesHostnameBasedKey()

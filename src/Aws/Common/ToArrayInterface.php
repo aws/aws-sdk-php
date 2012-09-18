@@ -19,7 +19,7 @@ namespace Aws\Common;
 /**
  * An object that can be represented as an array
  */
-interface ToArrayInterface
+interface ToArrayInterface extends \ArrayAccess, \Traversable
 {
     /**
      * Get the array representation of an object

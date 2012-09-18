@@ -5,33 +5,28 @@ namespace Aws\Tests\DynamoDb;
 use Aws\DynamoDb\ThrottlingErrorChecker;
 use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Backoff\ExponentialBackoffStrategy;
 
+/**
+ * @covers Aws\DynamoDb\ThrottlingErrorChecker
+ */
 class ThrottlingErrorCheckerTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /**
-     * @covers Aws\DynamoDb\ThrottlingErrorChecker
-     */
     public function testOnlyListensFor400Errors()
     {
         $request = new Request('GET', 'http://example.com');
         $response = new Response(200);
         $checker = new ThrottlingErrorChecker();
-        $this->assertNull($checker($request, $response));
+        $this->assertFalse($checker->getBackoffPeriod(0, $request, $response));
     }
 
-    /**
-     * @covers Aws\DynamoDb\ThrottlingErrorChecker
-     */
     public function testOnlyListensForCompletedRequests()
     {
         $request = new Request('GET', 'http://example.com');
         $checker = new ThrottlingErrorChecker();
-        $this->assertNull($checker($request));
+        $this->assertFalse($checker->getBackoffPeriod(0, $request));
     }
 
-    /**
-     * @covers Aws\DynamoDb\ThrottlingErrorChecker
-     */
     public function testReturnsTrueForRetryableErrors()
     {
         $request = new Request('GET', 'http://example.com');
@@ -41,8 +36,18 @@ class ThrottlingErrorCheckerTest extends \Guzzle\Tests\GuzzleTestCase
             . '"message":"The level of configured provisioned throughput for the table was exceeded.'
             . 'Consider increasing your provisioning level with the UpdateTable API"}'
         );
-
         $checker = new ThrottlingErrorChecker();
-        $this->assertTrue($checker($request, $response));
+        $this->assertEquals(0, $checker->getBackoffPeriod(1, $request, $response));
+        // Ensure it plays well with the chain
+        $checker->setNext(new ExponentialBackoffStrategy());
+        $this->assertEquals(8, $checker->getBackoffPeriod(3, $request, $response));
+    }
+
+    public function testBehavesProperlyAsChainLink()
+    {
+        $s = new ExponentialBackoffStrategy();
+        $checker = new ThrottlingErrorChecker($s);
+        $this->assertTrue($checker->makesDecision());
+        $this->assertSame($s, $checker->getNext());
     }
 }

@@ -16,6 +16,7 @@
 
 namespace Aws\DynamoDb\Model;
 
+use Aws\Common\AbstractToArray;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\DynamoDb\Enum\Type;
 
@@ -23,7 +24,7 @@ use Aws\DynamoDb\Enum\Type;
  * Class representing a DynamoDB item attribute. Contains helpers for building
  * attributes and arrays of attributes.
  */
-abstract class AbstractAttribute implements AttributeInterface
+abstract class AbstractAttribute extends AbstractToArray implements AttributeInterface
 {
     /**
      * @var string The DynamoDB attribute type (e.g. N, S, B, NS, SS, BS)
@@ -115,5 +116,25 @@ abstract class AbstractAttribute implements AttributeInterface
     public function toArray()
     {
         return $this->getFormatted();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset)
+    {
+        $data = $this->getFormatted();
+
+        return isset($data[$offset]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset)
+    {
+        $data = $this->getFormatted();
+
+        return isset($data[$offset]) ? $data[$offset] : null;
     }
 }

@@ -50,7 +50,7 @@ class ClientOptions extends Enum
 
     /**
      * @var string Used to cache credentials when using providers that require HTTP requests. Set the trueto use the
-     *             default APC cache or provide a `Guzzle\Common\Cache\CacheAdapterInterface` object.
+     *             default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
      */
     const CREDENTIALS_CACHE = 'credentials.cache';
 
@@ -111,14 +111,14 @@ class ClientOptions extends Enum
     const BACKOFF = 'client.backoff';
 
     /**
-     * @var string `Guzzle\Common\Log\LogAdapterInterface` object used to log backoff retries. Use'debug' to emit PHP
+     * @var string `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use 'debug' to emit PHP
      *             warnings when a retry is issued.
      */
     const BACKOFF_LOGGER = 'client.backoff.logger';
 
     /**
      * @var string Optional template to use for exponential backoff log messages. See
-     *             `Guzzle\Http\Plugin\ExponentialBackoffLogger` for formatting information.
+     *             `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
      */
     const BACKOFF_LOGGER_TEMPLATE = 'client.backoff.logger.template';
 
@@ -139,7 +139,7 @@ class ClientOptions extends Enum
     const SERVICE_DESCRIPTION = 'service.description';
 
     /**
-     * @var string Optional `Guzzle\Common\Cache\CacheAdapterInterface` object to use to cacheservice descriptions
+     * @var string Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache service descriptions
      */
     const SERVICE_DESCRIPTION_CACHE = 'service.description.cache';
 

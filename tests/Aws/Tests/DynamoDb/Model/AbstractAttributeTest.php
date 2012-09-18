@@ -74,5 +74,7 @@ class AbstractAttributeTest extends \Guzzle\Tests\GuzzleTestCase
         $attribute->setType(Type::STRING_SET);
 
         $this->assertEquals(array('SS' => array('baz', 'bar')), $attribute->toArray());
+        $this->assertTrue(isset($attribute['SS']));
+        $this->assertEquals(array('baz', 'bar'), $attribute['SS']);
     }
 }

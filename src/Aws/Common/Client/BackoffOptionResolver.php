@@ -19,18 +19,18 @@ namespace Aws\Common\Client;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Enum\ClientOptions as Options;
-use Guzzle\Common\Log\LogAdapterInterface;
-use Guzzle\Common\Log\ClosureLogAdapter;
+use Guzzle\Log\LogAdapterInterface;
+use Guzzle\Log\ClosureLogAdapter;
 use Guzzle\Common\Collection;
-use Guzzle\Http\Plugin\ExponentialBackoffPlugin;
-use Guzzle\Http\Plugin\ExponentialBackoffLogger;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
+use Guzzle\Plugin\Backoff\BackoffLogger;
 
 /**
  * Ensures that a valid 'client.exponential_backoff' option is present in the
  * configuration collection.  If the option is not present, this resolver
- * executes a callback to add an {@see ExponentialBackoff} plugin to the config.
+ * executes a callback to add an {@see BackoffPlugin} plugin to the config.
  */
-class ExponentialBackoffOptionResolver extends AbstractMissingFunctionOptionResolver
+class BackoffOptionResolver extends AbstractMissingFunctionOptionResolver
 {
     /**
      * @param string $missingFunction Provide a callable function to call if 'client.exponential_backoff' is not set
@@ -61,32 +61,32 @@ class ExponentialBackoffOptionResolver extends AbstractMissingFunctionOptionReso
         }
 
         // Ensure that the plugin implements the correct interface
-        if ($plugin && !($plugin instanceof ExponentialBackoffPlugin)) {
+        if ($plugin && !($plugin instanceof BackoffPlugin)) {
             throw new InvalidArgumentException(
-                Options::BACKOFF . ' must be an instance of Guzzle\\Http\\Plugin\\ExponentialBackoffPlugin'
+                Options::BACKOFF . ' must be an instance of Guzzle\\Plugin\\Backoff\\BackoffPlugin'
             );
         }
 
-        // Attach the ExponentialBackoffPlugin to the client
+        // Attach the BackoffPlugin to the client
         if ($client) {
             $client->addSubscriber($plugin, -255);
         }
     }
 
     /**
-     * Add the exponential backoff logger to the exponential backoff plugin
+     * Add the exponential backoff logger to the backoff plugin
      *
-     * @param ExponentialBackoffPlugin $plugin Plugin to attach a logger to
-     * @param mixed                    $logger Logger to use with the plugin
-     * @param string                   $format Logger format option
+     * @param BackoffPlugin $plugin Plugin to attach a logger to
+     * @param mixed         $logger Logger to use with the plugin
+     * @param string        $format Logger format option
      *
      * @throws InvalidArgumentException if the logger is not valid
      */
-    private function addLogger(ExponentialBackoffPlugin $plugin, $logger, $format = null)
+    private function addLogger(BackoffPlugin $plugin, $logger, $format = null)
     {
         if ($logger === 'debug') {
             $logger = new ClosureLogAdapter(function ($message) {
-                trigger_error($message);
+                trigger_error($message . "\n");
             });
         } elseif (!($logger instanceof LogAdapterInterface)) {
             throw new InvalidArgumentException(
@@ -96,7 +96,7 @@ class ExponentialBackoffOptionResolver extends AbstractMissingFunctionOptionReso
         }
 
         // Create the plugin responsible for logging exponential backoff retries
-        $logPlugin = new ExponentialBackoffLogger($logger);
+        $logPlugin = new BackoffLogger($logger);
         // You can specify a custom format or use the default
         if ($format) {
             $logPlugin->setTemplate($format);

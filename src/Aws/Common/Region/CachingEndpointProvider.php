@@ -16,7 +16,7 @@
 
 namespace Aws\Common\Region;
 
-use Guzzle\Common\Cache\CacheAdapterInterface;
+use Guzzle\Cache\CacheAdapterInterface;
 
 /**
  * Provides a caching layer to an endpoint provider

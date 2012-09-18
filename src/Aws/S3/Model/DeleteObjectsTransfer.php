@@ -22,7 +22,7 @@ use Aws\Common\Enum\UaString as Ua;
 use Aws\S3\Exception\InvalidArgumentException;
 use Aws\S3\Command\DeleteMultipleObjects;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
-use Guzzle\Common\Batch\BatchTransferInterface;
+use Guzzle\Batch\BatchTransferInterface;
 
 /**
  * Transfer logic for deleting multiple objects from an Amazon S3 bucket in a

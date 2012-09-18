@@ -14,31 +14,30 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Model;
+namespace Aws\Common\Command;
 
-use Aws\DynamoDb\Enum\Type;
+use Guzzle\Service\Command\DynamicCommand;
 
 /**
- * Class representing a DynamoDB binary attribute.
+ * Adds AWS Query service serialization
  */
-class Binary extends AbstractAttribute
+class QueryCommand extends DynamicCommand
 {
     /**
-     * Instantiates a DynamoDB binary attribute.
-     *
-     * @param string $value The DynamoDB attribute value
+     * @var AwsQueryVisitor
      */
-    public function __construct($value)
-    {
-        $this->setValue($value);
-        $this->setType(Type::BINARY);
-    }
+    protected static $queryVisitor;
 
     /**
-     * {@inheritdoc}
+     * Register the aws.query visitor
      */
-    public function setValue($value)
+    protected function init()
     {
-        return parent::setValue(base64_encode((string) $value));
+        // @codeCoverageIgnoreStart
+        if (!self::$queryVisitor) {
+            self::$queryVisitor = new AwsQueryVisitor();
+        }
+        // @codeCoverageIgnoreEnd
+        $this->addVisitor('aws.query', self::$queryVisitor);
     }
 }

@@ -20,7 +20,7 @@ use Aws\Common\Exception\RuntimeException;
 use Aws\S3\S3Client;
 use Guzzle\Http\Url;
 use Guzzle\Service\Command\DynamicCommand;
-use Guzzle\Service\Description\ApiCommand;
+use Guzzle\Service\Description\Operation;
 
 /**
  * Adds Amazon S3 specific functionality to dynamic commands
@@ -72,13 +72,13 @@ class DefaultCommand extends DynamicCommand
     {
         // Determine the URL based on the bucket
         if ($bucket = $this->get('bucket')) {
-            $data = $this->apiCommand->toArray();
+            $data = $this->operation->toArray();
             if ($key = $this->get('key')) {
                 $data['uri'] = (string) $this->getBucketUrl()->addPath($this->encodeKey($key));
             } else {
                 $data['uri'] = (string) $this->getBucketUrl();
             }
-            $this->apiCommand = new ApiCommand($data);
+            $this->operation = new Operation($data);
         }
 
         parent::build();
