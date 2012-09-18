@@ -120,14 +120,15 @@ class GlacierClient extends AbstractClient
 
         // Set default value for "accountId" for all requests
         $client->getEventDispatcher()->addListener('client.command.create', function(Event $event) {
-            $event['command']['accountId'] = '-';
+            $command = $event['command'];
+            $command['accountId'] = isset($command['accountId']) ? $command['accountId'] : '-';
         });
 
         // Set Expect header only for upload operations
         $client->addSubscriber(new ExpectHeaderListener(array('UploadArchive', 'UploadMultipartPart')));
 
         // Set x-amz-content-sha256 header for upload operations
-        $client->addSubscriber(new PayloadHashListener());
+        $client->addSubscriber(new GlacierUploadListener());
 
         return $client;
     }

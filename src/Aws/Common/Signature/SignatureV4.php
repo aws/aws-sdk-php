@@ -163,7 +163,10 @@ class SignatureV4 extends AbstractEndpointSignature
         $request->getParams()->set('aws.signed_headers', $signedHeaders);
 
         // Create the payload if this request has an entity body
-        if ($request instanceof EntityEnclosingRequestInterface) {
+        if ($request->hasHeader('x-amz-content-sha256')) {
+            // Handle streaming requests
+            $canon .= $request->getHeader('x-amz-content-sha256');
+        } elseif ($request instanceof EntityEnclosingRequestInterface) {
             $canon .= $this->base16(hash('sha256', (string) $request->getBody(), true));
         } else {
             $canon .= self::DEFAULT_PAYLOAD;
