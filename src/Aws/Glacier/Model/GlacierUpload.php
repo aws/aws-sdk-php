@@ -27,7 +27,7 @@ class GlacierUpload
     /**
      * @var string The sha256 tree hash of the upload body
      */
-    protected $treeHash;
+    protected $checksum;
 
     /**
      * @var string The sha256 linear hash of the upload body
@@ -50,15 +50,15 @@ class GlacierUpload
     protected $body;
 
     /**
-     * @param string              $treeHash    Tree hash of body
+     * @param string              $checksum    Tree hash of body
      * @param string              $contentHash Linear hash of body
      * @param int                 $size        Body size in bytes
      * @param array               $range       Starting and ending bytes
      * @param EntityBodyInterface $body        Upload body
      */
-    public function __construct($treeHash, $contentHash, $size, array $range, EntityBodyInterface $body)
+    public function __construct($checksum, $contentHash, $size, array $range, EntityBodyInterface $body)
     {
-        $this->treeHash = $treeHash;
+        $this->checksum = $checksum;
         $this->contentHash = $contentHash;
         $this->size = $size;
         $this->range = $range;
@@ -68,9 +68,9 @@ class GlacierUpload
     /**
      * @return string
      */
-    public function getTreeHash()
+    public function getChecksum()
     {
-        return $this->treeHash;
+        return $this->checksum;
     }
 
     /**

@@ -17,12 +17,12 @@
 namespace Aws\Common\Command;
 
 use Aws\Common\ToArrayInterface;
-use Guzzle\Service\Command\DynamicCommand;
+use Guzzle\Service\Command\OperationCommand;
 
 /**
  * Adds AWS JSON body functionality to dynamically generated HTTP requests
  */
-class JsonCommand extends DynamicCommand
+class JsonCommand extends OperationCommand
 {
     /**
      * {@inheritdoc}

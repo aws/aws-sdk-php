@@ -60,7 +60,7 @@ class GlacierUploadListener implements EventSubscriberInterface
 
         if (in_array($operation, self::$whitelist) && $upload instanceof GlacierUpload) {
             // Add required data for uploads
-            $command->set('checksum', $upload->getTreehash());
+            $command->set('checksum', $upload->getChecksum());
             $command->set('body', $upload->getBody());
             $command->set('headers', array(
                 'x-amz-content-sha256' => $upload->getContentHash(),

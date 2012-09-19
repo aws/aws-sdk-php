@@ -25,7 +25,7 @@ use Guzzle\Http\EntityBodyInterface;
 /**
  * Generates GlacierUpload objects from a string/stream that abstracts the data needed for upload requests
  */
-class GlacierUploadGenerator
+class UploadGenerator
 {
     const ALGORITHM = 'sha256';
     const SINGLE_UPLOAD = 0;
@@ -53,20 +53,20 @@ class GlacierUploadGenerator
     /**
      * @var array The total size of the entire upload body
      */
-    protected $totalSize;
+    protected $archiveSize;
 
     /**
      * @var string The tree hash of the entire upload body
      */
-    protected $rootTreeHash;
+    protected $rootChecksum;
 
     /**
-     * Creates a GlacierUploadGenerator and wraps the upload body in a Guzzle EntityBody object
+     * Creates a UploadGenerator and wraps the upload body in a Guzzle EntityBody object
      *
      * @param string|resource|EntityBodyInterface $body     The upload body
      * @param int                                 $partSize The size of parts to split the upload into
      *
-     * @return GlacierUploadGenerator
+     * @return UploadGenerator
      */
     public static function factory($body, $partSize = self::SINGLE_UPLOAD)
     {
@@ -82,8 +82,15 @@ class GlacierUploadGenerator
       *
       * @return string
       */
-    public static function calculateRootTreeHash(array $hashes)
+    public static function calculateRootChecksum(array $hashes, $areInHexForm = false)
     {
+        // Convert hex checksums into binary format before treehashing
+        if ($areInHexForm) {
+            $hashes = array_map(function ($hash) {
+                return pack("H*" , $hash);
+            }, $hashes);
+        }
+
         // Iteratively perform hashes up the tree to arrive at a single, root tree hash
         while (count($hashes) > 1) {
             $sets = array_chunk($hashes, 2);
@@ -99,16 +106,20 @@ class GlacierUploadGenerator
     /**
      * Validates a tree hash for an archive body. This is useful for validating archives downloaded from Glacier.
      *
-     * @param string|resource|EntityBodyInterface $body     The archive body
-     * @param string                              $treeHash The proposed tree hash of the body
+     * @param string|array|resource|EntityBodyInterface $body            Archive body or array of part checksums
+     * @param string                                    $glacierChecksum Checksum calculated by Glacier
      *
      * @return bool
      */
-    public static function validateChecksum($body, $treeHash)
+    public static function validateChecksum($body, $glacierChecksum)
     {
-        $upload = self::factory($body)->getSingleUpload();
+        if (is_array($body)) {
+            $checksum = self::calculateRootChecksum($body, true);
+        } else {
+            $checksum = self::factory($body)->getRootChecksum();
+        }
 
-        return ($upload->getTreeHash() === $treeHash);
+        return ($checksum === $glacierChecksum);
 
     }
 
@@ -167,17 +178,17 @@ class GlacierUploadGenerator
     /**
      * @return array
      */
-    public function getTotalSize()
+    public function getArchiveSize()
     {
-        return $this->totalSize;
+        return $this->archiveSize;
     }
 
     /**
      * @return string
      */
-    public function getRootTreeHash()
+    public function getRootChecksum()
     {
-        return $this->rootTreeHash;
+        return $this->rootChecksum;
     }
 
     /**
@@ -188,11 +199,12 @@ class GlacierUploadGenerator
     protected function generateUploads($partSize)
     {
         // Read the data from the stream and calculate hashes and sizes for uploads
+        $treeHashes = array();
         $this->body->seek(0);
         $this->initializeUpload();
         while ($data = $this->body->read(Size::MB)) {
             // Add data to the upload (will add to hashes and size calculations)
-            $this->addDataToUpload($data);
+            $treeHashes[] = $this->addDataToUpload($data);
 
             // If the upload part is complete, generate an upload object and reset the current upload
             if ($this->currentUpload['size'] === $partSize) {
@@ -207,9 +219,7 @@ class GlacierUploadGenerator
         }
 
         // Calculate the root tree hash and rewind the body
-        $this->rootTreeHash = self::calculateRootTreeHash(array_map(function (GlacierUpload $upload) {
-            return $upload->getTreeHash();
-        }, $this->generatedUploads));
+        $this->rootChecksum = self::calculateRootChecksum($treeHashes);
         $this->body->seek(0);
     }
 
@@ -230,6 +240,8 @@ class GlacierUploadGenerator
      * Adds streamed data to an upload and contributes to the hash and length calculations
      *
      * @param string $data
+     *
+     * @return string The raw tree hash of the chunk
      * @throws InvalidArgumentException if the chunk of of data is not equal to 1MB or less
      */
     protected function addDataToUpload($data)
@@ -240,9 +252,12 @@ class GlacierUploadGenerator
         }
 
         // Update the hashes and size
-        $this->currentUpload['tree_hashes'][] = hash(self::ALGORITHM, $data, true);
+        $treeHash = hash(self::ALGORITHM, $data, true);
+        $this->currentUpload['tree_hashes'][] = $treeHash;
         hash_update($this->currentUpload['hash_context'], $data);
         $this->currentUpload['size'] += strlen($data);
+
+        return $treeHash;
     }
 
     /**
@@ -253,14 +268,14 @@ class GlacierUploadGenerator
     protected function createUploadObject()
     {
         // Calculate the tree hash of the whole upload from the tree hashes from the 1MB chunks
-        $treeHash = self::calculateRootTreeHash($this->currentUpload['tree_hashes']);
+        $treeHash = self::calculateRootChecksum($this->currentUpload['tree_hashes']);
 
         // Close the streaming hash of the upload
         $contentHash = hash_final($this->currentUpload['hash_context']);
 
         // Get the stored size and offset and calculate the range
         $size = $this->currentUpload['size'];
-        $this->totalSize += $size;
+        $this->archiveSize += $size;
         $offset = $this->currentUpload['offset'];
         $range = array($offset, $offset + $size - 1);
 
