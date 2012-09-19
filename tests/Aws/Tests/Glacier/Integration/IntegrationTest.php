@@ -70,12 +70,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testUploadAndDeleteArchives()
     {
-        $content = str_repeat('x', 6 * Size::MB + 425);
-        $length = strlen($content);
+        $content  = str_repeat('x', 6 * Size::MB + 425);
+        $length   = strlen($content);
+        $partSize = 2 * Size::MB;
 
         $singleGen = UploadGenerator::factory($content);
         $this->assertEquals($length, $singleGen->getSingleUpload()->getSize());
-        $partSize = 2 * Size::MB;
+        $this->assertEquals($length, $singleGen->getArchiveSize());
+
         $multiGen = UploadGenerator::factory($content, $partSize);
         $this->assertEquals($length, $multiGen->getArchiveSize());
 
