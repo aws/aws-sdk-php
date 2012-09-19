@@ -16,12 +16,12 @@
 
 namespace Aws\Common\Command;
 
-use Guzzle\Service\Command\DynamicCommand;
+use Guzzle\Service\Command\OperationCommand;
 
 /**
  * Adds AWS Query service serialization
  */
-class QueryCommand extends DynamicCommand
+class QueryCommand extends OperationCommand
 {
     /**
      * @var AwsQueryVisitor
@@ -37,7 +37,8 @@ class QueryCommand extends DynamicCommand
         if (!self::$queryVisitor) {
             self::$queryVisitor = new AwsQueryVisitor();
         }
+
         // @codeCoverageIgnoreEnd
-        $this->addVisitor('aws.query', self::$queryVisitor);
+        $this->getRequestSerializer()->addVisitor('aws.query', self::$queryVisitor);
     }
 }
