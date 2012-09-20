@@ -1,0 +1,122 @@
+{
+    "includes": ["_aws"],
+    "services": {
+
+        "sdk1_settings": {
+            "extends": "default_settings",
+            "params": {
+                "certificate_authority": false
+            }
+        },
+
+        "v1.autoscaling": {
+            "extends": "sdk1_settings",
+            "class": "AmazonAS"
+        },
+
+        "v1.cloudformation": {
+            "extends": "sdk1_settings",
+            "class": "AmazonCloudFormation"
+        },
+
+        "v1.cloudfront": {
+            "extends": "sdk1_settings",
+            "class": "AmazonCloudFront"
+        },
+
+        "v1.cloudsearch": {
+            "extends": "sdk1_settings",
+            "class": "AmazonCloudSearch"
+        },
+
+        "v1.cloudwatch": {
+            "extends": "sdk1_settings",
+            "class": "AmazonCloudWatch"
+        },
+
+        "v1.dynamodb": {
+            "extends": "sdk1_settings",
+            "class": "AmazonDynamoDB"
+        },
+
+        "v1.ec2": {
+            "extends": "sdk1_settings",
+            "class": "AmazonEC2"
+        },
+
+        "v1.elasticache": {
+            "extends": "sdk1_settings",
+            "class": "AmazonElastiCache"
+        },
+
+        "v1.elasticbeanstalk": {
+            "extends": "sdk1_settings",
+            "class": "AmazonElasticBeanstalk"
+        },
+
+        "v1.elb": {
+            "extends": "sdk1_settings",
+            "class": "AmazonELB"
+        },
+
+        "v1.emr": {
+            "extends": "sdk1_settings",
+            "class": "AmazonEMR"
+        },
+
+        "v1.iam": {
+            "extends": "sdk1_settings",
+            "class": "AmazonIAM"
+        },
+
+        "v1.importexport": {
+            "extends": "sdk1_settings",
+            "class": "AmazonImportExport"
+        },
+
+        "v1.rds": {
+            "extends": "sdk1_settings",
+            "class": "AmazonRDS"
+        },
+
+        "v1.s3": {
+            "extends": "sdk1_settings",
+            "class": "AmazonS3"
+        },
+
+        "v1.sdb": {
+            "extends": "sdk1_settings",
+            "class": "AmazonSDB"
+        },
+
+        "v1.ses": {
+            "extends": "sdk1_settings",
+            "class": "AmazonSES"
+        },
+
+        "v1.sns": {
+            "extends": "sdk1_settings",
+            "class": "AmazonSNS"
+        },
+
+        "v1.sqs": {
+            "extends": "sdk1_settings",
+            "class": "AmazonSQS"
+        },
+
+        "v1.storagegateway": {
+            "extends": "sdk1_settings",
+            "class": "AmazonStorageGateway"
+        },
+
+        "v1.sts": {
+            "extends": "sdk1_settings",
+            "class": "AmazonSTS"
+        },
+
+        "v1.swf": {
+            "extends": "sdk1_settings",
+            "class": "AmazonSWF"
+        }
+    }
+}

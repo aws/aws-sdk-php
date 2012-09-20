@@ -6,6 +6,7 @@ use Aws\Common\Command\AwsQueryVisitor;
 use Guzzle\Service\Client;
 use Aws\Common\Command\QueryCommand;
 use Guzzle\Service\Description\Operation;
+use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Description\Parameter;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 
@@ -61,6 +62,7 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
             )
         ));
 
+        $command = new OperationCommand();
         $request = new EntityEnclosingRequest('POST', 'http://foo.com');
         $visitor = new AwsQueryVisitor();
 
@@ -79,8 +81,8 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                 'Foo' => array('test', 'other')
             )
         );
-        $param->process($value);
-        $visitor->visit($param, $request, $value);
+
+        $visitor->visit($command, $request, $param, $value);
 
         $fields = $request->getPostFields()->getAll();
         asort($fields);

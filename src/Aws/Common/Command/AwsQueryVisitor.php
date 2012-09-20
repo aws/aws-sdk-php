@@ -4,17 +4,18 @@ namespace Aws\Common\Command;
 
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Description\Parameter;
-use Guzzle\Service\Command\LocationVisitor\AbstractVisitor;
+use Guzzle\Service\Command\CommandInterface;
+use Guzzle\Service\Command\LocationVisitor\Request\AbstractRequestVisitor;
 
 /**
  * Location visitor used to serialize AWS query parameters (e.g. EC2, SES, SNS, SQS, etc) as POST fields
  */
-class AwsQueryVisitor extends AbstractVisitor
+class AwsQueryVisitor extends AbstractRequestVisitor
 {
     /**
      * {@inheritdoc}
      */
-    public function visit(Parameter $param, RequestInterface $request, $value)
+    public function visit(CommandInterface $command, RequestInterface $request, Parameter $param, $value)
     {
         $query = array();
         $this->customResolver($value, $param, $query, ($param->getRename() ?: $param->getName()));

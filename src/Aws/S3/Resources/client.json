@@ -1029,11 +1029,13 @@
                 },
                 "Status": {
                     "description": "Sets the versioning state of the bucket.",
-                    "type": "choice:Suspended,Enabled"
+                    "type": "string",
+                    "enum": ["Suspended", "Enabled"]
                 },
                 "MfaDelete": {
                     "description": "Specifies whether MFA Delete is enabled in the bucket versioning configuration.",
-                    "type": "choice:Disabled,Enabled"
+                    "type": "string",
+                    "enum": ["Disabled" , "Enabled"]
                 },
                 "body": {
                     "description": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",

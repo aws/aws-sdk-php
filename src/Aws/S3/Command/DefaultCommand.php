@@ -19,13 +19,13 @@ namespace Aws\S3\Command;
 use Aws\Common\Exception\RuntimeException;
 use Aws\S3\S3Client;
 use Guzzle\Http\Url;
-use Guzzle\Service\Command\DynamicCommand;
+use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Description\Operation;
 
 /**
  * Adds Amazon S3 specific functionality to dynamic commands
  */
-class DefaultCommand extends DynamicCommand
+class DefaultCommand extends OperationCommand
 {
     /**
      * Inject a bucket into the client's base URL
