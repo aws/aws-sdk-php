@@ -143,9 +143,6 @@ class S3Client extends AbstractClient
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
-     *           service descriptions
-     *     - service.description.cache.ttl: Optional TTL used for the service description cache
      * - Amazon S3 specific options
      *     - bucket.path_style: Set to true to force path style requests when possible
      * - Signature options
@@ -333,7 +330,8 @@ class S3Client extends AbstractClient
     protected function checkExistenceWithCommand(CommandInterface $command, $accept403 = false)
     {
         try {
-            $exists = (bool) $command->execute();
+            $command->execute();
+            $exists = true;
         } catch (AccessDeniedException $e) {
             $exists = (bool) $accept403;
         } catch (S3Exception $e) {

@@ -70,15 +70,15 @@ abstract class AbstractWaiter implements WaiterInterface
     {
         $this->config = $config;
 
-        if (array_key_exists('interval', $config)) {
+        if (isset($config['interval'])) {
             $this->interval = $config['interval'];
         }
 
-        if (array_key_exists('max_attempts', $config)) {
+        if (isset($config['max_attempts'])) {
             $this->maxAttempts = $config['max_attempts'];
         }
 
-        if (array_key_exists('max_failures', $config)) {
+        if (isset($config['max_failures'])) {
             $this->maxFailures = $config['max_failures'];
         }
 

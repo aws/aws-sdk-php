@@ -22,9 +22,7 @@ class BucketNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_success', 's3/head_failure'));
-        $client->waitUntil('bucket_not_exists', 'foo', array(
-            'interval' => 0
-        ));
+        $client->waitUntil('bucket_not_exists', 'foo', array('interval' => 0));
         $this->assertEquals(2, count($this->getMockedRequests()));
     }
 
@@ -35,12 +33,7 @@ class BucketNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
     public function testDoesNotBuffer500Exceptions()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
-        $mock = new MockPlugin(array(
-            new Response(500)
-        ));
-        $client->getEventDispatcher()->addSubscriber($mock);
-        $client->waitUntil('bucket_exists', 'foo', array(
-            'interval' => 0
-        ));
+        $this->setMockResponse($client, array(new Response(501)));
+        $client->waitUntil('bucket_not_exists', 'foo', array('interval' => 0));
     }
 }
