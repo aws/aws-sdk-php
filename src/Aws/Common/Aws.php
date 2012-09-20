@@ -64,23 +64,25 @@ class Aws extends ServiceBuilder
      */
     public static function factory($config = null, array $globalParameters = null)
     {
+        $defaultDefinition = self::getDefaultServiceDefinition();
+
         if (!$config) {
             // If nothing is passed in, then use the default configuration file
             // with Instance profile credentials
-            $config = self::getDefaultServiceDefinition();
+            $config = $defaultDefinition;
         } elseif (is_array($config)) {
             // If an array was passed, then use the default configuration file
             // with global parameter overrides in the first argument
             $globalParameters = $config;
-            $config = self::getDefaultServiceDefinition();
+            $config = $defaultDefinition;
         }
 
-        // @codeCoverageIgnoreStart
         if (!self::$defaultFactory) {
+            $sdk1CompatibilityDefinition = str_replace('aws-config', 'sdk1-config', $defaultDefinition);
             self::$defaultFactory = new ServiceBuilderAbstractFactory();
-            self::$defaultFactory->getJsonFactory()->addAlias('_aws', self::getDefaultServiceDefinition());
+            self::$defaultFactory->getJsonFactory()->addAlias('_aws', $defaultDefinition);
+            self::$defaultFactory->getJsonFactory()->addAlias('_sdk1', $sdk1CompatibilityDefinition);
         }
-        // @codeCoverageIgnoreEnd
 
         return self::$defaultFactory->build($config, $globalParameters);
     }
@@ -92,6 +94,6 @@ class Aws extends ServiceBuilder
      */
     public static function getDefaultServiceDefinition()
     {
-        return __DIR__ . DIRECTORY_SEPARATOR . 'aws-config.json';
+        return __DIR__  . '/Resources/aws-config.json';
     }
 }
