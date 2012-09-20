@@ -106,7 +106,7 @@ class AbstractGlacierResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
      */
     protected function getMockedCommand()
     {
-        return $this->getMockBuilder('Guzzle\Service\Command\DynamicCommand')
+        return $this->getMockBuilder('Guzzle\Service\Command\OperationCommand')
             ->disableOriginalConstructor()
             ->setMethods(array('execute'))
             ->getMock()
