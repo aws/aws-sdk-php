@@ -139,16 +139,6 @@ class ClientOptions extends Enum
     const SERVICE_DESCRIPTION = 'service.description';
 
     /**
-     * @var string Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache service descriptions
-     */
-    const SERVICE_DESCRIPTION_CACHE = 'service.description.cache';
-
-    /**
-     * @var string Optional TTL used for the service description cache
-     */
-    const SERVICE_DESCRIPTION_CACHE_TTL = 'service.description.cache.ttl';
-
-    /**
      * @var string Option holding client resolvers
      */
     const RESOLVERS = 'client.resolvers';

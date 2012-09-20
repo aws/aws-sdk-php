@@ -17,22 +17,17 @@
 namespace Aws\Common;
 
 use Guzzle\Service\Builder\ServiceBuilder;
-use Guzzle\Service\Builder\ServiceBuilderAbstractFactory;
+use Guzzle\Service\Builder\ServiceBuilderLoader;
 
 /**
  * Base class for interacting with web service clients
  */
-class Aws extends ServiceBuilder
+class Aws extends ServiceBuilderLoader
 {
     /**
      * @var string Current version of the SDK
      */
     const VERSION = '2.0.0';
-
-    /**
-     * @var ServiceBuilderAbstractFactory
-     */
-    protected static $defaultFactory;
 
     /**
      * Create a new service locator for the AWS SDK
@@ -60,9 +55,9 @@ class Aws extends ServiceBuilder
      *                                                         service as it is instantiated.
      * @param array                          $globalParameters Array of global parameters to pass to every service as it
      *                                                         is instantiated.
-     * @return Aws
+     * @return ServiceBuilder
      */
-    public static function factory($config = null, array $globalParameters = null)
+    public static function factory($config = null, array $globalParameters = array())
     {
         $defaultDefinition = self::getDefaultServiceDefinition();
 
@@ -77,14 +72,9 @@ class Aws extends ServiceBuilder
             $config = $defaultDefinition;
         }
 
-        if (!self::$defaultFactory) {
-            $sdk1CompatibilityDefinition = str_replace('aws-config', 'sdk1-config', $defaultDefinition);
-            self::$defaultFactory = new ServiceBuilderAbstractFactory();
-            self::$defaultFactory->getJsonFactory()->addAlias('_aws', $defaultDefinition);
-            self::$defaultFactory->getJsonFactory()->addAlias('_sdk1', $sdk1CompatibilityDefinition);
-        }
+        $loader = new static();
 
-        return self::$defaultFactory->build($config, $globalParameters);
+        return $loader->load($config, $globalParameters);
     }
 
     /**
@@ -95,5 +85,16 @@ class Aws extends ServiceBuilder
     public static function getDefaultServiceDefinition()
     {
         return __DIR__  . '/Resources/aws-config.json';
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $defaultDefinition = self::getDefaultServiceDefinition();
+        $sdk1CompatibilityDefinition = str_replace('aws-config', 'sdk1-config', $defaultDefinition);
+        $this->addAlias('_aws', $defaultDefinition);
+        $this->addAlias('_sdk1', $sdk1CompatibilityDefinition);
     }
 }
