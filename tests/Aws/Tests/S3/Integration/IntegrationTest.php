@@ -35,7 +35,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $client = self::getServiceBuilder()->get('s3');
         $bucket = self::getResourcePrefix() . '-s3-test';
         self::log("Creating the {$bucket} bucket");
-        $client->createBucket(array('bucket' => $bucket));
+        $client->createBucket(array('bucket' => $bucket))->execute();
         // Create the bucket
         self::log("Waiting for the bucket to exist");
         $client->waitUntil('bucket_exists', $bucket);
@@ -50,7 +50,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $clear = new ClearBucket($client, $bucket);
         $clear->clear();
         self::log("Deleting the {$bucket} bucket");
-        $client->deleteBucket(array('bucket' => $bucket));
+        $client->deleteBucket(array('bucket' => $bucket))->execute();
         self::log("Waiting for {$bucket} to not exist");
         $client->waitUntil('bucket_not_exists', $bucket);
     }
@@ -83,7 +83,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals("https://{$this->bucket}.s3.amazonaws.com/{$key}", $response->getLocation());
 
         // Delete the object
-        $this->client->deleteObject(array('bucket' => $this->bucket, 'key' => $key));
+        $this->client->deleteObject(array('bucket' => $this->bucket, 'key' => $key))->execute();
     }
 
     public function testCreatingAclWithModelsProducesCorrectXml()
@@ -169,7 +169,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->getObject(array(
             'bucket' => $this->bucket,
             'key'    => self::TEST_KEY
-        ));
+        ))->execute();
         $this->assertInstanceOf('Guzzle\Http\Message\Response', $result);
         $this->assertEquals('åbc 123', $result->getBody(true));
         $this->assertEquals('application/foo', $result->getContentType());
@@ -196,7 +196,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $xml = $this->client->getObjectAcl(array(
             'bucket' => $this->bucket,
             'key'    => self::TEST_KEY
-        ));
+        ))->execute();
 
         $data = array();
         foreach (Acl::fromXml($xml) as $grant) {
@@ -219,7 +219,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'bucket' => $this->bucket,
             'key'    => $key,
             'body'   => 'hi'
-        ));
+        ))->execute();
         $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
     }
 

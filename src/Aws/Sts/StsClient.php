@@ -24,12 +24,13 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
+use Guzzle\Service\Command\OperationCommand as Op;
 
 /**
  * Client to interact with the AWS Security Token Service
  *
- * @method array getSessionToken(array $args = array()) {@command sts GetSessionToken}
- * @method array getFederationToken(array $args = array()) {@command sts GetFederationToken}
+ * @method Op getSessionToken(array $args = array()) {@command sts GetSessionToken}
+ * @method Op getFederationToken(array $args = array()) {@command sts GetFederationToken}
  */
 class StsClient extends AbstractClient
 {
