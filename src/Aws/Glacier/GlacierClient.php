@@ -24,29 +24,30 @@ use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Common\Event;
+use Guzzle\Service\Command\OperationCommand as Op;
 
 /**
  * Client to interact with Amazon Glacier
  *
- * @method array abortMultipartUpload (array $args = array()) {@command glacier AbortMultipartUpload}
- * @method array completeMultipartUpload (array $args = array()) {@command glacier CompleteMultipartUpload}
- * @method array createVault (array $args = array()) {@command glacier CreateVault}
- * @method array deleteArchive (array $args = array()) {@command glacier DeleteArchive}
- * @method array deleteVault (array $args = array()) {@command glacier DeleteVault}
- * @method array deleteVaultNotifications (array $args = array()) {@command glacier DeleteVaultNotifications}
- * @method array describeJob (array $args = array()) {@command glacier DescribeJob}
- * @method array describeVault (array $args = array()) {@command glacier DescribeVault}
- * @method array getJobOutput (array $args = array()) {@command glacier GetJobOutput}
- * @method array getVaultNotifications (array $args = array()) {@command glacier GetVaultNotifications}
- * @method array initiateJob (array $args = array()) {@command glacier InitiateJob}
- * @method array initiateMultipartUpload (array $args = array()) {@command glacier InitiateMultipartUpload}
- * @method array listJobs (array $args = array()) {@command glacier ListJobs}
- * @method array listMultipartUploads (array $args = array()) {@command glacier ListMultipartUploads}
- * @method array listParts (array $args = array()) {@command glacier ListParts}
- * @method array listVaults (array $args = array()) {@command glacier ListVaults}
- * @method array setVaultNotifications (array $args = array()) {@command glacier SetVaultNotifications}
- * @method array uploadArchive (array $args = array()) {@command glacier UploadArchive}
- * @method array uploadMultipartPart (array $args = array()) {@command glacier UploadMultipartPart}
+ * @method Op abortMultipartUpload (array $args = array()) {@command glacier AbortMultipartUpload}
+ * @method Op completeMultipartUpload (array $args = array()) {@command glacier CompleteMultipartUpload}
+ * @method Op createVault (array $args = array()) {@command glacier CreateVault}
+ * @method Op deleteArchive (array $args = array()) {@command glacier DeleteArchive}
+ * @method Op deleteVault (array $args = array()) {@command glacier DeleteVault}
+ * @method Op deleteVaultNotifications (array $args = array()) {@command glacier DeleteVaultNotifications}
+ * @method Op describeJob (array $args = array()) {@command glacier DescribeJob}
+ * @method Op describeVault (array $args = array()) {@command glacier DescribeVault}
+ * @method Op getJobOutput (array $args = array()) {@command glacier GetJobOutput}
+ * @method Op getVaultNotifications (array $args = array()) {@command glacier GetVaultNotifications}
+ * @method Op initiateJob (array $args = array()) {@command glacier InitiateJob}
+ * @method Op initiateMultipartUpload (array $args = array()) {@command glacier InitiateMultipartUpload}
+ * @method Op listJobs (array $args = array()) {@command glacier ListJobs}
+ * @method Op listMultipartUploads (array $args = array()) {@command glacier ListMultipartUploads}
+ * @method Op listParts (array $args = array()) {@command glacier ListParts}
+ * @method Op listVaults (array $args = array()) {@command glacier ListVaults}
+ * @method Op setVaultNotifications (array $args = array()) {@command glacier SetVaultNotifications}
+ * @method Op uploadArchive (array $args = array()) {@command glacier UploadArchive}
+ * @method Op uploadMultipartPart (array $args = array()) {@command glacier UploadMultipartPart}
  */
 class GlacierClient extends AbstractClient
 {
@@ -105,9 +106,15 @@ class GlacierClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
+                // General service configuration
                 Options::SERVICE => 'glacier',
-                Options::SCHEME  => 'https'
+                Options::SCHEME  => 'https',
+
+                // Overwrite the default blacklist to allow Expect headers
+                'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
+
+                // Disable model processing when commands are executed by default, and simply return arrays
+                'params.' . Op::RESPONSE_PROCESSING => Op::TYPE_NATIVE
             ))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonRestExceptionParser())
@@ -115,7 +122,7 @@ class GlacierClient extends AbstractClient
 
         // Add the Glacier version header required for all operations
         $client->setDefaultHeaders(array(
-            'x-amz-glacier-version' => '2012-06-01'
+            'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
         ));
 
         // Set default value for "accountId" for all requests
@@ -125,7 +132,7 @@ class GlacierClient extends AbstractClient
         });
 
         // Set Expect header only for upload operations
-        $client->addSubscriber(new ExpectHeaderListener(array('UploadArchive', 'UploadMultipartPart')));
+        $client->addSubscriber(new ExpectHeaderListener());
 
         // Set x-amz-content-sha256 header for upload operations
         $client->addSubscriber(new GlacierUploadListener());

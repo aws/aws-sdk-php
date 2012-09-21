@@ -26,21 +26,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ExpectHeaderListener implements EventSubscriberInterface
 {
     /**
-     * @var array Commands that should include the Expect header
-     */
-    protected $whitelist;
-
-    /**
-     * Construct a new expect header plugin
-     *
-     * @param array $whitelist List of commands that should include the Expect header
-     */
-    public function __construct(array $whitelist = array())
-    {
-        $this->whitelist = $whitelist;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public static function getSubscribedEvents()
@@ -59,8 +44,7 @@ class ExpectHeaderListener implements EventSubscriberInterface
     {
         /** @var $command AbstractCommand */
         $command = $event['command'];
-        $expect = (bool) $command->get('use_expect', in_array($command->getName(), $this->whitelist));
-        if ($expect) {
+        if ($command->get('command.use_expect')) {
             $command->getRequest()->setHeader('Expect', '100-Continue');
         } else {
             $command->getRequest()->removeHeader('Expect');
