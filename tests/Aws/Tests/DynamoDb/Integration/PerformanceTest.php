@@ -45,32 +45,14 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                     'ReadCapacityUnits'  => self::READ_CAPACITY,
                     'WriteCapacityUnits' => 5
                 )
-            ));
-            // Wait until the table is created and active
-            $client->waitUntil('TableExists', self::getTableName());
-        } else {
-            // Wait until the table is active
-            $client->waitUntil('TableExists', self::getTableName());
+            ))->execute();
         }
 
+        // Wait until the table is created and active
+        $client->waitUntil('TableExists', self::getTableName());
+
         try {
-            // Check if the item exists
-            self::log('Checking if the test item exists');
-            $client->getItem(array(
-                'TableName' => self::getTableName(),
-                'Key' => array(
-                    'HashKeyElement' => array(
-                        'S' => 'fizz',
-                    ),
-                    'RangeKeyElement' => array(
-                        'N' => '1'
-                    )
-                )
-            ));
-            self::log('Item exists');
-        } catch (ResourceNotFoundException $e) {
-            // Add the test item if it does not exist
-            self::log('Test item does not exist. Creating now.');
+            self::log('Creating the test item');
             $client->putItem(array(
                 'TableName' => self::getTableName(),
                 'Item'      => $client->formatAttributes(array(
@@ -79,7 +61,7 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                     'attr1' => 42,
                     'attr2' => array('a', 'b', 'c', 'd')
                 ))
-            ));
+            ))->execute();
         } catch (DynamoDbException $e) {
             echo $e->getResponse()->getRequest();
             echo $e->getResponse();

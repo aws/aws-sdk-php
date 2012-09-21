@@ -676,7 +676,7 @@ return array (
                             ),
                             'Exists' => array(
                                 'description' => 'Specify whether or not a value already exists for the attribute name-value pair.',
-                                'type' => 'bool',
+                                'type' => 'boolean',
                                 'filters' => array(
                                     'Aws\\Common\\Command\\Filters::booleanString',
                                 ),
@@ -944,7 +944,7 @@ return array (
                     ),
                 ),
                 'ConsistentRead' => array(
-                    'type' => 'bool',
+                    'type' => 'boolean',
                     'location' => 'json',
                     'filters' => array(
                         'Aws\\Common\\Command\\Filters::booleanString',
@@ -1143,7 +1143,7 @@ return array (
                             ),
                             'Exists' => array(
                                 'description' => 'Specify whether or not a value already exists for the attribute name-value pair.',
-                                'type' => 'bool',
+                                'type' => 'boolean',
                                 'filters' => array(
                                     'Aws\\Common\\Command\\Filters::booleanString',
                                 ),
@@ -1227,7 +1227,7 @@ return array (
                     'minimum' => 1,
                 ),
                 'ConsistentRead' => array(
-                    'type' => 'bool',
+                    'type' => 'boolean',
                     'location' => 'json',
                     'filters' => array(
                         'Aws\\Common\\Command\\Filters::booleanString',
@@ -1235,7 +1235,7 @@ return array (
                 ),
                 'Count' => array(
                     'description' => 'If set to true, Amazon DynamoDB returns a total number of items that match the query parameters, instead of a list of the matching items and their attributes. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.',
-                    'type' => 'bool',
+                    'type' => 'boolean',
                     'location' => 'json',
                     'filters' => array(
                         'Aws\\Common\\Command\\Filters::booleanString',
@@ -1364,7 +1364,7 @@ return array (
                 ),
                 'ScanIndexForward' => array(
                     'description' => 'Specifies forward or backward traversal of the index. Amazon DynamoDB returns results reflecting the requested order, determined by the range key. The default value is true (forward).',
-                    'type' => 'bool',
+                    'type' => 'boolean',
                     'location' => 'json',
                     'filters' => array(
                         'Aws\\Common\\Command\\Filters::booleanString',
@@ -1530,7 +1530,7 @@ return array (
                 ),
                 'Count' => array(
                     'description' => 'If set to true, Amazon DynamoDB returns a total number of items for the Scan operation, even if the operation has no matching items for the assigned filter. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.',
-                    'type' => 'bool',
+                    'type' => 'boolean',
                     'location' => 'json',
                     'filters' => array(
                         'Aws\\Common\\Command\\Filters::booleanString',
@@ -1972,7 +1972,7 @@ return array (
                             ),
                             'Exists' => array(
                                 'description' => 'Specify whether or not a value already exists for the attribute name-value pair.',
-                                'type' => 'bool',
+                                'type' => 'boolean',
                                 'filters' => array(
                                     'Aws\\Common\\Command\\Filters::booleanString',
                                 ),

@@ -44,16 +44,16 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("# Attempting to delete {$table}");
 
         try {
-            $result = $client->describeTable(array('TableName' => $table));
+            $result = $client->describeTable(array('TableName' => $table))->execute();
             self::log('Table exists. Waiting until the status is ACTIVE');
             // Wait until the table is active
-            $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
+            $client->waitUntil('TableExists', $table, array('status' => 'ACTIVE'));
             self::log('Deleting the table');
             // Delete the table to clear out its contents
-            $client->deleteTable(array('TableName' => $table));
+            $client->deleteTable(array('TableName' => $table))->execute();
             self::log('Waiting until the table does not exist');
             // Wait until the table does not exist
-            $client->waitUntil('table_not_exists', $table);
+            $client->waitUntil('TableNotExists', $table);
         } catch (ResourceNotFoundException $e) {
             // The table does not exist so we are good
         }
@@ -83,7 +83,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testCreatesTable()
     {
         self::log("Waiting until {$this->table} does not exist");
-        $this->client->waitUntil('table_not_exists', $this->table);
+        $this->client->waitUntil('TableNotExists', $this->table);
 
         self::log("Attempting to create {$this->table}");
 
@@ -100,20 +100,18 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 )
             ),
             'ProvisionedThroughput' => array(
-                'ReadCapacityUnits'  => 20,
-                'WriteCapacityUnits' => 20
+                'ReadCapacityUnits'  => 10,
+                'WriteCapacityUnits' => 10
             )
-        ));
+        ))->execute();
 
         // Check/wait until the table exists
         self::log("Table created.  Waiting until it exists.");
-        $this->client->waitUntil('table_exists', $this->table);
+        $this->client->waitUntil('TableExists', $this->table);
         self::log("Table exists");
 
         // Ensure that the fields were set properly
-        $result = $this->client->describeTable(array(
-            'TableName' => $this->table
-        ));
+        $result = $this->client->describeTable(array('TableName' => $this->table))->execute();
 
         self::log("Ensuring the table was created with the proper values");
         $this->assertEquals($this->table, $result['Table']['TableName']);
@@ -121,8 +119,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals('S', $result['Table']['KeySchema']['HashKeyElement']['AttributeType']);
         $this->assertEquals('bar', $result['Table']['KeySchema']['RangeKeyElement']['AttributeName']);
         $this->assertEquals('N', $result['Table']['KeySchema']['RangeKeyElement']['AttributeType']);
-        $this->assertEquals(20, $result['Table']['ProvisionedThroughput']['ReadCapacityUnits']);
-        $this->assertEquals(20, $result['Table']['ProvisionedThroughput']['WriteCapacityUnits']);
+        $this->assertEquals(10, $result['Table']['ProvisionedThroughput']['ReadCapacityUnits']);
+        $this->assertEquals(10, $result['Table']['ProvisionedThroughput']['WriteCapacityUnits']);
     }
 
     /**
@@ -130,8 +128,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testListsTables()
     {
-        $command = $this->client->getCommand('ListTables');
-        $result = $command->execute();
+        $result = $this->client->getCommand('ListTables')->execute();
         $this->assertContains($this->table, $result['TableNames']);
     }
 
@@ -143,9 +140,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Iterating over all tables');
 
         $foundTables = array();
-        $iterator = $this->client->getIterator('ListTables', array(
-            'Limit' => 5
-        ));
+        $iterator = $this->client->getIterator('ListTables', array('Limit' => 5));
 
         foreach ($iterator as $table) {
             $foundTables[] = $table;
@@ -163,32 +158,26 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Updating table');
 
         // Need to wait until the table is active
-        $this->client->waitUntil('TableExists', $this->table, array(
-            'status' => 'active'
-        ));
+        $this->client->waitUntil('TableExists', $this->table, array('status' => 'active'));
 
         $this->client->updateTable(array(
             'TableName' => $this->table,
             'ProvisionedThroughput' => array(
-                'ReadCapacityUnits'  => 10,
-                'WriteCapacityUnits' => 10
+                'ReadCapacityUnits'  => 20,
+                'WriteCapacityUnits' => 20
             )
-        ));
+        ))->execute();
 
         // Wait until the table is active
         self::log('Waiting for the table to become active after updating');
-        $this->client->waitUntil('table_exists', $this->table, array(
-            'status' => 'active'
-        ));
+        $this->client->waitUntil('table_exists', $this->table, array('status' => 'ACTIVE'));
 
         // Ensure the table is updated
-        $result = $this->client->describeTable(array(
-            'TableName' => $this->table
-        ));
+        $result = $this->client->describeTable(array('TableName' => $this->table))->execute();
 
         // Ensure that the updates took effect
-        $this->assertEquals(10, $result['Table']['ProvisionedThroughput']['ReadCapacityUnits']);
-        $this->assertEquals(10, $result['Table']['ProvisionedThroughput']['WriteCapacityUnits']);
+        $this->assertEquals(20, $result['Table']['ProvisionedThroughput']['ReadCapacityUnits']);
+        $this->assertEquals(20, $result['Table']['ProvisionedThroughput']['WriteCapacityUnits']);
     }
 
     /**
@@ -206,7 +195,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->putItem(array(
             'TableName' => $this->table,
             'Item'       => $attributes
-        ));
+        ))->execute();
 
         $this->assertArrayHasKey('ConsumedCapacityUnits', $result);
 
@@ -219,7 +208,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'RangeKeyElement' => 10
             )),
             'ConsistentRead' => true
-        ));
+        ))->execute();
 
         $this->assertEquals('Test', $result['Item']['foo']['S']);
         $this->assertEquals(10, $result['Item']['bar']['N']);
@@ -230,7 +219,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->deleteItem(array(
             'TableName' => $this->table,
             'Key'        => new Key('Test', 10)
-        ));
+        ))->execute();
 
         $this->assertArrayHasKey('ConsumedCapacityUnits', $result);
     }
@@ -276,7 +265,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'foo' => 'Bar',
                 'bar' => 10
             ))
-        ));
+        ))->execute();
         self::log('Added 1 item');
 
         $this->client->putItem(array(
@@ -285,7 +274,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'foo' => 'Bar',
                 'bar' => 20
             ))
-        ));
+        ))->execute();
         self::log('Added 2 items');
 
         $this->client->putItem(array(
@@ -294,7 +283,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'foo' => 'Bar',
                 'bar' => 30
             ))
-        ));
+        ))->execute();
         self::log('Added 3 items');
 
         self::log('Waiting until at least 3 items are in the table');
@@ -352,10 +341,10 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Querying data');
 
         $iterator = $this->client->getIterator('Query', array(
-            'TableName'  => $this->table,
-            'Limit'       => 2,
-            'ConsistentRead' => true,
-            'HashKeyValue' => array('S' => 'Bar'),
+            'TableName'         => $this->table,
+            'Limit'             => 2,
+            'ConsistentRead'    => true,
+            'HashKeyValue'      => array('S' => 'Bar'),
             'RangeKeyCondition' => array(
                 'AttributeValueList' => array(
                     array('N' => '5')
