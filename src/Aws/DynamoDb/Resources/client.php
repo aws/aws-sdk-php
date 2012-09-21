@@ -1,6 +1,6 @@
 <?php
 return array (
-    'name' => 'dynamo_db',
+    'name' => 'dynamodb',
     'apiVersion' => '2011-12-05',
     'description' => 'Amazon DynamoDB is a fast, highly scalable, highly available, cost-effective non-relational database service.',
     'operations' => array(
@@ -8,7 +8,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'BatchGetItemOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -29,16 +30,14 @@ return array (
                     'required' => true,
                     'type' => 'object',
                     'location' => 'json',
-                    'min' => 1,
-                    'max' => 100,
                     'additionalProperties' => array(
                         'type' => 'object',
                         'properties' => array(
                             'Keys' => array(
                                 'required' => true,
                                 'type' => 'array',
-                                'min' => 1,
-                                'max' => 100,
+                                'minItems' => 1,
+                                'maxItems' => 100,
                                 'items' => array(
                                     'description' => 'The primary key that uniquely identifies each item in a table. A primary key can be a one attribute (hash) primary key or a two attribute (hash-and-range) primary key.',
                                     'type' => 'object',
@@ -139,7 +138,7 @@ return array (
                             ),
                             'AttributesToGet' => array(
                                 'type' => 'array',
-                                'min' => 1,
+                                'minItems' => 1,
                                 'items' => array(
                                     'type' => 'string',
                                 ),
@@ -167,7 +166,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'BatchWriteItemOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -189,12 +189,10 @@ return array (
                     'description' => 'A map of table name to list-of-write-requests. Used as input to the BatchWriteItem API call',
                     'type' => 'object',
                     'location' => 'json',
-                    'min' => 1,
-                    'max' => 25,
                     'additionalProperties' => array(
                         'type' => 'array',
-                        'min' => 1,
-                        'max' => 25,
+                        'minItems' => 1,
+                        'maxItems' => 25,
                         'items' => array(
                             'description' => 'This structure is a Union of PutRequest and DeleteRequest. It can contain exactly one of PutRequest or DeleteRequest. Never Both. This is enforced in the code.',
                             'type' => 'object',
@@ -381,7 +379,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'CreateTableOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -403,8 +402,8 @@ return array (
                     'description' => 'The name of the table you want to create. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'KeySchema' => array(
                     'required' => true,
@@ -420,8 +419,8 @@ return array (
                                     'required' => true,
                                     'description' => 'The AttributeName of the KeySchemaElement.',
                                     'type' => 'string',
-                                    'min' => 1,
-                                    'max' => 255,
+                                    'minLength' => 1,
+                                    'maxLength' => 255,
                                 ),
                                 'AttributeType' => array(
                                     'required' => true,
@@ -443,8 +442,8 @@ return array (
                                     'required' => true,
                                     'description' => 'The AttributeName of the KeySchemaElement.',
                                     'type' => 'string',
-                                    'min' => 1,
-                                    'max' => 255,
+                                    'minLength' => 1,
+                                    'maxLength' => 255,
                                 ),
                                 'AttributeType' => array(
                                     'required' => true,
@@ -468,12 +467,14 @@ return array (
                         'ReadCapacityUnits' => array(
                             'required' => true,
                             'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.',
-                            'min' => 1,
+                            'type' => 'numeric',
+                            'minimum' => 1,
                         ),
                         'WriteCapacityUnits' => array(
                             'required' => true,
                             'description' => 'WriteCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the WriteCapacityUnits.',
-                            'min' => 1,
+                            'type' => 'numeric',
+                            'minimum' => 1,
                         ),
                     ),
                 ),
@@ -497,7 +498,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'DeleteItemOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -519,8 +521,8 @@ return array (
                     'description' => 'The name of the table in which you want to delete an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'Key' => array(
                     'required' => true,
@@ -717,7 +719,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'DeleteTableOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -739,8 +742,8 @@ return array (
                     'description' => 'The name of the table you want to delete. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -766,7 +769,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'DescribeTableOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -788,8 +792,8 @@ return array (
                     'description' => 'The name of the table you want to describe. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
             ),
             'errorResponses' => array(
@@ -807,7 +811,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'GetItemOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -829,8 +834,8 @@ return array (
                     'description' => 'The name of the table in which you want to get an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'Key' => array(
                     'required' => true,
@@ -933,7 +938,7 @@ return array (
                 'AttributesToGet' => array(
                     'type' => 'array',
                     'location' => 'json',
-                    'min' => 1,
+                    'minItems' => 1,
                     'items' => array(
                         'type' => 'string',
                     ),
@@ -965,7 +970,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'ListTablesOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -986,14 +992,14 @@ return array (
                     'description' => 'The name of the table that starts the list. If you already ran a ListTables operation and received a LastEvaluatedTableName value in the response, use that value here to continue the list.',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
                     'location' => 'json',
-                    'min' => 1,
-                    'max' => 100,
+                    'minimum' => 1,
+                    'maximum' => 100,
                 ),
             ),
             'errorResponses' => array(
@@ -1007,7 +1013,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'PutItemOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -1029,8 +1036,8 @@ return array (
                     'description' => 'The name of the table in which you want to put an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'Item' => array(
                     'required' => true,
@@ -1179,7 +1186,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'QueryOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -1201,13 +1209,13 @@ return array (
                     'description' => 'The name of the table in which you want to query. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'AttributesToGet' => array(
                     'type' => 'array',
                     'location' => 'json',
-                    'min' => 1,
+                    'minItems' => 1,
                     'items' => array(
                         'type' => 'string',
                     ),
@@ -1216,7 +1224,7 @@ return array (
                     'description' => 'The maximum number of items to return. If Amazon DynamoDB hits this limit while querying the table, it stops the query and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the query. Also, if the result set size exceeds 1MB before Amazon DynamoDB hits this limit, it stops the query and returns the matching values, and a LastEvaluatedKey to apply in a subsequent operation to continue the query.',
                     'type' => 'numeric',
                     'location' => 'json',
-                    'min' => 1,
+                    'minimum' => 1,
                 ),
                 'ConsistentRead' => array(
                     'type' => 'bool',
@@ -1480,7 +1488,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'ScanOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -1502,13 +1511,13 @@ return array (
                     'description' => 'The name of the table in which you want to scan. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'AttributesToGet' => array(
                     'type' => 'array',
                     'location' => 'json',
-                    'min' => 1,
+                    'minItems' => 1,
                     'items' => array(
                         'type' => 'string',
                     ),
@@ -1517,7 +1526,7 @@ return array (
                     'description' => 'The maximum number of items to return. If Amazon DynamoDB hits this limit while scanning the table, it stops the scan and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the scan. Also, if the scanned data set size exceeds 1 MB before Amazon DynamoDB hits this limit, it stops the scan and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the scan.',
                     'type' => 'numeric',
                     'location' => 'json',
-                    'min' => 1,
+                    'minimum' => 1,
                 ),
                 'Count' => array(
                     'description' => 'If set to true, Amazon DynamoDB returns a total number of items for the Scan operation, even if the operation has no matching items for the assigned filter. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.',
@@ -1722,7 +1731,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'UpdateItemOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -1744,8 +1754,8 @@ return array (
                     'description' => 'The name of the table in which you want to update an item. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'Key' => array(
                     'required' => true,
@@ -2005,7 +2015,8 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
+            'responseClass' => 'UpdateTableOutput',
+            'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
             'parameters' => array(
                 'Content-Type' => array(
@@ -2027,8 +2038,8 @@ return array (
                     'description' => 'The name of the table you want to update. Allowed characters are a-z, A-Z, 0-9, _ (underscore), - (hyphen) and . (period).',
                     'type' => 'string',
                     'location' => 'json',
-                    'min' => 3,
-                    'max' => 255,
+                    'minLength' => 3,
+                    'maxLength' => 255,
                 ),
                 'ProvisionedThroughput' => array(
                     'required' => true,
@@ -2038,12 +2049,14 @@ return array (
                         'ReadCapacityUnits' => array(
                             'required' => true,
                             'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.',
-                            'min' => 1,
+                            'type' => 'numeric',
+                            'minimum' => 1,
                         ),
                         'WriteCapacityUnits' => array(
                             'required' => true,
                             'description' => 'WriteCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the WriteCapacityUnits.',
-                            'min' => 1,
+                            'type' => 'numeric',
+                            'minimum' => 1,
                         ),
                     ),
                 ),
@@ -2064,6 +2077,1030 @@ return array (
                 array(
                     'reason' => 'This exception is thrown when the service has a problem when trying to process the request.',
                     'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+    ),
+    'models' => array(
+        'BatchGetItemOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Responses' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'Items' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'object',
+                                    'additionalProperties' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'S' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'N' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'B' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SS' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                            'NS' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                            'BS' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ConsumedCapacityUnits' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'UnprocessedKeys' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'Keys' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'HashKeyElement' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'S' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'N' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'B' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'SS' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                                'NS' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                                'BS' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'RangeKeyElement' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'S' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'N' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'B' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'SS' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                                'NS' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                                'BS' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'AttributesToGet' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'BatchWriteItemOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Responses' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'ConsumedCapacityUnits' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'UnprocessedItems' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'array',
+                        'items' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'PutRequest' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Item' => array(
+                                            'type' => 'object',
+                                            'additionalProperties' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'S' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'N' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'B' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'SS' => array(
+                                                        'type' => 'array',
+                                                        'items' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                    'NS' => array(
+                                                        'type' => 'array',
+                                                        'items' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                    'BS' => array(
+                                                        'type' => 'array',
+                                                        'items' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                                'DeleteRequest' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'HashKeyElement' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'S' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'N' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'B' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'SS' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                        'NS' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                        'BS' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                                'RangeKeyElement' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'S' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'N' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'B' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'SS' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                        'NS' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                        'BS' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'CreateTableOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TableDescription' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'TableName' => array(
+                            'type' => 'string',
+                        ),
+                        'KeySchema' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'HashKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                                'RangeKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'TableStatus' => array(
+                            'type' => 'string',
+                        ),
+                        'CreationDateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'ProvisionedThroughput' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'LastIncreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'LastDecreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'ReadCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'WriteCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'TableSizeBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'ItemCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DeleteItemOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Attributes' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'S' => array(
+                                'type' => 'string',
+                            ),
+                            'N' => array(
+                                'type' => 'string',
+                            ),
+                            'B' => array(
+                                'type' => 'string',
+                            ),
+                            'SS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'NS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'BS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ConsumedCapacityUnits' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'DeleteTableOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TableDescription' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'TableName' => array(
+                            'type' => 'string',
+                        ),
+                        'KeySchema' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'HashKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                                'RangeKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'TableStatus' => array(
+                            'type' => 'string',
+                        ),
+                        'CreationDateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'ProvisionedThroughput' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'LastIncreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'LastDecreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'ReadCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'WriteCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'TableSizeBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'ItemCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeTableOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Table' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'TableName' => array(
+                            'type' => 'string',
+                        ),
+                        'KeySchema' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'HashKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                                'RangeKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'TableStatus' => array(
+                            'type' => 'string',
+                        ),
+                        'CreationDateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'ProvisionedThroughput' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'LastIncreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'LastDecreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'ReadCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'WriteCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'TableSizeBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'ItemCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'GetItemOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Item' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'S' => array(
+                                'type' => 'string',
+                            ),
+                            'N' => array(
+                                'type' => 'string',
+                            ),
+                            'B' => array(
+                                'type' => 'string',
+                            ),
+                            'SS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'NS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'BS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ConsumedCapacityUnits' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'ListTablesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TableNames' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'type' => 'string',
+                    ),
+                ),
+                'LastEvaluatedTableName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'PutItemOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Attributes' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'S' => array(
+                                'type' => 'string',
+                            ),
+                            'N' => array(
+                                'type' => 'string',
+                            ),
+                            'B' => array(
+                                'type' => 'string',
+                            ),
+                            'SS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'NS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'BS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ConsumedCapacityUnits' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'QueryOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Items' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'type' => 'object',
+                        'additionalProperties' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'S' => array(
+                                    'type' => 'string',
+                                ),
+                                'N' => array(
+                                    'type' => 'string',
+                                ),
+                                'B' => array(
+                                    'type' => 'string',
+                                ),
+                                'SS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'NS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'BS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Count' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'LastEvaluatedKey' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'HashKeyElement' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'S' => array(
+                                    'type' => 'string',
+                                ),
+                                'N' => array(
+                                    'type' => 'string',
+                                ),
+                                'B' => array(
+                                    'type' => 'string',
+                                ),
+                                'SS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'NS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'BS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'RangeKeyElement' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'S' => array(
+                                    'type' => 'string',
+                                ),
+                                'N' => array(
+                                    'type' => 'string',
+                                ),
+                                'B' => array(
+                                    'type' => 'string',
+                                ),
+                                'SS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'NS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'BS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ConsumedCapacityUnits' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'ScanOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Items' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'type' => 'object',
+                        'additionalProperties' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'S' => array(
+                                    'type' => 'string',
+                                ),
+                                'N' => array(
+                                    'type' => 'string',
+                                ),
+                                'B' => array(
+                                    'type' => 'string',
+                                ),
+                                'SS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'NS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'BS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Count' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'ScannedCount' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'LastEvaluatedKey' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'HashKeyElement' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'S' => array(
+                                    'type' => 'string',
+                                ),
+                                'N' => array(
+                                    'type' => 'string',
+                                ),
+                                'B' => array(
+                                    'type' => 'string',
+                                ),
+                                'SS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'NS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'BS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'RangeKeyElement' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'S' => array(
+                                    'type' => 'string',
+                                ),
+                                'N' => array(
+                                    'type' => 'string',
+                                ),
+                                'B' => array(
+                                    'type' => 'string',
+                                ),
+                                'SS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'NS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                                'BS' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ConsumedCapacityUnits' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'UpdateItemOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Attributes' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'S' => array(
+                                'type' => 'string',
+                            ),
+                            'N' => array(
+                                'type' => 'string',
+                            ),
+                            'B' => array(
+                                'type' => 'string',
+                            ),
+                            'SS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'NS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'BS' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ConsumedCapacityUnits' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'UpdateTableOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TableDescription' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'TableName' => array(
+                            'type' => 'string',
+                        ),
+                        'KeySchema' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'HashKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                                'RangeKeyElement' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AttributeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'TableStatus' => array(
+                            'type' => 'string',
+                        ),
+                        'CreationDateTime' => array(
+                            'type' => 'string',
+                        ),
+                        'ProvisionedThroughput' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'LastIncreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'LastDecreaseDateTime' => array(
+                                    'type' => 'string',
+                                ),
+                                'ReadCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'WriteCapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'TableSizeBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'ItemCount' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
                 ),
             ),
         ),

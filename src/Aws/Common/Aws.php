@@ -84,7 +84,7 @@ class Aws extends ServiceBuilderLoader
      */
     public static function getDefaultServiceDefinition()
     {
-        return __DIR__  . '/Resources/aws-config.json';
+        return __DIR__  . '/Resources/aws-config.php';
     }
 
     /**

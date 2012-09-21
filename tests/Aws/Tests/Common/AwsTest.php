@@ -30,6 +30,6 @@ class AwsTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testReturnsDefaultConfigPath()
     {
-        $this->assertContains('aws-config.json', Aws::getDefaultServiceDefinition());
+        $this->assertContains('aws-config.php', Aws::getDefaultServiceDefinition());
     }
 }

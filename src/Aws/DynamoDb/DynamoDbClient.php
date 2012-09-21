@@ -31,6 +31,7 @@ use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
+use Guzzle\Service\Command\AbstractCommand;
 
 /**
  * Client for interacting with Amazon DynamoDB
@@ -124,7 +125,9 @@ class DynamoDbClient extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE => 'dynamodb',
-                Options::SCHEME  => 'https'
+                Options::SCHEME  => 'https',
+                // Disable model processing when commands are executed by default, and simply return arrays
+                'params.' . AbstractCommand::RESPONSE_PROCESSING => AbstractCommand::TYPE_NATIVE
             ))
             ->setSignature(new SignatureV4())
             ->addClientResolver($exponentialBackoffResolver)

@@ -22,4 +22,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
  * Request is past expires date or the request date (either with 15 minute padding),
  * or the request date occurs more than 15 minutes in the future.
  */
-class RequestExpiredException extends StsException implements ClientExceptionInterface {}
+class RequestExpiredException extends StsException {}

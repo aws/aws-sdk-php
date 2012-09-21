@@ -16,9 +16,7 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ServerExceptionInterface;
-
 /**
  * The request processing has failed due to some unknown error, exception or failure.
  */
-class InternalFailureException extends StsException implements ServerExceptionInterface {}
+class InternalFailureException extends StsException {}

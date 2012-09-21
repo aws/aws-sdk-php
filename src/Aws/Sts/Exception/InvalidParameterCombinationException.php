@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * Parameters that must not be used together were used together.
  */
-class InvalidParameterCombinationException extends StsException implements ClientExceptionInterface {}
+class InvalidParameterCombinationException extends StsException {}

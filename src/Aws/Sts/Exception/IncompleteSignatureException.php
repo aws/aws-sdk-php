@@ -16,9 +16,7 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The request signature does not conform to AWS standards.
  */
-class IncompleteSignatureException extends StsException implements ClientExceptionInterface {}
+class IncompleteSignatureException extends StsException {}
