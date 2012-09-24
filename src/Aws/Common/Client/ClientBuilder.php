@@ -354,10 +354,7 @@ class ClientBuilder
         if ($certSetting) {
             // If set to TRUE, then use the default CA cert file
             if ($certSetting === 'true' || $certSetting === true) {
-                $certSetting = dirname(dirname(dirname(dirname(__DIR__))))
-                    . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR
-                    . 'mozilla' . DIRECTORY_SEPARATOR . 'cacert'
-                    . DIRECTORY_SEPARATOR . 'cacert.pem';
+                $certSetting = dirname(__DIR__) . '/Resources/cacert.pem';
             }
 
             // Enable SSL certificate verification using the Mozilla cert
