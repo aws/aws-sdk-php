@@ -31,23 +31,25 @@ use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
+use Guzzle\Service\Command\AbstractCommand;
+use Guzzle\Service\Command\OperationCommand as Op;
 
 /**
  * Client for interacting with Amazon DynamoDB
  *
- * @method array batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
- * @method array batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
- * @method array createTable(array $args = array()) {@command dynamodb CreateTable}
- * @method array deleteItem(array $args = array()) {@command dynamodb DeleteItem}
- * @method array deleteTable(array $args = array()) {@command dynamodb DeleteTable}
- * @method array describeTable(array $args = array()) {@command dynamodb DescribeTable}
- * @method array getItem(array $args = array()) {@command dynamodb GetItem}
- * @method array listTables(array $args = array()) {@command dynamodb ListTables}
- * @method array putItem(array $args = array()) {@command dynamodb PutItem}
- * @method array query(array $args = array()) {@command dynamodb Query}
- * @method array scan(array $args = array()) {@command dynamodb Scan}
- * @method array updateItem(array $arg = array()) {@command dynamodb UpdateItem}
- * @method array updateTable(array $args = array()) {@command dynamodb UpdateTable}
+ * @method Op batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
+ * @method Op batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
+ * @method Op createTable(array $args = array()) {@command dynamodb CreateTable}
+ * @method Op deleteItem(array $args = array()) {@command dynamodb DeleteItem}
+ * @method Op deleteTable(array $args = array()) {@command dynamodb DeleteTable}
+ * @method Op describeTable(array $args = array()) {@command dynamodb DescribeTable}
+ * @method Op getItem(array $args = array()) {@command dynamodb GetItem}
+ * @method Op listTables(array $args = array()) {@command dynamodb ListTables}
+ * @method Op putItem(array $args = array()) {@command dynamodb PutItem}
+ * @method Op query(array $args = array()) {@command dynamodb Query}
+ * @method Op scan(array $args = array()) {@command dynamodb Scan}
+ * @method Op updateItem(array $arg = array()) {@command dynamodb UpdateItem}
+ * @method Op updateTable(array $args = array()) {@command dynamodb UpdateTable}
  */
 class DynamoDbClient extends AbstractClient
 {
@@ -83,9 +85,6 @@ class DynamoDbClient extends AbstractClient
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
-     *           service descriptions
-     *     - service.description.cache.ttl: Optional TTL used for the service description cache
      * - Signature options
      *     - signature: You can optionally provide a custom signature implementation used to sign requests
      *     - signature.service: Set to explicitly override the service name used in signatures
@@ -127,7 +126,9 @@ class DynamoDbClient extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE => 'dynamodb',
-                Options::SCHEME  => 'https'
+                Options::SCHEME  => 'https',
+                // Disable model processing when commands are executed by default, and simply return arrays
+                'params.' . AbstractCommand::RESPONSE_PROCESSING => AbstractCommand::TYPE_NATIVE
             ))
             ->setSignature(new SignatureV4())
             ->addClientResolver($exponentialBackoffResolver)

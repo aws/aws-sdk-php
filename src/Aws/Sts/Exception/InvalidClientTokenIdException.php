@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * The X.509 certificate or AWS Access Key ID provided does not exist in our records.
  */
-class InvalidClientTokenIdException extends StsException implements ClientExceptionInterface {}
+class InvalidClientTokenIdException extends StsException {}

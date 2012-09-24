@@ -33,8 +33,6 @@ class BucketExists extends AbstractResourceWaiter
      */
     protected function doWait()
     {
-       return $this->client->doesBucketExist($this->resourceId, true, array(
-           Ua::OPTION => Ua::WAITER
-       ));
+       return $this->client->doesBucketExist($this->resourceId, true, array(Ua::OPTION => Ua::WAITER));
     }
 }

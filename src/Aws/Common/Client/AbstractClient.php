@@ -26,7 +26,6 @@ use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Waiter\WaiterClassFactory;
 use Aws\Common\Waiter\WaiterFactoryInterface;
 use Guzzle\Common\Collection;
-use Guzzle\Cache\CacheAdapterInterface;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
@@ -37,9 +36,9 @@ use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 abstract class AbstractClient extends Client implements AwsClientInterface
 {
     /**
-     * @var int Ensure that missing methods are executed using service descriptions
+     * {@inheritdoc}
      */
-    protected $magicMethodBehavior = self::MAGIC_CALL_EXECUTE;
+    protected $enableMagicMethods = true;
 
     /**
      * @var CredentialsInterface AWS credentials
@@ -188,18 +187,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
             : require "{$this->directory}/Resources/client.php";
 
         if ($description) {
-            $options = array();
-            if ($adapter = $this->getConfig(Options::SERVICE_DESCRIPTION_CACHE)) {
-                if (!($adapter instanceof CacheAdapterInterface)) {
-                    throw new InvalidArgumentException(Options::SERVICE_DESCRIPTION_CACHE . ' must be an instance of '
-                        . 'Guzzle\Cache\CacheAdapterInterface');
-                }
-                $options['cache.adapter'] = $adapter;
-            }
-            if ($ttl = $this->getConfig(Options::SERVICE_DESCRIPTION_CACHE_TTL)) {
-                $options['cache.description.ttl'] = $ttl;
-            }
-            $this->setDescription(ServiceDescription::factory($description, $options));
+            $this->setDescription(ServiceDescription::factory($description));
         }
     }
 

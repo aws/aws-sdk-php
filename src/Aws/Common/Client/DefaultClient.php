@@ -61,9 +61,6 @@ class DefaultClient extends AbstractClient
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
-     *           service descriptions
-     *     - service.description.cache.ttl: Optional TTL used for the service description cache
      *
      * @param array|Collection $config Client configuration data
      *

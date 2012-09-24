@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * Request must contain either a valid (registered) AWS Access Key ID or X.509 certificate.
  */
-class MissingAuthenticationTokenException extends StsException implements ClientExceptionInterface {}
+class MissingAuthenticationTokenException extends StsException {}

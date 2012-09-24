@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * The query string is malformed.
  */
-class MalformedQueryStringException extends StsException implements ClientExceptionInterface {}
+class MalformedQueryStringException extends StsException {}

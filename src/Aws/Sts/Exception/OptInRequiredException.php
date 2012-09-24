@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * The AWS Access Key ID needs a subscription for the service.
  */
-class OptInRequiredException extends StsException implements ClientExceptionInterface {}
+class OptInRequiredException extends StsException {}

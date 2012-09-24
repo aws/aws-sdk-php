@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * A bad or out-of-range value was supplied for the input parameter.
  */
-class InvalidParameterValueException extends StsException implements ClientExceptionInterface {}
+class InvalidParameterValueException extends StsException {}

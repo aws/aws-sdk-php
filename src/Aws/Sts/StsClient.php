@@ -24,12 +24,13 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
+use Guzzle\Service\Command\OperationCommand as Op;
 
 /**
  * Client to interact with the AWS Security Token Service
  *
- * @method array getSessionToken(array $args = array()) {@command sts GetSessionToken}
- * @method array getFederationToken(array $args = array()) {@command sts GetFederationToken}
+ * @method Op getSessionToken(array $args = array()) {@command sts GetSessionToken}
+ * @method Op getFederationToken(array $args = array()) {@command sts GetFederationToken}
  */
 class StsClient extends AbstractClient
 {
@@ -65,9 +66,6 @@ class StsClient extends AbstractClient
      *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
      *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
      *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Cache\CacheAdapterInterface` object to use to cache
-     *           service descriptions
-     *     - service.description.cache.ttl: Optional TTL used for the service description cache
      * - Signature options
      *     - signature: You can optionally provide a custom signature implementation used to sign requests
      *     - signature.service: Set to explicitly override the service name used in signatures

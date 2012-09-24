@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * The request is missing an action or operation parameter.
  */
-class MissingActionException extends StsException implements ClientExceptionInterface {}
+class MissingActionException extends StsException {}

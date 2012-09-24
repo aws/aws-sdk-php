@@ -27,7 +27,7 @@ class JsonCommand extends OperationCommand
     /**
      * {@inheritdoc}
      */
-    protected function build()
+    protected function validate()
     {
         // Convert toArray objects before normalizing
         array_walk_recursive($this->data, function (&$value) {
@@ -36,13 +36,22 @@ class JsonCommand extends OperationCommand
             }
         });
 
+        parent::validate();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function build()
+    {
         parent::build();
 
-        // Always use an empty JSON body
+        // Ensure that the body of the request ALWAYS includes some JSON. By default, this is an empty object.
         if (!$this->request->getBody()) {
             $this->request->setBody('{}');
         }
 
+        // Never send the Expect header when interacting with a JSON query service
         $this->request->removeHeader('Expect');
     }
 }

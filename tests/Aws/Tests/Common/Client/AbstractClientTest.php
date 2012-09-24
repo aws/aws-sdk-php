@@ -11,9 +11,7 @@ use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
 use Guzzle\Common\Collection;
-use Guzzle\Cache\DoctrineCacheAdapter;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
-use Doctrine\Common\Cache\ArrayCache;
 
 /**
  * @covers Aws\Common\Client\AbstractClient
@@ -139,38 +137,5 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         try {
             $client->fooBar();
         } catch (\Exception $e) {}
-    }
-
-    /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage service.description.cache must be an instance of Guzzle\Cache\CacheAdapterInterface
-     */
-    public function testEnsuresCustomServiceDescriptionCacheValidity()
-    {
-        $signature = new SignatureV4();
-        $credentials = new Credentials('test', '123');
-        $config = new Collection(array(
-            'service.description'       => 'abc',
-            'service.description.cache' => 'foo'
-        ));
-        $this->getMockBuilder('Aws\Common\Client\AbstractClient')
-            ->setConstructorArgs(array($credentials, $signature, $config))
-            ->getMockForAbstractClass();
-    }
-
-    public function testCachesServiceDescriptions()
-    {
-        $signature = new SignatureV4();
-        $credentials = new Credentials('test', '123');
-        $cache = new DoctrineCacheAdapter(new ArrayCache());
-        // Note: You must use a service description file to benefit from caching
-        $config = new Collection(array(
-            'service.description'           => __DIR__ . '/../../../../../src/Aws/S3/Resources/client.json',
-            'service.description.cache'     => $cache,
-            'service.description.cache.ttl' => 500
-        ));
-        $client = new DefaultClient($credentials, $signature, $config);
-        $data = $this->readAttribute($cache->getCacheObject(), 'data');
-        $this->assertGreaterThan(0, count($data));
     }
 }

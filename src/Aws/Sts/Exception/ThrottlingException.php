@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * Request was denied due to request throttling.
  */
-class ThrottlingException extends StsException implements ClientExceptionInterface {}
+class ThrottlingException extends StsException {}

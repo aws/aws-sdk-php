@@ -16,9 +16,7 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The action or operation requested is invalid.
  */
-class InvalidActionException extends StsException implements ClientExceptionInterface {}
+class InvalidActionException extends StsException {}

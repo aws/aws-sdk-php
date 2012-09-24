@@ -21,4 +21,4 @@ use Aws\Common\Exception\ClientExceptionInterface;
 /**
  * AWS query string is malformed, does not adhere to AWS standards.
  */
-class InvalidQueryParameterException extends StsException implements ClientExceptionInterface {}
+class InvalidQueryParameterException extends StsException {}

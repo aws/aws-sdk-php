@@ -63,7 +63,7 @@ class BackoffOptionResolver extends AbstractMissingFunctionOptionResolver
         // Ensure that the plugin implements the correct interface
         if ($plugin && !($plugin instanceof BackoffPlugin)) {
             throw new InvalidArgumentException(
-                Options::BACKOFF . ' must be an instance of Guzzle\\Plugin\\Backoff\\BackoffPlugin'
+                Options::BACKOFF . ' must be an instance of Guzzle\Plugin\Backoff\BackoffPlugin'
             );
         }
 

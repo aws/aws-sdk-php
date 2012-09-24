@@ -30,23 +30,6 @@ class AwsTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testReturnsDefaultConfigPath()
     {
-        $this->assertContains('aws-config.json', Aws::getDefaultServiceDefinition());
-    }
-
-    public function testOnlyCreatesOneServiceBuilderFactory()
-    {
-        $class = new \ReflectionClass('Aws\Common\Aws');
-        $defaultFactory = $class->getProperty('defaultFactory');
-        $defaultFactory->setAccessible(true);
-        $defaultFactory->setValue(null, null);
-
-        $builder1 = Aws::factory();
-        $factory1 = $this->readAttribute('Aws\Common\Aws', 'defaultFactory');
-
-        $builder2 = Aws::factory();
-        $factory2 = $this->readAttribute('Aws\Common\Aws', 'defaultFactory');
-
-        $this->assertNotSame($builder1, $builder2);
-        $this->assertSame($factory1, $factory2);
+        $this->assertContains('aws-config.php', Aws::getDefaultServiceDefinition());
     }
 }
