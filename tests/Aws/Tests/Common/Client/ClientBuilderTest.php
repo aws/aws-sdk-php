@@ -90,7 +90,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         // Ensure that the default setting of 'true' uses the Mozilla certs
         $config->set('ssl.cert', true);
         $method->invoke($builder, $config);
-        $this->assertContains('mozilla' . DIRECTORY_SEPARATOR . 'cacert' . DIRECTORY_SEPARATOR . 'cacert.pem', $config->get('curl.CURLOPT_CAINFO'));
+        $this->assertContains('/Resources/cacert.pem', $config->get('curl.CURLOPT_CAINFO'));
 
         // Ensure that a custom setting uses the custom setting
         $config->set('ssl.cert', '/foo/bar');
