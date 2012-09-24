@@ -224,7 +224,10 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesCanonicalizedString($input, $result, $expires = null)
     {
         $signature = new S3Signature();
-        $request = \Guzzle\Http\Message\RequestFactory::getInstance()->create($input['verb'], 'http://s3.amazonaws.com' . $input['path'], $input['headers']);
+        $request = \Guzzle\Http\Message\RequestFactory::getInstance()->create(
+            $input['verb'],
+            'http://s3.amazonaws.com' . $input['path'], $input['headers']
+        );
         $this->assertEquals($result, $signature->createCanonicalizedString($request), $expires);
     }
 
@@ -250,7 +253,10 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
         $client->getSignature()->signRequest($request, $client->getCredentials());
         $this->assertTrue($request->hasHeader('Date'));
         $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertContains($client->getCredentials()->getAccessKeyId() . ':', (string) $request->getHeader('Authorization'));
+        $this->assertContains(
+            $client->getCredentials()->getAccessKeyId() . ':',
+            (string) $request->getHeader('Authorization')
+        );
         if ($token = $client->getCredentials()->getSecurityToken()) {
             $this->assertEquals($token, $request->getHeader('x-amz-security-token'));
         } else {

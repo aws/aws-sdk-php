@@ -329,11 +329,11 @@ class UploadBuilder
     protected function initiateMultipartUpload()
     {
         $command = $this->client->getCommand('InitiateMultipartUpload', array(
-            'bucket'   => $this->bucket,
-            'key'      => $this->key,
-            'headers'  => $this->headers,
-            'acl'      => $this->acl,
-            Ua::OPTION => Ua::MULTIPART_UPLOAD
+            'bucket'          => $this->bucket,
+            'key'             => $this->key,
+            'command.headers' => $this->headers,
+            'acl'             => $this->acl,
+            Ua::OPTION        => Ua::MULTIPART_UPLOAD
         ));
 
         // Calculate the MD5 hash if none was set and it is asked of the builder
