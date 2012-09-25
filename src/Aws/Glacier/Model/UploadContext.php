@@ -208,6 +208,8 @@ class UploadContext implements \Serializable
     {
         $data = unserialize($serialized);
 
+        $this->treeHash    = null;
+        $this->chunkHash   = null;
         $this->checksum    = $data['checksum'];
         $this->contentHash = $data['contentHash'];
         $this->size        = $data['size'];
