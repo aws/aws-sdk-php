@@ -99,7 +99,7 @@ class SignatureV4 extends AbstractEndpointSignature
         $credentialScope = "{$shortDate}/{$region}/{$service}/aws4_request";
 
         $stringToSign = "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n"
-            . $this->base16(hash('sha256', $this->createCanonicalRequest($request), true));
+            . bin2hex(hash('sha256', $this->createCanonicalRequest($request), true));
 
         // Add the string to sign for debugging
         $request->getParams()->set('aws.string_to_sign', $stringToSign);
@@ -164,7 +164,7 @@ class SignatureV4 extends AbstractEndpointSignature
 
         // Create the payload if this request has an entity body
         if ($request instanceof EntityEnclosingRequestInterface) {
-            $canon .= $this->base16(hash(
+            $canon .= bin2hex(hash(
                 'sha256',
                 $request->getMethod() == 'POST' && count($request->getPostFields())
                     ? (string) $request->getPostFields() : (string) $request->getBody(),
