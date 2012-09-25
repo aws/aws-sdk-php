@@ -90,4 +90,72 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertSame($a, Attribute::factory($a));
     }
+
+    public function testSettersAndGettersWorkAsExpected()
+    {
+        /** @var $attribute \Aws\DynamoDb\Model\Attribute */
+        $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
+        $this->assertSame($attribute, $attribute->setValue('100'));
+        $this->assertSame($attribute, $attribute->setType(Type::NUMBER));
+        $this->assertSame('100', $attribute->getValue());
+        $this->assertSame(Type::NUMBER, $attribute->getType());
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     */
+    public function testSetValueFailsOnBadValue()
+    {
+        /** @var $attribute \Aws\DynamoDb\Model\Attribute */
+        $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
+        $attribute->setValue(100);
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     */
+    public function testSetTypeFailsOnBadType()
+    {
+        /** @var $attribute \Aws\DynamoDb\Model\Attribute */
+        $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
+        $attribute->setType('foo');
+    }
+
+    public function testGetFormattedProducesCorrectArrayStructure()
+    {
+        /** @var $attribute \Aws\DynamoDb\Model\Attribute */
+        $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
+        $attribute->setValue('100');
+        $attribute->setType(Type::NUMBER);
+
+        $putArray    = array(Type::NUMBER => '100');
+        $updateArray = array('Value' => array(Type::NUMBER => '100'));
+
+        $this->assertSame($putArray, $attribute->getFormatted());
+        $this->assertSame($putArray, $attribute->getFormatted(Attribute::FORMAT_PUT));
+        $this->assertSame($updateArray, $attribute->getFormatted(Attribute::FORMAT_UPDATE));
+        $this->assertSame($updateArray, $attribute->getFormatted(Attribute::FORMAT_EXPECTED));
+    }
+
+    public function testCanBeCastToString()
+    {
+        /** @var $attribute \Aws\DynamoDb\Model\Attribute */
+        $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
+        $attribute->setValue(array('baz', 'bar'));
+        $attribute->setType(Type::STRING_SET);
+
+        $this->assertEquals('baz, bar', (string) $attribute);
+    }
+
+    public function testCanBeCastToArray()
+    {
+        /** @var $attribute \Aws\DynamoDb\Model\Attribute */
+        $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
+        $attribute->setValue(array('baz', 'bar'));
+        $attribute->setType(Type::STRING_SET);
+
+        $this->assertEquals(array('SS' => array('baz', 'bar')), $attribute->toArray());
+        $this->assertTrue(isset($attribute['SS']));
+        $this->assertEquals(array('baz', 'bar'), $attribute['SS']);
+    }
 }
