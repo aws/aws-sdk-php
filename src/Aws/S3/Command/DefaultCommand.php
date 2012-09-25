@@ -72,13 +72,12 @@ class DefaultCommand extends OperationCommand
     {
         // Determine the URL based on the bucket
         if ($bucket = $this->get('bucket')) {
-            $data = $this->operation->toArray();
+            $this->operation = clone $this->operation;
             if ($key = $this->get('key')) {
-                $data['uri'] = (string) $this->getBucketUrl()->addPath($this->encodeKey($key));
+                $this->operation->setUri((string) $this->getBucketUrl()->addPath($this->encodeKey($key)));
             } else {
-                $data['uri'] = (string) $this->getBucketUrl();
+                $this->operation->setUri((string) $this->getBucketUrl());
             }
-            $this->operation = new Operation($data);
         }
 
         parent::build();

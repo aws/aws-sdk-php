@@ -117,14 +117,13 @@ class DeleteObjectsTransfer implements BatchTransferInterface
      */
     protected function processResponse(DeleteMultipleObjects $command)
     {
-        /** @var $result \SimpleXMLElement */
         $result = $command->getResult();
 
         // Ensure that the objects were deleted successfully
-        if (!empty($result->Error)) {
+        if (!empty($result['Error'])) {
             $errors = array();
-            foreach ($result->Error as $error) {
-                $errors[] = json_decode(json_encode($error), true);
+            foreach ($result['Error'] as $error) {
+                $errors[] = $error;
             }
             throw new DeleteMultipleObjectsException($errors);
         }

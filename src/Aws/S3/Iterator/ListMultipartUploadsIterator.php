@@ -31,9 +31,6 @@ class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
      */
     protected function handleResults($result)
     {
-        // Format the result
-        $result = $this->formatResult($result, array('Upload', 'CommonPrefixes'));
-
         // Get the list of uploads
         $uploads = $result['Upload'];
 
@@ -51,10 +48,10 @@ class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken($result)
     {
         $this->nextToken = false;
-        if ((string) $result->IsTruncated === 'true') {
+        if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {
             $this->nextToken = array(
-                'key-marker'       => (string) $result->nextKeyMarker,
-                'upload-id-marker' => (string) $result->nextUploadIdMarker
+                'key-marker'       => isset($result['nextKeyMarker']) ? $result['nextKeyMarker'] : null,
+                'upload-id-marker' => isset($result['nextUploadIdMarker']) ? $result['nextUploadIdMarker'] : null
             );
         }
     }

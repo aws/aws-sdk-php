@@ -22,7 +22,7 @@ class SerialTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $mock = $this->prepareMocks($transfer, $client);
         $result = $transfer->upload();
         $this->validateRequests($mock);
-        $this->assertInstanceOf('SimpleXMLElement', $result);
+        $this->assertInternalType('array', $result);
     }
 
     public function testTransfersNonSeekableStreams()
@@ -45,7 +45,7 @@ class SerialTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $transfer = new SerialTransfer($client, $state, $body);
         $mock = $this->prepareMocks($transfer, $client);
         $result = $transfer->upload();
-        $this->assertInstanceOf('SimpleXMLElement', $result);
+        $this->assertInternalType('array', $result);
         $this->validateRequests($mock);
     }
 
