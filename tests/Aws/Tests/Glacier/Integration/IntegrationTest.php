@@ -26,13 +26,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         /** @var $glacier GlacierClient */
         $glacier = self::getServiceBuilder()->get('glacier');
-        $glacier->createVault(array('vaultName' => self::TEST_VAULT));
+        $glacier->createVault(array('vaultName' => self::TEST_VAULT))->execute();
     }
 
     public function setUp()
     {
         $this->client = $this->getServiceBuilder()->get('glacier');
-        //$this->client->getConfig()->set('curl.CURLOPT_VERBOSE', true);
+        $this->client->getConfig()->set('curl.CURLOPT_VERBOSE', true);
     }
 
     public function testCrudVaults()
@@ -51,8 +51,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Create vaults and verify existence
         foreach ($vaults as $vault) {
-            $this->client->createVault(array('vaultName' => $vault));
-            $this->client->waitUntil('VaultExists', $vault);
+            $this->client->createVault(array('vaultName' => $vault))->execute();
+            $this->client->waitUntil('VaultExists', $vault, array('max_attempts' => 3));
         }
         $listVaults = $this->client->getIterator('ListVaults', array('limit' => '5'));
         $vaultList = array_filter(iterator_to_array($listVaults), $getVaultList);
@@ -60,7 +60,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Delete vaults and verify deletion
         foreach ($vaults as $vault) {
-            $this->client->deleteVault(array('vaultName' => $vault));
+            $this->client->deleteVault(array('vaultName' => $vault))->execute();
             $this->client->waitUntil('VaultNotExists', $vault);
         }
         $listVaults = $this->client->getIterator('ListVaults');
@@ -79,21 +79,19 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals($length, $helper->getSingleUploadContext()->getSize());
         $this->assertEquals($length, $helper->getArchiveSize());
         $body = $helper->getBody();
-        $uploadArchive = $this->client->getCommand('UploadArchive', array(
+        $archiveId = $this->client->getCommand('UploadArchive', array(
             'vaultName'          => self::TEST_VAULT,
             'archiveDescription' => 'Foo   bar',
             'body'               => $body,
-            'glacer.context'     => $helper->getSingleUploadContext()
-        ));
-        $uploadArchive->execute();
-        $archiveId = $uploadArchive->getResponse()->getHeader('x-amz-archive-id', true);
+            'glacier.context'     => $helper->getSingleUploadContext()
+        ))->getResponse()->getHeader('x-amz-archive-id', true);
         $this->assertNotEmpty($archiveId);
 
         // Delete the archive
         $this->client->deleteArchive(array(
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
-        ));
+        ))->execute();
 
         sleep(5);
 
@@ -101,35 +99,31 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $helper = UploadHelper::factory($content, $partSize);
         $this->assertEquals($length, $helper->getArchiveSize());
         $body = $helper->getBody();
-        $initiateMultipartUpload = $this->client->getCommand('InitiateMultipartUpload', array(
+        $uploadId = $this->client->getCommand('InitiateMultipartUpload', array(
             'vaultName' => self::TEST_VAULT,
             'partSize' => (string) $partSize
-        ));
-        $initiateMultipartUpload->execute();
-        $uploadId = $initiateMultipartUpload->getResponse()->getHeader('x-amz-multipart-upload-id', true);
+        ))->getResponse()->getHeader('x-amz-multipart-upload-id', true);
         foreach ($helper->getUploadContexts() as $context) {
             $this->client->uploadMultipartPart(array(
                 'vaultName'       => self::TEST_VAULT,
                 'uploadId'        => $uploadId,
                 'body'            => $body,
                 'glacier.context' => $context
-            ));
+            ))->execute();
             sleep(5);
         }
-        $completeMultipartUpload = $this->client->getCommand('CompleteMultipartUpload', array(
+        $archiveId = $this->client->getCommand('CompleteMultipartUpload', array(
             'vaultName' => self::TEST_VAULT,
             'uploadId' => $uploadId,
             'archiveSize' => (string) $helper->getArchiveSize(),
             'checksum' => $helper->getRootChecksum()
-        ));
-        $completeMultipartUpload->execute();
-        $archiveId = $completeMultipartUpload->getResponse()->getHeader('x-amz-archive-id', true);
+        ))->getResponse()->getHeader('x-amz-archive-id', true);
         $this->assertNotEmpty($archiveId);
 
         // Delete the archive
         $this->client->deleteArchive(array(
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
-        ));
+        ))->execute();;
     }
 }

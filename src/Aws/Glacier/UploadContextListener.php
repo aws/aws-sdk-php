@@ -61,7 +61,6 @@ class UploadContextListener implements EventSubscriberInterface
         if (in_array($operation, self::$whitelist) && $context instanceof UploadContext) {
             // Add required data for uploads
             $command->set('checksum', $context->getChecksum());
-            $command->set('body', $context->getBody());
             $command->set('command.headers', array(
                 'x-amz-content-sha256' => $context->getContentHash(),
                 'Content-Length'       => $context->getSize()
@@ -72,7 +71,7 @@ class UploadContextListener implements EventSubscriberInterface
                 list($start, $end) = $context->getRange();
                 $command->set('range', "bytes {$start}-${end}/*");
                 $command->set('body', new ReadLimitEntityBody(
-                    $context->getBody(),
+                    $command->get('body'),
                     $context->getSize(),
                     $context->getOffset()
                 ));
