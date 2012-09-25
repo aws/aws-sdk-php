@@ -4,7 +4,7 @@ namespace Aws\Tests\Glacier\Integration;
 
 use Aws\Common\Enum\Size;
 use Aws\Glacier\GlacierClient;
-use Aws\Glacier\Model\UploadGenerator;
+use Aws\Glacier\Model\UploadHelper;
 use Guzzle\Http\Client;
 
 use Guzzle\Plugin\Log\LogPlugin;
@@ -74,18 +74,16 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $length   = strlen($content);
         $partSize = 2 * Size::MB;
 
-        $singleGen = UploadGenerator::factory($content);
-        $this->assertEquals($length, $singleGen->getSingleUpload()->getSize());
-        $this->assertEquals($length, $singleGen->getArchiveSize());
-
-        $multiGen = UploadGenerator::factory($content, $partSize);
-        $this->assertEquals($length, $multiGen->getArchiveSize());
-
         // Single upload
+        $helper = UploadHelper::factory($content);
+        $this->assertEquals($length, $helper->getSingleUploadContext()->getSize());
+        $this->assertEquals($length, $helper->getArchiveSize());
+        $body = $helper->getBody();
         $uploadArchive = $this->client->getCommand('UploadArchive', array(
             'vaultName'          => self::TEST_VAULT,
             'archiveDescription' => 'Foo   bar',
-            'body'               => $singleGen->getSingleUpload()
+            'body'               => $body,
+            'glacer.context'     => $helper->getSingleUploadContext()
         ));
         $uploadArchive->execute();
         $archiveId = $uploadArchive->getResponse()->getHeader('x-amz-archive-id', true);
@@ -100,25 +98,29 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         sleep(5);
 
         // Multipart upload
+        $helper = UploadHelper::factory($content, $partSize);
+        $this->assertEquals($length, $helper->getArchiveSize());
+        $body = $helper->getBody();
         $initiateMultipartUpload = $this->client->getCommand('InitiateMultipartUpload', array(
             'vaultName' => self::TEST_VAULT,
             'partSize' => (string) $partSize
         ));
         $initiateMultipartUpload->execute();
         $uploadId = $initiateMultipartUpload->getResponse()->getHeader('x-amz-multipart-upload-id', true);
-        foreach ($multiGen->getUploads() as $upload) {
+        foreach ($helper->getUploadContexts() as $context) {
             $this->client->uploadMultipartPart(array(
-                'vaultName' => self::TEST_VAULT,
-                'uploadId' => $uploadId,
-                'body' => $upload
+                'vaultName'       => self::TEST_VAULT,
+                'uploadId'        => $uploadId,
+                'body'            => $body,
+                'glacier.context' => $context
             ));
             sleep(5);
         }
         $completeMultipartUpload = $this->client->getCommand('CompleteMultipartUpload', array(
             'vaultName' => self::TEST_VAULT,
             'uploadId' => $uploadId,
-            'archiveSize' => (string) $multiGen->getArchiveSize(),
-            'checksum' => $multiGen->getRootChecksum()
+            'archiveSize' => (string) $helper->getArchiveSize(),
+            'checksum' => $helper->getRootChecksum()
         ));
         $completeMultipartUpload->execute();
         $archiveId = $completeMultipartUpload->getResponse()->getHeader('x-amz-archive-id', true);

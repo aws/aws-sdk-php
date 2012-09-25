@@ -17,7 +17,7 @@
 namespace Aws\Glacier;
 
 use Aws\Common\Enum\Size;
-use Aws\Glacier\Model\GlacierUpload;
+use Aws\Glacier\Model\UploadContext;
 use Guzzle\Common\Event;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\ReadLimitEntityBody;
@@ -25,9 +25,9 @@ use Guzzle\Service\Command\AbstractCommand;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Listener that handles converting GlacierUpload objects into command parameters for Glacier's upload operations
+ * Listener that handles converting UploadContext objects into command parameters for Glacier's upload operations
  */
-class GlacierUploadListener implements EventSubscriberInterface
+class UploadContextListener implements EventSubscriberInterface
 {
     /**
      * @var array Commands that should include the hash header
@@ -45,7 +45,7 @@ class GlacierUploadListener implements EventSubscriberInterface
     }
 
     /**
-     * Retrieve bodies passed in as GlacierUpload objects and set the real hash, length, etc. values on the command
+     * Retrieve bodies passed in as UploadContext objects and set the real hash, length, etc. values on the command
      *
      * @param Event $event Event emitted
      */
@@ -55,25 +55,27 @@ class GlacierUploadListener implements EventSubscriberInterface
         $command   = $event['command'];
         $operation = $command->getName();
 
-        /** @var $upload GlacierUpload */
-        $upload = $command->get('body');
+        /** @var $upload UploadContext */
+        $context = $command->get('glacier.context');
 
-        if (in_array($operation, self::$whitelist) && $upload instanceof GlacierUpload) {
+        if (in_array($operation, self::$whitelist) && $context instanceof UploadContext) {
             // Add required data for uploads
-            $command->set('checksum', $upload->getChecksum());
-            $command->set('body', $upload->getBody());
-            $command->set('headers', array(
-                'x-amz-content-sha256' => $upload->getContentHash(),
-                'Content-Length'       => $upload->getSize()
+            $command->set('checksum', $context->getChecksum());
+            $command->set('body', $context->getBody());
+            $command->set('command.headers', array(
+                'x-amz-content-sha256' => $context->getContentHash(),
+                'Content-Length'       => $context->getSize()
             ));
 
             // Add range only for multipart upload parts
             if ($operation === 'UploadMultipartPart') {
-                list($start, $end) = $upload->getRange();
+                list($start, $end) = $context->getRange();
                 $command->set('range', "bytes {$start}-${end}/*");
-
-                $body = new ReadLimitEntityBody($upload->getBody(), $upload->getSize(), $upload->getOffset());
-                $command->set('body', $body);
+                $command->set('body', new ReadLimitEntityBody(
+                    $context->getBody(),
+                    $context->getSize(),
+                    $context->getOffset()
+                ));
             }
         }
     }

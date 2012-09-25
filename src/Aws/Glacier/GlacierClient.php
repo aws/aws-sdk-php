@@ -114,7 +114,12 @@ class GlacierClient extends AbstractClient
                 'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
 
                 // Disable model processing when commands are executed by default, and simply return arrays
-                'params.' . Op::RESPONSE_PROCESSING => Op::TYPE_NATIVE
+                'params.' . Op::RESPONSE_PROCESSING => Op::TYPE_NATIVE,
+
+                // Set default value for "accountId" for all requests
+                'command.params' => array(
+                    'accountId' => '-'
+                )
             ))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonRestExceptionParser())
@@ -125,17 +130,11 @@ class GlacierClient extends AbstractClient
             'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
         ));
 
-        // Set default value for "accountId" for all requests
-        $client->getEventDispatcher()->addListener('client.command.create', function(Event $event) {
-            $command = $event['command'];
-            $command['accountId'] = isset($command['accountId']) ? $command['accountId'] : '-';
-        });
-
         // Set Expect header only for upload operations
         $client->addSubscriber(new ExpectHeaderListener());
 
         // Set x-amz-content-sha256 header for upload operations
-        $client->addSubscriber(new GlacierUploadListener());
+        $client->addSubscriber(new UploadContextListener());
 
         return $client;
     }
