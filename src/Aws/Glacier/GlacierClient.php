@@ -130,7 +130,7 @@ class GlacierClient extends AbstractClient
             'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
         ));
 
-        // Set Expect header only for upload operations
+        // Set Expect header for upload operations
         $client->addSubscriber(new ExpectHeaderListener());
 
         // Set x-amz-content-sha256 header for upload operations

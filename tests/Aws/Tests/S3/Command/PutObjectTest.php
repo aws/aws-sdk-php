@@ -53,12 +53,6 @@ class PutObjectTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertNull($request->getHeader('Expect'));
     }
 
-    public function testUploadsFromFile()
-    {
-        $request = $this->getCommand()->useFileContents(__FILE__)->prepare();
-        $this->assertEquals(file_get_contents(__FILE__), (string) $request->getBody());
-    }
-
     public function testAddsMetadata()
     {
         $command = $this->getCommand()

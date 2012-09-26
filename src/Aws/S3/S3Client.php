@@ -18,6 +18,7 @@ namespace Aws\S3;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\ExpectHeaderListener;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\S3\Exception\AccessDeniedException;
@@ -171,6 +172,9 @@ class S3Client extends AbstractClient
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())
             ->build();
+
+        // Set Expect header for upload operations
+        $client->addSubscriber(new ExpectHeaderListener());
 
         return $client;
     }

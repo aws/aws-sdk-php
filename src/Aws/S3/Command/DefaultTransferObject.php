@@ -24,22 +24,6 @@ namespace Aws\S3\Command;
 class DefaultTransferObject extends DefaultUploadObject
 {
     /**
-     * {@inheritdoc}
-     */
-    protected function build()
-    {
-        parent::build();
-
-        // Modify the Expect header based on the 'use_expect' setting
-        $expect = $this['use_expect'];
-        if ($expect === true) {
-            $this->request->setHeader('Expect', '100-Continue');
-        } elseif ($expect === false) {
-            $this->request->removeHeader('Expect');
-        }
-    }
-
-    /**
      * Helper method used to transfer the contents of a file for the upload.
      *
      * @param string $filename File name to upload
