@@ -20,7 +20,6 @@ use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Session\LockingStrategy\LockingStrategyInterface;
 use Aws\DynamoDb\Session\LockingStrategy\LockingStrategyFactory;
-use Aws\DynamoDb\Model\Key;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
 
@@ -406,7 +405,7 @@ class SessionHandler
         // Perform scan and batch delete operations as needed
         foreach ($this->client->getIterator($tableScan) as $item) {
             // @codeCoverageIgnoreStart
-            $key = new Key($item[$this->config->get('hash_key')]['S']);
+            $key = array('HashKeyElement' => $item[$this->config->get('hash_key')]);
             $deleteBatch->add(new DeleteRequest($key, $tableName));
             // @codeCoverageIgnoreEnd
         }
