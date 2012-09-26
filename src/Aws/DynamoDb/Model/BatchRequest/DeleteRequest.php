@@ -17,7 +17,7 @@
 namespace Aws\DynamoDb\Model\BatchRequest;
 
 use Aws\Common\Exception\InvalidArgumentException;
-use Aws\DynamoDb\Model\Key;
+use Aws\DynamoDb\Model\Attribute;
 use Guzzle\Service\Command\AbstractCommand;
 
 /**
@@ -49,11 +49,6 @@ class DeleteRequest extends AbstractWriteRequest
         $table = $command->get('TableName');
         $key   = $command->get('Key');
 
-        // Create a Key object from the 'key' command data
-        if (!($key instanceof Key)) {
-            $key = new Key($key);
-        }
-
         // Return an instantiated DeleteRequest object
         return new DeleteRequest($key, $table);
     }
@@ -61,10 +56,10 @@ class DeleteRequest extends AbstractWriteRequest
     /**
      * Constructs a new delete request
      *
-     * @param Key    $key       The key of the item to delete
+     * @param array  $key       The key of the item to delete
      * @param string $tableName The name of the table which has the item
      */
-    public function __construct(Key $key, $tableName)
+    public function __construct(array $key, $tableName)
     {
         $this->key       = $key;
         $this->tableName = $tableName;
@@ -77,7 +72,14 @@ class DeleteRequest extends AbstractWriteRequest
      */
     public function toArray()
     {
-        return array('DeleteRequest' => array('Key' => $this->key->toArray()));
+        $key = $this->key;
+        foreach ($key as &$element) {
+            if ($element instanceof Attribute) {
+                $element = $element->toArray();
+            }
+        }
+
+        return array('DeleteRequest' => array('Key' => $key));
     }
 
     /**
