@@ -59,7 +59,7 @@ class ChunkHash implements ChunkHashInterface
             $useNative = function_exists('hex2bin');
         }
 
-        return $useNative ? hex2bin($hash) : pack("H*" , $hash);
+        return $useNative ? hex2bin($hash) : pack("H*", $hash);
     }
 
     /**
@@ -109,6 +109,7 @@ class ChunkHash implements ChunkHashInterface
         if (!$this->hash) {
             $this->hashRaw = hash_final($this->context, true);
             $this->hash = self::binaryToHex($this->hashRaw);
+            $this->isFinalized = true;
         }
 
         return $returnBinaryForm ? $this->hashRaw : $this->hash;

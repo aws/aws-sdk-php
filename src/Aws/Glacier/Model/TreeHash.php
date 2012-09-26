@@ -62,7 +62,7 @@ class TreeHash implements ChunkHashInterface
         $treeHash = new self($algorithm);
 
         // Convert checksums to binary form if provided in hex form and add them to the tree hash
-        $treeHash->checksums = $inBinaryForm ? $checksums : array_map('ChunkHash::hexToBinary', $checksums);
+        $treeHash->checksums = $inBinaryForm ? $checksums : array_map('Aws\Common\ChunkHash::hexToBinary', $checksums);
 
         // Pre-calculate hash
         $treeHash->getHash();
@@ -124,6 +124,8 @@ class TreeHash implements ChunkHashInterface
 
     /**
      * {@inheritdoc}
+     * @throws LogicException if the root tree hash is already calculated
+     * @throws InvalidArgumentException if the data is larger than 1MB
      */
     public function addData($data)
     {
@@ -150,9 +152,15 @@ class TreeHash implements ChunkHashInterface
      * @param bool   $inBinaryForm Whether or not the checksum is already in binary form
      *
      * @return self
+     * @throws LogicException if the root tree hash is already calculated
      */
     public function addChecksum($checksum, $inBinaryForm = false)
     {
+        // Error if hash is already calculated
+        if ($this->hash) {
+            throw new LogicException('You may not add more data to a finalized tree hash.');
+        }
+
         // Convert the checksum to binary form if necessary
         $this->checksums[] = $inBinaryForm ? $checksum : ChunkHash::hexToBinary($checksum);
 
