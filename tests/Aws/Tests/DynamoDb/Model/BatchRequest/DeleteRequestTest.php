@@ -3,7 +3,7 @@
 namespace Aws\Tests\DynamoDb\Model\BatchRequest;
 
 use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
-use Aws\DynamoDb\Model\Key;
+use Aws\DynamoDb\Model\Attribute;
 
 /**
  * @covers Aws\DynamoDb\Model\BatchRequest\DeleteRequest
@@ -12,9 +12,7 @@ class DeleteRequestTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testConstructorSetsValues()
     {
-        $key = $this->getMockBuilder('Aws\DynamoDb\Model\Key')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $key = array('HashKeyElement' => array('S' => 'foo'));
 
         $deleteRequest = new DeleteRequest($key, 'table');
 
@@ -23,7 +21,12 @@ class DeleteRequestTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanConvertToArray()
     {
-        $deleteRequest = new DeleteRequest(new Key('foo', 123), 'table');
+        $key = array(
+            'HashKeyElement'  => Attribute::factory('foo'),
+            'RangeKeyElement' => Attribute::factory(123)
+        );
+
+        $deleteRequest = new DeleteRequest($key, 'table');
         $this->assertEquals(array(
             'DeleteRequest' => array(
                 'Key' => array(
@@ -47,7 +50,7 @@ class DeleteRequestTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 $client->getCommand('DeleteItem', array(
                     'TableName' => 'foo',
-                    'Key' => 'foo'
+                    'Key' => array('HashKeyElement' => array('S' => 'foo'))
                 )),
                 'Aws\DynamoDb\Model\BatchRequest\DeleteRequest'
             )
