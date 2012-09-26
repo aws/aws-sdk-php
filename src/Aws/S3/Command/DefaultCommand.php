@@ -93,18 +93,4 @@ class DefaultCommand extends OperationCommand
             }
         }
     }
-
-    /**
-     * Account for XML and JSON responses from Amazon S3 that do not include a
-     * Content-Type header
-     * {@inheritdoc}
-     */
-    protected function process()
-    {
-        if ($contentType = $this['command.content_type']) {
-            $this->getResponse()->setHeader('Content-Type', $contentType);
-        }
-
-        parent::process();
-    }
 }

@@ -41,7 +41,9 @@ class ClientBuilder
      * @var array Default client config
      */
     protected static $commonConfigDefaults = array(
-        'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept', 'header.Expect')
+        'curl.options' => array(
+            'blacklist' => array(CURLOPT_ENCODING, 'header.Expect')
+        )
     );
 
     /**
@@ -261,8 +263,6 @@ class ClientBuilder
             $this->addBaseUrlToConfig($config);
         }
 
-        $this->resolveSslOptions($config);
-
         // Resolve credentials
         if (!$this->credentialsResolver) {
             $this->credentialsResolver = $this->getDefaultCredentialsResolver();
@@ -341,25 +341,6 @@ class ClientBuilder
         $provider = $config->get(Options::ENDPOINT_PROVIDER) ?: $this->getDefaultEndpointProvider();
         $endpoint = $provider->getEndpoint($service, $region);
         $config->set(Options::BASE_URL, $endpoint->getBaseUrl($config->get(Options::SCHEME)));
-    }
-
-    /**
-     * Determine options for CA certs
-     *
-     * @param Collection $config Configuration options
-     */
-    protected function resolveSslOptions(Collection $config)
-    {
-        $certSetting = $config->get(Options::SSL_CERT);
-        if ($certSetting) {
-            // If set to TRUE, then use the default CA cert file
-            if ($certSetting === 'true' || $certSetting === true) {
-                $certSetting = dirname(__DIR__) . '/Resources/cacert.pem';
-            }
-
-            // Enable SSL certificate verification using the Mozilla cert
-            $config->set('curl.CURLOPT_CAINFO', $certSetting);
-        }
     }
 
     /**

@@ -24,6 +24,10 @@
         's3' => array(
             'extends' => 'default_settings',
             'class'   => 'Aws\S3\S3Client'
+        ),
+        'cloudfront' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudFront\CloudFrontClient'
         )
     )
 );

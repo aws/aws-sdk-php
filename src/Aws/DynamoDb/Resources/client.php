@@ -17,7 +17,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -39,6 +39,7 @@ return array (
                                 'minItems' => 1,
                                 'maxItems' => 100,
                                 'items' => array(
+                                    'name' => 'Key',
                                     'description' => 'The primary key that uniquely identifies each item in a table. A primary key can be a one attribute (hash) primary key or a two attribute (hash-and-range) primary key.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -66,6 +67,7 @@ return array (
                                                     'description' => 'A set of strings.',
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'StringAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -73,6 +75,7 @@ return array (
                                                     'description' => 'A set of numbers.',
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'NumberAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -80,6 +83,7 @@ return array (
                                                     'description' => 'A set of binary attributes.',
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'BinaryAttributeValue',
                                                         'type' => 'string',
                                                         'filters' => array(
                                                             'base64_encode',
@@ -111,6 +115,7 @@ return array (
                                                     'description' => 'A set of strings.',
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'StringAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -118,6 +123,7 @@ return array (
                                                     'description' => 'A set of numbers.',
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'NumberAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -125,6 +131,7 @@ return array (
                                                     'description' => 'A set of binary attributes.',
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'BinaryAttributeValue',
                                                         'type' => 'string',
                                                         'filters' => array(
                                                             'base64_encode',
@@ -140,6 +147,7 @@ return array (
                                 'type' => 'array',
                                 'minItems' => 1,
                                 'items' => array(
+                                    'name' => 'AttributeName',
                                     'type' => 'string',
                                 ),
                             ),
@@ -175,7 +183,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -194,6 +202,7 @@ return array (
                         'minItems' => 1,
                         'maxItems' => 25,
                         'items' => array(
+                            'name' => 'WriteRequest',
                             'description' => 'This structure is a Union of PutRequest and DeleteRequest. It can contain exactly one of PutRequest or DeleteRequest. Never Both. This is enforced in the code.',
                             'type' => 'object',
                             'properties' => array(
@@ -227,6 +236,7 @@ return array (
                                                         'description' => 'A set of strings.',
                                                         'type' => 'array',
                                                         'items' => array(
+                                                            'name' => 'StringAttributeValue',
                                                             'type' => 'string',
                                                         ),
                                                     ),
@@ -234,6 +244,7 @@ return array (
                                                         'description' => 'A set of numbers.',
                                                         'type' => 'array',
                                                         'items' => array(
+                                                            'name' => 'NumberAttributeValue',
                                                             'type' => 'string',
                                                         ),
                                                     ),
@@ -241,6 +252,7 @@ return array (
                                                         'description' => 'A set of binary attributes.',
                                                         'type' => 'array',
                                                         'items' => array(
+                                                            'name' => 'BinaryAttributeValue',
                                                             'type' => 'string',
                                                             'filters' => array(
                                                                 'base64_encode',
@@ -284,6 +296,7 @@ return array (
                                                             'description' => 'A set of strings.',
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'StringAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -291,6 +304,7 @@ return array (
                                                             'description' => 'A set of numbers.',
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'NumberAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -298,6 +312,7 @@ return array (
                                                             'description' => 'A set of binary attributes.',
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'BinaryAttributeValue',
                                                                 'type' => 'string',
                                                                 'filters' => array(
                                                                     'base64_encode',
@@ -329,6 +344,7 @@ return array (
                                                             'description' => 'A set of strings.',
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'StringAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -336,6 +352,7 @@ return array (
                                                             'description' => 'A set of numbers.',
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'NumberAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -343,6 +360,7 @@ return array (
                                                             'description' => 'A set of binary attributes.',
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'BinaryAttributeValue',
                                                                 'type' => 'string',
                                                                 'filters' => array(
                                                                     'base64_encode',
@@ -388,7 +406,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -507,7 +525,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -553,6 +571,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -560,6 +579,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -567,6 +587,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -598,6 +619,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -605,6 +627,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -612,6 +635,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -652,6 +676,7 @@ return array (
                                         'description' => 'A set of strings.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'StringAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -659,6 +684,7 @@ return array (
                                         'description' => 'A set of numbers.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'NumberAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -666,6 +692,7 @@ return array (
                                         'description' => 'A set of binary attributes.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
@@ -728,7 +755,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -778,7 +805,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -820,7 +847,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -866,6 +893,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -873,6 +901,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -880,6 +909,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -911,6 +941,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -918,6 +949,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -925,6 +957,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -940,6 +973,7 @@ return array (
                     'location' => 'json',
                     'minItems' => 1,
                     'items' => array(
+                        'name' => 'AttributeName',
                         'type' => 'string',
                     ),
                 ),
@@ -979,7 +1013,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -1022,7 +1056,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -1066,6 +1100,7 @@ return array (
                                 'description' => 'A set of strings.',
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'StringAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1073,6 +1108,7 @@ return array (
                                 'description' => 'A set of numbers.',
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'NumberAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1080,6 +1116,7 @@ return array (
                                 'description' => 'A set of binary attributes.',
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
                                     'filters' => array(
                                         'base64_encode',
@@ -1119,6 +1156,7 @@ return array (
                                         'description' => 'A set of strings.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'StringAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1126,6 +1164,7 @@ return array (
                                         'description' => 'A set of numbers.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'NumberAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1133,6 +1172,7 @@ return array (
                                         'description' => 'A set of binary attributes.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
@@ -1195,7 +1235,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -1217,6 +1257,7 @@ return array (
                     'location' => 'json',
                     'minItems' => 1,
                     'items' => array(
+                        'name' => 'AttributeName',
                         'type' => 'string',
                     ),
                 ),
@@ -1266,6 +1307,7 @@ return array (
                             'description' => 'A set of strings.',
                             'type' => 'array',
                             'items' => array(
+                                'name' => 'StringAttributeValue',
                                 'type' => 'string',
                             ),
                         ),
@@ -1273,6 +1315,7 @@ return array (
                             'description' => 'A set of numbers.',
                             'type' => 'array',
                             'items' => array(
+                                'name' => 'NumberAttributeValue',
                                 'type' => 'string',
                             ),
                         ),
@@ -1280,6 +1323,7 @@ return array (
                             'description' => 'A set of binary attributes.',
                             'type' => 'array',
                             'items' => array(
+                                'name' => 'BinaryAttributeValue',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
@@ -1296,6 +1340,7 @@ return array (
                         'AttributeValueList' => array(
                             'type' => 'array',
                             'items' => array(
+                                'name' => 'AttributeValue',
                                 'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                                 'type' => 'object',
                                 'properties' => array(
@@ -1318,6 +1363,7 @@ return array (
                                         'description' => 'A set of strings.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'StringAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1325,6 +1371,7 @@ return array (
                                         'description' => 'A set of numbers.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'NumberAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1332,6 +1379,7 @@ return array (
                                         'description' => 'A set of binary attributes.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
@@ -1399,6 +1447,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1406,6 +1455,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1413,6 +1463,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -1444,6 +1495,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1451,6 +1503,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1458,6 +1511,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -1497,7 +1551,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -1519,6 +1573,7 @@ return array (
                     'location' => 'json',
                     'minItems' => 1,
                     'items' => array(
+                        'name' => 'AttributeName',
                         'type' => 'string',
                     ),
                 ),
@@ -1546,6 +1601,7 @@ return array (
                             'AttributeValueList' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'AttributeValue',
                                     'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -1568,6 +1624,7 @@ return array (
                                             'description' => 'A set of strings.',
                                             'type' => 'array',
                                             'items' => array(
+                                                'name' => 'StringAttributeValue',
                                                 'type' => 'string',
                                             ),
                                         ),
@@ -1575,6 +1632,7 @@ return array (
                                             'description' => 'A set of numbers.',
                                             'type' => 'array',
                                             'items' => array(
+                                                'name' => 'NumberAttributeValue',
                                                 'type' => 'string',
                                             ),
                                         ),
@@ -1582,6 +1640,7 @@ return array (
                                             'description' => 'A set of binary attributes.',
                                             'type' => 'array',
                                             'items' => array(
+                                                'name' => 'BinaryAttributeValue',
                                                 'type' => 'string',
                                                 'filters' => array(
                                                     'base64_encode',
@@ -1642,6 +1701,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1649,6 +1709,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1656,6 +1717,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -1687,6 +1749,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1694,6 +1757,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1701,6 +1765,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -1740,7 +1805,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -1786,6 +1851,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1793,6 +1859,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1800,6 +1867,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -1831,6 +1899,7 @@ return array (
                                     'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1838,6 +1907,7 @@ return array (
                                     'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1845,6 +1915,7 @@ return array (
                                     'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
@@ -1885,6 +1956,7 @@ return array (
                                         'description' => 'A set of strings.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'StringAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1892,6 +1964,7 @@ return array (
                                         'description' => 'A set of numbers.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'NumberAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1899,6 +1972,7 @@ return array (
                                         'description' => 'A set of binary attributes.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
@@ -1948,6 +2022,7 @@ return array (
                                         'description' => 'A set of strings.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'StringAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1955,6 +2030,7 @@ return array (
                                         'description' => 'A set of numbers.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'NumberAttributeValue',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -1962,6 +2038,7 @@ return array (
                                         'description' => 'A set of binary attributes.',
                                         'type' => 'array',
                                         'items' => array(
+                                            'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
@@ -2024,7 +2101,7 @@ return array (
                     'location' => 'header',
                     'default' => 'application/x-amz-json-1.0',
                 ),
-                'command.content_type' => array(
+                'command.expects' => array(
                     'static' => true,
                     'default' => 'application/json',
                 ),
@@ -2095,6 +2172,7 @@ return array (
                             'Items' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'AttributeMap',
                                     'type' => 'object',
                                     'additionalProperties' => array(
                                         'type' => 'object',
@@ -2111,18 +2189,21 @@ return array (
                                             'SS' => array(
                                                 'type' => 'array',
                                                 'items' => array(
+                                                    'name' => 'StringAttributeValue',
                                                     'type' => 'string',
                                                 ),
                                             ),
                                             'NS' => array(
                                                 'type' => 'array',
                                                 'items' => array(
+                                                    'name' => 'NumberAttributeValue',
                                                     'type' => 'string',
                                                 ),
                                             ),
                                             'BS' => array(
                                                 'type' => 'array',
                                                 'items' => array(
+                                                    'name' => 'BinaryAttributeValue',
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -2145,6 +2226,7 @@ return array (
                             'Keys' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'Key',
                                     'type' => 'object',
                                     'properties' => array(
                                         'HashKeyElement' => array(
@@ -2162,18 +2244,21 @@ return array (
                                                 'SS' => array(
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'StringAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
                                                 'NS' => array(
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'NumberAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
                                                 'BS' => array(
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'BinaryAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -2194,18 +2279,21 @@ return array (
                                                 'SS' => array(
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'StringAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
                                                 'NS' => array(
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'NumberAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
                                                 'BS' => array(
                                                     'type' => 'array',
                                                     'items' => array(
+                                                        'name' => 'BinaryAttributeValue',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -2217,6 +2305,7 @@ return array (
                             'AttributesToGet' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'AttributeName',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2247,6 +2336,7 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'array',
                         'items' => array(
+                            'name' => 'WriteRequest',
                             'type' => 'object',
                             'properties' => array(
                                 'PutRequest' => array(
@@ -2269,18 +2359,21 @@ return array (
                                                     'SS' => array(
                                                         'type' => 'array',
                                                         'items' => array(
+                                                            'name' => 'StringAttributeValue',
                                                             'type' => 'string',
                                                         ),
                                                     ),
                                                     'NS' => array(
                                                         'type' => 'array',
                                                         'items' => array(
+                                                            'name' => 'NumberAttributeValue',
                                                             'type' => 'string',
                                                         ),
                                                     ),
                                                     'BS' => array(
                                                         'type' => 'array',
                                                         'items' => array(
+                                                            'name' => 'BinaryAttributeValue',
                                                             'type' => 'string',
                                                         ),
                                                     ),
@@ -2310,18 +2403,21 @@ return array (
                                                         'SS' => array(
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'StringAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
                                                         'NS' => array(
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'NumberAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
                                                         'BS' => array(
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'BinaryAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -2342,18 +2438,21 @@ return array (
                                                         'SS' => array(
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'StringAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
                                                         'NS' => array(
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'NumberAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
                                                         'BS' => array(
                                                             'type' => 'array',
                                                             'items' => array(
+                                                                'name' => 'BinaryAttributeValue',
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -2462,18 +2561,21 @@ return array (
                             'SS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'StringAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'NS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'NumberAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'BS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2650,18 +2752,21 @@ return array (
                             'SS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'StringAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'NS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'NumberAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'BS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2682,6 +2787,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'TableName',
                         'type' => 'string',
                     ),
                 ),
@@ -2713,18 +2819,21 @@ return array (
                             'SS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'StringAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'NS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'NumberAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'BS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2745,6 +2854,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'AttributeMap',
                         'type' => 'object',
                         'additionalProperties' => array(
                             'type' => 'object',
@@ -2761,18 +2871,21 @@ return array (
                                 'SS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'NS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'BS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2803,18 +2916,21 @@ return array (
                                 'SS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'NS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'BS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2835,18 +2951,21 @@ return array (
                                 'SS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'NS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'BS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2868,6 +2987,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'AttributeMap',
                         'type' => 'object',
                         'additionalProperties' => array(
                             'type' => 'object',
@@ -2884,18 +3004,21 @@ return array (
                                 'SS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'NS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'BS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2930,18 +3053,21 @@ return array (
                                 'SS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'NS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'BS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2962,18 +3088,21 @@ return array (
                                 'SS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'StringAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'NS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'NumberAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
                                 'BS' => array(
                                     'type' => 'array',
                                     'items' => array(
+                                        'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -3009,18 +3138,21 @@ return array (
                             'SS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'StringAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'NS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'NumberAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),
                             'BS' => array(
                                 'type' => 'array',
                                 'items' => array(
+                                    'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
                                 ),
                             ),

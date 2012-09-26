@@ -195,7 +195,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Getting the object's ACL");
         $xml = $this->client->getObjectAcl(array(
             'bucket' => $this->bucket,
-            'key'    => self::TEST_KEY
+            'key'    => self::TEST_KEY,
+            'command.response_processing' => 'native'
         ))->execute();
 
         $data = array();

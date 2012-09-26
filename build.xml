@@ -195,12 +195,6 @@
     <target name="build" depends="phplint, prepare, test-init, test, package, package-min"/>
     <target name="report" depends="coverage, phploc, phpcs, phpmd, phpcpd, phpdepend, phpcb"/>
 
-    <target name="update-cacert" description="Downloads a new copy of the mozilla.org CA Cert bundle provided by curl.haxx.se">
-        <echo message="Downloading a new copy of http://curl.haxx.se/ca/cacert.pem to src/Aws/Common/Resources/cacert.pem" />
-        <delete file="src/Aws/Common/Resources/cacert.pem" />
-        <exec command="curl -s -S -o cacert.pem http://curl.haxx.se/ca/cacert.pem" dir="src/Aws/Common/Resources" passthru="true"/>
-    </target>
-
     <target name="update-regions" description="Downloads a new copy of the AWS regions and endpoints file used by the SDK">
         <echo message="Downloading a new copy of http://aws-sdk-configurations.amazonwebservices.com/endpoints.xml to src/Aws/Common/Resources/endpoints.xml" />
         <delete file="src/Aws/Common/Resources/endpoints.xml" />

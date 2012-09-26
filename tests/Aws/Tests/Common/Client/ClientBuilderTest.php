@@ -75,29 +75,6 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
     }
 
-    public function testResolvesSslOptions()
-    {
-        $builder = $this->getMockBuilder('Aws\Common\Client\ClientBuilder')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        // make the method callable
-        $method = new \ReflectionMethod('Aws\Common\Client\ClientBuilder', 'resolveSslOptions');
-        $method->setAccessible(true);
-
-        $config = new Collection();
-
-        // Ensure that the default setting of 'true' uses the Mozilla certs
-        $config->set('ssl.cert', true);
-        $method->invoke($builder, $config);
-        $this->assertContains('/Resources/cacert.pem', $config->get('curl.CURLOPT_CAINFO'));
-
-        // Ensure that a custom setting uses the custom setting
-        $config->set('ssl.cert', '/foo/bar');
-        $method->invoke($builder, $config);
-        $this->assertEquals('/foo/bar', $config->get('curl.CURLOPT_CAINFO'));
-    }
-
     public function getDataForProcessArrayTest()
     {
         return array(

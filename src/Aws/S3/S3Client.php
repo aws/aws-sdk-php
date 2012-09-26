@@ -143,9 +143,8 @@ class S3Client extends AbstractClient
      * - Generic client options
      *     - ssl.cert: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
      *           option should be used when you encounter curl error code 60.
-     *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
-     *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
-     *           See: http://www.php.net/manual/en/function.curl-setopt.php
+     *     - curl.options: Array of cURL options to apply to every request.
+     *          See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
      * - Amazon S3 specific options
      *     - bucket.path_style: Set to true to force path style requests when possible
      * - Signature options
@@ -165,7 +164,6 @@ class S3Client extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
                 Options::SCHEME  => 'https',
                 Options::SERVICE => 's3',
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.json'

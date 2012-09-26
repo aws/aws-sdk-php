@@ -49,6 +49,7 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
 
         // Wait until the table is created and active
         $client->waitUntil('TableExists', self::getTableName());
+        sleep(5);
 
         try {
             self::log('Creating the test item');
