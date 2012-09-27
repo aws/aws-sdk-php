@@ -158,7 +158,7 @@ class TreeHash implements ChunkHashInterface
     {
         // Error if hash is already calculated
         if ($this->hash) {
-            throw new LogicException('You may not add more data to a finalized tree hash.');
+            throw new LogicException('You may not add more checksums to a finalized tree hash.');
         }
 
         // Convert the checksum to binary form if necessary
