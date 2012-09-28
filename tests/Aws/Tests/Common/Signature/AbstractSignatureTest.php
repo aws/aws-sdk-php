@@ -39,17 +39,6 @@ class AbstractSignatureTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals($d, $method->invoke($this->signature, 'F, Y'));
     }
 
-    /**
-     * @covers Aws\Common\Signature\AbstractSignature::base16
-     */
-    public function testBase16Encodes()
-    {
-        $method = new \ReflectionMethod('Aws\Common\Signature\AbstractSignature', 'base16');
-        $method->setAccessible(true);
-
-        $this->assertEquals(61, $method->invoke($this->signature, 'a'));
-    }
-
     public function queryStringProvider()
     {
         return array(

@@ -29,11 +29,6 @@ class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
      */
     protected function handleResults($result)
     {
-        // Format the result
-        $result = $this->formatResult($result, array(
-            'Version', 'DeleteMarker', 'CommonPrefixes'
-        ));
-
         // Get the list of object versions
         $versions = array_merge($result['Version'], $result['DeleteMarker']);
 
@@ -51,10 +46,10 @@ class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken($result)
     {
         $this->nextToken = false;
-        if ((string) $result->IsTruncated === 'true') {
+        if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {
             $this->nextToken = array(
-                'key-marker'        => (string) $result->nextKeyMarker,
-                'version-id-marker' => (string) $result->nextVersionIdMarker
+                'key-marker'        => isset($result['nextKeyMarker']) ? $result['nextKeyMarker'] : null,
+                'version-id-marker' => isset($result['nextVersionIdMarker']) ? $result['nextVersionIdMarker'] : null
             );
         }
     }

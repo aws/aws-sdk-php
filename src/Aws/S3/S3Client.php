@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\ExpectHeaderListener;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\S3\Command\FakeModelResponseParser;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
@@ -172,6 +173,9 @@ class S3Client extends AbstractClient
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())
             ->build();
+
+        // Ensure that responses are converted from XML to an array and use the correct format
+        $client->addSubscriber(new FakeModelResponseParser());
 
         // Set Expect header for upload operations
         $client->addSubscriber(new ExpectHeaderListener());

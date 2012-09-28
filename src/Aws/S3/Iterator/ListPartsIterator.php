@@ -28,8 +28,7 @@ class ListPartsIterator extends AbstractS3ResourceIterator
      */
     protected function handleResults($result)
     {
-        $result = $this->formatResult($result, array('Part'));
-        return $result['Part'];
+        return isset($result['Part']) ? $result['Part'] : array();
     }
 
     /**
@@ -38,9 +37,9 @@ class ListPartsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken($result)
     {
         $this->nextToken = false;
-        if ((string) $result->IsTruncated === 'true') {
+        if ($result['IsTruncated'] === 'true') {
             $this->nextToken = array(
-                'part-number-marker' => (string) $result->NextPartNumberMarker
+                'part-number-marker' => $result['NextPartNumberMarker']
             );
         }
     }

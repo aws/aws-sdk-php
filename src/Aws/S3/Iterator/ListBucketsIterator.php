@@ -38,7 +38,6 @@ class ListBucketsIterator extends AbstractS3ResourceIterator
     protected function handleResults($result)
     {
         // Get and format the results
-        $result  = $this->formatResult($result, array('Buckets.Bucket'));
         $buckets = $result['Buckets']['Bucket'];
 
         // If only the names_only set, change arrays to a string

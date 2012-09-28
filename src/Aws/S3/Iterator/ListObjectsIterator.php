@@ -36,9 +36,6 @@ class ListObjectsIterator extends AbstractS3ResourceIterator
      */
     protected function handleResults($result)
     {
-        // Format the result
-        $result = $this->formatResult($result, array('Contents', 'CommonPrefixes'));
-
         // Get the list of objects and find the last key
         $objects = $result['Contents'];
         $numObjects = count($objects);
@@ -79,9 +76,9 @@ class ListObjectsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken($result)
     {
         $this->nextToken = false;
-        if ((string) $result->IsTruncated === 'true') {
+        if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {
             // Note: NextMarker is only available when a delimiter was specified
-            $nextMarker = (string) $result->NextMarker;
+            $nextMarker = isset($result['NextMarker']) ? $result['NextMarker'] : null;
             if ($nextMarker || $this->lastKey) {
                 $this->nextToken = array('marker' => $nextMarker ?: $this->lastKey);
             }

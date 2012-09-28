@@ -103,18 +103,4 @@ abstract class AbstractSignature implements SignatureInterface
     {
         return gmdate($format, $this->getTimestamp());
     }
-
-    /**
-     * Base 16 encode a string
-     *
-     * @param string $string String to base16 encode
-     *
-     * @return string
-     */
-    protected function base16($string)
-    {
-        $hex = unpack('H*', $string);
-
-        return reset($hex);
-    }
 }

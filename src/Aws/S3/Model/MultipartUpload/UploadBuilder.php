@@ -350,6 +350,6 @@ class UploadBuilder
         $result = $command->execute();
 
         // Create a new state based on the initiated upload
-        return new TransferState($this->bucket, $this->key, (string) $result->UploadId);
+        return new TransferState($this->bucket, $this->key, $result['UploadId']);
     }
 }
