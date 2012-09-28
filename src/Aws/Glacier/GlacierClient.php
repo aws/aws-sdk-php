@@ -25,7 +25,7 @@ use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Common\Event;
 use Guzzle\Service\Command\OperationCommand as Op;
-use Aws\Common\Iterator\MapResourceIteratorFactory;
+use Guzzle\Service\Resource\MapResourceIteratorFactory;
 
 /**
  * Client to interact with Amazon Glacier
