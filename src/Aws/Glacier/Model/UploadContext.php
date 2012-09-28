@@ -138,8 +138,12 @@ class UploadContext implements \Serializable
      */
     public function addData($data)
     {
+        $size = strlen($data);
+
         if ($this->isFinalized) {
             throw new LogicException('You cannot add data to a finalized UploadContext.');
+        } elseif ($this->size + $size > $this->maxSize) {
+            throw new LogicException('You cannot add data that will exceed the maximum size of this upload.');
         } else {
             $this->treeHash->addData($data);
             $this->chunkHash->addData($data);
