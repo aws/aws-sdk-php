@@ -25,6 +25,7 @@ use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Common\Event;
 use Guzzle\Service\Command\OperationCommand as Op;
+use Aws\Common\Iterator\MapResourceIteratorFactory;
 
 /**
  * Client to interact with Amazon Glacier
@@ -135,6 +136,11 @@ class GlacierClient extends AbstractClient
 
         // Set x-amz-content-sha256 header for upload operations
         $client->addSubscriber(new UploadContextListener());
+
+        // Use the same iterator class for every iterator
+        $client->setResourceIteratorFactory(new MapResourceIteratorFactory(array(
+             '*' => 'Aws\Glacier\Iterator\DefaultIterator'
+        )));
 
         return $client;
     }

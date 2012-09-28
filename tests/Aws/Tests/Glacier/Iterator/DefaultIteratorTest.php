@@ -2,13 +2,13 @@
 
 namespace Aws\Tests\Common\Iterator;
 
-use Aws\Glacier\Iterator\AbstractGlacierResourceIterator;
+use Aws\Glacier\Iterator\DefaultIterator;
 use Guzzle\Service\Command\AbstractCommand;
 
 /**
- * @covers Aws\Glacier\Iterator\AbstractGlacierResourceIterator
+ * @covers Aws\Glacier\Iterator\DefaultIterator
  */
-class AbstractGlacierResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
+class DefaultIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function getDataForPageSizeTest()
     {
@@ -32,10 +32,14 @@ class AbstractGlacierResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             $command->set('limit', $limit);
         }
 
-        $iterator = $this->getMockedIterator($command);
+        $iterator = new DefaultIterator($command);
         if ($pageSize) {
             $iterator->setPageSize($pageSize);
         }
+
+        $property = new \ReflectionProperty($iterator, 'command');
+        $property->setAccessible(true);
+        $property->setValue($iterator, $command);
 
         $prepareRequest = new \ReflectionMethod($iterator, 'prepareRequest');
         $prepareRequest->setAccessible(true);
@@ -47,7 +51,11 @@ class AbstractGlacierResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     public function testApplyNextTokenSetsTokenCorrectly()
     {
         $command = $this->getMockedCommand();
-        $iterator = $this->getMockedIterator($command);
+        $iterator = new DefaultIterator($command);
+
+        $property = new \ReflectionProperty($iterator, 'command');
+        $property->setAccessible(true);
+        $property->setValue($iterator, $command);
 
         $property = new \ReflectionProperty($iterator, 'nextToken');
         $property->setAccessible(true);
@@ -74,7 +82,11 @@ class AbstractGlacierResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         );
 
         $command = $this->getMockedCommand();
-        $iterator = $this->getMockedIterator($command);
+        $iterator = new DefaultIterator($command);
+
+        $property = new \ReflectionProperty($iterator, 'command');
+        $property->setAccessible(true);
+        $property->setValue($iterator, $command);
 
         $handleResults = new \ReflectionMethod($iterator, 'handleResults');
         $handleResults->setAccessible(true);
@@ -89,43 +101,24 @@ class AbstractGlacierResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers \Aws\Glacier\Iterator\ListVaultsIterator
-     * @covers \Aws\Glacier\Iterator\ListPartsIterator
-     * @covers \Aws\Glacier\Iterator\ListJobsIterator
-     */
-    public function testInstantiateGlacierIterators()
-    {
-        $glacier = $this->getServiceBuilder()->get('glacier');
-        $this->assertInstanceOf('\Aws\Glacier\Iterator\ListVaultsIterator', $glacier->getIterator('ListVaults'));
-        $this->assertInstanceOf('\Aws\Glacier\Iterator\ListPartsIterator', $glacier->getIterator('ListParts'));
-        $this->assertInstanceOf('\Aws\Glacier\Iterator\ListJobsIterator', $glacier->getIterator('ListJobs'));
-    }
-
-    /**
      * @return AbstractCommand
      */
     protected function getMockedCommand()
     {
-        return $this->getMockBuilder('Guzzle\Service\Command\OperationCommand')
+        $command = $this->getMockBuilder('Guzzle\Service\Command\OperationCommand')
             ->disableOriginalConstructor()
-            ->setMethods(array('execute'))
-            ->getMock()
-            ->set('foo', 'bar');
-    }
+            ->setMethods(array('execute', 'getName', '__clone'))
+            ->getMock();
 
-    /**
-     * @return AbstractGlacierResourceIterator
-     */
-    protected function getMockedIterator(AbstractCommand $command)
-    {
-        $iterator = $this->getMockForAbstractClass(
-            'Aws\Glacier\Iterator\AbstractGlacierResourceIterator', array(), '', false
-        );
+        $command->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('ListVaults'));
+        $command->expects($this->any())
+            ->method('__clone')
+            ->will($this->returnSelf());
 
-        $property = new \ReflectionProperty($iterator, 'command');
-        $property->setAccessible(true);
-        $property->setValue($iterator, $command);
+        $command->set('foo', 'bar');
 
-        return $iterator;
+        return $command;
     }
 }

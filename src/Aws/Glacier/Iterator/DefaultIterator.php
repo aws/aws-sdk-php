@@ -21,9 +21,13 @@ use Aws\Common\Iterator\AbstractResourceIterator;
 /**
  * Iterate over a Glacier command
  */
-abstract class AbstractGlacierResourceIterator extends AbstractResourceIterator
+class DefaultIterator extends AbstractResourceIterator
 {
-    protected $resultsKey = 'VaultList';
+    protected static $resultKeyMap = array(
+        'ListJobs'   => 'JobList',
+        'ListParts'  => 'Parts',
+        'ListVaults' => 'VaultList'
+    );
 
     /**
      * {@inheritdoc}
@@ -33,6 +37,7 @@ abstract class AbstractGlacierResourceIterator extends AbstractResourceIterator
         // If both a limiting parameter of a command and a iterator page size are specified, use the smaller of the two
         $pageSize = $this->calculatePageSize();
         $limit = $this->command->get('limit');
+        //var_dump(array('pageSize' => $pageSize, 'limit' => $limit));
         if ($limit && $pageSize) {
             $this->command->set('limit', min($pageSize, $limit));
         }
@@ -43,7 +48,9 @@ abstract class AbstractGlacierResourceIterator extends AbstractResourceIterator
      */
     protected function handleResults($result)
     {
-        return isset($result[$this->resultsKey]) ? $result[$this->resultsKey] : array();
+        // Look at the correct key based on the command name
+        $resultKey = self::$resultKeyMap[$this->command->getName()];
+        return isset($result[$resultKey]) ? $result[$resultKey] : array();
     }
 
     /**
