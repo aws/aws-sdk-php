@@ -26,8 +26,8 @@ use Aws\Glacier\Exception\ResourceNotFoundException;
  */
 class VaultNotExists extends AbstractResourceWaiter
 {
-    protected $interval = 5;
-    protected $maxAttempts = 20;
+    protected $interval = 3;
+    protected $maxAttempts = 15;
     protected $maxFailures = 0;
 
     /**
@@ -36,7 +36,7 @@ class VaultNotExists extends AbstractResourceWaiter
     protected function doWait()
     {
         try {
-            $result = $this->client->getCommand('DescribeVault', array(
+            $this->client->getCommand('DescribeVault', array(
                 'vaultName' => $this->resourceId,
                 Ua::OPTION  => Ua::WAITER
             ))->execute();

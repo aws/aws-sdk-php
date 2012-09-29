@@ -19,6 +19,7 @@ namespace Aws\Glacier\Waiter;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Waiter\AbstractResourceWaiter;
 use Aws\Glacier\Exception\ResourceNotFoundException;
+use Aws\Glacier\Exception\GlacierException;
 
 
 /**
@@ -26,9 +27,9 @@ use Aws\Glacier\Exception\ResourceNotFoundException;
  */
 class VaultExists extends AbstractResourceWaiter
 {
-    protected $interval = 5;
-    protected $maxAttempts = 20;
-    protected $maxFailures = 0;
+    protected $interval = 3;
+    protected $maxAttempts = 15;
+    protected $maxFailures = 15;
 
     /**
      * Wait until a bucket exists
@@ -36,7 +37,7 @@ class VaultExists extends AbstractResourceWaiter
     protected function doWait()
     {
         try {
-            $result = $this->client->getCommand('DescribeVault', array(
+            $this->client->getCommand('DescribeVault', array(
                 'vaultName' => $this->resourceId,
                 Ua::OPTION  => Ua::WAITER
             ))->execute();

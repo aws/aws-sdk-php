@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\Tests\DynamoDb\Waiter;
+namespace Aws\Tests\S3\Waiter;
 
 use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;

@@ -109,10 +109,12 @@ class UploadHelper
     public function getSingleUploadContext($index = null)
     {
         // Make sure index is set if there is more than one upload
-        if ($index === null && count($this->uploadContexts) > 1) {
-            throw new InvalidArgumentException('You must select an index if there is more than one part.');
-        } else {
-            $index = 0;
+        if ($index === null) {
+            if (count($this->uploadContexts) > 1) {
+                throw new InvalidArgumentException('You must select an index if there is more than one part.');
+            } else {
+                $index = 0;
+            }
         }
 
         $index = (int) $index;
