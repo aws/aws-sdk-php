@@ -21,4 +21,4 @@ use Aws\Common\Exception\ServerExceptionInterface;
 /**
  * The request has failed due to a temporary failure of the server.
  */
-class ServiceUnavailableException extends StsException implements ServerExceptionInterface {}
+class ServiceUnavailableException extends StsException {}
