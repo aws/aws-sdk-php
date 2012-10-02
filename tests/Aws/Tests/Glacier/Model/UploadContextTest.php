@@ -3,7 +3,6 @@
 namespace Aws\Tests\DynamoDb;
 
 use Aws\Glacier\Model\UploadContext;
-use Aws\Common\Enum\Size;
 
 class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
 {

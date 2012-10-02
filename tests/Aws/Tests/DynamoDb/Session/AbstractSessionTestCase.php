@@ -43,5 +43,4 @@ class AbstractSessionTestCase extends \Guzzle\Tests\GuzzleTestCase
         return $command;
     }
 
-
 }

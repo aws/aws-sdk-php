@@ -23,7 +23,6 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
-use Guzzle\Common\Event;
 use Guzzle\Service\Command\OperationCommand as Op;
 use Guzzle\Service\Resource\MapResourceIteratorFactory;
 

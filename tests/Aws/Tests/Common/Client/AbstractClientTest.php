@@ -6,7 +6,6 @@ use Aws\Common\Aws;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
-use Aws\Common\Client\DefaultClient;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;

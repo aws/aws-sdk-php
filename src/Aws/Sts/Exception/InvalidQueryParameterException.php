@@ -16,8 +16,6 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * AWS query string is malformed, does not adhere to AWS standards.
  */

@@ -2,7 +2,6 @@
 
 namespace Aws\Tests\DynamoDb\Integration;
 
-use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Exception\DynamoDbException;
 
 /**

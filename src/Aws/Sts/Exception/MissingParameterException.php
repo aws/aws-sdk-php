@@ -16,8 +16,6 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * An input parameter that is mandatory for processing the request is not supplied.
  */

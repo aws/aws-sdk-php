@@ -20,7 +20,6 @@ use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Waiter\AbstractResourceWaiter;
 use Aws\Glacier\Exception\ResourceNotFoundException;
 
-
 /**
  * Returns true when the bucket exists
  */

@@ -16,8 +16,6 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * Request was denied due to request throttling.
  */

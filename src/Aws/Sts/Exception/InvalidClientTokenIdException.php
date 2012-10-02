@@ -16,8 +16,6 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ClientExceptionInterface;
-
 /**
  * The X.509 certificate or AWS Access Key ID provided does not exist in our records.
  */
