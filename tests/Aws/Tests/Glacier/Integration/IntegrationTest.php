@@ -7,9 +7,6 @@ use Aws\Glacier\GlacierClient;
 use Aws\Glacier\Model\UploadHelper;
 use Guzzle\Http\Client;
 
-use Guzzle\Plugin\Log\LogPlugin;
-use Guzzle\Log\ClosureLogAdapter;
-
 /**
  * @group integration
  */

@@ -16,7 +16,6 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Common\ChunkHash;
 use Aws\Common\Enum\Size;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\OutOfBoundsException;

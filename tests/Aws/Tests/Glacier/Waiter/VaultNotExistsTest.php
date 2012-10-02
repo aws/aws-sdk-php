@@ -2,9 +2,6 @@
 
 namespace Aws\Tests\Glacier\Waiter;
 
-use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Mock\MockPlugin;
-
 /**
  * @covers Aws\Glacier\Waiter\VaultNotExists
  */

@@ -3,7 +3,6 @@
 namespace Aws\Tests\S3\Waiter;
 
 use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\S3\Waiter\BucketExists

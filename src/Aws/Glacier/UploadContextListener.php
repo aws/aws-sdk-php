@@ -16,10 +16,8 @@
 
 namespace Aws\Glacier;
 
-use Aws\Common\Enum\Size;
 use Aws\Glacier\Model\UploadContext;
 use Guzzle\Common\Event;
-use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\ReadLimitEntityBody;
 use Guzzle\Service\Command\AbstractCommand;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

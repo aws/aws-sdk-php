@@ -16,8 +16,6 @@
 
 namespace Aws\Common\Exception\Parser;
 
-use Guzzle\Http\Message\Response;
-
 /**
  * Parses JSON encoded exception responses from query services
  */

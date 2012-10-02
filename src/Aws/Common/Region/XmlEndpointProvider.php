@@ -17,9 +17,6 @@
 namespace Aws\Common\Region;
 
 use Aws\Common\Exception\InvalidArgumentException;
-use Guzzle\Common\Exception\RuntimeException;
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Client;
 
 /**
  * XML endpoint provider

@@ -7,7 +7,6 @@ use Guzzle\Common\Event;
 use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Client;
 use Guzzle\Http\Message\Response;
-use Guzzle\Http\Message\Request;
 
 /**
  * @covers Aws\S3\Command\FakeModelResponseParser
