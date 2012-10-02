@@ -50,15 +50,13 @@ class SerialTransfer extends AbstractTransfer
             }
             // @codeCoverageIgnoreEnd
 
-            $command = $this->client->getCommand('UploadPart', array(
-                'bucket'     => $this->state->getBucket(),
-                'key'        => $this->state->getKey(),
+            $params = $this->state->getIdParams();
+            $command = $this->client->getCommand('UploadPart', array_replace($params, array(
                 'PartNumber' => count($this->state) + 1,
-                'UploadId'   => $this->state->getUploadId(),
                 'body'       => $body,
                 'use_md5'    => $this->options['part_md5'],
                 Ua::OPTION   => Ua::MULTIPART_UPLOAD
-            ));
+            )));
 
             // Notify observers that the part is about to be uploaded
             $eventData = $this->getEventData();
@@ -70,14 +68,14 @@ class SerialTransfer extends AbstractTransfer
                 break;
             }
 
-            $result = $command->execute();
+            $response = $command->getResponse();
 
-            $this->state->addPart(
-                count($this->state) + 1,
-                (string) $result->getHeader('ETag'),
-                $body->getContentLength(),
-                gmdate('r')
-            );
+            $this->state->addPart(UploadPart::fromArray(array(
+                'PartNumber'   => count($this->state) + 1,
+                'ETag'         => $response->getHeader('ETag', true),
+                'Size'         => $body->getContentLength(),
+                'LastModified' => gmdate('r')
+            )));
 
             // Notify observers that the part was uploaded
             $this->dispatch(self::AFTER_PART_UPLOAD, $eventData);

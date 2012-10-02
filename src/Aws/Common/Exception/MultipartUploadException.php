@@ -14,26 +14,25 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Exception;
+namespace Aws\Common\Exception;
 
-use Aws\S3\Model\MultipartUpload\TransferState;
+use Aws\Common\MultipartUpload\TransferStateInterface;
 
 /**
- * Exception thrown when a {@see Aws\S3\Model\MultipartUpload\TransferInterface}
- * object encounters an error during transfer
+ * Thrown when a {@see Aws\Common\MultipartUpload\TransferInterface} object encounters an error during transfer
  */
-class MultipartUploadException extends S3Exception
+class MultipartUploadException extends RuntimeException
 {
     /**
-     * @var TransferState State of the transfer when the error was encountered
+     * @var TransferStateInterface State of the transfer when the error was encountered
      */
     protected $state;
 
     /**
-     * @param TransferState $state     Transfer state
-     * @param \Exception    $exception Last encountered exception
+     * @param TransferStateInterface $state     Transfer state
+     * @param \Exception             $exception Last encountered exception
      */
-    public function __construct(TransferState $state, \Exception $exception = null)
+    public function __construct(TransferStateInterface $state, \Exception $exception = null)
     {
         parent::__construct('An error was encountered while performing a multipart upload', 0, $exception);
     }
@@ -41,7 +40,7 @@ class MultipartUploadException extends S3Exception
     /**
      * Get the state of the transfer
      *
-     * @return TransferState
+     * @return TransferStateInterface
      */
     public function getState()
     {

@@ -14,45 +14,39 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Model\MultipartUpload;
+namespace Aws\Common\MultipartUpload;
 
 use Guzzle\Common\HasDispatcherInterface;
 
 /**
- * Interface for transferring the contents of a data source to Amazon S3 using
- * multipart upload
+ * Interface for transferring the contents of a data source to an AWS service via a multipart upload interface
  */
 interface TransferInterface extends HasDispatcherInterface
 {
-    const BEFORE_UPLOAD = 'multipart_upload.before_upload';
-    const AFTER_UPLOAD = 'multipart_upload.after_upload';
-    const AFTER_COMPLETE = 'multipart_upload.after_complete';
+    const BEFORE_UPLOAD      = 'multipart_upload.before_upload';
+    const AFTER_UPLOAD       = 'multipart_upload.after_upload';
+    const AFTER_COMPLETE     = 'multipart_upload.after_complete';
     const BEFORE_PART_UPLOAD = 'multipart_upload.before_part_upload';
-    const AFTER_PART_UPLOAD = 'multipart_upload.after_part_upload';
-
-    const MIN_PART_SIZE = 5242880;
-    const MAX_PART_SIZE = 5368709120;
-    const MAX_PARTS = 10000;
+    const AFTER_PART_UPLOAD  = 'multipart_upload.after_part_upload';
 
     /**
-     * Upload the source to Amazon S3 using a multipart upload
+     * Upload the source to using a multipart upload
      *
-     * @return \SimpleXMLElement Returns the result of a CompleteMultipartUpload command
-     * @link http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html
+     * @return array Returns the result of a the complete multipart upload command
      */
     public function upload();
 
     /**
      * Abort the upload
      *
-     * @link http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html
+     * @return array Returns the result of the abort multipart upload command
      */
     public function abort();
 
     /**
      * Get the current state of the upload
      *
-     * @return TransferState
+     * @return TransferStateInterface
      */
     public function getState();
 
@@ -61,7 +55,7 @@ interface TransferInterface extends HasDispatcherInterface
      *
      * This allows you to stop and later resume a long running transfer if needed.
      *
-     * @return TransferState
+     * @return TransferStateInterface
      */
     public function stop();
 }

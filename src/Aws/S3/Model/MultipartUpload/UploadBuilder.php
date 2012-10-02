@@ -16,9 +16,11 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
+use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\MultipartUpload\AbstractUploadBuilder;
 use Aws\S3\Model\Acl;
 use Guzzle\Http\EntityBody;
 
@@ -26,13 +28,8 @@ use Guzzle\Http\EntityBody;
  * Easily create a multipart uploader used to quickly and reliably upload a
  * large file or data stream to Amazon S3 using multipart uploads
  */
-class UploadBuilder
+class UploadBuilder extends AbstractUploadBuilder
 {
-    /**
-     * @var AwsClientInterface Client used to transfer requests
-     */
-    protected $client;
-
     /**
      * @var string Bucket to upload to
      */
@@ -44,11 +41,6 @@ class UploadBuilder
     protected $key;
 
     /**
-     * @var TransferState State of the transfer
-     */
-    protected $state;
-
-    /**
      * @var int Concurrency level to transfer the parts
      */
     protected $concurrency = 1;
@@ -56,12 +48,7 @@ class UploadBuilder
     /**
      * @var int Minimum part size to upload
      */
-    protected $minPartSize = TransferInterface::MIN_PART_SIZE;
-
-    /**
-     * @var EntityBody Source of the data
-     */
-    protected $source;
+    protected $minPartSize = AbstractTransfer::MIN_PART_SIZE;
 
     /**
      * @var string MD5 hash of the entire body to transfer
@@ -82,19 +69,6 @@ class UploadBuilder
      * @var Acl Acl to use with the object
      */
     protected $acl;
-
-    /**
-     * @var array Array of headers to set on the object
-     */
-    protected $headers = array();
-
-    /**
-     * Return a new instance of the UploadBuilder
-     */
-    public static function newInstance()
-    {
-        return new self;
-    }
 
     /**
      * Set the bucket to upload the object to
@@ -125,37 +99,6 @@ class UploadBuilder
     }
 
     /**
-     * Set the client used to connect to the Amazon S3 API
-     *
-     * @param AwsClientInterface $client Client to use
-     *
-     * @return self
-     */
-    public function setClient(AwsClientInterface $client)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Set the state of the upload. This is useful for resuming from a previously started multipart upload.
-     * You must use a local file stream as the data source if you wish to resume from a previous upload.
-     *
-     * @param TransferState|string $state Pass a TransferState object or the ID of the initiated multipart upload. When
-     *                                 an ID is passed, the builder will create a state object using the data from
-     *                                 a ListParts API response.
-     *
-     * @return self
-     */
-    public function resumeFrom($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
      * Set the minimum acceptable part size
      *
      * @param int $minSize Minimum acceptable part size
@@ -164,7 +107,7 @@ class UploadBuilder
      */
     public function setMinPartSize($minSize)
     {
-        $this->minPartSize = max($minSize, 5242880);
+        $this->minPartSize = (int) max((int) $minSize, AbstractTransfer::MIN_PART_SIZE);
 
         return $this;
     }
@@ -231,48 +174,6 @@ class UploadBuilder
     }
 
     /**
-     * Set the data source of the transfer
-     *
-     * @param resource|string|EntityBody $source Source of the transfer. Pass a string to transfer from a file on
-     *                                           disk. You can also stream from a resource returned from fopen or
-     *                                           a Guzzle {@see EntityBody} object.
-     *
-     * @return self
-     */
-    public function setSource($source)
-    {
-        // Use the contents of a file as the data source
-        if (is_string($source)) {
-            if (!file_exists($source)) {
-                throw new InvalidArgumentException("File does not exist: {$source}");
-            }
-            if (!$source = fopen($source, 'r')) {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException("Unable to open {$source} for reading");
-                // @codeCoverageIgnoreEnd
-            }
-        }
-
-        $this->source = EntityBody::factory($source);
-
-        return $this;
-    }
-
-    /**
-     * Specify the headers to set on the upload
-     *
-     * @param array $headers Headers to add to the uploaded object
-     *
-     * @return self
-     */
-    public function setHeaders(array $headers)
-    {
-        $this->headers = $headers;
-
-        return $this;
-    }
-
-    /**
      * Set the ACL to use on the object
      *
      * @param Acl $acl ACL to set on the object
@@ -287,9 +188,7 @@ class UploadBuilder
     }
 
     /**
-     * Build the appropriate uploader based on the builder options
-     *
-     * @return TransferInterface
+     * {@inheritdoc}
      * @throws InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
      * @throws InvalidArgumentException when missing required properties (bucket, key, client, source)
      */
@@ -305,7 +204,11 @@ class UploadBuilder
 
         // If no state was set, then create one by initiating or loading a multipart upload
         if (is_string($this->state)) {
-            $this->state = TransferState::fromUploadId($this->client, $this->bucket, $this->key, $this->state);
+            $this->state = TransferState::fromUploadId($this->client, array(
+                'bucket'   => $this->bucket,
+                'key'      => $this->key,
+                'UploadId' => $this->state
+            ));
         } elseif (!$this->state) {
             $this->state = $this->initiateMultipartUpload();
         }
@@ -322,19 +225,21 @@ class UploadBuilder
     }
 
     /**
-     * Initiate the multipart upload
-     *
-     * @return TransferState
+     * {@inheritdoc}
      */
     protected function initiateMultipartUpload()
     {
-        $command = $this->client->getCommand('InitiateMultipartUpload', array(
-            'bucket'          => $this->bucket,
-            'key'             => $this->key,
+        $params = array(
+            'bucket'   => $this->bucket,
+            'key'      => $this->key,
+        );
+
+        /** @var $command \Aws\S3\Command\DefaultUploadObject */
+        $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
             'command.headers' => $this->headers,
             'acl'             => $this->acl,
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
-        ));
+        )));
 
         // Calculate the MD5 hash if none was set and it is asked of the builder
         if ($this->calculateEntireMd5) {
@@ -350,6 +255,7 @@ class UploadBuilder
         $result = $command->execute();
 
         // Create a new state based on the initiated upload
-        return new TransferState($this->bucket, $this->key, $result['UploadId']);
+        $params['UploadId'] = $result['UploadId'];
+        return new TransferState($params);
     }
 }

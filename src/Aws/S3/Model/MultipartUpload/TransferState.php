@@ -17,204 +17,41 @@
 namespace Aws\S3\Model\MultipartUpload;
 
 use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\MultipartUpload\AbstractTransferState;
 
 /**
  * State of a multipart upload
  */
-class TransferState implements \Countable, \IteratorAggregate
+class TransferState extends AbstractTransferState
 {
     /**
-     * @var string Bucket to upload to
+     * {@inheritdoc}
      */
-    protected $bucket;
-
-    /**
-     * @var string Key of the object
-     */
-    protected $key;
-
-    /**
-     * @var string Upload ID of the initiated multipart upload
-     */
-    protected $uploadId;
-
-    /**
-     * @var array Array of parts where the part number is the index and the ETag is the value
-     */
-    protected $parts = array();
-
-    /**
-     * @var bool Whether or not the transfer was aborted
-     */
-    protected $aborted = false;
-
-    /**
-     * Construct a new transfer state object
-     *
-     * @param string $bucket   Bucket used to store the completed upload
-     * @param string $key      Key of the object to upload
-     * @param string $uploadId Upload ID of the initiated multipart upload
-     */
-    public function __construct($bucket, $key, $uploadId)
+    public static function fromUploadId(AwsClientInterface $client, array $idParams)
     {
-        $this->bucket = $bucket;
-        $this->key = $key;
-        $this->uploadId = $uploadId;
-    }
-
-    /**
-     * Create the transfer state from a ListParts response
-     *
-     * @param AwsClientInterface $client Client used to send the request
-     * @param string             $bucket Bucket of the upload
-     * @param string             $key    Key of the object
-     * @param string             $id     Upload ID to resume from
-     *
-     * @return self
-     */
-    public static function fromUploadId(AwsClientInterface $client, $bucket, $key, $id)
-    {
-        $transferState = new self($bucket, $key, $id);
-        $iterator = $client->getIterator('ListParts', array(
-            'bucket'   => $bucket,
-            'key'      => $key,
-            'UploadId' => $id
-        ));
+        $transferState = new self($idParams);
+        $iterator = $client->getIterator('ListParts', $idParams);
 
         foreach ($iterator as $part) {
-            $transferState->addPart($part['PartNumber'], $part['ETag'], $part['Size'], $part['LastModified']);
+            $transferState->addPart(UploadPart::fromArray($part));
         }
 
         return $transferState;
     }
 
     /**
-     * Get the bucket of the upload
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getBucket()
+    public function serialize()
     {
-        return $this->bucket;
+        // TODO: Implement serialize() method.
     }
 
     /**
-     * Get the key of the upload
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getKey()
+    public function unserialize($serialized)
     {
-        return $this->key;
-    }
-
-    /**
-     * Get the upload ID of the transfer
-     *
-     * @return string
-     */
-    public function getUploadId()
-    {
-        return $this->uploadId;
-    }
-
-    /**
-     * Get the part information of a specific part
-     *
-     * @param int $partNumber Part to retrieve
-     *
-     * @return array|null
-     */
-    public function getPart($partNumber)
-    {
-        return isset($this->parts[$partNumber]) ? $this->parts[$partNumber] : null;
-    }
-
-    /**
-     * Add a part to the transfer state
-     *
-     * @param int    $number       Part number
-     * @param string $etag         ETag of the part
-     * @param int    $size         Size of the part
-     * @param string $lastModified Date the part was lost modified
-     *
-     * @return self
-     */
-    public function addPart($number, $etag, $size, $lastModified)
-    {
-        $this->parts[$number] = array(
-            'ETag'         => $etag,
-            'PartNumber'   => $number,
-            'Size'         => $size,
-            'LastModified' => $lastModified
-        );
-
-        return $this;
-    }
-
-    /**
-     * Check if a specific part has been uploaded
-     *
-     * @param int $partNumber Part to check
-     *
-     * @return bool
-     */
-    public function hasPart($partNumber)
-    {
-        return isset($this->parts[$partNumber]);
-    }
-
-    /**
-     * Get a list of all of the uploaded part numbers
-     *
-     * @return array
-     */
-    public function getPartNumbers()
-    {
-        return array_keys($this->parts);
-    }
-
-    /**
-     * Set whether or not the transfer has been aborted
-     *
-     * @param bool $aborted Set to true to mark the transfer as aborted
-     *
-     * @return self
-     */
-    public function setAborted($aborted)
-    {
-        $this->aborted = $aborted;
-
-        return $this;
-    }
-
-    /**
-     * Check if the transfer has been marked as aborted
-     *
-     * @return bool
-     */
-    public function isAborted()
-    {
-        return $this->aborted;
-    }
-
-    /**
-     * Get the number of parts
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->parts);
-    }
-
-    /**
-     * Get the iterator
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->parts);
+        // TODO: Implement unserialize() method.
     }
 }

@@ -16,8 +16,8 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Enum\UaString as Ua;
+use Aws\Common\Exception\RuntimeException;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 
@@ -46,6 +46,8 @@ class ParallelTransfer extends AbstractTransfer
      */
     protected function init()
     {
+        parent::init();
+
         if (!$this->source->isLocal() || $this->source->getWrapper() != 'plainfile') {
             throw new RuntimeException('The source data must be a local file stream when uploading in parallel');
         }
@@ -79,15 +81,13 @@ class ParallelTransfer extends AbstractTransfer
                 }
                 // @codeCoverageIgnoreEnd
 
-                $eventData['command'] = $this->client->getCommand('UploadPart', array(
-                    'bucket'     => $this->state->getBucket(),
-                    'key'        => $this->state->getKey(),
+                $params = $this->state->getIdParams();
+                $eventData['command'] = $this->client->getCommand('UploadPart', array_replace($params, array(
                     'PartNumber' => count($this->state) + 1 + $i,
-                    'UploadId'   => $this->state->getUploadId(),
                     'body'       => $this->parts[$i],
                     'use_md5'    => $this->options['part_md5'],
                     Ua::OPTION   => Ua::MULTIPART_UPLOAD
-                ));
+                )));
                 $commands[] = $eventData['command'];
                 // Notify any listeners of the part upload
                 $this->dispatch(self::BEFORE_PART_UPLOAD, $eventData);
@@ -99,13 +99,14 @@ class ParallelTransfer extends AbstractTransfer
             }
 
             // Execute each command, iterate over the results, and add to the transfer state
+            /** @var $command \Guzzle\Service\Command\OperationCommand */
             foreach ($this->client->execute($commands) as $command) {
-                $this->state->addPart(
-                    count($this->state) + 1,
-                    (string) $command->getResult()->getHeader('ETag'),
-                    (int) (string) $command->getRequest()->getHeader('Content-Length'),
-                    gmdate('r')
-                );
+                $this->state->addPart(UploadPart::fromArray(array(
+                    'PartNumber'   => count($this->state) + 1,
+                    'ETag'         => $command->getResult()->getHeader('ETag', true),
+                    'Size'         => (int) $command->getRequest()->getHeader('Content-Length', true),
+                    'LastModified' => gmdate('r')
+                )));
                 $eventData['command'] = $command;
                 // Notify any listeners the the part was uploaded
                 $this->dispatch(self::AFTER_PART_UPLOAD, $eventData);
