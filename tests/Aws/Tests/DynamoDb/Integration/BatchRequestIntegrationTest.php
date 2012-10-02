@@ -8,7 +8,6 @@ use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
 use Aws\DynamoDb\Model\BatchRequest\PutRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\Item;
-use Aws\DynamoDb\Model\Key;
 
 /**
  * @group integration
@@ -74,7 +73,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Remove {$numItems} items from the table");
         $deleteBatch = WriteRequestBatch::factory($client);
         for ($i = 1; $i <= $numItems; $i++) {
-            $deleteBatch->add(new DeleteRequest(new Key("example_{$i}"), $table));
+            $deleteBatch->add(new DeleteRequest(array('HashKeyElement' => array('S' => "example_{$i}")), $table));
         }
         $deleteBatch->flush();
 

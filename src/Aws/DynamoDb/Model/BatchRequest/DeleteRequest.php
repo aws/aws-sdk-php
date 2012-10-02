@@ -26,7 +26,7 @@ use Guzzle\Service\Command\AbstractCommand;
 class DeleteRequest extends AbstractWriteRequest
 {
     /**
-     * @var Key The key of the item to delete
+     * @var array The key of the item to delete
      */
     protected $key;
 
@@ -85,7 +85,7 @@ class DeleteRequest extends AbstractWriteRequest
     /**
      * Get the key
      *
-     * @return Key
+     * @return array
      */
     public function getKey()
     {

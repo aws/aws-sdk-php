@@ -6,7 +6,6 @@ use Aws\Common\Waiter\CallableWaiter;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Model\Item;
-use Aws\DynamoDb\Model\Key;
 use Guzzle\Batch\BatchBuilder;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 
@@ -194,7 +193,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'Item'       => $attributes
         ))->execute();
 
-        $this->assertArrayHasKey('ConsumedCapacityUnits', $result);
+        $this->assertTrue(isset($result['ConsumedCapacityUnits']));
 
         self::log('Getting the item');
         // Get the item using the formatAttributes helper
@@ -212,13 +211,15 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals('abc', $result['Item']['baz']['S']);
 
         self::log('Deleting the item');
-        // Delete the item using a Key object
         $result = $this->client->deleteItem(array(
             'TableName' => $this->table,
-            'Key'        => new Key('Test', 10)
+            'Key'       => $this->client->formatAttributes(array(
+                'HashKeyElement' => 'Test',
+                'RangeKeyElement' => 10
+            )),
         ))->execute();
 
-        $this->assertArrayHasKey('ConsumedCapacityUnits', $result);
+        $this->assertTrue(isset($result['ConsumedCapacityUnits']));
     }
 
     /**
@@ -380,10 +381,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'RequestItems' => array(
                 $this->table => array(
                     'Keys' => array(
-                        // Use Key objects
-                        new Key('Bar', 10),
-                        new Key('Bar', 20),
-                        // Use regular array
+                        array(
+                            'HashKeyElement' => array('S' => 'Bar'),
+                            'RangeKeyElement' => array('N' => '10')
+                        ),
+                        array(
+                            'HashKeyElement' => array('S' => 'Bar'),
+                            'RangeKeyElement' => array('N' => '20')
+                        ),
                         array(
                             'HashKeyElement' => array('S' => 'Bar'),
                             'RangeKeyElement' => array('N' => '30')
