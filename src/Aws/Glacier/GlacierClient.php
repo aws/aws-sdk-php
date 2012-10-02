@@ -18,7 +18,6 @@ namespace Aws\Glacier;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Client\ExpectHeaderListener;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
@@ -129,9 +128,6 @@ class GlacierClient extends AbstractClient
         $client->setDefaultHeaders(array(
             'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
         ));
-
-        // Set Expect header for upload operations
-        $client->addSubscriber(new ExpectHeaderListener());
 
         // Set x-amz-content-sha256 header for upload operations
         $client->addSubscriber(new UploadContextListener());

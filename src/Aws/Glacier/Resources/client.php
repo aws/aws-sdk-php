@@ -723,11 +723,7 @@ return array (
                         'object',
                     ),
                     'location' => 'body',
-                ),
-                'command.use_expect' => array(
-                    'static' => true,
-                    'default' => true,
-                ),
+                )
             ),
             'errorResponses' => array(
                 array(
@@ -784,12 +780,8 @@ return array (
                         'string',
                         'object',
                     ),
-                    'location' => 'body',
-                ),
-                'command.use_expect' => array(
-                    'static' => true,
-                    'default' => true,
-                ),
+                    'location' => 'body'
+                )
             ),
             'errorResponses' => array(
                 array(

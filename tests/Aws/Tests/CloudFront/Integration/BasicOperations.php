@@ -27,6 +27,8 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'Comment' => 'Hello!'
         ));
         $result = $command->getResult();
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $result = $result->toArray();
         $this->assertArrayHasKey('Id', $result);
         self::$originId = $result['Id'];
         $this->assertArrayHasKey('S3CanonicalUserId', $result);
@@ -99,6 +101,8 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             )
         ))->execute();
 
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $result = $result->toArray();
         $this->assertArrayHasKey('Id', $result);
         $this->assertArrayHasKey('Status', $result);
         $this->assertArrayHasKey('Location', $result);
@@ -109,6 +113,8 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $id = $result['Id'];
 
         $result = $this->client->listDistributions()->execute();
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $result = $result->toArray();
         $this->assertGreaterThan(0, $result['Quantity']);
         $found = false;
         foreach ($result['Items'] as $item) {

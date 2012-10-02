@@ -47,9 +47,10 @@ class PutObjectTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('100-Continue', (string) $request->getHeader('Expect'));
     }
 
-    public function testRemovesExpectHeader()
+    public function testRemovesExpectHeaderWhenSizeIsLessThanMb()
     {
-        $request = $this->getCommand()->set('body', 'hello')->set('use_expect', false)->prepare();
+        $command = $this->getCommand(array('body' => 'hello'));
+        $request = $command->prepare();
         $this->assertNull($request->getHeader('Expect'));
     }
 
