@@ -19,7 +19,7 @@ namespace Aws\Glacier\Model\MultipartUpload;
 use Aws\Common\Enum\Size;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\OutOfBoundsException;
-use Aws\Glacier\Model\TreeHash;
+use Aws\Common\Hash\TreeHash;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\EntityBodyInterface;
 

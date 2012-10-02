@@ -20,7 +20,7 @@ use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\MultipartUpload\AbstractUploadBuilder;
+use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\S3\Model\Acl;
 use Guzzle\Http\EntityBody;
 

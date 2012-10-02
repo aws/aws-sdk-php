@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common;
+namespace Aws\Common\Hash;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\LogicException;
@@ -45,44 +45,11 @@ class ChunkHash implements ChunkHashInterface
     protected $hashRaw;
 
     /**
-     * Converts a hash in hex form to binary form
-     *
-     * @param string $hash Hash in hex form
-     *
-     * @return string Hash in binary form
-     */
-    public static function hexToBinary($hash)
-    {
-        // If using PHP 5.4, there is a native function to convert from hex to binary
-        static $useNative;
-        if ($useNative === null) {
-            $useNative = function_exists('hex2bin');
-        }
-
-        return $useNative ? hex2bin($hash) : pack("H*", $hash);
-    }
-
-    /**
-     * Converts a hash in binary form to hex form
-     *
-     * @param string $hash Hash in binary form
-     *
-     * @return string Hash in hex form
-     */
-    public static function binaryToHex($hash)
-    {
-        return bin2hex($hash);
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function __construct($algorithm = 'sha256')
+    public function __construct($algorithm = self::DEFAULT_ALGORITHM)
     {
-        if (!in_array($algorithm, hash_algos())) {
-            throw new InvalidArgumentException("The hashing algorithm you specified ({$algorithm}) does not exist.");
-        }
-
+        HashUtils::validateAlgorithm($algorithm);
         $this->context = hash_init($algorithm);
         $this->isFinalized = false;
     }
@@ -108,7 +75,7 @@ class ChunkHash implements ChunkHashInterface
     {
         if (!$this->hash) {
             $this->hashRaw = hash_final($this->context, true);
-            $this->hash = self::binaryToHex($this->hashRaw);
+            $this->hash = HashUtils::binToHex($this->hashRaw);
             $this->isFinalized = true;
         }
 

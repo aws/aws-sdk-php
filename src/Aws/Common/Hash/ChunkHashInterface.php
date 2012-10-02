@@ -14,13 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common;
+namespace Aws\Common\Hash;
 
 /**
  * Interface for objects that encapsulate the creation of a hash from streamed chunks of data
  */
 interface ChunkHashInterface
 {
+    const DEFAULT_ALGORITHM = 'sha256';
+
     /**
      * Constructs the chunk hash and sets the algorithm to use for hashing
      *

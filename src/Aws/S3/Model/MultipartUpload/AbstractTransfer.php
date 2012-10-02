@@ -18,7 +18,7 @@ namespace Aws\S3\Model\MultipartUpload;
 
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\RuntimeException;
-use Aws\Common\MultipartUpload\AbstractTransfer as CommonAbstractTransfer;
+use Aws\Common\Model\MultipartUpload\AbstractTransfer as CommonAbstractTransfer;
 
 /**
  * Abstract class for transfer commonalities

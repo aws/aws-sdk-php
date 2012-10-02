@@ -17,7 +17,7 @@
 namespace Aws\S3\Model\MultipartUpload;
 
 use Aws\Common\Client\AwsClientInterface;
-use Aws\Common\MultipartUpload\AbstractTransferState;
+use Aws\Common\Model\MultipartUpload\AbstractTransferState;
 
 /**
  * State of a multipart upload

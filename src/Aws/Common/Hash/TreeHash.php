@@ -14,17 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Glacier\Model;
+namespace Aws\Common\Hash;
 
-use Aws\Common\ChunkHash;
-use Aws\Common\ChunkHashInterface;
 use Aws\Common\Enum\Size;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\LogicException;
 use Guzzle\Http\EntityBody;
 
 /**
- * Encapsulates the creation of a Glacier tree hash from streamed chunks of data
+ * Encapsulates the creation of a tree hash from streamed chunks of data
  */
 class TreeHash implements ChunkHashInterface
 {
@@ -57,12 +55,12 @@ class TreeHash implements ChunkHashInterface
      *
      * @return TreeHash
      */
-    public static function fromChecksums(array $checksums, $inBinaryForm = false, $algorithm = 'sha256')
+    public static function fromChecksums(array $checksums, $inBinaryForm = false, $algorithm = self::DEFAULT_ALGORITHM)
     {
         $treeHash = new self($algorithm);
 
         // Convert checksums to binary form if provided in hex form and add them to the tree hash
-        $treeHash->checksums = $inBinaryForm ? $checksums : array_map('Aws\Common\ChunkHash::hexToBinary', $checksums);
+        $treeHash->checksums = $inBinaryForm ? $checksums : array_map('Aws\Common\HashUtils::hexToBin', $checksums);
 
         // Pre-calculate hash
         $treeHash->getHash();
@@ -78,7 +76,7 @@ class TreeHash implements ChunkHashInterface
      *
      * @return TreeHash
      */
-    public static function fromContent($content, $algorithm = 'sha256')
+    public static function fromContent($content, $algorithm = self::DEFAULT_ALGORITHM)
     {
         $treeHash = new self($algorithm);
 
@@ -103,7 +101,7 @@ class TreeHash implements ChunkHashInterface
      *
      * @return bool
      */
-    public static function validateChecksum($content, $checksum, $algorithm = 'sha256')
+    public static function validateChecksum($content, $checksum, $algorithm = self::DEFAULT_ALGORITHM)
     {
         $treeHash = self::fromContent($content, $algorithm);
 
@@ -113,12 +111,9 @@ class TreeHash implements ChunkHashInterface
     /**
      * {@inheritdoc}
      */
-    public function __construct($algorithm = 'sha256')
+    public function __construct($algorithm = self::DEFAULT_ALGORITHM)
     {
-        if (!in_array($algorithm, hash_algos())) {
-            throw new InvalidArgumentException("The hashing algorithm you specified ({$algorithm}) does not exist.");
-        }
-
+        HashUtils::validateAlgorithm($algorithm);
         $this->algorithm = $algorithm;
     }
 
@@ -162,7 +157,7 @@ class TreeHash implements ChunkHashInterface
         }
 
         // Convert the checksum to binary form if necessary
-        $this->checksums[] = $inBinaryForm ? $checksum : ChunkHash::hexToBinary($checksum);
+        $this->checksums[] = $inBinaryForm ? $checksum : HashUtils::hexToBin($checksum);
 
         return $this;
     }
@@ -184,7 +179,7 @@ class TreeHash implements ChunkHashInterface
             }
 
             $this->hashRaw = $hashes[0];
-            $this->hash = ChunkHash::binaryToHex($this->hashRaw);
+            $this->hash = HashUtils::binToHex($this->hashRaw);
         }
 
         return $returnBinaryForm ? $this->hashRaw : $this->hash;

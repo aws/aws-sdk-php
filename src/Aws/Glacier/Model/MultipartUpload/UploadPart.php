@@ -16,7 +16,7 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Common\MultipartUpload\AbstractUploadPart;
+use Aws\Common\Model\MultipartUpload\AbstractUploadPart;
 
 /**
  * An object that encapsulates the data for a Glacier upload operation

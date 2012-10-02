@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\MultipartUpload;
+namespace Aws\Common\Model\MultipartUpload;
 
 use Guzzle\Common\HasDispatcherInterface;
 
