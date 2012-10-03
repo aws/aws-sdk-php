@@ -24,7 +24,7 @@ class UploadContextListenerTest extends \Guzzle\Tests\GuzzleTestCase
         $content = 'foo';
         $hash = hash('sha256', $content);
 
-        $context = $this->getMockBuilder('Aws\Glacier\Model\UploadContext')
+        $context = $this->getMockBuilder('Aws\Glacier\Model\UploadPartContext')
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects($this->any())

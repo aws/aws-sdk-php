@@ -27,24 +27,14 @@ class TransferState extends AbstractTransferState
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public static function fromUploadId(AwsClientInterface $client, array $idParams)
     {
-        // TODO: Implement serialize() method.
-    }
+        $transferState = new self($idParams);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
-    }
+        foreach ($client->getIterator('ListParts', $idParams) as $part) {
+            $transferState->addPart(UploadPart::fromArray($part));
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected static function createPart($part)
-    {
-        return UploadPart::fromArray($part);
+        return $transferState;
     }
 }

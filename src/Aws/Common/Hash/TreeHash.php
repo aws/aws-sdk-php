@@ -32,7 +32,7 @@ class TreeHash implements ChunkHashInterface
     protected $algorithm;
 
     /**
-     * @var array Set of checksums from which the tree hash is derived
+     * @var array Set of binary checksums from which the tree hash is derived
      */
     protected $checksums = array();
 
@@ -134,7 +134,7 @@ class TreeHash implements ChunkHashInterface
             throw new InvalidArgumentException('The chunk of data added is too large for tree hashing.');
         }
 
-        // Store the raw hash of this data
+        // Store the raw hash of this data segment
         $this->checksums[] = hash($this->algorithm, $data, true);
 
         return $this;
@@ -183,5 +183,13 @@ class TreeHash implements ChunkHashInterface
         }
 
         return $returnBinaryForm ? $this->hashRaw : $this->hash;
+    }
+
+    /**
+     * @return array Array of raw checksums composing the tree hash
+     */
+    public function getChecksums()
+    {
+        return $this->checksums;
     }
 }

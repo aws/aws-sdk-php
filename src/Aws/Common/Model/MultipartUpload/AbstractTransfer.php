@@ -76,7 +76,8 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
         $this->source = $source;
 
         $this->init();
-        $this->calculatePartSize();
+
+        $this->partSize = $this->calculatePartSize();
     }
 
     /**
@@ -98,7 +99,9 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
      */
     public function abort()
     {
-        $result = $this->doAbort();
+        $params = $this->state->getIdParams();
+        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
+        $result = $this->client->getCommand('AbortMultipartUpload', $params)->getResult();
 
         $this->state->setAborted(true);
 
@@ -186,15 +189,10 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * Determine the upload part size based on the size of the source data and
      * taking into account the acceptable minimum and maximum part sizes.
+     *
+     * @return int The part size
      */
     abstract protected function calculatePartSize();
-
-    /**
-     * Abort the multipart upload. This defers to the child implementation
-     *
-     * @return array Returns the result of the abort multipart upload command
-     */
-    abstract protected function doAbort();
 
     /**
      * Complete the multipart upload

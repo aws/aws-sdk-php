@@ -4,7 +4,7 @@ namespace Aws\Tests\Glacier\Integration;
 
 use Aws\Common\Enum\Size;
 use Aws\Glacier\GlacierClient;
-use Aws\Glacier\Model\MultipartUpload\UploadHelper;
+use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\Client;
 
 /**
@@ -72,7 +72,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $partSize = 2 * Size::MB;
 
         // Single upload
-        $helper = UploadHelper::factory($content);
+        $helper = UploadPartGenerator::factory($content);
         $this->assertEquals($length, $helper->getUploadPart()->getSize());
         $this->assertEquals($length, $helper->getArchiveSize());
         $body = $helper->getBody();
@@ -93,7 +93,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         sleep(5);
 
         // Multipart upload
-        $helper = UploadHelper::factory($content, $partSize);
+        $helper = UploadPartGenerator::factory($content, $partSize);
         $this->assertEquals($length, $helper->getArchiveSize());
         $body = $helper->getBody();
         $uploadId = $this->client->getCommand('InitiateMultipartUpload', array(
@@ -114,7 +114,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'uploadId' => $uploadId,
             'archiveSize' => (string) $helper->getArchiveSize(),
             'checksum' => $helper->getRootChecksum()
-        ))->getResponse()->getHeader('x-amz-archive-id', true);
+        ))->getResult()->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
         // Delete the archive

@@ -17,6 +17,7 @@
 namespace Aws\Common\Model\MultipartUpload;
 
 use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Exception\RuntimeException;
 
 /**
  * State of a multipart upload
@@ -37,21 +38,6 @@ abstract class AbstractTransferState implements TransferStateInterface
      * @var bool Whether or not the transfer was aborted
      */
     protected $aborted = false;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function fromUploadId(AwsClientInterface $client, array $idParams)
-    {
-        $transferState = new static($idParams);
-        $iterator = $client->getIterator('ListParts', $idParams);
-
-        foreach ($iterator as $part) {
-            $transferState->addPart(static::createPart($part));
-        }
-
-        return $transferState;
-    }
 
     /**
      * Construct a new transfer state object
@@ -141,11 +127,25 @@ abstract class AbstractTransferState implements TransferStateInterface
     }
 
     /**
-     * Allows the child class to create an upload part object from an array of part information
-     *
-     * @param array|\Traversable $part Array of part information
-     *
-     * @return UploadPartInterface
+     * {@inheritdoc}
      */
-    abstract protected static function createPart($part);
+    public function serialize()
+    {
+        return serialize(get_object_vars($this));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        foreach (array_keys(get_object_vars($this)) as $property) {
+            if (isset($data[$property])) {
+                $this->{$property} = $data[$property];
+            } else {
+                throw new RuntimeException("The {$property} property could be restored during unserialization.");
+            }
+        }
+    }
 }

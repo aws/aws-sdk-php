@@ -7,9 +7,9 @@ use Aws\Glacier\Model\UploadContext;
 class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @covers Aws\Glacier\Model\UploadContext::__construct
-     * @covers Aws\Glacier\Model\UploadContext::getOffset
-     * @covers Aws\Glacier\Model\UploadContext::getSize
+     * @covers Aws\Glacier\Model\UploadPartContext::__construct
+     * @covers Aws\Glacier\Model\UploadPartContext::getOffset
+     * @covers Aws\Glacier\Model\UploadPartContext::getSize
      */
     public function testConstructorInitializesObject()
     {
@@ -23,9 +23,9 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\UploadContext::getSize
-     * @covers Aws\Glacier\Model\UploadContext::isEmpty
-     * @covers Aws\Glacier\Model\UploadContext::isFull
+     * @covers Aws\Glacier\Model\UploadPartContext::getSize
+     * @covers Aws\Glacier\Model\UploadPartContext::isEmpty
+     * @covers Aws\Glacier\Model\UploadPartContext::isFull
      */
     public function testIsEmptyAndFullAsExpected()
     {
@@ -49,12 +49,12 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\UploadContext::addData
-     * @covers Aws\Glacier\Model\UploadContext::finalize
-     * @covers Aws\Glacier\Model\UploadContext::getChecksum
-     * @covers Aws\Glacier\Model\UploadContext::getContentHash
-     * @covers Aws\Glacier\Model\UploadContext::getRange
-     * @covers Aws\Glacier\Model\UploadContext::getSize
+     * @covers Aws\Glacier\Model\UploadPartContext::addData
+     * @covers Aws\Glacier\Model\UploadPartContext::finalize
+     * @covers Aws\Glacier\Model\UploadPartContext::getChecksum
+     * @covers Aws\Glacier\Model\UploadPartContext::getContentHash
+     * @covers Aws\Glacier\Model\UploadPartContext::getRange
+     * @covers Aws\Glacier\Model\UploadPartContext::getSize
      */
     public function testCanRetrieveFinalHashes()
     {
@@ -69,8 +69,8 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\UploadContext::serialize
-     * @covers Aws\Glacier\Model\UploadContext::unserialize
+     * @covers Aws\Glacier\Model\UploadPartContext::serialize
+     * @covers Aws\Glacier\Model\UploadPartContext::unserialize
      */
     public function testCanSerializeAndUnserialize()
     {
@@ -97,7 +97,7 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \LogicException
-     * @covers Aws\Glacier\Model\UploadContext::addData
+     * @covers Aws\Glacier\Model\UploadPartContext::addData
      */
     public function testCannotAddDataAfterFinalized()
     {
@@ -110,7 +110,7 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \LogicException
-     * @covers Aws\Glacier\Model\UploadContext::addData
+     * @covers Aws\Glacier\Model\UploadPartContext::addData
      */
     public function testCannotAddTooMuchData()
     {
@@ -121,7 +121,7 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \LogicException
-     * @covers Aws\Glacier\Model\UploadContext::getChecksum
+     * @covers Aws\Glacier\Model\UploadPartContext::getChecksum
      */
     public function testCannotGetChecksumBeforeItIsCalculated()
     {
@@ -131,7 +131,7 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \LogicException
-     * @covers Aws\Glacier\Model\UploadContext::getContentHash
+     * @covers Aws\Glacier\Model\UploadPartContext::getContentHash
      */
     public function testCannotGetContextHashBeforeItIsCalculated()
     {
@@ -140,7 +140,7 @@ class UploadContextTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\UploadContext::serialize
+     * @covers Aws\Glacier\Model\UploadPartContext::serialize
      */
     public function testCannotSerializeUntilItsFinalized()
     {

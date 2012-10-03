@@ -21,7 +21,7 @@ use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
-use Aws\Glacier\Model\MultipartUpload\UploadHelper;
+use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\EntityBody;
 
 /**
@@ -51,9 +51,9 @@ class UploadBuilder extends AbstractUploadBuilder
     protected $partSize;
 
     /**
-     * @var UploadHelper Glacier upload helper object
+     * @var UploadPartGenerator Glacier upload helper object
      */
-    protected $uploadHelper;
+    protected $partGenerator;
 
     /**
      * Set the account ID to upload the part to
@@ -115,13 +115,13 @@ class UploadBuilder extends AbstractUploadBuilder
     /**
      * Sets the Glacier upload helper object that pre-calculates hashes and sizes for all upload parts
      *
-     * @param UploadHelper $uploadHelper Glacier upload helper object
+     * @param UploadPartGenerator $partGenerator Glacier upload helper object
      *
      * @return self
      */
-    public function setUploadHelper(UploadHelper $uploadHelper)
+    public function setPartGenerator(UploadPartGenerator $partGenerator)
     {
-        $this->uploadHelper = $uploadHelper;
+        $this->partGenerator = $partGenerator;
 
         return $this;
     }
@@ -134,9 +134,9 @@ class UploadBuilder extends AbstractUploadBuilder
     public function build()
     {
         // If a Glacier upload helper object was set, use the source and part size from it
-        if ($this->uploadHelper) {
-            $this->partSize = $this->uploadHelper->getPartSize();
-            $this->source = $this->uploadHelper->getBody();
+        if ($this->partGenerator) {
+            $this->partSize = $this->partGenerator->getPartSize();
+            $this->source = $this->partGenerator->getBody();
         }
 
         if (!$this->vaultName || !$this->client || !$this->source) {
@@ -155,7 +155,7 @@ class UploadBuilder extends AbstractUploadBuilder
                 'vaultName' => $this->vaultName,
                 'uploadId'  => $this->state
             ));
-            $state->setUploadHelper($this->uploadHelper);
+            $state->setPartGenerator($this->partGenerator);
             $this->state = $state;
         } elseif (!$this->state) {
             $this->state = $this->initiateMultipartUpload();
@@ -180,17 +180,17 @@ class UploadBuilder extends AbstractUploadBuilder
             'vaultName' => $this->vaultName
         );
 
-        $helper = $this->uploadHelper ?: UploadHelper::factory($this->source, $this->partSize);
+        $partGenerator = $this->partGenerator ?: UploadPartGenerator::factory($this->source, $this->partSize);
         $uploadId = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
             'command.headers' => $this->headers,
-            'partSize'        => $helper->getPartSize(),
+            'partSize'        => $partGenerator->getPartSize(),
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         )))->getResult()->get('uploadId');
 
         // Create a new state based on the initiated upload
         $params['uploadId'] = $uploadId;
         $state = new TransferState($params);
-        $state->setUploadHelper($helper);
+        $state->setPartGenerator($partGenerator);
         return $state;
     }
 }

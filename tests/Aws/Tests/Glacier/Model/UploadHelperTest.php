@@ -6,7 +6,7 @@ use Aws\Glacier\Model\UploadHelper;
 use Aws\Common\Enum\Size;
 
 /**
- * @covers Aws\Glacier\Model\UploadHelper
+ * @covers Aws\Glacier\Model\UploadPartGenerator
  */
 class UploadHelperTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -22,10 +22,10 @@ class UploadHelperTest extends \Guzzle\Tests\GuzzleTestCase
         $helper = UploadHelper::factory($this->bodyContent, Size::MB);
         $contexts = $helper->getUploadContexts();
 
-        $this->assertInstanceOf('Aws\Glacier\Model\UploadHelper', $helper);
+        $this->assertInstanceOf('Aws\Glacier\Model\UploadPartGenerator', $helper);
         $this->assertInstanceOf('Guzzle\Http\EntityBodyInterface', $helper->getBody());
-        $this->assertInstanceOf('Aws\Glacier\Model\UploadContext', $helper->getSingleUploadContext(0));
-        $this->assertInstanceOf('Aws\Glacier\Model\UploadContext', $contexts[0]);
+        $this->assertInstanceOf('Aws\Glacier\Model\UploadPartContext', $helper->getSingleUploadContext(0));
+        $this->assertInstanceOf('Aws\Glacier\Model\UploadPartContext', $contexts[0]);
         $this->assertCount(2, $contexts);
         $this->assertInternalType('string', $helper->getRootChecksum());
         $this->assertEquals(intval(1.25 * Size::MB), $helper->getArchiveSize());
@@ -61,6 +61,6 @@ class UploadHelperTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $helper = UploadHelper::factory($this->bodyContent, 4 * Size::MB);
         $context = $helper->getSingleUploadContext();
-        $this->assertInstanceOf('Aws\Glacier\Model\UploadContext', $context);
+        $this->assertInstanceOf('Aws\Glacier\Model\UploadPartContext', $context);
     }
 }

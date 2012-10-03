@@ -51,25 +51,16 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
     /**
      * {@inheritdoc}
      */
-    public function doAbort()
-    {
-        $params = $this->state->getIdParams();
-        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
-
-        return $this->client->getCommand('AbortMultipartUpload', $params)->getResult();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function calculatePartSize()
     {
-        $this->partSize = $this->source->getContentLength()
+        $partSize = $this->source->getContentLength()
             ? (int) ceil(($this->source->getContentLength() / self::MAX_PARTS))
             : self::MIN_PART_SIZE;
-        $this->partSize = max($this->options['min_part_size'], $this->partSize);
-        $this->partSize = min($this->partSize, self::MAX_PART_SIZE);
-        $this->partSize = max($this->partSize, self::MIN_PART_SIZE);
+        $partSize = max($this->options['min_part_size'], $partSize);
+        $partSize = min($partSize, self::MAX_PART_SIZE);
+        $partSize = max($partSize, self::MIN_PART_SIZE);
+
+        return $partSize;
     }
 
     /**

@@ -23,7 +23,7 @@ use Aws\Common\Exception\LogicException;
 /**
  * An object that encapsulates the data for a Glacier upload operation
  */
-class UploadContext
+class UploadPartContext
 {
     /**
      * @var TreeHash Tree hash context of the data
@@ -90,7 +90,7 @@ class UploadContext
             $this->chunkHash->addData($data);
             $this->size += $size;
         } catch (LogicException $e) {
-            throw new LogicException('You cannot add data to a finalized UploadContext.', 0, $e);
+            throw new LogicException('You cannot add data to a finalized UploadPartContext.', 0, $e);
         }
 
         return $this;
@@ -101,7 +101,7 @@ class UploadContext
      *
      * @return UploadPart
      */
-    public function getPart()
+    public function generatePart()
     {
         if (!$this->uploadPart) {
             $this->uploadPart = UploadPart::fromArray(array(

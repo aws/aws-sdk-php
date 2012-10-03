@@ -19,6 +19,8 @@ namespace Aws\Glacier\Model\MultipartUpload;
 use Aws\Common\Enum\Size;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\OutOfBoundsException;
+use Aws\Common\Exception\OverflowException;
+use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Hash\TreeHash;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\EntityBodyInterface;
@@ -26,8 +28,10 @@ use Guzzle\Http\EntityBodyInterface;
 /**
  * Generates UploadPart objects from a string/stream that encapsulate the data needed for upload requests
  */
-class UploadHelper
+class UploadPartGenerator implements \Serializable
 {
+    const MAX_NUM_PARTS = 10000;
+
     /**
      * @var array List of cached, valid upload part sizes for validation purposes
      */
@@ -59,12 +63,12 @@ class UploadHelper
     protected $partSize;
 
     /**
-     * Creates a UploadHelper and wraps the upload body in a Guzzle EntityBody object
+     * Creates a UploadPartGenerator and wraps the upload body in a Guzzle EntityBody object
      *
      * @param string|resource|EntityBodyInterface $body     The upload body
      * @param int                                 $partSize The size of parts to split the upload into
      *
-     * @return UploadHelper
+     * @return UploadPartGenerator
      */
     public static function factory($body, $partSize = null)
     {
@@ -172,7 +176,42 @@ class UploadHelper
     }
 
     /**
-     * Performs the work of reading the body stream, creating tree hashes, and creating UploadContext objects
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            'checksums'   => $this->treeHash->getChecksums(),
+            'uploadParts' => $this->uploadParts,
+            'archiveSize' => $this->archiveSize,
+            'partSize'    => $this->partSize
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+
+        foreach (array('uploadParts', 'archiveSize', 'partSize', 'checksums') as $property) {
+            if (!isset($data[$property])) {
+                throw new RuntimeException(sprintf('Cannot unserialize the %s class. The %s property is missing.',
+                    __CLASS__, $property
+                ));
+            }
+
+            if ($property === 'checksums') {
+                $this->treeHash = TreeHash::fromChecksums($data['checksums']);
+            } else {
+                $this->{$property} = $data[$property];
+            }
+        }
+    }
+
+    /**
+     * Performs the work of reading the body stream, creating tree hashes, and creating UploadPartContext objects
      */
     protected function generateUploadParts()
     {
@@ -180,7 +219,7 @@ class UploadHelper
         $this->body->seek(0);
 
         // Initialize variables for tracking data for upload
-        $uploadContext = new UploadContext($this->partSize, $this->body->ftell());
+        $uploadContext = new UploadPartContext($this->partSize, $this->body->ftell());
 
         // Read the data from the streamed body in 1MB chunks
         while ($data = $this->body->read(Size::MB)) {
@@ -189,23 +228,38 @@ class UploadHelper
 
             // If the upload part is complete, generate an upload object and reset the currently tracked upload data
             if ($uploadContext->isFull()) {
-                $part = $uploadContext->getPart();
-                $this->uploadParts[$part->getPartNumber()] = $part;
-                $this->treeHash->addChecksum($part->getChecksum());
-                $this->archiveSize += $part->getSize();
-                $uploadContext = new UploadContext($this->partSize, $this->body->ftell());
+                $this->updateTotals($uploadContext->generatePart());
+                $uploadContext = new UploadPartContext($this->partSize, $this->body->ftell());
             }
         }
 
         // Handle any leftover data
         if (!$uploadContext->isEmpty()) {
-            $part = $uploadContext->getPart();
-            $this->uploadParts[$part->getPartNumber()] = $part;
-            $this->treeHash->addChecksum($part->getChecksum());
-            $this->archiveSize += $part->getSize();
+            $this->updateTotals($uploadContext->generatePart());
         }
 
         // Rewind the body stream
         $this->body->seek(0);
+    }
+
+    /**
+     * Updated the upload helper running totals and tree hash with the data from a complete upload part
+     *
+     * @param UploadPart $part The newly completed upload part
+     *
+     * @throws OverflowException if the maximum number of allowed upload parts is exceeded
+     */
+    protected function updateTotals(UploadPart $part)
+    {
+        $partNumber = $part->getPartNumber();
+
+        // Throw an exception if there are more parts than total allowed
+        if ($partNumber > self::MAX_NUM_PARTS) {
+            throw new OverflowException('An archive must be uploaded in ' . self::MAX_NUM_PARTS . ' parts or less.');
+        }
+
+        $this->uploadParts[$partNumber] = $part;
+        $this->treeHash->addChecksum($part->getChecksum());
+        $this->archiveSize += $part->getSize();
     }
 }

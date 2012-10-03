@@ -16,7 +16,7 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Glacier\Model\MultipartUpload\UploadHelper;
+use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Model\MultipartUpload\AbstractTransferState;
 
@@ -25,55 +25,54 @@ use Aws\Common\Model\MultipartUpload\AbstractTransferState;
  */
 class TransferState extends AbstractTransferState
 {
-    const ALREADY_UPLOADED = '*';
+    const ALREADY_UPLOADED = '-';
 
     /**
-     * @var UploadHelper Glacier upload helper object that contains part information
+     * @var UploadPartGenerator Glacier upload helper object that contains part information
      */
-    protected $uploadHelper;
+    protected $partGenerator;
 
     /**
-     * @param UploadHelper $uploadHelper Glacier upload helper object
+     * {@inheritdoc}
+     */
+    public static function fromUploadId(AwsClientInterface $client, array $idParams)
+    {
+        $transferState = new self($idParams);
+        $listParts = $client->getCommand('ListParts', $idParams);
+
+        foreach ($client->getIterator($listParts) as $part) {
+            list($firstByte, $lastByte) = explode('-', $part['RangeInBytes']);
+            $partSize = (float) $listParts->getResult()->get('PartSizeInBytes');
+            $partData = array(
+                'partNumber'  => $firstByte / $partSize + 1,
+                'checksum'    => $part['SHA256TreeHash'],
+                'contentHash' => self::ALREADY_UPLOADED,
+                'size'        => $lastByte - $firstByte + 1,
+                'offset'      => $firstByte
+            );
+            $transferState->addPart(UploadPart::fromArray($partData));
+        }
+
+        return $transferState;
+    }
+
+    /**
+     * @param UploadPartGenerator $partGenerator Glacier upload helper object
      *
      * @return self
      */
-    public function setUploadHelper(UploadHelper $uploadHelper)
+    public function setPartGenerator(UploadPartGenerator $partGenerator)
     {
-        $this->uploadHelper = $uploadHelper;
+        $this->partGenerator = $partGenerator;
 
         return $this;
     }
 
     /**
-     * @return UploadHelper Glacier upload helper object
+     * @return UploadPartGenerator Glacier upload helper object
      */
-    public function getUploadHelper()
+    public function getPartGenerator()
     {
-        return $this->uploadHelper;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        // TODO: Implement serialize() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static function createPart($part)
-    {
-        $part['contentHash'] = self::ALREADY_UPLOADED;
-        return UploadPart::fromArray($part);
+        return $this->partGenerator;
     }
 }

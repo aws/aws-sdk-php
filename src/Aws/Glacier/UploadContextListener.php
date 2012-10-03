@@ -23,7 +23,7 @@ use Guzzle\Service\Command\AbstractCommand;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Listener that handles converting UploadContext objects into command parameters for Glacier's upload operations
+ * Listener that handles converting UploadPartContext objects into command parameters for Glacier's upload operations
  */
 class UploadContextListener implements EventSubscriberInterface
 {
@@ -43,7 +43,7 @@ class UploadContextListener implements EventSubscriberInterface
     }
 
     /**
-     * Retrieve bodies passed in as UploadContext objects and set the real hash, length, etc. values on the command
+     * Retrieve bodies passed in as UploadPartContext objects and set the real hash, length, etc. values on the command
      *
      * @param Event $event Event emitted
      */
