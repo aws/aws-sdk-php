@@ -54,6 +54,11 @@ class UploadHelper
     protected $archiveSize;
 
     /**
+     * @var int Size of upload parts
+     */
+    protected $partSize;
+
+    /**
      * Creates a UploadHelper and wraps the upload body in a Guzzle EntityBody object
      *
      * @param string|resource|EntityBodyInterface $body     The upload body
@@ -78,7 +83,7 @@ class UploadHelper
         $this->treeHash = new TreeHash();
 
         // The default/maximum upload/part size is 4GB
-        $partSize = $partSize ?: 4 * Size::GB;
+        $this->partSize = $partSize ?: 4 * Size::GB;
 
         // Setup valid part sizes (1MB-4GB where 2^N MB)
         if (!self::$validPartSizes) {
@@ -88,12 +93,12 @@ class UploadHelper
         }
 
         // Make sure the part size is valid
-        if (!in_array($partSize, self::$validPartSizes, true)) {
+        if (!in_array($this->partSize, self::$validPartSizes, true)) {
             throw new InvalidArgumentException('The part size must be a megabyte multiplied by a power of 2 and no'
                 . 'greater than 4 gigabytes.');
         }
 
-        $this->generateUploadParts($partSize);
+        $this->generateUploadParts();
     }
 
     /**
@@ -159,17 +164,23 @@ class UploadHelper
     }
 
     /**
-     * Performs the work of reading the body stream, creating tree hashes, and creating UploadContext objects
-     *
-     * @param int $partSize The size of parts to split the upload into
+     * @return string
      */
-    protected function generateUploadParts($partSize)
+    public function getPartSize()
+    {
+        return $this->partSize;
+    }
+
+    /**
+     * Performs the work of reading the body stream, creating tree hashes, and creating UploadContext objects
+     */
+    protected function generateUploadParts()
     {
         // Rewind the body stream
         $this->body->seek(0);
 
         // Initialize variables for tracking data for upload
-        $uploadContext = new UploadContext($partSize, $this->body->ftell());
+        $uploadContext = new UploadContext($this->partSize, $this->body->ftell());
 
         // Read the data from the streamed body in 1MB chunks
         while ($data = $this->body->read(Size::MB)) {
@@ -182,7 +193,7 @@ class UploadHelper
                 $this->uploadParts[$part->getPartNumber()] = $part;
                 $this->treeHash->addChecksum($part->getChecksum());
                 $this->archiveSize += $part->getSize();
-                $uploadContext = new UploadContext($partSize, $this->body->ftell());
+                $uploadContext = new UploadContext($this->partSize, $this->body->ftell());
             }
         }
 

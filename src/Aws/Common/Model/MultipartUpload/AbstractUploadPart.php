@@ -34,13 +34,9 @@ abstract class AbstractUploadPart implements UploadPartInterface
     protected $partNumber;
 
     /**
-     * Creates an upload part from its data
-     *
-     * @param array $data The data of the upload part
-     *
-     * @return self
+     * {@inheritdoc}
      */
-    public static function fromArray(array $data)
+    public static function fromArray($data)
     {
         $part = new static();
         $part->loadData($data);
@@ -49,7 +45,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getPartNumber()
     {
@@ -57,9 +53,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
     }
 
     /**
-     * Returns the upload part data in an array form
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function toArray()
     {
@@ -90,11 +84,11 @@ abstract class AbstractUploadPart implements UploadPartInterface
     /**
      * Loads an array of data into the upload part by extracting only the needed keys
      *
-     * @param array $data Data to load into the upload part value object
+     * @param array|\Traversable $data Data to load into the upload part value object
      *
      * @throws InvalidArgumentException if a required key is missing
      */
-    protected function loadData(array $data)
+    protected function loadData($data)
     {
         foreach (self::$keyMap as $key => $property) {
             if (isset($data[$key])) {

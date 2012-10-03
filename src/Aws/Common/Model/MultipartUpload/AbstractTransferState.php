@@ -39,6 +39,21 @@ abstract class AbstractTransferState implements TransferStateInterface
     protected $aborted = false;
 
     /**
+     * {@inheritdoc}
+     */
+    public static function fromUploadId(AwsClientInterface $client, array $idParams)
+    {
+        $transferState = new static($idParams);
+        $iterator = $client->getIterator('ListParts', $idParams);
+
+        foreach ($iterator as $part) {
+            $transferState->addPart(static::createPart($part));
+        }
+
+        return $transferState;
+    }
+
+    /**
      * Construct a new transfer state object
      *
      * @param array $params An array of identifier params
@@ -124,4 +139,13 @@ abstract class AbstractTransferState implements TransferStateInterface
     {
         return new \ArrayIterator($this->parts);
     }
+
+    /**
+     * Allows the child class to create an upload part object from an array of part information
+     *
+     * @param array|\Traversable $part Array of part information
+     *
+     * @return UploadPartInterface
+     */
+    abstract protected static function createPart($part);
 }

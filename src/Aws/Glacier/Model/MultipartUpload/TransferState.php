@@ -14,8 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Model\MultipartUpload;
+namespace Aws\Glacier\Model\MultipartUpload;
 
+use Aws\Glacier\Model\MultipartUpload\UploadHelper;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Model\MultipartUpload\AbstractTransferState;
 
@@ -24,6 +25,33 @@ use Aws\Common\Model\MultipartUpload\AbstractTransferState;
  */
 class TransferState extends AbstractTransferState
 {
+    const ALREADY_UPLOADED = '*';
+
+    /**
+     * @var UploadHelper Glacier upload helper object that contains part information
+     */
+    protected $uploadHelper;
+
+    /**
+     * @param UploadHelper $uploadHelper Glacier upload helper object
+     *
+     * @return self
+     */
+    public function setUploadHelper(UploadHelper $uploadHelper)
+    {
+        $this->uploadHelper = $uploadHelper;
+
+        return $this;
+    }
+
+    /**
+     * @return UploadHelper Glacier upload helper object
+     */
+    public function getUploadHelper()
+    {
+        return $this->uploadHelper;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -45,6 +73,7 @@ class TransferState extends AbstractTransferState
      */
     protected static function createPart($part)
     {
+        $part['contentHash'] = self::ALREADY_UPLOADED;
         return UploadPart::fromArray($part);
     }
 }

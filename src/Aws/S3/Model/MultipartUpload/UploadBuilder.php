@@ -195,7 +195,7 @@ class UploadBuilder extends AbstractUploadBuilder
     public function build()
     {
         if (!$this->bucket || !$this->key || !$this->client || !$this->source) {
-            throw new InvalidArgumentException('You must specify a bucket, key, client, and source');
+            throw new InvalidArgumentException('You must specify a bucket, key, client, and source.');
         }
 
         if ($this->state && !$this->source->isSeekable()) {

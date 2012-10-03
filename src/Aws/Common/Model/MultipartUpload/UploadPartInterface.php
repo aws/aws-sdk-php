@@ -24,11 +24,11 @@ interface UploadPartInterface extends \Serializable
     /**
      * Create an upload part from an array
      *
-     * @param array $data data representing the upload part
+     * @param array|\Traversable $data Data representing the upload part
      *
      * @return self
      */
-    public static function fromArray(array $data);
+    public static function fromArray($data);
 
     /**
      * Returns the part number of the upload part which is used as an identifier
