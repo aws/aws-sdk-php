@@ -83,7 +83,6 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
      */
     public function __construct(EntityBodyInterface $body, $partSize = null)
     {
-        $this->body = $body;
         $this->treeHash = new TreeHash();
 
         // The default/maximum upload/part size is 4GB
@@ -102,7 +101,7 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
                 . 'greater than 4 gigabytes.');
         }
 
-        $this->generateUploadParts();
+        $this->generateUploadParts($body);
     }
 
     /**
@@ -141,14 +140,6 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
     public function getAllParts()
     {
         return $this->uploadParts;
-    }
-
-    /**
-     * @return EntityBodyInterface
-     */
-    public function getBody()
-    {
-        return $this->body;
     }
 
     /**
@@ -228,24 +219,26 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
 
     /**
      * Performs the work of reading the body stream, creating tree hashes, and creating UploadPartContext objects
+     *
+     * @param EntityBodyInterface $body The body to create parts from
      */
-    protected function generateUploadParts()
+    protected function generateUploadParts(EntityBodyInterface $body)
     {
         // Rewind the body stream
-        $this->body->seek(0);
+        $body->seek(0);
 
         // Initialize variables for tracking data for upload
-        $uploadContext = new UploadPartContext($this->partSize, $this->body->ftell());
+        $uploadContext = new UploadPartContext($this->partSize, $body->ftell());
 
         // Read the data from the streamed body in 1MB chunks
-        while ($data = $this->body->read(Size::MB)) {
+        while ($data = $body->read(Size::MB)) {
             // Add data to the hashes and size calculations
             $uploadContext->addData($data);
 
             // If the upload part is complete, generate an upload object and reset the currently tracked upload data
             if ($uploadContext->isFull()) {
                 $this->updateTotals($uploadContext->generatePart());
-                $uploadContext = new UploadPartContext($this->partSize, $this->body->ftell());
+                $uploadContext = new UploadPartContext($this->partSize, $body->ftell());
             }
         }
 
@@ -255,7 +248,7 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
         }
 
         // Rewind the body stream
-        $this->body->seek(0);
+        $body->seek(0);
     }
 
     /**

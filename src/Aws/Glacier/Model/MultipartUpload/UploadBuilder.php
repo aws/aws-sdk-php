@@ -21,6 +21,7 @@ use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
+use Aws\Common\Model\MultipartUpload\TransferStateInterface as State;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\EntityBody;
 
@@ -136,10 +137,9 @@ class UploadBuilder extends AbstractUploadBuilder
         // If a Glacier upload helper object was set, use the source and part size from it
         if ($this->partGenerator) {
             $this->partSize = $this->partGenerator->getPartSize();
-            $this->source = $this->partGenerator->getBody();
         }
 
-        if (!$this->vaultName || !$this->client || !$this->source) {
+        if (!($this->state instanceof State) && !$this->vaultName || !$this->client || !$this->source) {
             throw new InvalidArgumentException('You must specify a vault name, client, and source.');
         }
 
@@ -155,7 +155,7 @@ class UploadBuilder extends AbstractUploadBuilder
                 'vaultName' => $this->vaultName,
                 'uploadId'  => $this->state
             ));
-            $state->setPartGenerator($this->partGenerator);
+            $state->setPartGenerator($this->partGenerator); // @todo what if this hasn't been set?
             $this->state = $state;
         } elseif (!$this->state) {
             $this->state = $this->initiateMultipartUpload();
@@ -180,17 +180,27 @@ class UploadBuilder extends AbstractUploadBuilder
             'vaultName' => $this->vaultName
         );
 
-        $partGenerator = $this->partGenerator ?: UploadPartGenerator::factory($this->source, $this->partSize);
-        $uploadId = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
+        if ($this->partGenerator) {
+            $partGenerator = $this->partGenerator;
+        } else {
+            $partGenerator = UploadPartGenerator::factory($this->source, $this->partSize);
+        }
+
+        $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
             'command.headers' => $this->headers,
             'partSize'        => $partGenerator->getPartSize(),
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
-        )))->getResult()->get('uploadId');
+        )));
+        $command->set('accountId', $this->accountId); // @todo remove this after bug is fixed
+        $this->client->getEventDispatcher()->addListener('command.before_prepare', function ($event) {
+            $c = $event['command']->getAll();
+        });
+        $params['uploadId'] = $command->getResult()->get('uploadId');
 
         // Create a new state based on the initiated upload
-        $params['uploadId'] = $uploadId;
         $state = new TransferState($params);
         $state->setPartGenerator($partGenerator);
+
         return $state;
     }
 }

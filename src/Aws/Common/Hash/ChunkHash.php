@@ -30,11 +30,6 @@ class ChunkHash implements ChunkHashInterface
     protected $context;
 
     /**
-     * @var bool Whether or not `hash_final()` has been called on the hash context
-     */
-    protected $isFinalized;
-
-    /**
      * @var string The resulting hash in hex form
      */
     protected $hash;
@@ -51,7 +46,6 @@ class ChunkHash implements ChunkHashInterface
     {
         HashUtils::validateAlgorithm($algorithm);
         $this->context = hash_init($algorithm);
-        $this->isFinalized = false;
     }
 
     /**
@@ -59,7 +53,7 @@ class ChunkHash implements ChunkHashInterface
      */
     public function addData($data)
     {
-        if ($this->isFinalized) {
+        if (!$this->context) {
             throw new LogicException('You may not add more data to a finalized chunk hash.');
         }
 
@@ -76,9 +70,19 @@ class ChunkHash implements ChunkHashInterface
         if (!$this->hash) {
             $this->hashRaw = hash_final($this->context, true);
             $this->hash = HashUtils::binToHex($this->hashRaw);
-            $this->isFinalized = true;
+            $this->context = null;
         }
 
         return $returnBinaryForm ? $this->hashRaw : $this->hash;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __clone()
+    {
+        if ($this->context) {
+            $this->context = hash_copy($this->context);
+        }
     }
 }

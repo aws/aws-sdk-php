@@ -44,6 +44,7 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
     {
         /** @var UploadPartGenerator $partGenerator */
         $partGenerator = $this->state->getPartGenerator();
+        var_dump($this->state->getIdParams());die;
 
         $params = array_replace($this->state->getIdParams(), array(
             'archiveSize' => $partGenerator->getArchiveSize(),
