@@ -79,6 +79,16 @@ class UploadPart extends AbstractUploadPart
     }
 
     /**
+     * @return int
+     */
+    public function getOffset()
+    {
+        return $this->offset;
+    }
+
+    /**
+     * Returns the byte range of the part as an array
+     *
      * @return array
      */
     public function getRange()
@@ -87,10 +97,14 @@ class UploadPart extends AbstractUploadPart
     }
 
     /**
-     * @return int
+     * Returns the byte range ot the part formatted for the Content-Range header
+     *
+     * @return string
      */
-    public function getOffset()
+    public function getFormattedRange()
     {
-        return $this->offset;
+        list($firstByte, $lastByte) = $this->getRange();
+
+        return "bytes {$firstByte}-${$lastByte}/*";
     }
 }

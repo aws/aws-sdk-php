@@ -16,7 +16,7 @@
 
 namespace Aws\Common\Exception;
 
-use Aws\Common\MultipartUpload\TransferStateInterface;
+use Aws\Common\Model\MultipartUpload\TransferStateInterface;
 
 /**
  * Thrown when a {@see Aws\Common\MultipartUpload\TransferInterface} object encounters an error during transfer

@@ -28,7 +28,7 @@ use Guzzle\Http\EntityBodyInterface;
 /**
  * Generates UploadPart objects from a string/stream that encapsulate the data needed for upload requests
  */
-class UploadPartGenerator implements \Serializable
+class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countable
 {
     const MAX_NUM_PARTS = 10000;
 
@@ -208,6 +208,22 @@ class UploadPartGenerator implements \Serializable
                 $this->{$property} = $data[$property];
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->uploadParts);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->uploadParts);
     }
 
     /**

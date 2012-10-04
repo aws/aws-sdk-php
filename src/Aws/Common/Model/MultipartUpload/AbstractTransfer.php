@@ -21,6 +21,7 @@ use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Http\EntityBody;
+use Guzzle\Service\Command\OperationCommand;
 
 /**
  * Abstract class for transfer commonalities
@@ -166,12 +167,13 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * Get an array used for event notifications
      *
+     * @param OperationCommand $command Command to include in event data
+     *
      * @return array
-     * @codeCoverageIgnore
      */
-    protected function getEventData()
+    protected function getEventData(OperationCommand $command = null)
     {
-        return array(
+        $data = array(
             'transfer'  => $this,
             'source'    => $this->source,
             'options'   => $this->options,
@@ -179,6 +181,12 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
             'part_size' => $this->partSize,
             'state'     => $this->state
         );
+
+        if ($command) {
+            $data['command'] = $command;
+        }
+
+        return $data;
     }
 
     /**

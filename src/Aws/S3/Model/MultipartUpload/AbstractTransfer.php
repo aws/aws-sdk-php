@@ -25,9 +25,10 @@ use Aws\Common\Model\MultipartUpload\AbstractTransfer as CommonAbstractTransfer;
  */
 abstract class AbstractTransfer extends CommonAbstractTransfer
 {
-    const MIN_PART_SIZE = 5242880; // 5MB
-    const MAX_PART_SIZE = 5368709120; // 5GB
-    const MAX_PARTS = 10000;
+    // An S3 upload part can be anywhere from 5 MB to 5 GB, but you can only have 10000 parts per upload
+    const MIN_PART_SIZE = 5242880;
+    const MAX_PART_SIZE = 5368709120;
+    const MAX_PARTS     = 10000;
 
     /**
      * {@inheritdoc}
