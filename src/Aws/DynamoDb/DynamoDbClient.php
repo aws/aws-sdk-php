@@ -125,9 +125,7 @@ class DynamoDbClient extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE => 'dynamodb',
-                Options::SCHEME  => 'https',
-                // Disable model processing when commands are executed by default, and simply return arrays
-                'params.' . AbstractCommand::RESPONSE_PROCESSING => AbstractCommand::TYPE_NATIVE
+                Options::SCHEME  => 'https'
             ))
             ->setSignature(new SignatureV4())
             ->addClientResolver($exponentialBackoffResolver)

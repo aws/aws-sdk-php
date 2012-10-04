@@ -21,8 +21,10 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Guzzle\Common\Collection;
+use Guzzle\Http\Url;
 use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Service\Command\OperationCommand as Op;
 use Guzzle\Service\Resource\MapResourceIteratorFactory;
@@ -100,9 +102,7 @@ class CloudFrontClient extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE => 'cloudfront',
-                Options::SCHEME  => 'https',
-                // Disable model processing when commands are executed by default, and simply return arrays
-                'params.' . AbstractCommand::RESPONSE_PROCESSING => AbstractCommand::TYPE_NATIVE
+                Options::SCHEME  => 'https'
             ))
             ->setSignature(new CloudFrontSignature())
             ->setExceptionParser(new DefaultXmlExceptionParser())
@@ -114,5 +114,128 @@ class CloudFrontClient extends AbstractClient
         )));
 
         return $client;
+    }
+
+    /**
+     * Create a signed URL
+     *
+     * This method accepts an array of configuration options:
+     * - url:       (string)  URL of the resource being signed (can include query string and wildcards). For example:
+     *                        rtmp://s5c39gqb8ow64r.cloudfront.net/videos/mp3_name.mp3
+     *                        http://d111111abcdef8.cloudfront.net/images/horizon.jpg?size=large&license=yes
+     * - policy:    (string)  JSON policy. Use this option when creating a signed URL for a custom policy.
+     * - expires:   (int)     UTC Unix timestamp used when signing with a canned policy. Not required when passing a
+     *                        custom 'policy' option.
+     *
+     * @param array $options Array of configuration options used when signing
+     *
+     * @return string The file URL with authentication parameters.
+     * @throws InvalidArgumentException if key_pair_id and private_key have not been configured on the client
+     */
+    public function getSignedUrl(array $options)
+    {
+        if (!$this->getConfig('key_pair_id') || !$this->getConfig('private_key')) {
+            throw new InvalidArgumentException(
+                'An Amazon CloudFront keypair ID (key_pair_id) and an RSA private key (private_key) is required'
+            );
+        }
+
+        // Initialize the configuration data and ensure that the url was specified
+        $options = Collection::fromConfig($options, null, array('url'));
+        // Determine the scheme of the policy
+        $urlSections = explode('://', $options['url']);
+        // Ensure that the URL contained a scheme and parts after the scheme
+        if (count($urlSections) < 2) {
+            throw new InvalidArgumentException('Invalid URL: ' . $options['url']);
+        }
+
+        // Get the real scheme by removing wildcards from the scheme
+        $scheme = str_replace('*', '', $urlSections[0]);
+        $policy = $options['policy'] ?: $this->createCannedPolicy($scheme, $options['url'], $options['expires']);
+        // Strip whitespace from the policy
+        $policy = str_replace(' ', '', $policy);
+
+        $url = Url::factory($scheme . '://' . $urlSections[1]);
+        if ($options['policy']) {
+            // Custom policies require that the encoded policy be specified in the URL
+            $url->getQuery()->set('Policy', strtr(base64_encode($policy), '+=/', '-_~'));
+        } else {
+            // Canned policies require that the Expires parameter be set in the URL
+            $url->getQuery()->set('Expires', $options['expires']);
+        }
+
+        // Sign the policy using the CloudFront private key
+        $signedPolicy = $this->rsaSha1Sign($policy, $this->getConfig('private_key'));
+        // Remove whitespace, base64 encode the policy, and replace special characters
+        $signedPolicy = strtr(base64_encode(str_replace(' ', '', $signedPolicy)), '+=/', '-_~');
+
+        $url->getQuery()
+            ->useUrlEncoding(false)
+            ->set('Signature', $signedPolicy)
+            ->set('Key-Pair-Id', $this->getConfig('key_pair_id'));
+
+        if ($scheme != 'rtmp') {
+            // HTTP and HTTPS signed URLs include the full URL
+            return (string) $url;
+        } else {
+            // Use a relative URL when creating Flash player URLs
+            $url->setScheme(null)->setHost(null);
+            // Encode query string variables for flash players
+            $url = str_replace(array('?', '=', '&'), array('%3F', '%3D', '%26'), (string) $url);
+
+            return substr($url, 1);
+        }
+    }
+
+    /**
+     * Sign a policy string using OpenSSL RSA SHA1
+     *
+     * @param string $policy             Policy to sign
+     * @param string $privateKeyFilename File containing the OpenSSL private key
+     *
+     * @return string
+     */
+    protected function rsaSha1Sign($policy, $privateKeyFilename)
+    {
+        $signature = '';
+        openssl_sign($policy, $signature, file_get_contents($privateKeyFilename));
+
+        return $signature;
+    }
+
+    /**
+     * Create a canned policy for a particular URL and expiration
+     *
+     * @param string $scheme  Parsed scheme without wildcards
+     * @param string $url     URL that is being signed
+     * @param int    $expires Time in which the signature expires
+     *
+     * @return string
+     * @throws InvalidArgumentException if the expiration is not set
+     */
+    protected function createCannedPolicy($scheme, $url, $expires)
+    {
+        if (!$expires) {
+            throw new InvalidArgumentException('An expires option is required when using a canned policy');
+        }
+
+        // Generate a canned policy
+        if ($scheme == 'http' || $scheme == 'https') {
+            $resource = $url;
+        } elseif ($scheme == 'rtmp') {
+            $parts = parse_url($url);
+            $pathParts = pathinfo($parts['path']);
+            // Add path leading to file, strip file extension, and add a query string if present
+            $resource = ltrim($pathParts['dirname'] . '/' . $pathParts['filename'], '/')
+                . (isset($parts['query']) ? "?{$parts['query']}" : '');
+        } else {
+            throw new InvalidArgumentException("Invalid URI scheme: {$scheme}. Must be one of http or rtmp.");
+        }
+
+        return sprintf(
+            '{"Statement":[{"Resource":"%s","Condition":{"DateLessThan":{"AWS:EpochTime":%d}}}]}',
+            $resource,
+            $expires
+        );
     }
 }

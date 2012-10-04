@@ -42,11 +42,6 @@ class PutObjectTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('XUFAKrxLKna5cZ2REBfFkg==', (string) $request->getHeader('Content-MD5'));
     }
 
-    public function testAddsExpectHeader() {
-        $request = $this->getCommand()->set('body', 'hello')->set('use_expect', true)->prepare();
-        $this->assertEquals('100-Continue', (string) $request->getHeader('Expect'));
-    }
-
     public function testRemovesExpectHeaderWhenSizeIsLessThanMb()
     {
         $command = $this->getCommand(array('body' => 'hello'));

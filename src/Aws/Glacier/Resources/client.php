@@ -671,6 +671,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'string',
                         'type' => 'string',
                     ),
                 ),
@@ -723,7 +724,7 @@ return array (
                         'object',
                     ),
                     'location' => 'body',
-                )
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -780,8 +781,8 @@ return array (
                         'string',
                         'object',
                     ),
-                    'location' => 'body'
-                )
+                    'location' => 'body',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -973,19 +974,16 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'vaultNotificationConfig' => array(
-                    'type' => 'object',
+                'SNSTopic' => array(
+                    'type' => 'string',
                     'location' => 'json',
-                    'properties' => array(
-                        'SNSTopic' => array(
-                            'type' => 'string',
-                        ),
-                        'Events' => array(
-                            'type' => 'array',
-                            'items' => array(
-                                'type' => 'string',
-                            ),
-                        ),
+                ),
+                'Events' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'string',
+                        'type' => 'string',
                     ),
                 ),
             ),
@@ -1030,6 +1028,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'GlacierJobDescription',
                         'type' => 'object',
                         'properties' => array(
                             'JobId' => array(
@@ -1094,6 +1093,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'UploadListElement',
                         'type' => 'object',
                         'properties' => array(
                             'MultipartUploadId' => array(
@@ -1148,6 +1148,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'PartListElement',
                         'type' => 'object',
                         'properties' => array(
                             'RangeInBytes' => array(
@@ -1173,6 +1174,7 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
+                        'name' => 'DescribeVaultOutput',
                         'type' => 'object',
                         'properties' => array(
                             'VaultARN' => array(

@@ -40,11 +40,7 @@ class ClientBuilder
     /**
      * @var array Default client config
      */
-    protected static $commonConfigDefaults = array(
-        'curl.options' => array(
-            'blacklist' => array(CURLOPT_ENCODING, 'header.Expect')
-        )
-    );
+    protected static $commonConfigDefaults = array();
 
     /**
      * @var array Default client requirements

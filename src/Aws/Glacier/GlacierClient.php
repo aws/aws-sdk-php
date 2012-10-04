@@ -79,12 +79,8 @@ class GlacierClient extends AbstractClient
      * - Generic client options
      *     - ssl.cert: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
      *           option should be used when you encounter curl error code 60.
-     *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
-     *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
-     *           See: http://www.php.net/manual/en/function.curl-setopt.php
-     *     - service.description.cache: Optional `Guzzle\Common\Cache\CacheAdapterInterface` object to use to cache
-     *           service descriptions
-     *     - service.description.cache.ttl: Optional TTL used for the service description cache
+     *     - curl.options: Array of cURL options to apply to every request.
+     *          See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
      * - Signature options
      *     - signature: You can optionally provide a custom signature implementation used to sign requests
      *     - signature.service: Set to explicitly override the service name used in signatures
@@ -108,17 +104,8 @@ class GlacierClient extends AbstractClient
                 // General service configuration
                 Options::SERVICE => 'glacier',
                 Options::SCHEME  => 'https',
-
-                // Overwrite the default blacklist to allow Expect headers
-                'curl.blacklist' => array(CURLOPT_ENCODING, 'header.Accept'),
-
-                // Disable model processing when commands are executed by default, and simply return arrays
-                'params.' . Op::RESPONSE_PROCESSING => Op::TYPE_NATIVE,
-
                 // Set default value for "accountId" for all requests
-                'command.params' => array(
-                    'accountId' => '-'
-                )
+                'command.params' => array('accountId' => '-')
             ))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonRestExceptionParser())

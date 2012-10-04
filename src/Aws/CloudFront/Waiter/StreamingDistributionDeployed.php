@@ -24,8 +24,8 @@ use Aws\Common\Waiter\AbstractResourceWaiter;
  */
 class StreamingDistributionDeployed extends AbstractResourceWaiter
 {
-    protected $interval = 10;
-    protected $maxAttempts = 20;
+    protected $interval = 60;
+    protected $maxAttempts = 25;
     protected $maxFailures = 0;
 
     /**

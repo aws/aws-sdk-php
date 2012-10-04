@@ -40,37 +40,39 @@
         },
 
         "AbstractHasAclHeaders": {
-            "x-amz-acl": {
-                "location": "header",
-                "filters": "strtolower",
-                "description": "The canned ACL to apply to the bucket/object.",
-                "type": "string",
-                "enum": ["private" , "public-read", "public-read-write", "authenticated-read", "bucket-owner-read", "bucket-owner-full-control"]
-            },
-            "x-amz-grant-read": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-write": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-read-acp": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-write-acp": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-full-control": {
-                "type": "string",
-                "location": "header"
-            },
-            "acl": {
-                "description": "Use this parameter to add a complex ACL hto the object instead of using a canned ACL",
-                "type": "object",
-                "instanceOf": "Aws\\S3\\Model\\Acl"
+            "parameters": {
+                "x-amz-acl": {
+                    "location": "header",
+                    "filters": "strtolower",
+                    "description": "The canned ACL to apply to the bucket/object.",
+                    "type": "string",
+                    "enum": ["private" , "public-read", "public-read-write", "authenticated-read", "bucket-owner-read", "bucket-owner-full-control"]
+                },
+                "x-amz-grant-read": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-write": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-read-acp": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-write-acp": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-full-control": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "acl": {
+                    "description": "Use this parameter to add a complex ACL to the object instead of using a canned ACL",
+                    "type": "object",
+                    "instanceOf": "Aws\\S3\\Model\\Acl"
+                }
             }
         },
 

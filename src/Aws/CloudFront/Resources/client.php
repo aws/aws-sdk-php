@@ -1589,6 +1589,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
+                                'rename' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -1604,6 +1605,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
+                                                    'rename' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -1631,6 +1633,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
+                                        'rename' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -1649,6 +1652,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Origin',
                                         'type' => 'object',
+                                        'rename' => 'Origin',
                                         'properties' => array(
                                             'Id' => array(
                                                 'type' => 'string',
@@ -1717,6 +1721,7 @@ return array (
                                             'items' => array(
                                                 'name' => 'AwsAccountNumber',
                                                 'type' => 'string',
+                                                'rename' => 'AwsAccountNumber',
                                             ),
                                         ),
                                     ),
@@ -1740,6 +1745,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CacheBehavior',
                                         'type' => 'object',
+                                        'rename' => 'CacheBehavior',
                                         'properties' => array(
                                             'PathPattern' => array(
                                                 'type' => 'string',
@@ -1775,6 +1781,7 @@ return array (
                                                         'items' => array(
                                                             'name' => 'AwsAccountNumber',
                                                             'type' => 'string',
+                                                            'rename' => 'AwsAccountNumber',
                                                         ),
                                                     ),
                                                 ),
@@ -1866,6 +1873,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Path',
                                         'type' => 'string',
+                                        'rename' => 'Path',
                                     ),
                                 ),
                             ),
@@ -1915,6 +1923,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
+                                'rename' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -1930,6 +1939,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
+                                                    'rename' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -1968,6 +1978,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
+                                        'rename' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -2009,6 +2020,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
+                                        'rename' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -2125,6 +2137,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
+                                'rename' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -2140,6 +2153,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
+                                                    'rename' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -2167,6 +2181,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
+                                        'rename' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -2185,6 +2200,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Origin',
                                         'type' => 'object',
+                                        'rename' => 'Origin',
                                         'properties' => array(
                                             'Id' => array(
                                                 'type' => 'string',
@@ -2253,6 +2269,7 @@ return array (
                                             'items' => array(
                                                 'name' => 'AwsAccountNumber',
                                                 'type' => 'string',
+                                                'rename' => 'AwsAccountNumber',
                                             ),
                                         ),
                                     ),
@@ -2276,6 +2293,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CacheBehavior',
                                         'type' => 'object',
+                                        'rename' => 'CacheBehavior',
                                         'properties' => array(
                                             'PathPattern' => array(
                                                 'type' => 'string',
@@ -2311,6 +2329,7 @@ return array (
                                                         'items' => array(
                                                             'name' => 'AwsAccountNumber',
                                                             'type' => 'string',
+                                                            'rename' => 'AwsAccountNumber',
                                                         ),
                                                     ),
                                                 ),
@@ -2381,6 +2400,7 @@ return array (
                             'items' => array(
                                 'name' => 'CNAME',
                                 'type' => 'string',
+                                'rename' => 'CNAME',
                             ),
                         ),
                     ),
@@ -2401,6 +2421,7 @@ return array (
                             'items' => array(
                                 'name' => 'Origin',
                                 'type' => 'object',
+                                'rename' => 'Origin',
                                 'properties' => array(
                                     'Id' => array(
                                         'type' => 'string',
@@ -2470,6 +2491,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
+                                        'rename' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -2494,6 +2516,7 @@ return array (
                             'items' => array(
                                 'name' => 'CacheBehavior',
                                 'type' => 'object',
+                                'rename' => 'CacheBehavior',
                                 'properties' => array(
                                     'PathPattern' => array(
                                         'type' => 'string',
@@ -2529,6 +2552,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'AwsAccountNumber',
                                                     'type' => 'string',
+                                                    'rename' => 'AwsAccountNumber',
                                                 ),
                                             ),
                                         ),
@@ -2611,6 +2635,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Path',
                                         'type' => 'string',
+                                        'rename' => 'Path',
                                     ),
                                 ),
                             ),
@@ -2660,6 +2685,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
+                                'rename' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -2675,6 +2701,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
+                                                    'rename' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -2713,6 +2740,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
+                                        'rename' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -2754,6 +2782,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
+                                        'rename' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -2805,6 +2834,7 @@ return array (
                             'items' => array(
                                 'name' => 'CNAME',
                                 'type' => 'string',
+                                'rename' => 'CNAME',
                             ),
                         ),
                     ),
@@ -2849,6 +2879,7 @@ return array (
                             'items' => array(
                                 'name' => 'AwsAccountNumber',
                                 'type' => 'string',
+                                'rename' => 'AwsAccountNumber',
                             ),
                         ),
                     ),
@@ -2900,6 +2931,7 @@ return array (
                     'items' => array(
                         'name' => 'CloudFrontOriginAccessIdentitySummary',
                         'type' => 'object',
+                        'rename' => 'CloudFrontOriginAccessIdentitySummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -2948,6 +2980,7 @@ return array (
                     'items' => array(
                         'name' => 'DistributionSummary',
                         'type' => 'object',
+                        'rename' => 'DistributionSummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -2972,6 +3005,7 @@ return array (
                                         'items' => array(
                                             'name' => 'CNAME',
                                             'type' => 'string',
+                                            'rename' => 'CNAME',
                                         ),
                                     ),
                                 ),
@@ -2987,6 +3021,7 @@ return array (
                                         'items' => array(
                                             'name' => 'Origin',
                                             'type' => 'object',
+                                            'rename' => 'Origin',
                                             'properties' => array(
                                                 'Id' => array(
                                                     'type' => 'string',
@@ -3055,6 +3090,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'AwsAccountNumber',
                                                     'type' => 'string',
+                                                    'rename' => 'AwsAccountNumber',
                                                 ),
                                             ),
                                         ),
@@ -3078,6 +3114,7 @@ return array (
                                         'items' => array(
                                             'name' => 'CacheBehavior',
                                             'type' => 'object',
+                                            'rename' => 'CacheBehavior',
                                             'properties' => array(
                                                 'PathPattern' => array(
                                                     'type' => 'string',
@@ -3113,6 +3150,7 @@ return array (
                                                             'items' => array(
                                                                 'name' => 'AwsAccountNumber',
                                                                 'type' => 'string',
+                                                                'rename' => 'AwsAccountNumber',
                                                             ),
                                                         ),
                                                     ),
@@ -3175,6 +3213,7 @@ return array (
                     'items' => array(
                         'name' => 'InvalidationSummary',
                         'type' => 'object',
+                        'rename' => 'InvalidationSummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -3220,6 +3259,7 @@ return array (
                     'items' => array(
                         'name' => 'StreamingDistributionSummary',
                         'type' => 'object',
+                        'rename' => 'StreamingDistributionSummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -3255,6 +3295,7 @@ return array (
                                         'items' => array(
                                             'name' => 'CNAME',
                                             'type' => 'string',
+                                            'rename' => 'CNAME',
                                         ),
                                     ),
                                 ),
@@ -3276,6 +3317,7 @@ return array (
                                         'items' => array(
                                             'name' => 'AwsAccountNumber',
                                             'type' => 'string',
+                                            'rename' => 'AwsAccountNumber',
                                         ),
                                     ),
                                 ),
@@ -3367,6 +3409,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
+                                'rename' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -3382,6 +3425,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
+                                                    'rename' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -3409,6 +3453,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
+                                        'rename' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -3427,6 +3472,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Origin',
                                         'type' => 'object',
+                                        'rename' => 'Origin',
                                         'properties' => array(
                                             'Id' => array(
                                                 'type' => 'string',
@@ -3495,6 +3541,7 @@ return array (
                                             'items' => array(
                                                 'name' => 'AwsAccountNumber',
                                                 'type' => 'string',
+                                                'rename' => 'AwsAccountNumber',
                                             ),
                                         ),
                                     ),
@@ -3518,6 +3565,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CacheBehavior',
                                         'type' => 'object',
+                                        'rename' => 'CacheBehavior',
                                         'properties' => array(
                                             'PathPattern' => array(
                                                 'type' => 'string',
@@ -3553,6 +3601,7 @@ return array (
                                                         'items' => array(
                                                             'name' => 'AwsAccountNumber',
                                                             'type' => 'string',
+                                                            'rename' => 'AwsAccountNumber',
                                                         ),
                                                     ),
                                                 ),
@@ -3641,6 +3690,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
+                                'rename' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -3656,6 +3706,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
+                                                    'rename' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -3694,6 +3745,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
+                                        'rename' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -3735,6 +3787,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
+                                        'rename' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
