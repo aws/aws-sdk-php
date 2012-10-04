@@ -37,7 +37,6 @@ class DefaultIterator extends AbstractResourceIterator
         // If both a limiting parameter of a command and a iterator page size are specified, use the smaller of the two
         $pageSize = $this->calculatePageSize();
         $limit = $this->command->get('limit');
-        //var_dump(array('pageSize' => $pageSize, 'limit' => $limit));
         if ($limit && $pageSize) {
             $this->command->set('limit', min($pageSize, $limit));
         }

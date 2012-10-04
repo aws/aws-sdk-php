@@ -191,10 +191,6 @@ class UploadBuilder extends AbstractUploadBuilder
             'partSize'        => $partGenerator->getPartSize(),
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         )));
-        $command->set('accountId', $this->accountId); // @todo remove this after bug is fixed
-        $this->client->getEventDispatcher()->addListener('command.before_prepare', function ($event) {
-            $c = $event['command']->getAll();
-        });
         $params['uploadId'] = $command->getResult()->get('uploadId');
 
         // Create a new state based on the initiated upload
