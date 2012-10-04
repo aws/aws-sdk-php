@@ -149,7 +149,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'bucket'       => $this->bucket,
             'key'          => self::TEST_KEY,
             'use_md5'      => true,
-            'use_expect'   => false,
             'body'         => 'åbc 123',
             'Content-Type' => 'application/foo',
             'acl'          => $acl,
@@ -161,6 +160,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log("Uploading an object");
         $result = $command->execute();
+        // make sure the expect header wasn't sent
+        $this->assertNull($command->getRequest()->getHeader('Expect'));
         $this->assertInstanceOf('Guzzle\Http\Message\Response', $result);
         $this->client->waitUntil('object_exists', $this->bucket . '/' . self::TEST_KEY);
 
@@ -195,7 +196,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Getting the object's ACL");
         $xml = $this->client->getObjectAcl(array(
             'bucket' => $this->bucket,
-            'key'    => self::TEST_KEY
+            'key'    => self::TEST_KEY,
+            'command.response_processing' => 'native'
         ))->execute();
 
         $data = array();
@@ -231,6 +233,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             ->addTag('Foo', 'Bar')
             ->addTag('Baz', 'Boo');
         $command->execute();
+        $this->assertNull($command->getRequest()->getHeader('Expect'));
     }
 
     protected function fetchExpectedAclXml()

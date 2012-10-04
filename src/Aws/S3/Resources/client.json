@@ -40,37 +40,39 @@
         },
 
         "AbstractHasAclHeaders": {
-            "x-amz-acl": {
-                "location": "header",
-                "filters": "strtolower",
-                "description": "The canned ACL to apply to the bucket/object.",
-                "type": "string",
-                "enum": ["private" , "public-read", "public-read-write", "authenticated-read", "bucket-owner-read", "bucket-owner-full-control"]
-            },
-            "x-amz-grant-read": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-write": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-read-acp": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-write-acp": {
-                "type": "string",
-                "location": "header"
-            },
-            "x-amz-grant-full-control": {
-                "type": "string",
-                "location": "header"
-            },
-            "acl": {
-                "description": "Use this parameter to add a complex ACL hto the object instead of using a canned ACL",
-                "type": "object",
-                "instanceOf": "Aws\\S3\\Model\\Acl"
+            "parameters": {
+                "x-amz-acl": {
+                    "location": "header",
+                    "filters": "strtolower",
+                    "description": "The canned ACL to apply to the bucket/object.",
+                    "type": "string",
+                    "enum": ["private" , "public-read", "public-read-write", "authenticated-read", "bucket-owner-read", "bucket-owner-full-control"]
+                },
+                "x-amz-grant-read": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-write": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-read-acp": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-write-acp": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "x-amz-grant-full-control": {
+                    "type": "string",
+                    "location": "header"
+                },
+                "acl": {
+                    "description": "Use this parameter to add a complex ACL to the object instead of using a canned ACL",
+                    "type": "object",
+                    "instanceOf": "Aws\\S3\\Model\\Acl"
+                }
             }
         },
 
@@ -79,8 +81,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation returns a list of all buckets owned by the authenticated sender of the request.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
-            "responseNotes": "SimpleXMLElement containing the list of buckets",
-            "responseClass": "SimpleXMLElement"
+            "responseNotes": "Returns an array of data",
+            "responseClass": "array"
         },
 
         "HeadBucket": {
@@ -127,8 +129,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation returns some or all (up to 1000) of the objects in a bucket. You can use the request parameters as selection criteria to return a subset of the objects in a bucket.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "delimiter": {
                     "type": "string",
@@ -154,8 +156,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of a bucket. To use GET to return the ACL of the bucket, you must have READ_ACP access to the bucket. If READ_ACP permission is granted to the anonymous user, you can return the ACL of the bucket without using an authorization header.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "type": "string",
@@ -164,7 +166,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -176,8 +178,8 @@
             "httpMethod": "GET",
             "summary": "Returns the lifecycle configuration information set on the bucket.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "type": "string",
@@ -186,7 +188,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -208,7 +210,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/json",
                     "static": true
                 }
@@ -220,8 +222,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the location subresource to return a bucket's Region. You set the bucket's Region using the LocationContraint request parameter in a PUT Bucket request.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "type": "string",
@@ -230,7 +232,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -242,8 +244,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the logging subresource to return the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "type": "string",
@@ -252,7 +254,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -264,8 +266,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the notification subresource to return the notification configuration of a bucket.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "type": "string",
@@ -274,7 +276,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -286,8 +288,8 @@
             "httpMethod": "GET",
             "summary": "You can use the versions subresource to list metadata about all of the versions of objects in a bucket.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "default": "_guzzle_blank_",
@@ -314,7 +316,7 @@
                     "type": "string",
                     "location": "query"
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -326,10 +328,10 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the requestPayment subresource to return the request payment configuration of a bucket. To use this version of the operation, you must be the bucket owner.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 },
@@ -348,10 +350,10 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the versioning subresource to return the versioning state of a bucket.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 },
@@ -369,8 +371,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation returns the website configuration from the website subresource.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "type": "string",
@@ -455,8 +457,8 @@
             "class": "Aws\\S3\\Command\\DeleteMultipleObjects",
             "summary": "The Multi-Object Delete operation enables you to delete multiple objects from a bucket using a single HTTP request.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "body": {
                     "description": "Raw body of the request. This can be set manually or built for you using the other parameters of the command.",
@@ -659,10 +661,6 @@
                 "use_md5": {
                     "description": "Set to true to add a Content-MD5 header based on the body",
                     "type": "boolean"
-                },
-                "use_expect": {
-                    "description": "Set whether or not to send an Expect: 100-Continue header",
-                    "type": "boolean"
                 }
             }
         },
@@ -694,8 +692,8 @@
             "httpMethod": "POST",
             "summary": "This operation initiates a multipart upload and returns an upload ID. This upload ID is used to associate all the parts in the specific multipart upload.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "location": "query",
@@ -703,7 +701,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -715,8 +713,8 @@
             "httpMethod": "GET",
             "summary": "This operation lists in-progress multipart uploads.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "default": "_guzzle_blank",
@@ -744,7 +742,7 @@
                     "type": "string",
                     "location": "query"
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -757,8 +755,8 @@
             "class": "Aws\\S3\\Command\\CompleteMultipartUpload",
             "summary": "This operation completes a multipart upload by assembling previously uploaded parts.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "body": {
                     "location": "body",
@@ -782,7 +780,7 @@
                     "default": "application/xml",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -812,8 +810,8 @@
             "httpMethod": "GET",
             "summary": "This operation lists the parts that have been uploaded for a specific multipart upload.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "UploadId": {
                     "description": "Upload ID identifying the multipart upload whose parts are being listed.",
@@ -838,8 +836,8 @@
             "httpMethod": "GET",
             "summary": "This implementation of the GET operation uses the acl subresource to return the access control list (ACL) of an object. To use this operation, you must have READ_ACP access to the object.",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "versionId": {
                     "description": "An object version ID",
@@ -853,7 +851,7 @@
                     "default": "_guzzle_blank_",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }
@@ -1217,8 +1215,8 @@
             "extends": "AbstractRequiresBucket",
             "summary": "Gets the TagSet associated with a bucket",
             "documentationUrl": "http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html",
-            "responseNotes": "Returns a SimpleXMLElement containing the response data",
-            "responseClass": "SimpleXMLElement",
+            "responseNotes": "Returns an array of response data",
+            "responseClass": "array",
             "parameters": {
                 "sub_resource": {
                     "default": "_guzzle_blank_",
@@ -1226,7 +1224,7 @@
                     "rename": "tagging",
                     "static": true
                 },
-                "command.content_type": {
+                "command.expects": {
                     "default": "application/xml",
                     "static": true
                 }

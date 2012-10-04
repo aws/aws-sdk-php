@@ -3,6 +3,7 @@
 namespace Aws\S3\Command;
 
 use Guzzle\Common\Event;
+use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\DefaultResponseParser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -50,7 +51,9 @@ class FakeModelResponseParser extends DefaultResponseParser implements EventSubs
         $result = parent::parse($command);
 
         // Convert SimpleXMLElement into an array, then adjusts the array to ensure arrays of objects are valid
-        if ($result instanceof \SimpleXMLElement) {
+        if ($result instanceof \SimpleXMLElement &&
+            $command->get(AbstractCommand::RESPONSE_PROCESSING) != AbstractCommand::TYPE_NATIVE
+        ) {
             $operationName = $command->getName();
             if (!isset($this->expand[$operationName])) {
                 // If no custom changes are needed, then use the simple XML to JSON conversion

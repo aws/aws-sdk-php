@@ -17,13 +17,21 @@
 namespace Aws\Common\Command;
 
 use Aws\Common\ToArrayInterface;
+use Guzzle\Service\Command\DefaultResponseParser;
 use Guzzle\Service\Command\OperationCommand;
+use Guzzle\Service\Command\NoTranslationOperationResponseParser;
+use Guzzle\Service\Description\OperationInterface;
 
 /**
  * Adds AWS JSON body functionality to dynamically generated HTTP requests
  */
 class JsonCommand extends OperationCommand
 {
+    /**
+     * @var NoTranslationOperationResponseParser
+     */
+    protected static $cachedResponseParser;
+
     /**
      * {@inheritdoc}
      */
@@ -44,6 +52,12 @@ class JsonCommand extends OperationCommand
      */
     protected function build()
     {
+        // By default, JSON commands with AWS require no response model processing
+        $this->responseParser = $this->operation->getResponseType() == OperationInterface::TYPE_MODEL
+            && $this->get(self::RESPONSE_PROCESSING) == self::TYPE_MODEL
+            ? NoTranslationOperationResponseParser::getInstance()
+            : DefaultResponseParser::getInstance();
+
         parent::build();
 
         // Ensure that the body of the request ALWAYS includes some JSON. By default, this is an empty object.

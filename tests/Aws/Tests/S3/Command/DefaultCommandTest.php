@@ -60,7 +60,7 @@ class DefaultCommandTest extends \Guzzle\Tests\GuzzleTestCase
     public function testParsesXmlOnCommandsThatRequireIt()
     {
         $this->command['bucket'] = 'test';
-        $this->command['command.content_type'] = 'application/xml';
+        $this->command['command.expects'] = 'application/xml';
         $request = $this->command->prepare();
         $request->setResponse(Response::fromMessage("HTTP/1.1 200 OK\r\n\r\n<foo><baz>Bar</baz></foo>"), true);
         $this->assertInstanceOf('SimpleXMLElement', $this->command->execute());

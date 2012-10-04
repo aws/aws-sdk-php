@@ -26,33 +26,26 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
             self::log('Table exists. Waiting until the status is ACTIVE');
             // Wait until the table is active
             $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
-            self::log('Deleting the table');
-            // Delete the table to clear out its contents
-            $client->deleteTable(array('TableName' => $table))->execute();
-            self::log('Waiting until the table does not exist');
-            // Wait until the table does not exist
-            $client->waitUntil('table_not_exists', $table);
-        } catch (ResourceNotFoundException $e) {}
-
-        self::log("Creating table {$table}...");
-        $client->createTable(array(
-            'TableName' => $table,
-            'KeySchema' => array(
-                'HashKeyElement' => array(
-                    'AttributeName' => 'foo',
-                    'AttributeType' => 'S'
+        } catch (ResourceNotFoundException $e) {
+            self::log("Creating table {$table}...");
+            $client->createTable(array(
+                'TableName' => $table,
+                'KeySchema' => array(
+                    'HashKeyElement' => array(
+                        'AttributeName' => 'foo',
+                        'AttributeType' => 'S'
+                    ),
                 ),
-            ),
-            'ProvisionedThroughput' => array(
-                'ReadCapacityUnits'  => 20,
-                'WriteCapacityUnits' => 20
-            )
-        ))->execute();
+                'ProvisionedThroughput' => array(
+                    'ReadCapacityUnits'  => 20,
+                    'WriteCapacityUnits' => 20
+                )
+            ))->execute();
 
-        $client->waitUntil('table_exists', $table, array('status' => 'active'));
-        self::log("Table created.");
+            $client->waitUntil('table_exists', $table, array('status' => 'active'));
+            self::log("Table created.");
+        }
 
-        // Test
         $numItems = 55;
         self::log("Testing the WriteRequestBatch with {$numItems} items.");
 
@@ -68,7 +61,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log("Assert that all {$numItems} items made it into the table.");
         $scanner = $client->getIterator('Scan', array('TableName' => $table));
-        $this->assertEquals($numItems, iterator_count($scanner), 'Not all of the items were inserted.');
+        $this->assertGreaterThanOrEqual($numItems, iterator_count($scanner), 'Not all of the items were inserted.');
 
         self::log("Remove {$numItems} items from the table");
         $deleteBatch = WriteRequestBatch::factory($client);
@@ -113,6 +106,5 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
         // Tear down
         self::log("Deleting table {$table}...");
         $client->deleteTable(array('TableName' => $table));
-        $client->waitUntil('table_not_exists', $table);
     }
 }

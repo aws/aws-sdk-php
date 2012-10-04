@@ -256,27 +256,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("# Attempting to delete {$table}");
 
         try {
-            $client->describeTable(array(
-                'TableName' => $table
-            ));
-
-            self::log('Table exists. Waiting until the status is ACTIVE');
-
+            $client->describeTable(array('TableName' => $table));
             // Wait until the table is active
-            $client->waitUntil('table_exists', $table, array(
-                'status' => 'ACTIVE'
-            ));
-
-            self::log('Deleting the table');
-
+            self::log('Table exists. Waiting until the status is ACTIVE');
+            $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
             // Delete the table to clear out its contents
-            $client->deleteTable(array(
-                'TableName' => $table
-            ));
-
-            self::log('Waiting until the table does not exist');
-
-            // Wait until the table does not exist
+            self::log('Deleting the table');
+            $client->deleteTable(array('TableName' => $table))->execute();
             $client->waitUntil('table_not_exists', $table);
         } catch (ResourceNotFoundException $e) {
             // The table does not exist so we are good

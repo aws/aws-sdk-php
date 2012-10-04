@@ -63,9 +63,8 @@ class StsClient extends AbstractClient
      * - Generic client options
      *     - ssl.cert: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
      *           option should be used when you encounter curl error code 60.
-     *     - curl.CURLOPT_VERBOSE: Set to true to output curl debug information during transfers
-     *     - curl.*: Prefix any available cURL option with `curl.` to add cURL options to each request.
-     *           See: http://www.php.net/manual/en/function.curl-setopt.php
+     *     - curl.options: Array of cURL options to apply to every request.
+     *          See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
      * - Signature options
      *     - signature: You can optionally provide a custom signature implementation used to sign requests
      *     - signature.service: Set to explicitly override the service name used in signatures

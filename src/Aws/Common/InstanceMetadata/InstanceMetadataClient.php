@@ -43,7 +43,9 @@ class InstanceMetadataClient extends AbstractClient
         $config = Collection::fromConfig($config, array(
             Options::BASE_URL => 'http://169.254.169.254/{version}/',
             'version'         => 'latest',
-            'curl.blacklist'  => array(CURLOPT_ENCODING, 'header.Accept', 'header.Expect')
+            'curl.options'    => array(
+                'blacklist' => array(CURLOPT_ENCODING, 'header.Expect')
+            )
         ), array('base_url', 'version'));
 
         return new self($config);
