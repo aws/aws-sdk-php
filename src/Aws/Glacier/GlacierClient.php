@@ -105,7 +105,10 @@ class GlacierClient extends AbstractClient
                 Options::SERVICE => 'glacier',
                 Options::SCHEME  => 'https',
                 // Set default value for "accountId" for all requests
-                'command.params' => array('accountId' => '-')
+                'command.params' => array(
+                    'accountId'               => '-',
+                    Options::MODEL_PROCESSING => true
+                )
             ))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonRestExceptionParser())
