@@ -20,6 +20,7 @@ use Aws\Common\Enum\UaString as Ua;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Session\SessionHandlerConfig;
 use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\Exception\ConditionalCheckFailedException;
 
 /**
  * This locking strategy uses pessimistic locking (similar to how the native
@@ -84,7 +85,7 @@ class PessimisticLockingStrategy extends AbstractLockingStrategy
         do {
             try {
                 $result = $updateItem->execute();
-            } catch (DynamoDbException $e) {
+            } catch (ConditionalCheckFailedException $e) {
                 // If lock fails, sleep and try again later
                 usleep(rand(
                     $this->config->get('min_lock_retry_microtime'),
@@ -93,6 +94,8 @@ class PessimisticLockingStrategy extends AbstractLockingStrategy
 
                 $result   = array();
                 $rightNow = time();
+            } catch (DynamoDbException $e) {
+                return $item;
             }
         } while (!$result && $rightNow < $timeout);
 

@@ -1,5 +1,4 @@
 <?php return array(
-
     "includes" => array("_aws"),
     "services" => array(
 
@@ -119,5 +118,6 @@
             "extends" => "sdk1_settings",
             "class"   => "AmazonSWF"
         )
+
     )
 );
