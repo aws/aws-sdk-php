@@ -31,7 +31,7 @@ class PessimisticLockingStrategyTest extends AbstractSessionTestCase
 
                 // Simulate lock acquisition failures
                 if ($calls++ < 5) {
-                    throw new \Aws\DynamoDb\Exception\DynamoDbException;
+                    throw new \Aws\DynamoDb\Exception\ConditionalCheckFailedException;
                 } else {
                     return array(
                         'Attributes' => array(
@@ -47,5 +47,24 @@ class PessimisticLockingStrategyTest extends AbstractSessionTestCase
         $strategy = new PessimisticLockingStrategy($client, $config);
         $item = $strategy->doRead('test');
         $this->assertSame(array('foo' => 'bar'), $item);
+    }
+
+    /**
+     * @covers Aws\DynamoDb\Session\LockingStrategy\PessimisticLockingStrategy::doRead
+     * @expectedException Aws\DynamoDb\Exception/AccessDeniedException
+     */
+    public function testReadFailsForOther400Errors()
+    {
+        // Prepare mocks
+        $client  = $this->getMockedClient();
+        $config  = $this->getMockedConfig();
+        $command = $this->getMockedCommand($client);
+        $command->expects($this->any())
+            ->method('execute')
+            ->will($this->throwException(new \Aws\DynamoDb\Exception\AccessDeniedException()));
+
+        // Test the doRead method
+        $strategy = new PessimisticLockingStrategy($client, $config);
+        $strategy->doRead('test');
     }
 }

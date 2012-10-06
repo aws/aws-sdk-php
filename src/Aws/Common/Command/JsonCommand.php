@@ -19,6 +19,7 @@ namespace Aws\Common\Command;
 use Aws\Common\ToArrayInterface;
 use Guzzle\Service\Command\DefaultResponseParser;
 use Guzzle\Service\Command\OperationCommand;
+use Guzzle\Service\Command\OperationResponseParser;
 use Guzzle\Service\Command\NoTranslationOperationResponseParser;
 use Guzzle\Service\Description\OperationInterface;
 
@@ -53,10 +54,14 @@ class JsonCommand extends OperationCommand
     protected function build()
     {
         // By default, JSON commands with AWS require no response model processing
-        $this->responseParser = $this->operation->getResponseType() == OperationInterface::TYPE_MODEL
-            && $this->get(self::RESPONSE_PROCESSING) == self::TYPE_MODEL
-            ? NoTranslationOperationResponseParser::getInstance()
-            : DefaultResponseParser::getInstance();
+        if ($this->operation->getResponseType() == OperationInterface::TYPE_MODEL
+            && $this->get(self::RESPONSE_PROCESSING) == self::TYPE_MODEL) {
+            $this->responseParser = $this->get('command.model_processing')
+                ? OperationResponseParser::getInstance()
+                : NoTranslationOperationResponseParser::getInstance();
+        } else {
+            $this->responseParser = DefaultResponseParser::getInstance();
+        }
 
         parent::build();
 
