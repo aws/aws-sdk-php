@@ -50,8 +50,9 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
             'checksum'    => $partGenerator->getRootChecksum(),
             Ua::OPTION    => Ua::MULTIPART_UPLOAD
         ));
+        $command = $this->client->getCommand('CompleteMultipartUpload', $params);
 
-        return $this->client->getCommand('CompleteMultipartUpload', $params)->getResult();
+        return $command->getResult();
     }
 
     /**

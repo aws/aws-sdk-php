@@ -24,9 +24,10 @@ use Aws\Common\Iterator\AbstractResourceIterator;
 class DefaultIterator extends AbstractResourceIterator
 {
     protected static $resultKeyMap = array(
-        'ListJobs'   => 'JobList',
-        'ListParts'  => 'Parts',
-        'ListVaults' => 'VaultList'
+        'ListJobs'             => 'JobList',
+        'ListMultipartUploads' => 'UploadsList',
+        'ListParts'            => 'Parts',
+        'ListVaults'           => 'VaultList'
     );
 
     /**

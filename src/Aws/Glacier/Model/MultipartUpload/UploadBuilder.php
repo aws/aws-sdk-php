@@ -23,7 +23,6 @@ use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\Common\Model\MultipartUpload\TransferStateInterface as State;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
-use Guzzle\Http\EntityBody;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -50,6 +49,11 @@ class UploadBuilder extends AbstractUploadBuilder
      * @var int Size of upload parts
      */
     protected $partSize;
+
+    /**
+     * @var string Archive description
+     */
+    protected $archiveDescription;
 
     /**
      * @var UploadPartGenerator Glacier upload helper object
@@ -94,6 +98,20 @@ class UploadBuilder extends AbstractUploadBuilder
     public function setPartSize($partSize)
     {
         $this->partSize = (int) $partSize;
+
+        return $this;
+    }
+
+    /**
+     * Set the archive description
+      *
+      * @param string $archiveDescription Archive description
+      *
+      * @return self
+     */
+    public function setArchiveDescription($archiveDescription)
+    {
+        $this->archiveDescription = $archiveDescription;
 
         return $this;
     }
@@ -187,11 +205,13 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
-            'command.headers' => $this->headers,
-            'partSize'        => $partGenerator->getPartSize(),
-            Ua::OPTION        => Ua::MULTIPART_UPLOAD
+            'command.headers'    => $this->headers,
+            'partSize'           => $partGenerator->getPartSize(),
+            'archiveDescription' => $this->archiveDescription,
+            Ua::OPTION           => Ua::MULTIPART_UPLOAD
         )));
-        $params['uploadId'] = $command->getResult()->get('uploadId');
+        // $params['uploadId'] = $command->getResult()->get('uploadId'); @todo response parsing is broken for rest/json
+        $params['uploadId'] = $command->getResponse()->getHeader('x-amz-multipart-upload-id', true);
 
         // Create a new state based on the initiated upload
         $state = new TransferState($params);

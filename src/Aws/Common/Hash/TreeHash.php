@@ -60,7 +60,7 @@ class TreeHash implements ChunkHashInterface
         $treeHash = new self($algorithm);
 
         // Convert checksums to binary form if provided in hex form and add them to the tree hash
-        $treeHash->checksums = $inBinaryForm ? $checksums : array_map('Aws\Common\HashUtils::hexToBin', $checksums);
+        $treeHash->checksums = $inBinaryForm ? $checksums : array_map('Aws\Common\Hash\HashUtils::hexToBin', $checksums);
 
         // Pre-calculate hash
         $treeHash->getHash();

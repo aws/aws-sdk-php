@@ -23,16 +23,10 @@ use Guzzle\Common\HasDispatcherInterface;
  */
 interface TransferInterface extends HasDispatcherInterface
 {
-    const BEFORE_UPLOAD      = 'multipart_upload.before_upload';
-    const AFTER_UPLOAD       = 'multipart_upload.after_upload';
-    const AFTER_COMPLETE     = 'multipart_upload.after_complete';
-    const BEFORE_PART_UPLOAD = 'multipart_upload.before_part_upload';
-    const AFTER_PART_UPLOAD  = 'multipart_upload.after_part_upload';
-
     /**
      * Upload the source to using a multipart upload
      *
-     * @return array Returns the result of a the complete multipart upload command
+     * @return array Result of the complete multipart upload command or an empty array if uploading was stopped
      */
     public function upload();
 

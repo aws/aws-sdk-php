@@ -172,7 +172,6 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
     public function serialize()
     {
         return serialize(array(
-            'checksums'   => $this->treeHash->getChecksums(),
             'uploadParts' => $this->uploadParts,
             'archiveSize' => $this->archiveSize,
             'partSize'    => $this->partSize
@@ -184,21 +183,24 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
      */
     public function unserialize($serialized)
     {
+        // Unserialize data
         $data = unserialize($serialized);
 
-        foreach (array('uploadParts', 'archiveSize', 'partSize', 'checksums') as $property) {
-            if (!isset($data[$property])) {
+        // Set properties
+        foreach (array('uploadParts', 'archiveSize', 'partSize') as $property) {
+            if (isset($data[$property])) {
+                $this->{$property} = $data[$property];
+            } else {
                 throw new RuntimeException(sprintf('Cannot unserialize the %s class. The %s property is missing.',
                     __CLASS__, $property
                 ));
             }
-
-            if ($property === 'checksums') {
-                $this->treeHash = TreeHash::fromChecksums($data['checksums']);
-            } else {
-                $this->{$property} = $data[$property];
-            }
         }
+
+        // Restore tree hash
+        $this->treeHash = TreeHash::fromChecksums(array_map(function (UploadPart $part) {
+            return $part->getChecksum();
+        }, $this->uploadParts));
     }
 
     /**

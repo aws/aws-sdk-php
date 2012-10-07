@@ -105,6 +105,6 @@ class UploadPart extends AbstractUploadPart
     {
         list($firstByte, $lastByte) = $this->getRange();
 
-        return "bytes {$firstByte}-${$lastByte}/*";
+        return "bytes {$firstByte}-{$lastByte}/*";
     }
 }

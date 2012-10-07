@@ -58,7 +58,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
     public function toArray()
     {
         $array = array();
-        foreach (self::$keyMap as $key => $property) {
+        foreach (static::$keyMap as $key => $property) {
             $array[$key] = $this->{$property};
         }
 
@@ -90,7 +90,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
      */
     protected function loadData($data)
     {
-        foreach (self::$keyMap as $key => $property) {
+        foreach (static::$keyMap as $key => $property) {
             if (isset($data[$key])) {
                 $this->{$property} = $data[$key];
             } else {

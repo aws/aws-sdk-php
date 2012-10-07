@@ -17,6 +17,7 @@
 namespace Aws\Common\Model\MultipartUpload;
 
 use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\AbstractHasDispatcher;
@@ -28,7 +29,14 @@ use Guzzle\Service\Command\OperationCommand;
  */
 abstract class AbstractTransfer extends AbstractHasDispatcher implements TransferInterface
 {
-   /**
+    const BEFORE_UPLOAD      = 'multipart_upload.before_upload';
+    const AFTER_UPLOAD       = 'multipart_upload.after_upload';
+    const BEFORE_PART_UPLOAD = 'multipart_upload.before_part_upload';
+    const AFTER_PART_UPLOAD  = 'multipart_upload.after_part_upload';
+    const AFTER_ABORT        = 'multipart_upload.after_abort';
+    const AFTER_COMPLETE     = 'multipart_upload.after_complete';
+
+    /**
      * @var AwsClientInterface Client used for the transfers
      */
     protected $client;
@@ -72,9 +80,10 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
         EntityBody $source,
         array $options = array()
     ) {
-        $this->client = $client;
-        $this->state = $state;
-        $this->source = $source;
+        $this->client  = $client;
+        $this->state   = $state;
+        $this->source  = $source;
+        $this->options = $options;
 
         $this->init();
 
@@ -89,9 +98,10 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
         return array(
             self::BEFORE_PART_UPLOAD,
             self::AFTER_UPLOAD,
-            self::AFTER_COMPLETE,
             self::BEFORE_PART_UPLOAD,
-            self::AFTER_PART_UPLOAD
+            self::AFTER_PART_UPLOAD,
+            self::AFTER_ABORT,
+            self::AFTER_COMPLETE
         );
     }
 
@@ -102,9 +112,13 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     {
         $params = $this->state->getIdParams();
         $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
-        $result = $this->client->getCommand('AbortMultipartUpload', $params)->getResult();
+        $command = $this->client->getCommand('AbortMultipartUpload', $params);
+
+        $result = $command->getResult();
 
         $this->state->setAborted(true);
+        $this->stop();
+        $this->dispatch(self::AFTER_ABORT, $this->getEventData($command));
 
         return $result;
     }
@@ -155,8 +169,13 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
         try {
             $this->transfer();
             $this->dispatch(self::AFTER_UPLOAD, $eventData);
-            $result = $this->complete();
-            $this->dispatch(self::AFTER_COMPLETE, $eventData);
+
+            if ($this->stopped) {
+                return array();
+            } else {
+                $result = $this->complete();
+                $this->dispatch(self::AFTER_COMPLETE, $eventData);
+            }
         } catch (\Exception $e) {
             throw new MultipartUploadException($this->state, $e);
         }
