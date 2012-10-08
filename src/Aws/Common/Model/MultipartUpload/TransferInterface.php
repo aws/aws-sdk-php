@@ -17,6 +17,7 @@
 namespace Aws\Common\Model\MultipartUpload;
 
 use Guzzle\Common\HasDispatcherInterface;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Interface for transferring the contents of a data source to an AWS service via a multipart upload interface
@@ -26,14 +27,14 @@ interface TransferInterface extends HasDispatcherInterface
     /**
      * Upload the source to using a multipart upload
      *
-     * @return array Result of the complete multipart upload command or an empty array if uploading was stopped
+     * @return Model|null Result of the complete multipart upload command or null if uploading was stopped
      */
     public function upload();
 
     /**
      * Abort the upload
      *
-     * @return array Returns the result of the abort multipart upload command
+     * @return Model Returns the result of the abort multipart upload command
      */
     public function abort();
 

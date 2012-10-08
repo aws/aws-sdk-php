@@ -19,6 +19,7 @@ namespace Aws\S3\Model\MultipartUpload;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer as CommonAbstractTransfer;
+use Guzzle\Service\Command\OperationCommand;
 
 /**
  * Abstract class for transfer commonalities
@@ -80,5 +81,19 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
         }
 
         return $command->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getAbortCommand()
+    {
+        $params = $this->state->getIdParams();
+        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
+
+        /** @var $command OperationCommand */
+        $command = $this->client->getCommand('AbortMultipartUpload', $params);
+
+        return $command;
     }
 }

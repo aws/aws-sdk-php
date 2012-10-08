@@ -28,21 +28,6 @@ use Guzzle\Iterator\ChunkedIterator;
 class ParallelTransfer extends AbstractTransfer
 {
     /**
-     * @var array Array of {@see ReadLimitEntityBody} objects
-     */
-    protected $parts;
-
-    /**
-     * @var int Concurrency level to use
-     */
-    protected $concurrency;
-
-    /**
-     * @var int Total number of parts to upload
-     */
-    protected $totalParts;
-
-    /**
      * {@inheritdoc}
      */
     protected function init()

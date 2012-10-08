@@ -61,9 +61,24 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function getAbortCommand()
+    {
+        $params = $this->state->getIdParams();
+        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
+
+        /** @var $command OperationCommand */
+        $command = $this->client->getCommand('AbortMultipartUpload', $params);
+
+        return $command;
+    }
+
+    /**
      * Creates an UploadMultipartPart command from an UploadPart object
      *
-     * @param UploadPart $part
+     * @param UploadPart $part          UploadPart for which to create a command
+     * @param bool       $useSourceCopy Whether or not to use the original source or a copy of it
      *
      * @return OperationCommand
      */
@@ -77,8 +92,8 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
         // Get the correct source
         $source = $this->source;
         if ($useSourceCopy) {
-            $url = $this->source->getUri();
-            $source = new EntityBody(fopen($url, 'r'));
+            $sourceUri = $this->source->getUri();
+            $source = new EntityBody(fopen($sourceUri, 'r'));
         }
 
         // Add the range, checksum, and the body limited by the range

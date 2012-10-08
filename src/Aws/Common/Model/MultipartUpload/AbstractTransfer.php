@@ -23,6 +23,7 @@ use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Http\EntityBody;
 use Guzzle\Service\Command\OperationCommand;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Abstract class for transfer commonalities
@@ -110,10 +111,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
      */
     public function abort()
     {
-        $params = $this->state->getIdParams();
-        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
-        $command = $this->client->getCommand('AbortMultipartUpload', $params);
-
+        $command = $this->getAbortCommand();
         $result = $command->getResult();
 
         $this->state->setAborted(true);
@@ -171,7 +169,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
             $this->dispatch(self::AFTER_UPLOAD, $eventData);
 
             if ($this->stopped) {
-                return array();
+                return null;
             } else {
                 $result = $this->complete();
                 $this->dispatch(self::AFTER_COMPLETE, $eventData);
@@ -224,7 +222,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * Complete the multipart upload
      *
-     * @return array Returns the result of the complete multipart upload command
+     * @return Model Returns the result of the complete multipart upload command
      */
     abstract protected function complete();
 
@@ -232,4 +230,11 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
      * Hook to implement in subclasses to perform the actual transfer
      */
     abstract protected function transfer();
+
+    /**
+     * Fetches the abort command fom the concrete implementation
+     *
+     * @return OperationCommand
+     */
+    abstract protected function getAbortCommand();
 }
