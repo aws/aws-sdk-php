@@ -21,7 +21,7 @@ class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements \IteratorA
             'httpMethod' => 'POST',
             'parameters' => array(
                 'test'      => array('location' => 'json'),
-                'named'     => array('location' => 'json', 'rename'   => 'Foo'),
+                'named'     => array('location' => 'json', 'sentAs' => 'Foo'),
                 'ignore_me' => array('location' => 'header')
             )
         ));

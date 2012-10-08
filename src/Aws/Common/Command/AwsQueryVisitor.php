@@ -18,7 +18,7 @@ class AwsQueryVisitor extends AbstractRequestVisitor
     public function visit(CommandInterface $command, RequestInterface $request, Parameter $param, $value)
     {
         $query = array();
-        $this->customResolver($value, $param, $query, ($param->getRename() ?: $param->getName()));
+        $this->customResolver($value, $param, $query, $param->getWireName());
         $request->addPostFields($query);
     }
 
@@ -35,7 +35,7 @@ class AwsQueryVisitor extends AbstractRequestVisitor
         if ($param->getType() == 'object') {
             foreach ($value as $name => $v) {
                 if ($subParam = $param->getProperty($name)) {
-                    $key = $prefix . '.' . ($subParam->getRename() ?: $subParam->getName());
+                    $key = $prefix . '.' . $subParam->getWireName();
                     if (is_array($v)) {
                         $this->customResolver($v, $subParam, $query, $key);
                     } else {
