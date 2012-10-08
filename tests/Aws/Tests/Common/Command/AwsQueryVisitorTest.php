@@ -54,7 +54,7 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                     ),
                     'Foo' => array(
                         'type'   => 'array',
-                        'rename' => 'Foo.member',
+                        'sentAs' => 'Foo.member',
                         'data'   => array('offset' => 10),
                         'items'  => array('type' => 'string')
                     )

@@ -597,7 +597,7 @@ return array (
                 'IfMatch' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'If-Match',
+                    'sentAs' => 'If-Match',
                 ),
             ),
             'errorResponses' => array(
@@ -634,7 +634,7 @@ return array (
                 'IfMatch' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'If-Match',
+                    'sentAs' => 'If-Match',
                 ),
             ),
             'errorResponses' => array(
@@ -671,7 +671,7 @@ return array (
                 'IfMatch' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'If-Match',
+                    'sentAs' => 'If-Match',
                 ),
             ),
             'errorResponses' => array(
@@ -979,7 +979,7 @@ return array (
                 'IfMatch' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'If-Match',
+                    'sentAs' => 'If-Match',
                 ),
             ),
             'errorResponses' => array(
@@ -1287,7 +1287,7 @@ return array (
                 'IfMatch' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'If-Match',
+                    'sentAs' => 'If-Match',
                 ),
             ),
             'errorResponses' => array(
@@ -1464,7 +1464,7 @@ return array (
                 'IfMatch' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'If-Match',
+                    'sentAs' => 'If-Match',
                 ),
             ),
             'errorResponses' => array(
@@ -1538,12 +1538,10 @@ return array (
                 'Location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
                 ),
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -1589,7 +1587,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
-                                'rename' => 'Signer',
+                                'sentAs' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -1605,7 +1603,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
-                                                    'rename' => 'KeyPairId',
+                                                    'sentAs' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -1633,7 +1631,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
-                                        'rename' => 'CNAME',
+                                        'sentAs' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -1652,7 +1650,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Origin',
                                         'type' => 'object',
-                                        'rename' => 'Origin',
+                                        'sentAs' => 'Origin',
                                         'properties' => array(
                                             'Id' => array(
                                                 'type' => 'string',
@@ -1721,7 +1719,7 @@ return array (
                                             'items' => array(
                                                 'name' => 'AwsAccountNumber',
                                                 'type' => 'string',
-                                                'rename' => 'AwsAccountNumber',
+                                                'sentAs' => 'AwsAccountNumber',
                                             ),
                                         ),
                                     ),
@@ -1745,7 +1743,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CacheBehavior',
                                         'type' => 'object',
-                                        'rename' => 'CacheBehavior',
+                                        'sentAs' => 'CacheBehavior',
                                         'properties' => array(
                                             'PathPattern' => array(
                                                 'type' => 'string',
@@ -1781,7 +1779,7 @@ return array (
                                                         'items' => array(
                                                             'name' => 'AwsAccountNumber',
                                                             'type' => 'string',
-                                                            'rename' => 'AwsAccountNumber',
+                                                            'sentAs' => 'AwsAccountNumber',
                                                         ),
                                                     ),
                                                 ),
@@ -1828,12 +1826,10 @@ return array (
                 'Location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
                 ),
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -1844,7 +1840,6 @@ return array (
                 'Location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
                 ),
                 'Id' => array(
                     'type' => 'string',
@@ -1873,7 +1868,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Path',
                                         'type' => 'string',
-                                        'rename' => 'Path',
+                                        'sentAs' => 'Path',
                                     ),
                                 ),
                             ),
@@ -1923,7 +1918,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
-                                'rename' => 'Signer',
+                                'sentAs' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -1939,7 +1934,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
-                                                    'rename' => 'KeyPairId',
+                                                    'sentAs' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -1978,7 +1973,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
-                                        'rename' => 'CNAME',
+                                        'sentAs' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -2020,7 +2015,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
-                                        'rename' => 'AwsAccountNumber',
+                                        'sentAs' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -2036,12 +2031,10 @@ return array (
                 'Location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
                 ),
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2072,7 +2065,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2091,7 +2083,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2137,7 +2128,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
-                                'rename' => 'Signer',
+                                'sentAs' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -2153,7 +2144,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
-                                                    'rename' => 'KeyPairId',
+                                                    'sentAs' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -2181,7 +2172,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
-                                        'rename' => 'CNAME',
+                                        'sentAs' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -2200,7 +2191,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Origin',
                                         'type' => 'object',
-                                        'rename' => 'Origin',
+                                        'sentAs' => 'Origin',
                                         'properties' => array(
                                             'Id' => array(
                                                 'type' => 'string',
@@ -2269,7 +2260,7 @@ return array (
                                             'items' => array(
                                                 'name' => 'AwsAccountNumber',
                                                 'type' => 'string',
-                                                'rename' => 'AwsAccountNumber',
+                                                'sentAs' => 'AwsAccountNumber',
                                             ),
                                         ),
                                     ),
@@ -2293,7 +2284,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CacheBehavior',
                                         'type' => 'object',
-                                        'rename' => 'CacheBehavior',
+                                        'sentAs' => 'CacheBehavior',
                                         'properties' => array(
                                             'PathPattern' => array(
                                                 'type' => 'string',
@@ -2329,7 +2320,7 @@ return array (
                                                         'items' => array(
                                                             'name' => 'AwsAccountNumber',
                                                             'type' => 'string',
-                                                            'rename' => 'AwsAccountNumber',
+                                                            'sentAs' => 'AwsAccountNumber',
                                                         ),
                                                     ),
                                                 ),
@@ -2376,7 +2367,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2400,7 +2390,7 @@ return array (
                             'items' => array(
                                 'name' => 'CNAME',
                                 'type' => 'string',
-                                'rename' => 'CNAME',
+                                'sentAs' => 'CNAME',
                             ),
                         ),
                     ),
@@ -2421,7 +2411,7 @@ return array (
                             'items' => array(
                                 'name' => 'Origin',
                                 'type' => 'object',
-                                'rename' => 'Origin',
+                                'sentAs' => 'Origin',
                                 'properties' => array(
                                     'Id' => array(
                                         'type' => 'string',
@@ -2491,7 +2481,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
-                                        'rename' => 'AwsAccountNumber',
+                                        'sentAs' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -2516,7 +2506,7 @@ return array (
                             'items' => array(
                                 'name' => 'CacheBehavior',
                                 'type' => 'object',
-                                'rename' => 'CacheBehavior',
+                                'sentAs' => 'CacheBehavior',
                                 'properties' => array(
                                     'PathPattern' => array(
                                         'type' => 'string',
@@ -2552,7 +2542,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'AwsAccountNumber',
                                                     'type' => 'string',
-                                                    'rename' => 'AwsAccountNumber',
+                                                    'sentAs' => 'AwsAccountNumber',
                                                 ),
                                             ),
                                         ),
@@ -2600,7 +2590,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2635,7 +2624,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Path',
                                         'type' => 'string',
-                                        'rename' => 'Path',
+                                        'sentAs' => 'Path',
                                     ),
                                 ),
                             ),
@@ -2685,7 +2674,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
-                                'rename' => 'Signer',
+                                'sentAs' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -2701,7 +2690,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
-                                                    'rename' => 'KeyPairId',
+                                                    'sentAs' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -2740,7 +2729,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
-                                        'rename' => 'CNAME',
+                                        'sentAs' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -2782,7 +2771,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
-                                        'rename' => 'AwsAccountNumber',
+                                        'sentAs' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -2798,7 +2787,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2834,7 +2822,7 @@ return array (
                             'items' => array(
                                 'name' => 'CNAME',
                                 'type' => 'string',
-                                'rename' => 'CNAME',
+                                'sentAs' => 'CNAME',
                             ),
                         ),
                     ),
@@ -2879,7 +2867,7 @@ return array (
                             'items' => array(
                                 'name' => 'AwsAccountNumber',
                                 'type' => 'string',
-                                'rename' => 'AwsAccountNumber',
+                                'sentAs' => 'AwsAccountNumber',
                             ),
                         ),
                     ),
@@ -2894,7 +2882,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -2931,7 +2918,7 @@ return array (
                     'items' => array(
                         'name' => 'CloudFrontOriginAccessIdentitySummary',
                         'type' => 'object',
-                        'rename' => 'CloudFrontOriginAccessIdentitySummary',
+                        'sentAs' => 'CloudFrontOriginAccessIdentitySummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -2980,7 +2967,7 @@ return array (
                     'items' => array(
                         'name' => 'DistributionSummary',
                         'type' => 'object',
-                        'rename' => 'DistributionSummary',
+                        'sentAs' => 'DistributionSummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -3005,7 +2992,7 @@ return array (
                                         'items' => array(
                                             'name' => 'CNAME',
                                             'type' => 'string',
-                                            'rename' => 'CNAME',
+                                            'sentAs' => 'CNAME',
                                         ),
                                     ),
                                 ),
@@ -3021,7 +3008,7 @@ return array (
                                         'items' => array(
                                             'name' => 'Origin',
                                             'type' => 'object',
-                                            'rename' => 'Origin',
+                                            'sentAs' => 'Origin',
                                             'properties' => array(
                                                 'Id' => array(
                                                     'type' => 'string',
@@ -3090,7 +3077,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'AwsAccountNumber',
                                                     'type' => 'string',
-                                                    'rename' => 'AwsAccountNumber',
+                                                    'sentAs' => 'AwsAccountNumber',
                                                 ),
                                             ),
                                         ),
@@ -3114,7 +3101,7 @@ return array (
                                         'items' => array(
                                             'name' => 'CacheBehavior',
                                             'type' => 'object',
-                                            'rename' => 'CacheBehavior',
+                                            'sentAs' => 'CacheBehavior',
                                             'properties' => array(
                                                 'PathPattern' => array(
                                                     'type' => 'string',
@@ -3150,7 +3137,7 @@ return array (
                                                             'items' => array(
                                                                 'name' => 'AwsAccountNumber',
                                                                 'type' => 'string',
-                                                                'rename' => 'AwsAccountNumber',
+                                                                'sentAs' => 'AwsAccountNumber',
                                                             ),
                                                         ),
                                                     ),
@@ -3213,7 +3200,7 @@ return array (
                     'items' => array(
                         'name' => 'InvalidationSummary',
                         'type' => 'object',
-                        'rename' => 'InvalidationSummary',
+                        'sentAs' => 'InvalidationSummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -3259,7 +3246,7 @@ return array (
                     'items' => array(
                         'name' => 'StreamingDistributionSummary',
                         'type' => 'object',
-                        'rename' => 'StreamingDistributionSummary',
+                        'sentAs' => 'StreamingDistributionSummary',
                         'properties' => array(
                             'Id' => array(
                                 'type' => 'string',
@@ -3295,7 +3282,7 @@ return array (
                                         'items' => array(
                                             'name' => 'CNAME',
                                             'type' => 'string',
-                                            'rename' => 'CNAME',
+                                            'sentAs' => 'CNAME',
                                         ),
                                     ),
                                 ),
@@ -3317,7 +3304,7 @@ return array (
                                         'items' => array(
                                             'name' => 'AwsAccountNumber',
                                             'type' => 'string',
-                                            'rename' => 'AwsAccountNumber',
+                                            'sentAs' => 'AwsAccountNumber',
                                         ),
                                     ),
                                 ),
@@ -3363,7 +3350,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -3409,7 +3395,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
-                                'rename' => 'Signer',
+                                'sentAs' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -3425,7 +3411,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
-                                                    'rename' => 'KeyPairId',
+                                                    'sentAs' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -3453,7 +3439,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
-                                        'rename' => 'CNAME',
+                                        'sentAs' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -3472,7 +3458,7 @@ return array (
                                     'items' => array(
                                         'name' => 'Origin',
                                         'type' => 'object',
-                                        'rename' => 'Origin',
+                                        'sentAs' => 'Origin',
                                         'properties' => array(
                                             'Id' => array(
                                                 'type' => 'string',
@@ -3541,7 +3527,7 @@ return array (
                                             'items' => array(
                                                 'name' => 'AwsAccountNumber',
                                                 'type' => 'string',
-                                                'rename' => 'AwsAccountNumber',
+                                                'sentAs' => 'AwsAccountNumber',
                                             ),
                                         ),
                                     ),
@@ -3565,7 +3551,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CacheBehavior',
                                         'type' => 'object',
-                                        'rename' => 'CacheBehavior',
+                                        'sentAs' => 'CacheBehavior',
                                         'properties' => array(
                                             'PathPattern' => array(
                                                 'type' => 'string',
@@ -3601,7 +3587,7 @@ return array (
                                                         'items' => array(
                                                             'name' => 'AwsAccountNumber',
                                                             'type' => 'string',
-                                                            'rename' => 'AwsAccountNumber',
+                                                            'sentAs' => 'AwsAccountNumber',
                                                         ),
                                                     ),
                                                 ),
@@ -3648,7 +3634,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),
@@ -3690,7 +3675,7 @@ return array (
                             'items' => array(
                                 'name' => 'Signer',
                                 'type' => 'object',
-                                'rename' => 'Signer',
+                                'sentAs' => 'Signer',
                                 'properties' => array(
                                     'AwsAccountNumber' => array(
                                         'type' => 'string',
@@ -3706,7 +3691,7 @@ return array (
                                                 'items' => array(
                                                     'name' => 'KeyPairId',
                                                     'type' => 'string',
-                                                    'rename' => 'KeyPairId',
+                                                    'sentAs' => 'KeyPairId',
                                                 ),
                                             ),
                                         ),
@@ -3745,7 +3730,7 @@ return array (
                                     'items' => array(
                                         'name' => 'CNAME',
                                         'type' => 'string',
-                                        'rename' => 'CNAME',
+                                        'sentAs' => 'CNAME',
                                     ),
                                 ),
                             ),
@@ -3787,7 +3772,7 @@ return array (
                                     'items' => array(
                                         'name' => 'AwsAccountNumber',
                                         'type' => 'string',
-                                        'rename' => 'AwsAccountNumber',
+                                        'sentAs' => 'AwsAccountNumber',
                                     ),
                                 ),
                             ),
@@ -3803,7 +3788,6 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'ETag',
                 ),
             ),
         ),

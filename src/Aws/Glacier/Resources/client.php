@@ -67,12 +67,12 @@ return array (
                 'archiveSize' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-archive-size',
+                    'sentAs' => 'x-amz-archive-size',
                 ),
                 'checksum' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-sha256-tree-hash',
+                    'sentAs' => 'x-amz-sha256-tree-hash',
                 ),
             ),
             'errorResponses' => array(
@@ -326,7 +326,7 @@ return array (
                 'range' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Range',
+                    'sentAs' => 'Range',
                 ),
             ),
             'errorResponses' => array(
@@ -450,12 +450,12 @@ return array (
                 'archiveDescription' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-archive-description',
+                    'sentAs' => 'x-amz-archive-description',
                 ),
                 'partSize' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-part-size',
+                    'sentAs' => 'x-amz-part-size',
                 ),
             ),
             'errorResponses' => array(
@@ -711,12 +711,12 @@ return array (
                 'archiveDescription' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-archive-description',
+                    'sentAs' => 'x-amz-archive-description',
                 ),
                 'checksum' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-sha256-tree-hash',
+                    'sentAs' => 'x-amz-sha256-tree-hash',
                 ),
                 'body' => array(
                     'type' => array(
@@ -769,12 +769,12 @@ return array (
                 'checksum' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-sha256-tree-hash',
+                    'sentAs' => 'x-amz-sha256-tree-hash',
                 ),
                 'range' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Content-Range',
+                    'sentAs' => 'Content-Range',
                 ),
                 'body' => array(
                     'type' => array(
@@ -811,17 +811,17 @@ return array (
                 'location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
+                    'sentAs' => 'Location',
                 ),
                 'checksum' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-sha256-tree-hash',
+                    'sentAs' => 'x-amz-sha256-tree-hash',
                 ),
                 'archiveId' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-archive-id',
+                    'sentAs' => 'x-amz-archive-id',
                 ),
             ),
         ),
@@ -832,7 +832,7 @@ return array (
                 'location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
+                    'sentAs' => 'Location',
                 ),
             ),
         ),
@@ -942,7 +942,7 @@ return array (
                 'checksum' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-sha256-tree-hash',
+                    'sentAs' => 'x-amz-sha256-tree-hash',
                 ),
                 'status' => array(
                     'type' => 'numeric',
@@ -951,22 +951,22 @@ return array (
                 'contentRange' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Content-Range',
+                    'sentAs' => 'Content-Range',
                 ),
                 'acceptRanges' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Accept-Ranges',
+                    'sentAs' => 'Accept-Ranges',
                 ),
                 'contentType' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Content-Type',
+                    'sentAs' => 'Content-Type',
                 ),
                 'archiveDescription' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-archive-description',
+                    'sentAs' => 'x-amz-archive-description',
                 ),
             ),
         ),
@@ -995,12 +995,12 @@ return array (
                 'location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
+                    'sentAs' => 'Location',
                 ),
                 'jobId' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-job-id',
+                    'sentAs' => 'x-amz-job-id',
                 ),
             ),
         ),
@@ -1011,12 +1011,12 @@ return array (
                 'location' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'Location',
+                    'sentAs' => 'Location',
                 ),
                 'uploadId' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-multipart-upload-id',
+                    'sentAs' => 'x-amz-multipart-upload-id',
                 ),
             ),
         ),
@@ -1211,7 +1211,7 @@ return array (
                 'checksum' => array(
                     'type' => 'string',
                     'location' => 'header',
-                    'rename' => 'x-amz-sha256-tree-hash',
+                    'sentAs' => 'x-amz-sha256-tree-hash',
                 ),
             ),
         ),
