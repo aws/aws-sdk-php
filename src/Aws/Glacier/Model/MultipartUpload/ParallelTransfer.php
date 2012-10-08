@@ -71,8 +71,8 @@ class ParallelTransfer extends AbstractTransfer
 
         foreach ($partSets as $partSet) {
             /** @var $part UploadPart */
-            foreach ($partSet as $part) {
-                $command = $this->getCommandForPart($part)->set('part', $part);
+            foreach ($partSet as $index => $part) {
+                $command = $this->getCommandForPart($part, (bool) $index)->set('part', $part);
                 $this->dispatch(self::BEFORE_PART_UPLOAD, $this->getEventData($command));
                 $commands[] = $command;
             }

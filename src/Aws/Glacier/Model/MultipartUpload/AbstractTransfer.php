@@ -21,6 +21,7 @@ use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer as CommonAbstractTransfer;
 use Aws\Glacier\Model\MultipartUpload\TransferState;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
+use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 use Guzzle\Service\Command\OperationCommand;
 
@@ -29,6 +30,11 @@ use Guzzle\Service\Command\OperationCommand;
  */
 abstract class AbstractTransfer extends CommonAbstractTransfer
 {
+    /**
+     * @var TransferState Glacier transfer state
+     */
+    protected $state;
+
     /**
      * {@inheritdoc}
      */
@@ -42,7 +48,6 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
      */
     protected function complete()
     {
-        /** @var UploadPartGenerator $partGenerator */
         $partGenerator = $this->state->getPartGenerator();
 
         $params = array_replace($this->state->getIdParams(), array(
@@ -62,17 +67,24 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
      *
      * @return OperationCommand
      */
-    protected function getCommandForPart(UploadPart $part)
+    protected function getCommandForPart(UploadPart $part, $useSourceCopy = false)
     {
         // Setup the command with identifying parameters (accountId, vaultName, and uploadId)
         /** @var $command OperationCommand */
         $command = $this->client->getCommand('UploadMultipartPart', $this->state->getIdParams());
         $command->set(Ua::OPTION, Ua::MULTIPART_UPLOAD);
 
+        // Get the correct source
+        $source = $this->source;
+        if ($useSourceCopy) {
+            $url = $this->source->getUri();
+            $source = new EntityBody(fopen($url, 'r'));
+        }
+
         // Add the range, checksum, and the body limited by the range
         $command->set('range', $part->getFormattedRange());
         $command->set('checksum', $part->getChecksum());
-        $command->set('body', new ReadLimitEntityBody($this->source, $part->getSize(), $part->getOffset()));
+        $command->set('body', new ReadLimitEntityBody($source, $part->getSize(), $part->getOffset()));
 
         // Add the required headers including the linear hash of the body
         $command->set('command.headers', array(

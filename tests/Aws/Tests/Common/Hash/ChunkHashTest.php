@@ -1,20 +1,14 @@
 <?php
 
-namespace Aws\Tests\Common;
+namespace Aws\Tests\Common\Hash;
 
-use Aws\Common\ChunkHash;
+use Aws\Common\Hash\ChunkHash;
 
+/**
+ * @covers \Aws\Common\Hash\ChunkHash
+ */
 class ChunkHashTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testHexBinConversionsWorkCorrectly()
-    {
-        $hex = "5a4b";
-        $bin = "ZK";
-
-        $this->assertEquals($hex, ChunkHash::binaryToHex($bin));
-        $this->assertEquals($bin, ChunkHash::hexToBinary($hex));
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -27,7 +21,6 @@ class ChunkHashTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $chunkHash = new ChunkHash('md5');
         $this->assertTrue(is_resource($this->readAttribute($chunkHash, 'context')));
-        $this->assertFalse($this->readAttribute($chunkHash, 'isFinalized'));
     }
 
     public function testHashingIsHappeningCorrectly()
@@ -53,5 +46,18 @@ class ChunkHashTest extends \Guzzle\Tests\GuzzleTestCase
         $chunkHash->getHash();
 
         $chunkHash->addData('bar');
+    }
+
+    public function testCloneMakesCopyOfHashContext()
+    {
+        $chunkHash1 = new ChunkHash('sha256');
+        $chunkHash1->addData('foo');
+
+        $chunkHash2 = clone $chunkHash1;
+
+        $this->assertEquals(hash('sha256', 'foo'), $chunkHash1->getHash());
+
+        $chunkHash2->addData('bar');
+        $this->assertEquals(hash('sha256', 'foobar'), $chunkHash2->getHash());
     }
 }

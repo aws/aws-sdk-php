@@ -1,8 +1,8 @@
 <?php
 
-namespace Aws\Tests\DynamoDb;
+namespace Aws\Tests\Common\Hash;
 
-use Aws\Glacier\Model\TreeHash;
+use Aws\Common\Hash\TreeHash;
 use Aws\Common\Enum\Size;
 
 class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
