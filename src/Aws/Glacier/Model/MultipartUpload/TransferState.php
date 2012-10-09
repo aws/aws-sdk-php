@@ -19,6 +19,7 @@ namespace Aws\Glacier\Model\MultipartUpload;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Model\MultipartUpload\AbstractTransferState;
+use Aws\Common\Model\MultipartUpload\UploadIdInterface;
 
 /**
  * State of a multipart upload
@@ -35,10 +36,10 @@ class TransferState extends AbstractTransferState
     /**
      * {@inheritdoc}
      */
-    public static function fromUploadId(AwsClientInterface $client, array $idParams)
+    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
     {
-        $transferState = new self($idParams);
-        $listParts = $client->getCommand('ListParts', $idParams);
+        $transferState = new self($uploadId);
+        $listParts = $client->getCommand('ListParts', $uploadId->toParams());
 
         foreach ($client->getIterator($listParts) as $part) {
             list($firstByte, $lastByte) = explode('-', $part['RangeInBytes']);

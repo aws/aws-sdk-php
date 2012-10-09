@@ -34,8 +34,12 @@ class ParallelTransfer extends AbstractTransfer
     {
         parent::init();
 
+        if (!$this->source->isLocal() || $this->source->getWrapper() != 'plainfile') {
+            throw new RuntimeException('The source data must be a local file stream when uploading in parallel.');
+        }
+
         if (empty($this->options['concurrency'])) {
-            throw new RuntimeException('The `concurrency` option must be specified when instantiating');
+            throw new RuntimeException('The `concurrency` option must be specified when instantiating.');
         }
     }
 

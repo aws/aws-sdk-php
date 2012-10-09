@@ -50,7 +50,7 @@ class SerialTransfer extends AbstractTransfer
             }
             // @codeCoverageIgnoreEnd
 
-            $params = $this->state->getIdParams();
+            $params = $this->state->getUploadId()->toParams();
             $command = $this->client->getCommand('UploadPart', array_replace($params, array(
                 'PartNumber' => count($this->state) + 1,
                 'body'       => $body,

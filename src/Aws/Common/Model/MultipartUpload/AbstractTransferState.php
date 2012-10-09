@@ -25,9 +25,9 @@ use Aws\Common\Exception\RuntimeException;
 abstract class AbstractTransferState implements TransferStateInterface
 {
     /**
-     * @var array Array of params used in a command to identity the upload part
+     * @var UploadIdInterface Object holding params used to identity the upload part
      */
-    protected $idParams;
+    protected $uploadId;
 
     /**
      * @var array Array of parts where the part number is the index and the ETag is the value
@@ -42,19 +42,19 @@ abstract class AbstractTransferState implements TransferStateInterface
     /**
      * Construct a new transfer state object
      *
-     * @param array $params An array of identifier params
+     * @param UploadIdInterface $uploadId Upload identifier object
      */
-    public function __construct(array $params)
+    public function __construct(UploadIdInterface $uploadId)
     {
-        $this->idParams = $params;
+        $this->uploadId = $uploadId;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getIdParams()
+    public function getUploadId()
     {
-        return $this->idParams;
+        return $this->uploadId;
     }
 
     /**

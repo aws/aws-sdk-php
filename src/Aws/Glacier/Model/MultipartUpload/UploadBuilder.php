@@ -161,20 +161,22 @@ class UploadBuilder extends AbstractUploadBuilder
             throw new InvalidArgumentException('You must specify a vault name, client, and source.');
         }
 
-        if ($this->state && !$this->source->isSeekable()) {
-            throw new InvalidArgumentException('You cannot resume a transfer using a non-seekable stream');
+        if (!$this->source->isSeekable()) {
+            throw new InvalidArgumentException('You cannot upload from a non-seekable source.');
         }
 
         // If no state was set, then create one by initiating or loading a multipart upload
         if (is_string($this->state)) {
+            if (!$this->partGenerator) {
+                throw new InvalidArgumentException('You must provide an UploadPartGenerator when resuming an upload.');
+            }
             /** @var $state \Aws\Glacier\Model\MultipartUpload\TransferState */
-            $state = TransferState::fromUploadId($this->client, array(
+            $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
                 'accountId' => $this->accountId,
                 'vaultName' => $this->vaultName,
                 'uploadId'  => $this->state
-            ));
-            $state->setPartGenerator($this->partGenerator); // @todo what if this hasn't been set?
-            $this->state = $state;
+            )));
+            $this->state->setPartGenerator($this->partGenerator);
         } elseif (!$this->state) {
             $this->state = $this->initiateMultipartUpload();
         }
@@ -210,11 +212,10 @@ class UploadBuilder extends AbstractUploadBuilder
             'archiveDescription' => $this->archiveDescription,
             Ua::OPTION           => Ua::MULTIPART_UPLOAD
         )));
-        // $params['uploadId'] = $command->getResult()->get('uploadId'); @todo response parsing is broken for rest/json
-        $params['uploadId'] = $command->getResponse()->getHeader('x-amz-multipart-upload-id', true);
+        $params['uploadId'] = $command->getResult()->get('uploadId');
 
         // Create a new state based on the initiated upload
-        $state = new TransferState($params);
+        $state = new TransferState(UploadId::fromParams($params));
         $state->setPartGenerator($partGenerator);
 
         return $state;

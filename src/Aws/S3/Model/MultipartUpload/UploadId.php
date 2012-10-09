@@ -16,26 +16,19 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Client\AwsClientInterface;
-use Aws\Common\Model\MultipartUpload\AbstractTransferState;
-use Aws\Common\Model\MultipartUpload\UploadIdInterface;
+use Aws\Common\Model\MultipartUpload\AbstractUploadId;
 
 /**
- * State of a multipart upload
+ * An object that encapsulates the identification for a Glacier upload part
  */
-class TransferState extends AbstractTransferState
+class UploadId extends AbstractUploadId
 {
     /**
      * {@inheritdoc}
      */
-    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
-    {
-        $transferState = new self($uploadId);
-
-        foreach ($client->getIterator('ListParts', $uploadId->toParams()) as $part) {
-            $transferState->addPart(UploadPart::fromArray($part));
-        }
-
-        return $transferState;
-    }
+    protected static $expectedValues = array(
+        'bucket'   => false,
+        'key'      => false,
+        'UploadId' => false
+    );
 }

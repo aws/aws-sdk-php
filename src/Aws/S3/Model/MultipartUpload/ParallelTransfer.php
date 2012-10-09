@@ -27,21 +27,6 @@ use Guzzle\Http\ReadLimitEntityBody;
 class ParallelTransfer extends AbstractTransfer
 {
     /**
-     * @var array Array of {@see ReadLimitEntityBody} objects
-     */
-    protected $parts;
-
-    /**
-     * @var int Concurrency level to use
-     */
-    protected $concurrency;
-
-    /**
-     * @var int Total number of parts to upload
-     */
-    protected $totalParts;
-
-    /**
      * {@inheritdoc}
      */
     protected function init()
@@ -49,11 +34,11 @@ class ParallelTransfer extends AbstractTransfer
         parent::init();
 
         if (!$this->source->isLocal() || $this->source->getWrapper() != 'plainfile') {
-            throw new RuntimeException('The source data must be a local file stream when uploading in parallel');
+            throw new RuntimeException('The source data must be a local file stream when uploading in parallel.');
         }
 
         if (empty($this->options['concurrency'])) {
-            throw new RuntimeException('The `concurrency` option must be specified when instantiating');
+            throw new RuntimeException('The `concurrency` option must be specified when instantiating.');
         }
     }
 
@@ -62,29 +47,31 @@ class ParallelTransfer extends AbstractTransfer
      */
     protected function transfer()
     {
-        $this->prepareParts();
-        $eventData = $this->getEventData();
+        $totalParts  = (int) ceil($this->source->getContentLength() / $this->partSize);
+        $concurrency = min($totalParts, $this->options['concurrency']);
+        $partsToSend = $this->prepareParts($concurrency);
+        $eventData   = $this->getEventData();
 
-        while (!$this->stopped && count($this->state) < $this->totalParts) {
+        while (!$this->stopped && count($this->state) < $totalParts) {
 
             $currentTotal = count($this->state);
             $commands = array();
 
-            for ($i = 0; $i < $this->concurrency && $i + $currentTotal < $this->totalParts; $i++) {
+            for ($i = 0; $i < $concurrency && $i + $currentTotal < $totalParts; $i++) {
 
                 // Move the offset to the correct position
-                $this->parts[$i]->setOffset(($currentTotal + $i) * $this->partSize);
+                $partsToSend[$i]->setOffset(($currentTotal + $i) * $this->partSize);
 
                 // @codeCoverageIgnoreStart
-                if ($this->parts[$i]->getContentLength() == 0) {
+                if ($partsToSend[$i]->getContentLength() == 0) {
                     break;
                 }
                 // @codeCoverageIgnoreEnd
 
-                $params = $this->state->getIdParams();
+                $params = $this->state->getUploadId()->toParams();
                 $eventData['command'] = $this->client->getCommand('UploadPart', array_replace($params, array(
                     'PartNumber' => count($this->state) + 1 + $i,
-                    'body'       => $this->parts[$i],
+                    'body'       => $partsToSend[$i],
                     'use_md5'    => $this->options['part_md5'],
                     Ua::OPTION   => Ua::MULTIPART_UPLOAD
                 )));
@@ -116,17 +103,21 @@ class ParallelTransfer extends AbstractTransfer
 
     /**
      * Prepare the entity body handles to use while transferring
+     *
+     * @param int $concurrency Number of parts to prepare
+     *
+     * @return array Parts to send
      */
-    protected function prepareParts()
+    protected function prepareParts($concurrency)
     {
-        $this->totalParts = (int) ceil($this->source->getContentLength() / $this->partSize);
-        $this->concurrency = min($this->totalParts, $this->options['concurrency']);
         $url = $this->source->getUri();
         // Use the source EntityBody as the first part
-        $this->parts = array(new ReadLimitEntityBody($this->source, $this->partSize));
+        $parts = array(new ReadLimitEntityBody($this->source, $this->partSize));
         // Open EntityBody handles for each part to upload in parallel
-        for ($i = 1; $i < $this->concurrency; $i++) {
-            $this->parts[] = new ReadLimitEntityBody(new EntityBody(fopen($url, 'r')), $this->partSize);
+        for ($i = 1; $i < $concurrency; $i++) {
+            $parts[] = new ReadLimitEntityBody(new EntityBody(fopen($url, 'r')), $this->partSize);
         }
+
+        return $parts;
     }
 }

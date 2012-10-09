@@ -70,7 +70,7 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
      */
     protected function complete()
     {
-        $params = $this->state->getIdParams();
+        $params = $this->state->getUploadId()->toParams();
         $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
 
         /** @var $command \Aws\S3\Command\CompleteMultipartUpload */
@@ -88,7 +88,7 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
      */
     protected function getAbortCommand()
     {
-        $params = $this->state->getIdParams();
+        $params = $this->state->getUploadId()->toParams();
         $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
 
         /** @var $command OperationCommand */

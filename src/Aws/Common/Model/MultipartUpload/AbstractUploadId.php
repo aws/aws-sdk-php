@@ -19,50 +19,37 @@ namespace Aws\Common\Model\MultipartUpload;
 use Aws\Common\Exception\InvalidArgumentException;
 
 /**
- * An object that encapsulates the data for an upload part
+ * An object that encapsulates the data identifying an upload
  */
-abstract class AbstractUploadPart implements UploadPartInterface
+abstract class AbstractUploadId implements UploadIdInterface
 {
     /**
-     * @var array A map of external array keys to internal property names
+     * @var array Expected values (with defaults)
      */
-    protected static $keyMap = array();
+    protected static $expectedValues = array();
 
     /**
-     * @var int The number of the upload part representing its order in the overall upload
+     * @var array Params representing the identifying information
      */
-    protected $partNumber;
+    protected $data = array();
 
     /**
      * {@inheritdoc}
      */
-    public static function fromArray($data)
+    public static function fromParams($data)
     {
-        $part = new static();
-        $part->loadData($data);
+        $uploadId = new static();
+        $uploadId->loadData($data);
 
-        return $part;
+        return $uploadId;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPartNumber()
+    public function toParams()
     {
-        return $this->partNumber;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $array = array();
-        foreach (static::$keyMap as $key => $property) {
-            $array[$key] = $this->{$property};
-        }
-
-        return $array;
+        return $this->data;
     }
 
     /**
@@ -70,7 +57,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
      */
     public function serialize()
     {
-        return serialize($this->toArray());
+        return serialize($this->data);
     }
 
     /**
@@ -82,19 +69,20 @@ abstract class AbstractUploadPart implements UploadPartInterface
     }
 
     /**
-     * Loads an array of data into the upload part by extracting only the needed keys
+     * Loads an array of data into the UploadId by extracting only the needed keys
      *
-     * @param array|\Traversable $data Data to load into the upload part value object
+     * @param array $data Data to load
      *
      * @throws InvalidArgumentException if a required key is missing
      */
     protected function loadData($data)
     {
-        foreach (static::$keyMap as $key => $property) {
+        $data = array_replace(static::$expectedValues, array_intersect_key($data, static::$expectedValues));
+        foreach ($data as $key => $value) {
             if (isset($data[$key])) {
-                $this->{$property} = $data[$key];
+                $this->data[$key] = $data[$key];
             } else {
-                throw new InvalidArgumentException("A required key [$key] was missing from the upload part.");
+                throw new InvalidArgumentException("A required key [$key] was missing from the UploadId.");
             }
         }
     }

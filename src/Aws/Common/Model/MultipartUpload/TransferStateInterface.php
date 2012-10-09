@@ -26,19 +26,19 @@ interface TransferStateInterface extends \Countable, \IteratorAggregate, \Serial
     /**
      * Create the transfer state from the results of list parts request
      *
-     * @param AwsClientInterface $client   Client used send the request
-     * @param array              $idParams Params needed to identify the upload and form the request
+     * @param AwsClientInterface $client   Client used to send the request
+     * @param UploadIdInterface  $uploadId Params needed to identify the upload and form the request
      *
      * @return self
      */
-    public static function fromUploadId(AwsClientInterface $client, array $idParams);
+    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId);
 
     /**
      * Get the params used to identify an upload part
      *
-     * @return array
+     * @return UploadIdInterface
      */
-    public function getIdParams();
+    public function getUploadId();
 
     /**
      * Get the part information of a specific part

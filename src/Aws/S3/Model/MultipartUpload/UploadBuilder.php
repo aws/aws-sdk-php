@@ -204,11 +204,11 @@ class UploadBuilder extends AbstractUploadBuilder
 
         // If no state was set, then create one by initiating or loading a multipart upload
         if (is_string($this->state)) {
-            $this->state = TransferState::fromUploadId($this->client, array(
+            $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
                 'bucket'   => $this->bucket,
                 'key'      => $this->key,
                 'UploadId' => $this->state
-            ));
+            )));
         } elseif (!$this->state) {
             $this->state = $this->initiateMultipartUpload();
         }
@@ -256,6 +256,6 @@ class UploadBuilder extends AbstractUploadBuilder
 
         // Create a new state based on the initiated upload
         $params['UploadId'] = $result['UploadId'];
-        return new TransferState($params);
+        return new TransferState(UploadId::fromParams($params));
     }
 }
