@@ -105,7 +105,7 @@ class UploadPartContext
     {
         if (!$this->uploadPart) {
             $this->uploadPart = UploadPart::fromArray(array(
-                'partNumber'  => $this->offset / $this->maxSize,
+                'partNumber'  => (int) ($this->offset / $this->maxSize + 1),
                 'checksum'    => $this->treeHash->getHash(),
                 'contentHash' => $this->chunkHash->getHash(),
                 'size'        => $this->size,

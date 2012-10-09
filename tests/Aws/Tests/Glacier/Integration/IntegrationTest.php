@@ -3,9 +3,14 @@
 namespace Aws\Tests\Glacier\Integration;
 
 use Aws\Common\Enum\Size;
+use Aws\Common\Exception\MultipartUploadException;
 use Aws\Glacier\GlacierClient;
+use Aws\Glacier\Model\MultipartUpload\AbstractTransfer as Transfer;
+use Aws\Glacier\Model\MultipartUpload\UploadBuilder;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\Client;
+use Guzzle\Http\EntityBody;
+use Guzzle\Http\ReadLimitEntityBody;
 
 /**
  * @group integration
@@ -67,20 +72,25 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testUploadAndDeleteArchives()
     {
-        $content  = str_repeat('x', 6 * Size::MB + 425);
-        $length   = strlen($content);
+        $length   = 6 * Size::MB + 425;
+        $content  = EntityBody::factory(str_repeat('x', $length));
         $partSize = 2 * Size::MB;
 
         // Single upload
-        $helper = UploadPartGenerator::factory($content);
-        $this->assertEquals($length, $helper->getUploadPart()->getSize());
-        $this->assertEquals($length, $helper->getArchiveSize());
-        $body = $helper->getBody();
+        $generator = UploadPartGenerator::factory($content);
+        $this->assertEquals($length, $generator->getUploadPart()->getSize());
+        $this->assertEquals($length, $generator->getArchiveSize());
+        $part = $generator->getUploadPart();
         $archiveId = $this->client->getCommand('UploadArchive', array(
             'vaultName'          => self::TEST_VAULT,
             'archiveDescription' => 'Foo   bar',
-            'body'               => $body,
-            'glacier.context'     => $helper->getUploadPart()
+            'checksum'           => $part->getChecksum(),
+            'range'              => $part->getFormattedRange(),
+            'body'               => $content,
+            'command.headers'    => array(
+                'x-amz-content-sha256' => $part->getContentHash(),
+                'Content-Length'       => $part->getSize()
+            )
         ))->getResponse()->getHeader('x-amz-archive-id', true);
         $this->assertNotEmpty($archiveId);
 
@@ -90,30 +100,34 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'archiveId' => $archiveId
         ))->execute();
 
-        sleep(5);
+        sleep(3);
 
         // Multipart upload
-        $helper = UploadPartGenerator::factory($content, $partSize);
-        $this->assertEquals($length, $helper->getArchiveSize());
-        $body = $helper->getBody();
+        $generator = UploadPartGenerator::factory($content, $partSize);
+        $this->assertEquals($length, $generator->getArchiveSize());
         $uploadId = $this->client->getCommand('InitiateMultipartUpload', array(
             'vaultName' => self::TEST_VAULT,
             'partSize' => (string) $partSize
         ))->getResult()->get('uploadId');
-        foreach ($helper->getAllParts() as $part) {
+        foreach ($generator as $part) {
             $this->client->uploadMultipartPart(array(
                 'vaultName'       => self::TEST_VAULT,
                 'uploadId'        => $uploadId,
-                'body'            => $body,
-                'glacier.context' => $part
+                'checksum'        => $part->getChecksum(),
+                'range'           => $part->getFormattedRange(),
+                'body'            => new ReadLimitEntityBody($content, $part->getSize(), $part->getOffset()),
+                'command.headers' => array(
+                    'x-amz-content-sha256' => $part->getContentHash(),
+                    'Content-Length'       => $part->getSize()
+                )
             ))->execute();
-            sleep(5);
+            sleep(3);
         }
         $archiveId = $this->client->getCommand('CompleteMultipartUpload', array(
-            'vaultName' => self::TEST_VAULT,
-            'uploadId' => $uploadId,
-            'archiveSize' => (string) $helper->getArchiveSize(),
-            'checksum' => $helper->getRootChecksum()
+            'vaultName'   => self::TEST_VAULT,
+            'uploadId'    => $uploadId,
+            'archiveSize' => $generator->getArchiveSize(),
+            'checksum'    => $generator->getRootChecksum()
         ))->getResult()->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
@@ -122,5 +136,54 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
         ))->execute();;
+    }
+
+    public function testMultipartUploadAbstractions()
+    {
+        $result = null;
+        $count  = 0;
+        $source = EntityBody::factory(str_repeat('x', 6 * Size::MB + 425));
+
+        /** @var $transfer Transfer */
+        $transfer = UploadBuilder::newInstance()
+            ->setClient($this->client)
+            ->setSource($source)
+            ->setVaultName(self::TEST_VAULT)
+            ->setPartSize(Size::MB)
+            ->setArchiveDescription('Foo   bar')
+            ->build();
+
+        $transfer->getEventDispatcher()->addListener($transfer::BEFORE_PART_UPLOAD, function ($event) use (&$count) {
+            if ($count > 2) {
+                throw new \Exception;
+            }
+            $count++;
+        });
+
+        try {
+            $transfer->upload();
+            $serializedState = null;
+            $this->fail('Unexpected code execution - exit point 1');
+        } catch (MultipartUploadException $e) {
+            $serializedState = serialize($e->getState());
+        }
+
+        /** @var $transfer Transfer */
+        $transfer = UploadBuilder::newInstance()
+            ->setClient($this->client)
+            ->setSource($source)
+            ->setVaultName(self::TEST_VAULT)
+            ->resumeFrom(unserialize($serializedState))
+            ->build();
+
+        try {
+            $result = $transfer->upload();
+        } catch (MultipartUploadException $e) {
+            $result = null;
+            $this->fail('Unexpected code execution - exit point 2');
+        }
+
+        $this->assertNotEmpty($result['archiveId']);
+        $this->assertEquals($result['checksum'], $transfer->getState()->getPartGenerator()->getRootChecksum());
     }
 }

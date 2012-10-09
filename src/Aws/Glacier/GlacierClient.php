@@ -119,9 +119,6 @@ class GlacierClient extends AbstractClient
             'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
         ));
 
-        // Set x-amz-content-sha256 header for upload operations
-        $client->addSubscriber(new UploadContextListener());
-
         // Use the same iterator class for every iterator
         $client->setResourceIteratorFactory(new MapResourceIteratorFactory(array(
              '*' => 'Aws\Glacier\Iterator\DefaultIterator'
