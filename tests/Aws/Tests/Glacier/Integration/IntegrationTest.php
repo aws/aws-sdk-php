@@ -140,8 +140,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testMultipartUploadAbstractions()
     {
-        $result = null;
-        $count  = 0;
         $source = EntityBody::factory(str_repeat('x', 6 * Size::MB + 425));
 
         /** @var $transfer Transfer */
@@ -153,7 +151,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             ->setArchiveDescription('Foo   bar')
             ->build();
 
-        $transfer->getEventDispatcher()->addListener($transfer::BEFORE_PART_UPLOAD, function ($event) use (&$count) {
+
+        $transfer->getEventDispatcher()->addListener($transfer::BEFORE_PART_UPLOAD, function ($event) {
+            static $count = 0;
             if ($count > 2) {
                 throw new \Exception;
             }
