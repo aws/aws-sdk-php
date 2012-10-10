@@ -77,10 +77,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $partSize = 2 * Size::MB;
 
         // Single upload
-        $generator = UploadPartGenerator::factory($content);
-        $this->assertEquals($length, $generator->getUploadPart()->getSize());
-        $this->assertEquals($length, $generator->getArchiveSize());
-        $part = $generator->getUploadPart();
+        $part = UploadPartGenerator::createSingleUploadPart($content);
+        $this->assertEquals($length, $part->getSize());
         $archiveId = $this->client->getCommand('UploadArchive', array(
             'vaultName'          => self::TEST_VAULT,
             'archiveDescription' => 'Foo   bar',
@@ -168,12 +166,15 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             $serializedState = serialize($e->getState());
         }
 
+        $state = unserialize($serializedState);
+        $this->assertInstanceOf('Aws\Glacier\Model\MultipartUpload\TransferState', $state);
+
         /** @var $transfer Transfer */
         $transfer = UploadBuilder::newInstance()
             ->setClient($this->client)
             ->setSource($source)
             ->setVaultName(self::TEST_VAULT)
-            ->resumeFrom(unserialize($serializedState))
+            ->resumeFrom($state)
             ->build();
 
         try {

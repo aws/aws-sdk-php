@@ -35,6 +35,8 @@ class MultipartUploadException extends RuntimeException
     public function __construct(TransferStateInterface $state, \Exception $exception = null)
     {
         parent::__construct('An error was encountered while performing a multipart upload', 0, $exception);
+
+        $this->state = $state;
     }
 
     /**
