@@ -124,6 +124,9 @@ class GlacierClient extends AbstractClient
              '*' => 'Aws\Glacier\Iterator\DefaultIterator'
         )));
 
+        // Listen for upload operations and make sure the required hash headers are added
+        $client->addSubscriber(new GlacierUploadListener());
+
         return $client;
     }
 }

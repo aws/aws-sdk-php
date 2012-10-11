@@ -99,13 +99,8 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
         // Add the range, checksum, and the body limited by the range
         $command->set('range', $part->getFormattedRange());
         $command->set('checksum', $part->getChecksum());
+        $command->set('ContentSHA256', $part->getContentHash());
         $command->set('body', new ReadLimitEntityBody($source, $part->getSize(), $part->getOffset()));
-
-        // Add the required headers including the linear hash of the body
-        $command->set('command.headers', array(
-            'x-amz-content-sha256' => $part->getContentHash(),
-            'Content-Length'       => $part->getSize()
-        ));
 
         return $command;
     }

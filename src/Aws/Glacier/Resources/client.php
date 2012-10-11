@@ -7,9 +7,9 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'array',
-            'responseType' => 'primitive',
-            'responseNotes' => 'The result of this operation will be an empty array',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -127,9 +127,9 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{accountId}/vaults/{vaultName}/archives/{archiveId}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'array',
-            'responseType' => 'primitive',
-            'responseNotes' => 'The result of this operation will be an empty array',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -166,9 +166,9 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{accountId}/vaults/{vaultName}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'array',
-            'responseType' => 'primitive',
-            'responseNotes' => 'The result of this operation will be an empty array',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -200,9 +200,9 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'array',
-            'responseType' => 'primitive',
-            'responseNotes' => 'The result of this operation will be an empty array',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -542,6 +542,7 @@ return array (
                 'uploadIdMarker' => array(
                     'type' => 'string',
                     'location' => 'query',
+                    'sentAs' => 'marker',
                 ),
                 'limit' => array(
                     'type' => 'string',
@@ -649,9 +650,9 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{accountId}/vaults/{vaultName}/notification-configuration',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'array',
-            'responseType' => 'primitive',
-            'responseNotes' => 'The result of this operation will be an empty array',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -725,6 +726,10 @@ return array (
                     ),
                     'location' => 'body',
                 ),
+                'ContentSHA256' => array(
+                    'description' => 'SHA256 checksum of the body.',
+                    'default' => true,
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -783,6 +788,10 @@ return array (
                     ),
                     'location' => 'body',
                 ),
+                'ContentSHA256' => array(
+                    'description' => 'SHA256 checksum of the body.',
+                    'default' => true,
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -804,6 +813,10 @@ return array (
         ),
     ),
     'models' => array(
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+        ),
         'ArchiveCreationOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -868,7 +881,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'json',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::stringBoolean',
                     ),
                 ),
                 'StatusCode' => array(
@@ -1052,7 +1065,7 @@ return array (
                             'Completed' => array(
                                 'type' => 'boolean',
                                 'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                    'Aws\\Common\\Command\\Filters::stringBoolean',
                                 ),
                             ),
                             'StatusCode' => array(

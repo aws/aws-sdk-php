@@ -7,10 +7,12 @@ use Aws\Common\Exception\MultipartUploadException;
 use Aws\Glacier\GlacierClient;
 use Aws\Glacier\Model\MultipartUpload\AbstractTransfer as Transfer;
 use Aws\Glacier\Model\MultipartUpload\UploadBuilder;
+use Aws\Glacier\Model\MultipartUpload\UploadPart;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\Client;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
+use Guzzle\Plugin\Log\LogPlugin;
 
 /**
  * @group integration
@@ -34,7 +36,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function setUp()
     {
         $this->client = $this->getServiceBuilder()->get('glacier');
-        $this->client->getConfig()->set('curl.CURLOPT_VERBOSE', true);
     }
 
     public function testCrudVaults()
@@ -77,19 +78,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $partSize = 2 * Size::MB;
 
         // Single upload
-        $part = UploadPartGenerator::createSingleUploadPart($content);
-        $this->assertEquals($length, $part->getSize());
         $archiveId = $this->client->getCommand('UploadArchive', array(
             'vaultName'          => self::TEST_VAULT,
             'archiveDescription' => 'Foo   bar',
-            'checksum'           => $part->getChecksum(),
-            'range'              => $part->getFormattedRange(),
-            'body'               => $content,
-            'command.headers'    => array(
-                'x-amz-content-sha256' => $part->getContentHash(),
-                'Content-Length'       => $part->getSize()
-            )
-        ))->getResponse()->getHeader('x-amz-archive-id', true);
+            'body'               => $content
+        ))->getResult()->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
         // Delete the archive
@@ -107,17 +100,15 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'vaultName' => self::TEST_VAULT,
             'partSize' => (string) $partSize
         ))->getResult()->get('uploadId');
+        /** @var $part UploadPart */
         foreach ($generator as $part) {
             $this->client->uploadMultipartPart(array(
                 'vaultName'       => self::TEST_VAULT,
                 'uploadId'        => $uploadId,
-                'checksum'        => $part->getChecksum(),
                 'range'           => $part->getFormattedRange(),
+                'checksum'        => $part->getChecksum(),
+                'ContentSHA256'   => $part->getContentHash(),
                 'body'            => new ReadLimitEntityBody($content, $part->getSize(), $part->getOffset()),
-                'command.headers' => array(
-                    'x-amz-content-sha256' => $part->getContentHash(),
-                    'Content-Length'       => $part->getSize()
-                )
             ))->execute();
             sleep(3);
         }
