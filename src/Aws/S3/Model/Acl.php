@@ -18,11 +18,12 @@ namespace Aws\S3\Model;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\OverflowException;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * Amazon S3 ACL model
  */
-class Acl implements \IteratorAggregate, \Countable
+class Acl implements ToArrayInterface, \IteratorAggregate, \Countable
 {
     /**
      * @var \SplObjectStorage List of grants on the ACL
@@ -132,8 +133,7 @@ class Acl implements \IteratorAggregate, \Countable
                     $this->addGrant($grant);
                 }
             } else {
-                throw new InvalidArgumentException('Grants must be passed in '
-                    . 'as an array or Traversable object.');
+                throw new InvalidArgumentException('Grants must be passed in as an array or Traversable object.');
             }
         }
 
@@ -201,11 +201,20 @@ class Acl implements \IteratorAggregate, \Countable
             $headers = array_merge_recursive($headers, $grant->getHeaderArray());
         }
 
-        foreach ($headers as $key => & $values) {
+        foreach ($headers as &$values) {
             $values = implode(', ', (array) $values);
         }
 
         return $headers;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo
+     */
+    public function toArray()
+    {
+        return array();
     }
 
     /**

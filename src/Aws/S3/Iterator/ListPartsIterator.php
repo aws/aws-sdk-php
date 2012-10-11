@@ -21,14 +21,14 @@ namespace Aws\S3\Iterator;
  */
 class ListPartsIterator extends AbstractS3ResourceIterator
 {
-    protected static $limitParam = 'max-parts';
+    protected static $limitParam = 'MaxParts';
 
     /**
      * {@inheritdoc}
      */
     protected function handleResults($result)
     {
-        return isset($result['Part']) ? $result['Part'] : array();
+        return $result['Parts'] ?: array();
     }
 
     /**
@@ -37,9 +37,9 @@ class ListPartsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken($result)
     {
         $this->nextToken = false;
-        if ($result['IsTruncated'] === 'true') {
+        if ($result['IsTruncated']) {
             $this->nextToken = array(
-                'part-number-marker' => $result['NextPartNumberMarker']
+                'PartNumberMarker' => $result['NextPartNumberMarker']
             );
         }
     }

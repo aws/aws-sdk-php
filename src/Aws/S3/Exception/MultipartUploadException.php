@@ -35,7 +35,11 @@ class MultipartUploadException extends S3Exception
      */
     public function __construct(TransferState $state, \Exception $exception = null)
     {
-        parent::__construct('An error was encountered while performing a multipart upload', 0, $exception);
+        parent::__construct(
+            'An error was encountered while performing a multipart upload: ' . $exception->getMessage(),
+            0,
+            $exception
+        );
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace Aws\Tests\S3\Iterator;
 
-use Aws\S3\Iterator\GetBucketObjectVersionsIterator;
+use Aws\S3\Iterator\ListObjectVersionsIterator;
 
 /**
- * @covers Aws\S3\Iterator\GetBucketObjectVersionsIterator
+ * @covers Aws\S3\Iterator\ListObjectVersionsIterator
  */
-class GetBucketObjectVersionsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
+class ListObjectVersionsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testIteratesGetBucketObjectVersionsCommand()
     {
@@ -19,11 +19,11 @@ class GetBucketObjectVersionsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         // Create an iterator that will exercise the most code paths
-        $command = $client->getCommand('GetBucketObjectVersions', array(
-            'bucket'    => 'bucket-1',
-            'delimiter' => '/'
+        $command = $client->getCommand('ListObjectVersions', array(
+            'Bucket'    => 'bucket-1',
+            'Delimiter' => '/'
         ));
-        $iterator = new GetBucketObjectVersionsIterator($command, array(
+        $iterator = new ListObjectVersionsIterator($command, array(
             'return_prefixes' => true
         ));
 

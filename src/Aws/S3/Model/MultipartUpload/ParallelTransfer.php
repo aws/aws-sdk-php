@@ -80,12 +80,12 @@ class ParallelTransfer extends AbstractTransfer
                 // @codeCoverageIgnoreEnd
 
                 $eventData['command'] = $this->client->getCommand('UploadPart', array(
-                    'bucket'     => $this->state->getBucket(),
-                    'key'        => $this->state->getKey(),
+                    'Bucket'     => $this->state->getBucket(),
+                    'Key'        => $this->state->getKey(),
                     'PartNumber' => count($this->state) + 1 + $i,
                     'UploadId'   => $this->state->getUploadId(),
-                    'body'       => $this->parts[$i],
-                    'use_md5'    => $this->options['part_md5'],
+                    'Body'       => $this->parts[$i],
+                    'ContentMD5' => (bool) $this->options['part_md5'],
                     Ua::OPTION   => Ua::MULTIPART_UPLOAD
                 ));
                 $commands[] = $eventData['command'];
@@ -102,7 +102,7 @@ class ParallelTransfer extends AbstractTransfer
             foreach ($this->client->execute($commands) as $command) {
                 $this->state->addPart(
                     count($this->state) + 1,
-                    (string) $command->getResult()->getHeader('ETag'),
+                    (string) $command->getResponse()->getHeader('ETag'),
                     (int) (string) $command->getRequest()->getHeader('Content-Length'),
                     gmdate('r')
                 );

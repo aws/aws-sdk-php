@@ -113,8 +113,8 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     public function abort()
     {
         $this->client->getCommand('AbortMultipartUpload', array(
-            'bucket'   => $this->state->getBucket(),
-            'key'      => $this->state->getKey(),
+            'Bucket'   => $this->state->getBucket(),
+            'Key'      => $this->state->getKey(),
             'UploadId' => $this->state->getUploadId(),
             Ua::OPTION => Ua::MULTIPART_UPLOAD
         ))->execute();
@@ -196,15 +196,12 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     protected function completeUpload()
     {
         $command = $this->client->getCommand('CompleteMultipartUpload', array(
-            'bucket'   => $this->state->getBucket(),
-            'key'      => $this->state->getKey(),
+            'Bucket'   => $this->state->getBucket(),
+            'Key'      => $this->state->getKey(),
             'UploadId' => $this->state->getUploadId(),
+            'Parts'    => $this->state->getIterator()->getArrayCopy(),
             Ua::OPTION => Ua::MULTIPART_UPLOAD
         ));
-
-        foreach ($this->state as $part) {
-            $command->addPart($part['PartNumber'], $part['ETag']);
-        }
 
         return $command->execute();
     }

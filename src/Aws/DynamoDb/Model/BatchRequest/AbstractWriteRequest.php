@@ -16,12 +16,10 @@
 
 namespace Aws\DynamoDb\Model\BatchRequest;
 
-use Aws\Common\AbstractToArray;
-
 /**
  * A base batch write request defining the ability to get the table name
  */
-abstract class AbstractWriteRequest extends AbstractToArray implements WriteRequestInterface
+abstract class AbstractWriteRequest implements WriteRequestInterface
 {
     /**
      * @var string The name of the DynamoDB table

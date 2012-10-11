@@ -76,8 +76,8 @@ class TransferState implements \Countable, \IteratorAggregate
     {
         $transferState = new self($bucket, $key, $id);
         $iterator = $client->getIterator('ListParts', array(
-            'bucket'   => $bucket,
-            'key'      => $key,
+            'Bucket'   => $bucket,
+            'Key'      => $key,
             'UploadId' => $id
         ));
 

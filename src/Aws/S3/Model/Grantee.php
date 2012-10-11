@@ -21,11 +21,12 @@ use Aws\S3\Enum\GranteeType;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\UnexpectedValueException;
 use Aws\Common\Exception\LogicException;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * Amazon S3 Grantee model
  */
-class Grantee
+class Grantee implements ToArrayInterface
 {
     /**
      * @var array A map of grantee types to grant header value prefixes
@@ -216,6 +217,14 @@ class Grantee
     {
         $key = self::$headerMap[$this->type];
         return "{$key}=\"{$this->id}\"";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        return array();
     }
 
     /**

@@ -158,7 +158,7 @@ return array (
                                     'required' => true,
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                             ),
@@ -171,7 +171,7 @@ return array (
                                     'required' => true,
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Quantity' => array(
@@ -232,7 +232,7 @@ return array (
                                                 'required' => true,
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                         ),
@@ -245,7 +245,7 @@ return array (
                                                 'required' => true,
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                             'Quantity' => array(
@@ -292,7 +292,7 @@ return array (
                             'required' => true,
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Bucket' => array(
@@ -310,7 +310,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
             ),
@@ -495,7 +495,7 @@ return array (
                             'required' => true,
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Bucket' => array(
@@ -517,7 +517,7 @@ return array (
                             'required' => true,
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -538,7 +538,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
             ),
@@ -1124,7 +1124,7 @@ return array (
                                     'required' => true,
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                             ),
@@ -1137,7 +1137,7 @@ return array (
                                     'required' => true,
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Quantity' => array(
@@ -1198,7 +1198,7 @@ return array (
                                                 'required' => true,
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                         ),
@@ -1211,7 +1211,7 @@ return array (
                                                 'required' => true,
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                             'Quantity' => array(
@@ -1258,7 +1258,7 @@ return array (
                             'required' => true,
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Bucket' => array(
@@ -1276,7 +1276,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'Id' => array(
@@ -1410,7 +1410,7 @@ return array (
                             'required' => true,
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Bucket' => array(
@@ -1432,7 +1432,7 @@ return array (
                             'required' => true,
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -1453,7 +1453,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'Id' => array(
@@ -1576,7 +1576,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -1697,7 +1697,7 @@ return array (
                                         'QueryString' => array(
                                             'type' => 'boolean',
                                             'filters' => array(
-                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                             ),
                                         ),
                                     ),
@@ -1708,7 +1708,7 @@ return array (
                                         'Enabled' => array(
                                             'type' => 'boolean',
                                             'filters' => array(
-                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                             ),
                                         ),
                                         'Quantity' => array(
@@ -1757,7 +1757,7 @@ return array (
                                                     'QueryString' => array(
                                                         'type' => 'boolean',
                                                         'filters' => array(
-                                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                                         ),
                                                     ),
                                                 ),
@@ -1768,7 +1768,7 @@ return array (
                                                     'Enabled' => array(
                                                         'type' => 'boolean',
                                                         'filters' => array(
-                                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                                         ),
                                                     ),
                                                     'Quantity' => array(
@@ -1804,7 +1804,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Bucket' => array(
@@ -1818,7 +1818,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                     ),
@@ -1907,7 +1907,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -1987,7 +1987,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Bucket' => array(
@@ -2004,7 +2004,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Quantity' => array(
@@ -2023,7 +2023,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                     ),
@@ -2117,7 +2117,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -2238,7 +2238,7 @@ return array (
                                         'QueryString' => array(
                                             'type' => 'boolean',
                                             'filters' => array(
-                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                             ),
                                         ),
                                     ),
@@ -2249,7 +2249,7 @@ return array (
                                         'Enabled' => array(
                                             'type' => 'boolean',
                                             'filters' => array(
-                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                             ),
                                         ),
                                         'Quantity' => array(
@@ -2298,7 +2298,7 @@ return array (
                                                     'QueryString' => array(
                                                         'type' => 'boolean',
                                                         'filters' => array(
-                                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                                         ),
                                                     ),
                                                 ),
@@ -2309,7 +2309,7 @@ return array (
                                                     'Enabled' => array(
                                                         'type' => 'boolean',
                                                         'filters' => array(
-                                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                                         ),
                                                     ),
                                                     'Quantity' => array(
@@ -2345,7 +2345,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Bucket' => array(
@@ -2359,7 +2359,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                     ),
@@ -2459,7 +2459,7 @@ return array (
                                 'QueryString' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                             ),
@@ -2470,7 +2470,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Quantity' => array(
@@ -2520,7 +2520,7 @@ return array (
                                             'QueryString' => array(
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                         ),
@@ -2531,7 +2531,7 @@ return array (
                                             'Enabled' => array(
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                             'Quantity' => array(
@@ -2569,7 +2569,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Bucket' => array(
@@ -2584,7 +2584,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'ETag' => array(
@@ -2663,7 +2663,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -2743,7 +2743,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Bucket' => array(
@@ -2760,7 +2760,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Quantity' => array(
@@ -2779,7 +2779,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                     ),
@@ -2838,7 +2838,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Bucket' => array(
@@ -2856,7 +2856,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -2876,7 +2876,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'ETag' => array(
@@ -2905,7 +2905,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'Quantity' => array(
@@ -2954,7 +2954,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'Quantity' => array(
@@ -3055,7 +3055,7 @@ return array (
                                             'QueryString' => array(
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                         ),
@@ -3066,7 +3066,7 @@ return array (
                                             'Enabled' => array(
                                                 'type' => 'boolean',
                                                 'filters' => array(
-                                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                                 ),
                                             ),
                                             'Quantity' => array(
@@ -3115,7 +3115,7 @@ return array (
                                                         'QueryString' => array(
                                                             'type' => 'boolean',
                                                             'filters' => array(
-                                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                                             ),
                                                         ),
                                                     ),
@@ -3126,7 +3126,7 @@ return array (
                                                         'Enabled' => array(
                                                             'type' => 'boolean',
                                                             'filters' => array(
-                                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                                             ),
                                                         ),
                                                         'Quantity' => array(
@@ -3159,7 +3159,7 @@ return array (
                             'Enabled' => array(
                                 'type' => 'boolean',
                                 'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                 ),
                             ),
                         ),
@@ -3187,7 +3187,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'Quantity' => array(
@@ -3233,7 +3233,7 @@ return array (
                     'type' => 'boolean',
                     'location' => 'xml',
                     'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
+                        'Aws\\Common\\Command\\Filters::booleanToString',
                     ),
                 ),
                 'Quantity' => array(
@@ -3293,7 +3293,7 @@ return array (
                                     'Enabled' => array(
                                         'type' => 'boolean',
                                         'filters' => array(
-                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                         ),
                                     ),
                                     'Quantity' => array(
@@ -3315,7 +3315,7 @@ return array (
                             'Enabled' => array(
                                 'type' => 'boolean',
                                 'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::booleanString',
+                                    'Aws\\Common\\Command\\Filters::booleanToString',
                                 ),
                             ),
                         ),
@@ -3384,7 +3384,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -3505,7 +3505,7 @@ return array (
                                         'QueryString' => array(
                                             'type' => 'boolean',
                                             'filters' => array(
-                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                             ),
                                         ),
                                     ),
@@ -3516,7 +3516,7 @@ return array (
                                         'Enabled' => array(
                                             'type' => 'boolean',
                                             'filters' => array(
-                                                'Aws\\Common\\Command\\Filters::booleanString',
+                                                'Aws\\Common\\Command\\Filters::booleanToString',
                                             ),
                                         ),
                                         'Quantity' => array(
@@ -3565,7 +3565,7 @@ return array (
                                                     'QueryString' => array(
                                                         'type' => 'boolean',
                                                         'filters' => array(
-                                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                                         ),
                                                     ),
                                                 ),
@@ -3576,7 +3576,7 @@ return array (
                                                     'Enabled' => array(
                                                         'type' => 'boolean',
                                                         'filters' => array(
-                                                            'Aws\\Common\\Command\\Filters::booleanString',
+                                                            'Aws\\Common\\Command\\Filters::booleanToString',
                                                         ),
                                                     ),
                                                     'Quantity' => array(
@@ -3612,7 +3612,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Bucket' => array(
@@ -3626,7 +3626,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                     ),
@@ -3664,7 +3664,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                         'Quantity' => array(
@@ -3744,7 +3744,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Bucket' => array(
@@ -3761,7 +3761,7 @@ return array (
                                 'Enabled' => array(
                                     'type' => 'boolean',
                                     'filters' => array(
-                                        'Aws\\Common\\Command\\Filters::booleanString',
+                                        'Aws\\Common\\Command\\Filters::booleanToString',
                                     ),
                                 ),
                                 'Quantity' => array(
@@ -3780,7 +3780,7 @@ return array (
                         'Enabled' => array(
                             'type' => 'boolean',
                             'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanString',
+                                'Aws\\Common\\Command\\Filters::booleanToString',
                             ),
                         ),
                     ),

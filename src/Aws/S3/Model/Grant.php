@@ -18,11 +18,12 @@ namespace Aws\S3\Model;
 
 use Aws\S3\Enum\Permission;
 use Aws\Common\Exception\InvalidArgumentException;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * Amazon S3 Grant model
  */
-class Grant
+class Grant implements ToArrayInterface
 {
     /**
      * @var array A map of permissions to grant header keys
@@ -123,6 +124,14 @@ class Grant
         return array(
             self::$headerMap[$this->permission] => $this->grantee->getHeaderValue()
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        return array();
     }
 
     /**

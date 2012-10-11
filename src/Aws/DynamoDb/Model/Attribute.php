@@ -16,15 +16,15 @@
 
 namespace Aws\DynamoDb\Model;
 
-use Aws\Common\AbstractToArray;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\DynamoDb\Enum\Type;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * Class representing a DynamoDB item attribute. Contains helpers for building
  * attributes and arrays of attributes.
  */
-class Attribute extends AbstractToArray
+class Attribute implements ToArrayInterface
 {
     /**
      * @var string A constant used to express the attribute be formatted for expected conditions
@@ -135,7 +135,7 @@ class Attribute extends AbstractToArray
      * Instantiates a DynamoDB attribute.
      *
      * @param string|array $value The DynamoDB attribute value
-     * @param string $type The DynamoDB attribute type (N, S, B, NS, SS, BS)
+     * @param string       $type  The DynamoDB attribute type (N, S, B, NS, SS, BS)
      */
     public function __construct($value, $type = Type::STRING)
     {
@@ -223,25 +223,5 @@ class Attribute extends AbstractToArray
     public function toArray()
     {
         return $this->getFormatted();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetExists($offset)
-    {
-        $data = $this->getFormatted();
-
-        return isset($data[$offset]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetGet($offset)
-    {
-        $data = $this->getFormatted();
-
-        return isset($data[$offset]) ? $data[$offset] : null;
     }
 }

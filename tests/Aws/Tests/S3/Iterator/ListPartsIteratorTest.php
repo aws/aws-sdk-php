@@ -19,10 +19,10 @@ class ListPartsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         // Create an iterator that will exercise the most code paths
-        $command = $client->getCommand('ListBuckets', array(
-            'bucket'   => 'bucket-1',
-            'key'      => 'object-1',
-            'uploadId' => 'upload-id-1',
+        $command = $client->getCommand('ListParts', array(
+            'Bucket'   => 'bucket-1',
+            'Key'      => 'object-1',
+            'UploadId' => 'upload-id-1',
         ));
         $iterator = new ListPartsIterator($command);
 

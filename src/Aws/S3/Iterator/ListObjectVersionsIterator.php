@@ -17,12 +17,12 @@
 namespace Aws\S3\Iterator;
 
 /**
- * Iterate over a GetBucketObjectVersions command
+ * Iterate over a ListObjectVersions command
  *
  * This iterator includes the following additional options:
  * @option bool return_prefixes Set to true to receive both prefixes and versions in results
  */
-class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
+class ListObjectVersionsIterator extends AbstractS3ResourceIterator
 {
     /**
      * {@inheritdoc}
@@ -30,7 +30,7 @@ class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
     protected function handleResults($result)
     {
         // Get the list of object versions
-        $versions = array_merge($result['Version'], $result['DeleteMarker']);
+        $versions = array_merge((array) $result['Version'], (array) $result['DeleteMarker']);
 
         // If there are prefixes and we want them, merge them in
         if ($this->get('return_prefixes') && $result['CommonPrefixes']) {
@@ -46,10 +46,10 @@ class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken($result)
     {
         $this->nextToken = false;
-        if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {
+        if ($result['IsTruncated']) {
             $this->nextToken = array(
-                'key-marker'        => isset($result['nextKeyMarker']) ? $result['nextKeyMarker'] : null,
-                'version-id-marker' => isset($result['nextVersionIdMarker']) ? $result['nextVersionIdMarker'] : null
+                'KeyMarker'       => $result['nextKeyMarker'],
+                'VersionIdMarker' => $result['nextVersionIdMarker']
             );
         }
     }

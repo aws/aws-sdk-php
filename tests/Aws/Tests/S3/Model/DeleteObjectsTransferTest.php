@@ -11,7 +11,7 @@ use Aws\S3\Exception\DeleteMultipleObjectsException;
 class DeleteObjectsTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @expectedException Aws\S3\Exception\InvalidArgumentException
+     * @expectedException \Aws\S3\Exception\InvalidArgumentException
      */
     public function testValidatesBatchData()
     {
@@ -55,7 +55,7 @@ class DeleteObjectsTransferTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\OverflowException
+     * @expectedException \Aws\Common\Exception\OverflowException
      */
     public function testEnsuresBatchSizeIsLessThan1000()
     {

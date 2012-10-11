@@ -23,9 +23,9 @@ class ListObjectsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Create an iterator that will exercise the most code paths
         $command = $client->getCommand('ListObjects', array(
-            'bucket'    => 'foo',
-            'max-keys'  => 5,
-            'delimiter' => '/'
+            'Bucket'    => 'foo',
+            'MaxKeys'   => 5,
+            'Delimiter' => '/'
         ));
         $iterator = new ListObjectsIterator($command, array(
             'page_size'       => 2,

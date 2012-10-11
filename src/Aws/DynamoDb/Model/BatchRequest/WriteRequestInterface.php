@@ -16,12 +16,12 @@
 
 namespace Aws\DynamoDb\Model\BatchRequest;
 
-use Aws\Common\ToArrayInterface;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * An interface used to describe a batch write request
  */
-interface WriteRequestInterface extends \IteratorAggregate, ToArrayInterface
+interface WriteRequestInterface extends ToArrayInterface
 {
     /**
      * Returns the table name that the write request is for.

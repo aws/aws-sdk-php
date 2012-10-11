@@ -51,12 +51,12 @@ class SerialTransfer extends AbstractTransfer
             // @codeCoverageIgnoreEnd
 
             $command = $this->client->getCommand('UploadPart', array(
-                'bucket'     => $this->state->getBucket(),
-                'key'        => $this->state->getKey(),
+                'Bucket'     => $this->state->getBucket(),
+                'Key'        => $this->state->getKey(),
                 'PartNumber' => count($this->state) + 1,
                 'UploadId'   => $this->state->getUploadId(),
-                'body'       => $body,
-                'use_md5'    => $this->options['part_md5'],
+                'Body'       => $body,
+                'ContentMD5' => (bool) $this->options['part_md5'],
                 Ua::OPTION   => Ua::MULTIPART_UPLOAD
             ));
 
@@ -74,7 +74,7 @@ class SerialTransfer extends AbstractTransfer
 
             $this->state->addPart(
                 count($this->state) + 1,
-                (string) $result->getHeader('ETag'),
+                (string) $command->getResponse()->getHeader('ETag'),
                 $body->getContentLength(),
                 gmdate('r')
             );

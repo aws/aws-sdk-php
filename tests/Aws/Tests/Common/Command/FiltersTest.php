@@ -30,7 +30,7 @@ class FiltersTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testConvertsBooleansToStrings($input, $output)
     {
-        $this->assertEquals($output, Filters::booleanString($input));
+        $this->assertEquals($output, Filters::booleanToString($input));
     }
 
     /**
@@ -54,7 +54,7 @@ class FiltersTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testConvertsStringsToBooleans($input, $output)
     {
-        $this->assertEquals($output, Filters::stringBoolean($input));
+        $this->assertEquals($output, Filters::stringToBoolean($input));
     }
 
     /**

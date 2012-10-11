@@ -102,7 +102,7 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testSetValueFailsOnBadValue()
     {
@@ -112,7 +112,7 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testSetTypeFailsOnBadType()
     {
@@ -153,9 +153,6 @@ class AttributeTest extends \Guzzle\Tests\GuzzleTestCase
         $attribute = $this->getMockForAbstractClass('Aws\DynamoDb\Model\Attribute', array('foo'));
         $attribute->setValue(array('baz', 'bar'));
         $attribute->setType(Type::STRING_SET);
-
         $this->assertEquals(array('SS' => array('baz', 'bar')), $attribute->toArray());
-        $this->assertTrue(isset($attribute['SS']));
-        $this->assertEquals(array('baz', 'bar'), $attribute['SS']);
     }
 }

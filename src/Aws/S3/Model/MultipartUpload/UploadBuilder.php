@@ -328,11 +328,11 @@ class UploadBuilder
      */
     protected function initiateMultipartUpload()
     {
-        $command = $this->client->getCommand('InitiateMultipartUpload', array(
-            'bucket'          => $this->bucket,
-            'key'             => $this->key,
+        $command = $this->client->getCommand('CreateMultipartUpload', array(
+            'Bucket'          => $this->bucket,
+            'Key'             => $this->key,
+            'ACL'             => $this->acl,
             'command.headers' => $this->headers,
-            'acl'             => $this->acl,
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         ));
 
@@ -344,7 +344,9 @@ class UploadBuilder
         // If an MD5 is specified, then add it to the custom headers of the request
         // so that it will be returned when downloading the object from Amazon S3
         if ($this->md5) {
-            $command->addMetadata('x-amz-meta-x-amz-Content-MD5', $this->md5);
+            $command['Metadata'] = array(
+                'x-amz-Content-MD5' => $this->md5
+            );
         }
 
         $result = $command->execute();
