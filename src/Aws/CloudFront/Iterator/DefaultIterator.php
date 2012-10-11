@@ -17,6 +17,7 @@
 namespace Aws\CloudFront\Iterator;
 
 use Aws\Common\Iterator\AbstractResourceIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Iterate over a CloudFront command
@@ -34,7 +35,7 @@ class DefaultIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         if (isset($result['IsTruncated']) && $result['IsTruncated'] == 'true') {
             $this->nextToken = isset($result['NextMarker']) ? $result['NextMarker'] : false;
@@ -46,7 +47,7 @@ class DefaultIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         return isset($result['Items']) ? $result['Items'] : array();
     }

@@ -16,6 +16,8 @@
 
 namespace Aws\S3\Iterator;
 
+use Guzzle\Service\Resource\Model;
+
 /**
  * Iterate over a ListObjects command
  *
@@ -34,7 +36,7 @@ class ListObjectsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         // Get the list of objects and find the last key
         $objects = $result['Contents'];
@@ -73,7 +75,7 @@ class ListObjectsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         $this->nextToken = false;
         if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {

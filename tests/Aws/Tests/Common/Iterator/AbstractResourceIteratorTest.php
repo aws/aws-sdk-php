@@ -3,6 +3,7 @@
 namespace Aws\Tests\Common\Iterator;
 
 use Aws\Common\Iterator\AbstractResourceIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * @covers Aws\Common\Iterator\AbstractResourceIterator
@@ -47,5 +48,6 @@ class AbstractResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         $result = $sendRequest->invoke($iterator);
 
         $this->assertEquals(array('foo'), $result);
+        $this->assertNull($iterator->getLastResult());
     }
 }

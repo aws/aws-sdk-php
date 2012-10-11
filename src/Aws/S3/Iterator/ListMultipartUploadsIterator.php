@@ -16,6 +16,8 @@
 
 namespace Aws\S3\Iterator;
 
+use Guzzle\Service\Resource\Model;
+
 /**
  * Iterate over a ListMultipartUploads command
  *
@@ -29,7 +31,7 @@ class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         // Get the list of uploads
         $uploads = $result['Upload'];
@@ -45,7 +47,7 @@ class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         $this->nextToken = false;
         if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {

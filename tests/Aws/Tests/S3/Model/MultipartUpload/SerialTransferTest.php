@@ -52,7 +52,7 @@ class SerialTransferTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * Validate that the correct requests were sent
      *
-     * @param MockPlugin MockPlugin to check
+     * @param $mock MockPlugin MockPlugin to check
      */
     protected function validateRequests(MockPlugin $mock)
     {
@@ -68,8 +68,8 @@ class SerialTransferTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * Prepare the mocks for testing
      *
-     * @param SerialTransfer  Transfer to add mocks to
-     * @param ClientInterface $client Client to mock
+     * @param $transfer SerialTransfer  Transfer to add mocks to
+     * @param $client   ClientInterface Client to mock
      *
      * @return MockPlugin
      */

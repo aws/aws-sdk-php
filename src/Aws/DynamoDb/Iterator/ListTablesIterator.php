@@ -15,6 +15,7 @@
  */
 
 namespace Aws\DynamoDb\Iterator;
+use Guzzle\Service\Resource\Model;
 
 use Aws\Common\Iterator\AbstractResourceIterator;
 
@@ -34,7 +35,7 @@ class ListTablesIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         return $result['TableNames'];
     }
@@ -42,7 +43,7 @@ class ListTablesIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         $this->nextToken = isset($result['LastEvaluatedTableName']) ? $result['LastEvaluatedTableName'] : false;
     }

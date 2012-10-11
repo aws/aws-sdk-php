@@ -17,6 +17,7 @@
 namespace Aws\Glacier\Iterator;
 
 use Aws\Common\Iterator\AbstractResourceIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Iterate over a Glacier command
@@ -46,11 +47,11 @@ class DefaultIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         // Look at the correct key based on the command name
         $resultKey = self::$resultKeyMap[$this->command->getName()];
-        return isset($result[$resultKey]) ? $result[$resultKey] : array();
+        return $result->get($resultKey) ?: array();
     }
 
     /**
@@ -64,8 +65,8 @@ class DefaultIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
-        $this->nextToken = isset($result['Marker']) ? $result['Marker'] : false;
+        $this->nextToken = $result->get('Marker');
     }
 }

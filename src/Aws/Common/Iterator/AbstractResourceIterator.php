@@ -17,6 +17,7 @@
 namespace Aws\Common\Iterator;
 
 use Aws\Common\Enum\UaString as Ua;
+Use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Resource\ResourceIterator;
 
 /**
@@ -24,6 +25,21 @@ use Guzzle\Service\Resource\ResourceIterator;
  */
 abstract class AbstractResourceIterator extends ResourceIterator
 {
+    /**
+     * @var Model Result of a command
+     */
+    protected $lastResult = null;
+
+    /**
+     * Provides access to the most recent result obtained by the iterator.
+     *
+     * @return Model|null
+     */
+    public function getLastResult()
+    {
+        return $this->lastResult;
+    }
+
     /**
      * {@inheritdoc}
      * This AWS specific version of the resource iterator is abstract and
@@ -44,6 +60,7 @@ abstract class AbstractResourceIterator extends ResourceIterator
             // Execute the request and handle the results
             $this->command->add(Ua::OPTION, Ua::ITERATOR);
             $result = $this->command->execute();
+            $this->lastResult = $result;
             $resources = $this->handleResults($result);
             $this->determineNextToken($result);
 
@@ -73,16 +90,16 @@ abstract class AbstractResourceIterator extends ResourceIterator
      * Handles the processing of the command results into the resources to be
      * returned by the iterator.
      *
-     * @param mixed $result The result of the command
+     * @param Model $result The result of the command
      *
      * @return array
      */
-    abstract protected function handleResults($result);
+    abstract protected function handleResults(Model $result);
 
     /**
      * Sets the nextToken by examining the results for this iteration
      *
-     * @param mixed $result The result of the command
+     * @param Model $result The result of the command
      */
-    abstract protected function determineNextToken($result);
+    abstract protected function determineNextToken(Model $result);
 }

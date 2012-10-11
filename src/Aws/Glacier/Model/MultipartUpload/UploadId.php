@@ -20,6 +20,7 @@ use Aws\Common\Model\MultipartUpload\AbstractUploadId;
 
 /**
  * An object that encapsulates the identification for a Glacier upload part
+ * @codeCoverageIgnore
  */
 class UploadId extends AbstractUploadId
 {

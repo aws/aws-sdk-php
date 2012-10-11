@@ -200,11 +200,7 @@ class UploadBuilder extends AbstractUploadBuilder
             'vaultName' => $this->vaultName
         );
 
-        if ($this->partGenerator) {
-            $partGenerator = $this->partGenerator;
-        } else {
-            $partGenerator = UploadPartGenerator::factory($this->source, $this->partSize);
-        }
+        $partGenerator = $this->partGenerator ?: UploadPartGenerator::factory($this->source, $this->partSize);
 
         $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
             'command.headers'    => $this->headers,

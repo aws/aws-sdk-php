@@ -17,6 +17,7 @@
 namespace Aws\DynamoDb\Iterator;
 
 use Aws\Common\Iterator\AbstractResourceIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Iterate over a BatchGetItem command
@@ -34,7 +35,7 @@ class BatchGetItemIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         $items = array();
         if (isset($result['Responses'])) {
@@ -51,7 +52,7 @@ class BatchGetItemIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         $this->nextToken = isset($result['UnprocessedKeys']) ? $result['UnprocessedKeys'] : false;
     }

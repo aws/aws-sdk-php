@@ -16,6 +16,8 @@
 
 namespace Aws\S3\Iterator;
 
+use Guzzle\Service\Resource\Model;
+
 /**
  * Iterate over a ListBuckets command
  *
@@ -35,7 +37,7 @@ class ListBucketsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         // Get and format the results
         $buckets = $result['Buckets']['Bucket'];
@@ -53,7 +55,7 @@ class ListBucketsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         // ListBuckets does not have markers
         $this->nextToken = false;

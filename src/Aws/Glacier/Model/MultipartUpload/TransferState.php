@@ -39,11 +39,11 @@ class TransferState extends AbstractTransferState
     public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
     {
         $transferState = new self($uploadId);
-        $listParts = $client->getCommand('ListParts', $uploadId->toParams());
+        $listParts = $client->getIterator('ListParts', $uploadId->toParams());
 
-        foreach ($client->getIterator($listParts) as $part) {
+        foreach ($listParts as $part) {
             list($firstByte, $lastByte) = explode('-', $part['RangeInBytes']);
-            $partSize = (float) $listParts->getResult()->get('PartSizeInBytes');
+            $partSize = (float) $listParts->getLastResult()->get('PartSizeInBytes');
             $partData = array(
                 'partNumber'  => $firstByte / $partSize + 1,
                 'checksum'    => $part['SHA256TreeHash'],

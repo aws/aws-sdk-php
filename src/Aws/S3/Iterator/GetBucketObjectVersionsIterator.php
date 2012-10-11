@@ -16,6 +16,8 @@
 
 namespace Aws\S3\Iterator;
 
+use Guzzle\Service\Resource\Model;
+
 /**
  * Iterate over a GetBucketObjectVersions command
  *
@@ -27,7 +29,7 @@ class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function handleResults($result)
+    protected function handleResults(Model $result)
     {
         // Get the list of object versions
         $versions = array_merge($result['Version'], $result['DeleteMarker']);
@@ -43,7 +45,7 @@ class GetBucketObjectVersionsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function determineNextToken($result)
+    protected function determineNextToken(Model $result)
     {
         $this->nextToken = false;
         if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {
