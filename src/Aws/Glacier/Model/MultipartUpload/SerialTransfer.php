@@ -30,10 +30,6 @@ class SerialTransfer extends AbstractTransfer
      */
     protected function transfer()
     {
-        if ($this->stopped) {
-            return;
-        }
-
         /** @var $partGenerator UploadPartGenerator */
         $partGenerator = $this->state->getPartGenerator();
 

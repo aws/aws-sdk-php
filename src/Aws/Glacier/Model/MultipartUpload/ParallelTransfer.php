@@ -48,18 +48,14 @@ class ParallelTransfer extends AbstractTransfer
      */
     protected function transfer()
     {
-        if ($this->stopped) {
-            return;
-        }
-
         /** @var $parts UploadPartGenerator */
         $parts     = $this->state->getPartGenerator();
         $chunkSize = min($this->options['concurrency'], count($parts));
         $partSets  = new ChunkedIterator($parts, $chunkSize);
-        $commands  = array();
 
         foreach ($partSets as $partSet) {
             /** @var $part UploadPart */
+            $commands = array();
             foreach ($partSet as $index => $part) {
                 $command = $this->getCommandForPart($part, (bool) $index)->set('part', $part);
                 $this->dispatch(self::BEFORE_PART_UPLOAD, $this->getEventData($command));
