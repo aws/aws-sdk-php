@@ -35,7 +35,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $client = self::getServiceBuilder()->get('s3');
         $bucket = self::getResourcePrefix() . '-s3-test';
         self::log("Creating the {$bucket} bucket");
-        $client->createBucket(array('bucket' => $bucket))->execute();
+        $client->createBucket(array(
+            'Bucket' => $bucket
+        ))->execute();
         // Create the bucket
         self::log("Waiting for the bucket to exist");
         $client->waitUntil('bucket_exists', $bucket);
@@ -50,7 +52,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $clear = new ClearBucket($client, $bucket);
         $clear->clear();
         self::log("Deleting the {$bucket} bucket");
-        $client->deleteBucket(array('bucket' => $bucket))->execute();
+        $client->deleteBucket(array(
+            'Bucket' => $bucket
+        ))->execute();
         self::log("Waiting for {$bucket} to not exist");
         $client->waitUntil('bucket_not_exists', $bucket);
     }
@@ -83,7 +87,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals("https://{$this->bucket}.s3.amazonaws.com/{$key}", $response->getLocation());
 
         // Delete the object
-        $this->client->deleteObject(array('bucket' => $this->bucket, 'key' => $key))->execute();
+        $this->client->deleteObject(array('Bucket' => $this->bucket, 'Key' => $key))->execute();
     }
 
     public function testCreatingAclWithModelsProducesCorrectXml()
@@ -146,12 +150,12 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             ->build();
 
         $command = $this->client->getCommand('PutObject', array(
-            'bucket'       => $this->bucket,
-            'key'          => self::TEST_KEY,
+            'Bucket'       => $this->bucket,
+            'Key'          => self::TEST_KEY,
             'use_md5'      => true,
-            'body'         => 'åbc 123',
+            'Body'         => 'åbc 123',
             'Content-Type' => 'application/foo',
-            'acl'          => $acl,
+            'ACL'          => $acl,
             'metadata'     => array(
                 'test'  => '123',
                 'abc'   => '@pples'
@@ -168,8 +172,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         // Ensure the object was created correctly
         self::log("GETting the object");
         $result = $this->client->getObject(array(
-            'bucket' => $this->bucket,
-            'key'    => self::TEST_KEY
+            'Bucket' => $this->bucket,
+            'Key'    => self::TEST_KEY
         ))->execute();
         $this->assertInstanceOf('Guzzle\Http\Message\Response', $result);
         $this->assertEquals('åbc 123', $result->getBody(true));
@@ -180,7 +184,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         // Ensure the object was created and we can find it in the iterator
         self::log("Checking if the item is in the ListObjects results");
         $iterator = $this->client->getIterator('ListObjects', array(
-            'bucket' => $this->bucket,
+            'Bucket' => $this->bucket,
             'prefix' => self::TEST_KEY
         ));
         $objects = $iterator->toArray();
@@ -195,8 +199,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         self::log("Getting the object's ACL");
         $xml = $this->client->getObjectAcl(array(
-            'bucket' => $this->bucket,
-            'key'    => self::TEST_KEY,
+            'Bucket' => $this->bucket,
+            'Key'    => self::TEST_KEY,
             'command.response_processing' => 'native'
         ))->execute();
 
@@ -218,9 +222,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Uploading an object with a UTF-8 key");
         $key = 'åbc';
         $this->client->putObject(array(
-            'bucket' => $this->bucket,
-            'key'    => $key,
-            'body'   => 'hi'
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+            'Body'   => 'hi'
         ))->execute();
         $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
     }

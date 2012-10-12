@@ -26,7 +26,7 @@ use Guzzle\Service\Resource\Model;
  */
 class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
 {
-    protected static $limitParam = 'max-uploads';
+    protected static $limitParam = 'MaxUploads';
 
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
     protected function handleResults(Model $result)
     {
         // Get the list of uploads
-        $uploads = $result['Upload'];
+        $uploads = $result['Uploads'];
 
         // If there are prefixes and we want them, merge them in
         if ($this->get('return_prefixes') && $result['CommonPrefixes']) {
@@ -50,10 +50,10 @@ class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
     protected function determineNextToken(Model $result)
     {
         $this->nextToken = false;
-        if (isset($result['IsTruncated']) && $result['IsTruncated'] === 'true') {
+        if ($result['IsTruncated']) {
             $this->nextToken = array(
-                'key-marker'       => isset($result['nextKeyMarker']) ? $result['nextKeyMarker'] : null,
-                'upload-id-marker' => isset($result['nextUploadIdMarker']) ? $result['nextUploadIdMarker'] : null
+                'KeyMarker'      => $result['NextKeyMarker'],
+                'UploadIdMarker' => $result['NextUploadIdMarker']
             );
         }
     }

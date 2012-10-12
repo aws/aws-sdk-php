@@ -16,17 +16,22 @@
 
 namespace Aws\DynamoDb\Model;
 
-use Aws\Common\AbstractToArray;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * Amazon DynamoDB item model
  */
-class Item extends AbstractToArray implements \Countable
+class Item implements \ArrayAccess, \IteratorAggregate, ToArrayInterface, \Countable
 {
     /**
      * @var string
      */
     protected $tableName;
+
+    /**
+     * @var array Data
+     */
+    protected $data = array();
 
     /**
      * Create an item from a simplified array
@@ -43,6 +48,21 @@ class Item extends AbstractToArray implements \Countable
         }
 
         return new self($attributes, $tableName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        $result = $this->data;
+        foreach ($result as &$value) {
+            if ($value instanceof Attribute) {
+                $value = $value->toArray();
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -90,7 +110,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function get($name)
     {
-        return $this->offsetGet($name);
+        return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
     /**
@@ -112,7 +132,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function has($attribute)
     {
-        return $this->offsetExists($attribute);
+        return isset($this->data[$attribute]);
     }
 
     /**
@@ -135,7 +155,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function add($name, Attribute $attribute)
     {
-        $this->offsetSet($name, $attribute);
+        $this->data[$name] = $attribute;
 
         return $this;
     }
@@ -168,7 +188,7 @@ class Item extends AbstractToArray implements \Countable
      */
     public function remove($name)
     {
-        $this->offsetUnset($name);
+        unset($this->data[$name]);
 
         return $this;
     }
@@ -181,5 +201,58 @@ class Item extends AbstractToArray implements \Countable
     public function count()
     {
         return count($this->data);
+    }
+
+    /**
+     * {@inhertidoc}
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->data);
+    }
+
+    /**
+     * ArrayAccess implementation of offsetExists()
+     *
+     * @param string $offset Array key
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->data[$offset]);
+    }
+
+    /**
+     * ArrayAccess implementation of offsetGet()
+     *
+     * @param string $offset Array key
+     *
+     * @return null|mixed
+     */
+    public function offsetGet($offset)
+    {
+        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+    }
+
+    /**
+     * ArrayAccess implementation of offsetGet()
+     *
+     * @param string $offset Array key
+     * @param mixed  $value  Value to set
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->data[$offset] = $value;
+    }
+
+    /**
+     * ArrayAccess implementation of offsetUnset()
+     *
+     * @param string $offset Array key
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->data[$offset]);
     }
 }

@@ -101,7 +101,7 @@ class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\RuntimeException
+     * @expectedException \Aws\Common\Exception\RuntimeException
      * @expectedExceptionMessage The transfer has been aborted and cannot be uploaded
      */
     public function testThrowsExceptionWhenAttemptingToUploadAbortedTransfer()
@@ -119,7 +119,7 @@ class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\S3\Exception\MultipartUploadException
+     * @expectedException \Aws\S3\Exception\MultipartUploadException
      */
     public function testWrapsExceptionsThrownDuringUpload()
     {
@@ -146,7 +146,7 @@ class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $mock = $this->setMockResponse($client, 's3/complete_multipart_upload');
 
         $state = new TransferState('foo', 'baz', 'bar');
-        $state->addPart(1, 'abc', 100, gmdate('r'));
+        $state->addPart(1, '"abc"', 100, gmdate('r'));
 
         $transfer = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
             ->setConstructorArgs(array(

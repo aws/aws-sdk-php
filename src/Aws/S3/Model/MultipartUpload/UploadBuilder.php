@@ -21,7 +21,7 @@ use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
-use Aws\S3\Model\Acl;
+use Aws\S3\Model\Acp;
 use Guzzle\Http\EntityBody;
 
 /**
@@ -66,7 +66,7 @@ class UploadBuilder extends AbstractUploadBuilder
     protected $calculatePartMd5 = true;
 
     /**
-     * @var Acl Acl to use with the object
+     * @var Acp Acp to use with the object
      */
     protected $acl;
 
@@ -176,11 +176,11 @@ class UploadBuilder extends AbstractUploadBuilder
     /**
      * Set the ACL to use on the object
      *
-     * @param Acl $acl ACL to set on the object
+     * @param Acp $acl ACL to set on the object
      *
      * @return self
      */
-    public function setAcl(Acl $acl)
+    public function setAcp(Acp $acl)
     {
         $this->acl = $acl;
 
@@ -205,8 +205,8 @@ class UploadBuilder extends AbstractUploadBuilder
         // If no state was set, then create one by initiating or loading a multipart upload
         if (is_string($this->state)) {
             $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
-                'bucket'   => $this->bucket,
-                'key'      => $this->key,
+                'Bucket'   => $this->bucket,
+                'Key'      => $this->key,
                 'UploadId' => $this->state
             )));
         } elseif (!$this->state) {
@@ -230,14 +230,13 @@ class UploadBuilder extends AbstractUploadBuilder
     protected function initiateMultipartUpload()
     {
         $params = array(
-            'bucket'   => $this->bucket,
-            'key'      => $this->key,
+            'Bucket'   => $this->bucket,
+            'Key'      => $this->key,
         );
 
         /** @var $command \Aws\S3\Command\DefaultUploadObject */
         $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
             'command.headers' => $this->headers,
-            'acl'             => $this->acl,
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         )));
 
@@ -249,7 +248,9 @@ class UploadBuilder extends AbstractUploadBuilder
         // If an MD5 is specified, then add it to the custom headers of the request
         // so that it will be returned when downloading the object from Amazon S3
         if ($this->md5) {
-            $command->addMetadata('x-amz-meta-x-amz-Content-MD5', $this->md5);
+            $command['Metadata'] = array(
+                'x-amz-Content-MD5' => $this->md5
+            );
         }
 
         $result = $command->execute();

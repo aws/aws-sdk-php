@@ -29,7 +29,7 @@ class DeleteObjectsBatchTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testValidatesInput()
     {
@@ -38,7 +38,7 @@ class DeleteObjectsBatchTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testValidatesCommandName()
     {
@@ -52,9 +52,9 @@ class DeleteObjectsBatchTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('s3');
         $batch = DeleteObjectsBatch::factory($client, 'foo');
         $batch->add($client->getCommand('DeleteObject', array(
-            'bucket'    => 'bucket',
-            'key'       => 'foo',
-            'versionId' => 'bar'
+            'Bucket'    => 'bucket',
+            'Key'       => 'foo',
+            'VersionId' => 'bar'
         )));
 
         $decorated = $this->readAttribute($batch, 'decoratedBatch');

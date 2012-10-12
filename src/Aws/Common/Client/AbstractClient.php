@@ -21,6 +21,7 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureInterface;
@@ -71,6 +72,8 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      * @param CredentialsInterface $credentials AWS credentials
      * @param SignatureInterface   $signature   Signature implementation
      * @param Collection           $config      Configuration options
+     *
+     * @throws InvalidArgumentException if an endpoint provider isn't provided
      */
     public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
     {
@@ -79,14 +82,24 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         $this->credentials = $credentials;
         $this->signature = $signature;
         $this->endpointProvider = $config->get(Options::ENDPOINT_PROVIDER);
+
+        // Make sure an endpoint provider was provided in the config
+        if (! ($this->endpointProvider instanceof EndpointProviderInterface)) {
+            throw new InvalidArgumentException('An endpoint provider must be provided to instantiate an AWS client');
+        }
+
         // Make sure the user agent is prefixed by the SDK version
         $this->setUserAgent('aws-sdk-php/' . Aws::VERSION, true);
+
         // Set the service description on the client
         $this->addServiceDescriptionFromConfig();
+
         // Add the event listener so that requests are signed before they are sent
         $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
+
         // Resolve any config options on the client that require a client to be instantiated
         $this->resolveOptions();
+
         // Add a resource iterator factory that uses the Iterator directory
         $this->addDefaultResourceIterator();
     }
@@ -100,9 +113,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Get the AWS credentials used with the client
-     *
-     * @return CredentialsInterface
+     * {@inheritdoc}
      */
     public function getCredentials()
     {
@@ -110,9 +121,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Get the signature implementation used with the client
-     *
-     * @return SignatureInterface
+     * {@inheritdoc}
      */
     public function getSignature()
     {
@@ -120,9 +129,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Get the endpoint provider used with the client
-     *
-     * @return EndpointProviderInterface
+     * {@inheritdoc}
      */
     public function getEndpointProvider()
     {

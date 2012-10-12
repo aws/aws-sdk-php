@@ -13,7 +13,7 @@ class AbstractS3ResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     public function testPrepareRequestSetsPageSizeCorrectly()
     {
         $command = $this->getMockedCommand();
-        $command->set('max-keys', 8);
+        $command->set('MaxKeys', 8);
 
         $iterator = $this->getMockedIterator($command);
         $iterator->setPageSize(10);
@@ -22,7 +22,7 @@ class AbstractS3ResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         $prepareRequest->setAccessible(true);
         $prepareRequest->invoke($iterator);
 
-        $this->assertEquals(8, $command->get('max-keys'));
+        $this->assertEquals(8, $command->get('MaxKeys'));
     }
 
     public function testApplyNextTokenSetsTokenCorrectly()

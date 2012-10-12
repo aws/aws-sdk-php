@@ -100,8 +100,8 @@ class ClearBucket extends AbstractHasDispatcher
     public function getIterator()
     {
         if (!$this->iterator) {
-            $this->iterator = $this->client->getIterator('GetBucketObjectVersions', array(
-                'bucket' => $this->bucket
+            $this->iterator = $this->client->getIterator('ListObjectVersions', array(
+                'Bucket' => $this->bucket
             ));
         }
 
@@ -164,7 +164,7 @@ class ClearBucket extends AbstractHasDispatcher
 
         $deleted = 0;
         foreach ($this->getIterator() as $object) {
-            $batch->addKey($object['Key'], isset($object['VersionId']) ? $object['VersionId'] : null);
+            $batch->addKey($object['Key'], $object['VersionId']);
             $deleted++;
         }
         $batch->flush();

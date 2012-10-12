@@ -73,8 +73,8 @@ class DeleteObjectsBatch extends AbstractBatchDecorator
     {
         if ($item instanceof AbstractCommand && $item->getName() == 'DeleteObject') {
             $item = array(
-                'Key'       => $item['key'],
-                'VersionId' => $item['versionId']
+                'Key'       => $item['Key'],
+                'VersionId' => $item['VersionId']
             );
         }
 

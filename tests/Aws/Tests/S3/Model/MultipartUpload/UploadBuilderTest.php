@@ -2,7 +2,7 @@
 
 namespace Aws\Tests\S3\Model;
 
-use Aws\S3\Model\Acl;
+use Aws\S3\Model\Acp;
 use Aws\S3\Model\Grantee;
 use Aws\S3\Model\Grant;
 use Aws\S3\Enum\Permission;
@@ -37,7 +37,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testHasChainableSetterMethods()
     {
-        $acl = new Acl(new Grantee('123'));
+        $acl = new Acp(new Grantee('123'));
         $client =  $this->getServiceBuilder()->get('s3');
         $body = EntityBody::factory();
 
@@ -55,7 +55,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setHeaders(array(
                 'Foo' => 'Bar'
             ))
-            ->setAcl($acl);
+            ->setAcp($acl);
 
         $this->assertEquals('foo', $this->readAttribute($b, 'bucket'));
         $this->assertEquals('baz', $this->readAttribute($b, 'key'));
@@ -130,7 +130,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanCreateNewStateByInitiatingMultipartUpload()
     {
-        $acl = new Acl(new Grantee('123'));
+        $acl = new Acp(new Grantee('123'));
         $acl->addGrant(new Grant(new Grantee('123'), Permission::READ));
         $client = $this->getServiceBuilder()->get('s3');
         $mock = $this->setMockResponse($client, array('s3/initiate_multipart_upload'));
@@ -140,7 +140,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setClient($client)
             ->setSource(EntityBody::factory())
             ->setHeaders(array('Foo' => 'Baz'))
-            ->setAcl($acl)
+            ->setAcp($acl)
             ->build();
         $requests = $mock->getReceivedRequests();
         $this->assertEquals(1, count($requests));

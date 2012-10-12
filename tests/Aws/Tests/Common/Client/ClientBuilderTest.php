@@ -28,9 +28,8 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'scheme'   => 'https',
                 'region'   => 'us-east-1',
                 'service'  => 'dynamodb',
-                'base_url' => '{scheme}://dynamodb.{region}.amazonaws.com'
             ))
-            ->setConfigRequirements(array('base_url'))
+            ->setConfigRequirements(array('scheme'))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();

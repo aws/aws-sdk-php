@@ -16,14 +16,12 @@
 
 namespace Aws\S3\Model;
 
-use Aws\S3\Enum\Permission;
-use Aws\S3\Enum\Group;
 use Aws\S3\Enum\GranteeType;
 
 /**
- * Builder for creating ACLs
+ * Builder for creating Access Control Policies
  */
-class AclBuilder
+class AcpBuilder
 {
     /**
      * @var Grantee The owner for the ACL
@@ -125,12 +123,12 @@ class AclBuilder
     }
 
     /**
-     * Builds the ACL and returns it
+     * Builds the ACP and returns it
      *
-     * @return Acl
+     * @return Acp
      */
     public function build()
     {
-        return new Acl($this->owner, $this->grants);
+        return new Acp($this->owner, $this->grants);
     }
 }

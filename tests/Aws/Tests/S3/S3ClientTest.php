@@ -119,7 +119,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertFalse($client->doesBucketPolicyExist('bucket'));
     }
 
-    public function testClearsBucketHelper()
+    public function testClearsBucketHelperAndUsesSubResources()
     {
         $client = $this->getServiceBuilder()->get('s3');
         $mock = $this->setMockResponse($client, array(

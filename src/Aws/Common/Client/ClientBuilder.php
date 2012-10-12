@@ -254,6 +254,11 @@ class ClientBuilder
             (self::$commonConfigRequirements + $this->configRequirements)
         );
 
+        // If no endpoint provider was explicitly set, the instantiate a default endpoint provider
+        if (!$config->get(Options::ENDPOINT_PROVIDER)) {
+            $config->set(Options::ENDPOINT_PROVIDER, $this->getDefaultEndpointProvider());
+        }
+
         // If no base_url was explicitly set, then grab one using the default endpoint provider
         if (!$config->get(Options::BASE_URL)) {
             $this->addBaseUrlToConfig($config);
@@ -334,10 +339,8 @@ class ClientBuilder
             );
         }
 
-        $provider = $config->get(Options::ENDPOINT_PROVIDER) ?: $this->getDefaultEndpointProvider();
-        $endpoint = $provider->getEndpoint($service, $region);
+        $endpoint = $config->get(Options::ENDPOINT_PROVIDER)->getEndpoint($service, $region);
         $config->set(Options::BASE_URL, $endpoint->getBaseUrl($config->get(Options::SCHEME)));
-        $config->set(Options::ENDPOINT_PROVIDER, $provider);
     }
 
     /**

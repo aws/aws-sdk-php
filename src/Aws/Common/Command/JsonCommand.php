@@ -16,7 +16,6 @@
 
 namespace Aws\Common\Command;
 
-use Aws\Common\ToArrayInterface;
 use Guzzle\Service\Command\DefaultResponseParser;
 use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Command\OperationResponseParser;
@@ -32,21 +31,6 @@ class JsonCommand extends OperationCommand
      * @var NoTranslationOperationResponseParser
      */
     protected static $cachedResponseParser;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function validate()
-    {
-        // Convert toArray objects before normalizing
-        array_walk_recursive($this->data, function (&$value) {
-            if ($value instanceof ToArrayInterface) {
-                $value = $value->toArray();
-            }
-        });
-
-        parent::validate();
-    }
 
     /**
      * {@inheritdoc}

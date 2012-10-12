@@ -2,8 +2,8 @@
 
 namespace Aws\Tests\Common\Command;
 
-use Aws\Common\ToArrayInterface;
 use Aws\Common\Command\JsonCommand;
+use Guzzle\Common\ToArrayInterface;
 use Guzzle\Http\Message\Response;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\Operation;
@@ -12,7 +12,7 @@ use Guzzle\Service\Description\ServiceDescription;
 /**
  * @covers Aws\Common\Command\JsonCommand
  */
-class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements \IteratorAggregate, ToArrayInterface
+class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements ToArrayInterface
 {
     public function testAddsToJsonBody()
     {
@@ -41,20 +41,28 @@ class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements \IteratorA
             'httpMethod' => 'POST',
             'parameters' => array(
                 'test' => array('location' => 'json'),
-                'foo'  => array('location' => 'json', 'type' => 'object')
+                'foo'  => array(
+                    'location' => 'json',
+                    'type'     => 'object',
+                    'properties' => array(
+                        'baz' => array(
+                            'type' => 'string'
+                        )
+                    )
+                )
             )
         ));
 
         $command = new JsonCommand(array(
-            'test' => $this,
-            'foo'  => array('baz' => $this)
+            'test' => 'hello',
+            'foo'  => $this
         ), $api);
 
         $command->setClient(new Client());
         $request = $command->prepare();
         $json = json_decode((string) $request->getBody(), true);
-        $this->assertEquals(array('baz' => 'bar'), $json['test']);
-        $this->assertEquals(array('baz' => array('baz' => 'bar')), $json['foo']);
+        $this->assertEquals('hello', $json['test']);
+        $this->assertEquals(array('baz' => 'bar'), $json['foo']);
     }
 
     public function testEnsuresThatBodyIsAlwaysSet()
@@ -67,34 +75,7 @@ class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements \IteratorA
 
     public function toArray()
     {
-        return $this->data;
-    }
-
-    protected $data = array('baz' => 'bar');
-
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->data);
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        $this->data[$offset] = $value;
-    }
-
-    public function offsetExists($offset)
-    {
-        return isset($this->data[$offset]);
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->data[$offset]);
-    }
-
-    public function offsetGet($offset)
-    {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        return array('baz' => 'bar');
     }
 
     public function testUsesProcessedModelsWhenEnabled()

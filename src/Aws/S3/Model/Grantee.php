@@ -21,11 +21,12 @@ use Aws\S3\Enum\GranteeType;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\UnexpectedValueException;
 use Aws\Common\Exception\LogicException;
+use Guzzle\Common\ToArrayInterface;
 
 /**
  * Amazon S3 Grantee model
  */
-class Grantee
+class Grantee implements ToArrayInterface
 {
     /**
      * @var array A map of grantee types to grant header value prefixes
@@ -82,8 +83,7 @@ class Grantee
         if (in_array($id, Group::values())) {
             $this->type = GranteeType::GROUP;
         } elseif (!is_string($id)) {
-            throw new InvalidArgumentException('The grantee ID must be '
-                . 'provided as a string value.');
+            throw new InvalidArgumentException('The grantee ID must be provided as a string value.');
         }
 
         if (strpos($id, '@') !== false) {
@@ -219,30 +219,26 @@ class Grantee
     }
 
     /**
-     * Returns the string form (XML) of the grantee
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function __toString()
+    public function toArray()
     {
-        $xml = '<Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            . 'xsi:type="' . $this->type . '">';
+        $result = array(
+            'Type' => $this->type
+        );
 
         switch ($this->type) {
             case GranteeType::USER:
-                $xml .= '<ID>' . $this->id . '</ID>';
-                $xml .= '<DisplayName>' . $this->displayName . '</DisplayName>';
+                $result['ID'] = $this->id;
+                $result['DisplayName'] = $this->displayName;
                 break;
             case GranteeType::EMAIL:
-                $xml .= '<EmailAddress>' . $this->id . '</EmailAddress>';
+                $result['EmailAddress'] = $this->id;
                 break;
             case GranteeType::GROUP:
-                $xml .= '<URI>' . $this->id . '</URI>';
-                break;
+                $result['URI'] = $this->id;
         }
 
-        $xml .= '</Grantee>';
-
-        return $xml;
+        return $result;
     }
 }

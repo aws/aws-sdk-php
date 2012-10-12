@@ -20,9 +20,9 @@ use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Exception\OverflowException;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\S3\Exception\InvalidArgumentException;
-use Aws\S3\Command\DeleteMultipleObjects;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Guzzle\Batch\BatchTransferInterface;
+use Guzzle\Service\Command\CommandInterface;
 
 /**
  * Transfer logic for deleting multiple objects from an Amazon S3 bucket in a
@@ -88,14 +88,14 @@ class DeleteObjectsTransfer implements BatchTransferInterface
             throw new OverflowException('Batches should be divided into chunks of no larger than 1000 keys');
         }
 
-        /** @var $command DeleteMultipleObjects */
-        $command = $this->client->getCommand('DeleteMultipleObjects', array(
-            'bucket'   => $this->bucket,
+        $del = array();
+        $command = $this->client->getCommand('DeleteObjects', array(
+            'Bucket'   => $this->bucket,
             Ua::OPTION => Ua::BATCH
         ));
 
         if ($this->mfa) {
-            $command['x-amz-mfa'] = $this->mfa;
+            $command->getRequestHeaders()->set('x-amz-mfa', $this->mfa);
         }
 
         foreach ($batch as $object) {
@@ -103,8 +103,13 @@ class DeleteObjectsTransfer implements BatchTransferInterface
             if (!is_array($object) || !isset($object['Key'])) {
                 throw new InvalidArgumentException('Invalid batch item encountered: ' . var_export($batch, true));
             }
-            $command->addObject($object['Key'], isset($object['VersionId']) ? $object['VersionId'] : null);
+            $del[] = array(
+                'Key'       => $object['Key'],
+                'VersionId' => isset($object['VersionId']) ? $object['VersionId'] : null
+            );
         }
+
+        $command['Delete'] = array('Objects' => $del);
 
         $command->execute();
         $this->processResponse($command);
@@ -113,18 +118,15 @@ class DeleteObjectsTransfer implements BatchTransferInterface
     /**
      * Process the response of the DeleteMultipleObjects request
      *
-     * @param DeleteMultipleObjects $command Command executed
+     * @paramCommandInterface $command Command executed
      */
-    protected function processResponse(DeleteMultipleObjects $command)
+    protected function processResponse(CommandInterface $command)
     {
         $result = $command->getResult();
 
         // Ensure that the objects were deleted successfully
-        if (!empty($result['Error'])) {
-            $errors = array();
-            foreach ($result['Error'] as $error) {
-                $errors[] = $error;
-            }
+        if (!empty($result['Errors'])) {
+            $errors = $result['Errors'];
             throw new DeleteMultipleObjectsException($errors);
         }
     }

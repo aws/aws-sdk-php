@@ -18,27 +18,29 @@ namespace Aws\S3\Model;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\OverflowException;
+use Guzzle\Common\ToArrayInterface;
+use Guzzle\Service\Command\AbstractCommand;
 
 /**
- * Amazon S3 ACL model
+ * Amazon S3 Access Control Policy (ACP)
  */
-class Acl implements \IteratorAggregate, \Countable
+class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
 {
     /**
-     * @var \SplObjectStorage List of grants on the ACL
+     * @var \SplObjectStorage List of grants on the ACP
      */
     protected $grants = array();
 
     /**
-     * @var Grantee The owner of the ACL policy
+     * @var Grantee The owner of the ACP
      */
     protected $owner;
 
     /**
-     * Constructs an ACL
+     * Constructs an ACP
      *
-     * @param Grantee            $owner  ACL policy owner
-     * @param array|\Traversable $grants List of grants for the ACL
+     * @param Grantee            $owner  ACP policy owner
+     * @param array|\Traversable $grants List of grants for the ACP
      */
     public function __construct(Grantee $owner, $grants = null)
     {
@@ -47,34 +49,45 @@ class Acl implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Create an Acl object from a SimpleXMLElement command result. This can
-     * be used to easily interact with the result of a getObjectAcl or
-     * getBucketAcl command.
+     * Create an Acp object from an array. This can be used to create an ACP from a response to a GetObject/Bucket ACL
+     * operation.
      *
-     * @param \SimpleXMLElement $xml XML data
+     * @param array $data Array of ACP data
      *
      * @return self
      */
-    public static function fromXml(\SimpleXMLElement $xml)
+    public static function fromArray(array $data)
     {
-        $builder = new AclBuilder();
-        $builder->setOwner((string) $xml->Owner->ID, (string) $xml->Owner->DisplayName);
+        $builder = new AcpBuilder();
+        $builder->setOwner((string) $data['Owner']['ID'], $data['Owner']['DisplayName']);
 
-        // Add each Grantee to the Acl
-        foreach ($xml->AccessControlList->Grant as $grant) {
-            $permission = (string) $grant->Permission;
-            switch ((string) $grant->Grantee->attributes('xsi', true)->type) {
+        // Add each Grantee to the ACP
+        foreach ($data['Grants'] as $grant) {
+            $permission = $grant['Permission'];
+
+            // Determine the type for response bodies that are missing the Type parameter
+            if (!isset($grant['Grantee']['Type'])) {
+                if (isset($grant['Grantee']['ID'])) {
+                    $grant['Grantee']['Type'] = 'CanonicalUser';
+                } elseif (isset($grant['Grantee']['URI'])) {
+                    $grant['Grantee']['Type'] = 'Group';
+                } else {
+                    $grant['Grantee']['Type'] = 'AmazonCustomerByEmail';
+                }
+            }
+
+            switch ($grant['Grantee']['Type']) {
                 case 'Group':
-                    $builder->addGrantForGroup($permission, (string) $grant->Grantee->URI);
+                    $builder->addGrantForGroup($permission, $grant['Grantee']['URI']);
                     break;
                 case 'AmazonCustomerByEmail':
-                    $builder->addGrantForEmail($permission, (string) $grant->Grantee->EmailAddress);
+                    $builder->addGrantForEmail($permission, $grant['Grantee']['EmailAddress']);
                     break;
                 case 'CanonicalUser':
                     $builder->addGrantForUser(
                         $permission,
-                        (string) $grant->Grantee->ID,
-                        (string) $grant->Grantee->DisplayName
+                        $grant['Grantee']['ID'],
+                        $grant['Grantee']['DisplayName']
                     );
             }
         }
@@ -83,9 +96,9 @@ class Acl implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Set the owner of the ACL policy
+     * Set the owner of the ACP policy
      *
-     * @param Grantee $owner ACL policy owner
+     * @param Grantee $owner ACP policy owner
      *
      * @return self
      *
@@ -103,7 +116,7 @@ class Acl implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Get the owner of the ACL policy
+     * Get the owner of the ACP policy
      *
      * @return Grantee
      */
@@ -113,9 +126,9 @@ class Acl implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Set the grants for the ACL
+     * Set the grants for the ACP
      *
-     * @param  array|\Traversable $grants List of grants for the ACL
+     * @param  array|\Traversable $grants List of grants for the ACP
      *
      * @return self
      *
@@ -132,8 +145,7 @@ class Acl implements \IteratorAggregate, \Countable
                     $this->addGrant($grant);
                 }
             } else {
-                throw new InvalidArgumentException('Grants must be passed in '
-                    . 'as an array or Traversable object.');
+                throw new InvalidArgumentException('Grants must be passed in as an array or Traversable object.');
             }
         }
 
@@ -162,7 +174,7 @@ class Acl implements \IteratorAggregate, \Countable
         if (count($this->grants) < 100) {
             $this->grants->attach($grant);
         } else {
-            throw new OverflowException('An ACL may contain up to 100 grants.');
+            throw new OverflowException('An ACP may contain up to 100 grants.');
         }
 
         return $this;
@@ -189,44 +201,43 @@ class Acl implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns an array of headers representing the grants in the ACL.
+     * Applies grant headers to a command's parameters
      *
-     * @return array
+     * @param AbstractCommand $command Command to be updated
+     *
+     * @return self
      */
-    public function getGrantHeaders()
+    public function updateCommand(AbstractCommand $command)
     {
-        /** @var $grant Grant */
-        $headers = array();
+        $parameters = array();
         foreach ($this->grants as $grant) {
-            $headers = array_merge_recursive($headers, $grant->getHeaderArray());
+            /** @var $grant Grant */
+            $parameters = array_merge_recursive($parameters, $grant->getParameterArray());
         }
 
-        foreach ($headers as $key => & $values) {
-            $values = implode(', ', (array) $values);
+        foreach ($parameters as $name => $values) {
+            $command->set($name, implode(', ', (array) $values));
         }
 
-        return $headers;
+        return $this;
     }
 
     /**
-     * Returns the string form (XML) of the ACL
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function __toString()
+    public function toArray()
     {
-        $grants = '';
+        $grants = array();
         foreach ($this->grants as $grant) {
-            $grants .= (string) $grant;
+            $grants[] = $grant->toArray();
         }
 
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
-        $xml .= '<AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/latest/">';
-        $xml .= '<Owner><ID>' . $this->owner->getId() . '</ID><DisplayName>';
-        $xml .= $this->owner->getDisplayName() . '</DisplayName></Owner>';
-        $xml .= '<AccessControlList>' . $grants . '</AccessControlList>';
-        $xml .= '</AccessControlPolicy>';
-
-        return $xml;
+        return array(
+            'Owner' => array(
+                'ID'          => $this->owner->getId(),
+                'DisplayName' => $this->owner->getDisplayName()
+            ),
+            'Grants' => $grants
+        );
     }
 }

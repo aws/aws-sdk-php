@@ -26,7 +26,7 @@ abstract class AbstractS3ResourceIterator extends AbstractResourceIterator
     /**
      * @var string Name of the limiting param for the command (e.g. max-keys)
      */
-    protected static $limitParam = 'max-keys';
+    protected static $limitParam = 'MaxKeys';
 
     /**
      * {@inheritdoc}
@@ -47,8 +47,7 @@ abstract class AbstractS3ResourceIterator extends AbstractResourceIterator
      */
     protected function applyNextToken()
     {
-        $token = (array) $this->nextToken;
-        foreach ($token as $key => $value) {
+        foreach ((array) $this->nextToken as $key => $value) {
             $this->command->set($key, $value);
         }
     }

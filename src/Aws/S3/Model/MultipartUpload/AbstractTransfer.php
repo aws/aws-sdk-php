@@ -73,7 +73,6 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
         $params = $this->state->getUploadId()->toParams();
         $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
 
-        /** @var $command \Aws\S3\Command\CompleteMultipartUpload */
         $command = $this->client->getCommand('CompleteMultipartUpload', $params);
 
         foreach ($this->state as $part) {

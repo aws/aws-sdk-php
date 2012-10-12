@@ -20,8 +20,8 @@ class ListMultipartUploadsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Create an iterator that will exercise the most code paths
         $command = $client->getCommand('ListMultipartUploads', array(
-            'bucket'    => 'bucket-1',
-            'delimiter' => '/'
+            'Bucket'    => 'bucket-1',
+            'Delimiter' => '/'
         ));
         $iterator = new ListMultipartUploadsIterator($command, array(
             'return_prefixes' => true

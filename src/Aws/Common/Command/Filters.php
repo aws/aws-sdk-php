@@ -28,7 +28,7 @@ class Filters
      *
      * @return string
      */
-    public static function booleanString($value)
+    public static function booleanToString($value)
     {
         return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
     }
@@ -40,7 +40,7 @@ class Filters
      *
      * @return bool
      */
-    public static function stringBoolean($value)
+    public static function stringToBoolean($value)
     {
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
@@ -60,5 +60,24 @@ class Filters
         }
 
         return $time;
+    }
+
+    /**
+     * Returns a date string for a string that can be converted using strtotime, a unix timestamp, or a DateTime object
+     *
+     * @param string|int|\DateTime $dateTime Date time string, Unix timestamp, or DateTime object
+     * @param string               $format   strtotime format used to represent the date time
+     *
+     * @return string
+     */
+    public static function getDate($dateTime, $format = \DateTime::RFC1123)
+    {
+        if ($dateTime instanceof \DateTime) {
+            return $dateTime->setTimezone(new \DateTimeZone('UTC'))->format($format);
+        } elseif (is_numeric($dateTime)) {
+            return gmdate($format, (int) $dateTime);
+        } else {
+            return gmdate($format, strtotime($dateTime));
+        }
     }
 }

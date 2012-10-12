@@ -29,10 +29,7 @@ class ListBucketsIterator extends AbstractS3ResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function prepareRequest()
-    {
-        // ListBuckets does not have limits
-    }
+    protected function prepareRequest() {}
 
     /**
      * {@inheritdoc}
@@ -40,7 +37,7 @@ class ListBucketsIterator extends AbstractS3ResourceIterator
     protected function handleResults(Model $result)
     {
         // Get and format the results
-        $buckets = $result['Buckets']['Bucket'];
+        $buckets = $result['Buckets'];
 
         // If only the names_only set, change arrays to a string
         if ($this->get('names_only')) {

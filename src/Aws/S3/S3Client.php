@@ -20,7 +20,6 @@ use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\S3\Command\FakeModelResponseParser;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
@@ -28,6 +27,7 @@ use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
 use Aws\S3\S3SignatureInterface;
 use Guzzle\Common\Collection;
+use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
@@ -164,15 +164,18 @@ class S3Client extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SCHEME  => 'https',
-                Options::SERVICE => 's3',
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.json'
+                Options::SERVICE => 's3'
             ))
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())
             ->build();
 
-        // Ensure that responses are converted from XML to an array and use the correct format
-        $client->addSubscriber(new FakeModelResponseParser());
+        // Use virtual hosted buckets when possible
+        $client->addSubscriber(new BucketStyleListener());
+        // Validate and add Content-MD5 hashes
+        $client->addSubscriber(new CommandContentMd5Plugin());
+        // Ensure that ACP headers are applied when needed
+        $client->addSubscriber(new AcpHeadersListener());
 
         return $client;
     }
@@ -270,12 +273,9 @@ class S3Client extends AbstractClient
     public function doesBucketExist($bucket, $accept403 = true, array $options = array())
     {
         return $this->checkExistenceWithCommand(
-            $this->getCommand(
-                'HeadBucket',
-                array_merge($options, array(
-                    'bucket' => $bucket
-                ))
-            ), $accept403
+            $this->getCommand('HeadBucket', array_merge($options, array(
+                'Bucket' => $bucket
+            ))), $accept403
         );
     }
 
@@ -291,13 +291,10 @@ class S3Client extends AbstractClient
     public function doesObjectExist($bucket, $key, array $options = array())
     {
         return $this->checkExistenceWithCommand(
-            $this->getCommand(
-                'HeadObject',
-                array_merge($options, array(
-                    'bucket' => $bucket,
-                    'key'    => $key
-                ))
-            )
+            $this->getCommand('HeadObject', array_merge($options, array(
+                'Bucket' => $bucket,
+                'Key'    => $key
+            )))
         );
     }
 
@@ -312,12 +309,9 @@ class S3Client extends AbstractClient
     public function doesBucketPolicyExist($bucket, array $options = array())
     {
         return $this->checkExistenceWithCommand(
-            $this->getCommand(
-                'GetBucketPolicy',
-                array_merge($options, array(
-                    'bucket' => $bucket
-                ))
-            )
+            $this->getCommand('GetBucketPolicy', array_merge($options, array(
+                'Bucket' => $bucket
+            )))
         );
     }
 
