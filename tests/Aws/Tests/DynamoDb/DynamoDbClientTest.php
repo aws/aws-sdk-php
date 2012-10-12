@@ -75,7 +75,7 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $creds     = new Credentials('foo', 'bar');
         $signature = new SignatureV4();
-        $config    = new Collection();
+        $config    = new Collection(array('endpoint_provider' => new \Aws\Common\Region\XmlEndpointProvider()));
         $client    = new DynamoDbClient($creds, $signature, $config);
 
         $this->assertSame($creds, $client->getCredentials());
