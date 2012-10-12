@@ -6,8 +6,17 @@ use Aws\Glacier\Model\MultipartUpload\TransferState;
 use Aws\Glacier\Model\MultipartUpload\ParallelTransfer;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\EntityBody;
+use Guzzle\Http\EntityBodyInterface;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Service\ClientInterface;
+
+// Special test class for cheating the partSize :-(
+class SpecialUploadPartGenerator extends UploadPartGenerator {
+    protected function generateUploadParts(EntityBodyInterface $body) {
+        $this->partSize = 1024;
+        parent::generateUploadParts($body);
+    }
+}
 
 /**
  * @covers Aws\Glacier\Model\MultipartUpload\ParallelTransfer
@@ -36,12 +45,7 @@ class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $uploadId = $this->getMockUploadId();
         $body = EntityBody::factory(fopen(__FILE__, 'r'));
 
-        $class = new \ReflectionClass('Aws\Glacier\Model\MultipartUpload\UploadPartGenerator');
-        $property = $class->getProperty('validPartSizes');
-        $property->setAccessible(true);
-        $property->setValue(array(1024));
-
-        $generator = UploadPartGenerator::factory($body, 1024);
+        $generator = SpecialUploadPartGenerator::factory($body, 1024 * 1024);
         $client = $this->getServiceBuilder()->get('glacier', true);
         $state = new TransferState($uploadId);
         $state->setPartGenerator($generator);

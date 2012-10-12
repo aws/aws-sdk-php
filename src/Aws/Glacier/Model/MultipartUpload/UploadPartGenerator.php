@@ -33,11 +33,6 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
     const MAX_NUM_PARTS = 10000;
 
     /**
-     * @var array List of cached, valid upload part sizes for validation purposes
-     */
-    protected static $validPartSizes;
-
-    /**
      * @var string The root checksum (tree hash) of the entire entity body
      */
     protected $rootChecksum;
@@ -67,7 +62,7 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
      */
     public static function factory($body, $partSize)
     {
-        return new self(EntityBody::factory($body), $partSize);
+        return new static(EntityBody::factory($body), $partSize);
     }
 
     /**
@@ -80,7 +75,7 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
      */
     public static function createSingleUploadPart($body)
     {
-        $generator = new self(EntityBody::factory($body), 4 * Size::GB);
+        $generator = new static(EntityBody::factory($body), 4 * Size::GB);
         if (count($generator) > 1) {
             // @codeCoverageIgnoreStart
             throw new RuntimeException('You cannot create a single upload that is larger than 4 GB.');
@@ -101,15 +96,9 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
     {
         $this->partSize = $partSize;
 
-        // Setup valid part sizes (1MB-4GB where 2^N MB)
-        if (!self::$validPartSizes) {
-            self::$validPartSizes = array_map(function ($value) {
-                return pow(2, $value) * Size::MB;
-            }, range(0, 12));
-        }
-
-        // Make sure the part size is valid
-        if (!in_array($this->partSize, self::$validPartSizes)) {
+       // Make sure the part size is valid
+        $validPartSizes = array_map(function ($value) {return pow(2, $value) * Size::MB;}, range(0, 12));
+        if (!in_array($this->partSize, $validPartSizes)) {
             throw new InvalidArgumentException('The part size must be a megabyte multiplied by a power of 2 and no '
                 . 'greater than 4 gigabytes.');
         }
