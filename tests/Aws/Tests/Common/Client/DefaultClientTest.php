@@ -3,6 +3,8 @@
 namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Client\DefaultClient;
+use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Enum\Region;
 
 class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -11,19 +13,19 @@ class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFactoryInitializesClient()
     {
-        $signature   = $this->getMock('Aws\Common\Signature\SignatureInterface');
+        $signature = $this->getMock('Aws\Common\Signature\SignatureInterface');
         $credentials = $this->getMock('Aws\Common\Credentials\CredentialsInterface');
 
         $client = DefaultClient::factory(array(
-            'credentials'  => $credentials,
-            'signature'    => $signature,
-            'base_url'     => 'https://{service}.{region}.amazonaws.com',
-            'service'      => 'foo',
-            'region'       => 'us-east-1'
+            Options::CREDENTIALS => $credentials,
+            Options::SIGNATURE   => $signature,
+            Options::SERVICE     => 'sns',
+            Options::REGION      => Region::US_EAST_1,
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureInterface', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureInterface', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\CredentialsInterface', $client->getCredentials());
-        $this->assertEquals('https://foo.us-east-1.amazonaws.com', $client->getBaseUrl());
+        $this->assertInstanceOf('Aws\Common\Region\EndpointProviderInterface', $client->getEndpointProvider());
+        $this->assertEquals('https://sns.us-east-1.amazonaws.com', $client->getBaseUrl());
     }
 }
