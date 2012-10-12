@@ -81,31 +81,6 @@ class GranteeTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('1234567890', $grantee->getDisplayName());
     }
 
-    public function getDataForToStringTest()
-    {
-        $cases = array();
-        $cases[] = array('1234567890', '<Grantee xmlns:xsi="http://www.w3.org/2'
-            . '001/XMLSchema-instance" xsi:type="CanonicalUser"><ID>1234567890<'
-            . '/ID><DisplayName>1234567890</DisplayName></Grantee>');
-        $cases[] = array('foo@example.com', '<Grantee xmlns:xsi="http://www.w3.'
-            . 'org/2001/XMLSchema-instance" xsi:type="AmazonCustomerByEmail"><E'
-            . 'mailAddress>foo@example.com</EmailAddress></Grantee>');
-        $cases[] = array(Group::ALL_USERS, '<Grantee xmlns:xsi="http://www.w3.o'
-            . 'rg/2001/XMLSchema-instance" xsi:type="Group"><URI>'
-            . Group::ALL_USERS . '</URI></Grantee>');
-
-        return $cases;
-    }
-
-    /**
-     * @dataProvider getDataForToStringTest
-     */
-    public function testToStringProducesExpectedXml($id, $xml)
-    {
-        $grantee = new Grantee($id);
-        $this->assertEquals($xml, (string) $grantee);
-    }
-
     public function getDataForHeaderValueTest()
     {
         return array(
@@ -122,5 +97,27 @@ class GranteeTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $grant = new Grantee($id);
         $this->assertSame($value, $grant->getHeaderValue());
+    }
+
+    public function testCanConvertToArray()
+    {
+        $grantee = new Grantee('foo@example.com');
+        $this->assertEquals(array(
+            'Type'         => 'AmazonCustomerByEmail',
+            'EmailAddress' => 'foo@example.com',
+        ), $grantee->toArray());
+
+        $grantee = new Grantee('12345');
+        $this->assertEquals(array(
+            'Type'        => 'CanonicalUser',
+            'ID'          => '12345',
+            'DisplayName' => '12345',
+        ), $grantee->toArray());
+
+        $grantee = new Grantee(Group::ALL_USERS);
+        $this->assertEquals(array(
+            'Type' => 'Group',
+            'URI'  => 'http://acs.amazonaws.com/groups/global/AllUsers',
+        ), $grantee->toArray());
     }
 }

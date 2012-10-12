@@ -174,6 +174,8 @@ class S3Client extends AbstractClient
         $client->addSubscriber(new BucketStyleListener());
         // Validate and add Content-MD5 hashes
         $client->addSubscriber(new CommandContentMd5Plugin());
+        // Ensure that ACP headers are applied when needed
+        $client->addSubscriber(new AcpHeadersListener());
 
         return $client;
     }

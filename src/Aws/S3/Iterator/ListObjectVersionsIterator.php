@@ -30,7 +30,7 @@ class ListObjectVersionsIterator extends AbstractS3ResourceIterator
     protected function handleResults($result)
     {
         // Get the list of object versions
-        $versions = array_merge((array) $result['Version'], (array) $result['DeleteMarker']);
+        $versions = array_merge((array) $result['Versions'], (array) $result['DeleteMarkers']);
 
         // If there are prefixes and we want them, merge them in
         if ($this->get('return_prefixes') && $result['CommonPrefixes']) {

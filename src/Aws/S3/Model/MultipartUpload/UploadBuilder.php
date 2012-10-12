@@ -19,7 +19,7 @@ namespace Aws\S3\Model\MultipartUpload;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Enum\UaString as Ua;
-use Aws\S3\Model\Acl;
+use Aws\S3\Model\Acp;
 use Guzzle\Http\EntityBody;
 
 /**
@@ -79,7 +79,7 @@ class UploadBuilder
     protected $calculatePartMd5 = true;
 
     /**
-     * @var Acl Acl to use with the object
+     * @var Acp Acp to use with the object
      */
     protected $acl;
 
@@ -275,11 +275,11 @@ class UploadBuilder
     /**
      * Set the ACL to use on the object
      *
-     * @param Acl $acl ACL to set on the object
+     * @param Acp $acl ACL to set on the object
      *
      * @return self
      */
-    public function setAcl(Acl $acl)
+    public function setAcp(Acp $acl)
     {
         $this->acl = $acl;
 
@@ -331,7 +331,7 @@ class UploadBuilder
         $command = $this->client->getCommand('CreateMultipartUpload', array(
             'Bucket'          => $this->bucket,
             'Key'             => $this->key,
-            'ACL'             => $this->acl,
+            'ACP'             => $this->acl,
             'command.headers' => $this->headers,
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         ));

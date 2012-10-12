@@ -19,6 +19,7 @@ namespace Aws\S3\Model;
 use Aws\S3\Enum\Permission;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\ToArrayInterface;
+use Guzzle\Service\Command\AbstractCommand;
 
 /**
  * Amazon S3 Grant model
@@ -26,14 +27,14 @@ use Guzzle\Common\ToArrayInterface;
 class Grant implements ToArrayInterface
 {
     /**
-     * @var array A map of permissions to grant header keys
+     * @var array A map of permissions to operation parameters
      */
-    protected static $headerMap = array(
-        Permission::READ         => 'x-amz-grant-read',
-        Permission::WRITE        => 'x-amz-grant-write',
-        Permission::READ_ACP     => 'x-amz-grant-read-acp',
-        Permission::WRITE_ACP    => 'x-amz-grant-write-acp',
-        Permission::FULL_CONTROL => 'x-amz-grant-full-control'
+    protected static $parameterMap = array(
+        Permission::READ         => 'GrantRead',
+        Permission::WRITE        => 'GrantWrite',
+        Permission::READ_ACP     => 'GrantReadACP',
+        Permission::WRITE_ACP    => 'GrantWriteACP',
+        Permission::FULL_CONTROL => 'GrantFullControl'
     );
 
     /**
@@ -115,14 +116,14 @@ class Grant implements ToArrayInterface
     }
 
     /**
-     * Return an array representation of the grant to be used as a header
+     * Returns an array of the operation parameter and value to set on the operation
      *
      * @return array
      */
-    public function getHeaderArray()
+    public function getParameterArray()
     {
         return array(
-            self::$headerMap[$this->permission] => $this->grantee->getHeaderValue()
+            self::$parameterMap[$this->permission] => $this->grantee->getHeaderValue()
         );
     }
 
@@ -131,19 +132,9 @@ class Grant implements ToArrayInterface
      */
     public function toArray()
     {
-        return array();
-    }
-
-    /**
-     * Returns the string form (XML) of the grant
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $xml = '<Grant>' . $this->grantee;
-        $xml .= '<Permission>' . $this->permission . '</Permission></Grant>';
-
-        return $xml;
+        return array(
+            'Grantee'    => $this->grantee->toArray(),
+            'Permission' => $this->permission
+        );
     }
 }

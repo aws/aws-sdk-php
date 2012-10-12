@@ -78,4 +78,27 @@ class FiltersTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $this->assertEquals($output, Filters::getTimestamp($input));
     }
+
+    /**
+     * @return array
+     */
+    public function dateProvider()
+    {
+        $t = time();
+        $result = gmdate('Y-m-d', $t);
+
+        return array(
+            array($t, $result),
+            array($result, $result),
+            array(new \DateTime($result), $result)
+        );
+    }
+
+    /**
+     * @dataProvider dateProvider
+     */
+    public function testConvertsDateTimes($input, $output)
+    {
+        $this->assertEquals($output, Filters::getDate($input, 'Y-m-d'));
+    }
 }

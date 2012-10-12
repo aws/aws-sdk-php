@@ -2,18 +2,18 @@
 
 namespace Aws\Tests\S3\Model;
 
-use Aws\S3\Model\AclBuilder;
+use Aws\S3\Model\AcpBuilder;
 use Aws\S3\Enum\Permission;
 use Aws\S3\Enum\Group;
 
 /**
- * @covers Aws\S3\Model\AclBuilder
+ * @covers Aws\S3\Model\AcpBuilder
  */
-class AclBuilderTest extends \Guzzle\Tests\GuzzleTestCase
+class AcpBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testCanSetOwner()
     {
-        $builder = AclBuilder::newInstance();
+        $builder = AcpBuilder::newInstance();
         $this->assertSame($builder, $builder->setOwner('1234567890'));
         $this->assertInstanceOf(
             'Aws\S3\Model\Grantee',
@@ -23,7 +23,7 @@ class AclBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanAddUserGrant()
     {
-        $builder = AclBuilder::newInstance();
+        $builder = AcpBuilder::newInstance();
         $after = $builder->addGrantForUser(Permission::READ, '12345');
         $this->assertSame($builder, $after);
 
@@ -34,7 +34,7 @@ class AclBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanAddEmailGrant()
     {
-        $builder = AclBuilder::newInstance();
+        $builder = AcpBuilder::newInstance();
         $after = $builder->addGrantForEmail(Permission::READ, 'foo@example.com');
         $this->assertSame($builder, $after);
 
@@ -45,7 +45,7 @@ class AclBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanAddGroupGrant()
     {
-        $builder = AclBuilder::newInstance();
+        $builder = AcpBuilder::newInstance();
         $after = $builder->addGrantForGroup(Permission::READ, Group::ALL_USERS);
         $this->assertSame($builder, $after);
 
@@ -54,12 +54,12 @@ class AclBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue($grants[0]->getGrantee()->isGroup());
     }
 
-    public function testCanBuildAnAcl()
+    public function testCanBuildAnAcp()
     {
-        $acl = AclBuilder::newInstance()->setOwner('1234567890')
+        $acl = AcpBuilder::newInstance()->setOwner('1234567890')
             ->addGrantForEmail(Permission::READ, 'foo@example.com')
             ->build();
 
-        $this->assertInstanceOf('Aws\S3\Model\Acl', $acl);
+        $this->assertInstanceOf('Aws\S3\Model\Acp', $acl);
     }
 }

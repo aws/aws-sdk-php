@@ -40,6 +40,8 @@ class TableExists extends AbstractResourceWaiter
                 Ua::OPTION  => Ua::WAITER
             ))->execute();
 
+            $this->config['status'] = isset($this->config['status']) ? $this->config['status'] : 'ACTIVE';
+
             // If a status was specified, check if the table has that status
             // Otherwise, return true because the table exists
             return isset($this->config['status'])

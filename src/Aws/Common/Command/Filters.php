@@ -80,18 +80,4 @@ class Filters
             return gmdate($format, strtotime($dateTime));
         }
     }
-
-    /**
-     * Returns a DateTime object
-     *
-     * @param string|int|\DateTime $dateTime Date time string, Unix timestamp, or DateTime object
-     *
-     * @return \DateTime
-     */
-    public static function getDateTime($dateTime)
-    {
-        return $dateTime instanceof \DateTime
-            ? $dateTime
-            : new \DateTime($dateTime);
-    }
 }

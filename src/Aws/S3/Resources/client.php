@@ -38,8 +38,8 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html',
             'data' => array(
-                'root' => 'MultipartUpload',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'MultipartUpload',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -62,7 +62,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -89,7 +89,7 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -264,6 +264,11 @@ return array (
                         ),
                     ),
                 ),
+                'ACP' => array(
+                    'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
+                    'type' => 'object',
+                    'additionalProperties' => true,
+                ),
             ),
         ),
         'CreateBucket' => array(
@@ -275,8 +280,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html',
             'data' => array(
-                'root' => 'CreateBucketConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'CreateBucketConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -342,6 +347,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
                 ),
+                'ACP' => array(
+                    'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
+                    'type' => 'object',
+                    'additionalProperties' => true,
+                ),
             ),
         ),
         'CreateMultipartUpload' => array(
@@ -352,7 +362,7 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -485,6 +495,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'uploads',
                     'default' => '_guzzle_blank_',
+                ),
+                'ACP' => array(
+                    'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
+                    'type' => 'object',
+                    'additionalProperties' => true,
                 ),
             ),
         ),
@@ -647,7 +662,7 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -671,7 +686,7 @@ return array (
                             'required' => true,
                             'type' => 'array',
                             'data' => array(
-                                'flatArray' => true,
+                                'xmlFlattened' => true,
                             ),
                             'items' => array(
                                 'type' => 'object',
@@ -1335,7 +1350,8 @@ return array (
                 'VersionIdMarker' => array(
                     'description' => 'Specifies the object version you want to start listing from.',
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'query',
+                    'sentAs' => 'version-id-marker',
                 ),
                 'MaxKeys' => array(
                     'description' => 'Sets the maximum number of keys returned in the response. The response might contain fewer keys but will never contain more.',
@@ -1451,8 +1467,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html',
             'data' => array(
-                'root' => 'AccessControlPolicy',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'AccessControlPolicy',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1489,6 +1505,9 @@ return array (
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
                                         'sentAs' => 'type',
+                                        'data' => array(
+                                            'xmlAttribute' => true,
+                                        ),
                                         'enum' => array(
                                             'CanonicalUser',
                                             'AmazonCustomerByEmail',
@@ -1578,6 +1597,11 @@ return array (
                     'sentAs' => 'acl',
                     'default' => '_guzzle_blank_',
                 ),
+                'ACP' => array(
+                    'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add an access control policy to the operation',
+                    'type' => 'object',
+                    'additionalProperties' => true,
+                ),
             ),
         ),
         'PutBucketCors' => array(
@@ -1589,8 +1613,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html',
             'data' => array(
-                'root' => 'CORSConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'CORSConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1602,7 +1626,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -1612,7 +1636,7 @@ return array (
                                 'description' => 'One or more origins you want customers to be able to access the bucket from.',
                                 'type' => 'array',
                                 'data' => array(
-                                    'flatArray' => true,
+                                    'xmlFlattened' => true,
                                 ),
                                 'items' => array(
                                     'type' => 'string',
@@ -1623,7 +1647,7 @@ return array (
                                 'description' => 'Identifies HTTP methods that the domain/origin specified in the rule is allowed to execute.',
                                 'type' => 'array',
                                 'data' => array(
-                                    'flatArray' => true,
+                                    'xmlFlattened' => true,
                                 ),
                                 'items' => array(
                                     'type' => 'string',
@@ -1638,7 +1662,7 @@ return array (
                                 'description' => 'One or more headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object).',
                                 'type' => 'array',
                                 'data' => array(
-                                    'flatArray' => true,
+                                    'xmlFlattened' => true,
                                 ),
                                 'items' => array(
                                     'type' => 'string',
@@ -1666,8 +1690,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html',
             'data' => array(
-                'root' => 'LifecycleConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'LifecycleConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1680,7 +1704,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -1736,8 +1760,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html',
             'data' => array(
-                'root' => 'BucketLoggingStatus',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'BucketLoggingStatus',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1772,6 +1796,9 @@ return array (
                                                 'description' => 'Type of grantee',
                                                 'type' => 'string',
                                                 'sentAs' => 'type',
+                                                'data' => array(
+                                                    'xmlAttribute' => true,
+                                                ),
                                                 'enum' => array(
                                                     'CanonicalUser',
                                                     'AmazonCustomerByEmail',
@@ -1822,8 +1849,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html',
             'data' => array(
-                'root' => 'NotificationConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'NotificationConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1867,7 +1894,7 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1878,7 +1905,10 @@ return array (
                 'Policy' => array(
                     'required' => true,
                     'description' => 'The bucket policy as a JSON document.',
-                    'type' => 'string',
+                    'type' => array(
+                        'string',
+                        'object',
+                    ),
                     'location' => 'body',
                 ),
                 'SubResource' => array(
@@ -1899,8 +1929,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html',
             'data' => array(
-                'root' => 'RequestPaymentConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'RequestPaymentConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1936,8 +1966,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html',
             'data' => array(
-                'root' => 'Tagging',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'Tagging',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1985,8 +2015,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html',
             'data' => array(
-                'root' => 'VersioningConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'VersioningConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2036,8 +2066,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html',
             'data' => array(
-                'root' => 'WebsiteConfiguration',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'WebsiteConfiguration',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2084,7 +2114,7 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2155,7 +2185,10 @@ return array (
                     'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'Body' => array(
-                    'type' => 'string',
+                    'type' => array(
+                        'string',
+                        'object',
+                    ),
                     'location' => 'body',
                 ),
                 'ACL' => array(
@@ -2219,6 +2252,15 @@ return array (
                     'description' => 'Content-MD5 checksum of the body. Set to false to disable',
                     'default' => true,
                 ),
+                'ValidateMD5' => array(
+                    'description' => 'Whether or not the Content-MD5 header of the response is validated. Default is true.',
+                    'default' => true,
+                ),
+                'ACP' => array(
+                    'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
+                    'type' => 'object',
+                    'additionalProperties' => true,
+                ),
             ),
         ),
         'PutObjectAcl' => array(
@@ -2230,8 +2272,8 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html',
             'data' => array(
-                'root' => 'AccessControlPolicy',
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => 'AccessControlPolicy',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2273,6 +2315,9 @@ return array (
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
                                         'sentAs' => 'type',
+                                        'data' => array(
+                                            'xmlAttribute' => true,
+                                        ),
                                         'enum' => array(
                                             'CanonicalUser',
                                             'AmazonCustomerByEmail',
@@ -2362,6 +2407,11 @@ return array (
                     'sentAs' => 'acl',
                     'default' => '_guzzle_blank_',
                 ),
+                'ACP' => array(
+                    'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add an access control policy to the operation',
+                    'type' => 'object',
+                    'additionalProperties' => true,
+                ),
             ),
         ),
         'UploadPart' => array(
@@ -2372,7 +2422,7 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2386,11 +2436,18 @@ return array (
                     'location' => 'uri',
                 ),
                 'Body' => array(
-                    'type' => 'string',
+                    'type' => array(
+                        'string',
+                        'object',
+                    ),
                     'location' => 'body',
                 ),
                 'ContentMD5' => array(
                     'description' => 'Content-MD5 checksum of the body. Set to false to disable',
+                    'default' => true,
+                ),
+                'ValidateMD5' => array(
+                    'description' => 'Whether or not the Content-MD5 header of the response is validated. Default is true.',
                     'default' => true,
                 ),
             ),
@@ -2403,7 +2460,7 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPartCopy.html',
             'data' => array(
-                'ns' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2630,7 +2687,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -2655,10 +2712,11 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'Error',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
+                        'sentAs' => 'Error',
                         'properties' => array(
                             'Key' => array(
                                 'type' => 'string',
@@ -2710,6 +2768,9 @@ return array (
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
                                         'sentAs' => 'type',
+                                        'data' => array(
+                                            'xmlAttribute' => true,
+                                        ),
                                     ),
                                     'ID' => array(
                                         'description' => 'The canonical user ID of the grantee.',
@@ -2747,20 +2808,22 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'CORSRule',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
+                        'sentAs' => 'CORSRule',
                         'properties' => array(
                             'AllowedOrigins' => array(
                                 'description' => 'One or more origins you want customers to be able to access the bucket from.',
                                 'type' => 'array',
                                 'sentAs' => 'AllowedOrigin',
                                 'data' => array(
-                                    'flatArray' => true,
+                                    'xmlFlattened' => true,
                                 ),
                                 'items' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'AllowedOrigin',
                                 ),
                             ),
                             'AllowedMethods' => array(
@@ -2768,10 +2831,11 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'AllowedMethod',
                                 'data' => array(
-                                    'flatArray' => true,
+                                    'xmlFlattened' => true,
                                 ),
                                 'items' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'AllowedMethod',
                                 ),
                             ),
                             'MaxAgeSeconds' => array(
@@ -2783,10 +2847,11 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'ExposeHeader',
                                 'data' => array(
-                                    'flatArray' => true,
+                                    'xmlFlattened' => true,
                                 ),
                                 'items' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'ExposeHeader',
                                 ),
                             ),
                         ),
@@ -2803,10 +2868,11 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'Rule',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
+                        'sentAs' => 'Rule',
                         'properties' => array(
                             'ID' => array(
                                 'description' => 'Unique identifier for the rule. The value cannot be longer than 255 characters.',
@@ -2864,6 +2930,9 @@ return array (
                                                 'description' => 'Type of grantee',
                                                 'type' => 'string',
                                                 'sentAs' => 'type',
+                                                'data' => array(
+                                                    'xmlAttribute' => true,
+                                                ),
                                             ),
                                             'ID' => array(
                                                 'description' => 'The canonical user ID of the grantee.',
@@ -3006,10 +3075,6 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ValidateMD5' => array(
-                    'description' => 'Whether or not the Content-MD5 header of the response is validated. Default is true.',
-                    'default' => true,
-                ),
                 'Body' => array(
                     'description' => 'Object data.',
                     'type' => 'string',
@@ -3111,6 +3176,9 @@ return array (
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
                                         'sentAs' => 'type',
+                                        'data' => array(
+                                            'xmlAttribute' => true,
+                                        ),
                                     ),
                                     'ID' => array(
                                         'description' => 'The canonical user ID of the grantee.',
@@ -3143,10 +3211,6 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ValidateMD5' => array(
-                    'description' => 'Whether or not the Content-MD5 header of the response is validated. Default is true.',
-                    'default' => true,
-                ),
                 'Body' => array(
                     'type' => 'string',
                     'location' => 'body',
@@ -3304,10 +3368,11 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'Upload',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
+                        'sentAs' => 'Upload',
                         'properties' => array(
                             'UploadId' => array(
                                 'description' => 'Upload ID that identifies the multipart upload.',
@@ -3384,11 +3449,11 @@ return array (
                 'Versions' => array(
                     'type' => 'array',
                     'location' => 'xml',
+                    'sentAs' => 'Version',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
-                        'name' => 'Version',
                         'type' => 'object',
                         'sentAs' => 'Version',
                         'properties' => array(
@@ -3439,11 +3504,11 @@ return array (
                 'DeleteMarkers' => array(
                     'type' => 'array',
                     'location' => 'xml',
+                    'sentAs' => 'DeleteMarker',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
-                        'name' => 'DeleteMarker',
                         'type' => 'object',
                         'sentAs' => 'DeleteMarker',
                         'properties' => array(
@@ -3501,7 +3566,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -3526,7 +3591,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -3585,7 +3650,7 @@ return array (
                     'type' => 'array',
                     'location' => 'xml',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
@@ -3642,10 +3707,11 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'Part',
                     'data' => array(
-                        'flatArray' => true,
+                        'xmlFlattened' => true,
                     ),
                     'items' => array(
                         'type' => 'object',
+                        'sentAs' => 'Part',
                         'properties' => array(
                             'PartNumber' => array(
                                 'description' => 'Part number identifying the part.',
