@@ -24,7 +24,7 @@ namespace Aws\S3\Iterator;
  */
 class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
 {
-    protected static $limitParam = 'max-uploads';
+    protected static $limitParam = 'MaxUploads';
 
     /**
      * {@inheritdoc}
