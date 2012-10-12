@@ -20,6 +20,9 @@ use Aws\Common\Aws;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Region\EndpointProviderInterface;
+use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Waiter\WaiterClassFactory;
@@ -60,6 +63,11 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     protected $directory;
 
     /**
+     * @var EndpointProviderInterface Endpoint provider used to retrieve region/service endpoints
+     */
+    protected $endpointProvider;
+
+    /**
      * @param CredentialsInterface $credentials AWS credentials
      * @param SignatureInterface   $signature   Signature implementation
      * @param Collection           $config      Configuration options
@@ -70,6 +78,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         parent::__construct($config->get(Options::BASE_URL), $config);
         $this->credentials = $credentials;
         $this->signature = $signature;
+        $this->endpointProvider = $config->get(Options::ENDPOINT_PROVIDER);
         // Make sure the user agent is prefixed by the SDK version
         $this->setUserAgent('aws-sdk-php/' . Aws::VERSION, true);
         // Set the service description on the client
@@ -108,6 +117,44 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     public function getSignature()
     {
         return $this->signature;
+    }
+
+    /**
+     * Get the endpoint provider used with the client
+     *
+     * @return EndpointProviderInterface
+     */
+    public function getEndpointProvider()
+    {
+        return $this->endpointProvider;
+    }
+
+    /**
+     * Change the region of the client
+     *
+     * @param string $region Name of the region to change to
+     *
+     * @return self
+     */
+    public function setRegion($region)
+    {
+        $config = $this->getConfig();
+
+        // Set the new base URL
+        $endpoint = $this->endpointProvider->getEndpoint($config->get(Options::SERVICE), $region);
+        $baseUrl = $endpoint->getBaseUrl($config->get(Options::SCHEME));
+        $this->setBaseUrl($baseUrl);
+        $config->set(Options::BASE_URL, $baseUrl);
+        $config->set(Options::REGION, $region);
+
+        // Update the signature if necessary
+        $signature = $this->getSignature();
+        if ($signature instanceof EndpointSignatureInterface) {
+            /** @var $signature EndpointSignatureInterface */
+            $signature->setRegionName($region);
+        }
+
+        return $this;
     }
 
     /**

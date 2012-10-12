@@ -337,6 +337,7 @@ class ClientBuilder
         $provider = $config->get(Options::ENDPOINT_PROVIDER) ?: $this->getDefaultEndpointProvider();
         $endpoint = $provider->getEndpoint($service, $region);
         $config->set(Options::BASE_URL, $endpoint->getBaseUrl($config->get(Options::SCHEME)));
+        $config->set(Options::ENDPOINT_PROVIDER, $provider);
     }
 
     /**

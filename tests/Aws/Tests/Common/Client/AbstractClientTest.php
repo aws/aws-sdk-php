@@ -4,8 +4,10 @@ namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Aws;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Enum\Region;
 use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
+use Aws\Common\Region\XmlEndpointProvider;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
@@ -136,5 +138,39 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         try {
             $client->fooBar();
         } catch (\Exception $e) {}
+    }
+
+    public function testSetRegionUpdatesBaseUrlAndSignature()
+    {
+        // Setup client
+        $endpointProvider = new XmlEndpointProvider();
+        $signature = new SignatureV4();
+        $signature->setRegionName(Region::US_EAST_1);
+        $credentials = new Credentials('test', '123');
+        $config = new Collection(array(
+            Options::SERVICE           => 's3',
+            Options::SCHEME            => 'https',
+            Options::BASE_URL          => $endpointProvider->getEndpoint('s3', Region::US_EAST_1)->getBaseUrl('https'),
+            Options::ENDPOINT_PROVIDER => $endpointProvider
+        ));
+        /** @var $client AbstractClient */
+        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
+            ->setConstructorArgs(array($credentials, $signature, $config))
+            ->getMockForAbstractClass();
+
+        // Get the original values
+        $baseUrl1 = $client->getBaseUrl();
+        $regionName1 = $this->readAttribute($signature, 'regionName');
+        $this->assertNotEmpty($baseUrl1);
+        $this->assertNotEmpty($regionName1);
+
+        // Change the region, get the new values, and compare with old
+        $client->setRegion(Region::US_WEST_1);
+        $baseUrl2 = $client->getBaseUrl();
+        $regionName2 = $this->readAttribute($signature, 'regionName');
+        $this->assertNotEmpty($baseUrl2);
+        $this->assertNotEmpty($regionName2);
+        $this->assertNotEquals($baseUrl1, $baseUrl2);
+        $this->assertNotEquals($regionName1, $regionName2);
     }
 }
