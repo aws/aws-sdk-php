@@ -30,7 +30,7 @@ abstract class AbstractTransferState implements TransferStateInterface
     protected $uploadId;
 
     /**
-     * @var array Array of parts where the part number is the index and the ETag is the value
+     * @var array Array of parts where the part number is the index
      */
     protected $parts = array();
 
@@ -140,8 +140,8 @@ abstract class AbstractTransferState implements TransferStateInterface
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
-        foreach (array_keys(get_object_vars($this)) as $property) {
-            if (isset($data[$property])) {
+        foreach (get_object_vars($this) as $property => $oldValue) {
+            if (array_key_exists($property, $data)) {
                 $this->{$property} = $data[$property];
             } else {
                 throw new RuntimeException("The {$property} property could be restored during unserialization.");
