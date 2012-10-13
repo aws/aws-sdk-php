@@ -2,11 +2,12 @@
 
 namespace Aws\Tests\Common\Signature;
 
-use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Credentials\Credentials;
-use Guzzle\Parser\ParserRegistry;
-use Guzzle\Http\Message\RequestFactory;
+use Aws\Common\Enum\DateFormat;
+use Aws\Common\Signature\SignatureV4;
 use Guzzle\Http\Message\Request;
+use Guzzle\Http\Message\RequestFactory;
+use Guzzle\Parser\ParserRegistry;
 
 class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -31,9 +32,9 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $signature->expects($this->any())
             ->method('getDateTime')
             ->will($this->returnValueMap(array(
-            array(SignatureV4::DATE_FORMAT_RFC1123, 'Mon, 09 Sep 2011 23:36:00 GMT'),
-            array(SignatureV4::DATE_FORMAT_ISO8601, '20110909T233600Z'),
-            array(SignatureV4::DATE_FORMAT_SHORT, '20110909')
+            array(DateFormat::RFC1123_GMT, 'Mon, 09 Sep 2011 23:36:00 GMT'),
+            array(DateFormat::ISO8601, '20110909T233600Z'),
+            array(DateFormat::SHORT, '20110909')
         )));
 
         return $signature;

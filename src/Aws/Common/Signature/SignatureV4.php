@@ -16,10 +16,11 @@
 
 namespace Aws\Common\Signature;
 
-use Aws\Common\HostNameUtils;
 use Aws\Common\Credentials\CredentialsInterface;
-use Guzzle\Http\Message\RequestInterface;
+use Aws\Common\Enum\DateFormat;
+use Aws\Common\HostNameUtils;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Url;
 
 /**
@@ -70,8 +71,8 @@ class SignatureV4 extends AbstractEndpointSignature
         // Refresh the cached timestamp
         $this->getTimestamp(true);
 
-        $longDate = $this->getDateTime(self::DATE_FORMAT_ISO8601);
-        $shortDate = $this->getDateTime(self::DATE_FORMAT_SHORT);
+        $longDate = $this->getDateTime(DateFormat::ISO8601);
+        $shortDate = $this->getDateTime(DateFormat::SHORT);
 
         // Remove any previously set Authorization headers so that
         // exponential backoff works correctly
@@ -81,7 +82,7 @@ class SignatureV4 extends AbstractEndpointSignature
         if ($request->hasHeader('x-amz-date') || !$request->hasHeader('Date')) {
             $request->setHeader('x-amz-date', $longDate);
         } else {
-            $request->setHeader('Date', $this->getDateTime(self::DATE_FORMAT_RFC1123));
+            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123_GMT));
         }
 
         // Add the security token if one is present

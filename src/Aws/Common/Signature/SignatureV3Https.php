@@ -17,6 +17,7 @@
 namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
@@ -32,7 +33,7 @@ class SignatureV3Https extends AbstractSignature
     {
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', $this->getDateTime(self::DATE_FORMAT_RFC1123));
+            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123_GMT));
         }
 
         // Calculate the string to sign

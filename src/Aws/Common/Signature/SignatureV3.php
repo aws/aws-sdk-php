@@ -17,6 +17,7 @@
 namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 
@@ -58,7 +59,7 @@ class SignatureV3 extends AbstractSignature
         $this->getTimestamp(true);
 
         // Add default headers
-        $request->setHeader('x-amz-date', $this->getDateTime(self::DATE_FORMAT_RFC1123));
+        $request->setHeader('x-amz-date', $this->getDateTime(DateFormat::RFC1123_GMT));
 
         // Add the security token if one is present
         if ($credentials->getSecurityToken()) {

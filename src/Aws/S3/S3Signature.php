@@ -17,6 +17,7 @@
 namespace Aws\S3;
 
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\QueryString;
 
@@ -55,7 +56,7 @@ class S3Signature implements S3SignatureInterface
 
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', gmdate(\DateTime::RFC2822));
+            $request->setHeader('Date', gmdate(DateFormat::RFC2822));
         }
 
         $stringToSign = $this->createCanonicalizedString($request);

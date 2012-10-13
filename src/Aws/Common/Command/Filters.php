@@ -16,6 +16,8 @@
 
 namespace Aws\Common\Command;
 
+use Aws\Common\Enum\DateFormat;
+
 /**
  * Filters for service descriptions
  */
@@ -70,7 +72,7 @@ class Filters
      *
      * @return string
      */
-    public static function getDate($dateTime, $format = \DateTime::RFC1123)
+    public static function getDate($dateTime, $format = DateFormat::RFC1123)
     {
         if ($dateTime instanceof \DateTime) {
             return $dateTime->setTimezone(new \DateTimeZone('UTC'))->format($format);
