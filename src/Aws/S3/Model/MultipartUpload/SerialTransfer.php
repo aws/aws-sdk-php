@@ -77,7 +77,7 @@ class SerialTransfer extends AbstractTransfer
                 count($this->state) + 1,
                 (string) $command->getResponse()->getHeader('ETag'),
                 $body->getContentLength(),
-                gmdate(\DateTime::RFC2822)
+                gmdate(DateFormat::RFC2822)
             );
 
             // Notify observers that the part was uploaded
