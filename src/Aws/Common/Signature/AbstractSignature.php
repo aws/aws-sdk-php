@@ -29,26 +29,9 @@ abstract class AbstractSignature implements SignatureInterface
     const DATE_FORMAT_SHORT   = 'Ymd';
 
     /**
-     * @var string hash_hmac signature algorithm
-     */
-    protected $algorithm;
-
-    /**
      * @var int Timestamp
      */
     private $timestamp;
-
-    /**
-     * Constructor used to specify the hashing algorithm
-     *
-     * @param string $algorithm Hashing algorithm. Defaults to sha256
-     *
-     * @link http://www.php.net/manual/en/function.hash-algos.php
-     */
-    public function __construct($algorithm = 'sha256')
-    {
-        $this->algorithm = $algorithm;
-    }
 
     /**
      * Get the canonicalized query string for a request
