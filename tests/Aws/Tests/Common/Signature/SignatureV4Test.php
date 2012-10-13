@@ -31,9 +31,9 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $signature->expects($this->any())
             ->method('getDateTime')
             ->will($this->returnValueMap(array(
-            array('r', 'Mon, 09 Sep 2011 23:36:00 GMT'),
-            array('Ymd\THis\Z', '20110909T233600Z'),
-            array('Ymd', '20110909')
+            array(SignatureV4::DATE_FORMAT_RFC1123, 'Mon, 09 Sep 2011 23:36:00 GMT'),
+            array(SignatureV4::DATE_FORMAT_ISO8601, '20110909T233600Z'),
+            array(SignatureV4::DATE_FORMAT_SHORT, '20110909')
         )));
 
         return $signature;

@@ -24,6 +24,10 @@ use Guzzle\Http\Message\RequestInterface;
  */
 abstract class AbstractSignature implements SignatureInterface
 {
+    const DATE_FORMAT_RFC1123 = 'D, d M Y H:i:s \G\M\T';
+    const DATE_FORMAT_ISO8601 = 'Ymd\THis\Z';
+    const DATE_FORMAT_SHORT   = 'Ymd';
+
     /**
      * @var string hash_hmac signature algorithm
      */

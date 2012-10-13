@@ -70,8 +70,8 @@ class SignatureV4 extends AbstractEndpointSignature
         // Refresh the cached timestamp
         $this->getTimestamp(true);
 
-        $longDate = $this->getDateTime('Ymd\THis\Z');
-        $shortDate = $this->getDateTime('Ymd');
+        $longDate = $this->getDateTime(self::DATE_FORMAT_ISO8601);
+        $shortDate = $this->getDateTime(self::DATE_FORMAT_SHORT);
 
         // Remove any previously set Authorization headers so that
         // exponential backoff works correctly
@@ -81,7 +81,7 @@ class SignatureV4 extends AbstractEndpointSignature
         if ($request->hasHeader('x-amz-date') || !$request->hasHeader('Date')) {
             $request->setHeader('x-amz-date', $longDate);
         } else {
-            $request->setHeader('Date', str_replace('+0000', 'GMT', $this->getDateTime('r')));
+            $request->setHeader('Date', $this->getDateTime(self::DATE_FORMAT_RFC1123));
         }
 
         // Add the security token if one is present

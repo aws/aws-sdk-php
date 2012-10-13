@@ -55,7 +55,7 @@ class S3Signature implements S3SignatureInterface
 
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', gmdate('r'));
+            $request->setHeader('Date', gmdate(\DateTime::RFC2822));
         }
 
         $stringToSign = $this->createCanonicalizedString($request);

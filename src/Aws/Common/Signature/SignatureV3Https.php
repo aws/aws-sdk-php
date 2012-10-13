@@ -14,17 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudFront;
+namespace Aws\Common\Signature;
 
-use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Credentials\CredentialsInterface;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
- * Amazon CloudFront signature implementation
- * @link http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/RESTAuthentication.html
+ * Implementation of Signature Version 3 HTTPS
+ * @link http://docs.amazonwebservices.com/Route53/latest/DeveloperGuide/RESTAuthentication.html
  */
-class CloudFrontSignature implements SignatureInterface
+class SignatureV3Https extends AbstractSignature
 {
     /**
      * {@inheritdoc}
@@ -33,15 +32,21 @@ class CloudFrontSignature implements SignatureInterface
     {
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', gmdate(\DateTime::RFC2822));
+            $request->setHeader('Date', $this->getDateTime(self::DATE_FORMAT_RFC1123));
         }
 
+        // Calculate the string to sign
         $stringToSign = (string) $request->getHeader('Date') ?: (string) $request->getHeader('x-amz-date');
         $request->getParams()->set('aws.string_to_sign', $stringToSign);
 
+        // Add the authorization header to the request
         $request->setHeader(
-            'Authorization',
-            'AWS ' . $credentials->getAccessKeyId() . ':' . $this->signString($stringToSign, $credentials)
+            'X-Amzn-Authorization',
+            sprintf(
+                'AWS3-HTTPS AWSAccessKeyId=%s,Algorithm=HmacSHA256,Signature=%s',
+                $credentials->getAccessKeyId(),
+                $this->signString($stringToSign, $credentials)
+            )
         );
     }
 
@@ -50,6 +55,6 @@ class CloudFrontSignature implements SignatureInterface
      */
     public function signString($string, CredentialsInterface $credentials)
     {
-        return base64_encode(hash_hmac('sha1', $string, $credentials->getSecretKey(), true));
+        return base64_encode(hash_hmac('sha256', $string, $credentials->getSecretKey(), true));
     }
 }

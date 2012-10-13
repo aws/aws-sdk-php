@@ -104,7 +104,7 @@ class ParallelTransfer extends AbstractTransfer
                     count($this->state) + 1,
                     (string) $command->getResponse()->getHeader('ETag'),
                     (int) (string) $command->getRequest()->getHeader('Content-Length'),
-                    gmdate('r')
+                    gmdate(\DateTime::RFC2822)
                 );
                 $eventData['command'] = $command;
                 // Notify any listeners the the part was uploaded
