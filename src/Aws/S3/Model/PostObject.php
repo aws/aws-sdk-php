@@ -118,7 +118,7 @@ class PostObject extends Collection
 
         // Setup policy document
         $policy = array(
-            'expiration' => gmdate(DateFormat::ISO8601_POLICY, $ttd),
+            'expiration' => gmdate(DateFormat::ISO8601_S3, $ttd),
             'conditions' => array(
                 array('bucket' => $this->bucket),
             )

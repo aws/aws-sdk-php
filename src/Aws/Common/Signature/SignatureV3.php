@@ -59,7 +59,7 @@ class SignatureV3 extends AbstractSignature
         $this->getTimestamp(true);
 
         // Add default headers
-        $request->setHeader('x-amz-date', $this->getDateTime(DateFormat::RFC1123_GMT));
+        $request->setHeader('x-amz-date', $this->getDateTime(DateFormat::RFC1123));
 
         // Add the security token if one is present
         if ($credentials->getSecurityToken()) {

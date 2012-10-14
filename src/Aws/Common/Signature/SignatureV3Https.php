@@ -33,7 +33,7 @@ class SignatureV3Https extends AbstractSignature
     {
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123_GMT));
+            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123));
         }
 
         // Calculate the string to sign

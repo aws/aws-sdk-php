@@ -82,7 +82,7 @@ class SignatureV4 extends AbstractEndpointSignature
         if ($request->hasHeader('x-amz-date') || !$request->hasHeader('Date')) {
             $request->setHeader('x-amz-date', $longDate);
         } else {
-            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123_GMT));
+            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123));
         }
 
         // Add the security token if one is present
