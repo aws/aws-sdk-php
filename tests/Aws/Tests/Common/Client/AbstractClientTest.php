@@ -7,6 +7,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\Region;
 use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
+use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Region\XmlEndpointProvider;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
@@ -23,7 +24,10 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $signature = new SignatureV4();
         $credentials = new Credentials('test', '123');
-        $config = new Collection();
+        $endpointProvider = $this->getMock('Aws\Common\Region\EndpointProviderInterface');
+        $config = new Collection(array(
+            Options::ENDPOINT_PROVIDER => $endpointProvider
+        ));
 
         $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
             ->setConstructorArgs(array($credentials, $signature, $config))
@@ -31,12 +35,16 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertSame($signature, $client->getSignature());
         $this->assertSame($credentials, $client->getCredentials());
+        $this->assertSame($endpointProvider, $client->getEndpointProvider());
         $this->assertSame($config, $client->getConfig());
 
         // Ensure a signature event dispatcher was added
-        $this->assertGreaterThan(0, array_filter($client->getEventDispatcher()->getListeners('request.before_send'), function($e) {
-            return $e[0] instanceof SignatureListener;
-        }));
+        $this->assertGreaterThan(0, array_filter(
+            $client->getEventDispatcher()->getListeners('request.before_send'),
+            function($e) {
+                return $e[0] instanceof SignatureListener;
+            }
+        ));
 
         // Ensure that the user agent string is correct
         $expectedUserAgent = 'aws-sdk-php/' . Aws::VERSION . ' Guzzle';
@@ -44,9 +52,24 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testThrowsExceptionWhenNoEndpointProvider()
+    {
+        $signature = new SignatureV4();
+        $credentials = new Credentials('test', '123');
+        $config = new Collection();
+        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
+            ->setConstructorArgs(array($credentials, $signature, $config))
+            ->getMockForAbstractClass();
+    }
+
     public function testConstructorCallsResolvers()
     {
-        $config = new Collection();
+        $config = new Collection(array(
+            Options::ENDPOINT_PROVIDER => $this->getMock('Aws\Common\Region\EndpointProviderInterface')
+        ));
         $signature = new SignatureV4();
         $credentials = new Credentials('test', '123');
         $config->set('client.resolvers', array(
