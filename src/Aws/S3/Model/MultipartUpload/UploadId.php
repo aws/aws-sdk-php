@@ -28,8 +28,8 @@ class UploadId extends AbstractUploadId
      * {@inheritdoc}
      */
     protected static $expectedValues = array(
-        'bucket'   => false,
-        'key'      => false,
+        'Bucket'   => false,
+        'Key'      => false,
         'UploadId' => false
     );
 }

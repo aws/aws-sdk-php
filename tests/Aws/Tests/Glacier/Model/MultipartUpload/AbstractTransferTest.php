@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\Tests\Glacier\Model;
+namespace Aws\Tests\Glacier\Model\MultipartUpload;
 
 use Aws\Glacier\Model\MultipartUpload\AbstractTransfer;
 use Aws\Glacier\Model\MultipartUpload\TransferState;

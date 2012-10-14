@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\Tests\DynamoDb;
+namespace Aws\Tests\Glacier\Model\MultipartUpload;
 
 use Aws\Glacier\Model\MultipartUpload\UploadPart;
 

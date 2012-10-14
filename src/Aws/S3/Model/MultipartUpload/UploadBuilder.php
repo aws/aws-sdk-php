@@ -68,7 +68,7 @@ class UploadBuilder extends AbstractUploadBuilder
     /**
      * @var Acp Acp to use with the object
      */
-    protected $acl;
+    protected $acp;
 
     /**
      * Set the bucket to upload the object to
@@ -153,7 +153,7 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function calculateMd5($calculateMd5)
     {
-        $this->calculateEntireMd5 = $calculateMd5;
+        $this->calculateEntireMd5 = (bool) $calculateMd5;
 
         return $this;
     }
@@ -168,21 +168,21 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function calculatePartMd5($usePartMd5)
     {
-        $this->calculatePartMd5 = $usePartMd5;
+        $this->calculatePartMd5 = (bool) $usePartMd5;
 
         return $this;
     }
 
     /**
-     * Set the ACL to use on the object
+     * Set the ACP to use on the object
      *
-     * @param Acp $acl ACL to set on the object
+     * @param Acp $acp ACP to set on the object
      *
      * @return self
      */
-    public function setAcp(Acp $acl)
+    public function setAcp(Acp $acp)
     {
-        $this->acl = $acl;
+        $this->acp = $acp;
 
         return $this;
     }
@@ -194,12 +194,18 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function build()
     {
+        if ($this->state instanceof TransferState) {
+            $params = $this->state->getUploadId()->toParams();
+            $this->bucket = isset($params['Bucket']) ? $params['Bucket'] : $this->bucket;
+            $this->key = isset($params['Key']) ? $params['Key'] : $this->key;
+        }
+
         if (!$this->bucket || !$this->key || !$this->client || !$this->source) {
             throw new InvalidArgumentException('You must specify a bucket, key, client, and source.');
         }
 
         if ($this->state && !$this->source->isSeekable()) {
-            throw new InvalidArgumentException('You cannot resume a transfer using a non-seekable stream');
+            throw new InvalidArgumentException('You cannot resume a transfer using a non-seekable source.');
         }
 
         // If no state was set, then create one by initiating or loading a multipart upload
@@ -234,8 +240,7 @@ class UploadBuilder extends AbstractUploadBuilder
             'Key'      => $this->key,
         );
 
-        /** @var $command \Aws\S3\Command\DefaultUploadObject */
-        $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
+        $command = $this->client->getCommand('CreateMultipartUpload', array_replace($params, array(
             'command.headers' => $this->headers,
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         )));
@@ -254,6 +259,7 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         $result = $command->execute();
+        //var_dump((string) $command->getResponse(), $command->getResult()->toArray());die;
 
         // Create a new state based on the initiated upload
         $params['UploadId'] = $result['UploadId'];

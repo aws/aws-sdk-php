@@ -1,193 +1,132 @@
 <?php
 
-namespace Aws\Tests\S3\Model;
+namespace Aws\Tests\Glacier\Model;
 
-use Aws\S3\Model\MultipartUpload\AbstractTransfer;
-use Aws\S3\Model\MultipartUpload\TransferState;
-use Aws\S3\Model\MultipartUpload\TransferInterface;
+use Aws\Glacier\Model\MultipartUpload\AbstractTransfer;
+use Aws\Glacier\Model\MultipartUpload\TransferState;
+use Aws\Glacier\Model\MultipartUpload\UploadPart;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\Response;
 
 /**
- * @covers Aws\S3\Model\MultipartUpload\AbstractTransfer
+ * @covers Aws\Glacier\Model\MultipartUpload\AbstractTransfer
  */
 class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testHasEvents()
+    /** @var \Aws\Glacier\GlacierClient */
+    protected $client;
+
+    /** @var \Aws\Glacier\Model\MultipartUpload\AbstractTransfer */
+    protected $transfer;
+
+    public function prepareTransfer($useRealClient = false)
     {
-        $this->assertInternalType('array', AbstractTransfer::getAllEvents());
+        $uploadId = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadId')
+            ->setMethods(array('toParams'))
+            ->getMock();
+        $uploadId->expects($this->any())
+            ->method('toParams')
+            ->will($this->returnValue(array(
+                'accountId' => '-',
+                'vaultName' => 'foo',
+                'uploadId'  => 'bar'
+            )
+        ));
+
+        $generator = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadPartGenerator')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $generator->expects($this->any())
+            ->method('getPartSize')
+            ->will($this->returnValue(1024 * 1024));
+
+        $body = EntityBody::factory(fopen(__FILE__, 'r'));
+
+        if ($useRealClient) {
+            $client = $this->getServiceBuilder()->get('glacier', true);
+        } else {
+            $client = $this->getMockBuilder('Aws\Glacier\GlacierClient')
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
+
+        $state = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\TransferState')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $state->expects($this->any())
+            ->method('getUploadId')
+            ->will($this->returnValue($uploadId));
+        $state->expects($this->any())
+            ->method('getPartGenerator')
+            ->will($this->returnValue($generator));
+
+        $this->client = $client;
+        $this->transfer = $this->getMockForAbstractClass('Aws\Glacier\Model\MultipartUpload\AbstractTransfer', array(
+            $client, $state, $body
+        ));
     }
 
-    public function partSizeDataProvider()
+    protected function callProtectedMethod($object, $method, array $args = array())
     {
-        return array(
-            array(8242880, null, 5242880),
-            array(8242880, 7242880, 7242880),
-            array(false, 7242880, 7242880),
-            array(false, 200, 5242880),
-            array(false, 72428800000, 5368709120),
-            array(false, null, null, 'Aws\Common\Exception\RuntimeException')
+        $reflectedObject = new \ReflectionObject($object);
+        $reflectedMethod = $reflectedObject->getMethod($method);
+        $reflectedMethod->setAccessible(true);
+
+        return $reflectedMethod->invokeArgs($object, $args);
+    }
+
+    public function testCanGetPartSize()
+    {
+        $this->prepareTransfer();
+        $this->assertEquals(1024 * 1024, $this->callProtectedMethod($this->transfer, 'calculatePartSize'));
+    }
+
+    public function testCanCompleteMultipartUpload()
+    {
+        $this->prepareTransfer();
+
+        $model = $this->getMockBuilder('Guzzle\Service\Resource\Model')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $command = $this->getMockBuilder('Guzzle\Service\Command\OperationCommand')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $command->expects($this->any())
+            ->method('getResult')
+            ->will($this->returnValue($model));
+        $this->client->expects($this->any())
+            ->method('getCommand')
+            ->will($this->returnValue($command));
+
+        $this->assertInstanceOf(
+            'Guzzle\Service\Resource\Model',
+            $this->callProtectedMethod($this->transfer, 'complete')
         );
     }
 
-    /**
-     * @dataProvider partSizeDataProvider
-     */
-    public function testCalculatesPartSize($len, $partLen, $size, $throwException = null)
+    public function testCanGetAbortCommand()
     {
-        $body = $this->getMockBuilder('Guzzle\Http\EntityBody')
-            ->disableOriginalConstructor()
-            ->setMethods(array('getContentLength'))
-            ->getMock();
+        $this->prepareTransfer(true);
 
-        $body->expects($this->any())
-            ->method('getContentLength')
-            ->will($this->returnValue($len));
-
-        try {
-            $upload = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-                ->setConstructorArgs(array(
-                    $this->getServiceBuilder()->get('s3'),
-                    new TransferState('foo', 'baz', 'bar'),
-                    $body,
-                    array('min_part_size' => $partLen)
-                ))
-                ->getMockForAbstractClass();
-            $this->assertEquals($size, $this->readAttribute($upload, 'partSize'));
-        } catch (\Exception $e) {
-            if (!$throwException) {
-                throw $e;
-            } else {
-                $this->assertInstanceOf($throwException, $e);
-            }
-        }
+        $abortCommand = $this->callProtectedMethod($this->transfer, 'getAbortCommand');
+        $this->assertInstanceOf('Guzzle\Service\Command\OperationCommand', $abortCommand);
+        $this->assertEquals('foo', $abortCommand->get('vaultName'));
     }
 
-    public function testHasGetters()
+    public function testCanGetCommandForUploadPart()
     {
-        $state = new TransferState('foo', 'baz', 'bar');
-        $upload = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-            ->setConstructorArgs(array(
-                $this->getServiceBuilder()->get('s3'),
-                $state,
-                EntityBody::factory()
-            ))
-            ->getMockForAbstractClass();
-        $this->assertSame($state, $upload->getState());
-        $options = $upload->getOptions();
-        $this->assertEquals(true, $options['part_md5']);
-        $this->assertEquals(5242880, $options['min_part_size']);
-    }
+        $this->prepareTransfer(true);
 
-    public function testAbortsMultipartUpload()
-    {
-        $client = $this->getServiceBuilder()->get('s3');
-        $state = new TransferState('foo', 'baz', 'bar');
-        $upload = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-            ->setConstructorArgs(array(
-                $this->getServiceBuilder()->get('s3'),
-                $state,
-                EntityBody::factory()
-            ))
-            ->getMockForAbstractClass();
+        $part = UploadPart::fromArray(array(
+            'partNumber'  => 1,
+            'checksum'    => 'foo',
+            'contentHash' => 'bar',
+            'size'        => 10,
+            'offset'      => 5
+        ));
 
-        $mock = $this->setMockResponse($client, array(Response::fromMessage("HTTP/1.1 204 OK\r\nContent-Length: 0\r\n\r\n")));
-        $upload->abort();
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(1, count($requests));
-        $this->assertEquals('DELETE', $requests[0]->getMethod());
-        $this->assertEquals('/baz?uploadId=bar', $requests[0]->getResource());
-        $this->assertTrue($state->isAborted());
-    }
-
-    /**
-     * @expectedException \Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage The transfer has been aborted and cannot be uploaded
-     */
-    public function testThrowsExceptionWhenAttemptingToUploadAbortedTransfer()
-    {
-        $state = new TransferState('foo', 'baz', 'bar');
-        $state->setAborted(true);
-        $transfer = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-            ->setConstructorArgs(array(
-                $this->getServiceBuilder()->get('s3'),
-                $state,
-                EntityBody::factory()
-            ))
-            ->getMockForAbstractClass();
-        $transfer->upload();
-    }
-
-    /**
-     * @expectedException \Aws\S3\Exception\MultipartUploadException
-     */
-    public function testWrapsExceptionsThrownDuringUpload()
-    {
-        $transfer = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-            ->setConstructorArgs(array(
-                $this->getServiceBuilder()->get('s3'),
-                new TransferState('foo', 'baz', 'bar'),
-                EntityBody::factory()
-            ))
-            ->setMethods(array('transfer'))
-            ->getMockForAbstractClass();
-
-        $e = new \Exception('Foo');
-        $transfer->expects($this->once())
-            ->method('transfer')
-            ->will($this->throwException($e));
-
-        $transfer->upload();
-    }
-
-    public function testCompletesUploadAndDispatchesEvents()
-    {
-        $client = $this->getServiceBuilder()->get('s3');
-        $mock = $this->setMockResponse($client, 's3/complete_multipart_upload');
-
-        $state = new TransferState('foo', 'baz', 'bar');
-        $state->addPart(1, '"abc"', 100, gmdate('r'));
-
-        $transfer = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-            ->setConstructorArgs(array(
-                $client,
-                $state,
-                EntityBody::factory()
-            ))
-            ->setMethods(array('transfer'))
-            ->getMockForAbstractClass();
-
-        $transfer->expects($this->once())
-            ->method('transfer')
-            ->will($this->returnValue(true));
-
-        $observer = $this->getWildcardObserver($transfer);
-        $transfer->upload();
-        $this->assertEquals(array(
-            TransferInterface::AFTER_UPLOAD,
-            TransferInterface::AFTER_COMPLETE
-        ), array_keys($observer->getGrouped()));
-
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(1, count($requests));
-        $this->assertEquals('POST', $requests[0]->getMethod());
-        $this->assertEquals('/baz?uploadId=bar', $requests[0]->getResource());
-        $this->assertContains('<PartNumber>1</PartNumber>', (string) $requests[0]->getBody());
-        $this->assertContains('<ETag>"abc"</ETag>', (string) $requests[0]->getBody());
-    }
-
-    public function testStoppingReturnsState()
-    {
-        $state = new TransferState('foo', 'baz', 'bar');
-        $transfer = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\AbstractTransfer')
-            ->setConstructorArgs(array(
-                $this->getServiceBuilder()->get('s3'),
-                $state,
-                EntityBody::factory()
-            ))
-            ->setMethods(array('transfer'))
-            ->getMockForAbstractClass();
-        $this->assertSame($state, $transfer->stop());
-        $this->assertEquals(true, $this->readAttribute($transfer, 'stopped'));
+        $command = $this->callProtectedMethod($this->transfer, 'getCommandForPart', array($part, true));
+        $this->assertInstanceOf('Guzzle\Service\Command\OperationCommand', $command);
+        $this->assertEquals('foo', $command->get('checksum'));
     }
 }
