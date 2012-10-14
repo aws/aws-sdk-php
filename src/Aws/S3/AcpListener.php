@@ -22,9 +22,9 @@ use Guzzle\Common\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Listener used to ADD ACP headers to an operation using an {@see Acl} object
+ * Listener used to add an Access Control Policy to a request
  */
-class AcpHeadersListener implements EventSubscriberInterface
+class AcpListener implements EventSubscriberInterface
 {
     /**
      * {@inheritdoc}
@@ -42,9 +42,8 @@ class AcpHeadersListener implements EventSubscriberInterface
         /** @var $command \Guzzle\Service\Command\AbstractCommand */
         $command = $event['command'];
         $operation = $command->getOperation();
-        if ($operation->hasParam('ACP') && !$operation->hasParam('Grants')) {
+        if ($operation->hasParam('ACP') && $command->hasKey('ACP')) {
             if ($acp = $command->get('ACP')) {
-
                 // Ensure that the correct object was passed
                 if (!($acp instanceof Acp)) {
                     throw new InvalidArgumentException('ACP must be an instance of Aws\S3\Model\Acp');
@@ -57,11 +56,16 @@ class AcpHeadersListener implements EventSubscriberInterface
                     );
                 }
 
-                // Add the correct header based parameters to the command
-                $acp->updateCommand($command);
-                // Remove the ACP parameter
-                $command->remove('ACP');
+                // Add the correct headers/body based parameters to the command
+                if ($operation->hasParam('Grants')) {
+                    $command->merge($acp->toArray());
+                } else {
+                    $acp->updateCommand($command);
+                }
             }
+
+            // Remove the ACP parameter
+            $command->remove('ACP');
         }
     }
 }

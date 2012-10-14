@@ -2,7 +2,7 @@
 
 namespace Aws\Tests\S3;
 
-use Aws\S3\AcpHeadersListener;
+use Aws\S3\AcpListener;
 use Aws\S3\Enum\Group;
 use Aws\S3\Model\Acp;
 use Aws\S3\Model\AcpBuilder;
@@ -10,13 +10,13 @@ use Aws\S3\Model\Grantee;
 use Guzzle\Http\Message\Response;
 
 /**
- * @covers Aws\S3\AcpHeadersListener
+ * @covers Aws\S3\AcpListener
  */
-class AcpHeadersListenerTest extends \Guzzle\Tests\GuzzleTestCase
+class AcpListenerTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testHasEvents()
     {
-        $this->assertNotEmpty(AcpHeadersListener::getSubscribedEvents());
+        $this->assertNotEmpty(AcpListener::getSubscribedEvents());
     }
 
     /**
@@ -63,14 +63,7 @@ class AcpHeadersListenerTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAppliesAcpHeadersToCommand()
     {
-        $acp = AcpBuilder::newInstance()
-            ->setOwner('test')
-            ->addGrantForEmail('READ', 'test@example.com')
-            ->addGrantForEmail('READ', 'baz@example.com')
-            ->addGrantForEmail('WRITE', 'jar@jar.com')
-            ->addGrantForGroup('READ_ACP', Group::ALL_USERS)
-            ->build();
-
+        $acp = $this->getAcp();
         $s3 = $this->getServiceBuilder()->get('s3');
         $command = $s3->getCommand('PutObject', array(
             'Bucket' => 'test',
@@ -82,5 +75,29 @@ class AcpHeadersListenerTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('emailAddress="test@example.com", emailAddress="baz@example.com"', $command['GrantRead']);
         $this->assertEquals('emailAddress="jar@jar.com"', $command['GrantWrite']);
         $this->assertEquals('uri="http://acs.amazonaws.com/groups/global/AllUsers"', $command['GrantReadACP']);
+    }
+
+    public function testAppliesAcpBodyToCommand()
+    {
+        $acp = $this->getAcp();
+        $s3 = $this->getServiceBuilder()->get('s3');
+        $command = $s3->getCommand('PutObjectAcl', array(
+            'Bucket' => 'test',
+            'Key'    => 'key',
+            'ACP'    => $acp
+        ));
+        $request = $command->prepare();
+        $this->assertContains('Grantee', (string) $request->getBody());
+    }
+
+    protected function getAcp()
+    {
+        return AcpBuilder::newInstance()
+            ->setOwner('test')
+            ->addGrantForEmail('READ', 'test@example.com')
+            ->addGrantForEmail('READ', 'baz@example.com')
+            ->addGrantForEmail('WRITE', 'jar@jar.com')
+            ->addGrantForGroup('READ_ACP', Group::ALL_USERS)
+            ->build();
     }
 }

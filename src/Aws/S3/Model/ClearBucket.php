@@ -164,7 +164,8 @@ class ClearBucket extends AbstractHasDispatcher
 
         $deleted = 0;
         foreach ($this->getIterator() as $object) {
-            $batch->addKey($object['Key'], $object['VersionId']);
+            $versionId = $object['VersionId'] == 'null' ? null : $object['VersionId'];
+            $batch->addKey($object['Key'], $versionId);
             $deleted++;
         }
         $batch->flush();

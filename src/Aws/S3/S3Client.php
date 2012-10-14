@@ -172,10 +172,10 @@ class S3Client extends AbstractClient
 
         // Use virtual hosted buckets when possible
         $client->addSubscriber(new BucketStyleListener());
+        // Ensure that ACP headers are applied when needed
+        $client->addSubscriber(new AcpListener());
         // Validate and add Content-MD5 hashes
         $client->addSubscriber(new CommandContentMd5Plugin());
-        // Ensure that ACP headers are applied when needed
-        $client->addSubscriber(new AcpHeadersListener());
 
         return $client;
     }
