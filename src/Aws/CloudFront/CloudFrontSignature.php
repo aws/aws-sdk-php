@@ -16,8 +16,9 @@
 
 namespace Aws\CloudFront;
 
-use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Enum\DateFormat;
+use Aws\Common\Signature\SignatureInterface;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
@@ -33,7 +34,7 @@ class CloudFrontSignature implements SignatureInterface
     {
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', gmdate('r'));
+            $request->setHeader('Date', gmdate(DateFormat::RFC2822));
         }
 
         $stringToSign = (string) $request->getHeader('Date') ?: (string) $request->getHeader('x-amz-date');

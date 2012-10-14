@@ -17,12 +17,13 @@
 namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 
 /**
  * Implementation of Signature Version 3
- * @link http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/UsingJSON.html
+ * @link http://docs.amazonwebservices.com/amazonswf/latest/developerguide/HMACAuth-swf.html
  */
 class SignatureV3 extends AbstractSignature
 {
@@ -58,7 +59,7 @@ class SignatureV3 extends AbstractSignature
         $this->getTimestamp(true);
 
         // Add default headers
-        $request->setHeader('x-amz-date', $this->getDateTime('D, d M Y H:i:s \G\M\T'));
+        $request->setHeader('x-amz-date', $this->getDateTime(DateFormat::RFC1123));
 
         // Add the security token if one is present
         if ($credentials->getSecurityToken()) {

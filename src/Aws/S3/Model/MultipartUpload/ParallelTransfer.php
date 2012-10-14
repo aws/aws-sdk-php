@@ -17,6 +17,7 @@
 namespace Aws\S3\Model\MultipartUpload;
 
 use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Enum\DateFormat;
 use Aws\Common\Enum\UaString as Ua;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
@@ -104,7 +105,7 @@ class ParallelTransfer extends AbstractTransfer
                     count($this->state) + 1,
                     (string) $command->getResponse()->getHeader('ETag'),
                     (int) (string) $command->getRequest()->getHeader('Content-Length'),
-                    gmdate('r')
+                    gmdate(DateFormat::RFC2822)
                 );
                 $eventData['command'] = $command;
                 // Notify any listeners the the part was uploaded

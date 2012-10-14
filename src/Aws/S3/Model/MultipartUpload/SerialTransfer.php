@@ -17,6 +17,7 @@
 namespace Aws\S3\Model\MultipartUpload;
 
 use Aws\Common\Enum\UaString as Ua;
+use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 
@@ -76,7 +77,7 @@ class SerialTransfer extends AbstractTransfer
                 count($this->state) + 1,
                 (string) $command->getResponse()->getHeader('ETag'),
                 $body->getContentLength(),
-                gmdate('r')
+                gmdate(DateFormat::RFC2822)
             );
 
             // Notify observers that the part was uploaded

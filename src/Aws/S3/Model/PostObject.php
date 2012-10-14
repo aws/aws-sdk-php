@@ -17,6 +17,7 @@
 namespace Aws\S3\Model;
 
 use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Enum\DateFormat;
 use Aws\S3\S3Client;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
@@ -117,7 +118,7 @@ class PostObject extends Collection
 
         // Setup policy document
         $policy = array(
-            'expiration' => gmdate('Y-m-d\TH:i:s\Z', $ttd),
+            'expiration' => gmdate(DateFormat::ISO8601_S3, $ttd),
             'conditions' => array(
                 array('bucket' => $this->bucket),
             )
