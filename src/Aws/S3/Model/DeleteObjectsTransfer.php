@@ -109,7 +109,7 @@ class DeleteObjectsTransfer implements BatchTransferInterface
             );
         }
 
-        $command['Delete'] = array('Objects' => $del);
+        $command['Objects'] = $del;
 
         $command->execute();
         $this->processResponse($command);

@@ -35,7 +35,7 @@ class S3Signature implements S3SignatureInterface
         'uploads', 'versionId', 'versioning', 'versions', 'website',
         'response-cache-control', 'response-content-disposition',
         'response-content-encoding', 'response-content-language',
-        'response-content-type', 'response-expires', 'tagging'
+        'response-content-type', 'response-expires', 'tagging', 'cors'
     );
 
     /**

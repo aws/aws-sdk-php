@@ -87,7 +87,7 @@ return array (
         ),
         'CopyObject' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{DestinationBucket}/{DestinationObject}',
+            'uri' => '/{Bucket}/{Key}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CopyObjectOutput',
             'responseType' => 'model',
@@ -103,23 +103,15 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'DestinationBucket' => array(
-                    'required' => true,
-                    'description' => 'Destination bucket',
-                    'type' => 'string',
-                    'location' => 'uri',
-                ),
-                'DestinationObject' => array(
-                    'required' => true,
-                    'description' => 'Destination object key',
-                    'type' => 'string',
-                    'location' => 'uri',
-                ),
                 'MetadataDirective' => array(
                     'description' => 'Specifies whether the metadata is copied from the source object or replaced with metadata provided in the request.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-metadata-directive',
+                    'enum' => array(
+                        'COPY',
+                        'REPLACE',
+                    ),
                 ),
                 'WebsiteRedirectLocation' => array(
                     'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL.',
@@ -237,6 +229,10 @@ return array (
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
                     'type' => 'object',
                     'additionalProperties' => true,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -463,6 +459,10 @@ return array (
                     'type' => 'object',
                     'additionalProperties' => true,
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'DeleteBucket' => array(
@@ -623,42 +623,45 @@ return array (
             'responseClass' => 'DeleteObjectsOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'Delete',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
+            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'Delete' => array(
-                    'required' => true,
-                    'type' => 'object',
+                'Quiet' => array(
+                    'description' => 'Element to enable quiet mode for the request. When you add this element, you must set its value to true.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'xml',
-                    'properties' => array(
-                        'Quiet' => array(
-                            'description' => 'Element to enable quiet mode for the request. When you add this element, you must set its value to true.',
-                            'type' => 'boolean',
-                            'format' => 'boolean-string',
-                        ),
-                        'Objects' => array(
-                            'required' => true,
-                            'type' => 'array',
-                            'data' => array(
-                                'xmlFlattened' => true,
+                ),
+                'Objects' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'type' => 'object',
+                        'sentAs' => 'Object',
+                        'properties' => array(
+                            'Key' => array(
+                                'required' => true,
+                                'description' => 'Key name of the object to delete.',
+                                'type' => 'string',
                             ),
-                            'items' => array(
-                                'type' => 'object',
-                                'sentAs' => 'Object',
-                                'properties' => array(
-                                    'Key' => array(
-                                        'required' => true,
-                                        'description' => 'Key name of the object to delete.',
-                                        'type' => 'string',
-                                    ),
-                                    'VersionId' => array(
-                                        'description' => 'VersionId for the specific version of the object to delete.',
-                                        'type' => 'string',
-                                    ),
-                                ),
+                            'VersionId' => array(
+                                'description' => 'VersionId for the specific version of the object to delete.',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -675,6 +678,15 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'delete',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -698,6 +710,10 @@ return array (
                     'sentAs' => 'acl',
                     'default' => '_guzzle_blank_',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'GetBucketCors' => array(
@@ -719,6 +735,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'cors',
                     'default' => '_guzzle_blank_',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -742,13 +762,17 @@ return array (
                     'sentAs' => 'lifecycle',
                     'default' => '_guzzle_blank_',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'GetBucketLocation' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'GetBucketLocationOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html',
@@ -787,6 +811,10 @@ return array (
                     'sentAs' => 'logging',
                     'default' => '_guzzle_blank_',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'GetBucketNotification' => array(
@@ -808,6 +836,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'notification',
                     'default' => '_guzzle_blank_',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -853,6 +885,10 @@ return array (
                     'sentAs' => 'requestPayment',
                     'default' => '_guzzle_blank_',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'GetBucketTagging' => array(
@@ -874,6 +910,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'tagging',
                     'default' => '_guzzle_blank_',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -897,6 +937,10 @@ return array (
                     'sentAs' => 'versioning',
                     'default' => '_guzzle_blank_',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'GetBucketWebsite' => array(
@@ -918,6 +962,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'website',
                     'default' => '_guzzle_blank_',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -1022,16 +1070,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'If-None-Match',
                 ),
-                'Metadata' => array(
-                    'description' => 'A map of metadata to store with the object in S3.',
-                    'type' => 'object',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-meta-',
-                    'additionalProperties' => array(
-                        'description' => 'The metadata value.',
-                        'type' => 'string',
-                    ),
-                ),
             ),
         ),
         'GetObjectAcl' => array(
@@ -1064,6 +1102,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'acl',
                     'default' => '_guzzle_blank_',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -1098,9 +1140,8 @@ return array (
             'httpMethod' => 'HEAD',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'HeadBucketOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1171,16 +1212,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'If-None-Match',
                 ),
-                'Metadata' => array(
-                    'description' => 'A map of metadata to store with the object in S3.',
-                    'type' => 'object',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-meta-',
-                    'additionalProperties' => array(
-                        'description' => 'The metadata value.',
-                        'type' => 'string',
-                    ),
-                ),
             ),
         ),
         'ListBuckets' => array(
@@ -1191,6 +1222,10 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html',
             'parameters' => array(
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'ListMultipartUploads' => array(
@@ -1242,6 +1277,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'uploads',
                     'default' => '_guzzle_blank_',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -1295,6 +1334,10 @@ return array (
                     'sentAs' => 'versions',
                     'default' => '_guzzle_blank_',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'ListObjects' => array(
@@ -1334,6 +1377,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'prefix',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
         'ListParts' => array(
@@ -1372,6 +1419,10 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'part-number-marker',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -1524,6 +1575,11 @@ return array (
                     'type' => 'object',
                     'additionalProperties' => true,
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
             ),
         ),
         'PutBucketCors' => array(
@@ -1605,6 +1661,11 @@ return array (
                     'sentAs' => 'cors',
                     'default' => '_guzzle_blank_',
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
             ),
         ),
         'PutBucketLifecycle' => array(
@@ -1678,6 +1739,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'lifecycle',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
                 ),
             ),
         ),
@@ -1773,6 +1839,11 @@ return array (
                     'sentAs' => 'logging',
                     'default' => '_guzzle_blank_',
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
             ),
         ),
         'PutBucketNotification' => array(
@@ -1822,6 +1893,11 @@ return array (
                     'sentAs' => 'notification',
                     'default' => '_guzzle_blank_',
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
             ),
         ),
         'PutBucketPolicy' => array(
@@ -1853,6 +1929,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'policy',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
                 ),
             ),
         ),
@@ -1894,6 +1975,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'requestPayment',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
                 ),
             ),
         ),
@@ -1947,6 +2033,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'tagging',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
                 ),
             ),
         ),
@@ -2003,6 +2094,11 @@ return array (
                     'sentAs' => 'versioning',
                     'default' => '_guzzle_blank_',
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
             ),
         ),
         'PutBucketWebsite' => array(
@@ -2055,6 +2151,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'website',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
                 ),
             ),
         ),
@@ -2358,6 +2459,11 @@ return array (
                     'type' => 'object',
                     'additionalProperties' => true,
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'static' => true,
+                    'default' => true,
+                ),
             ),
         ),
         'UploadPart' => array(
@@ -2466,6 +2572,10 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-modified-since',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
         ),
     ),
@@ -2507,17 +2617,13 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'CopyObjectResult' => array(
-                    'type' => 'object',
+                'ETag' => array(
+                    'type' => 'string',
                     'location' => 'xml',
-                    'properties' => array(
-                        'ETag' => array(
-                            'type' => 'string',
-                        ),
-                        'LastModified' => array(
-                            'type' => 'string',
-                        ),
-                    ),
+                ),
+                'LastModified' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured, the response includes this header.',
@@ -2806,6 +2912,21 @@ return array (
                 ),
             ),
         ),
+        'GetBucketLocationOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Location' => array(
+                    'type' => 'string',
+                    'location' => 'body',
+                    'filters' => array(
+                        'strval',
+                        'strip_tags',
+                        'trim',
+                    ),
+                ),
+            ),
+        ),
         'GetBucketLoggingOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3047,6 +3168,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
                 ),
+                'Metadata' => array(
+                    'description' => 'A map of metadata to store with the object in S3.',
+                    'type' => 'object',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-meta-',
+                    'additionalProperties' => array(
+                        'description' => 'The metadata value.',
+                        'type' => 'string',
+                    ),
+                ),
             ),
         ),
         'GetObjectAclOutput' => array(
@@ -3125,10 +3256,36 @@ return array (
                 ),
             ),
         ),
+        'HeadBucketOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'StatusCode' => array(
+                    'description' => 'HTTP status code',
+                    'type' => 'numeric',
+                    'location' => 'statusCode',
+                ),
+                'Date' => array(
+                    'description' => 'Amazon S3 date value',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
+            ),
+        ),
         'HeadObjectOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'StatusCode' => array(
+                    'description' => 'HTTP status code',
+                    'type' => 'numeric',
+                    'location' => 'statusCode',
+                ),
+                'Date' => array(
+                    'description' => 'Amazon S3 date value',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
                 'DeleteMarker' => array(
                     'description' => 'Specifies whether the object retrieved was (true) or was not (false) a Delete Marker. If false, this response header does not appear in the response.',
                     'type' => 'string',
@@ -3186,6 +3343,16 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
+                ),
+                'Metadata' => array(
+                    'description' => 'A map of metadata to store with the object in S3.',
+                    'type' => 'object',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-meta-',
+                    'additionalProperties' => array(
+                        'description' => 'The metadata value.',
+                        'type' => 'string',
+                    ),
                 ),
             ),
         ),
