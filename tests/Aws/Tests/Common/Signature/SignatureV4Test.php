@@ -2,11 +2,12 @@
 
 namespace Aws\Tests\Common\Signature;
 
-use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Credentials\Credentials;
-use Guzzle\Parser\ParserRegistry;
-use Guzzle\Http\Message\RequestFactory;
+use Aws\Common\Enum\DateFormat;
+use Aws\Common\Signature\SignatureV4;
 use Guzzle\Http\Message\Request;
+use Guzzle\Http\Message\RequestFactory;
+use Guzzle\Parser\ParserRegistry;
 
 class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -31,9 +32,9 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $signature->expects($this->any())
             ->method('getDateTime')
             ->will($this->returnValueMap(array(
-            array('r', 'Mon, 09 Sep 2011 23:36:00 GMT'),
-            array('Ymd\THis\Z', '20110909T233600Z'),
-            array('Ymd', '20110909')
+            array(DateFormat::RFC1123, 'Mon, 09 Sep 2011 23:36:00 GMT'),
+            array(DateFormat::ISO8601, '20110909T233600Z'),
+            array(DateFormat::SHORT, '20110909')
         )));
 
         return $signature;
@@ -100,6 +101,23 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         }
 
         return $groups;
+    }
+
+    /**
+     * @covers Aws\Common\Signature\SignatureV4::signRequest
+     * @covers Aws\Common\Signature\SignatureV4::createCanonicalRequest
+     */
+    public function testSignsRequestsWithContentHashCorrectly()
+    {
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $signature = $this->getSignature();
+        $request = RequestFactory::getInstance()->fromMessage("GET / HTTP/1.1\r\nx-amz-date: Mon, 09 Sep 2011 23:36:00 GMT\r\nHost: foo.com\r\n\r\n");
+
+        $contentHash = hash('sha256', 'foobar');
+        $request->setHeader('x-amz-content-sha256', $contentHash);
+
+        $signature->signRequest($request, $credentials);
+        $this->assertContains($contentHash, $request->getParams()->get('aws.canonical_request'));
     }
 
     /**

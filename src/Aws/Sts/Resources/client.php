@@ -102,36 +102,45 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Credentials' => array(
+                    'description' => 'Credentials for the service API authentication.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'AccessKeyId' => array(
+                            'description' => 'AccessKeyId ID that identifies the temporary credentials.',
                             'type' => 'string',
                         ),
                         'SecretAccessKey' => array(
+                            'description' => 'The Secret Access Key to sign requests.',
                             'type' => 'string',
                         ),
                         'SessionToken' => array(
+                            'description' => 'The security token that users must pass to the service API to use the temporary credentials.',
                             'type' => 'string',
                         ),
                         'Expiration' => array(
+                            'description' => 'The date on which these credentials expire.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'FederatedUser' => array(
+                    'description' => 'Identifiers for the federated user associated with the credentials. You can use the federated user\'s ARN in your resource policies.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'FederatedUserId' => array(
+                            'description' => 'The string identifying the federated user associated with the credentials, similar to the UserId of an IAM user.',
                             'type' => 'string',
                         ),
                         'Arn' => array(
+                            'description' => 'The ARN specifying the federated user associated with the credentials. For more information about ARNs and how to use them in policies, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'PackedPolicySize' => array(
+                    'description' => 'A percentage value indicating the size of the policy in packed form. Policies for which the packed size is greater than 100% of the allowed value are rejected by the service.',
                     'type' => 'numeric',
                     'location' => 'xml',
                 ),
@@ -142,19 +151,24 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Credentials' => array(
+                    'description' => 'The session credentials for API authentication.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'AccessKeyId' => array(
+                            'description' => 'AccessKeyId ID that identifies the temporary credentials.',
                             'type' => 'string',
                         ),
                         'SecretAccessKey' => array(
+                            'description' => 'The Secret Access Key to sign requests.',
                             'type' => 'string',
                         ),
                         'SessionToken' => array(
+                            'description' => 'The security token that users must pass to the service API to use the temporary credentials.',
                             'type' => 'string',
                         ),
                         'Expiration' => array(
+                            'description' => 'The date on which these credentials expire.',
                             'type' => 'string',
                         ),
                     ),

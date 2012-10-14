@@ -38,8 +38,12 @@ return array (
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html',
             'data' => array(
-                'xmlRoot' => 'MultipartUpload',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'MultipartUpload',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -88,9 +92,6 @@ return array (
             'responseClass' => 'CopyObjectOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -198,17 +199,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-match',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'CopySourceIfNoneMatch' => array(
                     'description' => 'Copies the object if its entity tag (ETag) is different than the specified ETag.',
@@ -216,17 +209,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-none-match',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'CopySourceIfUnmodifiedSince' => array(
                     'description' => 'Copies the object if it hasn\'\'t been modified since the specified time.',
@@ -234,17 +219,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-unmodified-since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'CopySourceIfModifiedSince' => array(
                     'description' => 'Copies the object if it has been modified since the specified time.',
@@ -252,17 +229,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-modified-since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'ACP' => array(
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
@@ -280,8 +249,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html',
             'data' => array(
-                'xmlRoot' => 'CreateBucketConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'CreateBucketConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -361,9 +334,6 @@ return array (
             'responseClass' => 'CreateMultipartUploadOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -405,16 +375,8 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'StorageClass' => array(
                     'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
@@ -661,9 +623,6 @@ return array (
             'responseClass' => 'DeleteObjectsOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -678,9 +637,7 @@ return array (
                         'Quiet' => array(
                             'description' => 'Element to enable quiet mode for the request. When you add this element, you must set its value to true.',
                             'type' => 'boolean',
-                            'filters' => array(
-                                'Aws\\Common\\Command\\Filters::booleanToString',
-                            ),
+                            'format' => 'boolean-string',
                         ),
                         'Objects' => array(
                             'required' => true,
@@ -1000,17 +957,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'response-expires',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'ResponseCacheControl' => array(
                     'description' => 'Sets the Cache-Control header of the response.',
@@ -1047,17 +996,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'If-Modified-Since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'IfUnmodifiedSince' => array(
                     'description' => 'Return the object only if it has not been modified since the specified time, otherwise return a 412 (precondition failed).',
@@ -1065,17 +1006,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'If-Unmodified-Since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'IfMatch' => array(
                     'description' => 'Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).',
@@ -1212,17 +1145,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'If-Modified-Since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'IfUnmodifiedSince' => array(
                     'description' => 'Return the object only if it has not been modified since the specified time, otherwise return a 412 (precondition failed).',
@@ -1230,17 +1155,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'If-Unmodified-Since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'IfMatch' => array(
                     'description' => 'Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).',
@@ -1467,8 +1384,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html',
             'data' => array(
-                'xmlRoot' => 'AccessControlPolicy',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'AccessControlPolicy',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1504,9 +1425,10 @@ return array (
                                         'required' => true,
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
-                                        'sentAs' => 'type',
+                                        'sentAs' => 'xsi:type',
                                         'data' => array(
                                             'xmlAttribute' => true,
+                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance',
                                         ),
                                         'enum' => array(
                                             'CanonicalUser',
@@ -1613,8 +1535,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html',
             'data' => array(
-                'xmlRoot' => 'CORSConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'CORSConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1690,8 +1616,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html',
             'data' => array(
-                'xmlRoot' => 'LifecycleConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'LifecycleConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1760,8 +1690,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html',
             'data' => array(
-                'xmlRoot' => 'BucketLoggingStatus',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'BucketLoggingStatus',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1795,9 +1729,10 @@ return array (
                                                 'required' => true,
                                                 'description' => 'Type of grantee',
                                                 'type' => 'string',
-                                                'sentAs' => 'type',
+                                                'sentAs' => 'xsi:type',
                                                 'data' => array(
                                                     'xmlAttribute' => true,
+                                                    'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance',
                                                 ),
                                                 'enum' => array(
                                                     'CanonicalUser',
@@ -1849,8 +1784,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html',
             'data' => array(
-                'xmlRoot' => 'NotificationConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'NotificationConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1893,9 +1832,6 @@ return array (
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -1929,8 +1865,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html',
             'data' => array(
-                'xmlRoot' => 'RequestPaymentConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'RequestPaymentConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1966,8 +1906,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html',
             'data' => array(
-                'xmlRoot' => 'Tagging',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'Tagging',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2015,8 +1959,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html',
             'data' => array(
-                'xmlRoot' => 'VersioningConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'VersioningConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2066,8 +2014,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html',
             'data' => array(
-                'xmlRoot' => 'WebsiteConfiguration',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'WebsiteConfiguration',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2113,9 +2065,6 @@ return array (
             'responseClass' => 'PutObjectOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -2157,16 +2106,8 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'StorageClass' => array(
                     'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
@@ -2272,8 +2213,12 @@ return array (
             'responseNotes' => 'The result of this operation will be an empty model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html',
             'data' => array(
-                'xmlRoot' => 'AccessControlPolicy',
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
+                'xmlRoot' => array(
+                    'name' => 'AccessControlPolicy',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -2314,9 +2259,10 @@ return array (
                                         'required' => true,
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
-                                        'sentAs' => 'type',
+                                        'sentAs' => 'xsi:type',
                                         'data' => array(
                                             'xmlAttribute' => true,
+                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance',
                                         ),
                                         'enum' => array(
                                             'CanonicalUser',
@@ -2421,9 +2367,6 @@ return array (
             'responseClass' => 'UploadPartOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -2459,9 +2402,6 @@ return array (
             'responseClass' => 'UploadPartCopyOutput',
             'responseType' => 'model',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPartCopy.html',
-            'data' => array(
-                'xmlNamespace' => 'http://s3.amazonaws.com/doc/2006-03-01/',
-            ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
@@ -2492,17 +2432,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-match',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'CopySourceIfNoneMatch' => array(
                     'description' => 'Copies the object if its entity tag (ETag) is different than the specified ETag.',
@@ -2510,17 +2442,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-none-match',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'CopySourceIfUnmodifiedSince' => array(
                     'description' => 'Copies the object if it hasn\'\'t been modified since the specified time.',
@@ -2528,17 +2452,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-unmodified-since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
                 'CopySourceIfModifiedSince' => array(
                     'description' => 'Copies the object if it has been modified since the specified time.',
@@ -2546,17 +2462,9 @@ return array (
                         'object',
                         'string',
                     ),
+                    'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-modified-since',
-                    'filters' => array(
-                        array(
-                            'method' => 'Aws\\Common\\Command\\Filters::getDate',
-                            'args' => array(
-                                '@value',
-                                'D, d M y H:i:s O',
-                            ),
-                        ),
-                    ),
                 ),
             ),
         ),
@@ -2572,10 +2480,7 @@ return array (
             'properties' => array(
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured, this will contain the expiration date (expiry-date) and rule ID (rule-id). The value of rule-id is URL encoded.',
-                    'type' => array(
-                        'object',
-                        'string',
-                    ),
+                    'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-expiration',
                 ),
@@ -2767,9 +2672,10 @@ return array (
                                     'Type' => array(
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
-                                        'sentAs' => 'type',
+                                        'sentAs' => 'xsi:type',
                                         'data' => array(
                                             'xmlAttribute' => true,
+                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance',
                                         ),
                                     ),
                                     'ID' => array(
@@ -2929,9 +2835,10 @@ return array (
                                             'Type' => array(
                                                 'description' => 'Type of grantee',
                                                 'type' => 'string',
-                                                'sentAs' => 'type',
+                                                'sentAs' => 'xsi:type',
                                                 'data' => array(
                                                     'xmlAttribute' => true,
+                                                    'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance',
                                                 ),
                                             ),
                                             'ID' => array(
@@ -2989,6 +2896,7 @@ return array (
                 'Policy' => array(
                     'description' => 'The bucket policy as a JSON document.',
                     'type' => 'string',
+                    'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
                 ),
             ),
@@ -3078,6 +2986,7 @@ return array (
                 'Body' => array(
                     'description' => 'Object data.',
                     'type' => 'string',
+                    'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
                 ),
                 'DeleteMarker' => array(
@@ -3100,10 +3009,7 @@ return array (
                 ),
                 'LastModified' => array(
                     'description' => 'Last modified date of the object',
-                    'type' => array(
-                        'object',
-                        'string',
-                    ),
+                    'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'Last-Modified',
                 ),
@@ -3175,9 +3081,10 @@ return array (
                                     'Type' => array(
                                         'description' => 'Type of grantee',
                                         'type' => 'string',
-                                        'sentAs' => 'type',
+                                        'sentAs' => 'xsi:type',
                                         'data' => array(
                                             'xmlAttribute' => true,
+                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance',
                                         ),
                                     ),
                                     'ID' => array(
@@ -3213,6 +3120,7 @@ return array (
             'properties' => array(
                 'Body' => array(
                     'type' => 'string',
+                    'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
                 ),
             ),
@@ -3241,10 +3149,7 @@ return array (
                 ),
                 'LastModified' => array(
                     'description' => 'Last modified date of the object',
-                    'type' => array(
-                        'object',
-                        'string',
-                    ),
+                    'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'Last-Modified',
                 ),
@@ -3302,10 +3207,7 @@ return array (
                             ),
                             'CreationDate' => array(
                                 'description' => 'Date the bucket was created.',
-                                'type' => array(
-                                    'object',
-                                    'string',
-                                ),
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -3384,10 +3286,7 @@ return array (
                             ),
                             'Initiated' => array(
                                 'description' => 'Date and time at which the multipart upload was initiated.',
-                                'type' => array(
-                                    'object',
-                                    'string',
-                                ),
+                                'type' => 'string',
                             ),
                             'StorageClass' => array(
                                 'description' => 'The class of storage used to store the object.',
@@ -3482,10 +3381,7 @@ return array (
                             ),
                             'LastModified' => array(
                                 'description' => 'Date and time the object was last modified.',
-                                'type' => array(
-                                    'object',
-                                    'string',
-                                ),
+                                'type' => 'string',
                             ),
                             'Owner' => array(
                                 'type' => 'object',
@@ -3537,10 +3433,7 @@ return array (
                             ),
                             'LastModified' => array(
                                 'description' => 'Date and time the object was last modified.',
-                                'type' => array(
-                                    'object',
-                                    'string',
-                                ),
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -3600,10 +3493,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'LastModified' => array(
-                                'type' => array(
-                                    'object',
-                                    'string',
-                                ),
+                                'type' => 'string',
                             ),
                             'ETag' => array(
                                 'type' => 'string',
@@ -3719,10 +3609,7 @@ return array (
                             ),
                             'LastModified' => array(
                                 'description' => 'Date and time at which the part was uploaded.',
-                                'type' => array(
-                                    'object',
-                                    'string',
-                                ),
+                                'type' => 'string',
                             ),
                             'ETag' => array(
                                 'description' => 'Entity tag returned when the part was uploaded.',
@@ -3775,10 +3662,7 @@ return array (
             'properties' => array(
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured, this will contain the expiration date (expiry-date) and rule ID (rule-id). The value of rule-id is URL encoded.',
-                    'type' => array(
-                        'object',
-                        'string',
-                    ),
+                    'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-expiration',
                 ),
@@ -3835,10 +3719,7 @@ return array (
                 ),
                 'LastModified' => array(
                     'description' => 'Date and time at which the object was uploaded.',
-                    'type' => array(
-                        'object',
-                        'string',
-                    ),
+                    'type' => 'string',
                     'location' => 'xml',
                 ),
                 'ServerSideEncryption' => array(

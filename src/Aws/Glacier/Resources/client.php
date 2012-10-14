@@ -539,12 +539,12 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'uploadIdMarker' => array(
+                'limit' => array(
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'marker',
                 ),
-                'limit' => array(
+                'marker' => array(
                     'type' => 'string',
                     'location' => 'query',
                 ),
@@ -880,9 +880,6 @@ return array (
                 'Completed' => array(
                     'type' => 'boolean',
                     'location' => 'json',
-                    'filters' => array(
-                        'Aws\\Common\\Command\\Filters::stringBoolean',
-                    ),
                 ),
                 'StatusCode' => array(
                     'type' => 'string',
@@ -950,6 +947,7 @@ return array (
             'properties' => array(
                 'body' => array(
                     'type' => 'string',
+                    'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
                 ),
                 'checksum' => array(
@@ -1064,9 +1062,6 @@ return array (
                             ),
                             'Completed' => array(
                                 'type' => 'boolean',
-                                'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::stringBoolean',
-                                ),
                             ),
                             'StatusCode' => array(
                                 'type' => 'string',

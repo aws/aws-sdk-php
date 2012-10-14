@@ -23,15 +23,21 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
     {
         $s3 = self::getServiceBuilder()->get('s3');
         self::$bucketName = crc32(gethostname()) . 'cftest';
+
+        // Create the test bucket
         self::log('Creating bucket for testing distributions: ' . self::$bucketName);
-        $s3->createBucket(array('bucket' => self::$bucketName))->execute();
+        $s3->createBucket(array(
+            'Bucket' => self::$bucketName)
+        )->execute();
         $s3->waitUntil('bucket_exists', self::$bucketName);
+
+        // Add the test object
         self::log('Bucket created, adding test object...');
         $s3->putObject(array(
-            'bucket'    => self::$bucketName,
-            'key'       => 'foo.txt',
-            'x-amz-acl' => 'public-read',
-            'body'      => 'hello!'
+            'Bucket' => self::$bucketName,
+            'Key'    => 'foo.txt',
+            'ACL'    => 'public-read',
+            'Body'   => 'hello!'
         ))->execute();
         $s3->waitUntil('object_exists', self::$bucketName . '/foo.txt');
     }
@@ -41,12 +47,14 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $s3 = self::getServiceBuilder()->get('s3');
         self::log('Deleting test object');
         $s3->deleteObject(array(
-            'bucket' => self::$bucketName,
-            'key'    => 'foo.txt'
+            'Bucket' => self::$bucketName,
+            'Key'    => 'foo.txt'
         ))->execute();
         sleep(1);
         self::log('Deleting test bucket');
-        $s3->deleteBucket(array('bucket' => self::$bucketName))->execute();
+        $s3->deleteBucket(array(
+            'Bucket' => self::$bucketName
+        ))->execute();
 
         $cf = self::getServiceBuilder()->get('cloudfront');
         if (self::$originId) {
@@ -89,9 +97,9 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         // Grant CF to read from the bucket
         $s3 = $this->getServiceBuilder()->get('s3');
         $s3->putObjectAcl(array(
-            'bucket' => self::$bucketName,
-            'key'    => 'foo.txt',
-            'x-amz-grant-read' => 'id="' . $result['S3CanonicalUserId'] . '"'
+            'Bucket'    => self::$bucketName,
+            'Key'       => 'foo.txt',
+            'GrantRead' => 'id="' . $result['S3CanonicalUserId'] . '"'
         ))->execute();
     }
 

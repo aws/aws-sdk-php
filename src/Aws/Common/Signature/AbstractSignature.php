@@ -25,26 +25,9 @@ use Guzzle\Http\Message\RequestInterface;
 abstract class AbstractSignature implements SignatureInterface
 {
     /**
-     * @var string hash_hmac signature algorithm
-     */
-    protected $algorithm;
-
-    /**
      * @var int Timestamp
      */
     private $timestamp;
-
-    /**
-     * Constructor used to specify the hashing algorithm
-     *
-     * @param string $algorithm Hashing algorithm. Defaults to sha256
-     *
-     * @link http://www.php.net/manual/en/function.hash-algos.php
-     */
-    public function __construct($algorithm = 'sha256')
-    {
-        $this->algorithm = $algorithm;
-    }
 
     /**
      * Get the canonicalized query string for a request
