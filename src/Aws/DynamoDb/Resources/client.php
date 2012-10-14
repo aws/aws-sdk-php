@@ -704,9 +704,7 @@ return array (
                             'Exists' => array(
                                 'description' => 'Specify whether or not a value already exists for the attribute name-value pair.',
                                 'type' => 'boolean',
-                                'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::booleanString',
-                                ),
+                                'format' => 'boolean-string',
                             ),
                         ),
                     ),
@@ -979,10 +977,8 @@ return array (
                 ),
                 'ConsistentRead' => array(
                     'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
-                    'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1184,9 +1180,7 @@ return array (
                             'Exists' => array(
                                 'description' => 'Specify whether or not a value already exists for the attribute name-value pair.',
                                 'type' => 'boolean',
-                                'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::booleanString',
-                                ),
+                                'format' => 'boolean-string',
                             ),
                         ),
                     ),
@@ -1269,18 +1263,14 @@ return array (
                 ),
                 'ConsistentRead' => array(
                     'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
-                    'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
-                    ),
                 ),
                 'Count' => array(
                     'description' => 'If set to true, Amazon DynamoDB returns a total number of items that match the query parameters, instead of a list of the matching items and their attributes. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.',
                     'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
-                    'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
-                    ),
                 ),
                 'HashKeyValue' => array(
                     'required' => true,
@@ -1413,10 +1403,8 @@ return array (
                 'ScanIndexForward' => array(
                     'description' => 'Specifies forward or backward traversal of the index. Amazon DynamoDB returns results reflecting the requested order, determined by the range key. The default value is true (forward).',
                     'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
-                    'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
-                    ),
                 ),
                 'ExclusiveStartKey' => array(
                     'description' => 'Primary key of the item from which to continue an earlier query. An earlier query might provide this value as the LastEvaluatedKey if that query operation was interrupted before completing the query; either because of the result set size or the Limit parameter. The LastEvaluatedKey can be passed back in a new query request to continue the operation from that point.',
@@ -1586,10 +1574,8 @@ return array (
                 'Count' => array(
                     'description' => 'If set to true, Amazon DynamoDB returns a total number of items for the Scan operation, even if the operation has no matching items for the assigned filter. Do not set Count to true while providing a list of AttributesToGet, otherwise Amazon DynamoDB returns a validation error.',
                     'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
-                    'filters' => array(
-                        'Aws\\Common\\Command\\Filters::booleanString',
-                    ),
                 ),
                 'ScanFilter' => array(
                     'description' => 'Evaluates the scan results and returns only the desired values.',
@@ -2050,9 +2036,7 @@ return array (
                             'Exists' => array(
                                 'description' => 'Specify whether or not a value already exists for the attribute name-value pair.',
                                 'type' => 'boolean',
-                                'filters' => array(
-                                    'Aws\\Common\\Command\\Filters::booleanString',
-                                ),
+                                'format' => 'boolean-string',
                             ),
                         ),
                     ),
@@ -2167,6 +2151,7 @@ return array (
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'The item attributes from a response in a specific table, along with the read resources consumed on the table during the request.',
                         'type' => 'object',
                         'properties' => array(
                             'Items' => array(
@@ -2175,18 +2160,23 @@ return array (
                                     'name' => 'AttributeMap',
                                     'type' => 'object',
                                     'additionalProperties' => array(
+                                        'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'S' => array(
+                                                'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                                 'type' => 'string',
                                             ),
                                             'N' => array(
+                                                'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                                 'type' => 'string',
                                             ),
                                             'B' => array(
+                                                'description' => 'Binary attributes are sequences of unsigned bytes.',
                                                 'type' => 'string',
                                             ),
                                             'SS' => array(
+                                                'description' => 'A set of strings.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'StringAttributeValue',
@@ -2194,6 +2184,7 @@ return array (
                                                 ),
                                             ),
                                             'NS' => array(
+                                                'description' => 'A set of numbers.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NumberAttributeValue',
@@ -2201,6 +2192,7 @@ return array (
                                                 ),
                                             ),
                                             'BS' => array(
+                                                'description' => 'A set of binary attributes.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'BinaryAttributeValue',
@@ -2218,6 +2210,7 @@ return array (
                     ),
                 ),
                 'UnprocessedKeys' => array(
+                    'description' => 'Contains a map of tables and their respective keys that were not processed with the current response, possibly due to reaching a limit on the response size. The UnprocessedKeys value is in the same form as a RequestItems parameter (so the value can be provided directly to a subsequent BatchGetItem operation). For more information, see the above RequestItems parameter.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -2227,21 +2220,27 @@ return array (
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'Key',
+                                    'description' => 'The primary key that uniquely identifies each item in a table. A primary key can be a one attribute (hash) primary key or a two attribute (hash-and-range) primary key.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'HashKeyElement' => array(
+                                            'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'S' => array(
+                                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                                     'type' => 'string',
                                                 ),
                                                 'N' => array(
+                                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                                     'type' => 'string',
                                                 ),
                                                 'B' => array(
+                                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                                     'type' => 'string',
                                                 ),
                                                 'SS' => array(
+                                                    'description' => 'A set of strings.',
                                                     'type' => 'array',
                                                     'items' => array(
                                                         'name' => 'StringAttributeValue',
@@ -2249,6 +2248,7 @@ return array (
                                                     ),
                                                 ),
                                                 'NS' => array(
+                                                    'description' => 'A set of numbers.',
                                                     'type' => 'array',
                                                     'items' => array(
                                                         'name' => 'NumberAttributeValue',
@@ -2256,6 +2256,7 @@ return array (
                                                     ),
                                                 ),
                                                 'BS' => array(
+                                                    'description' => 'A set of binary attributes.',
                                                     'type' => 'array',
                                                     'items' => array(
                                                         'name' => 'BinaryAttributeValue',
@@ -2265,18 +2266,23 @@ return array (
                                             ),
                                         ),
                                         'RangeKeyElement' => array(
+                                            'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'S' => array(
+                                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                                     'type' => 'string',
                                                 ),
                                                 'N' => array(
+                                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                                     'type' => 'string',
                                                 ),
                                                 'B' => array(
+                                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                                     'type' => 'string',
                                                 ),
                                                 'SS' => array(
+                                                    'description' => 'A set of strings.',
                                                     'type' => 'array',
                                                     'items' => array(
                                                         'name' => 'StringAttributeValue',
@@ -2284,6 +2290,7 @@ return array (
                                                     ),
                                                 ),
                                                 'NS' => array(
+                                                    'description' => 'A set of numbers.',
                                                     'type' => 'array',
                                                     'items' => array(
                                                         'name' => 'NumberAttributeValue',
@@ -2291,6 +2298,7 @@ return array (
                                                     ),
                                                 ),
                                                 'BS' => array(
+                                                    'description' => 'A set of binary attributes.',
                                                     'type' => 'array',
                                                     'items' => array(
                                                         'name' => 'BinaryAttributeValue',
@@ -2319,6 +2327,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Responses' => array(
+                    'description' => 'The response object as a result of BatchWriteItem call. This is essentially a map of table name to ConsumedCapacityUnits.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -2331,32 +2340,40 @@ return array (
                     ),
                 ),
                 'UnprocessedItems' => array(
+                    'description' => 'The Items which we could not successfully process in a BatchWriteItem call is returned as UnprocessedItems',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'array',
                         'items' => array(
                             'name' => 'WriteRequest',
+                            'description' => 'This structure is a Union of PutRequest and DeleteRequest. It can contain exactly one of PutRequest or DeleteRequest. Never Both. This is enforced in the code.',
                             'type' => 'object',
                             'properties' => array(
                                 'PutRequest' => array(
                                     'type' => 'object',
                                     'properties' => array(
                                         'Item' => array(
+                                            'description' => 'The item to put',
                                             'type' => 'object',
                                             'additionalProperties' => array(
+                                                'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                                                 'type' => 'object',
                                                 'properties' => array(
                                                     'S' => array(
+                                                        'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                                         'type' => 'string',
                                                     ),
                                                     'N' => array(
+                                                        'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                                         'type' => 'string',
                                                     ),
                                                     'B' => array(
+                                                        'description' => 'Binary attributes are sequences of unsigned bytes.',
                                                         'type' => 'string',
                                                     ),
                                                     'SS' => array(
+                                                        'description' => 'A set of strings.',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'StringAttributeValue',
@@ -2364,6 +2381,7 @@ return array (
                                                         ),
                                                     ),
                                                     'NS' => array(
+                                                        'description' => 'A set of numbers.',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'NumberAttributeValue',
@@ -2371,6 +2389,7 @@ return array (
                                                         ),
                                                     ),
                                                     'BS' => array(
+                                                        'description' => 'A set of binary attributes.',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
@@ -2386,21 +2405,27 @@ return array (
                                     'type' => 'object',
                                     'properties' => array(
                                         'Key' => array(
+                                            'description' => 'The item\'s key to be delete',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'HashKeyElement' => array(
+                                                    'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                                                     'type' => 'object',
                                                     'properties' => array(
                                                         'S' => array(
+                                                            'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                                             'type' => 'string',
                                                         ),
                                                         'N' => array(
+                                                            'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                                             'type' => 'string',
                                                         ),
                                                         'B' => array(
+                                                            'description' => 'Binary attributes are sequences of unsigned bytes.',
                                                             'type' => 'string',
                                                         ),
                                                         'SS' => array(
+                                                            'description' => 'A set of strings.',
                                                             'type' => 'array',
                                                             'items' => array(
                                                                 'name' => 'StringAttributeValue',
@@ -2408,6 +2433,7 @@ return array (
                                                             ),
                                                         ),
                                                         'NS' => array(
+                                                            'description' => 'A set of numbers.',
                                                             'type' => 'array',
                                                             'items' => array(
                                                                 'name' => 'NumberAttributeValue',
@@ -2415,6 +2441,7 @@ return array (
                                                             ),
                                                         ),
                                                         'BS' => array(
+                                                            'description' => 'A set of binary attributes.',
                                                             'type' => 'array',
                                                             'items' => array(
                                                                 'name' => 'BinaryAttributeValue',
@@ -2424,18 +2451,23 @@ return array (
                                                     ),
                                                 ),
                                                 'RangeKeyElement' => array(
+                                                    'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                                                     'type' => 'object',
                                                     'properties' => array(
                                                         'S' => array(
+                                                            'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                                             'type' => 'string',
                                                         ),
                                                         'N' => array(
+                                                            'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                                             'type' => 'string',
                                                         ),
                                                         'B' => array(
+                                                            'description' => 'Binary attributes are sequences of unsigned bytes.',
                                                             'type' => 'string',
                                                         ),
                                                         'SS' => array(
+                                                            'description' => 'A set of strings.',
                                                             'type' => 'array',
                                                             'items' => array(
                                                                 'name' => 'StringAttributeValue',
@@ -2443,6 +2475,7 @@ return array (
                                                             ),
                                                         ),
                                                         'NS' => array(
+                                                            'description' => 'A set of numbers.',
                                                             'type' => 'array',
                                                             'items' => array(
                                                                 'name' => 'NumberAttributeValue',
@@ -2450,6 +2483,7 @@ return array (
                                                             ),
                                                         ),
                                                         'BS' => array(
+                                                            'description' => 'A set of binary attributes.',
                                                             'type' => 'array',
                                                             'items' => array(
                                                                 'name' => 'BinaryAttributeValue',
@@ -2477,29 +2511,36 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The name of the table being described.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
                             'type' => 'object',
                             'properties' => array(
                                 'HashKeyElement' => array(
+                                    'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
                                 ),
                                 'RangeKeyElement' => array(
+                                    'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -2544,21 +2585,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
+                    'description' => 'If the ReturnValues parameter is provided as ALL_OLD in the request, Amazon DynamoDB returns an array of attribute name-value pairs (essentially, the deleted item). Otherwise, the response contains an empty set.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Binary attributes are sequences of unsigned bytes.',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'A set of strings.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2566,6 +2613,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'A set of numbers.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2573,6 +2621,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'A set of binary attributes.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2597,29 +2646,36 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The name of the table being described.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
                             'type' => 'object',
                             'properties' => array(
                                 'HashKeyElement' => array(
+                                    'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
                                 ),
                                 'RangeKeyElement' => array(
+                                    'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -2668,29 +2724,36 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The name of the table being described.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
                             'type' => 'object',
                             'properties' => array(
                                 'HashKeyElement' => array(
+                                    'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
                                 ),
                                 'RangeKeyElement' => array(
+                                    'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -2735,21 +2798,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Item' => array(
+                    'description' => 'Contains the requested attributes.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Binary attributes are sequences of unsigned bytes.',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'A set of strings.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2757,6 +2826,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'A set of numbers.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2764,6 +2834,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'A set of binary attributes.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2792,6 +2863,7 @@ return array (
                     ),
                 ),
                 'LastEvaluatedTableName' => array(
+                    'description' => 'The name of the last table in the current list. Use this value as the ExclusiveStartTableName in a new request to continue the list until all the table names are returned. If this value is null, all table names have been returned.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2802,21 +2874,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
+                    'description' => 'Attribute values before the put operation, but only if the ReturnValues parameter is specified as ALL_OLD in the request.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Binary attributes are sequences of unsigned bytes.',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'A set of strings.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2824,6 +2902,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'A set of numbers.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2831,6 +2910,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'A set of binary attributes.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2857,18 +2937,23 @@ return array (
                         'name' => 'AttributeMap',
                         'type' => 'object',
                         'additionalProperties' => array(
+                            'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -2876,6 +2961,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -2883,6 +2969,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -2894,26 +2981,33 @@ return array (
                     ),
                 ),
                 'Count' => array(
+                    'description' => 'Number of items in the response.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'LastEvaluatedKey' => array(
+                    'description' => 'Primary key of the item where the query operation stopped, inclusive of the previous result set. Use this value to start a new operation excluding this value in the new request. The LastEvaluatedKey is null when the entire query result set is complete (i.e. the operation processed the "last page").',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'HashKeyElement' => array(
+                            'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -2921,6 +3015,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -2928,6 +3023,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -2937,18 +3033,23 @@ return array (
                             ),
                         ),
                         'RangeKeyElement' => array(
+                            'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -2956,6 +3057,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -2963,6 +3065,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -2990,18 +3093,23 @@ return array (
                         'name' => 'AttributeMap',
                         'type' => 'object',
                         'additionalProperties' => array(
+                            'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -3009,6 +3117,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -3016,6 +3125,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -3027,30 +3137,38 @@ return array (
                     ),
                 ),
                 'Count' => array(
+                    'description' => 'Number of items in the response.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'ScannedCount' => array(
+                    'description' => 'Number of items in the complete scan before any filters are applied. A high ScannedCount value with few, or no, Count results indicates an inefficient Scan operation.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'LastEvaluatedKey' => array(
+                    'description' => 'Primary key of the item where the scan operation stopped. Provide this value in a subsequent scan operation to continue the operation from that point. The LastEvaluatedKey is null when the entire scan result set is complete (i.e. the operation processed the "last page").',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'HashKeyElement' => array(
+                            'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -3058,6 +3176,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -3065,6 +3184,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -3074,18 +3194,23 @@ return array (
                             ),
                         ),
                         'RangeKeyElement' => array(
+                            'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Binary attributes are sequences of unsigned bytes.',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'A set of strings.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -3093,6 +3218,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'A set of numbers.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -3100,6 +3226,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'A set of binary attributes.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -3121,21 +3248,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
+                    'description' => 'A map of attribute name-value pairs, but only if the ReturnValues parameter is specified as something other than NONE in the request.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Numbers are positive or negative exact-value decimals and integers. A number can have up to 38 digits precision and can be between 10^-128 to 10^+126.',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Binary attributes are sequences of unsigned bytes.',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'A set of strings.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -3143,6 +3276,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'A set of numbers.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -3150,6 +3284,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'A set of binary attributes.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -3174,29 +3309,36 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The name of the table being described.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
                             'type' => 'object',
                             'properties' => array(
                                 'HashKeyElement' => array(
+                                    'description' => 'A hash key element is treated as the primary key, and can be a string or a number. Single attribute primary keys have one index value. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
                                 ),
                                 'RangeKeyElement' => array(
+                                    'description' => 'A range key element is treated as a secondary key (used in conjunction with the primary key), and can be a string or a number, and is only used for hash-and-range primary keys. The value can be String, Number, StringSet, NumberSet.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
+                                            'description' => 'The AttributeName of the KeySchemaElement.',
                                             'type' => 'string',
                                         ),
                                         'AttributeType' => array(
+                                            'description' => 'The AttributeType of the KeySchemaElement which can be a String or a Number.',
                                             'type' => 'string',
                                         ),
                                     ),
