@@ -32,7 +32,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         // Set up
         /** @var $client DynamoDbClient */
-        $client = self::getServiceBuilder()->get('dynamodb');
+        $client = self::getServiceBuilder()->get('dynamodb', true);
         $table = self::getResourcePrefix() . '-php-test-batch-write';
 
         try {
@@ -56,7 +56,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
                 )
             ))->execute();
 
-            $client->waitUntil('table_exists', $table, array('status' => 'active'));
+            $client->waitUntil('table_exists');
             self::log("Table created.");
         }
 
@@ -80,10 +80,11 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Remove {$numItems} items from the table");
         $deleteBatch = WriteRequestBatch::factory($client);
         for ($i = 1; $i <= $numItems; $i++) {
-            $deleteBatch->add(new DeleteRequest(array('HashKeyElement' => array('S' => "example_{$i}")), $table));
+            $deleteBatch->add(new DeleteRequest(array(
+                'HashKeyElement' => array('S' => "example_{$i}")
+            ), $table));
         }
         $deleteBatch->flush();
-        sleep(3);
 
         self::log("Assert that all {$numItems} items are deleted from the table");
         $scanner = $client->getIterator('Scan', array('TableName' => $table));
