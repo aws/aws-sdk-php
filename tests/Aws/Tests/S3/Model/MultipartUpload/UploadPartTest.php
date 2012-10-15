@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\Tests\Glacier\Model\MultipartUpload;
+namespace Aws\Tests\S3\Model\MultipartUpload;
 
 use Aws\Common\Enum\DateFormat;
 use Aws\S3\Model\MultipartUpload\UploadPart;

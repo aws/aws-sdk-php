@@ -4,6 +4,8 @@ namespace Aws\Tests\Common\Iterator;
 
 use Aws\Glacier\Iterator\DefaultIterator;
 use Guzzle\Service\Command\AbstractCommand;
+use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Description\Parameter;
 
 /**
  * @covers Aws\Glacier\Iterator\DefaultIterator
@@ -70,7 +72,7 @@ class DefaultIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testResultsAreHandledCorrectly()
     {
-        $result = array(
+        $result = new Model(array(
             'VaultList' => array(
                 array(/* ... */),
                 array(/* ... */),
@@ -79,7 +81,7 @@ class DefaultIteratorTest extends \Guzzle\Tests\GuzzleTestCase
                 array(/* ... */)
             ),
             'Marker' => '[MARKER]'
-        );
+        ), new Parameter());
 
         $command = $this->getMockedCommand();
         $iterator = new DefaultIterator($command);

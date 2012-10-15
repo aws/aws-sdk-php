@@ -145,7 +145,7 @@ class ClientOptions extends Enum
     const RESOLVERS = 'client.resolvers';
 
     /**
-     * @var string Whether or not modeled responses have tranformations applied to them
+     * @var string Whether or not modeled responses have transformations applied to them
      */
     const MODEL_PROCESSING = 'command.model_processing';
 }

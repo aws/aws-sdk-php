@@ -3,6 +3,7 @@
 namespace Aws\Tests\Common\Iterator;
 
 use Aws\Common\Iterator\AbstractResourceIterator;
+use Guzzle\Service\Description\Parameter;
 use Guzzle\Service\Resource\Model;
 
 /**
@@ -12,13 +13,14 @@ class AbstractResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testSendRequest()
     {
+        $model = new Model(array(), new Parameter());
         // Mock Command
         $command = $this->getMockBuilder('Aws\Common\Command\JsonCommand')
             ->disableOriginalConstructor()
             ->getMock();
         $command->expects($this->any())
             ->method('execute')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue($model));
 
         // Mock the iterator
         $iterator = $this->getMockForAbstractClass(
@@ -48,6 +50,6 @@ class AbstractResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         $result = $sendRequest->invoke($iterator);
 
         $this->assertEquals(array('foo'), $result);
-        $this->assertNull($iterator->getLastResult());
+        $this->assertSame($model, $iterator->getLastResult());
     }
 }
