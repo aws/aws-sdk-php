@@ -20,7 +20,6 @@ use Aws\Common\Aws;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Signature\EndpointSignatureInterface;

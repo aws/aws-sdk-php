@@ -16,10 +16,6 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Common\Enum\UaString as Ua;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\ReadLimitEntityBody;
-
 /**
  * Transfers multipart upload parts serially
  */

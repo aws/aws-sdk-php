@@ -31,7 +31,6 @@ use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
-use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Service\Command\OperationCommand as Op;
 
 /**

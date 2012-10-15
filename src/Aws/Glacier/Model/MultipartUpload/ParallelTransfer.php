@@ -16,10 +16,7 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\RuntimeException;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\ReadLimitEntityBody;
 use Guzzle\Iterator\ChunkedIterator;
 
 /**

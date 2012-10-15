@@ -19,7 +19,6 @@ namespace Aws\S3\Model;
 use Aws\S3\Enum\Permission;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\ToArrayInterface;
-use Guzzle\Service\Command\AbstractCommand;
 
 /**
  * Amazon S3 Grant model

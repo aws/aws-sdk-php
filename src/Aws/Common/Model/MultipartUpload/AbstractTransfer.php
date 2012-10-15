@@ -17,7 +17,6 @@
 namespace Aws\Common\Model\MultipartUpload;
 
 use Aws\Common\Client\AwsClientInterface;
-use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\AbstractHasDispatcher;

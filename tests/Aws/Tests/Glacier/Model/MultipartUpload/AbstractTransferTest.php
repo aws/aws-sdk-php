@@ -6,7 +6,6 @@ use Aws\Glacier\Model\MultipartUpload\AbstractTransfer;
 use Aws\Glacier\Model\MultipartUpload\TransferState;
 use Aws\Glacier\Model\MultipartUpload\UploadPart;
 use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\Glacier\Model\MultipartUpload\AbstractTransfer

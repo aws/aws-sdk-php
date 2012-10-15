@@ -16,7 +16,6 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadPart;
 
 /**

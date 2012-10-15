@@ -6,8 +6,6 @@ use Aws\Glacier\Model\MultipartUpload\TransferState;
 use Aws\Glacier\Model\MultipartUpload\SerialTransfer;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\EntityBody;
-use Guzzle\Plugin\Mock\MockPlugin;
-use Guzzle\Service\ClientInterface;
 
 /**
  * @covers Aws\Glacier\Model\MultipartUpload\SerialTransfer

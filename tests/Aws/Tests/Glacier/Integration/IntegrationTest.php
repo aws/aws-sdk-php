@@ -12,7 +12,6 @@ use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\Client;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
-use Guzzle\Plugin\Log\LogPlugin;
 
 /**
  * @group integration
@@ -139,7 +138,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             ->setPartSize(Size::MB)
             ->setArchiveDescription('Foo   bar')
             ->build();
-
 
         $transfer->getEventDispatcher()->addListener($transfer::BEFORE_PART_UPLOAD, function ($event) {
             static $count = 0;

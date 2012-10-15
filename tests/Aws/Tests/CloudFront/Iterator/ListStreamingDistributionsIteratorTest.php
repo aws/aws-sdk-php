@@ -2,8 +2,6 @@
 
 namespace Aws\Tests\CloudFront\Iterator;
 
-use Aws\CloudFront\Iterator\ListStreamingDistributionsIterator;
-
 /**
  * @covers Aws\CloudFront\Iterator\DefaultIterator
  */

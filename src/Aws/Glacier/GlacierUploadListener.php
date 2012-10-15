@@ -16,7 +16,6 @@
 
 namespace Aws\Glacier;
 
-use Aws\Glacier\Model\MultipartUpload\UploadPart;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Common\Event;
 use Guzzle\Http\Message\EntityEnclosingRequest;

@@ -7,7 +7,6 @@ use Aws\S3\Enum\Group;
 use Aws\S3\Model\Acp;
 use Aws\S3\Model\AcpBuilder;
 use Aws\S3\Model\Grantee;
-use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\S3\AcpListener

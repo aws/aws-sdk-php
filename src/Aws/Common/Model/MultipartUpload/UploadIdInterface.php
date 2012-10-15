@@ -30,7 +30,6 @@ interface UploadIdInterface extends \Serializable
      */
     public static function fromParams($data);
 
-
     /**
      * Returns the array form of the upload identification for use as command params
      *

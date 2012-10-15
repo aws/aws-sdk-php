@@ -25,7 +25,6 @@ use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
-use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Service\Command\OperationCommand as Op;
 use Guzzle\Service\Resource\MapResourceIteratorFactory;
 

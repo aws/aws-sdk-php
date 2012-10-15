@@ -16,13 +16,11 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\S3\Model\Acp;
-use Guzzle\Http\EntityBody;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a

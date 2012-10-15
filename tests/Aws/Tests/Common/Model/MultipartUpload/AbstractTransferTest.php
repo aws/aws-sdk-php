@@ -4,9 +4,7 @@ namespace Aws\Tests\Common\Model\MultipartUpload;
 
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\Common\Model\MultipartUpload\AbstractTransferState;
-use Aws\Common\Model\MultipartUpload\TransferInterface;
 use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\Common\Model\MultipartUpload\AbstractTransfer

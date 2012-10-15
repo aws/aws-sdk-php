@@ -3,7 +3,6 @@
 namespace Aws\Tests\CloudFront\Waiter;
 
 use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\CloudFront\Waiter\InvalidationCompleted

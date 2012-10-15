@@ -17,10 +17,8 @@
 namespace Aws\Glacier\Model\MultipartUpload;
 
 use Aws\Common\Enum\UaString as Ua;
-use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer as CommonAbstractTransfer;
 use Aws\Glacier\Model\MultipartUpload\TransferState;
-use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 use Guzzle\Service\Command\OperationCommand;

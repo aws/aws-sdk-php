@@ -7,7 +7,6 @@ use Aws\S3\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Model\MultipartUpload\TransferState;
 use Aws\S3\Model\MultipartUpload\UploadPart;
 use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\S3\Model\MultipartUpload\AbstractTransfer

@@ -7,8 +7,6 @@ use Aws\Glacier\Model\MultipartUpload\ParallelTransfer;
 use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\EntityBodyInterface;
-use Guzzle\Plugin\Mock\MockPlugin;
-use Guzzle\Service\ClientInterface;
 
 // Special test class for cheating the partSize :-(
 class SpecialUploadPartGenerator extends UploadPartGenerator {

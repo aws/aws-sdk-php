@@ -16,7 +16,6 @@
 
 namespace Aws\Glacier\Model\MultipartUpload;
 
-use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;

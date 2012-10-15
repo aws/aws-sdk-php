@@ -16,7 +16,6 @@
 
 namespace Aws\Common\Hash;
 
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\LogicException;
 
 /**

@@ -17,7 +17,6 @@
 namespace Aws\Common\Model\MultipartUpload;
 
 use Aws\Common\Client\AwsClientInterface;
-use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Http\EntityBody;
 

@@ -16,8 +16,6 @@
 
 namespace Aws\Sts\Exception;
 
-use Aws\Common\Exception\ServerExceptionInterface;
-
 /**
  * The request has failed due to a temporary failure of the server.
  */
