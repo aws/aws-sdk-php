@@ -63,7 +63,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Ensuring the table {$this->table} was created");
         $result = $this->client->describeTable(array(
             'TableName' => $this->table
-        ));
+        ))->execute();
         $this->assertEquals($this->table, $result['Table']['TableName']);
     }
 
@@ -256,10 +256,10 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("# Attempting to delete {$table}");
 
         try {
-            $client->describeTable(array('TableName' => $table));
+            $client->describeTable(array('TableName' => $table))->execute();
             // Wait until the table is active
             self::log('Table exists. Waiting until the status is ACTIVE');
-            $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
+            $client->waitUntil('table_exists', $table);
             // Delete the table to clear out its contents
             self::log('Deleting the table');
             $client->deleteTable(array('TableName' => $table))->execute();

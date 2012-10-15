@@ -25,8 +25,8 @@ use Aws\DynamoDb\Exception\ResourceNotFoundException;
  */
 class TableNotExists extends AbstractResourceWaiter
 {
-    protected $interval = 15;
-    protected $maxAttempts = 25;
+    protected $interval = 30;
+    protected $maxAttempts = 60;
     protected $maxFailures = 0;
 
     /**
