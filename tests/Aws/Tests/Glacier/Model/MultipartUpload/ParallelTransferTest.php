@@ -84,7 +84,7 @@ class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
         for ($j = 0; $j < $i; $j++) {
             $this->assertEquals('PUT', $requests[$j]->getMethod());
         }
-        $this->assertEquals('POST', $requests[4]->getMethod());
+        $this->assertEquals('PUT', $requests[4]->getMethod());
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
     }
 
