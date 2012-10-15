@@ -110,18 +110,6 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanCreateNewStateByInitiatingMultipartUpload()
     {
-//        $client = $this->getServiceBuilder()->get('s3');
-//        $mock = $this->setMockResponse($client, array('s3/initiate_multipart_upload'));
-//        $transfer = UploadBuilder::newInstance()
-//            ->setVaultName('foo')
-//            ->setClient($client)
-//            ->setSource(EntityBody::factory('foo'))
-//            ->build();
-//        $requests = $mock->getReceivedRequests();
-//        $this->assertEquals(1, count($requests));
-//        $this->assertInstanceOf('Aws\S3\Model\MultipartUpload\TransferState', $transfer->getState());
-
-
         $acl = new Acp(new Grantee('123'));
         $acl->addGrant(new Grant(new Grantee('123'), Permission::READ));
         $client = $this->getServiceBuilder()->get('s3');

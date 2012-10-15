@@ -16,8 +16,9 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Enum\DateFormat;
+use Aws\Common\Enum\Size;
+use Aws\Common\Enum\UaString as Ua;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 
@@ -41,7 +42,7 @@ class SerialTransfer extends AbstractTransfer
                 $body = EntityBody::factory();
                 while ($body->getContentLength() < $this->partSize
                     && $body->write(
-                        $this->source->read(max(1, min(10240, $this->partSize - $body->getContentLength())))
+                        $this->source->read(max(1, min(10 * Size::KB, $this->partSize - $body->getContentLength())))
                     ));
             }
 

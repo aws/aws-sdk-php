@@ -70,16 +70,21 @@ abstract class AbstractTransfer extends CommonAbstractTransfer
      */
     protected function complete()
     {
-        $params = $this->state->getUploadId()->toParams();
-        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
-
-        $command = $this->client->getCommand('CompleteMultipartUpload', $params);
-
+        /** @var $part UploadPart  */
+        $parts = array();
         foreach ($this->state as $part) {
-            $command->addPart($part['PartNumber'], $part['ETag']);
+            $parts[] = array(
+                'PartNumber' => $part->getPartNumber(),
+                'ETag'       => $part->getETag(),
+            );
         }
 
-        return $command->execute();
+        $params = $this->state->getUploadId()->toParams();
+        $params[Ua::OPTION] = Ua::MULTIPART_UPLOAD;
+        $params['Parts'] = $parts;
+        $command = $this->client->getCommand('CompleteMultipartUpload', $params);
+
+        return $command->getResult();
     }
 
     /**

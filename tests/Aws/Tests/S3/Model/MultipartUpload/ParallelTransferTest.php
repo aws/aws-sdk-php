@@ -9,30 +9,22 @@ use Guzzle\Http\EntityBodyInterface;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Service\ClientInterface;
 
-// Special test class for cheating the partSize :-(
-class SpecialUploadPartGenerator extends UploadPartGenerator {
-    protected function generateUploadParts(EntityBodyInterface $body) {
-        $this->partSize = 1024;
-        parent::generateUploadParts($body);
-    }
-}
-
 /**
- * @covers Aws\Glacier\Model\MultipartUpload\ParallelTransfer
+ * @covers Aws\S3\Model\MultipartUpload\ParallelTransfer
  */
 class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
     protected function getMockUploadId()
     {
-        $uploadId = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadId')
+        $uploadId = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\UploadId')
             ->setMethods(array('toParams'))
             ->getMock();
         $uploadId->expects($this->any())
             ->method('toParams')
             ->will($this->returnValue(array(
-                'accountId' => '-',
-                'vaultName' => 'foo',
-                'uploadId'  => 'bar'
+                'Bucket'   => 'foo',
+                'Key'      => 'bar',
+                'UploadId' => 'baz'
             )
         ));
 
@@ -44,11 +36,14 @@ class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $uploadId = $this->getMockUploadId();
         $body = EntityBody::factory(fopen(__FILE__, 'r'));
 
-        $generator = SpecialUploadPartGenerator::factory($body, 1024 * 1024);
-        $client = $this->getServiceBuilder()->get('glacier', true);
+        $client = $this->getServiceBuilder()->get('s3', true);
         $state = new TransferState($uploadId);
-        $state->setPartGenerator($generator);
         $transfer = new ParallelTransfer($client, $state, $body, array('concurrency' => 2));
+
+        $refClass = new \ReflectionClass($transfer);
+        $property = $refClass->getProperty('partSize');
+        $property->setAccessible(true);
+        $property->setValue($transfer, 1024);
 
         return array($transfer, $client, $state);
     }
@@ -59,9 +54,9 @@ class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
 
         $mocks = array();
         for ($i = 0; $i < intval(ceil(filesize(__FILE__) / 1024)); $i++) {
-            $mocks[] = 'glacier/upload_part';
+            $mocks[] = 's3/upload_part';
         }
-        $mocks[] = 'glacier/complete_multipart_upload';
+        $mocks[] = 's3/complete_multipart_upload';
         $mock = $this->setMockResponse($client, $mocks);
 
         $result = $transfer->upload();
@@ -94,7 +89,7 @@ class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresTheFileIsLocalAndSeekable()
     {
         $transfer = new ParallelTransfer(
-            $this->getServiceBuilder()->get('glacier'),
+            $this->getServiceBuilder()->get('s3'),
             new TransferState($this->getMockUploadId()),
             EntityBody::factory('foo')
         );
@@ -106,7 +101,7 @@ class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresConcurrencyIsSpecified()
     {
         $transfer = new ParallelTransfer(
-            $this->getServiceBuilder()->get('glacier'),
+            $this->getServiceBuilder()->get('s3'),
             new TransferState($this->getMockUploadId()),
             EntityBody::factory(fopen(__FILE__, 'r'))
         );

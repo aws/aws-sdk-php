@@ -90,8 +90,8 @@ class ParallelTransfer extends AbstractTransfer
             foreach ($this->client->execute($commands) as $command) {
                 $this->state->addPart(UploadPart::fromArray(array(
                     'PartNumber'   => count($this->state) + 1,
-                    'ETag'         => $command->getResult()->getHeader('ETag', true),
-                    'Size'         => (int) $command->getRequest()->getHeader('Content-Length', true),
+                    'ETag'         => $command->getResponse()->getHeader('ETag', true),
+                    'Size'         => (int) $command->getResponse()->getHeader('Content-Length', true),
                     'LastModified' => gmdate(DateFormat::RFC2822)
                 )));
                 $eventData['command'] = $command;

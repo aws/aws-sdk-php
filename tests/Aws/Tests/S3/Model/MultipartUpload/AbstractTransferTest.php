@@ -1,68 +1,84 @@
 <?php
 
-namespace Aws\Tests\Glacier\Model;
+namespace Aws\Tests\S3\Model\MultipartUpload;
 
-use Aws\Glacier\Model\MultipartUpload\AbstractTransfer;
-use Aws\Glacier\Model\MultipartUpload\TransferState;
-use Aws\Glacier\Model\MultipartUpload\UploadPart;
+use Aws\Common\Enum\DateFormat;
+use Aws\S3\Model\MultipartUpload\AbstractTransfer;
+use Aws\S3\Model\MultipartUpload\TransferState;
+use Aws\S3\Model\MultipartUpload\UploadPart;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\Response;
 
 /**
- * @covers Aws\Glacier\Model\MultipartUpload\AbstractTransfer
+ * @covers Aws\S3\Model\MultipartUpload\AbstractTransfer
  */
 class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /** @var \Aws\Glacier\GlacierClient */
+    /** @var \Aws\S3\S3Client */
     protected $client;
 
-    /** @var \Aws\Glacier\Model\MultipartUpload\AbstractTransfer */
+    /** @var \Aws\S3\Model\MultipartUpload\AbstractTransfer */
     protected $transfer;
 
-    public function prepareTransfer($useRealClient = false)
-    {
-        $uploadId = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadId')
+    public function prepareTransfer(
+        $useRealClient = false,
+        $contentLength = AbstractTransfer::MIN_PART_SIZE,
+        $partLength = AbstractTransfer::MIN_PART_SIZE
+    ) {
+        $uploadId = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\UploadId')
             ->setMethods(array('toParams'))
             ->getMock();
         $uploadId->expects($this->any())
             ->method('toParams')
             ->will($this->returnValue(array(
-                'accountId' => '-',
-                'vaultName' => 'foo',
-                'uploadId'  => 'bar'
+                'Bucket'   => 'foo',
+                'Key'      => 'bar',
+                'UploadId' => 'baz'
             )
         ));
 
-        $generator = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadPartGenerator')
+        $body = $this->getMockBuilder('Guzzle\Http\EntityBody')
             ->disableOriginalConstructor()
+            ->setMethods(array('getContentLength'))
             ->getMock();
-        $generator->expects($this->any())
-            ->method('getPartSize')
-            ->will($this->returnValue(1024 * 1024));
-
-        $body = EntityBody::factory(fopen(__FILE__, 'r'));
+        $body->expects($this->any())
+            ->method('getContentLength')
+            ->will($this->returnValue($contentLength));
 
         if ($useRealClient) {
-            $client = $this->getServiceBuilder()->get('glacier', true);
+            $client = $this->getServiceBuilder()->get('s3', true);
         } else {
-            $client = $this->getMockBuilder('Aws\Glacier\GlacierClient')
+            $client = $this->getMockBuilder('Aws\S3\S3Client')
                 ->disableOriginalConstructor()
                 ->getMock();
         }
 
-        $state = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\TransferState')
+        $state = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\TransferState')
             ->disableOriginalConstructor()
             ->getMock();
         $state->expects($this->any())
             ->method('getUploadId')
             ->will($this->returnValue($uploadId));
         $state->expects($this->any())
-            ->method('getPartGenerator')
-            ->will($this->returnValue($generator));
+            ->method('getIterator')
+            ->will($this->returnValue(new \ArrayIterator(array(
+            UploadPart::fromArray(array(
+                'PartNumber'   => 1,
+                'ETag'         => 'aaa',
+                'LastModified' => gmdate(DateFormat::RFC2822),
+                'Size'         => 5
+            )),
+            UploadPart::fromArray(array(
+                'PartNumber'   => 2,
+                'ETag'         => 'bbb',
+                'LastModified' => gmdate(DateFormat::RFC2822),
+                'Size'         => 5
+            ))
+        ))));
 
         $this->client = $client;
-        $this->transfer = $this->getMockForAbstractClass('Aws\Glacier\Model\MultipartUpload\AbstractTransfer', array(
-            $client, $state, $body
+        $this->transfer = $this->getMockForAbstractClass('Aws\S3\Model\MultipartUpload\AbstractTransfer', array(
+            $client, $state, $body, array('min_part_size' => $partLength)
         ));
     }
 
@@ -75,10 +91,33 @@ class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
         return $reflectedMethod->invokeArgs($object, $args);
     }
 
-    public function testCanGetPartSize()
+    public function partSizeDataProvider()
     {
-        $this->prepareTransfer();
-        $this->assertEquals(1024 * 1024, $this->callProtectedMethod($this->transfer, 'calculatePartSize'));
+        return array(
+            array(8242880, null, 5242880),
+            array(8242880, 7242880, 7242880),
+            array(false, 7242880, 7242880),
+            array(false, 200, 5242880),
+            array(false, 72428800000, 5368709120),
+            array(false, null, null, 'Aws\Common\Exception\RuntimeException')
+        );
+    }
+
+    /**
+     * @dataProvider partSizeDataProvider
+     */
+    public function testCalculatesPartSize($length, $partLength, $size, $throwException = null)
+    {
+        try {
+            $this->prepareTransfer(false, $length, $partLength);
+            $this->assertEquals($size, $this->readAttribute($this->transfer, 'partSize'));
+        } catch (\Exception $e) {
+            if (!$throwException) {
+                throw $e;
+            } else {
+                $this->assertInstanceOf($throwException, $e);
+            }
+        }
     }
 
     public function testCanCompleteMultipartUpload()
@@ -110,23 +149,6 @@ class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
 
         $abortCommand = $this->callProtectedMethod($this->transfer, 'getAbortCommand');
         $this->assertInstanceOf('Guzzle\Service\Command\OperationCommand', $abortCommand);
-        $this->assertEquals('foo', $abortCommand->get('vaultName'));
-    }
-
-    public function testCanGetCommandForUploadPart()
-    {
-        $this->prepareTransfer(true);
-
-        $part = UploadPart::fromArray(array(
-            'partNumber'  => 1,
-            'checksum'    => 'foo',
-            'contentHash' => 'bar',
-            'size'        => 10,
-            'offset'      => 5
-        ));
-
-        $command = $this->callProtectedMethod($this->transfer, 'getCommandForPart', array($part, true));
-        $this->assertInstanceOf('Guzzle\Service\Command\OperationCommand', $command);
-        $this->assertEquals('foo', $command->get('checksum'));
+        $this->assertEquals('foo', $abortCommand->get('Bucket'));
     }
 }

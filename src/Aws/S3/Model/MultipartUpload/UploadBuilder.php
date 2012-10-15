@@ -242,6 +242,7 @@ class UploadBuilder extends AbstractUploadBuilder
 
         $command = $this->client->getCommand('CreateMultipartUpload', array_replace($params, array(
             'command.headers' => $this->headers,
+            'ACP'             => $this->acp,
             Ua::OPTION        => Ua::MULTIPART_UPLOAD
         )));
 
@@ -259,7 +260,6 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         $result = $command->execute();
-        //var_dump((string) $command->getResponse(), $command->getResult()->toArray());die;
 
         // Create a new state based on the initiated upload
         $params['UploadId'] = $result['UploadId'];
