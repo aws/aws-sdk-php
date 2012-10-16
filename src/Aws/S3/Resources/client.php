@@ -25,6 +25,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Aborts a multipart upload.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -51,6 +52,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CompleteMultipartUploadOutput',
             'responseType' => 'model',
+            'summary' => 'Completes a multipart upload by assembling previously uploaded parts.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -106,6 +108,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CopyObjectOutput',
             'responseType' => 'model',
+            'summary' => 'Creates a copy of an object that is already stored in Amazon S3.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -258,6 +261,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Creates a new bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -344,6 +348,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateMultipartUploadOutput',
             'responseType' => 'model',
+            'summary' => 'Initiates a multipart upload and returns an upload ID.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -487,6 +492,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Deletes the bucket.    All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -503,6 +509,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Deletes the cors configuration information set for the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEcors.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -526,6 +533,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Deletes the lifecycle configuration from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -549,6 +557,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Deletes the policy from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -572,6 +581,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Deletes the tags from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -595,6 +605,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'This operation removes the website configuration from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -617,6 +628,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'DeleteObjectOutput',
             'responseType' => 'model',
+            'summary' => 'Removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn\'\'t a null version, Amazon S3 does not remove any objects.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -637,6 +649,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'DeleteObjectsOutput',
             'responseType' => 'model',
+            'summary' => 'This operation enables you to delete multiple objects from a bucket using a single HTTP request.    You may specify up to 1000 keys.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -711,6 +724,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketAclOutput',
             'responseType' => 'model',
+            'summary' => 'Gets the access control policy for the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -737,6 +751,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketCorsOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the cors configuration for the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETcors.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -763,6 +778,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketLifecycleOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the lifecycle configuration information set on the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -790,6 +806,7 @@ return array (
             'responseClass' => 'GetBucketLocationOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Returns the region the bucket resides in.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -812,6 +829,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketLoggingOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -838,6 +856,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketNotificationOutput',
             'responseType' => 'model',
+            'summary' => 'Return the notification configuration of a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -864,6 +883,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketPolicyOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the policy of a specified bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -886,6 +906,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketRequestPaymentOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the request payment configuration of a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -912,6 +933,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketTaggingOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the tag set associated with the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -938,6 +960,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketVersioningOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the versioning state of a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -964,6 +987,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketWebsiteOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the website configuration for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -990,6 +1014,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetObjectOutput',
             'responseType' => 'model',
+            'summary' => 'Retrieves objects from Amazon S3.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1093,6 +1118,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetObjectAclOutput',
             'responseType' => 'model',
+            'summary' => 'Returns the access control list (ACL) of an object.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1130,6 +1156,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetObjectTorrentOutput',
             'responseType' => 'model',
+            'summary' => 'Return torrent files from a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETtorrent.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1157,6 +1184,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'HeadBucketOutput',
             'responseType' => 'model',
+            'summary' => 'This operation is useful to determine if a bucket exists and you have permission to access it.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1172,6 +1200,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'HeadObjectOutput',
             'responseType' => 'model',
+            'summary' => 'The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you\'\'re only interested in an object\'\'s metadata. To use HEAD, you must have READ access to the object.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1235,6 +1264,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListBucketsOutput',
             'responseType' => 'model',
+            'summary' => 'Returns a list of all buckets owned by the authenticated sender of the request.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html',
             'parameters' => array(
                 'command.expects' => array(
@@ -1249,6 +1279,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListMultipartUploadsOutput',
             'responseType' => 'model',
+            'summary' => 'This operation lists in-progress multipart uploads.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1305,6 +1336,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListObjectVersionsOutput',
             'responseType' => 'model',
+            'summary' => 'Returns metadata about all of the versions of objects in a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1361,6 +1393,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListObjectsOutput',
             'responseType' => 'model',
+            'summary' => 'Returns some or all (up to 1000) of the objects in a bucket. You can use the request parameters as selection criteria to return a subset of the objects in a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1404,6 +1437,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListPartsOutput',
             'responseType' => 'model',
+            'summary' => 'Lists the parts that have been uploaded for a specific multipart upload.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1448,6 +1482,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Sets the permissions on a bucket using access control lists (ACL).',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -1604,6 +1639,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Sets the cors configuration for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -1690,6 +1726,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Sets lifecycle configuration for your bucket. If a lifecycle configuration exists, it replaces it.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -1769,6 +1806,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters. To set the logging status of a bucket, you must be the bucket owner.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -1868,6 +1906,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Enables notifications of specified events for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -1922,6 +1961,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Replaces a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1959,6 +1999,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Sets the request payment configuration for a bucket. By default, the bucket owner pays for downloads from the bucket. This configuration parameter enables the bucket owner (only) to specify that the person requesting the download will be charged for the download.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -2005,6 +2046,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Sets the tags for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -2063,6 +2105,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Sets the versioning state of an existing bucket. To set the versioning state, you must be the bucket owner.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -2123,6 +2166,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'Set the website configuration for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -2180,6 +2224,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'PutObjectOutput',
             'responseType' => 'model',
+            'summary' => 'Adds an object to a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -2327,6 +2372,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'The result of this operation will be an empty model',
+            'summary' => 'uses the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -2487,6 +2533,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UploadPartOutput',
             'responseType' => 'model',
+            'summary' => 'Uploads a part in a multipart upload.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -2522,6 +2569,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UploadPartCopyOutput',
             'responseType' => 'model',
+            'summary' => 'Uploads a part by copying data from an existing object as data source.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPartCopy.html',
             'parameters' => array(
                 'Bucket' => array(

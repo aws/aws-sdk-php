@@ -43,6 +43,10 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -324,6 +328,10 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'xml',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -421,6 +429,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -553,6 +565,10 @@ return array (
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'xml',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -717,6 +733,10 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -738,6 +758,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -761,6 +785,10 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -782,6 +810,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -810,6 +842,10 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -835,6 +871,10 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -856,6 +896,10 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -882,6 +926,10 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -903,6 +951,10 @@ return array (
                 'MaxItems' => array(
                     'type' => 'string',
                     'location' => 'query',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -931,6 +983,10 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -955,6 +1011,10 @@ return array (
                 'MaxItems' => array(
                     'type' => 'string',
                     'location' => 'query',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -997,6 +1057,10 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'If-Match',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(
@@ -1298,6 +1362,10 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'If-Match',
                 ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1472,6 +1540,10 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'If-Match',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
             'errorResponses' => array(

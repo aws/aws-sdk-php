@@ -26,6 +26,7 @@ return array (
             'responseClass' => 'BatchGetItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Retrieves the attributes for multiple items from multiple tables using their primary keys.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -192,6 +193,7 @@ return array (
             'responseClass' => 'BatchWriteItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Allows to execute a batch of Put and/or Delete Requests for many tables in a single call. A total of 25 requests are allowed.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -415,6 +417,7 @@ return array (
             'responseClass' => 'CreateTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Adds a new table to your account.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -534,6 +537,7 @@ return array (
             'responseClass' => 'DeleteItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Deletes a single item in a table by primary key.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -762,6 +766,7 @@ return array (
             'responseClass' => 'DeleteTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Deletes a table and all of its items.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -812,6 +817,7 @@ return array (
             'responseClass' => 'DescribeTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Retrieves information about the table, including the current status of the table, the primary key schema and when the table was created.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -854,6 +860,7 @@ return array (
             'responseClass' => 'GetItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Retrieves a set of Attributes for an item that matches the primary key.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1018,6 +1025,7 @@ return array (
             'responseClass' => 'ListTablesOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Retrieves a paginated list of table names created by the AWS Account of the caller in the AWS Region (e.g. us-east-1).',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1061,6 +1069,7 @@ return array (
             'responseClass' => 'PutItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Creates a new item, or replaces an old item with a new item (including all the attributes).',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1238,6 +1247,7 @@ return array (
             'responseClass' => 'QueryOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Gets the values of one or more items and its attributes by primary key (composite primary key, only).',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1548,6 +1558,7 @@ return array (
             'responseClass' => 'ScanOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Retrieves one or more items and its attributes by performing a full scan of a table.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1800,6 +1811,7 @@ return array (
             'responseClass' => 'UpdateItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Edits an existing item\'s attributes.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2094,6 +2106,7 @@ return array (
             'responseClass' => 'UpdateTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Updates the provisioned throughput for the given table.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,

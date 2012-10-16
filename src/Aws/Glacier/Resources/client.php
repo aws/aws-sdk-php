@@ -972,7 +972,7 @@ return array (
                 ),
                 'status' => array(
                     'type' => 'numeric',
-                    'location' => 'http_status',
+                    'location' => 'statusCode',
                 ),
                 'contentRange' => array(
                     'type' => 'string',
