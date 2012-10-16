@@ -27,10 +27,10 @@ use Guzzle\Common\Collection;
 use Guzzle\Service\Command\OperationCommand as Op;
 
 /**
- * Client to interact with the AWS Security Token Service
+ * Client to interact with AWS Security Token Service
  *
- * @method Op getSessionToken(array $args = array()) {@command sts GetSessionToken}
  * @method Op getFederationToken(array $args = array()) {@command sts GetFederationToken}
+ * @method Op getSessionToken(array $args = array()) {@command sts GetSessionToken}
  */
 class StsClient extends AbstractClient
 {

@@ -31,27 +31,27 @@ use Guzzle\Service\Resource\MapResourceIteratorFactory;
 /**
  * Client to interact with Amazon CloudFront
  *
- * @method Op createCloudFrontOriginAccessIdentity (array $args = array()) {@command cloudfront CreateCloudFrontOriginAccessIdentity}
- * @method Op createDistribution (array $args = array()) {@command cloudfront CreateDistribution}
- * @method Op createInvalidation (array $args = array()) {@command cloudfront CreateInvalidation}
- * @method Op createStreamingDistribution (array $args = array()) {@command cloudfront CreateStreamingDistribution}
- * @method Op deleteCloudFrontOriginAccessIdentity (array $args = array()) {@command cloudfront DeleteCloudFrontOriginAccessIdentity}
- * @method Op deleteDistribution (array $args = array()) {@command cloudfront DeleteDistribution}
- * @method Op deleteStreamingDistribution (array $args = array()) {@command cloudfront DeleteStreamingDistribution}
- * @method Op getCloudFrontOriginAccessIdentity (array $args = array()) {@command cloudfront GetCloudFrontOriginAccessIdentity}
- * @method Op getCloudFrontOriginAccessIdentityConfig (array $args = array()) {@command cloudfront GetCloudFrontOriginAccessIdentityConfig}
- * @method Op getDistribution (array $args = array()) {@command cloudfront GetDistribution}
- * @method Op getDistributionConfig (array $args = array()) {@command cloudfront GetDistributionConfig}
- * @method Op getInvalidation (array $args = array()) {@command cloudfront GetInvalidation}
- * @method Op getStreamingDistribution (array $args = array()) {@command cloudfront GetStreamingDistribution}
- * @method Op getStreamingDistributionConfig (array $args = array()) {@command cloudfront GetStreamingDistributionConfig}
- * @method Op listCloudFrontOriginAccessIdentities (array $args = array()) {@command cloudfront ListCloudFrontOriginAccessIdentities}
- * @method Op listDistributions (array $args = array()) {@command cloudfront ListDistributions}
- * @method Op listInvalidations (array $args = array()) {@command cloudfront ListInvalidations}
- * @method Op listStreamingDistributions (array $args = array()) {@command cloudfront ListStreamingDistributions}
- * @method Op updateCloudFrontOriginAccessIdentity (array $args = array()) {@command cloudfront UpdateCloudFrontOriginAccessIdentity}
- * @method Op updateDistribution (array $args = array()) {@command cloudfront UpdateDistribution}
- * @method Op updateStreamingDistribution (array $args = array()) {@command cloudfront UpdateStreamingDistribution}
+ * @method Op createCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront CreateCloudFrontOriginAccessIdentity}
+ * @method Op createDistribution(array $args = array()) {@command cloudfront CreateDistribution}
+ * @method Op createInvalidation(array $args = array()) {@command cloudfront CreateInvalidation}
+ * @method Op createStreamingDistribution(array $args = array()) {@command cloudfront CreateStreamingDistribution}
+ * @method Op deleteCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront DeleteCloudFrontOriginAccessIdentity}
+ * @method Op deleteDistribution(array $args = array()) {@command cloudfront DeleteDistribution}
+ * @method Op deleteStreamingDistribution(array $args = array()) {@command cloudfront DeleteStreamingDistribution}
+ * @method Op getCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront GetCloudFrontOriginAccessIdentity}
+ * @method Op getCloudFrontOriginAccessIdentityConfig(array $args = array()) {@command cloudfront GetCloudFrontOriginAccessIdentityConfig}
+ * @method Op getDistribution(array $args = array()) {@command cloudfront GetDistribution}
+ * @method Op getDistributionConfig(array $args = array()) {@command cloudfront GetDistributionConfig}
+ * @method Op getInvalidation(array $args = array()) {@command cloudfront GetInvalidation}
+ * @method Op getStreamingDistribution(array $args = array()) {@command cloudfront GetStreamingDistribution}
+ * @method Op getStreamingDistributionConfig(array $args = array()) {@command cloudfront GetStreamingDistributionConfig}
+ * @method Op listCloudFrontOriginAccessIdentities(array $args = array()) {@command cloudfront ListCloudFrontOriginAccessIdentities}
+ * @method Op listDistributions(array $args = array()) {@command cloudfront ListDistributions}
+ * @method Op listInvalidations(array $args = array()) {@command cloudfront ListInvalidations}
+ * @method Op listStreamingDistributions(array $args = array()) {@command cloudfront ListStreamingDistributions}
+ * @method Op updateCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront UpdateCloudFrontOriginAccessIdentity}
+ * @method Op updateDistribution(array $args = array()) {@command cloudfront UpdateDistribution}
+ * @method Op updateStreamingDistribution(array $args = array()) {@command cloudfront UpdateStreamingDistribution}
  */
 class CloudFrontClient extends AbstractClient
 {
