@@ -33,7 +33,7 @@ class AbstractResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $command->expects($this->any())
-            ->method('execute')
+            ->method('getResult')
             ->will($this->returnValue($model));
 
         // Mock the iterator
