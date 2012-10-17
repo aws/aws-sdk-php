@@ -41,7 +41,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\TreeHash::fromChecksums
+     * @covers Aws\Common\Hash\TreeHash::fromChecksums
      */
     public function testTreeHashingChecksumsWorksCorrectly()
     {
@@ -51,7 +51,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\TreeHash::fromContent
+     * @covers Aws\Common\Hash\TreeHash::fromContent
      */
     public function testTreeHashingContentWorksCorrectly()
     {
@@ -60,7 +60,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\TreeHash::validateChecksum
+     * @covers Aws\Common\Hash\TreeHash::validateChecksum
      */
     public function testValidatingChecksumWorksCorrectly()
     {
@@ -70,7 +70,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @covers Aws\Glacier\Model\TreeHash::__construct
+     * @covers Aws\Common\Hash\TreeHash::__construct
      */
     public function testThrowsExceptionForInvalidAlgorithm()
     {
@@ -78,10 +78,10 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Glacier\Model\TreeHash::__construct
-     * @covers Aws\Glacier\Model\TreeHash::addData
-     * @covers Aws\Glacier\Model\TreeHash::addChecksum
-     * @covers Aws\Glacier\Model\TreeHash::getHash
+     * @covers Aws\Common\Hash\TreeHash::__construct
+     * @covers Aws\Common\Hash\TreeHash::addData
+     * @covers Aws\Common\Hash\TreeHash::addChecksum
+     * @covers Aws\Common\Hash\TreeHash::getHash
      */
     public function testHashingIsHappeningCorrectly()
     {
@@ -96,7 +96,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \LogicException
-     * @covers Aws\Glacier\Model\TreeHash::addData
+     * @covers Aws\Common\Hash\TreeHash::addData
      */
     public function testCannotAddDataAfterHashCalculation()
     {
@@ -109,7 +109,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @covers Aws\Glacier\Model\TreeHash::addData
+     * @covers Aws\Common\Hash\TreeHash::addData
      */
     public function testCannotAddDataChunksLargerThanOneMegabyte()
     {
@@ -119,7 +119,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \LogicException
-     * @covers Aws\Glacier\Model\TreeHash::addChecksum
+     * @covers Aws\Common\Hash\TreeHash::addChecksum
      */
     public function testCannotAddChecksumsAfterHashCalculation()
     {

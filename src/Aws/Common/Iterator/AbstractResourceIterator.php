@@ -59,10 +59,9 @@ abstract class AbstractResourceIterator extends ResourceIterator
 
             // Execute the request and handle the results
             $this->command->add(Ua::OPTION, Ua::ITERATOR);
-            $result = $this->command->execute();
-            $this->lastResult = $result;
-            $resources = $this->handleResults($result);
-            $this->determineNextToken($result);
+            $this->lastResult = $this->command->getResult();
+            $resources = $this->handleResults($this->lastResult);
+            $this->determineNextToken($this->lastResult);
 
             // If no resources collected, prepare to reiterate before yielding
             if ($reiterate = empty($resources) && $this->nextToken) {
