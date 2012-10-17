@@ -1,26 +1,15 @@
-# Exclude build artifacts
 *.phar
 build/artifacts
 build/vanity/output
 build/vanity/reports
-
-# Exclude common cruft
+phpunit.xml
+phpunit.functional.xml
+test_services.json
+Config
+Makefile
 .idea
 .DS_Store
 .swp
 .build
-
-# Don't ship our composer.lock file
 composer.lock
-
-# Don't commit vendor folders
 vendor
-
-# Don't commit sensitive information
-phpunit.xml
-phpunit.functional.xml
-test_services.json
-
-# Exclude proprietary build info
-Config
-Makefile

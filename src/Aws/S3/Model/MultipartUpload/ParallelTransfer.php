@@ -16,8 +16,9 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Enum\DateFormat;
+use Aws\Common\Enum\UaString as Ua;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 

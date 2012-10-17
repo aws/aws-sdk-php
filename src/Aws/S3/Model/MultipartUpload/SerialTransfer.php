@@ -55,8 +55,8 @@ class SerialTransfer extends AbstractTransfer
             $params = $this->state->getUploadId()->toParams();
             $command = $this->client->getCommand('UploadPart', array_replace($params, array(
                 'PartNumber' => count($this->state) + 1,
-                'body'       => $body,
-                'use_md5'    => $this->options['part_md5'],
+                'Body'       => $body,
+                'ContentMD5' => (bool) $this->options['part_md5'],
                 Ua::OPTION   => Ua::MULTIPART_UPLOAD
             )));
 
