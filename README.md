@@ -113,11 +113,11 @@ Using [Composer](http://getcomposer.org) is the recommended way to install the A
 dependency management tool for PHP that allows you to declare the dependencies your project needs and installs them into
 your project. In order to use the AWS SDK for PHP 2 through Composer, you must do the following:
 
-1. Add `"aws/aws-sdk-for-php-2"` as a dependency in your project's `composer.json` file.
+1. Add `"aws/aws-sdk-php"` as a dependency in your project's `composer.json` file.
 
         {
             "require": {
-                "aws/aws-sdk-php-2": "*"
+                "aws/aws-sdk-php": "*"
             }
         }
 
@@ -166,7 +166,7 @@ any PHP project. PEAR packages are not specific to your project, but rather to t
 From the command-line, you can install the SDK with PEAR as follows:
 
     pear channel-discover pear.amazonwebservices.com
-    pear install aws/sdk2
+    pear install aws/sdk
 
 **Note:** You may need to use `sudo` for the above commands.
 
@@ -326,7 +326,8 @@ default configuration.
 
 Excerpt from `src/Aws/Common/Resources/aws-config.php`:
 
-    <?php return array(
+    <?php
+    return array(
         'services' => array(
             'default_settings' => array(
                 'params' => array()
@@ -367,7 +368,8 @@ defined in the default configuration file extends from
 that extends the default configuration file and add credentials to the
 `default_settings` service:
 
-    <?php return array(
+    <?php
+    return array(
         'includes' => array('_aws'),
         'services' => array(
             'default_settings' => array(
@@ -395,7 +397,8 @@ argument of the `factory()` method:
 You can create custom named services if you need to use multiple
 accounts with the same service:
 
-    <?php return array(
+    <?php
+    return array(
         'includes' => array('_aws'),
         'services' => array(
             'foo.dynamodb' => array(

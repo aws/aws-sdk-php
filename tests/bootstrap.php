@@ -42,10 +42,11 @@ if (get_cfg_var('CONFIG')) {
 // Set the service configuration file if it was not provided from the CLI
 if (!isset($_SERVER['CONFIG'])) {
     $serviceConfig = $_SERVER['CONFIG'] = dirname(__DIR__) . '/test_services.json';
-    if (!file_exists(dirname(__DIR__) . '/test_services.json')) {
-        $serviceConfig .= '.dist';
-    }
     $_SERVER['CONFIG'] = $serviceConfig;
+    if (!file_exists($serviceConfig)) {
+        die("test_services.json does not exist.\n"
+            . "Please run phing test-init or copy test_services.json.dist to test_services.json\n\n");
+    }
 }
 
 if (!is_readable($_SERVER['CONFIG'])) {

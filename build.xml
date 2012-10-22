@@ -56,20 +56,6 @@
         <exec command="php -d aws_phar=aws.phar `which phpunit`" passthru="true" />
     </target>
 
-    <target name="package-min" description="Builds a minimal phar package">
-        <phingcall target="test-init" />
-        <pharpackage destfile="build/aws.min.phar" stub="build/phar-stub-min.php" signature="md5" basedir=".">
-            <fileset dir=".">
-                <include name="src/**/*.php" />
-                <include name="src/**/*.json" />
-            </fileset>
-            <metadata>
-                <element name="link" value="${sdk_url}" />
-            </metadata>
-        </pharpackage>
-        <exec command="php -d aws_phar=aws.min.phar `which phpunit`" passthru="true" />
-    </target>
-
     <target name="composer-init" description="Downloads a local copy of composer.phar if necessary">
         <if>
             <available file="composer.phar" />
@@ -192,7 +178,7 @@
     </target>
 
     <target name="all" depends="clean, prepare, test-init, build, report"/>
-    <target name="build" depends="phplint, prepare, test-init, test, package, package-min"/>
+    <target name="build" depends="phplint, prepare, test-init, test, package"/>
     <target name="report" depends="coverage, phploc, phpcs, phpmd, phpcpd, phpdepend, phpcb"/>
 
     <target name="update-regions" description="Downloads a new copy of the AWS regions and endpoints file used by the SDK">
