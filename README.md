@@ -440,7 +440,6 @@ format instead of PHP.
 
 * AWS SDK for PHP: <http://aws.amazon.com/sdkforphp>
 * API Documentation: <http://docs.amazonwebservices.com/aws-sdk-for-php-2/latest/>
-* Packagist: TBD
-* Travis CI: TBD
+* Packagist: <https://packagist.org/packages/aws/aws-sdk-php>
 * License: <http://aws.amazon.com/apache2.0/>
 * Forums: <http://aws.amazon.com/forums>
