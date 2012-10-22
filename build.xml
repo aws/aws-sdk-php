@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="aws-sdk-for-php" default="package">
+<project name="aws-sdk-for-php" default="test">
 
     <property name="dir.output" value="${project.basedir}/build/artifacts" />
     <property name="coverage" value="false" />
@@ -34,13 +34,14 @@
         </if>
     </target>
 
-    <target name="package" description="Create a phar with an autoloader">
+    <target name="phar" description="Create a phar with an autoloader">
         <phingcall target="test-init" />
-        <pharpackage destfile="build/aws.phar" stub="build/phar-stub.php" signature="md5" basedir=".">
+        <pharpackage destfile="build/aws.phar" stub="build/phar-stub.php" basedir=".">
             <fileset dir=".">
                 <!-- Add AWS classes -->
                 <include name="src/**/*.php" />
                 <include name="src/**/*.json" />
+                <include name="src/**/*.xml" />
                 <!-- Include the Symfony2 class loader component -->
                 <include name="vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php" />
                 <!-- Install Guzzle and its dependencies -->
@@ -178,7 +179,7 @@
     </target>
 
     <target name="all" depends="clean, prepare, test-init, build, report"/>
-    <target name="build" depends="phplint, prepare, test-init, test, package"/>
+    <target name="build" depends="phplint, prepare, test-init, test, phar"/>
     <target name="report" depends="coverage, phploc, phpcs, phpmd, phpcpd, phpdepend, phpcb"/>
 
     <target name="update-regions" description="Downloads a new copy of the AWS regions and endpoints file used by the SDK">
