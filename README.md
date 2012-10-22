@@ -7,7 +7,27 @@ downloadable `.phar` file, or by using [Composer](http://getcomposer.org).
 This latest addition to the AWS SDKs family provides developers with a more modern, extensible, easy to use, and
 performant AWS client for PHP. This new version is built on top of [Guzzle](http://guzzlephp.org), a PHP HTTP client
 framework, which provides increased performance, persistent connection management, and an extensible plug-in system.
-The AWS SDK for PHP 2 requires PHP 5.3.
+The AWS SDK for PHP 2 requires PHP 5.3.2.
+
+## Table of Contents
+
+> 1. **[New Features](#new-features)**
+> 2. **[Before Using the SDK](#before-using-the-sdk)**
+>     * [Signing Up for AWS](#signing-up-for-aws)
+>         * [To sign up for AWS](#to-sign-up-for-aws)
+>         * [To view your AWS credentials](#to-view-your-aws-credentials)
+>     * [Getting your AWS credentials](#getting-your-aws-credentials)
+>     * [Minimum requirements](#minimum-requirements)
+> 3. **[Installing the SDK](#installing-the-sdk)**
+>     * [Installing via Composer](#installing-via-composer)
+>     * [Installing via Phar](#installing-via-phar)
+>     * [Installing via PEAR](#installing-via-pear)
+> 4. **[Using the SDK](#using-the-sdk)**
+>     * [Quick Start](#quick-start)
+>     * [Using the Service Builder](#using-the-service-builder)
+>     * [Configuration](#configuration)
+>     * [Using a Custom Configuration File](#using-a-custom-configuration-file)
+> 5. **[Additional Information](#additional-information)**
 
 ## New Features
 
@@ -90,7 +110,7 @@ confidential to protect your account. Store it securely in a safe place. Never i
 never e-mail it to anyone. Do not share it outside your organization, even if an inquiry appears to come from AWS or
 Amazon.com. No one who legitimately represents Amazon will ever ask you for your Secret Access Key.
 
-### Configuring your PHP environment
+### Minimum requirements
 
 Aside from a baseline understanding of object-oriented programming in PHP (including PHP 5.3 namespaces), there are a
 few minimum system requirements to start using the AWS SDK for PHP 2. The extensions listed are common and are installed
@@ -99,10 +119,12 @@ with PHP 5.3 by default in most environments.
 - Minimum requirements
     - PHP 5.3.2+ compiled with the cURL extension
     - A recent version of cURL 7.16.2+ compiled with OpenSSL and zlib
-- To use Amazon CloudFront private distributions, you must have the OpenSSL PHP extension (which is not the same as any
-  low-level OpenSSL libraries you may have installed on your system) to sign private CloudFront URLs.
-- To enable caching, you should consider installing the [APC](http://php.net/apc) or
-  [XCache](http://xcache.lighttpd.net) PHP extensions, or another extension that can be used by
+- To use Amazon CloudFront private distributions, you must have the [OpenSSL PHP extension](http://us2.php.net/openssl)
+  (which is not the same as any low-level OpenSSL libraries you may have installed on your system) to sign private
+  CloudFront URLs.
+- To improve the overall performance of your PHP environment, as well as to enable in-memory caching, it is highly
+  recommended that you install an [opcode cache](https://secure.wikimedia.org/wikipedia/en/wiki/PHP_accelerator) such as
+  [APC](http://php.net/apc), [XCache](http://xcache.lighttpd.net), or another extension that can be used by
   [Doctrine\Common\Cache](https://github.com/doctrine/common/tree/master/lib/Doctrine/Common/Cache>).
 
 ## Installing the SDK
@@ -163,12 +185,9 @@ like Yum that install packages system-wide.
 PEAR packages are easy to install, and are available in your PHP environment path so that they are accessible to
 any PHP project. PEAR packages are not specific to your project, but rather to the machine they're installed on.
 
-From the command-line, you can install the SDK with PEAR as follows:
+From the command-line, you can install the SDK with PEAR as follows. _**Note:** You may need to use `sudo` for the following command._
 
-    pear channel-discover pear.amazonwebservices.com
-    pear install aws/sdk
-
-**Note:** You may need to use `sudo` for the above commands.
+    pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
 
 Once the SDK has been installed via PEAR, you can load the phar into your project with:
 
@@ -183,7 +202,8 @@ factory method to instantiate clients as needed.
 
     <?php
 
-    // Include the SDK using the Composer autoloader
+    // Include the SDK along with your other project dependencies
+    // using the Composer autoloader
     require 'vendor/autoload.php';
 
     use Aws\DynamoDb\DynamoDbClient;
