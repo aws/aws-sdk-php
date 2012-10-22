@@ -73,11 +73,11 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $cf = self::getServiceBuilder()->get('cloudfront');
         if (self::$originId) {
             self::log('Deleting origin access identity');
-            $cf->deleteCloudFrontOriginAccessIdentity(array('Id' => self::$originId));
+            $cf->deleteCloudFrontOriginAccessIdentity(array('Id' => self::$originId))->execute();
         }
         if (self::$distributionId) {
             self::log('Deleting distribution');
-            $cf->deleteDistribution(array('Id' => self::$distributionId));
+            $cf->deleteDistribution(array('Id' => self::$distributionId))->execute();
         }
     }
 
@@ -135,7 +135,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'Enabled' => true,
             'CallerReference' => 'BazBar-' . time(),
             'DefaultCacheBehavior' => array(
-                'MinTTL' => 10,
+                'MinTTL' => 3600,
                 'ViewerProtocolPolicy' => 'allow-all',
                 'TargetOriginId' => self::$originId,
                 'TrustedSigners' => array(
