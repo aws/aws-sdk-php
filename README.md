@@ -438,7 +438,7 @@ format instead of PHP.
 
 ## Additional Information
 
-* AWS SDK for PHP: <http://aws.amazon.com/sdkforphp>
+* AWS SDK for PHP: <http://aws.amazon.com/sdkforphp2>
 * API Documentation: <http://docs.amazonwebservices.com/aws-sdk-for-php-2/latest/>
 * Packagist: <https://packagist.org/packages/aws/aws-sdk-php>
 * License: <http://aws.amazon.com/apache2.0/>
