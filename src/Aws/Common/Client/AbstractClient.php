@@ -88,7 +88,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         }
 
         // Make sure the user agent is prefixed by the SDK version
-        $this->setUserAgent('aws-sdk-php/' . Aws::VERSION, true);
+        $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
 
         // Set the service description on the client
         $this->addServiceDescriptionFromConfig();
