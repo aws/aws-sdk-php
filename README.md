@@ -176,6 +176,11 @@ file are the following required and suggested libraries:
 -  [Monolog](https://github.com/seldaek/monolog) for logging
 -  [Doctrine](https://github.com/doctrine/common) for caching
 
+You can download the packaged Phar at http://pear.amazonwebservices.com/get/aws.phar. Simply include it in your
+scripts to get started:
+
+    require 'aws.phar';
+
 ### Installing via PEAR
 
 [PEAR](http://pear.php.net), which stands for *PHP Extension and Application Repository*, is a framework and
