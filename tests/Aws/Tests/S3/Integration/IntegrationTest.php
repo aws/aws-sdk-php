@@ -105,8 +105,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->headBucket(array(
             'Bucket' => $this->bucket
         ))->execute();
-        $this->assertEquals(200, $result['StatusCode']);
-        $this->assertNotNull($result['Date']);
+        $this->assertNotNull($result['RequestId']);
     }
 
     /**
@@ -157,6 +156,27 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->log(__METHOD__);
         $result = $this->client->getBucketLocation(array('Bucket' => $this->bucket))->execute();
         $this->assertSame('', $result['Location']);
+    }
+
+    /**
+     * @depends testHeadBucket
+     */
+    public function testPutBucketLocation()
+    {
+        $this->log(__METHOD__);
+        $bucketName = self::getResourcePrefix() . '-s3eutest';
+        try {
+            $this->client->headBucket(array('Bucket' => $bucketName))->execute();
+        } catch (\Exception $e) {
+            $this->client->createBucket(array(
+                'Bucket'             => $bucketName,
+                'LocationConstraint' => 'EU'
+            ))->execute();
+        }
+        $this->client->waitUntil('bucket_exists', $bucketName);
+        $result = $this->client->getBucketLocation(array('Bucket' => $bucketName))->execute();
+        $this->assertEquals('EU', $result['Location']);
+        $this->client->deleteBucket(array('Bucket' => $bucketName))->execute();
     }
 
     /**
@@ -289,7 +309,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ));
         $result = $command->execute();
         $this->assertContains('Grantee', (string) $command->getRequest()->getBody());
-        $this->assertEquals(array(), $result->toArray());
+        $this->assertEquals(array('RequestId'), array_keys($result->toArray()));
+        // Ensure that the RequestId model value is being populated correctly
+        $this->assertEquals((string) $command->getResponse()->getHeader('x-amz-request-id'), $result['RequestId']);
     }
 
     /**
@@ -389,7 +411,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'UploadId' => $uploadId
         ));
         $result = $command->execute();
-        $this->assertEquals(array(), $result->toArray());
+        $this->assertEquals(array('RequestId'), array_keys($result->toArray()));
     }
 
     /**

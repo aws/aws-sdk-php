@@ -614,9 +614,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '2012-05-05/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2012_05_05Output',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'Id' => array(
                     'required' => true,
@@ -651,9 +650,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '2012-05-05/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteDistribution2012_05_05Output',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'Id' => array(
                     'required' => true,
@@ -688,9 +686,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '2012-05-05/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteStreamingDistribution2012_05_05Output',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'Id' => array(
                     'required' => true,
@@ -1622,6 +1619,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'CreateDistributionResult' => array(
@@ -1889,6 +1891,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'CreateInvalidationResult' => array(
@@ -1935,6 +1942,11 @@ return array (
                             'type' => 'string',
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -2082,11 +2094,45 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
-        'EmptyOutput' => array(
+        'DeleteCloudFrontOriginAccessIdentity2012_05_05Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteDistribution2012_05_05Output' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteStreamingDistribution2012_05_05Output' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
         ),
         'GetCloudFrontOriginAccessIdentityResult' => array(
             'type' => 'object',
@@ -2116,6 +2162,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetCloudFrontOriginAccessIdentityConfigResult' => array(
@@ -2133,6 +2184,11 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -2397,6 +2453,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetDistributionConfigResult' => array(
@@ -2602,6 +2663,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetInvalidationResult' => array(
@@ -2644,6 +2710,11 @@ return array (
                             'type' => 'string',
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -2787,6 +2858,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetStreamingDistributionConfigResult' => array(
@@ -2873,6 +2949,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'ListCloudFrontOriginAccessIdentitiesResult' => array(
@@ -2918,6 +2999,11 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3134,6 +3220,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'ListInvalidationsResult' => array(
@@ -3176,6 +3267,11 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3278,6 +3374,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'UpdateCloudFrontOriginAccessIdentityResult' => array(
@@ -3307,6 +3408,11 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3571,6 +3677,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'UpdateStreamingDistributionResult' => array(
@@ -3712,6 +3823,11 @@ return array (
                 'ETag' => array(
                     'type' => 'string',
                     'location' => 'header',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),

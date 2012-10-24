@@ -22,9 +22,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}/{Key}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'AbortMultipartUploadOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Aborts a multipart upload.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html',
             'parameters' => array(
@@ -99,6 +98,10 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -258,9 +261,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'CreateBucketOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Creates a new bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html',
             'data' => array(
@@ -489,9 +491,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteBucketOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Deletes the bucket.    All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html',
             'parameters' => array(
@@ -506,9 +507,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteBucketCorsOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Deletes the cors configuration information set for the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEcors.html',
             'parameters' => array(
@@ -530,9 +530,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteBucketLifecycleOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Deletes the lifecycle configuration from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html',
             'parameters' => array(
@@ -554,9 +553,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteBucketPolicyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Deletes the policy from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html',
             'parameters' => array(
@@ -578,9 +576,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteBucketTaggingOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Deletes the tags from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html',
             'parameters' => array(
@@ -602,9 +599,8 @@ return array (
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'DeleteBucketWebsiteOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'This operation removes the website configuration from the bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html',
             'parameters' => array(
@@ -805,7 +801,6 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetBucketLocationOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Returns the region the bucket resides in.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html',
             'parameters' => array(
@@ -1259,7 +1254,7 @@ return array (
             ),
         ),
         'ListBuckets' => array(
-            'httpMethod' => 'Get',
+            'httpMethod' => 'GET',
             'uri' => '/',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListBucketsOutput',
@@ -1479,9 +1474,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketAclOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Sets the permissions on a bucket using access control lists (ACL).',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html',
             'data' => array(
@@ -1636,9 +1630,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketCorsOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Sets the cors configuration for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html',
             'data' => array(
@@ -1723,9 +1716,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketLifecycleOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Sets lifecycle configuration for your bucket. If a lifecycle configuration exists, it replaces it.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html',
             'data' => array(
@@ -1803,9 +1795,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketLoggingOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters. To set the logging status of a bucket, you must be the bucket owner.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html',
             'data' => array(
@@ -1822,7 +1813,7 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'LogginEnabled' => array(
+                'LoggingEnabled' => array(
                     'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
@@ -1903,9 +1894,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketNotificationOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Enables notifications of specified events for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html',
             'data' => array(
@@ -1958,9 +1948,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketPolicyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Replaces a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html',
             'parameters' => array(
@@ -1996,9 +1985,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketRequestPaymentOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Sets the request payment configuration for a bucket. By default, the bucket owner pays for downloads from the bucket. This configuration parameter enables the bucket owner (only) to specify that the person requesting the download will be charged for the download.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html',
             'data' => array(
@@ -2043,9 +2031,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketTaggingOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Sets the tags for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html',
             'data' => array(
@@ -2102,9 +2089,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketVersioningOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Sets the versioning state of an existing bucket. To set the versioning state, you must be the bucket owner.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html',
             'data' => array(
@@ -2163,9 +2149,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutBucketWebsiteOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'Set the website configuration for a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html',
             'data' => array(
@@ -2369,9 +2354,8 @@ return array (
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}/{Key}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'PutObjectAclOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'summary' => 'uses the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html',
             'data' => array(
@@ -2643,14 +2627,38 @@ return array (
         ),
     ),
     'models' => array(
-        'EmptyOutput' => array(
+        'AbortMultipartUploadOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
         ),
         'CompleteMultipartUploadOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'Location' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Bucket' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Key' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'ETag' => array(
+                    'description' => 'Entity tag for the uploaded object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured, this will contain the expiration date (expiry-date) and rule ID (rule-id). The value of rule-id is URL encoded.',
                     'type' => 'string',
@@ -2663,16 +2671,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
                 ),
-                'ETag' => array(
-                    'description' => 'Entity tag for the uploaded object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                ),
                 'VersionId' => array(
                     'description' => 'Version of the object.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -2705,6 +2713,22 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'CreateBucketOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'CreateMultipartUploadOutput' => array(
@@ -2733,6 +2757,77 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteBucketOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteBucketCorsOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteBucketLifecycleOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteBucketPolicyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteBucketTaggingOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'DeleteBucketWebsiteOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'DeleteObjectOutput' => array(
@@ -2750,6 +2845,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -2806,6 +2906,11 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -2872,6 +2977,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketCorsOutput' => array(
@@ -2932,6 +3042,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketLifecycleOutput' => array(
@@ -2973,6 +3088,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketLocationOutput' => array(
@@ -2994,7 +3114,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'LogginEnabled' => array(
+                'LoggingEnabled' => array(
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -3051,6 +3171,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketNotificationOutput' => array(
@@ -3071,6 +3196,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketPolicyOutput' => array(
@@ -3083,6 +3213,11 @@ return array (
                     'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketRequestPaymentOutput' => array(
@@ -3093,6 +3228,11 @@ return array (
                     'description' => 'Specifies who pays for the download and request fees.',
                     'type' => 'string',
                     'location' => 'xml',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3119,6 +3259,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetBucketVersioningOutput' => array(
@@ -3134,6 +3279,11 @@ return array (
                     'description' => 'Specifies whether MFA delete is enabled in the bucket versioning configuration. This element is only returned if the bucket has been configured with MFA delete. If the bucket has never been so configured, this element is not returned.',
                     'type' => 'string',
                     'location' => 'xml',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3160,6 +3310,11 @@ return array (
                             'type' => 'string',
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3241,6 +3396,11 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetObjectAclOutput' => array(
@@ -3306,6 +3466,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'GetObjectTorrentOutput' => array(
@@ -3317,21 +3482,21 @@ return array (
                     'instanceOf' => 'Guzzle\\Http\\EntityBody',
                     'location' => 'body',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'HeadBucketOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'StatusCode' => array(
-                    'description' => 'HTTP status code',
-                    'type' => 'numeric',
-                    'location' => 'statusCode',
-                ),
-                'Date' => array(
-                    'description' => 'Amazon S3 date value',
-                    'type' => 'string',
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
                     'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3339,16 +3504,6 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'StatusCode' => array(
-                    'description' => 'HTTP status code',
-                    'type' => 'numeric',
-                    'location' => 'statusCode',
-                ),
-                'Date' => array(
-                    'description' => 'Amazon S3 date value',
-                    'type' => 'string',
-                    'location' => 'header',
-                ),
                 'DeleteMarker' => array(
                     'description' => 'Specifies whether the object retrieved was (true) or was not (false) a Delete Marker. If false, this response header does not appear in the response.',
                     'type' => 'string',
@@ -3417,6 +3572,11 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'ListBucketsOutput' => array(
@@ -3453,6 +3613,11 @@ return array (
                             'type' => 'string',
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3549,6 +3714,11 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3700,6 +3870,11 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'ListObjectsOutput' => array(
@@ -3780,6 +3955,11 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3884,6 +4064,121 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketAclOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketCorsOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketLifecycleOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketLoggingOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketNotificationOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketPolicyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketRequestPaymentOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketTaggingOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketVersioningOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutBucketWebsiteOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'PutObjectOutput' => array(
@@ -3913,6 +4208,22 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
                 ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'PutObjectAclOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
             ),
         ),
         'UploadPartOutput' => array(
@@ -3929,6 +4240,11 @@ return array (
                     'description' => 'Entity tag for the uploaded object.',
                     'type' => 'string',
                     'location' => 'header',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),
@@ -3957,6 +4273,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
                 ),
             ),
         ),

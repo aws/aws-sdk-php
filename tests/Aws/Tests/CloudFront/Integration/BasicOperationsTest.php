@@ -108,6 +108,9 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals($result['Location'], (string) $command->getResponse()->getHeader('Location'));
         $this->assertEquals($result['ETag'], (string) $command->getResponse()->getHeader('ETag'));
 
+        // Ensure that the RequestId model value is being populated correctly
+        $this->assertEquals((string) $command->getResponse()->getHeader('x-amz-request-id'), $result['RequestId']);
+
         // Grant CF to read from the bucket
         $s3 = $this->getServiceBuilder()->get('s3');
         $s3->putObjectAcl(array(
@@ -206,7 +209,11 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'url'     => 'https://' . self::$distributionUrl . '/foo.txt',
             'expires' => time() + 10000
         ));
-        $c = new HttpClient();
-        $this->assertEquals('hello!', $c->get($url)->send()->getBody(true));
+        try {
+            $c = new HttpClient();
+            $this->assertEquals('hello!', $c->get($url)->send()->getBody(true));
+        } catch (\Exception $e) {
+            $this->fail($e->getMessage());
+        }
     }
 }
