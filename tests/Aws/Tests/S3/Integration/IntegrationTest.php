@@ -59,14 +59,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Creating the {$bucket} bucket");
         $client->createBucket(array(
             'Bucket' => $bucket
-        ))->execute();
+        ));
         // Create the bucket
         self::log("Waiting for the bucket to exist");
         $client->waitUntil('bucket_exists', $bucket);
 
         // Create the bucket
         self::log("Getting owner id and display name");
-        $result = $client->listBuckets()->execute();
+        $result = $client->listBuckets();
         self::$ownerId = $result['Owner']['ID'];
         self::$displayName = $result['Owner']['DisplayName'];
     }
@@ -82,7 +82,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Deleting the {$bucket} bucket");
         $client->deleteBucket(array(
             'Bucket' => $bucket
-        ))->execute();
+        ));
         self::log("Waiting for {$bucket} to not exist");
         $client->waitUntil('bucket_not_exists', $bucket);
     }
@@ -104,7 +104,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         $result = $this->client->headBucket(array(
             'Bucket' => $this->bucket
-        ))->execute();
+        ));
         $this->assertNotNull($result['RequestId']);
     }
 
@@ -113,7 +113,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testGetService()
     {
-        $result = $this->client->listBuckets()->execute();
+        $result = $this->client->listBuckets();
         $this->assertNotEmpty($result['Owner']);
         $this->assertNotEmpty($result['Owner']['ID']);
         $this->assertNotEmpty($result['Owner']['DisplayName']);
@@ -135,7 +135,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketCors()
     {
         $this->log(__METHOD__);
-        $this->client->getBucketCors(array('Bucket' => $this->bucket))->execute();
+        $this->client->getBucketCors(array('Bucket' => $this->bucket));
     }
 
     /**
@@ -145,7 +145,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketLifecycle()
     {
         $this->log(__METHOD__);
-        $this->client->getBucketLifecycle(array('Bucket' => $this->bucket))->execute();
+        $this->client->getBucketLifecycle(array('Bucket' => $this->bucket));
     }
 
     /**
@@ -154,7 +154,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketLocation()
     {
         $this->log(__METHOD__);
-        $result = $this->client->getBucketLocation(array('Bucket' => $this->bucket))->execute();
+        $result = $this->client->getBucketLocation(array('Bucket' => $this->bucket));
         $this->assertSame('', $result['Location']);
     }
 
@@ -166,17 +166,17 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->log(__METHOD__);
         $bucketName = self::getResourcePrefix() . '-s3eutest';
         try {
-            $this->client->headBucket(array('Bucket' => $bucketName))->execute();
+            $this->client->headBucket(array('Bucket' => $bucketName));
         } catch (\Exception $e) {
             $this->client->createBucket(array(
                 'Bucket'             => $bucketName,
                 'LocationConstraint' => 'EU'
-            ))->execute();
+            ));
         }
         $this->client->waitUntil('bucket_exists', $bucketName);
-        $result = $this->client->getBucketLocation(array('Bucket' => $bucketName))->execute();
+        $result = $this->client->getBucketLocation(array('Bucket' => $bucketName));
         $this->assertEquals('EU', $result['Location']);
-        $this->client->deleteBucket(array('Bucket' => $bucketName))->execute();
+        $this->client->deleteBucket(array('Bucket' => $bucketName));
     }
 
     /**
@@ -185,7 +185,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketLogging()
     {
         $this->log(__METHOD__);
-        $result = $this->client->getBucketLogging(array('Bucket' => $this->bucket))->execute();
+        $result = $this->client->getBucketLogging(array('Bucket' => $this->bucket));
         $this->assertNull($result['LoggingEnabled']);
     }
 
@@ -195,7 +195,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketNotification()
     {
         $this->log(__METHOD__);
-        $this->client->getBucketNotification(array('Bucket' => $this->bucket))->execute();
+        $this->client->getBucketNotification(array('Bucket' => $this->bucket));
     }
 
     /**
@@ -205,7 +205,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketPolicy()
     {
         $this->log(__METHOD__);
-        $this->client->getBucketPolicy(array('Bucket' => $this->bucket))->execute();
+        $this->client->getBucketPolicy(array('Bucket' => $this->bucket));
     }
 
     /**
@@ -214,7 +214,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketRequestPayment()
     {
         $this->log(__METHOD__);
-        $result = $this->client->getBucketRequestPayment(array('Bucket' => $this->bucket))->execute();
+        $result = $this->client->getBucketRequestPayment(array('Bucket' => $this->bucket));
         $this->assertEquals('BucketOwner', $result['Payer']);
     }
 
@@ -224,7 +224,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketVersioning()
     {
         $this->log(__METHOD__);
-        $this->client->getBucketVersioning(array('Bucket' => $this->bucket))->execute();
+        $this->client->getBucketVersioning(array('Bucket' => $this->bucket));
     }
 
     /**
@@ -234,7 +234,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketWebsite()
     {
         $this->log(__METHOD__);
-        $this->client->getBucketWebsite(array('Bucket' => $this->bucket))->execute();
+        $this->client->getBucketWebsite(array('Bucket' => $this->bucket));
     }
 
     /**
@@ -267,7 +267,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->headObject(array(
             'Bucket' => $this->bucket,
             'Key'    => self::TEST_KEY
-        ))->execute();
+        ));
         $this->assertEquals('application/foo', $result['ContentType']);
         $this->assertEquals('123', $result['Metadata']['test']);
         $this->assertEquals('@pples', $result['Metadata']['abc']);
@@ -277,7 +277,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->getObject(array(
             'Bucket' => $this->bucket,
             'Key'    => self::TEST_KEY
-        ))->execute();
+        ));
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
         $this->assertInstanceOf('Guzzle\Http\EntityBody', $result['Body']);
         $this->assertEquals('åbc 123', (string) $result['Body']);
@@ -302,7 +302,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPutObjectAcl()
     {
         self::log("Setting a custom object ACL");
-        $command = $this->client->putObjectAcl(array(
+        $command = $this->client->getCommand('PutObjectAcl', array(
             'Bucket' => $this->bucket,
             'Key'    => self::TEST_KEY,
             'ACP'    => $this->acp
@@ -323,7 +323,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $model = $this->client->getObjectAcl(array(
             'Bucket' => $this->bucket,
             'Key'    => self::TEST_KEY
-        ))->execute();
+        ));
 
         $data = array();
         foreach (Acp::fromArray($model->toArray()) as $grant) {
@@ -349,7 +349,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'Bucket' => $this->bucket,
             'Key'    => $key,
             'Body'   => 'hi'
-        ))->execute();
+        ));
         $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
     }
 
@@ -359,14 +359,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testCopiesObjects()
     {
         self::log("Copying the object");
-        $command = $this->client->copyObject(array(
+        $result = $this->client->copyObject(array(
             'Bucket'               => $this->bucket,
             'Key'                  => 'copy-key',
             'CopySource'           => $this->bucket . '/' . self::TEST_KEY,
             'MetadataDirective'    => 'COPY',
             'ServerSideEncryption' => 'AES256'
         ));
-        $result = $command->execute();
         $this->assertNotEmpty($result['ETag']);
         $this->assertEquals('AES256', $result['ServerSideEncryption']);
         $this->assertNotEmpty($result['LastModified']);
@@ -379,14 +378,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testMultipartUploads()
     {
         $this->log('Initiating an upload');
-        $command = $this->client->createMultipartUpload(array(
+        $result = $this->client->createMultipartUpload(array(
             'Bucket'   => $this->bucket,
             'Key'      => 'big',
             'Metadata' => array(
                 'foo' => 'bar'
             )
         ));
-        $result = $command->execute();
         $this->assertNotEmpty($result['UploadId']);
         $this->assertNotEmpty($result['Key']);
         $this->assertNotEmpty($result['Bucket']);
@@ -394,7 +392,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         sleep(1);
 
         $this->log('Getting uploads');
-        $command = $this->client->listMultipartUploads(array(
+        $command = $this->client->getCommand('ListMultipartUploads', array(
             'Bucket'   => $this->bucket,
             'Key'      => 'big',
             'UploadId' => $uploadId
@@ -405,7 +403,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertSame(false, $result['IsTruncated']);
 
         $this->log('Aborting the upload');
-        $command = $this->client->abortMultipartUpload(array(
+        $command = $this->client->getCommand('AbortMultipartUpload', array(
             'Bucket'   => $this->bucket,
             'Key'      => 'big',
             'UploadId' => $uploadId
@@ -443,7 +441,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testGetBucketTagging()
     {
         $this->log(__METHOD__);
-        $result = $this->client->getBucketTagging(array('Bucket' => $this->bucket))->execute();
+        $result = $this->client->getBucketTagging(array('Bucket' => $this->bucket));
         $this->assertNotEmpty($result['TagSet']);
     }
 
@@ -469,6 +467,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals("https://{$this->bucket}.s3.amazonaws.com/{$key}", $response->getLocation());
 
         // Delete the object
-        $this->client->deleteObject(array('Bucket' => $this->bucket, 'Key' => $key))->execute();
+        $this->client->deleteObject(array('Bucket' => $this->bucket, 'Key' => $key));
     }
 }

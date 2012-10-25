@@ -236,7 +236,7 @@ factory method to instantiate clients as needed.
             'ReadCapacityUnits'  => 10,
             'WriteCapacityUnits' => 5
         )
-    ))->getResult();
+    ));
 
     // Wait until the table is created and active
     $client->waitUntil('TableExists', $table);
@@ -257,17 +257,16 @@ implemented using the `__call()` magic method of the client and acts as
 a shortcut.
 
     // The shortcut via __call
-    $command = $client->createTable(array(/* ... */));
-    $result = $command->getResult();
+    $result = $client->createTable(array(/* ... */));
 
-    // The "real" syntax
+    // The command based syntax
     $command = $client->getCommand('CreateTable', array(/* ... */));
     $result = $command->getResult();
 
-Either way, the return value is a "Command" object, which encapsulates
-the request and response of the call to AWS. From the command object,
-you can call the `getResult()` method (as in the preceding example) or
-the `execute()` method to get the parsed result, or you can call the
+When using the command based syntax, the return value is a "Command" object,
+which encapsulates the request and response of the call to AWS. From the
+command object, you can call the `getResult()` method (as in the preceding
+example) or the `execute()` method to get the parsed result, or you can call the
 `getResponse()` method if you need to get information about the response
 (e.g., the status code or the raw response).
 
@@ -275,7 +274,7 @@ The command object can also be useful when you want to manipulate the
 request before execution or need to execute several commands in
 parallel. It also supports a chainable syntax.
 
-    $result = $client->listTables()
+    $result = $client->getCommand('ListTables')
         ->set('Limit', 5)
         ->set('ExclusiveStartTableName', 'some-table-name')
         ->getResult();
@@ -329,7 +328,7 @@ failed requests. Be sure to use `try` and `catch` blocks appropriately.
                 'HashKeyElement' => 'using-dynamodb-with-the-php-sdk'
             )),
             'ConsistentRead' => true
-        ))->getResult();
+        ));
 
         print_r($result['Item']);
     } catch (DynamoDbException $e) {

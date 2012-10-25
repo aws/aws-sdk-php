@@ -22,31 +22,31 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
-use Guzzle\Service\Command\OperationCommand as Op;
+use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Resource\MapResourceIteratorFactory;
 
 /**
  * Client to interact with Amazon Glacier
  *
- * @method Op abortMultipartUpload(array $args = array()) {@command glacier AbortMultipartUpload}
- * @method Op completeMultipartUpload(array $args = array()) {@command glacier CompleteMultipartUpload}
- * @method Op createVault(array $args = array()) {@command glacier CreateVault}
- * @method Op deleteArchive(array $args = array()) {@command glacier DeleteArchive}
- * @method Op deleteVault(array $args = array()) {@command glacier DeleteVault}
- * @method Op deleteVaultNotifications(array $args = array()) {@command glacier DeleteVaultNotifications}
- * @method Op describeJob(array $args = array()) {@command glacier DescribeJob}
- * @method Op describeVault(array $args = array()) {@command glacier DescribeVault}
- * @method Op getJobOutput(array $args = array()) {@command glacier GetJobOutput}
- * @method Op getVaultNotifications(array $args = array()) {@command glacier GetVaultNotifications}
- * @method Op initiateJob(array $args = array()) {@command glacier InitiateJob}
- * @method Op initiateMultipartUpload(array $args = array()) {@command glacier InitiateMultipartUpload}
- * @method Op listJobs(array $args = array()) {@command glacier ListJobs}
- * @method Op listMultipartUploads(array $args = array()) {@command glacier ListMultipartUploads}
- * @method Op listParts(array $args = array()) {@command glacier ListParts}
- * @method Op listVaults(array $args = array()) {@command glacier ListVaults}
- * @method Op setVaultNotifications(array $args = array()) {@command glacier SetVaultNotifications}
- * @method Op uploadArchive(array $args = array()) {@command glacier UploadArchive}
- * @method Op uploadMultipartPart(array $args = array()) {@command glacier UploadMultipartPart}
+ * @method Model abortMultipartUpload(array $args = array()) {@command glacier AbortMultipartUpload}
+ * @method Model completeMultipartUpload(array $args = array()) {@command glacier CompleteMultipartUpload}
+ * @method Model createVault(array $args = array()) {@command glacier CreateVault}
+ * @method Model deleteArchive(array $args = array()) {@command glacier DeleteArchive}
+ * @method Model deleteVault(array $args = array()) {@command glacier DeleteVault}
+ * @method Model deleteVaultNotifications(array $args = array()) {@command glacier DeleteVaultNotifications}
+ * @method Model describeJob(array $args = array()) {@command glacier DescribeJob}
+ * @method Model describeVault(array $args = array()) {@command glacier DescribeVault}
+ * @method Model getJobOutput(array $args = array()) {@command glacier GetJobOutput}
+ * @method Model getVaultNotifications(array $args = array()) {@command glacier GetVaultNotifications}
+ * @method Model initiateJob(array $args = array()) {@command glacier InitiateJob}
+ * @method Model initiateMultipartUpload(array $args = array()) {@command glacier InitiateMultipartUpload}
+ * @method Model listJobs(array $args = array()) {@command glacier ListJobs}
+ * @method Model listMultipartUploads(array $args = array()) {@command glacier ListMultipartUploads}
+ * @method Model listParts(array $args = array()) {@command glacier ListParts}
+ * @method Model listVaults(array $args = array()) {@command glacier ListVaults}
+ * @method Model setVaultNotifications(array $args = array()) {@command glacier SetVaultNotifications}
+ * @method Model uploadArchive(array $args = array()) {@command glacier UploadArchive}
+ * @method Model uploadMultipartPart(array $args = array()) {@command glacier UploadMultipartPart}
  */
 class GlacierClient extends AbstractClient
 {

@@ -38,11 +38,6 @@ use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 abstract class AbstractClient extends Client implements AwsClientInterface
 {
     /**
-     * {@inheritdoc}
-     */
-    protected $enableMagicMethods = true;
-
-    /**
      * @var CredentialsInterface AWS credentials
      */
     protected $credentials;

@@ -30,24 +30,24 @@ use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
-use Guzzle\Service\Command\OperationCommand as Op;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Client for interacting with Amazon DynamoDB
  *
- * @method Op batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
- * @method Op batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
- * @method Op createTable(array $args = array()) {@command dynamodb CreateTable}
- * @method Op deleteItem(array $args = array()) {@command dynamodb DeleteItem}
- * @method Op deleteTable(array $args = array()) {@command dynamodb DeleteTable}
- * @method Op describeTable(array $args = array()) {@command dynamodb DescribeTable}
- * @method Op getItem(array $args = array()) {@command dynamodb GetItem}
- * @method Op listTables(array $args = array()) {@command dynamodb ListTables}
- * @method Op putItem(array $args = array()) {@command dynamodb PutItem}
- * @method Op query(array $args = array()) {@command dynamodb Query}
- * @method Op scan(array $args = array()) {@command dynamodb Scan}
- * @method Op updateItem(array $arg = array()) {@command dynamodb UpdateItem}
- * @method Op updateTable(array $args = array()) {@command dynamodb UpdateTable}
+ * @method Model batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
+ * @method Model batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
+ * @method Model createTable(array $args = array()) {@command dynamodb CreateTable}
+ * @method Model deleteItem(array $args = array()) {@command dynamodb DeleteItem}
+ * @method Model deleteTable(array $args = array()) {@command dynamodb DeleteTable}
+ * @method Model describeTable(array $args = array()) {@command dynamodb DescribeTable}
+ * @method Model getItem(array $args = array()) {@command dynamodb GetItem}
+ * @method Model listTables(array $args = array()) {@command dynamodb ListTables}
+ * @method Model putItem(array $args = array()) {@command dynamodb PutItem}
+ * @method Model query(array $args = array()) {@command dynamodb Query}
+ * @method Model scan(array $args = array()) {@command dynamodb Scan}
+ * @method Model updateItem(array $arg = array()) {@command dynamodb UpdateItem}
+ * @method Model updateTable(array $args = array()) {@command dynamodb UpdateTable}
  */
 class DynamoDbClient extends AbstractClient
 {

@@ -31,59 +31,59 @@ use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
-use Guzzle\Service\Command\OperationCommand as Op;
+use Guzzle\Service\Resource\Model;
 
 /**
  * Client to interact with Amazon Simple Storage Service
  *
- * @method Op abortMultipartUpload(array $args = array()) {@command s3 AbortMultipartUpload}
- * @method Op completeMultipartUpload(array $args = array()) {@command s3 CompleteMultipartUpload}
- * @method Op copyObject(array $args = array()) {@command s3 CopyObject}
- * @method Op createBucket(array $args = array()) {@command s3 CreateBucket}
- * @method Op createMultipartUpload(array $args = array()) {@command s3 CreateMultipartUpload}
- * @method Op deleteBucket(array $args = array()) {@command s3 DeleteBucket}
- * @method Op deleteBucketCors(array $args = array()) {@command s3 DeleteBucketCors}
- * @method Op deleteBucketLifecycle(array $args = array()) {@command s3 DeleteBucketLifecycle}
- * @method Op deleteBucketPolicy(array $args = array()) {@command s3 DeleteBucketPolicy}
- * @method Op deleteBucketTagging(array $args = array()) {@command s3 DeleteBucketTagging}
- * @method Op deleteBucketWebsite(array $args = array()) {@command s3 DeleteBucketWebsite}
- * @method Op deleteObject(array $args = array()) {@command s3 DeleteObject}
- * @method Op deleteObjects(array $args = array()) {@command s3 DeleteObjects}
- * @method Op getBucketAcl(array $args = array()) {@command s3 GetBucketAcl}
- * @method Op getBucketCors(array $args = array()) {@command s3 GetBucketCors}
- * @method Op getBucketLifecycle(array $args = array()) {@command s3 GetBucketLifecycle}
- * @method Op getBucketLocation(array $args = array()) {@command s3 GetBucketLocation}
- * @method Op getBucketLogging(array $args = array()) {@command s3 GetBucketLogging}
- * @method Op getBucketNotification(array $args = array()) {@command s3 GetBucketNotification}
- * @method Op getBucketPolicy(array $args = array()) {@command s3 GetBucketPolicy}
- * @method Op getBucketRequestPayment(array $args = array()) {@command s3 GetBucketRequestPayment}
- * @method Op getBucketTagging(array $args = array()) {@command s3 GetBucketTagging}
- * @method Op getBucketVersioning(array $args = array()) {@command s3 GetBucketVersioning}
- * @method Op getBucketWebsite(array $args = array()) {@command s3 GetBucketWebsite}
- * @method Op getObject(array $args = array()) {@command s3 GetObject}
- * @method Op getObjectAcl(array $args = array()) {@command s3 GetObjectAcl}
- * @method Op getObjectTorrent(array $args = array()) {@command s3 GetObjectTorrent}
- * @method Op headBucket(array $args = array()) {@command s3 HeadBucket}
- * @method Op headObject(array $args = array()) {@command s3 HeadObject}
- * @method Op listBuckets(array $args = array()) {@command s3 ListBuckets}
- * @method Op listMultipartUploads(array $args = array()) {@command s3 ListMultipartUploads}
- * @method Op listObjectVersions(array $args = array()) {@command s3 ListObjectVersions}
- * @method Op listObjects(array $args = array()) {@command s3 ListObjects}
- * @method Op listParts(array $args = array()) {@command s3 ListParts}
- * @method Op putBucketAcl(array $args = array()) {@command s3 PutBucketAcl}
- * @method Op putBucketCors(array $args = array()) {@command s3 PutBucketCors}
- * @method Op putBucketLifecycle(array $args = array()) {@command s3 PutBucketLifecycle}
- * @method Op putBucketLogging(array $args = array()) {@command s3 PutBucketLogging}
- * @method Op putBucketNotification(array $args = array()) {@command s3 PutBucketNotification}
- * @method Op putBucketPolicy(array $args = array()) {@command s3 PutBucketPolicy}
- * @method Op putBucketRequestPayment(array $args = array()) {@command s3 PutBucketRequestPayment}
- * @method Op putBucketTagging(array $args = array()) {@command s3 PutBucketTagging}
- * @method Op putBucketVersioning(array $args = array()) {@command s3 PutBucketVersioning}
- * @method Op putBucketWebsite(array $args = array()) {@command s3 PutBucketWebsite}
- * @method Op putObject(array $args = array()) {@command s3 PutObject}
- * @method Op putObjectAcl(array $args = array()) {@command s3 PutObjectAcl}
- * @method Op uploadPart(array $args = array()) {@command s3 UploadPart}
- * @method Op uploadPartCopy(array $args = array()) {@command s3 UploadPartCopy}
+ * @method Model abortMultipartUpload(array $args = array()) {@command s3 AbortMultipartUpload}
+ * @method Model completeMultipartUpload(array $args = array()) {@command s3 CompleteMultipartUpload}
+ * @method Model copyObject(array $args = array()) {@command s3 CopyObject}
+ * @method Model createBucket(array $args = array()) {@command s3 CreateBucket}
+ * @method Model createMultipartUpload(array $args = array()) {@command s3 CreateMultipartUpload}
+ * @method Model deleteBucket(array $args = array()) {@command s3 DeleteBucket}
+ * @method Model deleteBucketCors(array $args = array()) {@command s3 DeleteBucketCors}
+ * @method Model deleteBucketLifecycle(array $args = array()) {@command s3 DeleteBucketLifecycle}
+ * @method Model deleteBucketPolicy(array $args = array()) {@command s3 DeleteBucketPolicy}
+ * @method Model deleteBucketTagging(array $args = array()) {@command s3 DeleteBucketTagging}
+ * @method Model deleteBucketWebsite(array $args = array()) {@command s3 DeleteBucketWebsite}
+ * @method Model deleteObject(array $args = array()) {@command s3 DeleteObject}
+ * @method Model deleteObjects(array $args = array()) {@command s3 DeleteObjects}
+ * @method Model getBucketAcl(array $args = array()) {@command s3 GetBucketAcl}
+ * @method Model getBucketCors(array $args = array()) {@command s3 GetBucketCors}
+ * @method Model getBucketLifecycle(array $args = array()) {@command s3 GetBucketLifecycle}
+ * @method Model getBucketLocation(array $args = array()) {@command s3 GetBucketLocation}
+ * @method Model getBucketLogging(array $args = array()) {@command s3 GetBucketLogging}
+ * @method Model getBucketNotification(array $args = array()) {@command s3 GetBucketNotification}
+ * @method Model getBucketPolicy(array $args = array()) {@command s3 GetBucketPolicy}
+ * @method Model getBucketRequestPayment(array $args = array()) {@command s3 GetBucketRequestPayment}
+ * @method Model getBucketTagging(array $args = array()) {@command s3 GetBucketTagging}
+ * @method Model getBucketVersioning(array $args = array()) {@command s3 GetBucketVersioning}
+ * @method Model getBucketWebsite(array $args = array()) {@command s3 GetBucketWebsite}
+ * @method Model getObject(array $args = array()) {@command s3 GetObject}
+ * @method Model getObjectAcl(array $args = array()) {@command s3 GetObjectAcl}
+ * @method Model getObjectTorrent(array $args = array()) {@command s3 GetObjectTorrent}
+ * @method Model headBucket(array $args = array()) {@command s3 HeadBucket}
+ * @method Model headObject(array $args = array()) {@command s3 HeadObject}
+ * @method Model listBuckets(array $args = array()) {@command s3 ListBuckets}
+ * @method Model listMultipartUploads(array $args = array()) {@command s3 ListMultipartUploads}
+ * @method Model listObjectVersions(array $args = array()) {@command s3 ListObjectVersions}
+ * @method Model listObjects(array $args = array()) {@command s3 ListObjects}
+ * @method Model listParts(array $args = array()) {@command s3 ListParts}
+ * @method Model putBucketAcl(array $args = array()) {@command s3 PutBucketAcl}
+ * @method Model putBucketCors(array $args = array()) {@command s3 PutBucketCors}
+ * @method Model putBucketLifecycle(array $args = array()) {@command s3 PutBucketLifecycle}
+ * @method Model putBucketLogging(array $args = array()) {@command s3 PutBucketLogging}
+ * @method Model putBucketNotification(array $args = array()) {@command s3 PutBucketNotification}
+ * @method Model putBucketPolicy(array $args = array()) {@command s3 PutBucketPolicy}
+ * @method Model putBucketRequestPayment(array $args = array()) {@command s3 PutBucketRequestPayment}
+ * @method Model putBucketTagging(array $args = array()) {@command s3 PutBucketTagging}
+ * @method Model putBucketVersioning(array $args = array()) {@command s3 PutBucketVersioning}
+ * @method Model putBucketWebsite(array $args = array()) {@command s3 PutBucketWebsite}
+ * @method Model putObject(array $args = array()) {@command s3 PutObject}
+ * @method Model putObjectAcl(array $args = array()) {@command s3 PutObjectAcl}
+ * @method Model uploadPart(array $args = array()) {@command s3 UploadPart}
+ * @method Model uploadPartCopy(array $args = array()) {@command s3 UploadPartCopy}
  */
 class S3Client extends AbstractClient
 {
