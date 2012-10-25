@@ -43,7 +43,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         /** @var $glacier GlacierClient */
         $glacier = self::getServiceBuilder()->get('glacier');
-        $glacier->createVault(array('vaultName' => self::TEST_VAULT))->execute();
+        $glacier->createVault(array('vaultName' => self::TEST_VAULT));
     }
 
     public function setUp()
@@ -67,7 +67,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Create vaults and verify existence
         foreach ($vaults as $vault) {
-            $this->client->createVault(array('vaultName' => $vault))->execute();
+            $this->client->createVault(array('vaultName' => $vault));
             $this->client->waitUntil('VaultExists', $vault, array('max_attempts' => 3));
         }
         $listVaults = $this->client->getIterator('ListVaults', array('limit' => '5'));
@@ -76,7 +76,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Delete vaults and verify deletion
         foreach ($vaults as $vault) {
-            $this->client->deleteVault(array('vaultName' => $vault))->execute();
+            $this->client->deleteVault(array('vaultName' => $vault));
             $this->client->waitUntil('VaultNotExists', $vault);
         }
         $listVaults = $this->client->getIterator('ListVaults');
@@ -102,7 +102,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->client->deleteArchive(array(
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
-        ))->execute();
+        ));
 
         sleep(3);
 
@@ -122,7 +122,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'checksum'        => $part->getChecksum(),
                 'ContentSHA256'   => $part->getContentHash(),
                 'body'            => new ReadLimitEntityBody($content, $part->getSize(), $part->getOffset()),
-            ))->execute();
+            ));
             sleep(3);
         }
         $archiveId = $this->client->getCommand('CompleteMultipartUpload', array(
@@ -137,7 +137,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->client->deleteArchive(array(
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
-        ))->execute();;
+        ));
     }
 
     public function testMultipartUploadAbstractions()

@@ -252,9 +252,9 @@ who have used the first AWS SDK. One difference is that **every**
 service operation (or "command") now accepts *only a single array* as an
 argument.
 
-The `createTable()` method doesn't actually exist on the client. It is
-implemented using the `__call()` magic method of the client and acts as
-a shortcut.
+The `createTable()` method doesn't actually exist on the client. It is implemented using the
+``__call()`` magic method of the client and acts as a shortcut to instantiate a command,
+execute the command, and retrieve the result.
 
     // The shortcut via __call
     $result = $client->createTable(array(/* ... */));

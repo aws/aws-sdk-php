@@ -40,9 +40,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
         // Create the test bucket
         self::log('Creating bucket for testing distributions: ' . self::$bucketName);
-        $s3->createBucket(array(
-            'Bucket' => self::$bucketName)
-        )->execute();
+        $s3->createBucket(array('Bucket' => self::$bucketName));
         $s3->waitUntil('bucket_exists', self::$bucketName);
 
         // Add the test object
@@ -52,7 +50,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'Key'    => 'foo.txt',
             'ACL'    => 'public-read',
             'Body'   => 'hello!'
-        ))->execute();
+        ));
         $s3->waitUntil('object_exists', self::$bucketName . '/foo.txt');
     }
 
@@ -63,21 +61,19 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $s3->deleteObject(array(
             'Bucket' => self::$bucketName,
             'Key'    => 'foo.txt'
-        ))->execute();
+        ));
         sleep(1);
         self::log('Deleting test bucket');
-        $s3->deleteBucket(array(
-            'Bucket' => self::$bucketName
-        ))->execute();
+        $s3->deleteBucket(array('Bucket' => self::$bucketName));
 
         $cf = self::getServiceBuilder()->get('cloudfront');
         if (self::$originId) {
             self::log('Deleting origin access identity');
-            $cf->deleteCloudFrontOriginAccessIdentity(array('Id' => self::$originId))->execute();
+            $cf->deleteCloudFrontOriginAccessIdentity(array('Id' => self::$originId));
         }
         if (self::$distributionId) {
             self::log('Deleting distribution');
-            $cf->deleteDistribution(array('Id' => self::$distributionId))->execute();
+            $cf->deleteDistribution(array('Id' => self::$distributionId));
         }
     }
 
@@ -88,7 +84,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
     public function testCreatesOrigins()
     {
-        $command = $this->client->createCloudFrontOriginAccessIdentity(array(
+        $command = $this->client->getCommand('CreateCloudFrontOriginAccessIdentity', array(
             'CallerReference' => 'foo',
             'Comment'         => 'Hello!'
         ));
@@ -117,7 +113,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'Bucket'    => self::$bucketName,
             'Key'       => 'foo.txt',
             'GrantRead' => 'id="' . $result['S3CanonicalUserId'] . '"'
-        ))->execute();
+        ));
     }
 
     /**
@@ -168,7 +164,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
                     )
                 )
             )
-        ))->execute();
+        ));
 
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
         $result = $result->toArray();
@@ -183,7 +179,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals(self::$bucketName . '.s3.amazonaws.com', $result['DistributionConfig']['Origins']['Items'][0]['DomainName']);
         $id = $result['Id'];
 
-        $result = $this->client->listDistributions()->execute();
+        $result = $this->client->listDistributions();
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
         $result = $result->toArray();
         $this->assertGreaterThan(0, $result['Quantity']);

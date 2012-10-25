@@ -75,9 +75,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $sh->createSessionsTable(25, 25);
 
         self::log("Ensuring the table {$this->table} was created");
-        $result = $this->client->describeTable(array(
-            'TableName' => $this->table
-        ))->execute();
+        $result = $this->client->describeTable(array('TableName' => $this->table));
         $this->assertEquals($this->table, $result['Table']['TableName']);
     }
 
@@ -270,13 +268,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("# Attempting to delete {$table}");
 
         try {
-            $client->describeTable(array('TableName' => $table))->execute();
+            $client->describeTable(array('TableName' => $table));
             // Wait until the table is active
             self::log('Table exists. Waiting until the status is ACTIVE');
             $client->waitUntil('table_exists', $table);
             // Delete the table to clear out its contents
             self::log('Deleting the table');
-            $client->deleteTable(array('TableName' => $table))->execute();
+            $client->deleteTable(array('TableName' => $table));
             $client->waitUntil('table_not_exists', $table);
         } catch (ResourceNotFoundException $e) {
             // The table does not exist so we are good

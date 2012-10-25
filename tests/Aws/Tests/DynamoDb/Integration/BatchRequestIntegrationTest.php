@@ -36,7 +36,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
         $table = self::getResourcePrefix() . '-php-test-batch-write';
 
         try {
-            $result = $client->describeTable(array('TableName' => $table))->execute();
+            $result = $client->describeTable(array('TableName' => $table));
             self::log('Table exists. Waiting until the status is ACTIVE');
             // Wait until the table is active
             $client->waitUntil('table_exists', $table, array('status' => 'ACTIVE'));
@@ -54,7 +54,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
                     'ReadCapacityUnits'  => 20,
                     'WriteCapacityUnits' => 20
                 )
-            ))->execute();
+            ));
 
             $client->waitUntil('table_exists');
             self::log("Table created.");

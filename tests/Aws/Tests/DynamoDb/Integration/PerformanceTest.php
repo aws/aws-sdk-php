@@ -58,7 +58,7 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                     'ReadCapacityUnits'  => self::READ_CAPACITY,
                     'WriteCapacityUnits' => 5
                 )
-            ))->execute();
+            ));
         }
 
         // Wait until the table is created and active
@@ -75,7 +75,7 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                     'attr1' => 42,
                     'attr2' => array('a', 'b', 'c', 'd')
                 ))
-            ))->execute();
+            ));
         } catch (DynamoDbException $e) {
             echo $e->getResponse()->getRequest();
             echo $e->getResponse();
