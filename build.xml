@@ -10,7 +10,7 @@
     <fileset id="src_files" dir="${project.basedir}/src" includes="**/*.php" />
 
     <target name="test" description="Run unit tests" depends="test-init">
-        <exec passthru="true" command="phpunit" />
+        <exec passthru="true" command="vendor/bin/phpunit" />
     </target>
 
     <target name="integration" description="Run integration tests">

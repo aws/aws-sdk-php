@@ -28,7 +28,7 @@ if (get_cfg_var('aws_phar')) {
 }
 
 // Include the composer autoloader
-$loader = require_once dirname(__DIR__) . '/vendor/autoload.php';
+$loader = require dirname(__DIR__) . '/vendor/autoload.php';
 $loader->add('Aws\\Test', __DIR__);
 
 // Register services with the GuzzleTestCase

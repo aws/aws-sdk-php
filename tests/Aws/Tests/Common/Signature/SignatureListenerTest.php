@@ -29,6 +29,7 @@ class SignatureListenerTest extends \Guzzle\Tests\GuzzleTestCase
     public function testSignsRequestsProperly()
     {
         $request = new Request('GET', 'http://www.example.com');
+        $request->getEventDispatcher();
         $credentials = new Credentials('a', 'b');
         $signature = $this->getMock('Aws\Common\Signature\SignatureV4');
 

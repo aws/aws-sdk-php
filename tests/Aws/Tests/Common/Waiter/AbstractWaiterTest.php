@@ -39,7 +39,7 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     public function testPerformsWait()
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractWaiter')
-            ->setMethods('doWait')
+            ->setMethods(array('doWait'))
             ->getMockForAbstractClass();
 
         $count = 0;
@@ -55,7 +55,7 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     public function testPerformsWaitWithInterval()
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractWaiter')
-            ->setMethods('doWait')
+            ->setMethods(array('doWait'))
             ->getMockForAbstractClass();
 
         $waiter->setInterval(0.001);
@@ -77,7 +77,7 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     public function testPerformsWaitUntilMaxAttempts()
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractWaiter')
-            ->setMethods('doWait')
+            ->setMethods(array('doWait'))
             ->getMockForAbstractClass();
 
         $waiter->setMaxAttempts(1);
@@ -96,7 +96,7 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     public function testPerformsWaitUntilMaxFailures()
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractWaiter')
-            ->setMethods('doWait')
+            ->setMethods(array('doWait'))
             ->getMockForAbstractClass();
 
         $waiter->setMaxFailures(2);
