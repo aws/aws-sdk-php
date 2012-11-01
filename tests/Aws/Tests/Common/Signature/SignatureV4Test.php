@@ -162,8 +162,8 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Common\Signature\AbstractEndpointSignature::setServiceName
-     * @covers Aws\Common\Signature\AbstractEndpointSignature::setRegionName
+     * @covers Aws\Common\Signature\SignatureV4::setServiceName
+     * @covers Aws\Common\Signature\SignatureV4::setRegionName
      */
     public function testCanExplicitlySetServiceAndRegionName()
     {

@@ -27,12 +27,22 @@ use Guzzle\Http\Url;
  * Signature Version 4
  * @link http://docs.amazonwebservices.com/general/latest/gr/signature-version-4.html
  */
-class SignatureV4 extends AbstractEndpointSignature
+class SignatureV4 extends AbstractSignature implements EndpointSignatureInterface
 {
     /**
      * @var string Cache of the default empty entity-body payload
      */
     const DEFAULT_PAYLOAD = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+
+    /**
+     * @var string Explicitly set service name
+     */
+    protected $serviceName;
+
+    /**
+     * @var string Explicitly set region name
+     */
+    protected $regionName;
 
     /**
      * @var int Maximum number of hashes to cache
@@ -48,6 +58,34 @@ class SignatureV4 extends AbstractEndpointSignature
      * @var int Size of the hash cache
      */
     protected $cacheSize = 0;
+
+    /**
+     * Set the service name instead of inferring it from a request URL
+     *
+     * @param string $service Name of the service used when signing
+     *
+     * @return self
+     */
+    public function setServiceName($service)
+    {
+        $this->serviceName = $service;
+
+        return $this;
+    }
+
+    /**
+     * Set the region name instead of inferring it from a request URL
+     *
+     * @param string $region Name of the region used when signing
+     *
+     * @return self
+     */
+    public function setRegionName($region)
+    {
+        $this->regionName = $region;
+
+        return $this;
+    }
 
     /**
      * Set the maximum number of computed hashes to cache
