@@ -19,7 +19,7 @@ permissions and limitations under the License.
 
 <https://github.com/guzzle/guzzle>
 
-Copyright (c) 2011 Michael Dowling, https://github.com/mtdowling <mtdowling@gmail.com>
+Copyright (c) 2011 Michael Dowling, https://github.com/mtdowling
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
