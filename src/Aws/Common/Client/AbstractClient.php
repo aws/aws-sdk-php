@@ -71,6 +71,11 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      */
     public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
     {
+        // Use the system's CACert if running as a phar
+        if (defined('AWS_PHAR')) {
+            $config->set(self::SSL_CERT_AUTHORITY, 'system');
+        }
+
         // Bootstrap with Guzzle
         parent::__construct($config->get(Options::BASE_URL), $config);
         $this->credentials = $credentials;

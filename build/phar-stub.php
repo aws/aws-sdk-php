@@ -16,6 +16,8 @@
 
 Phar::mapPhar('aws.phar');
 
+define('AWS_PHAR', true);
+
 require_once 'phar://aws.phar/vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new Symfony\Component\ClassLoader\UniversalClassLoader();
