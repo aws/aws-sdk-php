@@ -204,7 +204,7 @@ class Item implements \ArrayAccess, \IteratorAggregate, ToArrayInterface, \Count
     }
 
     /**
-     * {@inhertidoc}
+     * {@inheritdoc}
      */
     public function getIterator()
     {

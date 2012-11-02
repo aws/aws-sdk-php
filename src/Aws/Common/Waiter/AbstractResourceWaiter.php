@@ -80,6 +80,6 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
             throw new RuntimeException('No resource ID has been specified on the waiter');
         }
 
-        return parent::wait();
+        parent::wait();
     }
 }

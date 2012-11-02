@@ -502,7 +502,7 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.',
+                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of strictly consistent reads.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -2137,7 +2137,7 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.',
+                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of strictly consistent reads.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),

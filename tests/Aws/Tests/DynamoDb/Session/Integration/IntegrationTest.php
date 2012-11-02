@@ -191,7 +191,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->simulateSessionStart($shPessimistic2);
         $this->simulateSessionCommit($shPessimistic1);
         $shPessimisticTime = microtime(true) - $shPessimisticTime;
-        $this->assertGreaterThan(5, $shPessimisticTime, 'Pessimistic locking strategy operated faster than expected. Locking may not be occuring.');
+        $this->assertGreaterThan(5, $shPessimisticTime, 'Pessimistic locking strategy operated faster than expected. Locking may not be occurring.');
 
         // Clean up
         $this->simulateSessionStart($shNull1);
