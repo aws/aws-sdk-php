@@ -11,23 +11,23 @@ The AWS SDK for PHP 2 requires PHP 5.3.2.
 
 ## Table of Contents
 
-> 1. **[New Features](#new-features)**
-> 2. **[Before Using the SDK](#before-using-the-sdk)**
->     * [Signing Up for AWS](#signing-up-for-aws)
->         * [To sign up for AWS](#to-sign-up-for-aws)
->         * [To view your AWS credentials](#to-view-your-aws-credentials)
->     * [Getting your AWS credentials](#getting-your-aws-credentials)
->     * [Minimum requirements](#minimum-requirements)
-> 3. **[Installing the SDK](#installing-the-sdk)**
->     * [Installing via Composer](#installing-via-composer)
->     * [Installing via Phar](#installing-via-phar)
->     * [Installing via PEAR](#installing-via-pear)
-> 4. **[Using the SDK](#using-the-sdk)**
->     * [Quick Start](#quick-start)
->     * [Using the Service Builder](#using-the-service-builder)
->     * [Configuration](#configuration)
->     * [Using a Custom Configuration File](#using-a-custom-configuration-file)
-> 5. **[Additional Information](#additional-information)**
+1. **[New Features](#new-features)**
+2. **[Before Using the SDK](#before-using-the-sdk)**
+    * [Signing Up for AWS](#signing-up-for-aws)
+        * [To sign up for AWS](#to-sign-up-for-aws)
+        * [To view your AWS credentials](#to-view-your-aws-credentials)
+    * [Getting your AWS credentials](#getting-your-aws-credentials)
+    * [Minimum requirements](#minimum-requirements)
+3. **[Installing the SDK](#installing-the-sdk)**
+    * [Installing via Composer](#installing-via-composer)
+    * [Installing via Phar](#installing-via-phar)
+    * [Installing via PEAR](#installing-via-pear)
+4. **[Using the SDK](#using-the-sdk)**
+    * [Quick Start](#quick-start)
+    * [Using the Service Builder](#using-the-service-builder)
+    * [Configuration](#configuration)
+    * [Using a Custom Configuration File](#using-a-custom-configuration-file)
+5. **[Additional Information](#additional-information)**
 
 ## New Features
 
@@ -67,7 +67,6 @@ You are charged only for the services you use.
 #### To sign up for AWS
 
 1. Go to http://aws.amazon.com and click **Sign Up Now**.
-
 1. Follow the on-screen instructions.
 
 AWS sends you a confirmation email after the sign-up process is complete. At any time, you can view your current account
@@ -77,13 +76,9 @@ charges and account activity and download usage reports.
 #### To view your AWS credentials
 
 1. Go to http://aws.amazon.com/.
-
 1. Click **My Account/Console**, and then click **Security Credentials**.
-
 1. Under **Your Account**, click **Security Credentials**.
-
 1. In the spaces provided, type your user name and password, and then click **Sign in using our secure server**.
-
 1. Under **Access Credentials**, on the **Access Keys** tab, your access key ID is displayed. To view your secret key,
    under **Secret Access Key**, click **Show**.
 
@@ -205,43 +200,45 @@ Once the SDK has been installed via PEAR, you can load the phar into your projec
 You can quickly get up and running by using a web service client's
 factory method to instantiate clients as needed.
 
-    <?php
+```php
+<?php
 
-    // Include the SDK along with your other project dependencies
-    // using the Composer autoloader
-    require 'vendor/autoload.php';
+// Include the SDK along with your other project dependencies
+// using the Composer autoloader
+require 'vendor/autoload.php';
 
-    use Aws\DynamoDb\DynamoDbClient;
-    use Aws\Common\Enum\Region;
+use Aws\DynamoDb\DynamoDbClient;
+use Aws\Common\Enum\Region;
 
-    // Instantiate the DynamoDB client with your AWS credentials
-    $client = DynamoDbClient::factory(array(
-        'key'    => 'your-aws-access-key-id',
-        'secret' => 'your-aws-secret-access-key',
-        'region' => Region::US_WEST_2
-    ));
+// Instantiate the DynamoDB client with your AWS credentials
+$client = DynamoDbClient::factory(array(
+    'key'    => 'your-aws-access-key-id',
+    'secret' => 'your-aws-secret-access-key',
+    'region' => Region::US_WEST_2
+));
 
-    $table = 'posts';
+$table = 'posts';
 
-    // Create a "posts" table
-    $result = $client->createTable(array(
-        'TableName' => $table,
-        'KeySchema' => array(
-            'HashKeyElement' => array(
-                'AttributeName' => 'slug',
-                'AttributeType' => 'S'
-            )
-        ),
-        'ProvisionedThroughput' => array(
-            'ReadCapacityUnits'  => 10,
-            'WriteCapacityUnits' => 5
+// Create a "posts" table
+$result = $client->createTable(array(
+    'TableName' => $table,
+    'KeySchema' => array(
+        'HashKeyElement' => array(
+            'AttributeName' => 'slug',
+            'AttributeType' => 'S'
         )
-    ));
+    ),
+    'ProvisionedThroughput' => array(
+        'ReadCapacityUnits'  => 10,
+        'WriteCapacityUnits' => 5
+    )
+));
 
-    // Wait until the table is created and active
-    $client->waitUntil('TableExists', $table);
+// Wait until the table is created and active
+$client->waitUntil('TableExists', $table);
 
-    echo "The {$table} table has been created.\n";
+echo "The {$table} table has been created.\n";
+```
 
 **Note:** Instantiating a client without providing credentials causes
 the client to attempt to retrieve [IAM Instance Profile
@@ -256,12 +253,16 @@ The `createTable()` method doesn't actually exist on the client. It is implement
 ``__call()`` magic method of the client and acts as a shortcut to instantiate a command,
 execute the command, and retrieve the result.
 
-    // The shortcut via __call
-    $result = $client->createTable(array(/* ... */));
+```php
+<?php
 
-    // The command based syntax
-    $command = $client->getCommand('CreateTable', array(/* ... */));
-    $result = $command->getResult();
+// The shortcut via __call
+$result = $client->createTable(array(/* ... */));
+
+// The command based syntax
+$command = $client->getCommand('CreateTable', array(/* ... */));
+$result = $command->getResult();
+```
 
 When using the command based syntax, the return value is a "Command" object,
 which encapsulates the request and response of the call to AWS. From the
@@ -274,10 +275,14 @@ The command object can also be useful when you want to manipulate the
 request before execution or need to execute several commands in
 parallel. It also supports a chainable syntax.
 
-    $result = $client->getCommand('ListTables')
-        ->set('Limit', 5)
-        ->set('ExclusiveStartTableName', 'some-table-name')
-        ->getResult();
+```php
+<?php
+
+$result = $client->getCommand('ListTables')
+    ->set('Limit', 5)
+    ->set('ExclusiveStartTableName', 'some-table-name')
+    ->getResult();
+```
 
 ### Using the Service Builder
 
@@ -301,39 +306,41 @@ service builder to use the same credentials for every client.
 **Note:** Unlike the prior SDK, service clients throw exceptions for
 failed requests. Be sure to use `try` and `catch` blocks appropriately.
 
-    <?php
+```php
+<?php
 
-    // Include the SDK using the phar
-    require 'aws.phar';
+// Include the SDK using the phar
+require 'aws.phar';
 
-    use Aws\Common\Aws;
-    use Aws\Common\Enum\Region;
-    use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\Common\Aws;
+use Aws\Common\Enum\Region;
+use Aws\DynamoDb\Exception\DynamoDbException;
 
-    // Create a service building using shared credentials for each service
-    $aws = Aws::factory(array(
-        'key'    => 'your-aws-access-key-id',
-        'secret' => 'your-aws-secret-access-key',
-        'region' => Region::US_WEST_2
+// Create a service building using shared credentials for each service
+$aws = Aws::factory(array(
+    'key'    => 'your-aws-access-key-id',
+    'secret' => 'your-aws-secret-access-key',
+    'region' => Region::US_WEST_2
+));
+
+// Retrieve the DynamoDB client by its short name from the service builder
+$client = $aws->get('dynamodb');
+
+// Get an item from the "posts"
+try {
+    $result = $client->getItem(array(
+        'TableName' => 'posts',
+        'Key' => $client->formatAttributes(array(
+            'HashKeyElement' => 'using-dynamodb-with-the-php-sdk'
+        )),
+        'ConsistentRead' => true
     ));
 
-    // Retrieve the DynamoDB client by its short name from the service builder
-    $client = $aws->get('dynamodb');
-
-    // Get an item from the "posts"
-    try {
-        $result = $client->getItem(array(
-            'TableName' => 'posts',
-            'Key' => $client->formatAttributes(array(
-                'HashKeyElement' => 'using-dynamodb-with-the-php-sdk'
-            )),
-            'ConsistentRead' => true
-        ));
-
-        print_r($result['Item']);
-    } catch (DynamoDbException $e) {
-        echo 'The item could not be retrieved.';
-    }
+    print_r($result['Item']);
+} catch (DynamoDbException $e) {
+    echo 'The item could not be retrieved.';
+}
+```
 
 Passing an associative array of parameters to the first or second
 argument of `Aws\Common\Aws::factory()` will treat the parameters as
@@ -350,22 +357,24 @@ default configuration.
 
 Excerpt from `src/Aws/Common/Resources/aws-config.php`:
 
-    <?php
-    return array(
-        'services' => array(
-            'default_settings' => array(
-                'params' => array()
-            ),
-            'dynamodb' => array(
-                'extends' => 'default_settings',
-                'class'   => 'Aws\DynamoDb\DynamoDbClient'
-            ),
-            's3' => array(
-                'extends' => 'default_settings',
-                'class'   => 'Aws\S3\S3Client'
-            )
+```php
+<?php
+return array(
+    'services' => array(
+        'default_settings' => array(
+            'params' => array()
+        ),
+        'dynamodb' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\DynamoDb\DynamoDbClient'
+        ),
+        's3' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\S3\S3Client'
         )
-    );
+    )
+);
+```
 
 The `aws-config.php` file provides default configuration settings for
 associating client classes with service names. This file tells the
@@ -392,73 +401,80 @@ defined in the default configuration file extends from
 that extends the default configuration file and add credentials to the
 `default_settings` service:
 
-    <?php
-    return array(
-        'includes' => array('_aws'),
-        'services' => array(
-            'default_settings' => array(
-                'params' => array(
-                    'key'    => 'your-aws-access-key-id',
-                    'secret' => 'your-aws-secret-access-key',
-                    'region' => 'us-west-2'
-                )
+```php
+<?php
+return array(
+    'includes' => array('_aws'),
+    'services' => array(
+        'default_settings' => array(
+            'params' => array(
+                'key'    => 'your-aws-access-key-id',
+                'secret' => 'your-aws-secret-access-key',
+                'region' => 'us-west-2'
             )
         )
-    );
+    )
+);
+```
 
 You can use your custom configuration file with the `Aws\Common\Aws`
 class by passing the full path to the configuration file in the first
 argument of the `factory()` method:
 
-    <?php
+```php
+<?php
 
-    require 'aws.phar';
+require 'aws.phar';
+use Aws\Common\Aws;
 
-    use Aws\Common\Aws;
-
-    $aws = Aws::factory('/path/to/custom/config.php');
+$aws = Aws::factory('/path/to/custom/config.php');
+```
 
 You can create custom named services if you need to use multiple
 accounts with the same service:
 
-    <?php
-    return array(
-        'includes' => array('_aws'),
-        'services' => array(
-            'foo.dynamodb' => array(
-                'extends' => 'dynamodb',
-                'params'  => array(
-                    'key'    => 'your-aws-access-key-id-for-foo',
-                    'secret' => 'your-aws-secret-access-key-for-foo',
-                    'region' => 'us-west-2'
-                )
-            ),
-            'bar.dynamodb' => array(
-                'extends' => 'dynamodb',
-                'params'  => array(
-                    'key'    => 'your-aws-access-key-id-for-bar',
-                    'secret' => 'your-aws-secret-access-key-for-bar',
-                    'region' => 'us-west-2'
-                )
+```php
+<?php
+return array(
+    'includes' => array('_aws'),
+    'services' => array(
+        'foo.dynamodb' => array(
+            'extends' => 'dynamodb',
+            'params'  => array(
+                'key'    => 'your-aws-access-key-id-for-foo',
+                'secret' => 'your-aws-secret-access-key-for-foo',
+                'region' => 'us-west-2'
+            )
+        ),
+        'bar.dynamodb' => array(
+            'extends' => 'dynamodb',
+            'params'  => array(
+                'key'    => 'your-aws-access-key-id-for-bar',
+                'secret' => 'your-aws-secret-access-key-for-bar',
+                'region' => 'us-west-2'
             )
         )
-    );
+    )
+);
+```
 
 If you prefer JSON syntax, you can define your configuration in JSON
 format instead of PHP.
 
-    {
-        "includes": ["_aws"],
-        "services": {
-            "default_settings": {
-                "params": {
-                    "key": "your-aws-access-key-id",
-                    "secret": "your-aws-secret-access-key",
-                    "region": "us-west-2"
-                }
+```javascript
+{
+    "includes": ["_aws"],
+    "services": {
+        "default_settings": {
+            "params": {
+                "key": "your-aws-access-key-id",
+                "secret": "your-aws-secret-access-key",
+                "region": "us-west-2"
             }
         }
     }
+}
+```
 
 ## Additional Information
 
