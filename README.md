@@ -481,7 +481,7 @@ format instead of PHP.
 ## Additional Information
 
 * AWS SDK for PHP: <http://aws.amazon.com/sdkforphp2>
-* API documentation: <http://docs.amazonwebservices.com/aws-sdk-for-php-2/latest/>
+* API documentation: <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/>
 * PHP discussion forum: <https://forums.aws.amazon.com/forum.jspa?forumID=80>
 * Packagist: <https://packagist.org/packages/aws/aws-sdk-php>
 * License: <http://aws.amazon.com/apache2.0/>
