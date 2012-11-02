@@ -22,7 +22,7 @@ if (!file_exists(dirname(__DIR__) . '/composer.lock')) {
         . "See http://getcomposer.org for help with installing composer\n");
 }
 
-// Inclue the phar files if testing against the phars
+// Include the phar files if testing against the phars
 if (get_cfg_var('aws_phar')) {
     require dirname(__DIR__) . '/build/' . get_cfg_var('aws_phar');
 }

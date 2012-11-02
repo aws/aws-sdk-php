@@ -33,7 +33,7 @@ class DeleteObjectsTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $transfer->transfer(array('foo'));
     }
 
-    public function testIngoresEmptyBatches()
+    public function testIgnoresEmptyBatches()
     {
         list($client, $transfer) = $this->getBatch();
         $transfer->transfer(array());
