@@ -135,7 +135,7 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
     ```json
         {
             "require": {
-                "aws/aws-sdk-php": "*"
+                "aws/aws-sdk-php": "2.*"
             }
         }
     ```
