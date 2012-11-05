@@ -35,7 +35,11 @@ class AcpListener implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * An event handler for constructing ACP definitions.
+     *
+     * @param  Event  $event The event to respond to.
+     *
+     * @throws InvalidArgumentException
      */
     public function onCommandBeforePrepare(Event $event)
     {

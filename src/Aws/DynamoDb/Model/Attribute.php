@@ -154,7 +154,11 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve the formatted data.
+     *
+     * @param  string $format The format to apply to the data.
+     *
+     * @return string         The formatted version of the data.
      */
     public function getFormatted($format = Attribute::FORMAT_PUT)
     {
@@ -174,7 +178,9 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve the attribute type.
+     *
+     * @return string The attribute type.
      */
     public function getType()
     {
@@ -182,7 +188,9 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve the attribute value.
+     *
+     * @return string The attribute value.
      */
     public function getValue()
     {
@@ -190,7 +198,11 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Set the attribute type.
+     *
+     * @param  string $type The attribute type to set.
+     *
+     * @return string       The attribute type.
      */
     public function setType($type)
     {
@@ -204,7 +216,11 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Set the attribute value.
+     *
+     * @param  string $type The attribute value to set.
+     *
+     * @return string       The attribute value.
      */
     public function setValue($value)
     {
