@@ -56,7 +56,7 @@ class GlacierClient extends AbstractClient
     protected $directory = __DIR__;
 
     /**
-     * Factory method to create a new Amazon DynamoDB client using an array of configuration options:
+     * Factory method to create a new Amazon Glacier client using an array of configuration options:
      *
      * Credential options (`key`, `secret`, and optional `token` OR `credentials` is required)
      *
