@@ -167,6 +167,10 @@ return array (
                                     'type' => 'string',
                                 ),
                             ),
+                            'ConsistentRead' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
                         ),
                     ),
                 ),
@@ -502,7 +506,7 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of strictly consistent reads.',
+                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -2137,7 +2141,7 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of strictly consistent reads.',
+                            'description' => 'ReadCapacityUnits are in terms of strictly consistent reads, assuming items of 1k. 2k items require twice the ReadCapacityUnits. Eventually-consistent reads only require half the ReadCapacityUnits of stirctly consistent reads.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -2344,6 +2348,9 @@ return array (
                                     'name' => 'AttributeName',
                                     'type' => 'string',
                                 ),
+                            ),
+                            'ConsistentRead' => array(
+                                'type' => 'boolean',
                             ),
                         ),
                     ),

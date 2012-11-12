@@ -22,6 +22,7 @@ use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Model\Item;
 use Guzzle\Batch\BatchBuilder;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
+use Guzzle\Plugin\History\HistoryPlugin;
 
 /**
  * @group integration
@@ -391,6 +392,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         self::log('Running BatchGetItem');
 
+        $history = new HistoryPlugin();
+        $this->client->addSubscriber($history);
+
         $iterator = $this->client->getIterator('BatchGetItem', array(
             'RequestItems' => array(
                 $this->table => array(
@@ -407,12 +411,17 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                             'HashKeyElement' => array('S' => 'Bar'),
                             'RangeKeyElement' => array('N' => '30')
                         )
-                    )
+                    ),
+                    'ConsistentRead' => true
                 )
             )
         ));
 
         $items = $iterator->toArray();
+        $this->client->getEventDispatcher()->removeSubscriber($history);
+        // Ensure that the request was sent using consistent read
+        $this->assertContains('"ConsistentRead":"true"', (string) $history->getLastRequest()->getBody());
+
         $this->assertTrue(count($items) >= 3);
         $this->assertTrue($iterator->getRequestCount() >= 1);
 
