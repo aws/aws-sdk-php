@@ -102,16 +102,19 @@ class DynamoDbClient extends AbstractClient
         // Configure the custom exponential backoff plugin for DynamoDB throttling
         $exponentialBackoffResolver = new BackoffOptionResolver(function ($config, $client) {
             return new BackoffPlugin(
-                // Use the custom error checking strategy
-                new ThrottlingErrorChecker(
-                    // Retry HTTP 500 and 503 responses
-                    new HttpBackoffStrategy(null,
-                        // Truncate the number of backoffs to 11
-                        new TruncatedBackoffStrategy(11,
-                            // Retry transient curl errors
-                            new CurlBackoffStrategy(null,
-                                // Use the custom retry delay method instead of default exponential backoff
-                                new CallbackBackoffStrategy(array($client, 'calculateRetryDelay'), false)
+                // Validate CRC32 headers
+                new Crc32ErrorChecker(
+                    // Use the custom error checking strategy
+                    new ThrottlingErrorChecker(
+                        // Retry HTTP 500 and 503 responses
+                        new HttpBackoffStrategy(null,
+                            // Truncate the number of backoffs to 11
+                            new TruncatedBackoffStrategy(11,
+                                // Retry transient curl errors
+                                new CurlBackoffStrategy(null,
+                                    // Use the custom retry delay method instead of default exponential backoff
+                                    new CallbackBackoffStrategy(array($client, 'calculateRetryDelay'), false)
+                                )
                             )
                         )
                     )

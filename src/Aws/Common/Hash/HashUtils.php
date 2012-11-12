@@ -69,16 +69,4 @@ class HashUtils
 
         return true;
     }
-
-    /**
-     * Calculates a CRC32 checksum from a value. This function works the same on both 32-bit and 64-bit systems
-     *
-     * @param string $value The value of which to calculate a checksum
-     *
-     * @return string The resulting CRC32 checksum as a string
-     */
-    public static function crc32($value)
-    {
-        return sprintf('%u', crc32($value));
-    }
 }

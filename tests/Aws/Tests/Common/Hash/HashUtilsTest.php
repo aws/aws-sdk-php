@@ -44,9 +44,4 @@ class HashUtilsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $this->assertTrue(HashUtils::validateAlgorithm('md5'));
     }
-
-    public function testCrc32WorksCorrectly()
-    {
-        $this->assertEquals(crc32(1), HashUtils::crc32(1));
-    }
 }
