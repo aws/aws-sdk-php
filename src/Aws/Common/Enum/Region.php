@@ -43,6 +43,9 @@ class Region extends Enum
     const AP_SOUTHEAST_1      = 'ap-southeast-1';
     const SINGAPORE           = self::AP_SOUTHEAST_1;
 
+    const AP_SOUTHEAST_2      = 'ap-southeast-2';
+    const SYDNEY              = self::AP_SOUTHEAST_2;
+
     const AP_NORTHEAST_1      = 'ap-northeast-1';
     const TOKYO               = self::AP_NORTHEAST_1;
 
