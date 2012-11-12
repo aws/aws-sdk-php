@@ -82,6 +82,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model putBucketWebsite(array $args = array()) {@command s3 PutBucketWebsite}
  * @method Model putObject(array $args = array()) {@command s3 PutObject}
  * @method Model putObjectAcl(array $args = array()) {@command s3 PutObjectAcl}
+ * @method Model restoreObject(array $args = array()) {@command s3 RestoreObject}
  * @method Model uploadPart(array $args = array()) {@command s3 UploadPart}
  * @method Model uploadPartCopy(array $args = array()) {@command s3 UploadPartCopy}
  */

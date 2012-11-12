@@ -41,13 +41,18 @@ class BucketStyleListener implements EventSubscriberInterface
     {
         $command = $event['command'];
         $bucket = $command['Bucket'];
+
+        $request = $command->getRequest();
+
+        // Set the key and bucket on the request
+        $request->getParams()->set('bucket', $bucket)->set('key', $command['key']);
+
         // Switch to virtual if PathStyle is disabled, or not a DNS compatible bucket name, or the scheme is
         // http, or the scheme is https and there are no dots in the host header (avoids SSL issues)
         if (!$command['PathStyle'] && $command->getClient()->isValidBucketName($bucket)
             && !($command->getRequest()->getScheme() == 'https' && strpos($bucket, '.'))
         ) {
             // Switch to virtual hosted bucket
-            $request = $command->getRequest();
             $request->setHost($bucket . '.' . $request->getHost());
             $request->setPath(str_replace("/{$bucket}", '', $request->getPath()));
         }

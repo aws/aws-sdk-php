@@ -14,16 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\S3\Exception;
 
 /**
- * Contains enumerable Amazon S3 storage options
+ * This operation is not allowed against this storage tier
  */
-class Storage extends Enum
-{
-    const STANDARD = 'STANDARD';
-    const REDUCED  = 'REDUCED_REDUNDANCY';
-    const GLACIER = 'GLACIER';
-}
+class ObjectAlreadyInActiveTierErrorException extends S3Exception {}

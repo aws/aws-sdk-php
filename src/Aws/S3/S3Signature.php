@@ -20,6 +20,7 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\QueryString;
+use Guzzle\Http\Url;
 
 /**
  * Default Amazon S3 signature implementation
@@ -133,20 +134,16 @@ class S3Signature implements S3SignatureInterface
      */
     protected function createCanonicalizedResource(RequestInterface $request)
     {
-        // If this is a virtual hosted bucket, then append the bucket name
-        $host = $request->getHost();
+        $baseUrl = Url::factory($request->getClient()->getBaseUrl());
 
-        $parts = explode('.', $host);
-        $totalParts = count($parts);
-        if ($parts[$totalParts - 2] !== 'amazonaws') {
-            // The host does not contain S3, so it must be a CNAME
+        $host = $request->getHost();
+        if (strpos($host, $baseUrl->getHost()) === false) {
+            // The host does not contain the base URL, so it must be a CNAME
             $buffer = '/' . $host;
-        } elseif ($totalParts > 3) {
-            // The host contains more than three parts, so it is a virtual hosted bucket
-            $buffer = '/' . implode('.', array_slice($parts, 0, -3));
         } else {
-            // The host does not contain any bucket information
-            $buffer = '';
+            // Remove the baseURL from the host of the request to attempt to determine the bucket name
+            $vBucket = trim(str_replace($baseUrl->getHost(), '', $request->getHost()), ' .');
+            $buffer = $vBucket ? "/{$vBucket}" : '';
         }
 
         $buffer .= $request->getPath();

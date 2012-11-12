@@ -456,7 +456,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $data = $post->getFormInputs();
 
         // Use Guzzle to simulate a browser POST upload to S3
-        $http = new Client();
+        $http = new Client(array('ssl.certificate_authority' => false));
         /** @var $response \Guzzle\Http\Message\Response */
         $response = $http->post($form['action'], null, $data)
             ->addPostFiles(array('file' => __DIR__ . DIRECTORY_SEPARATOR . $key))
@@ -468,5 +468,39 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Delete the object
         $this->client->deleteObject(array('Bucket' => $this->bucket, 'Key' => $key));
+    }
+
+    public function testUsesTieredStorage()
+    {
+        self::log("Uploading an object then placing in Glacier");
+        $key = 'abc';
+        $this->client->putObject(array(
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+            'Body'   => 'hi'
+        ));
+        self::log("Waiting until the object exists");
+        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        self::log("Moving the object to glacier by setting a lifecycle policy on the object");
+
+        $command = $this->client->getCommand('PutBucketLifecycle', array(
+            'Bucket' => $this->bucket,
+            'Rules' => array(
+                array(
+                    'ID' => 'foo-rule',
+                    'Status' => 'Enabled',
+                    'Prefix' => 'a',
+                    'Transition' => array(
+                        'Days'         => 0,
+                        'StorageClass' => 'GLACIER'
+                    )
+                )
+            )
+        ));
+
+        $result = $command->execute();
+        $this->assertNotNull($result['RequestId']);
+
+        echo $command->getRequest();
     }
 }

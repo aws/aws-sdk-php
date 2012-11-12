@@ -14,16 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\S3\Exception;
 
 /**
- * Contains enumerable Amazon S3 storage options
+ * The source object of the COPY operation is not in the active tier and is only stored in Amazon Glacier.
  */
-class Storage extends Enum
-{
-    const STANDARD = 'STANDARD';
-    const REDUCED  = 'REDUCED_REDUNDANCY';
-    const GLACIER = 'GLACIER';
-}
+class ObjectNotInActiveTierErrorException extends S3Exception {}

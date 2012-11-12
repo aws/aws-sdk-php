@@ -44,6 +44,12 @@ return array (
                     'sentAs' => 'uploadId',
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified multipart upload does not exist.',
+                    'class' => 'NoSuchUploadException',
+                ),
+            ),
         ),
         'CompleteMultipartUpload' => array(
             'httpMethod' => 'POST',
@@ -254,6 +260,12 @@ return array (
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The source object of the COPY operation is not in the active tier and is only stored in Amazon Glacier.',
+                    'class' => 'ObjectNotInActiveTierErrorException',
                 ),
             ),
         ),
@@ -1763,14 +1775,47 @@ return array (
                                     'Disabled',
                                 ),
                             ),
+                            'Transition' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Days' => array(
+                                        'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Date' => array(
+                                        'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
+                                        'type' => array(
+                                            'object',
+                                            'string',
+                                        ),
+                                        'format' => 'date-time',
+                                    ),
+                                    'StorageClass' => array(
+                                        'description' => 'The class of storage used to store the object.',
+                                        'type' => 'string',
+                                        'enum' => array(
+                                            'STANDARD',
+                                            'REDUCED_REDUDANCY',
+                                            'GLACIER',
+                                        ),
+                                    ),
+                                ),
+                            ),
                             'Expiration' => array(
-                                'required' => true,
                                 'type' => 'object',
                                 'properties' => array(
                                     'Days' => array(
                                         'required' => true,
                                         'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
                                         'type' => 'numeric',
+                                    ),
+                                    'Date' => array(
+                                        'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
+                                        'type' => array(
+                                            'object',
+                                            'string',
+                                        ),
+                                        'format' => 'date-time',
                                     ),
                                 ),
                             ),
@@ -2511,6 +2556,62 @@ return array (
                 ),
             ),
         ),
+        'RestoreObject' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/{Bucket}/{Key}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'RestoreObjectOutput',
+            'responseType' => 'model',
+            'summary' => 'Restores an archived copy of an object back into Amazon S3',
+            'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectRestore.html',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'RestoreRequest',
+                    'namespaces' => array(
+                        'http://s3.amazonaws.com/doc/2006-03-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'Bucket' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Key' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Days' => array(
+                    'required' => true,
+                    'description' => 'Lifetime of the active copy in days',
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'SubResource' => array(
+                    'required' => true,
+                    'static' => true,
+                    'location' => 'query',
+                    'sentAs' => 'restore',
+                    'default' => '_guzzle_blank_',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'This operation is not allowed against this storage tier',
+                    'class' => 'ObjectAlreadyInActiveTierErrorException',
+                ),
+                array(
+                    'reason' => 'feewwewfe',
+                    'class' => 'FooException',
+                ),
+                array(
+                    'reason' => 'Baz',
+                    'class' => 'BarException',
+                ),
+            ),
+        ),
         'UploadPart' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}/{Key}',
@@ -3076,12 +3177,33 @@ return array (
                                 'description' => 'If \'Enabled\', the rule is currently being applied. If \'Disabled\', the rule is not currently being applied.',
                                 'type' => 'string',
                             ),
+                            'Transition' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Days' => array(
+                                        'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Date' => array(
+                                        'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
+                                        'type' => 'string',
+                                    ),
+                                    'StorageClass' => array(
+                                        'description' => 'The class of storage used to store the object.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                             'Expiration' => array(
                                 'type' => 'object',
                                 'properties' => array(
                                     'Days' => array(
                                         'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
                                         'type' => 'numeric',
+                                    ),
+                                    'Date' => array(
+                                        'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
+                                        'type' => 'string',
                                     ),
                                 ),
                             ),
@@ -4216,6 +4338,17 @@ return array (
             ),
         ),
         'PutObjectAclOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'RestoreObjectOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
