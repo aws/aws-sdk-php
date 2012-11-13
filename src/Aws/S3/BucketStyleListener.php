@@ -41,7 +41,6 @@ class BucketStyleListener implements EventSubscriberInterface
     {
         $command = $event['command'];
         $bucket = $command['Bucket'];
-
         $request = $command->getRequest();
 
         // Set the key and bucket on the request

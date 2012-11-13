@@ -500,7 +500,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         $result = $command->execute();
         $this->assertNotNull($result['RequestId']);
-
-        echo $command->getRequest();
+        $this->assertContains(
+            '<Transition><Days>0</Days><StorageClass>GLACIER</StorageClass></Transition>',
+            (string) $command->getRequest()
+        );
     }
 }

@@ -242,6 +242,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             $input['verb'],
             'http://s3.amazonaws.com' . $input['path'], $input['headers']
         );
+        $request->setClient($this->getServiceBuilder()->get('s3'));
         $this->assertEquals($result, $signature->createCanonicalizedString($request), $expires);
     }
 

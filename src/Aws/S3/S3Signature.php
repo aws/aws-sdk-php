@@ -134,17 +134,9 @@ class S3Signature implements S3SignatureInterface
      */
     protected function createCanonicalizedResource(RequestInterface $request)
     {
-        $baseUrl = Url::factory($request->getClient()->getBaseUrl());
-
-        $host = $request->getHost();
-        if (strpos($host, $baseUrl->getHost()) === false) {
-            // The host does not contain the base URL, so it must be a CNAME
-            $buffer = '/' . $host;
-        } else {
-            // Remove the baseURL from the host of the request to attempt to determine the bucket name
-            $vBucket = trim(str_replace($baseUrl->getHost(), '', $request->getHost()), ' .');
-            $buffer = $vBucket ? "/{$vBucket}" : '';
-        }
+        $bucket = $request->getParams()->get('bucket') ?: $this->parseBucketName($request);
+        // Use any specified bucket name, the parsed bucket name, or no bucket name when interacting with GetService
+        $buffer = $bucket ? "/{$bucket}" : '';
 
         $buffer .= $request->getPath();
         $buffer = str_replace('//', '/', $buffer);
@@ -164,5 +156,41 @@ class S3Signature implements S3SignatureInterface
         }
 
         return $buffer;
+    }
+
+    /**
+     * Parse the bucket name from a request object
+     *
+     * @param RequestInterface $request Request to parse
+     *
+     * @return string
+     */
+    protected function parseBucketName(RequestInterface $request)
+    {
+        $baseUrl = Url::factory($request->getClient()->getBaseUrl());
+        $baseHost = $baseUrl->getHost();
+        $host = $request->getHost();
+
+        if (strpos($host, $baseHost) === false) {
+            // Does not contain the base URL, so it's either a redirect, CNAME, or using a different region
+            $baseHost = '';
+            // For every known S3 host, check if that host is present on the request
+            $provider = $request->getClient()->getEndpointProvider();
+            foreach ($provider->getRegions('s3') as $region) {
+                $endpointHost = $provider->getEndpoint('s3', $region)->getHost();
+                if (strpos($host, $endpointHost) !== false) {
+                    // This host matches the request host. Tells use the region and endpoint-- we can derive the bucket
+                    $baseHost = $endpointHost;
+                    break;
+                }
+            }
+            // If no matching base URL was found, then assume that this is a CNAME, and the CNAME is the bucket
+            if (!$baseHost) {
+                return $host;
+            }
+        }
+
+        // Remove the baseURL from the host of the request to attempt to determine the bucket name
+        return trim(str_replace($baseHost, '', $request->getHost()), ' .');
     }
 }
