@@ -24,7 +24,6 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -144,7 +143,6 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -183,7 +181,6 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -217,7 +214,6 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -557,7 +553,6 @@ return array (
                 'limit' => array(
                     'type' => 'string',
                     'location' => 'query',
-                    'sentAs' => 'marker',
                 ),
                 'marker' => array(
                     'type' => 'string',
@@ -667,7 +662,6 @@ return array (
             'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'responseNotes' => 'The result of this operation will be an empty model',
             'parameters' => array(
                 'accountId' => array(
                     'required' => true,
@@ -924,6 +918,14 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'ArchiveSHA256TreeHash' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'RetrievalByteRange' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
         ),
         'DescribeVaultOutput' => array(
@@ -1097,6 +1099,12 @@ return array (
                                 'type' => 'string',
                             ),
                             'SHA256TreeHash' => array(
+                                'type' => 'string',
+                            ),
+                            'ArchiveSHA256TreeHash' => array(
+                                'type' => 'string',
+                            ),
+                            'RetrievalByteRange' => array(
                                 'type' => 'string',
                             ),
                         ),
