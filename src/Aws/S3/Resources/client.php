@@ -2317,6 +2317,7 @@ return array (
                     'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'Body' => array(
+                    'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
                     'type' => array(
                         'string',
                         'object',
@@ -2602,14 +2603,6 @@ return array (
                     'reason' => 'This operation is not allowed against this storage tier',
                     'class' => 'ObjectAlreadyInActiveTierErrorException',
                 ),
-                array(
-                    'reason' => 'feewwewfe',
-                    'class' => 'FooException',
-                ),
-                array(
-                    'reason' => 'Baz',
-                    'class' => 'BarException',
-                ),
             ),
         ),
         'UploadPart' => array(
@@ -2632,6 +2625,7 @@ return array (
                     'location' => 'uri',
                 ),
                 'Body' => array(
+                    'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
                     'type' => array(
                         'string',
                         'object',
