@@ -243,7 +243,7 @@ class S3Client extends AbstractClient
     {
         if ($request->getClient() !== $this) {
             throw new InvalidArgumentException('The request object must be associated with the client. Use the '
-                . '$client->get(), $client->head(), $client->post(), $client->put(), etc methods when passing in a'
+                . '$client->get(), $client->head(), $client->post(), $client->put(), etc. methods when passing in a '
                 . 'request object');
         }
 
