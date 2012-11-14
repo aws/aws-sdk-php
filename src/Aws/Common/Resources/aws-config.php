@@ -36,6 +36,11 @@ return array(
             'class'   => 'Aws\Glacier\GlacierClient'
         ),
 
+        'route53' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Route53\Route53Client'
+        ),
+
         's3' => array(
             'extends' => 'default_settings',
             'class'   => 'Aws\S3\S3Client'

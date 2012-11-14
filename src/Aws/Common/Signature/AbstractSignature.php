@@ -32,6 +32,7 @@ abstract class AbstractSignature implements SignatureInterface
     /**
      * Get the canonicalized query string for a request
      *
+     * @param RequestInterface $request
      * @return string
      */
     protected function getCanonicalizedQueryString(RequestInterface $request)
