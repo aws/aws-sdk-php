@@ -152,8 +152,9 @@ class S3Client extends AbstractClient
      *
      * Generic client options
      *
-     * - ssl.cert - Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
-     *   option should be used when you encounter curl error code 60.
+     * - ssl.certificate_authority: Set to true to use the bundled CA cert (default), system to use the certificate
+     *   bundled with your system, or pass the full path to an SSL certificate bundle. This option should be used when
+     *   you encounter curl error code 60.
      * - curl.options - Array of cURL options to apply to every request.
      *   See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
      * - signature - You can optionally provide a custom signature implementation used to sign requests
