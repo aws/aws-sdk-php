@@ -18,6 +18,7 @@ namespace Aws\Tests\S3;
 
 use Aws\S3\S3Client;
 use Guzzle\Http\Url;
+use Guzzle\Http\Message\Request;
 
 /**
  * @covers Aws\S3\S3Client
@@ -88,6 +89,16 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('s3');
         $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), '10 minutes'));
         $this->assertTrue(time() < $url->getQuery()->get('Expires'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The request object must be associated with the client
+     */
+    public function testValidatesRequestObjectWhenCreatingPreSignedUrl()
+    {
+        $client = $this->getServiceBuilder()->get('s3');
+        $client->createPresignedUrl(new Request('GET', 'http://foo.com'), '+10 minutes');
     }
 
     public function testDoesBucketExistReturnsCorrectBooleanValue()

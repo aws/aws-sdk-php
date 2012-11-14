@@ -20,6 +20,7 @@ use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\InvalidArgumentException;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
@@ -230,13 +231,21 @@ class S3Client extends AbstractClient
     /**
      * Create a pre-signed URL for a request
      *
-     * @param RequestInterface $request Request to generate the URL for
+     * @param RequestInterface $request Request to generate the URL for. Use the factory methods of the client to create
+     *                                  this request object.
      * @param int|string       $expires The Unix timestamp to expire at or a string that can be evaluated by strtotime
      *
      * @return string
+     * @throws InvalidArgumentException if the request is not associated with this client object
      */
     public function createPresignedUrl(RequestInterface $request, $expires)
     {
+        if ($request->getClient() !== $this) {
+            throw new InvalidArgumentException('The request object must be associated with the client. Use the '
+                . '$client->get(), $client->head(), $client->post(), $client->put(), etc methods when passing in a'
+                . 'request object');
+        }
+
         if (!is_numeric($expires)) {
             $expires = strtotime($expires);
         }
