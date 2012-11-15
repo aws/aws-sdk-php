@@ -26,6 +26,11 @@ return array(
             'class'   => 'Aws\CloudFront\CloudFrontClient'
         ),
 
+        'datapipeline' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\DataPipeline\DataPipelineClient'
+        ),
+
         'dynamodb' => array(
             'extends' => 'default_settings',
             'class'   => 'Aws\DynamoDb\DynamoDbClient'

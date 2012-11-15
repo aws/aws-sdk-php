@@ -14,22 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception\Parser;
+namespace Aws\DataPipeline\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Parses JSON encoded exception responses from query services
+ * Contains enumerable WorkStatus values
  */
-class JsonQueryExceptionParser extends AbstractJsonExceptionParser
+class WorkStatus extends Enum
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, array $json)
-    {
-        $parts = explode('#', $json['__type']);
-        $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
-        $data['message'] = isset($json['message']) ? $json['message'] : null;
-
-        return $data;
-    }
+    const FINISHED = 'FINISHED';
+    const FAILED = 'FAILED';
+    const FALSE = 'FALSE';
 }

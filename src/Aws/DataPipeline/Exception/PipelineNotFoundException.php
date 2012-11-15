@@ -14,22 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception\Parser;
+namespace Aws\DataPipeline\Exception;
 
 /**
- * Parses JSON encoded exception responses from query services
+ * The specified pipeline was not found. Check that you used the correct identifier.
  */
-class JsonQueryExceptionParser extends AbstractJsonExceptionParser
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, array $json)
-    {
-        $parts = explode('#', $json['__type']);
-        $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
-        $data['message'] = isset($json['message']) ? $json['message'] : null;
-
-        return $data;
-    }
-}
+class PipelineNotFoundException extends DataPipelineException {}
