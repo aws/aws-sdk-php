@@ -41,10 +41,12 @@ class BucketStyleListener implements EventSubscriberInterface
     {
         $command = $event['command'];
         $bucket = $command['Bucket'];
+        $key = $command['Key'];
         $request = $command->getRequest();
+        $pathStyle = false;
 
         // Set the key and bucket on the request
-        $request->getParams()->set('bucket', $bucket)->set('key', $command['key']);
+        $request->getParams()->set('bucket', $bucket)->set('key', $key);
 
         // Switch to virtual if PathStyle is disabled, or not a DNS compatible bucket name, or the scheme is
         // http, or the scheme is https and there are no dots in the host header (avoids SSL issues)
@@ -54,6 +56,24 @@ class BucketStyleListener implements EventSubscriberInterface
             // Switch to virtual hosted bucket
             $request->setHost($bucket . '.' . $request->getHost());
             $request->setPath(str_replace("/{$bucket}", '', $request->getPath()));
+        } else {
+            $pathStyle = true;
+        }
+
+        if (!$bucket) {
+            $request->getParams()->set('s3.resource', '/');
+        } elseif ($pathStyle) {
+            // Path style does not need a trailing slash
+            $request->getParams()->set(
+                's3.resource',
+                '/' . rawurlencode($bucket) . ($key ? ('/' . rawurlencode($key)) : '')
+            );
+        } else {
+            // Bucket style needs a trailing slash
+            $request->getParams()->set(
+                's3.resource',
+                '/' . rawurlencode($bucket) . ($key ? ('/' . rawurlencode($key)) : '/')
+            );
         }
     }
 }
