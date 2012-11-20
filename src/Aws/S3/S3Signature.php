@@ -134,11 +134,17 @@ class S3Signature implements S3SignatureInterface
      */
     protected function createCanonicalizedResource(RequestInterface $request)
     {
-        $bucket = $request->getParams()->get('bucket') ?: $this->parseBucketName($request);
-        // Use any specified bucket name, the parsed bucket name, or no bucket name when interacting with GetService
-        $buffer = $bucket ? "/{$bucket}" : '';
+        $buffer = $request->getParams()->get('s3.resource');
+        // When sending a raw HTTP request (e.g. $client->get())
+        if (null === $buffer) {
+            $bucket = $request->getParams()->get('bucket') ?: $this->parseBucketName($request);
+            // Use any specified bucket name, the parsed bucket name, or no bucket name when interacting with GetService
+            $buffer = $bucket ? "/{$bucket}" : '';
+            // if the bucket was path style, then ensure that the bucket wasn't duplicated in the resource
+            $buffer .= str_replace("/{$bucket}/{$bucket}", "/{$bucket}", $request->getPath());
+        }
 
-        $buffer .= $request->getPath();
+        // Remove double slashes
         $buffer = str_replace('//', '/', $buffer);
 
         // Add sub resource parameters
