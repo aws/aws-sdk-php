@@ -18,6 +18,7 @@ namespace Aws\S3;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\UploadBodyListener;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
@@ -185,6 +186,8 @@ class S3Client extends AbstractClient
         $client->addSubscriber(new AcpListener());
         // Validate and add Content-MD5 hashes
         $client->addSubscriber(new CommandContentMd5Plugin());
+        // Allow for specifying bodies with file paths and file handles
+        $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
 
         return $client;
     }

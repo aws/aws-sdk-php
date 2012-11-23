@@ -2624,6 +2624,20 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'UploadId' => array(
+                    'required' => true,
+                    'description' => 'Upload ID identifying the multipart upload whose part is being uploaded.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'uploadId',
+                ),
+                'PartNumber' => array(
+                    'required' => true,
+                    'description' => 'Part number of part being uploaded.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'partNumber',
+                ),
                 'Body' => array(
                     'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
                     'type' => array(
@@ -2660,6 +2674,20 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+                'UploadId' => array(
+                    'required' => true,
+                    'description' => 'Upload ID identifying the multipart upload whose part is being copied.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'uploadId',
+                ),
+                'PartNumber' => array(
+                    'required' => true,
+                    'description' => 'Part number of part being copied.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'partNumber',
                 ),
                 'CopySourceRange' => array(
                     'description' => 'The range of bytes to copy from the source object. The range value must use the form bytes=first-last, where the first and last are the zero-based byte offsets to copy. For example, bytes=0-9 indicates that you want to copy the first ten bytes of the source. You can copy a range only if the source object is greater than 5 GB.',

@@ -18,6 +18,7 @@ namespace Aws\Glacier;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\UploadBodyListener;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
@@ -125,6 +126,13 @@ class GlacierClient extends AbstractClient
         $client->setResourceIteratorFactory(new MapResourceIteratorFactory(array(
              '*' => 'Aws\Glacier\Iterator\DefaultIterator'
         )));
+
+        // Allow for specifying bodies with file paths and file handles
+        $client->addSubscriber(new UploadBodyListener(
+            array('UploadArchive', 'UploadMultipartPart'),
+            'body',
+            'sourceFile'
+        ));
 
         // Listen for upload operations and make sure the required hash headers are added
         $client->addSubscriber(new GlacierUploadListener());
