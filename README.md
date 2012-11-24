@@ -478,10 +478,35 @@ format instead of PHP.
 }
 ```
 
+## More Examples
+
+### Uploading a file to Amazon S3.
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Aws\Common\Aws;
+use Aws\S3\Enum\CannedAcl;
+
+// Instantiate an S3 client
+$s3 = Aws::factory('/path/to/config.php')->get('s3');
+
+// Upload a publicly accessible file. File size, file type, and md5 hash are automatically calculated by the SDK
+$s3->putObject(array(
+    'Bucket' => 'my-bucket',
+    'Key'    => 'my-object',
+    'Body'   => fopen('/path/to/file', 'r'),
+    'ACL'    => CannedAcl::PUBLIC_READ
+));
+```
+
 ## Additional Information
 
 * AWS SDK for PHP: <http://aws.amazon.com/sdkforphp2>
 * API documentation: <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/>
 * PHP discussion forum: <https://forums.aws.amazon.com/forum.jspa?forumID=80>
+* Issue Tracker: <https://github.com/aws/aws-sdk-php/issues>
 * Packagist: <https://packagist.org/packages/aws/aws-sdk-php>
 * License: <http://aws.amazon.com/apache2.0/>
