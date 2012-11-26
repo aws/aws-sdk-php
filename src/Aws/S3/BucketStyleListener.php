@@ -55,7 +55,7 @@ class BucketStyleListener implements EventSubscriberInterface
         ) {
             // Switch to virtual hosted bucket
             $request->setHost($bucket . '.' . $request->getHost());
-            $request->setPath(str_replace("/{$bucket}", '', $request->getPath()));
+            $request->setPath(preg_replace("#^/{$bucket}#", '', $request->getPath()));
         } else {
             $pathStyle = true;
         }

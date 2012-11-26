@@ -381,6 +381,25 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testPutAndListObjects
      */
+    public function testUploadsObjectsWithKeysMatchingBucketName()
+    {
+        self::log("Uploading an object with a name the same as the bucket");
+        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $key = $this->bucket . '-foo';
+        $command = $this->client->getCommand('PutObject', array(
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+            'Body'   => 'hi'
+        ));
+        $command->execute();
+        $this->assertEquals("/{$this->bucket}-foo", $command->getRequest()->getPath());
+        $this->assertEquals("{$this->bucket}.s3.amazonaws.com", $command->getRequest()->getHost());
+        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+    }
+
+    /**
+     * @depends testPutAndListObjects
+     */
     public function testPutObjectsWithUtf8Keys()
     {
         self::log("Uploading an object with a UTF-8 key");

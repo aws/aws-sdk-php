@@ -141,7 +141,7 @@ class S3Signature implements S3SignatureInterface
             // Use any specified bucket name, the parsed bucket name, or no bucket name when interacting with GetService
             $buffer = $bucket ? "/{$bucket}" : '';
             // if the bucket was path style, then ensure that the bucket wasn't duplicated in the resource
-            $buffer .= str_replace("/{$bucket}/{$bucket}", "/{$bucket}", $request->getPath());
+            $buffer .= preg_replace("#^/{$bucket}/{$bucket}#", "/{$bucket}", $request->getPath());
         }
 
         // Remove double slashes
