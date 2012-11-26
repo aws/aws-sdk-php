@@ -1,12 +1,36 @@
 # Vanity configuration
 vanity:
     name: AWS SDK for PHP
-api:
-    stage: dev
+
+source:
     exclude:
         classes: /\n/
-    warn:
-        dependencies: true
-        inconsistencies: true
-        todo: true
-        ungrouped: true
+
+warn:
+    dependencies: true
+    inconsistencies: true
+    todo: true
+    ungrouped: true
+
+generator:
+    template:
+        comments:
+            facebook_app_id: "124113651073820"
+
+        social_buttons:
+            facebook_app_id: "124113651073820"
+            facebook_page: https://www.facebook.com/pages/AWS-SDK-for-PHP/276240099155588
+            google_plus: true
+            twitter_username: AWSSDKforPHP
+
+        seo:
+            contributors: ["Michael Dowling", "Jeremy Lindblom"]
+            copyright_years: "2010-2012"
+            copyright_owner: "Amazon Web Services, Inc."
+            copyright_owner_url: http://aws.amazon.com
+            description: "With AWS SDK for PHP, developers get started using Amazon Web Services, including Amazon DynamoDB, Amazon S3, Amazon Glacier and Amazon CloudFront."
+            google_verification: XHghG81ulgiW-3EylGcF48sG28tBW5EH0bNUhgo_DrU
+            license_url: http://aws.amazon.com/apache2.0
+            locale: en-US
+
+        web_root: http://docs.amazonwebservices.com/aws-sdk-php-2/latest/
