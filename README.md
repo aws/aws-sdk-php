@@ -12,22 +12,24 @@ The AWS SDK for PHP 2 requires PHP 5.3.2.
 ## Table of Contents
 
 1. **[New Features](#new-features)**
-2. **[Before Using the SDK](#before-using-the-sdk)**
+1. **[Before Using the SDK](#before-using-the-sdk)**
     * [Signing Up for AWS](#signing-up-for-aws)
         * [To sign up for AWS](#to-sign-up-for-aws)
         * [To view your AWS credentials](#to-view-your-aws-credentials)
     * [Getting your AWS credentials](#getting-your-aws-credentials)
     * [Minimum requirements](#minimum-requirements)
-3. **[Installing the SDK](#installing-the-sdk)**
+1. **[Installing the SDK](#installing-the-sdk)**
     * [Installing via Composer](#installing-via-composer)
     * [Installing via Phar](#installing-via-phar)
     * [Installing via PEAR](#installing-via-pear)
-4. **[Using the SDK](#using-the-sdk)**
+1. **[Using the SDK](#using-the-sdk)**
     * [Quick Start](#quick-start)
     * [Using the Service Builder](#using-the-service-builder)
     * [Configuration](#configuration)
     * [Using a Custom Configuration File](#using-a-custom-configuration-file)
-5. **[Additional Information](#additional-information)**
+1. **[More Examples](#more-examples)**
+1. **[Contributing to the SDK](#contributing-to-the-sdk)**
+1. **[Additional Information](#additional-information)**
 
 ## New Features
 
@@ -480,7 +482,7 @@ format instead of PHP.
 
 ## More Examples
 
-### Uploading a file to Amazon S3.
+### Uploading a File to Amazon S3
 
 ```php
 <?php
@@ -489,18 +491,102 @@ require 'vendor/autoload.php';
 
 use Aws\Common\Aws;
 use Aws\S3\Enum\CannedAcl;
+use Aws\S3\Exception\S3Exception;
 
 // Instantiate an S3 client
 $s3 = Aws::factory('/path/to/config.php')->get('s3');
 
 // Upload a publicly accessible file. File size, file type, and md5 hash are automatically calculated by the SDK
-$s3->putObject(array(
-    'Bucket' => 'my-bucket',
-    'Key'    => 'my-object',
-    'Body'   => fopen('/path/to/file', 'r'),
-    'ACL'    => CannedAcl::PUBLIC_READ
-));
+try {
+    $s3->putObject(array(
+        'Bucket' => 'my-bucket',
+        'Key'    => 'my-object',
+        'Body'   => fopen('/path/to/file', 'r'),
+        'ACL'    => CannedAcl::PUBLIC_READ
+    ));
+} catch (S3Exception $e) {
+    echo "The file was not uploaded.\n";
+}
 ```
+
+### List the Names of Every Object in Your Amazon S3 Account
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Aws\Common\Aws;
+
+// Instantiate an S3 client
+$s3 = Aws::factory('/path/to/config.php')->get('s3');
+
+foreach ($s3->getIterator('ListBuckets') as $bucket) {
+    foreach ($s3->getIterator('ListObjects', array('Bucket' => $bucket['Name'])) as $object) {
+        echo $bucket['Name'] . '/' . $object['Key'] . PHP_EOL;
+    }
+}
+```
+
+### Upload a Large File to Amazon S3 in 10 MB Parts
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Aws\Common\Aws;
+use Aws\Common\Enum\Size;
+use Aws\Common\Exception\MultipartUploadException;
+use Aws\S3\Model\MultipartUpload\UploadBuilder;
+
+// Instantiate an S3 client
+$s3 = Aws::factory('/path/to/config.php')->get('s3');
+
+// Prepare the upload parameters
+$uploader = UploadBuilder::newInstance()
+    ->setClient($s3)
+    ->setSource('/path/to/large/file.mov')
+    ->setBucket('my-bucket')
+    ->setKey('my-object-key')
+    ->setMinPartSize(10 * Size::MB)
+    ->build();
+
+// Perform the upload. Abort the upload if something goes wrong
+try {
+    $uploader->upload();
+    echo "Upload complete.\n";
+} catch (MultipartUploadException $e) {
+    $uploader->abort();
+    echo "Upload failed.\n";
+}
+```
+
+## Contributing to the SDK
+
+We work hard to provide a high-quality and useful SDK, and we greatly value feedback and contributions from our
+community. Whether it's a new feature, correction, or additional documentation, we welcome your pull requests. With
+version 2 of the SDK, we've tried to make our development even more open than before. Please submit any
+[issues](https://github.com/aws/aws-sdk-php/issues) or [pull requests](https://github.com/aws/aws-sdk-php/pulls) through
+GitHub. Here are a few things to keep in mind for your contributions:
+
+1. The SDK is released under the [Apache license](http://aws.amazon.com/apache2.0/). Any code you submit will be
+   released under that license. For substantial contributions, we may ask you to sign a [Contributor License Agreement
+   (CLA)](http://en.wikipedia.org/wiki/Contributor_License_Agreement).
+2. We follow the [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md),
+   [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), and
+   [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) recommendations
+   from the [PHP Framework Interop Group](http://php-fig.org). Please submit code that follows these standards. The
+   [PHP CS Fixer](http://cs.sensiolabs.org/) tool can be helpful for formatting your code.
+3. We maintain a high percentage of code coverage in our unit tests. If you make changes to the code, please add,
+   update, and/or remove unit (and integration) tests as appropriate.
+4. We do not accept pull requests that change `client.php` files (i.e., `src/Aws/*/Resources/client.php`). We generate
+   these files based on our internal knowledge of the AWS services.
+5. If your code does not conform to the PSR standards or does not include adequate tests, we may ask you to update your
+   pull requests before we accept them. We also reserve the right to deny any pull requests that do not align with our
+   standards or goals.
+6. If you would like to implement support for an AWS service that is not yet available in the SDK, please talk to us
+   beforehand to avoid any duplication of effort.
 
 ## Additional Information
 
