@@ -72,8 +72,8 @@ class ParallelTransfer extends AbstractTransfer
                 $params = $this->state->getUploadId()->toParams();
                 $eventData['command'] = $this->client->getCommand('UploadPart', array_replace($params, array(
                     'PartNumber' => count($this->state) + 1 + $i,
-                    'body'       => $partsToSend[$i],
-                    'use_md5'    => $this->options['part_md5'],
+                    'Body'       => $partsToSend[$i],
+                    'ContentMD5' => (bool) $this->options['part_md5'],
                     Ua::OPTION   => Ua::MULTIPART_UPLOAD
                 )));
                 $commands[] = $eventData['command'];
