@@ -25,7 +25,10 @@ use Aws\S3\Model\Grantee;
 use Aws\S3\Model\PostObject;
 use Aws\S3\S3Client;
 use Aws\S3\Model\ClearBucket;
+use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Guzzle\Http\Client;
+use Aws\S3\Model\MultipartUpload\UploadBuilder;
+use Guzzle\Plugin\History\HistoryPlugin;
 
 /**
  * @group integration
@@ -33,6 +36,7 @@ use Guzzle\Http\Client;
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     const TEST_KEY = 'foo';
+    const LARGE_OBJECT = '/tmp/large-object.jpg';
 
     /**
      * @var S3Client
@@ -71,6 +75,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public static function tearDownAfterClass()
     {
+        //unlink(self::LARGE_OBJECT);
         $client = self::getServiceBuilder()->get('s3');
         $bucket = self::getResourcePrefix() . '-s3-test';
         self::log("Clearing the contents of the {$bucket} bucket");
@@ -421,6 +426,23 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * @depends testPutAndListObjects
+     */
+    public function testPutObjectGuessesContentType()
+    {
+        self::log("Uploading an object and guessing Content-Type");
+        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $key = 'file';
+        $command = $this->client->getCommand('PutObject', array(
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+            'Body'   => fopen(__FILE__, 'r')
+        ));
+        $command->execute();
+        $this->assertEquals('text/x-php', (string) $command->getRequest()->getHeader('Content-Type'));
+    }
+
+    /**
      * @depends testPutObjectsWithUtf8Keys
      */
     public function testCopiesObjects()
@@ -571,5 +593,44 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             '<Transition><Days>0</Days><StorageClass>GLACIER</StorageClass></Transition>',
             (string) $command->getRequest()
         );
+    }
+
+    public function testMultipartUpload()
+    {
+        $this->client->waitUntil('bucket_exists', $this->bucket);
+        self::log('Creating a 100MB object in /tmp/large-object.jpg');
+        $handle = fopen('/tmp/large-object.jpg', 'w+');
+        $part = str_repeat('.', 1000);
+        for ($i = 0; $i < (1024 * 1024 * 5) / 1000; $i++) {
+            fwrite($handle, $part);
+        }
+        fclose($handle);
+
+        $history = new HistoryPlugin();
+        $this->client->addSubscriber($history);
+
+        self::log('Initiating transfer');
+        $transfer = UploadBuilder::newInstance()
+            ->setBucket($this->bucket)
+            ->setKey('large_key')
+            ->setSource(self::LARGE_OBJECT)
+            ->calculateMd5(true)
+            ->calculatePartMd5(true)
+            ->setOption('ACL', 'public-read')
+            ->setClient($this->client)
+            ->build();
+
+        $this->assertEquals(1, $history->count());
+        $this->assertTrue($history->getLastRequest()->getQuery()->hasKey('uploads'));
+        $this->assertEquals('image/jpeg', (string) $history->getLastRequest()->getHeader('Content-Type'));
+        $history->clear();
+
+        self::log('Uploading parts');
+        $transfer->upload();
+        $this->assertEquals(3, $history->count());
+        $requests = $history->getIterator()->getArrayCopy();
+        $this->assertEquals('PUT', $requests[0]->getMethod());
+        $this->assertEquals('PUT', $requests[1]->getMethod());
+        $this->assertEquals('POST', $requests[2]->getMethod());
     }
 }

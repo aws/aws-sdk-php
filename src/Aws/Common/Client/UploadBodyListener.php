@@ -81,9 +81,12 @@ class UploadBodyListener implements EventSubscriberInterface
                 $body = fopen($source, 'r');
             }
 
-            // If a file handle is passed in then covert it into a Guzzle EntityBody
-            if (is_resource($body)) {
+            if (null !== $body) {
                 $body = EntityBody::factory($body);
+                // Apply a ContentType parameter to the command if one is not present
+                if (!$command->get('ContentType') && $command->getOperation()->hasParam('ContentType')) {
+                    $command->set('ContentType', $body->getContentType());
+                }
             }
 
             // Prepare the body parameter and remove the source file parameter

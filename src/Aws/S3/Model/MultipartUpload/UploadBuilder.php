@@ -21,6 +21,7 @@ use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\S3\Model\Acp;
+use Guzzle\Http\Mimetypes;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -28,16 +29,6 @@ use Aws\S3\Model\Acp;
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    /**
-     * @var string Bucket to upload to
-     */
-    protected $bucket;
-
-    /**
-     * @var string Key of the object
-     */
-    protected $key;
-
     /**
      * @var int Concurrency level to transfer the parts
      */
@@ -64,9 +55,9 @@ class UploadBuilder extends AbstractUploadBuilder
     protected $calculatePartMd5 = true;
 
     /**
-     * @var Acp Acp to use with the object
+     * @var array Array of initiate command options
      */
-    protected $acp;
+    protected $commandOptions = array();
 
     /**
      * Set the bucket to upload the object to
@@ -77,9 +68,7 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setBucket($bucket)
     {
-        $this->bucket = $bucket;
-
-        return $this;
+        return $this->setOption('Bucket', $bucket);
     }
 
     /**
@@ -91,9 +80,7 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setKey($key)
     {
-        $this->key = $key;
-
-        return $this;
+        return $this->setOption('Key', $key);
     }
 
     /**
@@ -180,7 +167,20 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     public function setAcp(Acp $acp)
     {
-        $this->acp = $acp;
+        return $this->setOption('ACP', $acp);
+    }
+
+    /**
+     * Set an option to pass to the initial CreateMultipartUpload operation
+     *
+     * @param string $name  Option name
+     * @param string $value Option value
+     *
+     * @return self
+     */
+    public function setOption($name, $value)
+    {
+        $this->commandOptions[$name] = $value;
 
         return $this;
     }
@@ -193,13 +193,13 @@ class UploadBuilder extends AbstractUploadBuilder
     public function build()
     {
         if ($this->state instanceof TransferState) {
-            $params = $this->state->getUploadId()->toParams();
-            $this->bucket = isset($params['Bucket']) ? $params['Bucket'] : $this->bucket;
-            $this->key = isset($params['Key']) ? $params['Key'] : $this->key;
+            $this->commandOptions = array_replace($this->commandOptions, $this->state->getUploadId()->toParams());
         }
 
-        if (!$this->bucket || !$this->key || !$this->client || !$this->source) {
-            throw new InvalidArgumentException('You must specify a bucket, key, client, and source.');
+        if (!isset($this->commandOptions['Bucket']) || !isset($this->commandOptions['Key'])
+            || !$this->client || !$this->source
+        ) {
+            throw new InvalidArgumentException('You must specify a Bucket, Key, client, and source.');
         }
 
         if ($this->state && !$this->source->isSeekable()) {
@@ -209,8 +209,8 @@ class UploadBuilder extends AbstractUploadBuilder
         // If no state was set, then create one by initiating or loading a multipart upload
         if (is_string($this->state)) {
             $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
-                'Bucket'   => $this->bucket,
-                'Key'      => $this->key,
+                'Bucket'   => $this->commandOptions['Bucket'],
+                'Key'      => $this->commandOptions['Key'],
                 'UploadId' => $this->state
             )));
         } elseif (!$this->state) {
@@ -233,16 +233,16 @@ class UploadBuilder extends AbstractUploadBuilder
      */
     protected function initiateMultipartUpload()
     {
-        $params = array(
-            'Bucket'   => $this->bucket,
-            'Key'      => $this->key,
-        );
+        // Determine Content-Type
+        if ($mimeType = $this->source->getContentType()) {
+            $this->commandOptions['ContentType'] = $mimeType;
+        }
 
-        $command = $this->client->getCommand('CreateMultipartUpload', array_replace($params, array(
+        $params = array_replace(array(
+            Ua::OPTION        => Ua::MULTIPART_UPLOAD,
             'command.headers' => $this->headers,
-            'ACP'             => $this->acp,
-            Ua::OPTION        => Ua::MULTIPART_UPLOAD
-        )));
+            'Metadata'        => array()
+        ), $this->commandOptions);
 
         // Calculate the MD5 hash if none was set and it is asked of the builder
         if ($this->calculateEntireMd5) {
@@ -252,15 +252,13 @@ class UploadBuilder extends AbstractUploadBuilder
         // If an MD5 is specified, then add it to the custom headers of the request
         // so that it will be returned when downloading the object from Amazon S3
         if ($this->md5) {
-            $command['Metadata'] = array(
-                'x-amz-Content-MD5' => $this->md5
-            );
+            $params['Metadata']['x-amz-Content-MD5'] = $this->md5;
         }
 
-        $result = $command->execute();
-
+        $result = $this->client->getCommand('CreateMultipartUpload', $params)->execute();
         // Create a new state based on the initiated upload
         $params['UploadId'] = $result['UploadId'];
+
         return new TransferState(UploadId::fromParams($params));
     }
 }

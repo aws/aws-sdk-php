@@ -47,21 +47,26 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
            ->calculateMd5(false)
            ->calculatePartMd5(true)
            ->setMinPartSize(10000)
-           ->setAcp($acp);
+           ->setAcp($acp)
+           ->setOption('Metadata', array('Foo' => 'Baz'))
+           ->setOption('Test', '123');
 
-       $this->assertEquals('foo', $this->readAttribute($b, 'bucket'));
-       $this->assertEquals('bar', $this->readAttribute($b, 'key'));
+       $options = $this->readAttribute($b, 'commandOptions');
+       $this->assertEquals('foo', $options['Bucket']);
+       $this->assertEquals('bar', $options['Key']);
+       $this->assertSame($acp, $options['ACP']);
+       $this->assertEquals(array('Foo' => 'Baz'), $options['Metadata']);
+       $this->assertEquals('123', $options['Test']);
        $this->assertEquals(1, $this->readAttribute($b, 'concurrency'));
        $this->assertEquals('abc', $this->readAttribute($b, 'md5'));
        $this->assertTrue($this->readAttribute($b, 'calculatePartMd5'));
        $this->assertFalse($this->readAttribute($b, 'calculateEntireMd5'));
        $this->assertEquals(AbstractTransfer::MIN_PART_SIZE, $this->readAttribute($b, 'minPartSize'));
-       $this->assertSame($acp, $this->readAttribute($b, 'acp'));
    }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage You must specify a bucket, key, client, and source.
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage You must specify a Bucket, Key, client, and source.
      */
     public function testValidatesThatRequiredFieldsAreSet()
     {
@@ -128,12 +133,14 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $acl->addGrant(new Grant(new Grantee('123'), Permission::READ));
         $client = $this->getServiceBuilder()->get('s3');
         $mock = $this->setMockResponse($client, array('s3/initiate_multipart_upload'));
+        $expires = time() + 1000;
         $transfer = UploadBuilder::newInstance()
             ->setBucket('foo')
             ->setKey('bar')
             ->setClient($client)
-            ->setSource(EntityBody::factory())
+            ->setSource(__FILE__)
             ->setHeaders(array('Foo' => 'Bar'))
+            ->setOption('Expires', $expires)
             ->setAcp($acl)
             ->calculateMd5(true)
             ->build();
@@ -141,6 +148,10 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(1, count($requests));
         $this->assertEquals('/bar?uploads', $requests[0]->getResource());
         $this->assertEquals('Bar', (string) $requests[0]->getHeader('Foo'));
+        $this->assertEquals($expires, strtotime((string) $requests[0]->getHeader('Expires')));
+        $this->assertEquals('text/x-php', (string) $requests[0]->getHeader('Content-Type'));
+        $this->assertNotEmpty((string) $requests[0]->getHeader('x-amz-meta-x-amz-Content-MD5'));
+        $this->assertEquals('id="123"', (string) $requests[0]->getHeader('x-amz-grant-read'));
         $this->assertTrue($requests[0]->hasHeader('x-amz-grant-read'));
     }
 

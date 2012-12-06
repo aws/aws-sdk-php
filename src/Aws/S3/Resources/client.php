@@ -217,6 +217,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -227,6 +228,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -237,6 +239,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -247,6 +250,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -404,6 +408,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -1051,6 +1056,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -1090,6 +1096,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -1100,6 +1107,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -1236,6 +1244,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -1246,6 +1255,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -2296,6 +2306,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -2707,6 +2718,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -2717,6 +2729,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -2727,6 +2740,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
@@ -2737,6 +2751,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'header',
