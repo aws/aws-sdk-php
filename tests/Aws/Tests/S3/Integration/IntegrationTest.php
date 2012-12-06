@@ -75,7 +75,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public static function tearDownAfterClass()
     {
-        //unlink(self::LARGE_OBJECT);
+        unlink(self::LARGE_OBJECT);
         $client = self::getServiceBuilder()->get('s3');
         $bucket = self::getResourcePrefix() . '-s3-test';
         self::log("Clearing the contents of the {$bucket} bucket");
