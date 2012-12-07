@@ -123,7 +123,8 @@ with PHP 5.3 by default in most environments.
 - To improve the overall performance of your PHP environment, as well as to enable in-memory caching, it is **highly
   recommended** that you install an [opcode cache](https://secure.wikimedia.org/wikipedia/en/wiki/PHP_accelerator) such
   as [APC](http://php.net/apc), [XCache](http://xcache.lighttpd.net), or another extension that can be used by
-  [Doctrine\Common\Cache](https://github.com/doctrine/common/tree/master/lib/Doctrine/Common/Cache>).
+  [Doctrine\Common\Cache](https://github.com/doctrine/common/tree/master/lib/Doctrine/Common/Cache>). For APC, it is
+  recommended that you set the `apc.shm_size` INI setting to be `64MB` or higher.
 
 ## Installing the SDK
 
@@ -176,10 +177,16 @@ file are the following required and suggested libraries:
 -  [Monolog](https://github.com/seldaek/monolog) for logging
 -  [Doctrine](https://github.com/doctrine/common) for caching
 
-You can download the packaged Phar at http://pear.amazonwebservices.com/get/aws.phar. Simply include it in your
-scripts to get started:
+You can download the packaged Phar at http://pear.amazonwebservices.com/get/aws.phar. Simply include it in your scripts
+to get started:
 
     require 'aws.phar';
+
+**Note:** If you are using PHP with the Suhosin patch (especially common on Ubuntu and Debian distributions), you will
+need to enable the use of phars in the `suhosin.ini`. Without this, including a phar file in your code will cause it to
+silently fail. You should modify the `suhosin.ini` file by adding the line:
+
+    suhosin.executor.include.whitelist = phar
 
 ### Installing via PEAR
 
