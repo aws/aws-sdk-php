@@ -52,8 +52,9 @@ The AWS SDK for PHP 2 requires PHP 5.3.2.
 - Full unit test suite with extensive code coverage
 - [Composer](http://getcomposer.org) support for installing and autoloading SDK dependencies
 - [Phing](http://phing.info) `build.xml` for installing dev tools, driving testing, and producing `.phar` files
-- Powerful Amazon DynamoDB batch write system
-- Powerful Amazon Simple Storage Service (Amazon S3) and Amazon Glacier multipart upload system
+- Fast Amazon DynamoDB batch PutItem and DeleteItem system
+- Multipart upload system for Amazon Simple Storage Service (Amazon S3) and Amazon Glacier that can be paused and
+  resumed.
 - Redesigned DynamoDB Session Handler
 - Improved multi-region support
 
@@ -119,9 +120,9 @@ with PHP 5.3 by default in most environments.
 - To use Amazon CloudFront private distributions, you must have the [OpenSSL PHP extension](http://us2.php.net/openssl)
   (which is not the same as any low-level OpenSSL libraries you may have installed on your system) to sign private
   CloudFront URLs.
-- To improve the overall performance of your PHP environment, as well as to enable in-memory caching, it is highly
-  recommended that you install an [opcode cache](https://secure.wikimedia.org/wikipedia/en/wiki/PHP_accelerator) such as
-  [APC](http://php.net/apc), [XCache](http://xcache.lighttpd.net), or another extension that can be used by
+- To improve the overall performance of your PHP environment, as well as to enable in-memory caching, it is **highly
+  recommended** that you install an [opcode cache](https://secure.wikimedia.org/wikipedia/en/wiki/PHP_accelerator) such
+  as [APC](http://php.net/apc), [XCache](http://xcache.lighttpd.net), or another extension that can be used by
   [Doctrine\Common\Cache](https://github.com/doctrine/common/tree/master/lib/Doctrine/Common/Cache>).
 
 ## Installing the SDK
@@ -155,8 +156,8 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
 
 1. Require Composer's autoloader.
 
-    Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries that
-    it downloads. To use it, just add the following line to your code's bootstrap process.
+    Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries
+    that it downloads. To use it, just add the following line to your code's bootstrap process.
 
         require '/path/to/sdk/vendor/autoload.php';
 
@@ -189,7 +190,8 @@ like Yum that install packages system-wide.
 PEAR packages are easy to install, and are available in your PHP environment path so that they are accessible to
 any PHP project. PEAR packages are not specific to your project, but rather to the machine they're installed on.
 
-From the command-line, you can install the SDK with PEAR as follows. _**Note:** You may need to use `sudo` for the following command._
+From the command-line, you can install the SDK with PEAR as follows. _**Note:** You may need to use `sudo` for the
+following command._
 
     pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
 
@@ -201,8 +203,7 @@ Once the SDK has been installed via PEAR, you can load the phar into your projec
 
 ### Quick Start
 
-You can quickly get up and running by using a web service client's
-factory method to instantiate clients as needed.
+You can quickly get up and running by using a web service client's factory method to instantiate clients as needed.
 
 ```php
 <?php
@@ -244,18 +245,14 @@ $client->waitUntil('TableExists', $table);
 echo "The {$table} table has been created.\n";
 ```
 
-**Note:** Instantiating a client without providing credentials causes
-the client to attempt to retrieve [IAM Instance Profile
-credentials](http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances).
+**Note:** Instantiating a client without providing credentials causes the client to attempt to retrieve [IAM Instance
+Profile credentials](http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances).
 
-The preceding syntax for creating a table should look familiar to those
-who have used the first AWS SDK. One difference is that **every**
-service operation (or "command") now accepts *only a single array* as an
-argument.
+The preceding syntax for creating a table should look familiar to those who have used the first AWS SDK. One difference
+is that **every** service operation (or "command") now accepts *only a single array* as an argument.
 
-The `createTable()` method doesn't actually exist on the client. It is implemented using the
-``__call()`` magic method of the client and acts as a shortcut to instantiate a command,
-execute the command, and retrieve the result.
+The `createTable()` method doesn't actually exist on the client. It is implemented using the ``__call()`` magic method
+of the client and acts as a shortcut to instantiate a command, execute the command, and retrieve the result.
 
 ```php
 <?php
@@ -268,16 +265,13 @@ $command = $client->getCommand('CreateTable', array(/* ... */));
 $result = $command->getResult();
 ```
 
-When using the command based syntax, the return value is a "Command" object,
-which encapsulates the request and response of the call to AWS. From the
-command object, you can call the `getResult()` method (as in the preceding
-example) or the `execute()` method to get the parsed result, or you can call the
-`getResponse()` method if you need to get information about the response
-(e.g., the status code or the raw response).
+When using the command based syntax, the return value is a "Command" object, which encapsulates the request and response
+of the call to AWS. From the command object, you can call the `getResult()` method (as in the preceding example) or the
+`execute()` method to get the parsed result, or you can call the `getResponse()` method if you need to get information
+about the response (e.g., the status code or the raw response).
 
-The command object can also be useful when you want to manipulate the
-request before execution or need to execute several commands in
-parallel. It also supports a chainable syntax.
+The command object can also be useful when you want to manipulate the request before execution or need to execute
+several commands in parallel. It also supports a chainable syntax.
 
 ```php
 <?php
@@ -290,25 +284,20 @@ $result = $client->getCommand('ListTables')
 
 ### Using the Service Builder
 
-When using the SDK, you have the option to use individual factory
-methods for each client or the `Aws\Common\Aws` class to build your
-clients. The `Aws\Common\Aws` class is a service builder and dependency
-injection container for the SDK and is the recommended way for
-instantiating clients. The service builder allows you to share
-configuration options between multiple services and pre-wires short
-service names with the appropriate client class.
+When using the SDK, you have the option to use individual factory methods for each client or the `Aws\Common\Aws` class
+to build your clients. The `Aws\Common\Aws` class is a service builder and dependency injection container for the SDK
+and is the recommended way for instantiating clients. The service builder allows you to share configuration options
+between multiple services and pre-wires short service names with the appropriate client class.
 
-The following example shows how to use the service builder to retrieve a
-`Aws\DynamoDb\DynamoDbClient` and perform the `GetItem` operation using
-the command syntax.
+The following example shows how to use the service builder to retrieve a `Aws\DynamoDb\DynamoDbClient` and perform the
+`GetItem` operation using the command syntax.
 
-Passing an associative array of parameters as the first or second
-argument of `Aws\Common\Aws::factory()` treats the parameters as shared
-across all clients generated by the builder. In the example, we tell the
-service builder to use the same credentials for every client.
+Passing an associative array of parameters as the first or second argument of `Aws\Common\Aws::factory()` treats the
+parameters as shared across all clients generated by the builder. In the example, we tell the service builder to use
+the same credentials for every client.
 
-**Note:** Unlike the prior SDK, service clients throw exceptions for
-failed requests. Be sure to use `try` and `catch` blocks appropriately.
+**Note:** Unlike the prior SDK, service clients throw exceptions for failed requests. Be sure to use `try` and `catch`
+blocks appropriately.
 
 ```php
 <?php
@@ -346,18 +335,14 @@ try {
 }
 ```
 
-Passing an associative array of parameters to the first or second
-argument of `Aws\Common\Aws::factory()` will treat the parameters as
-shared parameters across all clients generated by the builder. In the
-above example, we are telling the service builder to use the same
-credentials for every client.
+Passing an associative array of parameters to the first or second argument of `Aws\Common\Aws::factory()` will treat the
+parameters as shared parameters across all clients generated by the builder. In the above example, we are telling the
+service builder to use the same credentials for every client.
 
 ### Configuration
 
-When passing an array of parameters to the first argument of
-`Aws\Common\Aws::factory()`, the service builder loads the default
-`aws-config.php` file and merge the array of shared parameters into the
-default configuration.
+When passing an array of parameters to the first argument of `Aws\Common\Aws::factory()`, the service builder loads the
+default `aws-config.php` file and merge the array of shared parameters into the default configuration.
 
 Excerpt from `src/Aws/Common/Resources/aws-config.php`:
 
@@ -380,30 +365,22 @@ return array(
 );
 ```
 
-The `aws-config.php` file provides default configuration settings for
-associating client classes with service names. This file tells the
-`Aws\Common\Aws` service builder which class to instantiate when you
-reference a client by name.
+The `aws-config.php` file provides default configuration settings for associating client classes with service names.
+This file tells the `Aws\Common\Aws` service builder which class to instantiate when you reference a client by name.
 
-None of the service configurations have defined `key` or `secret`
-settings. Unless you wish to use IAM Instance Profile credentials, you
-will need to supply credentials to the service builder in order to use
-access credentials with each client. For example, the code sample in
-*Using the Service Builder* is using the default aws-config.json file
-and merging shared credentials into each client by passing an array into
-the first argument of `Aws\Common\Aws::factory()`.
+None of the service configurations have defined `key` or `secret` settings. Unless you wish to use IAM Instance Profile
+credentials, you will need to supply credentials to the service builder in order to use access credentials with each
+client. For example, the code sample in *Using the Service Builder* is using the default aws-config.json file and
+merging shared credentials into each client by passing an array into the first argument of `Aws\Common\Aws::factory()`.
 
 ### Using a Custom Configuration File
 
-You can use a custom configuration file that allows you to create custom
-named clients with pre-configured settings.
+You can use a custom configuration file that allows you to create custom named clients with pre-configured settings.
 
-Let's say you want to use the default `aws-config.php` settings, but you
-want to supply your keys using a configuration file. Each service
-defined in the default configuration file extends from
-`default_settings` service. You can create a custom configuration file
-that extends the default configuration file and add credentials to the
-`default_settings` service:
+Let's say you want to use the default `aws-config.php` settings, but you want to supply your keys using a configuration
+file. Each service defined in the default configuration file extends from `default_settings` service. You can create a
+custom configuration file that extends the default configuration file and add credentials to the `default_settings`
+service:
 
 ```php
 <?php
@@ -421,9 +398,8 @@ return array(
 );
 ```
 
-You can use your custom configuration file with the `Aws\Common\Aws`
-class by passing the full path to the configuration file in the first
-argument of the `factory()` method:
+You can use your custom configuration file with the `Aws\Common\Aws` class by passing the full path to the configuration
+file in the first argument of the `factory()` method:
 
 ```php
 <?php
@@ -434,8 +410,7 @@ use Aws\Common\Aws;
 $aws = Aws::factory('/path/to/custom/config.php');
 ```
 
-You can create custom named services if you need to use multiple
-accounts with the same service:
+You can create custom named services if you need to use multiple accounts with the same service:
 
 ```php
 <?php
@@ -462,8 +437,7 @@ return array(
 );
 ```
 
-If you prefer JSON syntax, you can define your configuration in JSON
-format instead of PHP.
+If you prefer JSON syntax, you can define your configuration in JSON format instead of PHP.
 
 ```json
 {
