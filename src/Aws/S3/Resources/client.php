@@ -1042,13 +1042,13 @@ return array (
                 'ResponseContentType' => array(
                     'description' => 'Sets the Content-Type header of the response.',
                     'type' => 'string',
-                    'location' => 'header',
+                    'location' => 'query',
                     'sentAs' => 'response-content-type',
                 ),
                 'ResponseContentLanguage' => array(
                     'description' => 'Sets the Content-Language header of the response.',
                     'type' => 'string',
-                    'location' => 'header',
+                    'location' => 'query',
                     'sentAs' => 'response-content-language',
                 ),
                 'ResponseExpires' => array(
@@ -1059,25 +1059,25 @@ return array (
                         'integer',
                     ),
                     'format' => 'date-time-http',
-                    'location' => 'header',
+                    'location' => 'query',
                     'sentAs' => 'response-expires',
                 ),
                 'ResponseCacheControl' => array(
                     'description' => 'Sets the Cache-Control header of the response.',
                     'type' => 'string',
-                    'location' => 'header',
+                    'location' => 'query',
                     'sentAs' => 'response-cache-control',
                 ),
                 'ResponseContentDisposition' => array(
                     'description' => 'Sets the Content-Disposition header of the response',
                     'type' => 'string',
-                    'location' => 'header',
+                    'location' => 'query',
                     'sentAs' => 'response-content-disposition',
                 ),
                 'ResponseContentEncoding' => array(
                     'description' => 'Sets the Content-Encoding header of the response.',
                     'type' => 'string',
-                    'location' => 'header',
+                    'location' => 'query',
                     'sentAs' => 'response-content-encoding',
                 ),
                 'VersionId' => array(
@@ -1797,6 +1797,7 @@ return array (
                                         'type' => array(
                                             'object',
                                             'string',
+                                            'integer',
                                         ),
                                         'format' => 'date-time',
                                     ),
@@ -1824,6 +1825,7 @@ return array (
                                         'type' => array(
                                             'object',
                                             'string',
+                                            'integer',
                                         ),
                                         'format' => 'date-time',
                                     ),
@@ -2862,6 +2864,10 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'Location' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
                 'RequestId' => array(
                     'description' => 'Request ID of the operation',
                     'location' => 'header',
