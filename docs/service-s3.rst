@@ -75,7 +75,7 @@ The above example creates a bucket in the standard US-EAST-1 region. You can cha
         'LocationConstraint' => Region::EU_WEST_1
     ));
 
-You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the EU_WEST_1
+You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the ``EU_WEST_1``
 constant. The SDK provides various Enum classes under the ``Aws\Common\Enum`` namespace that can be useful for
 remembering available values and ensuring you do not enter a typo.
 
@@ -87,7 +87,7 @@ Waiting until the bucket exists
 -------------------------------
 
 Now that we've created a bucket, let's force our application to wait until the bucket exists. This can be done easily
-using a _waiter_ object. The following snippet of code will poll the bucket until it exists or the maximum number of
+using a *waiter* object. The following snippet of code will poll the bucket until it exists or the maximum number of
 polling attempts are completed.
 
 .. code-block:: php
@@ -169,9 +169,9 @@ You can list all of the buckets owned by your account using the ``listBuckets`` 
     }
 
 All service operation calls using the AWS SDK for PHP return a ``Guzzle\Service\Resource\Model`` object. This object
-contains all of the data returned from the service in a normalized array like object. The data stored in the model can
-be access like an array as seen above. The object also contains a ``get()`` method used to retrieve values from the
-model by name, and a ``getPath()`` method that can be used to retrieve nested values.
+contains all of the data returned from the service in a normalized array like object. The object also contains a
+``get()`` method used to retrieve values from the model by name, and a ``getPath()`` method that can be used to
+retrieve nested values.
 
 .. code-block:: php
 
@@ -181,7 +181,7 @@ model by name, and a ``getPath()`` method that can be used to retrieve nested va
 Listing objects in your buckets
 -------------------------------
 
-Listing objects is a lot easier in the new SDK thanks to _iterators_. You can list all of the objects in a bucket using
+Listing objects is a lot easier in the new SDK thanks to *iterators*. You can list all of the objects in a bucket using
 the ``ListObjectsIterator``.
 
 .. code-block:: php
@@ -192,7 +192,7 @@ the ``ListObjectsIterator``.
         echo $object['Key'] . "\n";
     }
 
-Iterators will handle sending any required subsequent requests when a response is truncated. The ListObject iterator
+Iterators will handle sending any required subsequent requests when a response is truncated. The ListObjects iterator
 works with other parameters too.
 
 .. code-block:: php
@@ -306,7 +306,8 @@ easier to upload large files using multipart upload.
     }
 
 You can attempt to upload parts in parallel by specifying the concurrency option on the UploadBuilder object. The
-following example will attempt to upload three parts in parallel until the entire object has been uploaded.
+following example will create a transfer object that will attempt to upload three parts in parallel until the entire
+object has been uploaded.
 
 .. code-block:: php
 
