@@ -83,6 +83,17 @@ remembering available values and ensuring you do not enter a typo.
 
     Using the enum classes is not required. You could have simply pass 'eu-west-1' in the ``LocationConstraint`` key.
 
+Waiting until the bucket exists
+-------------------------------
+
+Now that we've created a bucket, let's force our application to wait until the bucket exists. This can be done easily
+using a _waiter_ object. The following snippet of code will poll the bucket until it exists or the maximum number of
+polling attempts are completed.
+
+.. code-block:: php
+
+    $client->waitUntil('bucket_exists', 'mybucket');
+
 Uploading objects
 -----------------
 
