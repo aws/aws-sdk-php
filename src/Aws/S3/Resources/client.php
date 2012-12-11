@@ -1125,6 +1125,10 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'If-None-Match',
                 ),
+                'SaveAs' => array(
+                    'description' => 'Specify where the contents of the object should be downloaded. Can be the path to a file, a resource returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object.',
+                    'location' => 'response_body',
+                ),
             ),
         ),
         'GetObjectAcl' => array(
