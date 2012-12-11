@@ -306,3 +306,55 @@ following example will attempt to upload three parts in parallel until the entir
         ->setKey('my-object-key')
         ->setConcurrency(3)
         ->build();
+
+Setting ACLs and Access Control Policies
+----------------------------------------
+
+You can specify a canned ACL on an object when uploading:
+
+.. code-block:: php
+
+    $client->putObject(array(
+        'Bucket'     => 'mybucket',
+        'Key'        => 'data.txt',
+        'SourceFile' => '/path/to/data.txt',
+        'ACL'        => 'public-read'
+    ));
+
+You can use the ``Aws\S3\Enum\CannedAcl`` object to provide canned ACL constants:
+
+.. code-block:: php
+
+    use Aws\S3\Enum\CannedAcl;
+
+    $client->putObject(array(
+        'Bucket'     => 'mybucket',
+        'Key'        => 'data.txt',
+        'SourceFile' => '/path/to/data.txt',
+        'ACL'        => CannedAcl::PUBLIC_READ
+    ));
+
+You can specify more complex ACLs using the ``ACP`` parameter when sending PutObject, CopyObject, CreateBucket,
+CreateMultipartUpload, PutBucketAcl, PutObjectAcl, and other operations that accept a canned ACL. Using the ``ACP``
+parameter allows you specify more granular access control policies using a ``Aws\S3\Model\Acp`` object. The easiest
+way to create an Acp object is through the ``Aws\S3\Model\AcpBuilder``.
+
+.. code-block:: php
+
+    use Aws\S3\Enum\Permission;
+    use Aws\S3\Enum\Group;
+    use Aws\S3\Model\AcpBuilder;
+
+    $acp = AcpBuilder::newInstance()
+        ->setOwner($myOwnerId)
+        ->addGrantForEmail(Permission::READ, 'test@example.com')
+        ->addGrantForUser(Permission::FULL_CONTROL, 'user-id')
+        ->addGrantForGroup(Permission::READ, Group::AUTHENTICATED_USERS)
+        ->build();
+
+    $client->putObject(array(
+        'Bucket'     => 'mybucket',
+        'Key'        => 'data.txt',
+        'SourceFile' => '/path/to/data.txt',
+        'ACP'        => $acp
+    ));
