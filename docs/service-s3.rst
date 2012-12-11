@@ -1,0 +1,308 @@
+=========
+Amazon S3
+=========
+
+This guide focuses on the AWS SDK for PHP interface to Amazon S3. This guide assumes you have already downloaded and
+installed the AWS SDK for PHP 2.
+
+Creating a client
+-----------------
+
+The first thing you need to do is create a client object. There are a couple of ways to do this using the SDK.
+
+Factory method
+~~~~~~~~~~~~~~
+
+The easiest way to get up and running is to use the factory method. Simply pass in your access keys and a region to
+connect to.
+
+.. code-block:: php
+
+    use Aws\S3\S3Client;
+
+    $client = S3Client::factory(array(
+        'key'    => '<aws access key>',
+        'secret' => '<aws secret key>',
+        'region' => 'us-west-2'
+    ));
+
+Service locator
+~~~~~~~~~~~~~~~
+
+A more robust way to connection to Amazon S3 is through the service locator. This allows you to specify credentials and
+other configuration settings in a configuration file. These settings can then be shared across all clients so that you
+only have to specify your keys once.
+
+.. code-block:: php
+
+    use Aws\Common\Aws;
+
+    $aws = Aws::factory('/path/to/my_config.json');
+    $client = $aws->get('s3');
+
+Creating a bucket
+-----------------
+
+Now that we've created a client object, let's create a bucket. This bucket will be used throughout the remainder of this
+guide.
+
+.. code-block:: php
+
+    $client->createBucket(array('Bucket' => 'mybucket'));
+
+If you run the above code example unaltered, you'll probably trigger the following exception::
+
+    PHP Fatal error:  Uncaught Aws\S3\Exception\BucketAlreadyExistsException: AWS Error Code: BucketAlreadyExists,
+    Status Code: 409, AWS Request ID: D94E6394791E98A4, AWS Error Type: client, AWS Error Message: The requested bucket
+    name is not available. The bucket namespace is shared by all users of the system. Please select a different name
+    and try again.
+
+This is because bucket names in Amazon S3 reside in a global namespace. You'll need to change the actual name of the
+bucket used in the examples of this tutorial in order for them to work correctly.
+
+Creating a bucket in another region
+-----------------------------------
+
+The above example creates a bucket in the standard US-EAST-1 region. You can change the bucket location by passing a
+``LocationConstraint`` value.
+
+.. code-block:: php
+
+    use Aws\Common\Enum\Region;
+
+    $client->createBucket(array(
+        'Bucket'             => 'mybucket',
+        'LocationConstraint' => Region::EU_WEST_1
+    ));
+
+You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the EU_WEST_1
+constant. The SDK provides various Enum classes under the ``Aws\Common\Enum`` namespace that can be useful for
+remembering available values and ensuring you do not enter a typo.
+
+.. note::
+
+    Using the enum classes is not required. You could have simply pass 'eu-west-1' in the ``LocationConstraint`` key.
+
+Uploading objects
+-----------------
+
+Now that you've created a bucket, let's put some data in it. The following example creates an object in your bucket
+called data.txt that contains 'Hello!'.
+
+.. code-block:: php
+
+    $client->putObject(array(
+        'Bucket' => 'mybucket',
+        'Key'    => 'data.txt',
+        'Body'   => 'Hello!'
+    ));
+
+The AWS SDK for PHP will attempt to automatically determine the most appropriate Content-Type header used to store the
+object. If you are using a less common file extension and your Content-Type header is not added automatically, you can
+add a Content-Type header by passing a ``ContentType`` option to the operation.
+
+Uploading a file
+~~~~~~~~~~~~~~~~
+
+The above example uploaded text data to your object. You can alternatively upload the contents of a file by passing
+the ``SourceFile`` option. Let's also put some metadata on the object.
+
+.. code-block:: php
+
+    $client->putObject(array(
+        'Bucket'     => 'mybucket',
+        'Key'        => 'data.txt',
+        'SourceFile' => '/path/to/data.txt',
+        'Metadata'   => array(
+            'Foo' => 'abc',
+            'Baz' => '123'
+        )
+    ));
+
+Uploading from a stream
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Alternatively, you can pass a resource returned from an ``fopen`` call to the ``Body`` parameter.
+
+.. code-block:: php
+
+    $client->putObject(array(
+        'Bucket' => 'mybucket',
+        'Key'    => 'data.txt',
+        'Body'   => fopen('/path/to/data.txt', 'r+')
+    ));
+
+Because the AWS SDK for PHP is built around Guzzle, you can also pass an EntityBody object.
+
+.. code-block:: php
+
+    use Guzzle\Http\EntityBody;
+
+    $client->putObject(array(
+        'Bucket' => 'mybucket',
+        'Key'    => 'data.txt',
+        'Body'   => EntityBody::factory(fopen('/path/to/data.txt', 'r+'))
+    ));
+
+Listing your buckets
+--------------------
+
+You can list all of the buckets owned by your account using the ``listBuckets`` method.
+
+.. code-block:: php
+
+    $result = $client->listBuckets()->get('Buckets');
+
+    foreach ($result['Buckets'] as $bucket) {
+        echo "{$bucket['Name']} - {$bucket['CreationDate']}\n";
+    }
+
+All service operation calls using the AWS SDK for PHP return a ``Guzzle\Service\Resource\Model`` object. This object
+contains all of the data returned from the service in a normalized array like object. The data stored in the model can
+be access like an array as seen above. The object also contains a ``get()`` method used to retrieve values from the
+model by name, and a ``getPath()`` method that can be used to retrieve nested values.
+
+.. code-block:: php
+
+    $result = $client->listBuckets();
+    $id = $result->getPath('Owner/ID');
+
+Listing objects in your buckets
+-------------------------------
+
+Listing objects is a lot easier in the new SDK thanks to _iterators_. You can list all of the objects in a bucket using
+the ``ListObjectsIterator``.
+
+.. code-block:: php
+
+    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'mybucket'));
+
+    foreach ($iterator as $object) {
+        echo $object['Key'] . "\n";
+    }
+
+Iterators will handle sending any required subsequent requests when a response is truncated. The ListObject iterator
+works with other parameters too.
+
+.. code-block:: php
+
+    $iterator = $client->getIterator('ListObjects', array(
+        'Bucket' => 'mybucket',
+        'Prefix' => 'foo'
+    ));
+
+    foreach ($iterator as $object) {
+        echo $object['Key'] . "\n";
+    }
+
+You can convert any iterator to an array using the ``toArray()`` method of the iterator.
+
+.. note::
+
+    Converting an iterator to an array will load the entire contents of the iterator into memory.
+
+Downloading objects
+-------------------
+
+You can use the ``GetObject`` operation to download an object.
+
+.. code-block:: php
+
+    $result = $client->getObject(array(
+        'Bucket' => 'mybucket',
+        'Key'    => 'data.txt'
+    ));
+
+    echo get_class($result['Body']);
+    // >>> Guzzle\Http\EntityBody
+    echo $result['Body'];
+    // >>> Hello!
+
+The contents of the object are stored in the ``Body`` parameter of the model object. Other parameters are stored in
+model including ``ContentType``, ``ContentLength``, ``VersionId``, ``ETag``, etc...
+
+The ``Body`` parameter stores a reference to a ``Guzzle\Http\EntityBody`` object. The SDK will store the data in a
+temporary PHP stream by default. This will work for most use-cases and will automatically protect your application from
+attempting to download extremely large files into memory.
+
+The EntityBody object has other nice features that allow you to read data using streams.
+
+.. code-block:: php
+
+    // Read the body off of the underlying stream
+    $result['Body']->rewind();
+    while ($data = $result['Body']->read(1024)) {
+        echo $data;
+    }
+
+    // Cast the body to a primitive string (loads the entire contents into memory!)
+    $bodyAsString = (string) $result['Body'];
+
+Saving objects to a file
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can save the contents of an object to a file by setting the SaveAs parameter.
+
+.. code-block:: php
+
+    $result = $client->getObject(array(
+        'Bucket' => 'mybucket',
+        'Key'    => 'data.txt',
+        'SaveAs' => '/tmp/data.txt'
+    ));
+
+The ``SaveAs`` parameter will only work with versions of Guzzle >= 3.0.7. If you are using an older version of
+Guzzle, you can set the ``command.response_body`` parameter to a valid ``Guzzle\Http\EntityBodyInterface`` object.
+
+.. code-block:: php
+
+    use Guzzle\Http\EntityBody;
+
+    $result = $client->getObject(array(
+        'Bucket'                => 'mybucket',
+        'Key'                   => 'data.txt',
+        'command.response_body' => EntityBody::factory(fopen('/tmp/data.txt', 'r+'))
+    ));
+
+Uploading large files using multipart uploads
+---------------------------------------------
+
+Amazon S3 allows you to uploads large files in pieces. The AWS SDK for PHP provides an abstraction layer that makes it
+easier to upload large files using multipart upload.
+
+.. code-block:: php
+
+    use Aws\Common\Enum\Size;
+    use Aws\Common\Exception\MultipartUploadException;
+    use Aws\S3\Model\MultipartUpload\UploadBuilder;
+
+    $uploader = UploadBuilder::newInstance()
+        ->setClient($client)
+        ->setSource('/path/to/large/file.mov')
+        ->setBucket('mybucket')
+        ->setKey('my-object-key')
+        ->setOption('Metadata', array('Foo' => 'Bar')),
+        ->setOption('CacheControl', 'max-age=3600')
+        ->build();
+
+    // Perform the upload. Abort the upload if something goes wrong
+    try {
+        $uploader->upload();
+        echo "Upload complete.\n";
+    } catch (MultipartUploadException $e) {
+        $uploader->abort();
+        echo "Upload failed.\n";
+    }
+
+You can attempt to upload parts in parallel by specifying the concurrency option on the UploadBuilder object. The
+following example will attempt to upload three parts in parallel until the entire object has been uploaded.
+
+.. code-block:: php
+
+    $uploader = UploadBuilder::newInstance()
+        ->setClient($client)
+        ->setSource('/path/to/large/file.mov')
+        ->setBucket('mybucket')
+        ->setKey('my-object-key')
+        ->setConcurrency(3)
+        ->build();
