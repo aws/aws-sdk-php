@@ -2,8 +2,8 @@
 Migration Guide
 ===============
 
-The purpose of this guide is to show how to migrate your code to use the new AWS SDK for PHP 2 and how the new SDK
-differs from the first version of the SDK.
+This guide shows how to migrate your code to use the new AWS SDK for PHP 2 and how the new SDK differs from the first
+version of the SDK.
 
 Introduction
 ------------
@@ -19,8 +19,20 @@ top of the `Guzzle HTTP client framework <http://guzzlephp.org>`_, which provide
 event-driven customization.  We also introduced high-level abstractions to make programming common tasks easy. The SDK
 is compatible with PHP 5.3.2 and newer, and follows the PSR-0 standard for namespaces and autoloading.
 
+Which Services are Supported?
+-----------------------------
+
+The AWS SDK for PHP 2 does not currently support all AWS services. However, we will incrementally add support for the
+other services in upcoming releases to the Version 2 SDK.
+
+Fortunately, it is straightforward to use the previous SDK side-by-side with this version. This enables using the SDK
+for the services it supports while relying on the prior SDK for those it does not. Please see the :doc:`side-by-side` for details.
+
+Follow our `AWS SDK for PHP 2 GitHub repository <https://github.com/aws/aws-sdk-php>`_ to stay up-to-date with the
+latest changes.
+
 What's New?
-~~~~~~~~~~~
+-----------
 
 - `PHP 5.3 namespaces <http://php.net/namespaces>`_
 - Follows `PSR-0, PSR-1, and PSR-2 standards <http://php-fig.org>`_
@@ -34,7 +46,7 @@ What's New?
 - "Waiter" objects that allow you to poll a resource until it is in a desired state
 - Resource iterator objects for easily iterating over paginated responses
 - Service-specific sets of exceptions
-- Modelled responses with a simpler interface
+- Modeled responses with a simpler interface
 - Grouped constants (Enums) for service parameter options
 - Flexible request batching system
 - Service builder/container that supports easy configuration and dependency injection
@@ -43,12 +55,13 @@ What's New?
   dependencies
 - `Phing <http://phing.info>`_ ``build.xml`` for installing dev tools, driving testing, and producing ``.phar`` files
 - Powerful Amazon DynamoDB batch write system
-- Powerful Amazon Simple Storage Service (Amazon S3) and Amazon Glacier multipart upload system
-- Redesigned DynamoDB Session Handler
+- Powerful Amazon Simple Storage Service (Amazon S3) and Amazon Glacier multipart upload system that can be paused and
+  resumed
+- Redesigned DynamoDB Session Handler with smarter writing and garbage collection
 - Improved multi-region support
 
 What's Different?
-~~~~~~~~~~~~~~~~~
+-----------------
 
 - **Architecture** – The new SDK is built on top of `Guzzle <http://guzzlephp.org>`_ and inherits its features and
   conventions. Every AWS service client extends the Guzzle client, defining operations through a service description
@@ -134,9 +147,9 @@ What's Different?
 
     // New SDK - PutObject operation
     $result = $s3->putObject(array(
-        'bucket' => 'bucket-name',
-        'key'    => 'object-key.txt',
-        'body'   => 'lorem ipsum'
+        'Bucket' => 'bucket-name',
+        'Key'    => 'object-key.txt',
+        'Body'   => 'lorem ipsum'
     ));
 
   In the new SDK, the ``putObject()`` method doesn’t actually exist as a method on the client. It is implemented using
@@ -154,9 +167,9 @@ What's Different?
   .. code-block:: php
 
     $command = $s3->getCommand('PutObject', array(
-        'bucket' => 'bucket-name',
-        'key'    => 'object-key.txt',
-        'body'   => 'lorem ipsum'
+        'Bucket' => 'bucket-name',
+        'Key'    => 'object-key.txt',
+        'Body'   => 'lorem ipsum'
     ));
     $result = $command->execute();
 
@@ -165,9 +178,9 @@ What's Different?
   .. code-block:: php
 
     $s3->getCommand('PutObject')
-        ->set('bucket', 'bucket-name')
-        ->set('key', 'object-key.txt')
-        ->set('body', 'lorem ipsum')
+        ->set('Bucket', 'bucket-name')
+        ->set('Key', 'object-key.txt')
+        ->set('Body', 'lorem ipsum')
         ->execute();
 
 - **Responses** – The format of responses has changed. Responses are no longer instances of the ``CFResponse`` object.
@@ -215,7 +228,7 @@ What's Different?
         printf('The provisioned throughput could not be determined for table "%s".', $tableName);
     }
 
-  You can also get the Guzzle response object back from the command. This is helpful if you need to retrieve the status
+  You can get the Guzzle response object back from the command. This is helpful if you need to retrieve the status
   code, additional data from the headers, or the raw response body.
 
   .. code-block:: php
@@ -228,7 +241,8 @@ What's Different?
   .. code-block:: php
 
     try {
-        $result = $dynamoDb->describeTable(array(TableName' => 'my-table'));
+        $command = $dynamoDb->getCommand('DescribeTable', array('TableName' => $tableName));
+        $statusCode = $command->getResponse()->getStatusCode();
     } catch (Aws\DynamoDb\Exception\DynamoDbException $e) {
         $statusCode = $e->getResponse()->getStatusCode();
     }
@@ -240,25 +254,12 @@ What's Different?
   .. code-block:: php
 
     $objects = $s3->getIterator('ListObjects', array(
-        'bucket' => 'my-bucket-name'
+        'Bucket' => 'my-bucket-name'
     ));
 
     foreach ($objects as $object) {
         echo $object['Key'] . PHP_EOL;
     }
-
-Which Services are Supported?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The AWS SDK for PHP 2 does not currently support all AWS services. However, we will incrementally add support for other
-services in upcoming releases to the Version 2 SDK.
-
-Fortunately, it is straightforward to use the previous SDK side-by-side with this version. This enables using the SDK
-for the services it supports while relying on the prior SDK for those it does not. Please see the
-`Side-by-Side Guide <http://docs.amazonwebservices.com/awssdkdocsphp2/latest/sidebysideguide/>`_ for details.
-
-Follow our `AWS SDK for PHP 2 GitHub repository <https://github.com/aws/aws-sdk-php-2>`_ to stay up-to-date with the
-latest changes.
 
 Comparing Code Samples from Both SDKs
 -------------------------------------
@@ -311,10 +312,10 @@ From Version 2 of the SDK
 
   try {
       $result = $s3->listParts(array(
-          'bucket'    => 'my-bucket-name',
-          'key'       => 'my-object-key',
-          'uploadId'  => 'my-upload-id',
-          'max-parts' => 10
+          'Bucket'    => 'my-bucket-name',
+          'Key'       => 'my-object-key',
+          'UploadId'  => 'my-upload-id',
+          'MaxParts' => 10
       ));
 
       // Loop through and display the part numbers
