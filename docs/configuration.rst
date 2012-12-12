@@ -2,7 +2,7 @@ Configuration
 =============
 
 When passing an array of parameters to the first argument of ``Aws\Common\Aws::factory()``, the service builder loads
-the default ``aws-config.php`` file and merge the array of shared parameters into the default configuration.
+the default ``aws-config.php`` file and merges the array of shared parameters into the default configuration.
 
 Excerpt from ``src/Aws/Common/Resources/aws-config.php``:
 
