@@ -21,8 +21,10 @@ AWS SDK for PHP 2
     service-s3
     service-sts
 
-The AWS SDK for PHP 2 enables PHP developers to build solutions with Amazon Simple Storage Service (Amazon S3), Amazon
-DynamoDB, Amazon Glacier, and more.
+The **AWS SDK for PHP** enables PHP developers to easily interface with AWS services and build solutions with Amazon
+Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP, developers can
+get started in minutes by using Composer – by requiring the ``aws/aws-sdk-php`` package – or by downloading a `single
+phar file <http://pear.amazonwebservices.com/get/aws.phar>`_.
 
 Getting started
 ---------------
