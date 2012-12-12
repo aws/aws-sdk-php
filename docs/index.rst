@@ -8,8 +8,8 @@ AWS SDK for PHP 2
     awssignup
     requirements
     installation
-    configuration
     quick-start
+    configuration
 
     migration-guide
     side-by-side
@@ -29,8 +29,8 @@ Getting started
 * :doc:`awssignup`
 * :doc:`requirements`
 * :doc:`installation`
-* :doc:`configuration`
 * :doc:`quick-start`
+* :doc:`configuration`
 
 Migrating from SDK 1 to SDK 2
 -----------------------------
