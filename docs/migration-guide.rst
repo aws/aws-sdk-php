@@ -54,8 +54,8 @@ What's New?
 - `Composer <http://getcomposer.org>`_ support (including PSR-0 compliance) for installing and autoloading SDK
   dependencies
 - `Phing <http://phing.info>`_ ``build.xml`` for installing dev tools, driving testing, and producing ``.phar`` files
-- Powerful Amazon DynamoDB batch write system
-- Powerful Amazon Simple Storage Service (Amazon S3) and Amazon Glacier multipart upload system that can be paused and
+- Fast Amazon DynamoDB batch PutItem and DeleteItem system
+- Multipart upload system for Amazon Simple Storage Service (Amazon S3) and Amazon Glacier that can be paused and
   resumed
 - Redesigned DynamoDB Session Handler with smarter writing and garbage collection
 - Improved multi-region support

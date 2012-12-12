@@ -1,13 +1,14 @@
 # AWS SDK for PHP 2
 
-The AWS SDK for PHP 2 enables PHP developers to build solutions with Amazon Simple Storage Service (Amazon S3), Amazon
-DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP 2, developers can get started in minutes with a single,
-downloadable `.phar` file, or by using [Composer](http://getcomposer.org).
+The *AWS SDK for PHP* enables PHP developers to easily interface with AWS services and build solutions with Amazon
+Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP, developers can
+get started in minutes by using Composer – by requiring the `aws/aws-sdk-php` package – or by downloading a [single
+phar file](http://pear.amazonwebservices.com/get/aws.phar).
 
-This latest addition to the AWS SDKs family provides developers with a more modern, extensible, easy to use, and
-performant AWS client for PHP. This new version is built on top of [Guzzle](http://guzzlephp.org), a PHP HTTP client
-framework, which provides increased performance, persistent connection management, and an extensible plug-in system.
-The AWS SDK for PHP 2 requires PHP 5.3.2.
+This latest version 2 of SDK provides developers with a more modern, extensible, easy to use, and performant AWS client
+for PHP. This new version is built on top of [Guzzle](http://guzzlephp.org), a PHP HTTP client framework, which provides
+increased performance, persistent connection management, and an extensible plug-in system. The AWS SDK for PHP requires
+PHP 5.3.2 or higher.
 
 ## Table of Contents
 
