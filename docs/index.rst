@@ -5,10 +5,14 @@ AWS SDK for PHP 2
 .. toctree::
     :hidden:
 
+    awssignup
     requirements
     installation
     configuration
+    quick-start
+
     migration-guide
+    side-by-side
 
     service-cloudfront
     service-dynamodb
@@ -22,10 +26,17 @@ DynamoDB, Amazon Glacier, and more.
 Getting started
 ---------------
 
+* :doc:`awssignup`
 * :doc:`requirements`
 * :doc:`installation`
 * :doc:`configuration`
+* :doc:`quick-start`
+
+Migrating from SDK 1 to SDK 2
+-----------------------------
+
 * :doc:`migration-guide`
+* :doc:`side-by-side`
 
 Supported services
 ------------------

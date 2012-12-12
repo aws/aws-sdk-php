@@ -1,6 +1,6 @@
-=========
-Amazon S3
-=========
+==================================
+Amazon Simple Storage Service (S3)
+==================================
 
 This guide focuses on the AWS SDK for PHP interface to Amazon S3. This guide assumes you have already downloaded and
 installed the AWS SDK for PHP 2.

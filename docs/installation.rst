@@ -2,7 +2,7 @@ Installation
 ============
 
 Installing via Composer
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Using `Composer <http://getcomposer.org>`_ is the recommended way to install the AWS SDK for PHP 2. Composer is
 dependency management tool for PHP that allows you to declare the dependencies your project needs and installs them into
@@ -45,7 +45,7 @@ You can find out more on how to install Composer, configure autoloading, and oth
 dependencies at `getcomposer.org <http://getcomposer.org>`_.
 
 Installing via Phar
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Each release of the AWS SDK for PHP ships with a pre-packaged `phar <http://php.net/manual/en/book.phar.php>`_ file
 containing all of the classes and dependencies you need to run the SDK. Additionally, the phar file automatically
@@ -73,17 +73,22 @@ to get started::
 Installing via PEAR
 ~~~~~~~~~~~~~~~~~~~
 
+`PEAR <http://pear.php.net/>`_, which stands for PHP Extension and Application Repository, is a framework and
+distribution system for reusable PHP components. It is the PHP equivalent of other package management solutions like Yum
+that install packages system-wide.
+
 PEAR packages are easy to install, and are available in your PHP environment path so that they are accessible to
 any PHP project. PEAR packages are not specific to your project, but rather to the machine they're installed on.
 
-From the command-line, you can install the SDK with PEAR as follows (this might need to be run as sudo):
+From the command-line, you can install the SDK with PEAR as follows (this might need to be run as ``sudo``):
 
 .. code-block:: sh
 
-    pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
+    pear channel-discover pear.amazonwebservices.com
+    pear install aws/sdk
 
 Once the SDK has been installed via PEAR, you can load the phar into your project with:
 
 .. code-block:: php
 
-    require 'AWSSDKforPHP/aws.phar';
+    require 'AWSSDKforPHP/src/aws.phar';
