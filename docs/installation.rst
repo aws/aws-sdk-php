@@ -44,6 +44,16 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
 You can find out more on how to install Composer, configure autoloading, and other best-practices for defining
 dependencies at `getcomposer.org <http://getcomposer.org>`_.
 
+During your development, you can keep up with the latest changes on the master branch by requiring ``dev-master``.
+
+   .. code-block:: js
+
+       {
+           "require": {
+               "aws/aws-sdk-php": "dev-master"
+           }
+       }
+
 Installing via Phar
 -------------------
 
@@ -57,28 +67,28 @@ file are the following required and suggested libraries:
 -  `Monolog <https://github.com/seldaek/monolog>`_ for logging
 -  `Doctrine <https://github.com/doctrine/common>`_ for caching
 
-You can download the packaged Phar at http://pear.amazonwebservices.com/get/aws.phar. Simply include it in your scripts
-to get started::
+You can `download the packaged Phar <http://pear.amazonwebservices.com/get/aws.phar>`_ and simply include it in your
+scripts to get started::
 
     require 'aws.phar';
+
+If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK and build a phar file yourself using the
+*"phar"* task.
 
 .. note::
 
     If you are using PHP with the Suhosin patch (especially common on Ubuntu and Debian distributions), you will need
-    to enable the use of phars in the `suhosin.ini`. Without this, including a phar file in your code will cause it to
-    silently fail. You should modify the `suhosin.ini` file by adding the line:
+    to enable the use of phars in the ``suhosin.ini``. Without this, including a phar file in your code will cause it to
+    silently fail. You should modify the ``suhosin.ini`` file by adding the line:
 
     ``suhosin.executor.include.whitelist = phar``
 
 Installing via PEAR
 ~~~~~~~~~~~~~~~~~~~
 
-`PEAR <http://pear.php.net/>`_, which stands for PHP Extension and Application Repository, is a framework and
-distribution system for reusable PHP components. It is the PHP equivalent of other package management solutions like Yum
-that install packages system-wide.
-
-PEAR packages are easy to install, and are available in your PHP environment path so that they are accessible to
-any PHP project. PEAR packages are not specific to your project, but rather to the machine they're installed on.
+`PEAR <http://pear.php.net/>`_ packages are easy to install, and are available in your PHP environment path so that they
+are accessible to any PHP project. PEAR packages are not specific to your project, but rather to the machine they're
+installed on.
 
 From the command-line, you can install the SDK with PEAR as follows (this might need to be run as ``sudo``):
 
@@ -91,4 +101,4 @@ Once the SDK has been installed via PEAR, you can load the phar into your projec
 
 .. code-block:: php
 
-    require 'AWSSDKforPHP/src/aws.phar';
+    require 'AWSSDKforPHP/aws.phar';

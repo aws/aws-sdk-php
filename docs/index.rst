@@ -10,6 +10,7 @@ AWS SDK for PHP 2
     installation
     quick-start
     configuration
+    contribution
 
     migration-guide
     side-by-side
@@ -31,6 +32,7 @@ Getting started
 * :doc:`installation`
 * :doc:`quick-start`
 * :doc:`configuration`
+* :doc:`contribution`
 
 Migrating from SDK 1 to SDK 2
 -----------------------------
