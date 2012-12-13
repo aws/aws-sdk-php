@@ -160,4 +160,21 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue($requests[0]->getQuery()->hasKey('versions'));
         $this->assertTrue($requests[1]->getQuery()->hasKey('delete'));
     }
+
+    public function testProperlyEncodesPrefixKeys()
+    {
+        $this->assertEquals('/foo/baz%20/bar%21', S3Client::encodeKey('/foo/baz /bar!'));
+        $client = $this->getServiceBuilder()->get('s3');
+        $command = $client->getCommand('PutObject', array(
+            'Key'    => 'foo/baz /bar!',
+            'Bucket' => 'test'
+        ));
+        $command->prepare();
+        $this->assertEquals('/test/foo/baz%20/bar%21', $command->getRequest()->getPath());
+    }
+
+    public function testExplodesKeys()
+    {
+        $this->assertEquals(array('foo', 'baz ', 'bar!'), S3Client::explodeKey('foo/baz /bar!'));
+    }
 }

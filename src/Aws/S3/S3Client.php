@@ -336,6 +336,30 @@ class S3Client extends AbstractClient
     }
 
     /**
+     * Raw URL encode a key and allow for '/' characters
+     *
+     * @param string $key Key to encode
+     *
+     * @return string Returns the encoded key
+     */
+    public static function encodeKey($key)
+    {
+        return str_replace('%2F', '/', rawurlencode(str_replace('%20', ' ', $key)));
+    }
+
+    /**
+     * Explode a prefixed key into an array of values
+     *
+     * @param string $key Key to explode
+     *
+     * @return array Returns the exploded
+     */
+    public static function explodeKey($key)
+    {
+        return explode('/', $key);
+    }
+
+    /**
      * Determines whether or not a resource exists using a command
      *
      * @param CommandInterface $command   Command used to poll for the resource

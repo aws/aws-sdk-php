@@ -347,6 +347,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPutObjectAcl()
     {
         self::log("Setting a custom object ACL");
+        $this->client->waitUntil('bucket_exists', $this->bucket);
         $command = $this->client->getCommand('PutObjectAcl', array(
             'Bucket' => $this->bucket,
             'Key'    => self::TEST_KEY,
@@ -562,6 +563,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testUsesTieredStorage()
     {
         self::log("Uploading an object then placing in Glacier");
+        $this->client->waitUntil('bucket_exists', $this->bucket);
         $key = 'abc';
         $this->client->putObject(array(
             'Bucket' => $this->bucket,
@@ -632,5 +634,37 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals('PUT', $requests[0]->getMethod());
         $this->assertEquals('PUT', $requests[1]->getMethod());
         $this->assertEquals('POST', $requests[2]->getMethod());
+    }
+
+    /**
+     * @depends testPutAndListObjects
+     */
+    public function testWorksWithPrefixKeys()
+    {
+        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $key = 'foo /baz/bar!';
+        $command = $this->client->getCommand('PutObject', array(
+            'Bucket'     => $this->bucket,
+            'Key'        => $key,
+            'SourceFile' => __FILE__
+        ));
+        $command->execute();
+        // Ensure the path is correct
+        $this->assertEquals('/foo%20/baz/bar%21', $command->getRequest()->getPath());
+        // Ensure the key is not an array
+        $this->assertEquals('foo /baz/bar!', $command['Key']);
+
+        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        $result = $this->client->getObject(array('Bucket' => $this->bucket, 'Key' => $key));
+        $this->assertEquals(file_get_contents(__FILE__), (string) $result['Body']);
+
+        // Test using path style hosting
+        $command = $this->client->getCommand('DeleteObject', array(
+            'Bucket'    => $this->bucket,
+            'Key'       => $key,
+            'PathStyle' => true
+        ));
+        $command->execute();
+        $this->assertEquals('/' . $this->bucket . '/foo%20/baz/bar%21', $command->getRequest()->getPath());
     }
 }

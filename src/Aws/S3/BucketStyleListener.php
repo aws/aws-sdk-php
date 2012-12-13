@@ -41,9 +41,15 @@ class BucketStyleListener implements EventSubscriberInterface
     {
         $command = $event['command'];
         $bucket = $command['Bucket'];
-        $key = $command['Key'];
         $request = $command->getRequest();
         $pathStyle = false;
+
+        if ($key = $command['Key']) {
+            // Modify the command Key to account for the {/Key*} explosion into an array
+            if (is_array($key)) {
+                $command['Key'] = $key = implode('/', $key);
+            }
+        }
 
         // Set the key and bucket on the request
         $request->getParams()->set('bucket', $bucket)->set('key', $key);
@@ -66,13 +72,13 @@ class BucketStyleListener implements EventSubscriberInterface
             // Path style does not need a trailing slash
             $request->getParams()->set(
                 's3.resource',
-                '/' . rawurlencode($bucket) . ($key ? ('/' . rawurlencode($key)) : '')
+                '/' . rawurlencode($bucket) . ($key ? ('/' . S3Client::encodeKey($key)) : '')
             );
         } else {
             // Bucket style needs a trailing slash
             $request->getParams()->set(
                 's3.resource',
-                '/' . rawurlencode($bucket) . ($key ? ('/' . rawurlencode($key)) : '/')
+                '/' . rawurlencode($bucket) . ($key ? ('/' . S3Client::encodeKey($key)) : '/')
             );
         }
     }

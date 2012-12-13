@@ -20,7 +20,7 @@ return array (
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'AbortMultipartUploadOutput',
             'responseType' => 'model',
@@ -36,6 +36,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'UploadId' => array(
                     'required' => true,
@@ -53,7 +56,7 @@ return array (
         ),
         'CompleteMultipartUpload' => array(
             'httpMethod' => 'POST',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CompleteMultipartUploadOutput',
             'responseType' => 'model',
@@ -77,6 +80,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'UploadId' => array(
                     'required' => true,
@@ -113,7 +119,7 @@ return array (
         ),
         'CopyObject' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CopyObjectOutput',
             'responseType' => 'model',
@@ -129,6 +135,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'MetadataDirective' => array(
                     'description' => 'Specifies whether the metadata is copied from the source object or replaced with metadata provided in the request.',
@@ -362,7 +371,7 @@ return array (
         ),
         'CreateMultipartUpload' => array(
             'httpMethod' => 'POST',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateMultipartUploadOutput',
             'responseType' => 'model',
@@ -378,6 +387,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'CacheControl' => array(
                     'description' => 'Can be used to specify caching behavior along the request/reply chain.',
@@ -637,7 +649,7 @@ return array (
         ),
         'DeleteObject' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'DeleteObjectOutput',
             'responseType' => 'model',
@@ -653,6 +665,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
             ),
         ),
@@ -1022,7 +1037,7 @@ return array (
         ),
         'GetObject' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetObjectOutput',
             'responseType' => 'model',
@@ -1038,6 +1053,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'ResponseContentType' => array(
                     'description' => 'Sets the Content-Type header of the response.',
@@ -1133,7 +1151,7 @@ return array (
         ),
         'GetObjectAcl' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetObjectAclOutput',
             'responseType' => 'model',
@@ -1149,6 +1167,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'VersionId' => array(
                     'description' => 'VersionId used to reference a specific version of the object.',
@@ -1171,7 +1192,7 @@ return array (
         ),
         'GetObjectTorrent' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetObjectTorrentOutput',
             'responseType' => 'model',
@@ -1187,6 +1208,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -1215,7 +1239,7 @@ return array (
         ),
         'HeadObject' => array(
             'httpMethod' => 'HEAD',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'HeadObjectOutput',
             'responseType' => 'model',
@@ -1231,6 +1255,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'VersionId' => array(
                     'description' => 'VersionId used to reference a specific version of the object.',
@@ -1454,7 +1481,7 @@ return array (
         ),
         'ListParts' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListPartsOutput',
             'responseType' => 'model',
@@ -1470,6 +1497,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'UploadId' => array(
                     'required' => true,
@@ -2266,7 +2296,7 @@ return array (
         ),
         'PutObject' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'PutObjectOutput',
             'responseType' => 'model',
@@ -2282,6 +2312,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'CacheControl' => array(
                     'description' => 'Can be used to specify caching behavior along the request/reply chain.',
@@ -2415,7 +2448,7 @@ return array (
         ),
         'PutObjectAcl' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'PutObjectAclOutput',
             'responseType' => 'model',
@@ -2439,6 +2472,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'Owner' => array(
                     'type' => 'object',
@@ -2576,7 +2612,7 @@ return array (
         ),
         'RestoreObject' => array(
             'httpMethod' => 'POST',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'RestoreObjectOutput',
             'responseType' => 'model',
@@ -2600,6 +2636,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'Days' => array(
                     'required' => true,
@@ -2624,7 +2663,7 @@ return array (
         ),
         'UploadPart' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UploadPartOutput',
             'responseType' => 'model',
@@ -2640,6 +2679,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'UploadId' => array(
                     'required' => true,
@@ -2675,7 +2717,7 @@ return array (
         ),
         'UploadPartCopy' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}/{Key}',
+            'uri' => '/{Bucket}{/Key*}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UploadPartCopyOutput',
             'responseType' => 'model',
@@ -2691,6 +2733,9 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'UploadId' => array(
                     'required' => true,
