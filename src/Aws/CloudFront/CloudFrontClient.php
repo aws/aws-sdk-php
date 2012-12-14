@@ -25,7 +25,6 @@ use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
 use Guzzle\Service\Resource\Model;
-use Guzzle\Service\Resource\MapResourceIteratorFactory;
 
 /**
  * Client to interact with Amazon CloudFront
@@ -99,6 +98,7 @@ class CloudFrontClient extends AbstractClient
      */
     public static function factory($config = array())
     {
+        // Instantiate the CloudFront client
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
@@ -107,12 +107,19 @@ class CloudFrontClient extends AbstractClient
             ))
             ->setSignature(new CloudFrontSignature())
             ->setExceptionParser(new DefaultXmlExceptionParser())
+            ->setIteratorsConfig(array(
+                'token_param' => 'Marker',
+                'token_key'   => 'NextMarker',
+                'more_key'    => 'IsTruncated',
+                'result_key'  => 'Items',
+                'operations'  => array(
+                    'ListCloudFrontOriginAccessIdentities',
+                    'ListDistributions',
+                    'ListInvalidations',
+                    'ListStreamingDistributions'
+                )
+            ))
             ->build();
-
-        // Most (if not all) CloudFront iterators use the same logic
-        $client->setResourceIteratorFactory(new MapResourceIteratorFactory(array(
-            '*' => 'Aws\CloudFront\Iterator\DefaultIterator'
-        )));
 
         return $client;
     }

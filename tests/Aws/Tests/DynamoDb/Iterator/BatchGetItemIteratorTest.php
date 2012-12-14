@@ -14,58 +14,33 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\DynamoDb\Model;
+namespace Aws\Tests\DynamoDb\Iterator;
 
 use Aws\DynamoDb\Iterator\BatchGetItemIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * @covers Aws\DynamoDb\Iterator\BatchGetItemIterator
  */
 class BatchGetItemIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testIteratesBatchGetItemCommand()
+    public function testConcreteResultHandlingWorks()
     {
-        $client = $this->getServiceBuilder()->get('dynamodb');
-        $mock = $this->setMockResponse($client, array(
-            'dynamodb/batch_get_item_has_more',
-            'dynamodb/batch_get_item_empty_has_more',
-            'dynamodb/batch_get_item_final'
-        ));
-
-        $iterator = new BatchGetItemIterator($client->getCommand('BatchGetItem', array(
-            'RequestItems' => array(
+        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+        $iterator = new BatchGetItemIterator($command);
+        $model = new Model(array(
+            'Responses' => array(
                 'Table1' => array(
-                    'Keys' => array(
-                        array(
-                            'HashKeyElement'  => array('S' => 'KeyValue1'),
-                            'RangeKeyElement' => array('N' => 'KeyValue2')
-                        ),
-                        array(
-                            'HashKeyElement'  => array('S' => 'KeyValue3'),
-                            'RangeKeyElement' => array('N' => 'KeyValue4')
-                        ),
-                        array(
-                            'HashKeyElement'  => array('S' => 'KeyValue5'),
-                            'RangeKeyElement' => array('N' => 'KeyValue6')
-                        )
-                    ),
-                    'AttributesToGet' => array('AttributeName1', 'AttributeName2', 'AttributeName3')
-                ),
-                'Table2' => array(
-                    'Keys' => array(
-                        array('HashKeyElement' => array('S' => 'KeyValue4')),
-                        array('HashKeyElement' => array('S' => 'KeyValue5'))
-                    ),
-                    'AttributesToGet' => array('AttributeName4', 'AttributeName5', 'AttributeName6')
+                    'Items' => array(1, 2, 3)
                 )
             )
-        )));
+        ));
 
-        foreach ($iterator as $item) {
-            $this->assertInternalType('array', $item);
-        }
+        $class = new \ReflectionObject($iterator);
+        $method = $class->getMethod('handleResults');
+        $method->setAccessible(true);
+        $items = $method->invoke($iterator, $model);
 
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(3, count($requests));
+        $this->assertCount(3, $items);
     }
 }

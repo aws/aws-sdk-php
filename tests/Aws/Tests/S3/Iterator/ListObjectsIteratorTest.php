@@ -17,46 +17,44 @@
 namespace Aws\Tests\S3\Iterator;
 
 use Aws\S3\Iterator\ListObjectsIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * @covers Aws\S3\Iterator\ListObjectsIterator
  */
 class ListObjectsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testIteratesListObjectsCommand()
+    public function testResultHandlingWorks()
     {
-        /** @var $client \Guzzle\Service\ClientInterface */
-        $client = $this->getServiceBuilder()->get('s3');
-        $mock = $this->setMockResponse($client, array(
-            's3/list_objects_page_1',
-            's3/list_objects_page_2',
-            's3/list_objects_page_3',
-            's3/list_objects_page_4',
-            's3/list_objects_page_5'
-        ));
-
-        // Create an iterator that will exercise the most code paths
-        $command = $client->getCommand('ListObjects', array(
-            'Bucket'    => 'foo',
-            'MaxKeys'   => 5,
-            'Delimiter' => '/'
-        ));
+        // Prepare an iterator that will execute all LOC in handleResults
+        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
         $iterator = new ListObjectsIterator($command, array(
-            'page_size'       => 2,
-            'return_prefixes' => true,
             'names_only'      => true,
-            'sort_results'    => true
+            'return_prefixes' => true,
+            'sort_results'    => true,
+            'token_key'       => 'NextMarker'
+        ));
+        $model = new Model(array(
+            'Contents' => array(
+                array('Key' => 'Foo'),
+                array('Key' => 'Bar'),
+                array('Key' => 'Baz'),
+            ),
+            'CommonPrefixes' => array(
+                array('Prefix' => 'Fizz'),
+                array('Prefix' => 'Buzz'),
+            )
         ));
 
-        // Verify that we got back everything back
-        $expectedObjects = array('a/', 'b/', 'c', 'd/', 'e', 'f', 'g/');
-        $this->assertSame($expectedObjects, $iterator->toArray());
+        $class = new \ReflectionObject($iterator);
+        $method = $class->getMethod('handleResults');
+        $method->setAccessible(true);
+        $items = $method->invoke($iterator, $model);
 
-        // Verify that 5 HTTP requests were made
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(5, count($requests));
+        // We should get the names of all objects and prefixes in a sorted array
+        $this->assertSame(array('Bar', 'Baz', 'Buzz', 'Fizz', 'Foo'), $items);
 
-        // Verify that only 4 iterations (not 5) were made
-        $this->assertEquals(4, $iterator->getRequestCount());
+        // The last key should be set as the NextMarker in the result
+        $this->assertEquals('Baz', $model->get('NextMarker'));
     }
 }

@@ -17,44 +17,29 @@
 namespace Aws\S3\Iterator;
 
 use Guzzle\Service\Resource\Model;
+use Aws\Common\Iterator\AwsResourceIterator;
 
 /**
- * Iterate over a ListMultipartUploads command
+ * Iterator for the S3 ListMultipartUploads command
  *
  * This iterator includes the following additional options:
  * @option bool return_prefixes Set to true to return both prefixes and uploads
  */
-class ListMultipartUploadsIterator extends AbstractS3ResourceIterator
+class ListMultipartUploadsIterator extends AwsResourceIterator
 {
-    protected static $limitParam = 'MaxUploads';
-
     /**
      * {@inheritdoc}
      */
     protected function handleResults(Model $result)
     {
         // Get the list of uploads
-        $uploads = $result['Uploads'];
+        $uploads = $result->get('Uploads') ?: array();
 
         // If there are prefixes and we want them, merge them in
-        if ($this->get('return_prefixes') && $result['CommonPrefixes']) {
-            $uploads = array_merge($uploads, $result['CommonPrefixes']);
+        if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
+            $uploads = array_merge($uploads, $result->get('CommonPrefixes'));
         }
 
         return $uploads;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = false;
-        if ($result['IsTruncated']) {
-            $this->nextToken = array(
-                'KeyMarker'      => $result['NextKeyMarker'],
-                'UploadIdMarker' => $result['NextUploadIdMarker']
-            );
-        }
     }
 }

@@ -17,52 +17,30 @@
 namespace Aws\Tests\S3\Iterator;
 
 use Aws\S3\Iterator\ListMultipartUploadsIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * @covers Aws\S3\Iterator\ListMultipartUploadsIterator
  */
 class ListMultipartUploadsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testIteratesListMultipartUploadsCommand()
+    public function testResultHandlingWorks()
     {
-        /** @var $client \Guzzle\Service\ClientInterface */
-        $client = $this->getServiceBuilder()->get('s3');
-        $mock = $this->setMockResponse($client, array(
-            's3/list_multipart_uploads_page_1',
-            's3/list_multipart_uploads_page_2'
-        ));
-
-        // Create an iterator that will exercise the most code paths
-        $command = $client->getCommand('ListMultipartUploads', array(
-            'Bucket'    => 'bucket-1',
-            'Delimiter' => '/'
-        ));
+        // Prepare an iterator that will execute all LOC in handleResults
+        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
         $iterator = new ListMultipartUploadsIterator($command, array(
             'return_prefixes' => true
         ));
+        $model = new Model(array(
+            'Uploads'        => array(1, 2),
+            'CommonPrefixes' => array(3, 4)
+        ));
 
-        // Verify that we got back everything back
-        $actualUploads = array();
-        $expectedUploads = array(
-            'object-1|upload-id-1',
-            'object-1|upload-id-2',
-            'object-2|upload-id-1',
-            'object-2|upload-id-2',
-            'prefix-1/',
-            'prefix-2/'
-        );
-        foreach ($iterator as $upload) {
-            if (isset($upload['Key'])) {
-                $actualUploads[] = "$upload[Key]|$upload[UploadId]";
-            } else {
-                $actualUploads[] = $upload['Prefix'];
-            }
-        }
-        $this->assertSame($expectedUploads, $actualUploads);
+        $class = new \ReflectionObject($iterator);
+        $method = $class->getMethod('handleResults');
+        $method->setAccessible(true);
+        $items = $method->invoke($iterator, $model);
 
-        // Verify that the number of requests are as expected
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(2, count($requests));
-        $this->assertEquals(1, $iterator->getRequestCount());
+        $this->assertCount(4, $items);
     }
 }

@@ -16,13 +16,13 @@
 
 namespace Aws\DynamoDb\Iterator;
 
-use Aws\Common\Iterator\AbstractResourceIterator;
+use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Iterate over a Scan command
+ * Iterator for a DynamoDB Scan operation. Can also get the total scanned count
  */
-class ScanIterator extends AbstractResourceIterator
+class ScanIterator extends AwsResourceIterator
 {
     /**
      * @var int Total number of scanned items
@@ -42,27 +42,10 @@ class ScanIterator extends AbstractResourceIterator
     /**
      * {@inheritdoc}
      */
-    protected function applyNextToken()
-    {
-        $this->command->set('ExclusiveStartKey', $this->nextToken);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function handleResults(Model $result)
     {
-        $this->scannedCount += isset($result['ScannedCount']) ? $result['ScannedCount'] : 0;
-        $items = isset($result['Items']) ? $result['Items'] : array();
+        $this->scannedCount += (int) $result->get('ScannedCount');
 
-        return $items;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = isset($result['LastEvaluatedKey']) ? $result['LastEvaluatedKey'] : false;
+        return parent::handleResults($result);
     }
 }

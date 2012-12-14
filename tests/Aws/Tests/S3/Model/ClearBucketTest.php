@@ -40,7 +40,7 @@ class ClearBucketTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('test', $this->readAttribute($clear, 'mfa'));
 
         // Ensure that the iterator can set explicitly
-        $iterator = $this->getMockForAbstractClass('Aws\S3\Iterator\AbstractS3ResourceIterator', array(), '', false);
+        $iterator = $this->getMockForAbstractClass('Aws\Common\Iterator\AwsResourceIterator', array(), '', false);
         $clear->setIterator($iterator);
         $this->assertSame($iterator, $clear->getIterator());
     }
@@ -48,7 +48,7 @@ class ClearBucketTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesDefaultIterator()
     {
         $clear = new ClearBucket($this->getServiceBuilder()->get('s3'), 'foo');
-        $this->assertInstanceOf('Aws\S3\Iterator\AbstractS3ResourceIterator', $clear->getIterator());
+        $this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $clear->getIterator());
     }
 
     public function testHasEvents()

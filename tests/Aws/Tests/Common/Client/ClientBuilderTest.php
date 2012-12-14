@@ -46,6 +46,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setConfigRequirements(array('scheme'))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonQueryExceptionParser())
+            ->setIteratorsConfig(array('token_param' => 'foo'))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
@@ -74,7 +75,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testBuildThrowsExceptionWithoutSignature()
     {
@@ -124,7 +125,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage You must specify a [base_url] or a [region, service, and optional scheme]
      */
     public function testEnsuresBaseUrlOrServiceAndRegionAreSet()
@@ -135,7 +136,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage A signature has not been provided
      */
     public function testEnsuresSignatureIsProvided()
