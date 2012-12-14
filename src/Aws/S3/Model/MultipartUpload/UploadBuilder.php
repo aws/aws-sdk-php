@@ -85,7 +85,7 @@ class UploadBuilder extends AbstractUploadBuilder
     /**
      * Set the minimum acceptable part size
      *
-     * @param int $minSize Minimum acceptable part size
+     * @param int $minSize Minimum acceptable part size in bytes
      *
      * @return self
      */
