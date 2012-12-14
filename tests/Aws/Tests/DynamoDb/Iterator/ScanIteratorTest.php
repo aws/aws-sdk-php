@@ -14,36 +14,31 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\DynamoDb\Model;
+namespace Aws\Tests\DynamoDb\Iterator;
 
 use Aws\DynamoDb\Iterator\ScanIterator;
+use Guzzle\Service\Resource\Model;
 
 /**
  * @covers Aws\DynamoDb\Iterator\ScanIterator
  */
 class ScanIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testIteratesQueryCommand()
+    public function testCanGetScannedCount()
     {
-        $client = $this->getServiceBuilder()->get('dynamodb');
-        $mock = $this->setMockResponse($client, array(
-            'dynamodb/scan_has_more',
-            'dynamodb/scan_empty_has_more',
-            'dynamodb/scan_final',
+        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+        $iterator = new ScanIterator($command, array('result_key' => 'Items'));
+        $model = new Model(array(
+            'Items' => array(1, 2, 3),
+            'ScannedCount' => 4
         ));
 
-        $iterator = new ScanIterator($client->getCommand('Scan', array(
-            'TableName' => 'foo'
-        )));
+        $class = new \ReflectionObject($iterator);
+        $method = $class->getMethod('handleResults');
+        $method->setAccessible(true);
+        $items = $method->invoke($iterator, $model);
 
-        $data = $iterator->toArray();
-        $this->assertEquals(3, count($data));
-
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(3, count($requests));
-        $json = json_decode((string) $requests[1]->getBody(), true);
-        $this->assertArrayHasKey('ExclusiveStartKey', $json);
-
-        $this->assertEquals(207, $iterator->getScannedCount());
+        $this->assertEquals(4, $iterator->getScannedCount());
+        $this->assertCount(3, $items);
     }
 }

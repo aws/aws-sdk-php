@@ -16,74 +16,55 @@
 
 namespace Aws\S3\Iterator;
 
+use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Iterate over a ListObjects command
+ * Iterator for an S3 ListObjects command
  *
  * This iterator includes the following additional options:
  * @option bool return_prefixes Set to true to receive both prefixes and objects in results
  * @option bool sort_results    Set to true to sort mixed (object/prefix) results
  * @option bool names_only      Set to true to receive only the object/prefix names
  */
-class ListObjectsIterator extends AbstractS3ResourceIterator
+class ListObjectsIterator extends AwsResourceIterator
 {
-    /**
-     * @var string The last key in the objects returned which can be used for the next token
-     */
-    protected $lastKey;
-
     /**
      * {@inheritdoc}
      */
     protected function handleResults(Model $result)
     {
-        // Get the list of objects and find the last key
-        $objects = (array) $result['Contents'];
+        // Get the list of objects and record the last key
+        $objects = $result->get('Contents') ?: array();
         $numObjects = count($objects);
-        $this->lastKey = $numObjects ? $objects[$numObjects - 1]['Key'] : false;
+        $lastKey = $numObjects ? $objects[$numObjects - 1]['Key'] : false;
+        if ($lastKey && !$result->hasKey($this->get('token_key'))) {
+            $result->set($this->get('token_key'), $lastKey);
+        }
 
         // Closure for getting the name of an object or prefix
         $getName = function ($object) {
             return isset($object['Key']) ? $object['Key'] : $object['Prefix'];
         };
 
-        // If there are common prefixes returned (i.e. a delimiter was set)
-        // and we care about them, then there is some additional work to do
-        if ($this->get('return_prefixes') && $result['CommonPrefixes']) {
+        // If common prefixes returned (i.e. a delimiter was set) and they need to be returned, there is more to do
+        if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
             // Collect and format the prefixes to include with the objects
-            $objects = array_merge($objects, $result['CommonPrefixes']);
+            $objects = array_merge($objects, $result->get('CommonPrefixes'));
 
-            //Sort the objects and prefixes to maintain alphabetical order,
-            //but only if some of each were returned
-            if ($this->get('sort_results') && $this->lastKey && $objects) {
+            // Sort the objects and prefixes to maintain alphabetical order, but only if some of each were returned
+            if ($this->get('sort_results') && $lastKey && $objects) {
                 usort($objects, function ($object1, $object2) use ($getName) {
                     return strcmp($getName($object1), $getName($object2));
                 });
             }
         }
 
-        // If only the names are desired, iterate through the results and
-        // convert the arrays to the object/prefix names
+        // If only the names are desired, iterate through the results and convert the arrays to the object/prefix names
         if ($this->get('names_only')) {
             $objects = array_map($getName, $objects);
         }
 
         return $objects;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = false;
-        if ($result['IsTruncated']) {
-            // Note: NextMarker is only available when a delimiter was specified
-            $nextMarker = $result['NextMarker'];
-            if ($nextMarker || $this->lastKey) {
-                $this->nextToken = array('Marker' => $nextMarker ?: $this->lastKey);
-            }
-        }
     }
 }

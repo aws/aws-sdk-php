@@ -16,30 +16,22 @@
 
 namespace Aws\DynamoDb\Iterator;
 
-use Aws\Common\Iterator\AbstractResourceIterator;
+use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Iterate over a BatchGetItem command
+ * Iterator for a DynamoDB Scan operation
  */
-class BatchGetItemIterator extends AbstractResourceIterator
+class BatchGetItemIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function applyNextToken()
-    {
-        $this->command->set('RequestItems', $this->nextToken);
-    }
-
     /**
      * {@inheritdoc}
      */
     protected function handleResults(Model $result)
     {
         $items = array();
-        if (isset($result['Responses'])) {
-            foreach ($result['Responses'] as $table) {
+        if ($responses = $result->get('Responses')) {
+            foreach ($responses as $table) {
                 foreach ($table['Items'] as $item) {
                     $items[] = $item;
                 }
@@ -47,13 +39,5 @@ class BatchGetItemIterator extends AbstractResourceIterator
         }
 
         return $items;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = isset($result['UnprocessedKeys']) ? $result['UnprocessedKeys'] : false;
     }
 }

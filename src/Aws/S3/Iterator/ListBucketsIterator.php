@@ -16,28 +16,24 @@
 
 namespace Aws\S3\Iterator;
 
+use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Iterate over a ListBuckets command
+ * Iterator for the S3 ListBuckets command
  *
  * This iterator includes the following additional options:
  * @option bool names_only Set to true to receive only the object/prefix names
  */
-class ListBucketsIterator extends AbstractS3ResourceIterator
+class ListBucketsIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function prepareRequest() {}
-
     /**
      * {@inheritdoc}
      */
     protected function handleResults(Model $result)
     {
-        // Get and format the results
-        $buckets = $result['Buckets'];
+        // Get the results
+        $buckets = $result->get('Buckets') ?: array();
 
         // If only the names_only set, change arrays to a string
         if ($this->get('names_only')) {
@@ -47,14 +43,5 @@ class ListBucketsIterator extends AbstractS3ResourceIterator
         }
 
         return $buckets;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        // ListBuckets does not have markers
-        $this->nextToken = false;
     }
 }

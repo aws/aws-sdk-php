@@ -178,14 +178,44 @@ class S3Client extends AbstractClient
             ))
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())
+            ->setIteratorsConfig(array(
+                'more_key' => 'IsTruncated',
+                'operations' => array(
+                    'ListBuckets',
+                    'ListMultipartUploads' => array(
+                        'limit_param' => 'MaxUploads',
+                        'token_param' => array('KeyMarker', 'UploadIdMarker'),
+                        'token_key'   => array('NextKeyMarker', 'NextUploadIdMarker'),
+                    ),
+                    'ListObjects' => array(
+                        'limit_param' => 'MaxKeys',
+                        'token_param' => 'Marker',
+                        'token_key'   => 'NextMarker',
+                    ),
+                    'ListObjectVersions' => array(
+                        'limit_param' => 'MaxKeys',
+                        'token_param' => array('KeyMarker', 'VersionIdMarker'),
+                        'token_key'   => array('nextKeyMarker', 'nextVersionIdMarker'),
+                    ),
+                    'ListParts' => array(
+                        'limit_param' => 'MaxParts',
+                        'result_key'  => 'Parts',
+                        'token_param' => 'PartNumberMarker',
+                        'token_key'   => 'NextPartNumberMarker',
+                    ),
+                )
+            ))
             ->build();
 
         // Use virtual hosted buckets when possible
         $client->addSubscriber(new BucketStyleListener());
+
         // Ensure that ACP headers are applied when needed
         $client->addSubscriber(new AcpListener());
+
         // Validate and add Content-MD5 hashes
         $client->addSubscriber(new CommandContentMd5Plugin());
+
         // Allow for specifying bodies with file paths and file handles
         $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
 

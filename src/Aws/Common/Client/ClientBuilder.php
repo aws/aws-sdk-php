@@ -16,21 +16,23 @@
 
 namespace Aws\Common\Client;
 
-use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Credentials\Credentials;
-use Aws\Common\Signature\SignatureInterface;
-use Aws\Common\Exception\Parser\ExceptionParserInterface;
-use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
-use Aws\Common\Exception\NamespaceExceptionFactory;
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\ExceptionListener;
+use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Exception\NamespaceExceptionFactory;
+use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
+use Aws\Common\Exception\Parser\ExceptionParserInterface;
+use Aws\Common\Iterator\AwsResourceIteratorFactory;
 use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Region\CachingEndpointProvider;
 use Aws\Common\Region\XmlEndpointProvider;
-use Guzzle\Common\Collection;
+use Aws\Common\Signature\SignatureInterface;
 use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Client;
+use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 
 /**
  * Builder for creating AWS service clients
@@ -46,6 +48,11 @@ class ClientBuilder
      * @var array Default client requirements
      */
     protected static $commonConfigRequirements = array(Options::REGION);
+
+    /**
+     * @var EndpointProviderInterface Default region/service endpoint provider
+     */
+    protected static $defaultEndpointProvider;
 
     /**
      * @var string The namespace of the client
@@ -93,9 +100,9 @@ class ClientBuilder
     protected $exceptionParser;
 
     /**
-     * @var EndpointProviderInterface Default region/service endpoint provider
+     * @var array Array of configuration data for iterators available for the client
      */
-    protected static $defaultEndpointProvider;
+    protected $iteratorsConfig = array();
 
     /**
      * Factory method for creating the client builder
@@ -237,6 +244,20 @@ class ClientBuilder
     }
 
     /**
+     * Set the configuration for the client's iterators
+     *
+     * @param array $config Configuration data for client's iterators
+     *
+     * @return ClientBuilder
+     */
+    public function setIteratorsConfig(array $config)
+    {
+        $this->iteratorsConfig = $config;
+
+        return $this;
+    }
+
+    /**
      * Performs the building logic using all of the parameters that have been
      * set and falling back to default values. Returns an instantiate service
      * client with credentials prepared and plugins attached.
@@ -317,6 +338,12 @@ class ClientBuilder
             'params.cache.key_filter',
             'header=date,x-amz-date,x-amz-security-token,x-amzn-authorization'
         );
+
+        // Set the iterator resource factory based on the provided iterators config
+        $client->setResourceIteratorFactory(new AwsResourceIteratorFactory(
+            $this->iteratorsConfig,
+            new ResourceIteratorClassFactory($this->clientNamespace . '\\Iterator')
+        ));
 
         return $client;
     }

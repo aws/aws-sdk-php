@@ -24,7 +24,6 @@ use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
-use Guzzle\Service\Resource\MapResourceIteratorFactory;
 
 /**
  * Client to interact with Amazon Glacier
@@ -100,7 +99,7 @@ class GlacierClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        // Setup Glacier client
+        // Setup the Glacier client
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
@@ -115,6 +114,25 @@ class GlacierClient extends AbstractClient
             ))
             ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonRestExceptionParser())
+            ->setIteratorsConfig(array(
+                'limit_param' => 'limit',
+                'token_param' => 'marker',
+                'token_key'   => 'Marker',
+                'operations'  => array(
+                    'ListJobs' => array(
+                        'result_key' => 'JobList'
+                    ),
+                    'ListMultipartUploads' => array(
+                        'result_key' => 'UploadsList'
+                    ),
+                    'ListParts' => array(
+                        'result_key' => 'Parts'
+                    ),
+                    'ListVaults' => array(
+                        'result_key' => 'VaultList'
+                    )
+                )
+            ))
             ->build();
 
         // Add the Glacier version header required for all operations
@@ -122,17 +140,9 @@ class GlacierClient extends AbstractClient
             'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
         ));
 
-        // Use the same iterator class for every iterator
-        $client->setResourceIteratorFactory(new MapResourceIteratorFactory(array(
-             '*' => 'Aws\Glacier\Iterator\DefaultIterator'
-        )));
-
         // Allow for specifying bodies with file paths and file handles
-        $client->addSubscriber(new UploadBodyListener(
-            array('UploadArchive', 'UploadMultipartPart'),
-            'body',
-            'sourceFile'
-        ));
+        $uploadOperations = array('UploadArchive', 'UploadMultipartPart');
+        $client->addSubscriber(new UploadBodyListener($uploadOperations, 'body', 'sourceFile'));
 
         // Listen for upload operations and make sure the required hash headers are added
         $client->addSubscriber(new GlacierUploadListener());
