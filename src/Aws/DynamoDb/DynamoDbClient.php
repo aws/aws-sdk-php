@@ -133,6 +133,24 @@ class DynamoDbClient extends AbstractClient
             ->setSignature(new SignatureV4())
             ->addClientResolver($exponentialBackoffResolver)
             ->setExceptionParser(new JsonQueryExceptionParser())
+            ->setIteratorsConfig(array(
+                'result_key'  => 'Items',
+                'token_param' => 'ExclusiveStartKey',
+                'token_key'   => 'LastEvaluatedKey',
+                'operations'  => array(
+                    'BatchGetItem' => array(
+                        'token_param' => 'RequestItems',
+                        'token_key'   => 'UnprocessedKeys',
+                    ),
+                    'ListTables' => array(
+                        'result_key'  => 'TableNames',
+                        'token_param' => 'ExclusiveStartTableName',
+                        'token_key'   => 'LastEvaluatedTableName',
+                    ),
+                    'Query',
+                    'Scan',
+                )
+            ))
             ->build();
     }
 

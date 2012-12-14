@@ -14,14 +14,30 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\CloudFront\Iterator;
+namespace Aws\Tests\CloudFront\Integration;
 
 /**
- * @covers Aws\CloudFront\Iterator\DefaultIterator
+ * @group integration
  */
-class ListStreamingDistributionsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
+class IteratorsTest extends \Aws\Tests\IntegrationTestCase
 {
-    public function testFactoryCreatesClient()
+    public function testListDistributionsIterator()
+    {
+        $client = $this->getServiceBuilder()->get('cloudfront');
+        $this->setMockResponse($client, array(
+            'cloudfront/ListDistributions_page_1',
+            'cloudfront/ListDistributions_page_2'
+        ));
+        $iterator = $client->getIterator('ListDistributions');
+        $this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $iterator);
+        $result = iterator_to_array($iterator);
+        $this->assertEquals(3, count($result));
+        $this->assertEquals('EXAMPLE1', $result[0]['Id']);
+        $this->assertEquals('EXAMPLE2', $result[1]['Id']);
+        $this->assertEquals('EXAMPLE3', $result[2]['Id']);
+    }
+
+    public function testListStreamingDistributionsIterator()
     {
         $client = $this->getServiceBuilder()->get('cloudfront');
         $this->setMockResponse($client, array(
@@ -29,8 +45,8 @@ class ListStreamingDistributionsIteratorTest extends \Guzzle\Tests\GuzzleTestCas
             'cloudfront/ListStreamingDistributions_page_2'
         ));
         $iterator = $client->getIterator('ListStreamingDistributions');
-        $this->assertInstanceOf('Aws\CloudFront\Iterator\DefaultIterator', $iterator);
-        $result = iterator_to_array($client->getIterator('ListStreamingDistributions'));
+        $this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $iterator);
+        $result = iterator_to_array($iterator);
         $this->assertEquals(3, count($result));
         $this->assertEquals('EXAMPLE1', $result[0]['Id']);
         $this->assertEquals('EXAMPLE2', $result[1]['Id']);

@@ -16,15 +16,16 @@
 
 namespace Aws\S3\Iterator;
 
+use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Iterate over a ListObjectVersions command
+ * Iterator for an S3 ListObjectVersions command
  *
  * This iterator includes the following additional options:
  * @option bool return_prefixes Set to true to receive both prefixes and versions in results
  */
-class ListObjectVersionsIterator extends AbstractS3ResourceIterator
+class ListObjectVersionsIterator extends AwsResourceIterator
 {
     /**
      * {@inheritdoc}
@@ -32,27 +33,15 @@ class ListObjectVersionsIterator extends AbstractS3ResourceIterator
     protected function handleResults(Model $result)
     {
         // Get the list of object versions
-        $versions = array_merge((array) $result['Versions'], (array) $result['DeleteMarkers']);
+        $versions = $result->get('Versions') ?: array();
+        $deleteMarkers = $result->get('DeleteMarkers') ?: array();
+        $versions = array_merge($versions, $deleteMarkers);
 
         // If there are prefixes and we want them, merge them in
-        if ($this->get('return_prefixes') && $result['CommonPrefixes']) {
-            $versions = array_merge($versions, $result['CommonPrefixes']);
+        if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
+            $versions = array_merge($versions, $result->get('CommonPrefixes'));
         }
 
         return $versions;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = false;
-        if ($result['IsTruncated']) {
-            $this->nextToken = array(
-                'KeyMarker'       => $result['nextKeyMarker'],
-                'VersionIdMarker' => $result['nextVersionIdMarker']
-            );
-        }
     }
 }

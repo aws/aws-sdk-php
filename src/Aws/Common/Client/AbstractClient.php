@@ -30,7 +30,6 @@ use Aws\Common\Waiter\WaiterFactoryInterface;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
-use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 
 /**
  * Abstract AWS client
@@ -93,9 +92,6 @@ abstract class AbstractClient extends Client implements AwsClientInterface
 
         // Resolve any config options on the client that require a client to be instantiated
         $this->resolveOptions();
-
-        // Add a resource iterator factory that uses the Iterator directory
-        $this->addDefaultResourceIterator();
     }
 
     /**
@@ -236,16 +232,5 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         if ($description) {
             $this->setDescription(ServiceDescription::factory($description));
         }
-    }
-
-    /**
-     * Add a default resource iterator factory to the client
-     */
-    protected function addDefaultResourceIterator()
-    {
-        $clientClass = get_class($this);
-        $this->resourceIteratorFactory = new ResourceIteratorClassFactory(
-            substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Iterator'
-        );
     }
 }
