@@ -17,6 +17,8 @@ Minimum requirements
     To work with Amazon CloudFront private distributions, you must have the OpenSSL PHP extension to sign private
     CloudFront URLs.
 
+.. _optimal-settings:
+
 Optimal settings
 ----------------
 
