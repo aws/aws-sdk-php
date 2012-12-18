@@ -92,3 +92,21 @@ For more complex logging or logging to a file, you can build a LogPlugin manuall
     $s3Client->addSubscriber($logPlugin);
 
 You can find out more about the LogPlugin on the Guzzle website: http://guzzlephp.org/guide/plugins.html#log-plugin
+
+How can I set arbitrary headers on a request?
+---------------------------------------------
+
+You can add any arbitrary headers to a service operation by setting the ``command.headers`` value. The following example
+shows how to add an ``X-Foo-Baz`` header to an Amazon S3 PutObject operation.
+
+.. code-block:: php
+
+    $s3Client = S3Client::factory(array('region' => 'us-east-1'));
+    $s3Client->putObject(array(
+        'Key'    => 'test',
+        'Bucket' => 'mybucket',
+        'command.headers' => array(
+            'X-Foo-Baz' => 'Bar'
+        )
+    ));
+
