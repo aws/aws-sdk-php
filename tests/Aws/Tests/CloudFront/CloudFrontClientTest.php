@@ -38,6 +38,11 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $ts = time() + 1000;
         $client = $this->getServiceBuilder()->get('cloudfront');
+
+        if ($client->getConfig('private_key') == 'change_me') {
+            $this->markTestSkipped('CloudFront private_key not set');
+        }
+
         /** @var $client \Aws\CloudFront\CloudFrontClient */
         $url = $client->getSignedUrl(array(
             'url'     => 'http://abc.cloudfront.net/images/image.jpg?color=red',
@@ -61,6 +66,9 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $ts = time() + 1000;
         $client = $this->getServiceBuilder()->get('cloudfront');
+        if ($client->getConfig('private_key') == 'change_me') {
+            $this->markTestSkipped('CloudFront private_key not set');
+        }
         /** @var $client \Aws\CloudFront\CloudFrontClient */
         $url = $client->getSignedUrl(array(
             'url'     => 'rtmp://foo.cloudfront.net/test.mp4',
