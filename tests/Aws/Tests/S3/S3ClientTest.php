@@ -176,5 +176,8 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testExplodesKeys()
     {
         $this->assertEquals(array('foo', 'baz ', 'bar!'), S3Client::explodeKey('foo/baz /bar!'));
+        $this->assertEquals(array('foo', 'baz ', 'bar!'), S3Client::explodeKey('/foo/baz /bar!'));
+        $this->assertEquals(array(''), S3Client::explodeKey(''));
+        $this->assertEquals(array(''), S3Client::explodeKey(null));
     }
 }

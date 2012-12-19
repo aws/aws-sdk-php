@@ -386,7 +386,8 @@ class S3Client extends AbstractClient
      */
     public static function explodeKey($key)
     {
-        return explode('/', $key);
+        // Remove a leading slash if one is found
+        return explode('/', $key && $key[0] == '/' ? substr($key, 1) : $key);
     }
 
     /**
