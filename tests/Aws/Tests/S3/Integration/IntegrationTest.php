@@ -636,13 +636,21 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals('POST', $requests[2]->getMethod());
     }
 
+    public function prefixKeyProvider()
+    {
+        return array(
+            array('foo /baz/bar!', 'foo /baz/bar!', '/foo%20/baz/bar%21'),
+            array('/foo', 'foo', '/foo')
+        );
+    }
+
     /**
      * @depends testPutAndListObjects
+     * @dataProvider prefixKeyProvider
      */
-    public function testWorksWithPrefixKeys()
+    public function testWorksWithPrefixKeys($key, $cleaned, $encoded)
     {
         $this->client->waitUntil('bucket_exists', $this->bucket);
-        $key = 'foo /baz/bar!';
         $command = $this->client->getCommand('PutObject', array(
             'Bucket'     => $this->bucket,
             'Key'        => $key,
@@ -650,9 +658,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ));
         $command->execute();
         // Ensure the path is correct
-        $this->assertEquals('/foo%20/baz/bar%21', $command->getRequest()->getPath());
+        $this->assertEquals($encoded, $command->getRequest()->getPath());
         // Ensure the key is not an array
-        $this->assertEquals('foo /baz/bar!', $command['Key']);
+        $this->assertEquals($cleaned, $command['Key']);
 
         $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
         $result = $this->client->getObject(array('Bucket' => $this->bucket, 'Key' => $key));
@@ -665,6 +673,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'PathStyle' => true
         ));
         $command->execute();
-        $this->assertEquals('/' . $this->bucket . '/foo%20/baz/bar%21', $command->getRequest()->getPath());
+        $this->assertEquals('/' . $this->bucket . $encoded, $command->getRequest()->getPath());
     }
 }
