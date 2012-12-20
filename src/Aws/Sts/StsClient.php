@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\CredentialsOptionResolver;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Enum\Region;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
@@ -88,7 +89,7 @@ class StsClient extends AbstractClient
             ->setConfigDefaults(array(
                 Options::SERVICE => 'sts',
                 Options::SCHEME  => 'https',
-                Options::REGION  => 'us-east-1'
+                Options::REGION  => Region::US_EAST_1
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 // Always need long term credentials

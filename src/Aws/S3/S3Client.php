@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\UploadBodyListener;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Enum\Region;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
@@ -174,7 +175,8 @@ class S3Client extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SCHEME  => 'https',
-                Options::SERVICE => 's3'
+                Options::SERVICE => 's3',
+                Options::REGION  => Region::US_EAST_1
             ))
             ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())

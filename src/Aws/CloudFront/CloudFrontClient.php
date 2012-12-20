@@ -20,6 +20,7 @@ use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Enum\Region;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Guzzle\Common\Collection;
@@ -74,9 +75,8 @@ class CloudFrontClient extends AbstractClient
      * - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
      *   credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
      *
-     * Region and Endpoint options (a `region` and optional `scheme` OR a `base_url` is required)
+     * Region and Endpoint options
      *
-     * - region: Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
      * - base_url: Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
      * - endpoint_provider: Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
      *
@@ -103,7 +103,8 @@ class CloudFrontClient extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE => 'cloudfront',
-                Options::SCHEME  => 'https'
+                Options::SCHEME  => 'https',
+                Options::REGION  => Region::US_EAST_1
             ))
             ->setSignature(new CloudFrontSignature())
             ->setExceptionParser(new DefaultXmlExceptionParser())
