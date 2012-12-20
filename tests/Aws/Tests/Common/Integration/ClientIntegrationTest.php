@@ -70,4 +70,19 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             $this->assertEquals(200, $command->getResponse()->getStatusCode());
         }
     }
+
+    public function testCanInstantiateRegionlessClientsWithoutParameters()
+    {
+        $config = array('key' => 'foo', 'secret' => 'bar');
+
+        try {
+            // Instantiate all of the clients that do not require a region
+            \Aws\S3\S3Client::factory($config);
+            \Aws\CloudFront\CloudFrontClient::factory($config);
+            \Aws\Route53\Route53Client::factory($config);
+            \Aws\Sts\StsClient::factory($config);
+        } catch (\InvalidArgumentException $e) {
+            $this->fail('All of the above clients should have been instantiated without errors.');
+        }
+    }
 }
