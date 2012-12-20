@@ -1,13 +1,22 @@
 CHANGELOG
 =========
 
+2.0.3 (2012-12-20)
+------------------
+
+* Added support for **AWS Data Pipeline**
+* Added support for **Amazon Route 53**
+* Fixed an issue with the Amazon S3 client where object keys with slashes were causing errors
+* Added a `SaveAs` parameter to the Amazon S3 `GetObject` operation to allow saving the object directly to a file
+* Refactored iterators to remove code duplication and ease creation of future iterators
+
 2.0.2 (2012-12-10)
 ------------------
 
 * Fixed an issue with the Amazon S3 client where non-DNS compatible buckets that was previously causing a signature
   mismatch error
 * Fixed an issue with the service description for the Amazon S3 `UploadPart` operation so that it works correctly
-* Fixed an issue with the Amazon S3 service description dealing with response-* query parameters of `GetObject`
+* Fixed an issue with the Amazon S3 service description dealing with `response-*` query parameters of `GetObject`
 * Fixed an issue with the Amazon S3 client where object keys prefixed by the bucket name were being treated incorrectly
 * Fixed an issue with `Aws\S3\Model\MultipartUpload\ParallelTransfer` class
 * Added support for the `AssumeRole` operation for AWS STS
@@ -30,3 +39,8 @@ CHANGELOG
 ------------------
 
 * Initial release of the AWS SDK for PHP Version 2. See <http://aws.amazon.com/sdkforphp2/> for more information.
+* Added support for **Amazon Simple Storage Service (Amazon S3)**
+* Added support for **Amazon DynamoDB**
+* Added support for **Amazon Glacier**
+* Added support for **Amazon CloudFront**
+* Added support for **AWS Security Token Service (AWS STS)**
