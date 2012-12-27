@@ -44,15 +44,16 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
 You can find out more on how to install Composer, configure autoloading, and other best-practices for defining
 dependencies at `getcomposer.org <http://getcomposer.org>`_.
 
-During your development, you can keep up with the latest changes on the master branch by requiring ``dev-master``.
+During your development, you can keep up with the latest changes on the master branch by setting the version
+requirment for the SDK to ``dev-master``.
 
-   .. code-block:: js
+.. code-block:: js
 
-       {
-           "require": {
-               "aws/aws-sdk-php": "dev-master"
-           }
-       }
+   {
+      "require": {
+         "aws/aws-sdk-php": "dev-master"
+      }
+   }
 
 Installing via Phar
 -------------------
