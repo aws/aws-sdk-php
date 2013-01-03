@@ -27,6 +27,7 @@ use Aws\S3\S3Client;
 use Aws\S3\Model\ClearBucket;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Guzzle\Http\Client;
+use Guzzle\Http\Message\Request;
 use Aws\S3\Model\MultipartUpload\UploadBuilder;
 use Guzzle\Plugin\History\HistoryPlugin;
 
@@ -674,5 +675,29 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ));
         $command->execute();
         $this->assertEquals('/' . $this->bucket . $encoded, $command->getRequest()->getPath());
+    }
+
+    /**
+     * @depends testPutAndListObjects
+     */
+    public function testPreSignedUrlAllowsSpaces()
+    {
+        self::log('Uploading an object with a space in the key');
+        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $key = 'foo baz bar';
+        $this->client->putObject(array(
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+            'Body'   => 'hi'
+        ));
+        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+
+        self::log('Creating an downloading using a pre-signed URL');
+        $extra = urlencode("attachment; filename=\"{$key}\"");
+        $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$extra}");
+        $url = $this->client->createPresignedUrl($request, '+10 minutes');
+        $this->assertEquals('hi', file_get_contents($url));
+        $client = new Client();
+        $this->assertEquals('hi', $client->get($url)->send()->getBody(true));
     }
 }
