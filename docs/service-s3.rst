@@ -2,19 +2,7 @@
 Amazon Simple Storage Service (S3)
 ==================================
 
-This guide focuses on the AWS SDK for PHP interface to Amazon S3. This guide assumes you have already downloaded and
-installed the AWS SDK for PHP 2.
-
-Creating a client
------------------
-
-The first thing you need to do is create a client object. There are a couple of ways to do this using the SDK.
-
-Factory method
-~~~~~~~~~~~~~~
-
-The easiest way to get up and running is to use the factory method. Simply pass in your access keys and a region to
-connect to.
+.. include:: _snippets/service_intro.txt
 
 .. code-block:: php
 
@@ -26,12 +14,7 @@ connect to.
         'region' => 'us-west-2'
     ));
 
-Service locator
-~~~~~~~~~~~~~~~
-
-A more robust way to connection to Amazon S3 is through the service locator. This allows you to specify credentials and
-other configuration settings in a configuration file. These settings can then be shared across all clients so that you
-only have to specify your keys once.
+.. include:: _snippets/service_intro_service_locator.txt
 
 .. code-block:: php
 
@@ -39,6 +22,8 @@ only have to specify your keys once.
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('s3');
+
+.. |service_name| replace:: Amazon S3
 
 Creating a bucket
 -----------------
