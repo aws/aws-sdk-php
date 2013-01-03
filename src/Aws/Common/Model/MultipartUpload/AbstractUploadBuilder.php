@@ -113,6 +113,10 @@ abstract class AbstractUploadBuilder
 
         $this->source = EntityBody::factory($source);
 
+        if ($this->source->isSeekable() && $this->source->getSize() == 0) {
+            throw new InvalidArgumentException('Empty body provided to upload builder');
+        }
+
         return $this;
     }
 

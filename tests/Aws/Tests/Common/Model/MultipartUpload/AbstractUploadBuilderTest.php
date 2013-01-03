@@ -46,11 +46,21 @@ class AbstractUploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage File does not exist
      */
     public function testEnsuresFilesExistsWhenSettingSource()
     {
         $this->mockBuilder->setSource('/path/to/missing/file/yall');
+    }
+
+    /**
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Empty body provided to upload builder
+     */
+    public function testEnsuresFileIsNotEmptyWhenSettingSource()
+    {
+        $this->mockBuilder->setSource(EntityBody::factory(''));
     }
 
     public function testHasChainableSetterMethods()

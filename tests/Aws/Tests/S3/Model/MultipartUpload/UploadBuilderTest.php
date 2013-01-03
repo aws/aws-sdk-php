@@ -107,7 +107,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $uploader = UploadBuilder::newInstance()
             ->resumeFrom($state)
             ->setClient($this->getServiceBuilder()->get('s3'))
-            ->setSource(EntityBody::factory())
+            ->setSource(EntityBody::factory('test'))
             ->build();
         $this->assertSame($state, $uploader->getState());
     }
@@ -121,7 +121,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setKey('bar')
             ->resumeFrom('abc')
             ->setClient($client)
-            ->setSource(EntityBody::factory())
+            ->setSource(EntityBody::factory('test'))
             ->build();
         $this->assertEquals(1, count($mock->getReceivedRequests()));
         $this->assertEquals(2, count($transfer->getState()));
