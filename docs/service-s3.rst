@@ -371,6 +371,6 @@ object.
 
 .. code-block:: php
 
-    $extra = "attachment; filename=\"{$key}\"";
-    $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$extra}");
+    $disposition = "attachment; filename=\"{$key}\"";
+    $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$disposition}");
     $url = $this->client->createPresignedUrl($request, '+10 minutes');
