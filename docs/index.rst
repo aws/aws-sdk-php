@@ -17,8 +17,10 @@ AWS SDK for PHP 2
     side-by-side
 
     service-cloudfront
+    service-datapipeline
     service-dynamodb
     service-glacier
+    service-route53
     service-s3
     service-sts
 
@@ -48,7 +50,9 @@ Supported services
 ------------------
 
 * :doc:`service-cloudfront`
+* :doc:`service-datapipeline`
 * :doc:`service-dynamodb`
 * :doc:`service-glacier`
+* :doc:`service-route53`
 * :doc:`service-s3`
 * :doc:`service-sts`
