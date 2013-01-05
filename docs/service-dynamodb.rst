@@ -77,18 +77,18 @@ method to get information about the table.
 
 .. code-block:: php
 
-    $result = $client->describeTable(array('TableName' => 'posts'));
+    $result = $client->describeTable(array('TableName' => 'errors'));
 
 The return value of the ``describeTable()`` method is a ``Guzzle\Service\Resource\Model`` object that can be used like
 an array. For example, you could retrieve the number of items in a table or the amount of provisioned read throughput.
 
 .. code-block:: php
 
-    echo $result['Table']['ItemCount']
+    echo $result['Table']['ItemCount'] . "\n";
     // 0
 
     // Use the getPath() method to retrieve deeply nested array key values
-    echo $result->getPath('Table/ProvisionedThroughput/ReadCapacityUnits');
+    echo $result->getPath('Table/ProvisionedThroughput/ReadCapacityUnits') . "\n";
     // 10
 
 Listing tables
@@ -137,11 +137,13 @@ method of the client.
 
 .. code-block:: php
 
-    $result = $this->client->putItem(array(
+    $time = time();
+
+    $result = $client->putItem(array(
         'TableName' => 'errors',
         'Item' => $client->formatAttributes(array(
             'id'      => 1201,
-            'time'    => time(),
+            'time'    => $time,
             'error'   => 'Executive overflow',
             'message' => 'no vacant areas'
         ))
@@ -152,11 +154,11 @@ item. Alternatively, you can provide the item attributes without using the helpe
 
 .. code-block:: php
 
-    $result = $this->client->putItem(array(
+    $result = $client->putItem(array(
         'TableName' => 'errors',
         'Item' => array(
             'id'      => array('N' => '1201'),
-            'time'    => array('N' => time()),
+            'time'    => array('N' => $time),
             'error'   => array('S' => 'Executive overflow'),
             'message' => array('S' => 'no vacant areas')
         ))
@@ -176,22 +178,23 @@ operation.
 
     $result = $client->getItem(array(
         'ConsistentRead' => true,
-        'TableName' => $this->table,
+        'TableName' => 'errors',
         'Key'       => array(
-            'HashKeyElement' => array('N' => '1201')
-        ))
+            'HashKeyElement'  => array('N' => '1201'),
+            'RangeKeyElement' => array('N' => $time)
+        )
     ));
 
-    echo $result['Item']['id']['N'];
+    echo $result['Item']['id']['N'] . "\n";
     // 1201
 
-    echo $result->getPath('Item/id/N');
+    echo $result->getPath('Item/id/N') . "\n";
     // 1201
 
-    echo $result['Item']['error']['S'];
+    echo $result['Item']['error']['S'] . "\n";
     // Executive overflow
 
-    echo $result['Item']['messsage']['S'];
+    echo $result['Item']['message']['S'] . "\n";
     // no vacant areas
 
 Query and scan
@@ -218,7 +221,7 @@ use the query iterator to retrieve the entire list of all items matching the que
         'HashKeyValue'      => array('N' => '1201'),
         'RangeKeyCondition' => array(
             'AttributeValueList' => array(
-                array('N' => time("-15 minutes")
+                array('N' => time("-15 minutes"))
             ),
             'ComparisonOperator' => 'GT'
         )
