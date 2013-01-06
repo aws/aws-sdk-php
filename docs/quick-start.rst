@@ -242,3 +242,29 @@ passing an optional third argument containing an array of parameters.
         'interval'     => 10.5,
         'max_attempts' => 3
     ));
+
+Iterators
+---------
+
+Some AWS operations will return a paginated result set that requires subsequent requests in order to retrieve an entire
+result. The AWS SDK for PHP includes *iterators* that handle the process of sending subsequent requests. Use the
+``getIterator()`` method of a client object in order to retrieve an iterator for a particular command.
+
+.. code-block:: php
+
+    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'mybucket'));
+
+    foreach ($iterator as $object) {
+        echo $object['Key'] . "\n";
+    }
+
+The ``getIterator()`` method accepts either a command object or the name of an operation as the first argument. The
+second argument is only used when passing a string and instructs the client on what actual operation to execute.
+
+.. code-block:: php
+
+    $command = $client->getCommand('ListObjects', array('Bucket' => 'mybucket'));
+    $iterator = $client->getIterator($command);
+
+You can find a list of the iterators supported by a client by viewing the Iterator/ directory of a client
+(e.g. ``src/Aws/S3/Iterator/``).
