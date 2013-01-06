@@ -221,14 +221,14 @@ use the query iterator to retrieve the entire list of all items matching the que
         'HashKeyValue'      => array('N' => '1201'),
         'RangeKeyCondition' => array(
             'AttributeValueList' => array(
-                array('N' => time("-15 minutes"))
+                array('N' => strtotime("-15 minutes"))
             ),
             'ComparisonOperator' => 'GT'
         )
     ));
 
     foreach ($iterator as $item) {
-        echo $item['time']['N'] . ': ' . $item['error'] . "\n";
+        echo $item['time']['N'] . ': ' . $item['error']['S'] . "\n";
     }
 
 Scan
@@ -252,7 +252,7 @@ minutes that contain the word "overflow":
             ),
             'time' => array(
                 'AttributeValueList' => array(
-                    array('N' => time('-15 minutes'))
+                    array('N' => strtotime('-15 minutes'))
                 ),
                 'ComparisonOperator' => 'GT'
             )
@@ -260,7 +260,7 @@ minutes that contain the word "overflow":
     ));
 
     foreach ($iterator as $item) {
-        echo $item['time']['N'] . ': ' . $item['error'] . "\n";
+        echo $item['time']['N'] . ': ' . $item['error']['S'] . "\n";
     }
 
 Using the WriteRequestBatch
