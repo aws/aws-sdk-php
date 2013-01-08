@@ -94,13 +94,13 @@ class SignatureV2Test extends \Guzzle\Tests\GuzzleTestCase
                     'Version' => '2009-04-15',
                     'Action'  => 'ListDomains'
                 ),
-                "f69jqJCuCMIhB8TiQhWGsEVxa8cs4Yrxw4IhK%2FyZa68%3D"
+                "f69jqJCuCMIhB8TiQhWGsEVxa8cs4Yrxw4IhK/yZa68="
             ),
             array(
                 "GET /?SignatureVersion=2&AWSAccessKeyId=$key&Action=ListDomains&Version=2009-04-15&SignatureMethod=HmacSHA256&Timestamp=$timestamp HTTP/1.1\r\nHost: sdb.us-west-2.amazonaws.com",
                 "GET\nsdb.us-west-2.amazonaws.com\n/\nAWSAccessKeyId=$key&Action=ListDomains&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=$timestamp&Version=2009-04-15",
                 array(),
-                "74xJjWQP2QHN4C7c%2BNoYqGaBQEfjm3FEzAJXJMh78HI%3D"
+                "74xJjWQP2QHN4C7c+NoYqGaBQEfjm3FEzAJXJMh78HI="
             )
         );
     }

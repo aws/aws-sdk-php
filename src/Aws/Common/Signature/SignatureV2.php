@@ -17,7 +17,6 @@
 namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Enum\DateFormat;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
@@ -80,33 +79,25 @@ class SignatureV2 extends AbstractSignature
     /**
      * Get the canonicalized query/parameter string for a request
      *
+     * @param RequestInterface $request Request used to build canonicalized string
+     *
      * @return string
      */
     public function getCanonicalizedParameterString(RequestInterface $request)
     {
-        $params = array();
-        $str    = '';
-
-        switch ($request->getMethod()) {
-            case 'POST':
-                $params = $request->getPostFields()->toArray();
-                break;
-            case 'GET':
-            case 'HEAD':
-            case 'PUT':
-            case 'DELETE':
-            default:
-                $params = $request->getQuery()->toArray();
-                break;
+        if ($request->getMethod() == 'POST') {
+            $params = $request->getPostFields()->toArray();
+        } else {
+            $params = $request->getQuery()->toArray();
         }
 
         uksort($params, 'strcmp');
 
+        $str = '';
         foreach ($params as $key => $val) {
             $str .= rawurlencode($key) . '=' . rawurlencode($val) . '&';
         }
 
-        $str = substr($str, 0, -1);
-        return $str;
+        return substr($str, 0, -1);
     }
 }
