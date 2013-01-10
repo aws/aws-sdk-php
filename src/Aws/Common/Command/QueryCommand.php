@@ -40,5 +40,6 @@ class QueryCommand extends OperationCommand
 
         // @codeCoverageIgnoreEnd
         $this->getRequestSerializer()->addVisitor('aws.query', self::$queryVisitor);
+        $this->setResponseParser(QueryXmlResponseParser::getInstance());
     }
 }
