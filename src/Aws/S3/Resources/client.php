@@ -149,70 +149,45 @@ return array (
                         'REPLACE',
                     ),
                 ),
+                'CacheControl' => array(
+                    'description' => 'Can be used to specify caching behavior along the request/reply chain.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Cache-Control',
+                ),
+                'ContentDisposition' => array(
+                    'description' => 'Specifies presentational information for the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Disposition',
+                ),
+                'ContentEncoding' => array(
+                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Encoding',
+                ),
+                'ContentType' => array(
+                    'description' => 'A standard MIME type describing the format of the object data.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Type',
+                ),
+                'Expires' => array(
+                    'description' => 'The date and time at which the object is no longer cacheable.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                ),
                 'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL.',
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-website-redirect-location',
-                ),
-                'ACL' => array(
-                    'description' => 'The canned ACL to apply to the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-acl',
-                    'enum' => array(
-                        'private',
-                        'public-read',
-                        'public-read-write',
-                        'authenticated-read',
-                        'bucket-owner-read',
-                        'bucket-owner-full-control',
-                    ),
-                ),
-                'GrantRead' => array(
-                    'description' => 'Allows grantee to list the objects in the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read',
-                ),
-                'GrantWrite' => array(
-                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write',
-                ),
-                'GrantReadACP' => array(
-                    'description' => 'Allows grantee to read the bucket ACL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read-acp',
-                ),
-                'GrantWriteACP' => array(
-                    'description' => 'Allows grantee to write the ACL for the applicable bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write-acp',
-                ),
-                'GrantFullControl' => array(
-                    'description' => 'Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-full-control',
-                ),
-                'ServerSideEncryption' => array(
-                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption',
-                    'enum' => array(
-                        'AES256',
-                    ),
-                ),
-                'StorageClass' => array(
-                    'description' => 'The class of storage used to store the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-storage-class',
                 ),
                 'CopySource' => array(
                     'required' => true,
@@ -264,6 +239,73 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-modified-since',
+                ),
+                'StorageClass' => array(
+                    'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
+                    'enum' => array(
+                        'STANDARD',
+                        'REDUCED_REDUNDANCY',
+                    ),
+                ),
+                'ACL' => array(
+                    'description' => 'The canned ACL to apply to the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-acl',
+                    'enum' => array(
+                        'private',
+                        'public-read',
+                        'public-read-write',
+                        'authenticated-read',
+                        'bucket-owner-read',
+                        'bucket-owner-full-control',
+                    ),
+                ),
+                'GrantRead' => array(
+                    'description' => 'Allows grantee to read the object data and its metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read',
+                ),
+                'GrantReadACP' => array(
+                    'description' => 'Allows grantee to read the object ACL.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read-acp',
+                ),
+                'GrantWriteACP' => array(
+                    'description' => 'Allows grantee to write the ACL for the applicable object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write-acp',
+                ),
+                'GrantFullControl' => array(
+                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-full-control',
+                ),
+                'ServerSideEncryption' => array(
+                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
+                    'enum' => array(
+                        'AES256',
+                    ),
+                ),
+                'Metadata' => array(
+                    'description' => 'A map of metadata to store with the object in S3.',
+                    'type' => 'object',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-meta-',
+                    'additionalProperties' => array(
+                        'description' => 'The metadata value.',
+                        'type' => 'string',
+                    ),
                 ),
                 'ACP' => array(
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
@@ -368,6 +410,12 @@ return array (
                     'additionalProperties' => true,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select a different name and try again.',
+                    'class' => 'BucketAlreadyExistsException',
+                ),
+            ),
         ),
         'CreateMultipartUpload' => array(
             'httpMethod' => 'POST',
@@ -425,6 +473,12 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                 ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
+                ),
                 'StorageClass' => array(
                     'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
                     'type' => 'string',
@@ -434,12 +488,6 @@ return array (
                         'STANDARD',
                         'REDUCED_REDUNDANCY',
                     ),
-                ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'ACL' => array(
                     'description' => 'The canned ACL to apply to the object.',
@@ -2350,16 +2398,6 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                 ),
-                'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-storage-class',
-                    'enum' => array(
-                        'STANDARD',
-                        'REDUCED_REDUNDANCY',
-                    ),
-                ),
                 'WebsiteRedirectLocation' => array(
                     'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
                     'type' => 'string',
@@ -2373,6 +2411,16 @@ return array (
                         'object',
                     ),
                     'location' => 'body',
+                ),
+                'StorageClass' => array(
+                    'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
+                    'enum' => array(
+                        'STANDARD',
+                        'REDUCED_REDUNDANCY',
+                    ),
                 ),
                 'ACL' => array(
                     'description' => 'The canned ACL to apply to the object.',
