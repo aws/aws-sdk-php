@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 namespace Aws\Route53\Exception;
 
 /**
- * The hosted zone you are trying to create already exists. Route 53 returns this error when a hosted zone has already 
+ * The hosted zone you are trying to create already exists. Route 53 returns this error when a hosted zone has already
  * been created with the specified CallerReference.
  */
 class HostedZoneAlreadyExistsException extends Route53Exception {}
