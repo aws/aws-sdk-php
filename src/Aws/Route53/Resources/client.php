@@ -17,6 +17,9 @@
 return array (
     'name' => 'route53',
     'apiVersion' => '2012-02-29',
+    'serviceType' => 'rest-xml',
+    'globalEndpoint' => true,
+    'signatureVersion' => 'v3https',
     'operations' => array(
         'ChangeResourceRecordSets' => array(
             'httpMethod' => 'POST',
@@ -215,16 +218,16 @@ return array (
                     'required' => true,
                     'description' => 'The name of the domain. This must be a fully-specified domain, for example, www.example.com. The trailing dot is optional; Route 53 assumes that the domain name is fully qualified. This means that Route 53 treats www.example.com (without a trailing dot) and www.example.com. (with a trailing dot) as identical.',
                     'type' => 'string',
-                    'maxLength' => 1024,
                     'location' => 'xml',
+                    'maxLength' => 1024,
                 ),
                 'CallerReference' => array(
                     'required' => true,
                     'description' => 'A unique string that identifies the request and that allows failed CreateHostedZone requests to be retried without the risk of executing the operation twice. You must use a unique CallerReference string every time you create a hosted zone. CallerReference can be any unique string; you might choose to use a string that identifies your project, such as DNSMigration_01.',
                     'type' => 'string',
+                    'location' => 'xml',
                     'minLength' => 1,
                     'maxLength' => 128,
-                    'location' => 'xml',
                 ),
                 'HostedZoneConfig' => array(
                     'description' => 'A complex type that contains an optional comment about your hosted zone.',

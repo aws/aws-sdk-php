@@ -17,6 +17,9 @@
 return array (
     'name' => 's3',
     'apiVersion' => '2006-03-01',
+    'serviceType' => 'rest-xml',
+    'timestampFormat' => 'rfc822',
+    'signatureVersion' => 's3',
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',

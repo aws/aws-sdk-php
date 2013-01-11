@@ -18,6 +18,10 @@ return array (
     'name' => 'dynamodb',
     'apiVersion' => '2011-12-05',
     'description' => 'Amazon DynamoDB is a fast, highly scalable, highly available, cost-effective non-relational database service.',
+    'serviceType' => 'json',
+    'jsonVersion' => '1.0',
+    'targetPrefix' => 'DynamoDB_20111205.',
+    'signatureVersion' => 'v4',
     'operations' => array(
         'BatchGetItem' => array(
             'httpMethod' => 'POST',

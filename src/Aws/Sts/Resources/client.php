@@ -18,6 +18,10 @@ return array (
     'name' => 'sts',
     'apiVersion' => '2011-06-15',
     'description' => 'AWS Security Token Service',
+    'serviceType' => 'query',
+    'globalEndpoint' => true,
+    'resultWrapped' => true,
+    'signatureVersion' => 'v4',
     'operations' => array(
         'AssumeRole' => array(
             'httpMethod' => 'POST',
