@@ -660,8 +660,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $command->execute();
         // Ensure the path is correct
         $this->assertEquals($encoded, $command->getRequest()->getPath());
-        // Ensure the key is not an array
-        $this->assertEquals($cleaned, $command['Key']);
+        // Ensure the key is not an array and is returned to it's previous value
+        $this->assertEquals($key, $command['Key']);
 
         $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
         $result = $this->client->getObject(array('Bucket' => $this->bucket, 'Key' => $key));
