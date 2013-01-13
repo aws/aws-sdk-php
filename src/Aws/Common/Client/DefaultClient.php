@@ -71,7 +71,6 @@ class DefaultClient extends AbstractClient
     {
         return ClientBuilder::factory()
             ->setConfig($config)
-            ->setConfigRequirements(array(Options::REGION, Options::SIGNATURE))
             ->setConfigDefaults(array(Options::SCHEME => 'https'))
             ->build();
     }

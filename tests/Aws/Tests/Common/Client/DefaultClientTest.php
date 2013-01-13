@@ -27,19 +27,15 @@ class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFactoryInitializesClient()
     {
-        $signature = $this->getMock('Aws\Common\Signature\SignatureInterface');
         $credentials = $this->getMock('Aws\Common\Credentials\CredentialsInterface');
-
         $client = DefaultClient::factory(array(
             Options::CREDENTIALS => $credentials,
-            Options::SIGNATURE   => $signature,
-            Options::SERVICE     => 'sns',
-            Options::REGION      => Region::US_EAST_1,
+            Options::SERVICE_DESCRIPTION => __DIR__ . '/../../../../../src/Aws/Sts/Resources/client.php'
         ));
-
         $this->assertInstanceOf('Aws\Common\Signature\SignatureInterface', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\CredentialsInterface', $client->getCredentials());
         $this->assertInstanceOf('Aws\Common\Region\EndpointProviderInterface', $client->getEndpointProvider());
-        $this->assertEquals('https://sns.us-east-1.amazonaws.com', $client->getBaseUrl());
+        $this->assertSame($credentials, $client->getCredentials());
+        $this->assertEquals('https://sts.amazonaws.com', $client->getBaseUrl());
     }
 }

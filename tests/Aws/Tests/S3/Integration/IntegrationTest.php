@@ -25,7 +25,6 @@ use Aws\S3\Model\Grantee;
 use Aws\S3\Model\PostObject;
 use Aws\S3\S3Client;
 use Aws\S3\Model\ClearBucket;
-use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\Request;
 use Aws\S3\Model\MultipartUpload\UploadBuilder;

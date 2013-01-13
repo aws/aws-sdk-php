@@ -2,7 +2,6 @@
 
 namespace Aws\Common\Command;
 
-use Guzzle\Common\Collection;
 use Guzzle\Service\Description\Operation;
 use Guzzle\Service\Description\Parameter;
 use Guzzle\Service\Command\OperationResponseParser;
@@ -19,7 +18,7 @@ class QueryXmlResponseParser extends OperationResponseParser
     {
         $data = parent::xmlToArray($xml, $operation, $model);
 
-        if ($operation->getServiceDescription()->getData('xmlWrapped')) {
+        if ($operation->getServiceDescription()->getData('resultWrapped')) {
             $wrappingNode = $operation->getName() . 'Result';
             if (isset($data[$wrappingNode])) {
                 $data = $data[$wrappingNode] + $data;

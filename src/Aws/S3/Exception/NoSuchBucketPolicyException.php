@@ -20,4 +20,3 @@ namespace Aws\S3\Exception;
  * The specified bucket policy does not exist.
  */
 class NoSuchBucketPolicyException extends S3Exception {}
-

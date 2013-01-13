@@ -22,7 +22,6 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\DateFormat;
 use Aws\Common\Enum\Region;
 use Aws\Common\Exception\ServiceResponseException;
-use Aws\Common\Signature\SignatureV3Https;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -39,11 +38,6 @@ use Guzzle\Service\Resource\Model;
  */
 class Route53Client extends AbstractClient
 {
-    /**
-     * @inheritdoc
-     */
-    protected $directory = __DIR__;
-
     /**
      * Factory method to create a new Amazon Glacier client using an array of configuration options:
      *
@@ -88,12 +82,8 @@ class Route53Client extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                // General service configuration
-                Options::SERVICE => 'route53',
-                Options::SCHEME  => 'https',
-                Options::REGION  => Region::US_EAST_1
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
             ))
-            ->setSignature(new SignatureV3Https())
             ->setIteratorsConfig(array(
                 'limit_param' => 'MaxItems',
                 'more_key'    => 'IsTruncated',

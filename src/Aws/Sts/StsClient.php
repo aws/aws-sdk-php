@@ -22,7 +22,6 @@ use Aws\Common\Client\CredentialsOptionResolver;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\Region;
-use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -34,11 +33,6 @@ use Guzzle\Service\Resource\Model;
  */
 class StsClient extends AbstractClient
 {
-    /**
-     * @inheritdoc
-     */
-    protected $directory = __DIR__;
-
     /**
      * Factory method to create a new Amazon STS client using an array of configuration options:
      *
@@ -87,9 +81,7 @@ class StsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE => 'sts',
-                Options::SCHEME  => 'https',
-                Options::REGION  => Region::US_EAST_1
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 // Always need long term credentials
@@ -97,7 +89,6 @@ class StsClient extends AbstractClient
                     return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
                 }
             }))
-            ->setSignature(new SignatureV4())
             ->build();
     }
 }

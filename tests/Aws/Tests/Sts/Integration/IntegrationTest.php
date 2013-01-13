@@ -57,7 +57,7 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Ensure that the result is an array
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $command->getResult());
-        $this->assertNotNull($command->getResult()->get('GetFederationTokenResult'));
+        $this->assertNotNull($command->getResult()->get('Credentials'));
         $this->assertNotNull($command->getResult()->get('ResponseMetadata'));
     }
 

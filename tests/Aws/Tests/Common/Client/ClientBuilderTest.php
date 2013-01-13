@@ -17,12 +17,9 @@
 namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Client\ClientBuilder;
-use Aws\DynamoDb\DynamoDbClient;
-use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Client\CredentialsOptionResolver;
-use Aws\Common\Client\SignatureOptionResolver;
 use Aws\Common\Credentials\Credentials;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
@@ -42,14 +39,27 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'scheme'   => 'https',
                 'region'   => 'us-east-1',
                 'service'  => 'dynamodb',
+                'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/client.php'
             ))
             ->setConfigRequirements(array('scheme'))
-            ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array('token_param' => 'foo'))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
+    }
+
+    public function testUsesGlobalEndpoint()
+    {
+        $client = ClientBuilder::factory('Aws\\Sts')
+            ->setConfig(array())
+            ->setConfigDefaults(array(
+                'service' => 'sts',
+                'service.description' => __DIR__ . '/../../../../../src/Aws/Sts/Resources/client.php'
+            ))
+            ->build();
+
+        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
     }
 
     public function testBuildAlternate()
@@ -58,32 +68,15 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setConfigDefaults(array(
                 'scheme'  => 'https',
                 'region'  => 'us-west-1',
-                'service' => 'dynamodb'
+                'service' => 'dynamodb',
+                'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/client.php'
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
             }))
-            ->setSignatureResolver(new SignatureOptionResolver(function () {
-                return new SignatureV4();
-            }))
             ->addClientResolver(new BackoffOptionResolver(function() {
                 return BackoffPlugin::getExponentialBackoff();
             }))
-            ->build();
-
-        $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
-    }
-
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     */
-    public function testBuildThrowsExceptionWithoutSignature()
-    {
-        $client = ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfigDefaults(array(
-                'region'  => 'us-east-1',
-                'service' => 's3'
-            ))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
@@ -125,27 +118,45 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage You must specify a [base_url] or a [region, service, and optional scheme]
      */
     public function testEnsuresBaseUrlOrServiceAndRegionAreSet()
     {
-        $builder = ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfig(array('region'  => 'us-west-1'))
+        ClientBuilder::factory('Aws\\DynamoDb')
+            ->setConfig(array(
+                'region'  => 'us-west-1',
+                'service.description' => array('signatureVersion' => 'v2')
+            ))
             ->build();
     }
 
     /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage A signature has not been provided
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage does not specify a signatureVersion
      */
     public function testEnsuresSignatureIsProvided()
     {
-        $builder = ClientBuilder::factory('Aws\\DynamoDb')
+        ClientBuilder::factory('Aws\\DynamoDb')
             ->setConfig(array(
                 'region'  => 'us-west-1',
                 'service' => 'dynamodb',
-                'scheme'  => 'http'
+                'scheme'  => 'http',
+                'service.description' => array()
+            ))
+            ->build();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A region is required
+     */
+    public function testEnsuresExceptionIsThrownWhenMissingRequiredRegion()
+    {
+        ClientBuilder::factory('Aws\\DynamoDb')
+            ->setConfig(array(
+                'service' => 'dynamodb',
+                'service.description' => array('signatureVersion' => 'v2')
             ))
             ->build();
     }

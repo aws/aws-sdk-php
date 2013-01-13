@@ -18,7 +18,6 @@ namespace Aws\Common\Iterator;
 
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\RuntimeException;
-use Guzzle\Common\Collection;
 Use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Resource\ResourceIterator;
 

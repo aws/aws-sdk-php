@@ -21,7 +21,6 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -47,11 +46,6 @@ use Guzzle\Service\Resource\Model;
  */
 class DataPipelineClient extends AbstractClient
 {
-    /**
-     * @inheritdoc
-     */
-    protected $directory = __DIR__;
-
     /**
      * Factory method to create a new Amazon Data Pipeline client using an array of configuration options:
      *
@@ -100,10 +94,8 @@ class DataPipelineClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE => 'datapipeline',
-                Options::SCHEME  => 'https'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
             ))
-            ->setSignature(new SignatureV4())
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array(
                 'limit_key'   => 'limit',

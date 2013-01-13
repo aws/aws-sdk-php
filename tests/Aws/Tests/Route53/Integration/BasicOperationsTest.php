@@ -18,7 +18,6 @@ namespace Aws\Tests\Route53\Integration;
 
 use Aws\Route53\Route53Client;
 use Aws\Route53\Enum\Status;
-use Guzzle\Http\Client as HttpClient;
 
 /**
  * @group integration

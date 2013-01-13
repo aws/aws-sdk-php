@@ -55,11 +55,6 @@ use Guzzle\Service\Resource\Model;
 class CloudFrontClient extends AbstractClient
 {
     /**
-     * @inheritdoc
-     */
-    protected $directory = __DIR__;
-
-    /**
      * Factory method to create a new Amazon CloudFront client using an array of configuration options:
      *
      * Credential options (`key`, `secret`, and optional `token` OR `credentials` is required)
@@ -102,11 +97,9 @@ class CloudFrontClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE => 'cloudfront',
-                Options::SCHEME  => 'https',
-                Options::REGION  => Region::US_EAST_1
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php',
+                Options::SIGNATURE => new CloudFrontSignature()
             ))
-            ->setSignature(new CloudFrontSignature())
             ->setExceptionParser(new DefaultXmlExceptionParser())
             ->setIteratorsConfig(array(
                 'token_param' => 'Marker',

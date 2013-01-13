@@ -174,11 +174,9 @@ class S3Client extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SCHEME  => 'https',
-                Options::SERVICE => 's3',
-                Options::REGION  => Region::US_EAST_1
+                Options::SIGNATURE => new S3Signature(),
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
             ))
-            ->setSignature(new S3Signature())
             ->setExceptionParser(new S3ExceptionParser())
             ->setIteratorsConfig(array(
                 'more_key' => 'IsTruncated',

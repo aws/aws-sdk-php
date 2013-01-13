@@ -27,11 +27,16 @@ use Aws\Common\Iterator\AwsResourceIteratorFactory;
 use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Region\CachingEndpointProvider;
 use Aws\Common\Region\XmlEndpointProvider;
-use Aws\Common\Signature\SignatureInterface;
+use Aws\Common\Signature\EndpointSignatureInterface;
+use Aws\Common\Signature\SignatureV2;
+use Aws\Common\Signature\SignatureV3;
+use Aws\Common\Signature\SignatureV3Https;
+use Aws\Common\Signature\SignatureV4;
 use Guzzle\Cache\DoctrineCacheAdapter;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Client;
+use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 
 /**
@@ -42,12 +47,12 @@ class ClientBuilder
     /**
      * @var array Default client config
      */
-    protected static $commonConfigDefaults = array();
+    protected static $commonConfigDefaults = array('scheme' => 'https');
 
     /**
      * @var array Default client requirements
      */
-    protected static $commonConfigRequirements = array(Options::REGION);
+    protected static $commonConfigRequirements = array(Options::SERVICE_DESCRIPTION);
 
     /**
      * @var EndpointProviderInterface Default region/service endpoint provider
@@ -78,16 +83,6 @@ class ClientBuilder
      * @var CredentialsOptionResolver The resolver for credentials
      */
     protected $credentialsResolver;
-
-    /**
-     * @var SignatureOptionResolver The resolver for the signature
-     */
-    protected $signatureResolver;
-
-    /**
-     * @var SignatureInterface The signature
-     */
-    protected $signature;
 
     /**
      * @var array An array of client resolvers
@@ -183,36 +178,6 @@ class ClientBuilder
     }
 
     /**
-     * Sets the signature resolver. You can use the setSignature method instead
-     * to set the signature using the default SignatureOptionResolver.
-     *
-     * @param SignatureOptionResolver $signatureResolver The signature resolver
-     *
-     * @return ClientBuilder
-     */
-    public function setSignatureResolver(SignatureOptionResolver $signatureResolver)
-    {
-        $this->signatureResolver = $signatureResolver;
-
-        return $this;
-    }
-
-    /**
-     * Sets the signature. You can use the setSignatureResolver method to set
-     * the SignatureOptionResolver instead if you need greater flexibility.
-     *
-     * @param SignatureInterface $signature The signature
-     *
-     * @return ClientBuilder
-     */
-    public function setSignature(SignatureInterface $signature)
-    {
-        $this->signature = $signature;
-
-        return $this;
-    }
-
-    /**
      * Adds a client resolver. The most common case is adding a custom
      * exponential backoff strategy. If an exponential backoff strategy is not
      * provided, then a default one will be used.
@@ -268,12 +233,14 @@ class ClientBuilder
     public function build()
     {
         // Resolve config
-        /** @var $config Collection */
         $config = Collection::fromConfig(
             $this->config,
             array_merge(self::$commonConfigDefaults, $this->configDefaults),
             (self::$commonConfigRequirements + $this->configRequirements)
         );
+
+        // Set values from the service description
+        $this->updateConfigFromDescription($config);
 
         // If no endpoint provider was explicitly set, the instantiate a default endpoint provider
         if (!$config->get(Options::ENDPOINT_PROVIDER)) {
@@ -291,18 +258,6 @@ class ClientBuilder
         }
         $this->credentialsResolver->resolve($config);
 
-        // Resolve signature
-        if (!$this->signatureResolver) {
-            if (!$config->hasKey(Options::SIGNATURE) && !$this->signature) {
-                throw new InvalidArgumentException('A signature has not been provided.');
-            }
-            $signature = $this->signature;
-            $this->signatureResolver = new SignatureOptionResolver(function () use ($signature) {
-                return $signature;
-            });
-        }
-        $this->signatureResolver->resolve($config);
-
         // Add other client resolvers, like exponential backoff
         if (!$this->hasBackoffOptionResolver()) {
             $this->addClientResolver($this->getDefaultBackoffResolver());
@@ -318,7 +273,13 @@ class ClientBuilder
 
         // Construct the client
         /** @var $client AwsClientInterface */
-        $client = new $clientClass($config->get(Options::CREDENTIALS), $config->get(Options::SIGNATURE), $config);
+        $client = new $clientClass(
+            $config->get(Options::CREDENTIALS),
+            $config->get(Options::SIGNATURE),
+            $config
+        );
+
+        $client->setDescription($config->get(Options::SERVICE_DESCRIPTION));
 
         // Add exception marshaling so that more descriptive exception are thrown
         if ($this->clientNamespace) {
@@ -452,5 +413,75 @@ class ClientBuilder
         // @codeCoverageIgnoreEnd
 
         return self::$defaultEndpointProvider;
+    }
+
+    /**
+     * Update a configuration object from a service description
+     *
+     * @param Collection $config Config to update
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function updateConfigFromDescription(Collection $config)
+    {
+        $description = $config->get(Options::SERVICE_DESCRIPTION);
+        if (!($description instanceof ServiceDescription)) {
+            $description = ServiceDescription::factory($description);
+            $config->set(Options::SERVICE_DESCRIPTION, $description);
+        }
+
+        $this->addSignature($description, $config);
+
+        if (!$config->get(Options::SERVICE)) {
+            $config->set(Options::SERVICE, $description->getName());
+        }
+
+        if (!$config->get(Options::REGION)) {
+            if (!$description->getData('globalEndpoint')) {
+                throw new InvalidArgumentException('A region is required when using ' . $config->get(Options::SERVICE));
+            }
+            $config->set(Options::REGION, 'us-east-1');
+        }
+    }
+
+    /**
+     * Return an appropriate signature object for a a client based on a description
+     *
+     * @param ServiceDescription $description Description that holds a signature option
+     * @param Collection         $config      Configuration options
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function addSignature(ServiceDescription $description, Collection $config)
+    {
+        if (!($signature = $config->get(Options::SIGNATURE))) {
+            if (!$description->getData('signatureVersion')) {
+                throw new InvalidArgumentException('The service description does not specify a signatureVersion');
+            }
+            switch ($description->getData('signatureVersion')) {
+                case 'v2':
+                    $signature = new SignatureV2();
+                    break;
+                case 'v3':
+                    $signature = new SignatureV3();
+                    break;
+                case 'v3https':
+                    $signature = new SignatureV3Https();
+                    break;
+                case 'v4':
+                    $signature = new SignatureV4();
+                    break;
+            }
+        }
+
+        // Allow a custom service name or region value to be provided
+        if ($signature instanceof EndpointSignatureInterface) {
+            $signature->setServiceName(
+                $config->get(Options::SIGNATURE_SERVICE) ?: $description->getData('signingName')
+            );
+            $signature->setRegionName($config->get(Options::SIGNATURE_REGION));
+        }
+
+        $config->set(Options::SIGNATURE, $signature);
     }
 }

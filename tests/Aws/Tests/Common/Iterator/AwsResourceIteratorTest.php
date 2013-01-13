@@ -18,7 +18,6 @@ namespace Aws\Tests\Common\Iterator;
 
 use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Service\Command\AbstractCommand;
-use Guzzle\Service\Description\Parameter;
 use Guzzle\Service\Resource\Model;
 
 /**

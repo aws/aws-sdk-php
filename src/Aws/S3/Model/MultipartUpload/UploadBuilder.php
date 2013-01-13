@@ -21,7 +21,6 @@ use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\S3\Model\Acp;
-use Guzzle\Http\Mimetypes;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a

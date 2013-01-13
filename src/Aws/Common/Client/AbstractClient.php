@@ -29,7 +29,6 @@ use Aws\Common\Waiter\WaiterClassFactory;
 use Aws\Common\Waiter\WaiterFactoryInterface;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * Abstract AWS client
@@ -50,11 +49,6 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      * @var WaiterFactoryInterface Factory used to create waiter classes
      */
     protected $waiterFactory;
-
-    /**
-     * @var string The directory of the client set by the child class
-     */
-    protected $directory;
 
     /**
      * @var EndpointProviderInterface Endpoint provider used to retrieve region/service endpoints
@@ -83,9 +77,6 @@ abstract class AbstractClient extends Client implements AwsClientInterface
 
         // Make sure the user agent is prefixed by the SDK version
         $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
-
-        // Set the service description on the client
-        $this->addServiceDescriptionFromConfig();
 
         // Add the event listener so that requests are signed before they are sent
         $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
@@ -216,21 +207,6 @@ abstract class AbstractClient extends Client implements AwsClientInterface
                 $resolver->resolve($config, $this);
             }
             $config->remove(Options::RESOLVERS);
-        }
-    }
-
-    /**
-     * Add a service description to the client
-     */
-    protected function addServiceDescriptionFromConfig()
-    {
-        // Set the service description
-        $description = $this->getConfig(Options::SERVICE_DESCRIPTION) || !$this->directory
-            ? $this->getConfig(Options::SERVICE_DESCRIPTION)
-            : require "{$this->directory}/Resources/client.php";
-
-        if ($description) {
-            $this->setDescription(ServiceDescription::factory($description));
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Aws\DynamoDb;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\DynamoDb\Model\Attribute;
@@ -51,11 +50,6 @@ use Guzzle\Service\Resource\Model;
  */
 class DynamoDbClient extends AbstractClient
 {
-    /**
-     * @inheritdoc
-     */
-    protected $directory = __DIR__;
-
     /**
      * Factory method to create a new Amazon DynamoDB client using an array of configuration options:
      *
@@ -127,10 +121,8 @@ class DynamoDbClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE => 'dynamodb',
-                Options::SCHEME  => 'https'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
             ))
-            ->setSignature(new SignatureV4())
             ->addClientResolver($exponentialBackoffResolver)
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array(
