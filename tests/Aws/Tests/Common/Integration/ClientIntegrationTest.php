@@ -82,7 +82,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             \Aws\Route53\Route53Client::factory($config);
             \Aws\Sts\StsClient::factory($config);
         } catch (\InvalidArgumentException $e) {
-            $this->fail('All of the above clients should have been instantiated without errors.');
+            $this->fail('All of the above clients should have been instantiated without errors: ' . $e->getMessage());
         }
     }
 }

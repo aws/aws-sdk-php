@@ -19,6 +19,7 @@ return array (
     'apiVersion' => '2006-03-01',
     'serviceType' => 'rest-xml',
     'timestampFormat' => 'rfc822',
+    'globalEndpoint' => true,
     'signatureVersion' => 's3',
     'operations' => array(
         'AbortMultipartUpload' => array(
