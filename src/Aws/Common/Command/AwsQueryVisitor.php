@@ -44,7 +44,7 @@ class AwsQueryVisitor extends AbstractRequestVisitor
                 }
             }
         } elseif ($param->getType() == 'array') {
-            $offset = $param->getData('offset') ?: 0;
+            $offset = $param->getData('offset') ?: 1;
             foreach ($value as $index => $v) {
                 $index += $offset;
                 if (is_array($v) && $items = $param->getItems()) {
