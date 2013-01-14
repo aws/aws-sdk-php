@@ -20,7 +20,6 @@ use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Signature\SignatureV2;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -111,12 +110,7 @@ class ElasticBeanstalkClient extends AbstractClient
         // Construct the STS client with the client builder
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(
-                Options::SERVICE => 'elasticbeanstalk',
-                Options::SCHEME  => 'https',
-                Options::REGION  => 'us-east-1'
-            ))
-            ->setSignature(new SignatureV2())
+            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'))
             ->build();
     }
 }

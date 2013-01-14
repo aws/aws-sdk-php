@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,10 @@ return array (
     'name' => 'elasticbeanstalk',
     'apiVersion' => '2010-12-01',
     'description' => 'AWS Elastic Beanstalk',
+    'serviceType' => 'query',
+    'resultWrapped' => true,
+    'signatureVersion' => 'v4',
+    'memberedLists' => true,
     'operations' => array(
         'CheckDNSAvailability' => array(
             'httpMethod' => 'POST',
@@ -160,6 +164,14 @@ return array (
                     'reason' => 'The caller has exceeded the limit on the number of application versions associated with their account.',
                     'class' => 'TooManyApplicationVersionsException',
                 ),
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
+                ),
+                array(
+                    'reason' => 'The specified S3 bucket does not belong to the S3 region in which the service is running.',
+                    'class' => 'S3LocationNotInServiceRegionException',
+                ),
             ),
         ),
         'CreateConfigurationTemplate' => array(
@@ -236,6 +248,7 @@ return array (
                     'description' => 'If specified, sets the specified configuration option to the requested value. The new value overrides the value obtained from the solution stack or the source configuration template.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
                         'description' => 'A specification identifying an individual configuration option along with its current value.',
@@ -258,6 +271,10 @@ return array (
                 ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
+                ),
                 array(
                     'reason' => 'The caller has exceeded the limit on the number of configuration templates associated with their account.',
                     'class' => 'TooManyConfigurationTemplatesException',
@@ -335,6 +352,7 @@ return array (
                     'description' => 'If specified, sets the specified configuration options to the requested value in the configuration set for the new environment. These override the values obtained from the solution stack or the configuration template.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
                         'description' => 'A specification identifying an individual configuration option along with its current value.',
@@ -359,6 +377,7 @@ return array (
                     'description' => 'A list of custom user-defined configuration options to remove from the configuration set for this new environment.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionsToRemove.member',
                     'items' => array(
                         'name' => 'OptionSpecification',
                         'description' => 'A specification identifying an individual configuration option.',
@@ -380,6 +399,10 @@ return array (
                 array(
                     'reason' => 'The caller has exceeded the limit of allowed environments associated with the account.',
                     'class' => 'TooManyEnvironmentsException',
+                ),
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
                 ),
             ),
         ),
@@ -411,6 +434,10 @@ return array (
                     'reason' => 'The caller does not have a subscription to Amazon S3.',
                     'class' => 'S3SubscriptionRequiredException',
                 ),
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
+                ),
             ),
         ),
         'DeleteApplication' => array(
@@ -419,7 +446,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'Deletes the specified application along with all associated versions and configurations.',
+            'summary' => 'Deletes the specified application along with all associated versions and configurations. The application versions will not be deleted from your Amazon S3 bucket.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -438,6 +465,18 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
+                ),
+                'TerminateEnvByForce' => array(
+                    'description' => 'When set to true, running environments will be terminated before deleting the application.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because another operation is already in progress affecting an an element in this activity.',
+                    'class' => 'OperationInProgressException',
                 ),
             ),
         ),
@@ -487,6 +526,18 @@ return array (
                     'reason' => 'Unable to delete the Amazon S3 source bundle associated with the application version, although the application version deleted successfully.',
                     'class' => 'SourceBundleDeletionException',
                 ),
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
+                ),
+                array(
+                    'reason' => 'Unable to perform the specified operation because another operation is already in progress affecting an an element in this activity.',
+                    'class' => 'OperationInProgressException',
+                ),
+                array(
+                    'reason' => 'The specified S3 bucket does not belong to the S3 region in which the service is running.',
+                    'class' => 'S3LocationNotInServiceRegionException',
+                ),
             ),
         ),
         'DeleteConfigurationTemplate' => array(
@@ -522,6 +573,12 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because another operation is already in progress affecting an an element in this activity.',
+                    'class' => 'OperationInProgressException',
                 ),
             ),
         ),
@@ -590,6 +647,7 @@ return array (
                     'description' => 'If specified, restricts the returned descriptions to only include ones that have the specified version labels.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'VersionLabels.member',
                     'items' => array(
                         'name' => 'VersionLabel',
                         'type' => 'string',
@@ -621,6 +679,7 @@ return array (
                     'description' => 'If specified, restricts the returned descriptions to only include those with the specified names.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'ApplicationNames.member',
                     'items' => array(
                         'name' => 'ApplicationName',
                         'type' => 'string',
@@ -679,6 +738,7 @@ return array (
                     'description' => 'If specified, restricts the descriptions to only the specified options.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Options.member',
                     'items' => array(
                         'name' => 'OptionSpecification',
                         'description' => 'A specification identifying an individual configuration option.',
@@ -770,6 +830,12 @@ return array (
                     'maxLength' => 23,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
+                ),
+            ),
         ),
         'DescribeEnvironments' => array(
             'httpMethod' => 'POST',
@@ -807,6 +873,7 @@ return array (
                     'description' => 'If specified, restricts the returned descriptions to include only those that have the specified IDs.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'EnvironmentIds.member',
                     'items' => array(
                         'name' => 'EnvironmentId',
                         'type' => 'string',
@@ -816,6 +883,7 @@ return array (
                     'description' => 'If specified, restricts the returned descriptions to include only those that have the specified names.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'EnvironmentNames.member',
                     'items' => array(
                         'name' => 'EnvironmentName',
                         'type' => 'string',
@@ -834,6 +902,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
@@ -914,6 +983,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
@@ -923,6 +993,7 @@ return array (
                     'type' => array(
                         'object',
                         'string',
+                        'integer',
                     ),
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
@@ -990,6 +1061,12 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 4,
                     'maxLength' => 23,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
                 ),
             ),
         ),
@@ -1188,6 +1265,12 @@ return array (
                     'location' => 'aws.query',
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
+                ),
+            ),
         ),
         'UpdateApplication' => array(
             'httpMethod' => 'POST',
@@ -1309,6 +1392,7 @@ return array (
                     'description' => 'A list of configuration option settings to update with the new specified option value.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
                         'description' => 'A specification identifying an individual configuration option along with its current value.',
@@ -1333,6 +1417,7 @@ return array (
                     'description' => 'A list of configuration options to remove from the configuration set.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionsToRemove.member',
                     'items' => array(
                         'name' => 'OptionSpecification',
                         'description' => 'A specification identifying an individual configuration option.',
@@ -1348,6 +1433,12 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
                 ),
             ),
         ),
@@ -1405,6 +1496,7 @@ return array (
                     'description' => 'If specified, updates the configuration set associated with the running environment and sets the specified configuration options to the requested value.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
                         'description' => 'A specification identifying an individual configuration option along with its current value.',
@@ -1429,6 +1521,7 @@ return array (
                     'description' => 'A list of custom user-defined configuration options to remove from the configuration set for this environment.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionsToRemove.member',
                     'items' => array(
                         'name' => 'OptionSpecification',
                         'description' => 'A specification identifying an individual configuration option.',
@@ -1444,6 +1537,12 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
                 ),
             ),
         ),
@@ -1492,6 +1591,7 @@ return array (
                     'description' => 'A list of the options and desired values to evaluate.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
                         'description' => 'A specification identifying an individual configuration option along with its current value.',
@@ -1511,6 +1611,12 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services',
+                    'class' => 'InsufficientPrivilegesException',
                 ),
             ),
         ),
@@ -1563,6 +1669,7 @@ return array (
                             'items' => array(
                                 'name' => 'VersionLabel',
                                 'type' => 'string',
+                                'sentAs' => 'member',
                             ),
                         ),
                         'ConfigurationTemplates' => array(
@@ -1571,6 +1678,7 @@ return array (
                             'items' => array(
                                 'name' => 'ConfigurationTemplateName',
                                 'type' => 'string',
+                                'sentAs' => 'member',
                             ),
                         ),
                     ),
@@ -1676,6 +1784,7 @@ return array (
                         'name' => 'ConfigurationOptionSetting',
                         'description' => 'A specification identifying an individual configuration option along with its current value.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Namespace' => array(
                                 'description' => 'A unique namespace identifying the option\'s associated AWS resource.',
@@ -1787,6 +1896,7 @@ return array (
                                         'name' => 'Listener',
                                         'description' => 'Describes the properties of a Listener for the LoadBalancer.',
                                         'type' => 'object',
+                                        'sentAs' => 'member',
                                         'properties' => array(
                                             'Protocol' => array(
                                                 'description' => 'The protocol that is used by the Listener.',
@@ -1832,6 +1942,7 @@ return array (
                         'name' => 'ApplicationVersionDescription',
                         'description' => 'Describes the properties of an application version.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'ApplicationName' => array(
                                 'description' => 'The name of the application associated with this release.',
@@ -1884,6 +1995,7 @@ return array (
                         'name' => 'ApplicationDescription',
                         'description' => 'Describes the properties of an application.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'ApplicationName' => array(
                                 'description' => 'The name of the application.',
@@ -1907,6 +2019,7 @@ return array (
                                 'items' => array(
                                     'name' => 'VersionLabel',
                                     'type' => 'string',
+                                    'sentAs' => 'member',
                                 ),
                             ),
                             'ConfigurationTemplates' => array(
@@ -1915,6 +2028,7 @@ return array (
                                 'items' => array(
                                     'name' => 'ConfigurationTemplateName',
                                     'type' => 'string',
+                                    'sentAs' => 'member',
                                 ),
                             ),
                         ),
@@ -1939,6 +2053,7 @@ return array (
                         'name' => 'ConfigurationOptionDescription',
                         'description' => 'Describes the possible values for a configuration option.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Namespace' => array(
                                 'description' => 'A unique namespace identifying the option\'s associated AWS resource.',
@@ -1970,6 +2085,7 @@ return array (
                                 'items' => array(
                                     'name' => 'ConfigurationOptionPossibleValue',
                                     'type' => 'string',
+                                    'sentAs' => 'member',
                                 ),
                             ),
                             'MinValue' => array(
@@ -2015,6 +2131,7 @@ return array (
                         'name' => 'ConfigurationSettingsDescription',
                         'description' => 'Describes the settings for a configuration set.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'SolutionStackName' => array(
                                 'description' => 'The name of the solution stack this configuration set uses.',
@@ -2055,6 +2172,7 @@ return array (
                                     'name' => 'ConfigurationOptionSetting',
                                     'description' => 'A specification identifying an individual configuration option along with its current value.',
                                     'type' => 'object',
+                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'Namespace' => array(
                                             'description' => 'A unique namespace identifying the option\'s associated AWS resource.',
@@ -2096,6 +2214,7 @@ return array (
                                 'name' => 'AutoScalingGroup',
                                 'description' => 'Describes an Auto Scaling launch configuration.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Name' => array(
                                         'description' => 'The name of the AutoScalingGroup .',
@@ -2111,6 +2230,7 @@ return array (
                                 'name' => 'Instance',
                                 'description' => 'The description of an Amazon EC2 instance.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Id' => array(
                                         'description' => 'The ID of the Amazon EC2 instance.',
@@ -2126,6 +2246,7 @@ return array (
                                 'name' => 'LaunchConfiguration',
                                 'description' => 'Describes an Auto Scaling launch configuration.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Name' => array(
                                         'description' => 'The name of the launch configuration.',
@@ -2141,6 +2262,7 @@ return array (
                                 'name' => 'LoadBalancer',
                                 'description' => 'Describes a LoadBalancer.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Name' => array(
                                         'description' => 'The name of the LoadBalancer.',
@@ -2156,6 +2278,7 @@ return array (
                                 'name' => 'Trigger',
                                 'description' => 'Describes a trigger.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Name' => array(
                                         'description' => 'The name of the trigger.',
@@ -2180,6 +2303,7 @@ return array (
                         'name' => 'EnvironmentDescription',
                         'description' => 'Describes the properties of an environment.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'EnvironmentName' => array(
                                 'description' => 'The name of this environment.',
@@ -2256,6 +2380,7 @@ return array (
                                                     'name' => 'Listener',
                                                     'description' => 'Describes the properties of a Listener for the LoadBalancer.',
                                                     'type' => 'object',
+                                                    'sentAs' => 'member',
                                                     'properties' => array(
                                                         'Protocol' => array(
                                                             'description' => 'The protocol that is used by the Listener.',
@@ -2289,6 +2414,7 @@ return array (
                         'name' => 'EventDescription',
                         'description' => 'Describes an event.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'EventDate' => array(
                                 'description' => 'The date when the event occurred.',
@@ -2343,6 +2469,7 @@ return array (
                     'items' => array(
                         'name' => 'SolutionStackName',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'SolutionStackDetails' => array(
@@ -2353,6 +2480,7 @@ return array (
                         'name' => 'SolutionStackDescription',
                         'description' => 'Describes the solution stack.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'SolutionStackName' => array(
                                 'description' => 'The name of the solution stack.',
@@ -2364,6 +2492,7 @@ return array (
                                 'items' => array(
                                     'name' => 'FileTypeExtension',
                                     'type' => 'string',
+                                    'sentAs' => 'member',
                                 ),
                             ),
                         ),
@@ -2383,6 +2512,7 @@ return array (
                         'name' => 'EnvironmentInfoDescription',
                         'description' => 'The information retrieved from the Amazon EC2 instances.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'InfoType' => array(
                                 'description' => 'The type of information retrieved.',
@@ -2417,6 +2547,7 @@ return array (
                         'name' => 'ValidationMessage',
                         'description' => 'An error or warning for a desired configuration option value.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Message' => array(
                                 'description' => 'A message describing the error or warning.',
