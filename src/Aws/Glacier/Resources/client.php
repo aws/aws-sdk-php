@@ -18,8 +18,10 @@ return array (
     'name' => 'glacier',
     'apiVersion' => '2012-06-01',
     'description' => 'Amazon Glacier is a storage solution for "cold data."',
+    'fullName' => 'Amazon Glacier',
     'serviceType' => 'rest-json',
     'signatureVersion' => 'v4',
+    'namespace' => 'Glacier',
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',

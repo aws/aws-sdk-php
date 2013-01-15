@@ -18,10 +18,13 @@ return array (
     'name' => 'elasticbeanstalk',
     'apiVersion' => '2010-12-01',
     'description' => 'AWS Elastic Beanstalk',
+    'fullName' => 'AWS Elastic Beanstalk',
+    'abbr' => 'Elastic Beanstalk',
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'memberedLists' => true,
+    'namespace' => 'ElasticBeanstalk',
     'operations' => array(
         'CheckDNSAvailability' => array(
             'httpMethod' => 'POST',

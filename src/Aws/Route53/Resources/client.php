@@ -17,9 +17,12 @@
 return array (
     'name' => 'route53',
     'apiVersion' => '2012-02-29',
+    'fullName' => 'Amazon Route 53',
+    'abbr' => 'Route 53',
     'serviceType' => 'rest-xml',
     'globalEndpoint' => true,
     'signatureVersion' => 'v3https',
+    'namespace' => 'Route53',
     'operations' => array(
         'ChangeResourceRecordSets' => array(
             'httpMethod' => 'POST',

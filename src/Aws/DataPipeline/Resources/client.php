@@ -18,10 +18,12 @@ return array (
     'name' => 'datapipeline',
     'apiVersion' => '2012-10-29',
     'description' => 'This is the AWS Data Pipeline API Reference. This guide provides descriptions and samples of the AWS Data Pipeline API.',
+    'fullName' => 'AWS Data Pipeline',
     'serviceType' => 'json',
     'jsonVersion' => '1.1',
     'targetPrefix' => 'DataPipeline.',
     'signatureVersion' => 'v4',
+    'namespace' => 'DataPipeline',
     'operations' => array(
         'ActivatePipeline' => array(
             'httpMethod' => 'POST',

@@ -17,9 +17,12 @@
 return array (
     'name' => 'cloudfront',
     'apiVersion' => '2012-05-05',
+    'fullName' => 'Amazon CloudFront',
+    'abbr' => 'CloudFront',
     'serviceType' => 'rest-xml',
     'globalEndpoint' => true,
     'signatureVersion' => 'cloudfront',
+    'namespace' => 'CloudFront',
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',
