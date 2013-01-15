@@ -59,11 +59,6 @@ use Guzzle\Service\Resource\Model;
 class ElasticBeanstalkClient extends AbstractClient
 {
     /**
-     * {@inheritdoc}
-     */
-    protected $directory = __DIR__;
-
-    /**
      * Factory method to create a new AWS Elastic Beanstalk client using an array of configuration options:
      *
      * Credential options (`key`, `secret`, and optional `token` OR `credentials` is required)
