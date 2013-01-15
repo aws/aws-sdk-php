@@ -36,6 +36,11 @@ return array(
             'class'   => 'Aws\DynamoDb\DynamoDbClient'
         ),
 
+        'elasticloadbalancing' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\ElasticLoadBalancing\ElasticLoadBalancingClient'
+        ),
+
         'elasticbeanstalk' => array(
             'extends' => 'default_settings',
             'class'   => 'Aws\ElasticBeanstalk\ElasticBeanstalkClient'
