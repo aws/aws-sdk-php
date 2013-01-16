@@ -41,13 +41,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'licenseId' => array(
+                'LicenseId' => array(
                     'required' => true,
                     'description' => 'Specifies the ID for the specific license to activate against.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'capacity' => array(
+                'Capacity' => array(
                     'required' => true,
                     'description' => 'Specifies the additional number of licenses to activate.',
                     'type' => 'numeric',
@@ -101,25 +101,25 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'privateIpAddresses' => array(
+                'PrivateIpAddresses' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'privateIpAddress',
+                    'sentAs' => 'PrivateIpAddress',
                     'items' => array(
                         'name' => 'PrivateIpAddress',
                         'type' => 'string',
                     ),
                 ),
-                'secondaryPrivateIpAddressCount' => array(
+                'SecondaryPrivateIpAddressCount' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'allowReassignment' => array(
+                'AllowReassignment' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -145,13 +145,11 @@ return array (
                     'default' => '2012-12-01',
                 ),
                 'InstanceId' => array(
-                    'required' => true,
                     'description' => 'The instance to associate with the IP address.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'PublicIp' => array(
-                    'required' => true,
                     'description' => 'IP address that you are assigning to the instance.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -161,15 +159,15 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'privateIpAddress' => array(
+                'PrivateIpAddress' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'allowReassociation' => array(
+                'AllowReassociation' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -226,13 +224,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'subnetId' => array(
+                'SubnetId' => array(
                     'required' => true,
                     'description' => 'The ID of the subnet.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'routeTableId' => array(
+                'RouteTableId' => array(
                     'required' => true,
                     'description' => 'The ID of the route table.',
                     'type' => 'string',
@@ -258,13 +256,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'internetGatewayId' => array(
+                'InternetGatewayId' => array(
                     'required' => true,
                     'description' => 'The ID of the Internet gateway to attach.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'vpcId' => array(
+                'VpcId' => array(
                     'required' => true,
                     'description' => 'The ID of the VPC.',
                     'type' => 'string',
@@ -289,17 +287,17 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'deviceIndex' => array(
+                'DeviceIndex' => array(
                     'required' => true,
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -310,7 +308,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'AttachVolumeResult',
+            'responseClass' => 'attachment',
             'responseType' => 'model',
             'summary' => 'Attach a previously created volume to a running instance.',
             'parameters' => array(
@@ -394,59 +392,53 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'groupId' => array(
+                'GroupId' => array(
                     'required' => true,
                     'description' => 'ID of the VPC security group to modify.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ipPermissions' => array(
+                'IpPermissions' => array(
                     'description' => 'List of IP permissions to authorize on the specified security group. Specifying permissions through IP permissions is the preferred way of authorizing permissions since it offers more flexibility and control.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
                             'IpProtocol' => array(
                                 'description' => 'The IP protocol of this permission.',
                                 'type' => 'string',
-                                'sentAs' => 'ipProtocol',
                             ),
                             'FromPort' => array(
                                 'description' => 'Start of port range for the TCP and UDP protocols, or an ICMP type number. An ICMP type number of -1 indicates a wildcard (i.e., any ICMP type number).',
                                 'type' => 'numeric',
-                                'sentAs' => 'fromPort',
                             ),
                             'ToPort' => array(
                                 'description' => 'End of port range for the TCP and UDP protocols, or an ICMP code. An ICMP code of -1 indicates a wildcard (i.e., any ICMP code).',
                                 'type' => 'numeric',
-                                'sentAs' => 'toPort',
                             ),
                             'UserIdGroupPairs' => array(
                                 'description' => 'The list of AWS user IDs and groups included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'groups',
+                                'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'UserId' => array(
                                             'description' => 'The AWS user ID of an account.',
                                             'type' => 'string',
-                                            'sentAs' => 'userId',
                                         ),
                                         'GroupName' => array(
                                             'description' => 'Name of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupName',
                                         ),
                                         'GroupId' => array(
                                             'description' => 'ID of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupId',
                                         ),
                                     ),
                                 ),
@@ -454,16 +446,14 @@ return array (
                             'IpRanges' => array(
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'ipRanges',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'CidrIp' => array(
                                             'description' => 'The list of CIDR IP ranges.',
                                             'type' => 'string',
-                                            'sentAs' => 'cidrIp',
                                         ),
                                     ),
                                 ),
@@ -506,48 +496,42 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
                             'IpProtocol' => array(
                                 'description' => 'The IP protocol of this permission.',
                                 'type' => 'string',
-                                'sentAs' => 'ipProtocol',
                             ),
                             'FromPort' => array(
                                 'description' => 'Start of port range for the TCP and UDP protocols, or an ICMP type number. An ICMP type number of -1 indicates a wildcard (i.e., any ICMP type number).',
                                 'type' => 'numeric',
-                                'sentAs' => 'fromPort',
                             ),
                             'ToPort' => array(
                                 'description' => 'End of port range for the TCP and UDP protocols, or an ICMP code. An ICMP code of -1 indicates a wildcard (i.e., any ICMP code).',
                                 'type' => 'numeric',
-                                'sentAs' => 'toPort',
                             ),
                             'UserIdGroupPairs' => array(
                                 'description' => 'The list of AWS user IDs and groups included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'groups',
+                                'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'UserId' => array(
                                             'description' => 'The AWS user ID of an account.',
                                             'type' => 'string',
-                                            'sentAs' => 'userId',
                                         ),
                                         'GroupName' => array(
                                             'description' => 'Name of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupName',
                                         ),
                                         'GroupId' => array(
                                             'description' => 'ID of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupId',
                                         ),
                                     ),
                                 ),
@@ -555,16 +539,14 @@ return array (
                             'IpRanges' => array(
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'ipRanges',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'CidrIp' => array(
                                             'description' => 'The list of CIDR IP ranges.',
                                             'type' => 'string',
-                                            'sentAs' => 'cidrIp',
                                         ),
                                     ),
                                 ),
@@ -610,12 +592,10 @@ return array (
                                 'Bucket' => array(
                                     'description' => 'The bucket in which to store the AMI. You can specify a bucket that you already own or a new bucket that Amazon EC2 creates on your behalf.',
                                     'type' => 'string',
-                                    'sentAs' => 'bucket',
                                 ),
                                 'Prefix' => array(
                                     'description' => 'The prefix to use when storing the AMI in S3.',
                                     'type' => 'string',
-                                    'sentAs' => 'prefix',
                                 ),
                                 'AWSAccessKeyId' => array(
                                     'description' => 'The Access Key ID of the owner of the Amazon S3 bucket.',
@@ -624,12 +604,10 @@ return array (
                                 'UploadPolicy' => array(
                                     'description' => 'A Base64-encoded Amazon S3 upload policy that gives Amazon EC2 permission to upload items into Amazon S3 on the user\'s behalf.',
                                     'type' => 'string',
-                                    'sentAs' => 'uploadPolicy',
                                 ),
                                 'UploadPolicySignature' => array(
                                     'description' => 'The signature of the Base64 encoded JSON document.',
                                     'type' => 'string',
-                                    'sentAs' => 'uploadPolicySignature',
                                 ),
                             ),
                         ),
@@ -680,12 +658,12 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'conversionTaskId' => array(
+                'ConversionTaskId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'reasonMessage' => array(
+                'ReasonMessage' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -708,7 +686,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'exportTaskId' => array(
+                'ExportTaskId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -732,7 +710,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'reservedInstancesListingId' => array(
+                'ReservedInstancesListingId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -757,7 +735,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'spotInstanceRequestIds' => array(
+                'SpotInstanceRequestIds' => array(
                     'required' => true,
                     'description' => 'Specifies the ID of the Spot Instance request.',
                     'type' => 'array',
@@ -897,23 +875,22 @@ return array (
                     'description' => 'A set of one or more DHCP configurations.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'dhcpConfiguration',
+                    'sentAs' => 'DhcpConfiguration',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'The DhcpConfiguration data type',
                         'type' => 'object',
                         'properties' => array(
                             'Key' => array(
                                 'description' => 'Contains the name of a DHCP option.',
                                 'type' => 'string',
-                                'sentAs' => 'key',
                             ),
                             'Values' => array(
                                 'description' => 'Contains a set of values for a DHCP option.',
                                 'type' => 'array',
-                                'sentAs' => 'valueSet',
+                                'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -940,33 +917,33 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'required' => true,
                     'description' => 'The ID of the instance from which to create the new image.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'name' => array(
+                'Name' => array(
                     'required' => true,
                     'description' => 'The name for the new AMI being created.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'description' => array(
+                'Description' => array(
                     'description' => 'The description for the new AMI being created.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'noReboot' => array(
+                'NoReboot' => array(
                     'description' => 'By default this property is set to false, which means Amazon EC2 attempts to cleanly shut down the instance before image creation and reboots the instance afterwards. When set to true, Amazon EC2 will not shut down the instance before creating the image. When this option is used, file system integrity on the created image cannot be guaranteed.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
-                'blockDeviceMappings' => array(
+                'BlockDeviceMappings' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'blockDeviceMapping',
+                    'sentAs' => 'BlockDeviceMapping',
                     'items' => array(
                         'name' => 'BlockDeviceMapping',
                         'description' => 'The BlockDeviceMappingItemType data type.',
@@ -975,43 +952,41 @@ return array (
                             'VirtualName' => array(
                                 'description' => 'Specifies the virtual device name.',
                                 'type' => 'string',
-                                'sentAs' => 'virtualName',
                             ),
                             'DeviceName' => array(
                                 'description' => 'Specifies the device name (e.g., /dev/sdh).',
                                 'type' => 'string',
-                                'sentAs' => 'deviceName',
                             ),
-                            'ebs' => array(
+                            'Ebs' => array(
                                 'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
                                 'type' => 'object',
                                 'properties' => array(
-                                    'snapshotId' => array(
+                                    'SnapshotId' => array(
                                         'description' => 'The ID of the snapshot from which the volume will be created.',
                                         'type' => 'string',
                                     ),
-                                    'volumeSize' => array(
+                                    'VolumeSize' => array(
                                         'description' => 'The size of the volume, in gigabytes.',
                                         'type' => 'numeric',
                                     ),
-                                    'deleteOnTermination' => array(
+                                    'DeleteOnTermination' => array(
                                         'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
                                     ),
-                                    'volumeType' => array(
+                                    'VolumeType' => array(
                                         'type' => 'string',
                                         'enum' => array(
                                             'standard',
                                             'io1',
                                         ),
                                     ),
-                                    'iops' => array(
+                                    'Iops' => array(
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
-                            'noDevice' => array(
+                            'NoDevice' => array(
                                 'description' => 'Specifies the device name to suppress during instance launch.',
                                 'type' => 'string',
                             ),
@@ -1037,16 +1012,16 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'targetEnvironment' => array(
+                'TargetEnvironment' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'enum' => array(
@@ -1054,28 +1029,28 @@ return array (
                         'vmware',
                     ),
                 ),
-                'exportToS3Task' => array(
+                'ExportToS3Task' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
-                    'sentAs' => 'exportToS3',
+                    'sentAs' => 'ExportToS3',
                     'properties' => array(
-                        'diskImageFormat' => array(
+                        'DiskImageFormat' => array(
                             'type' => 'string',
                             'enum' => array(
                                 'vmdk',
                                 'vhd',
                             ),
                         ),
-                        'containerFormat' => array(
+                        'ContainerFormat' => array(
                             'type' => 'string',
                             'enum' => array(
                                 'ova',
                             ),
                         ),
-                        's3Bucket' => array(
+                        'S3Bucket' => array(
                             'type' => 'string',
                         ),
-                        's3Prefix' => array(
+                        'S3Prefix' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -1146,7 +1121,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'vpcId' => array(
+                'VpcId' => array(
                     'required' => true,
                     'description' => 'The ID of the VPC where the network ACL will be created.',
                     'type' => 'string',
@@ -1172,25 +1147,25 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkAclId' => array(
+                'NetworkAclId' => array(
                     'required' => true,
                     'description' => 'ID of the ACL where the entry will be created.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ruleNumber' => array(
+                'RuleNumber' => array(
                     'required' => true,
                     'description' => 'Rule number to assign to the entry (e.g., 100). ACL entries are processed in ascending order by rule number.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'protocol' => array(
+                'Protocol' => array(
                     'required' => true,
                     'description' => 'IP protocol the rule applies to. Valid Values: tcp, udp, icmp or an IP protocol number.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ruleAction' => array(
+                'RuleAction' => array(
                     'required' => true,
                     'description' => 'Whether to allow or deny traffic that matches the rule.',
                     'type' => 'string',
@@ -1200,39 +1175,45 @@ return array (
                         'deny',
                     ),
                 ),
-                'egress' => array(
+                'Egress' => array(
                     'required' => true,
                     'description' => 'Whether this rule applies to egress traffic from the subnet (true) or ingress traffic to the subnet (false).',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
-                'cidrBlock' => array(
+                'CidrBlock' => array(
                     'required' => true,
                     'description' => 'The CIDR range to allow or deny, in CIDR notation (e.g., 172.16.0.0/24).',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'icmpTypeCode' => array(
+                'IcmpTypeCode' => array(
                     'description' => 'ICMP values.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'sentAs' => 'Icmp',
                     'properties' => array(
-                        '' => array(
+                        'Type' => array(
+                            'description' => 'For the ICMP protocol, the ICMP type. A value of -1 is a wildcard meaning all types. Required if specifying icmp for the protocol.',
+                            'type' => 'numeric',
+                        ),
+                        'Code' => array(
+                            'description' => 'For the ICMP protocol, the ICMP code. A value of -1 is a wildcard meaning all codes. Required if specifying icmp for the protocol.',
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
-                'portRange' => array(
+                'PortRange' => array(
                     'description' => 'Port ranges.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'from' => array(
+                        'From' => array(
                             'description' => 'The first port in the range. Required if specifying tcp or udp for the protocol.',
                             'type' => 'numeric',
                         ),
-                        'to' => array(
+                        'To' => array(
                             'description' => 'The last port in the range. Required if specifying tcp or udp for the protocol.',
                             'type' => 'numeric',
                         ),
@@ -1257,20 +1238,20 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'subnetId' => array(
+                'SubnetId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'privateIpAddress' => array(
+                'PrivateIpAddress' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'groups' => array(
+                'Groups' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'SecurityGroupId',
@@ -1279,25 +1260,25 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'privateIpAddresses' => array(
+                'PrivateIpAddresses' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'object',
                         'properties' => array(
-                            'privateIpAddress' => array(
+                            'PrivateIpAddress' => array(
                                 'required' => true,
                                 'type' => 'string',
                             ),
-                            'primary' => array(
+                            'Primary' => array(
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
                         ),
                     ),
                 ),
-                'secondaryPrivateIpAddressCount' => array(
+                'SecondaryPrivateIpAddressCount' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1321,13 +1302,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'groupName' => array(
+                'GroupName' => array(
                     'required' => true,
                     'description' => 'The name of the PlacementGroup.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'strategy' => array(
+                'Strategy' => array(
                     'required' => true,
                     'description' => 'The PlacementGroup strategy.',
                     'type' => 'string',
@@ -1355,37 +1336,37 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'reservedInstancesId' => array(
+                'ReservedInstancesId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'instanceCount' => array(
+                'InstanceCount' => array(
                     'required' => true,
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'priceSchedules' => array(
+                'PriceSchedules' => array(
                     'required' => true,
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'object',
                         'properties' => array(
-                            'term' => array(
+                            'Term' => array(
                                 'type' => 'numeric',
                             ),
-                            'price' => array(
+                            'Price' => array(
                                 'type' => 'numeric',
                             ),
-                            'currencyCode' => array(
+                            'CurrencyCode' => array(
                                 'type' => 'string',
                             ),
                         ),
                     ),
                 ),
-                'clientToken' => array(
+                'ClientToken' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1410,29 +1391,29 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'routeTableId' => array(
+                'RouteTableId' => array(
                     'required' => true,
                     'description' => 'The ID of the route table where the route will be added.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'destinationCidrBlock' => array(
+                'DestinationCidrBlock' => array(
                     'required' => true,
                     'description' => 'The CIDR address block used for the destination match. For example: 0.0.0.0/0. Routing decisions are based on the most specific match.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'gatewayId' => array(
+                'GatewayId' => array(
                     'description' => 'The ID of a VPN or Internet gateway attached to your VPC. You must provide either GatewayId or InstanceId, but not both.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'description' => 'The ID of a NAT instance in your VPC. You must provide either GatewayId or InstanceId, but not both.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1456,7 +1437,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'vpcId' => array(
+                'VpcId' => array(
                     'required' => true,
                     'description' => 'The ID of the VPC where the route table will be created.',
                     'type' => 'string',
@@ -1506,7 +1487,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'CreateSnapshotResult',
+            'responseClass' => 'snapshot',
             'responseType' => 'model',
             'summary' => 'Create a snapshot of the volume identified by volume ID. A volume does not have to be detached at the time the snapshot is taken.',
             'parameters' => array(
@@ -1551,13 +1532,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'bucket' => array(
+                'Bucket' => array(
                     'required' => true,
                     'description' => 'The Amazon S3 bucket in which to store the Spot Instance datafeed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'prefix' => array(
+                'Prefix' => array(
                     'description' => 'The prefix that is prepended to datafeed files.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1619,7 +1600,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'resources' => array(
+                'Resources' => array(
                     'required' => true,
                     'description' => 'One or more IDs of resources to tag. This could be the ID of an AMI, an instance, an EBS volume, or snapshot, etc.',
                     'type' => 'array',
@@ -1630,22 +1611,22 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'tags' => array(
+                'Tags' => array(
                     'required' => true,
                     'description' => 'The tags to add or overwrite for the specified resources. Each tag item consists of a key-value pair.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'Tag',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
                         'type' => 'object',
                         'properties' => array(
-                            'key' => array(
+                            'Key' => array(
                                 'description' => 'The tag\'s key.',
                                 'type' => 'string',
                             ),
-                            'value' => array(
+                            'Value' => array(
                                 'description' => 'The tag\'s value.',
                                 'type' => 'string',
                             ),
@@ -1658,7 +1639,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'CreateVolumeResult',
+            'responseClass' => 'volume',
             'responseType' => 'model',
             'summary' => 'Initializes an empty volume of a given size.',
             'parameters' => array(
@@ -1726,7 +1707,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'instanceTenancy' => array(
+                'InstanceTenancy' => array(
                     'description' => 'The allowed tenancy of instances launched into the VPC. A value of default means instances can be launched with any tenancy; a value of dedicated means instances must be launched with tenancy as dedicated.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1769,11 +1750,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'options' => array(
+                'Options' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'staticRoutesOnly' => array(
+                        'StaticRoutesOnly' => array(
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
@@ -1859,13 +1840,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'licenseId' => array(
+                'LicenseId' => array(
                     'required' => true,
                     'description' => 'Specifies the ID for the specific license to deactivate against.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'capacity' => array(
+                'Capacity' => array(
                     'required' => true,
                     'description' => 'Specifies the amount of capacity to deactivate against the license.',
                     'type' => 'numeric',
@@ -1943,7 +1924,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'internetGatewayId' => array(
+                'InternetGatewayId' => array(
                     'required' => true,
                     'description' => 'The ID of the Internet gateway to be deleted.',
                     'type' => 'string',
@@ -1995,7 +1976,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkAclId' => array(
+                'NetworkAclId' => array(
                     'required' => true,
                     'description' => 'The ID of the network ACL to be deleted.',
                     'type' => 'string',
@@ -2021,19 +2002,19 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkAclId' => array(
+                'NetworkAclId' => array(
                     'required' => true,
                     'description' => 'ID of the network ACL.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ruleNumber' => array(
+                'RuleNumber' => array(
                     'required' => true,
                     'description' => 'Rule number for the entry to delete.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'egress' => array(
+                'Egress' => array(
                     'required' => true,
                     'description' => 'Whether the rule to delete is an egress rule (true) or ingress rule (false).',
                     'type' => 'boolean',
@@ -2059,7 +2040,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -2084,7 +2065,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'groupName' => array(
+                'GroupName' => array(
                     'required' => true,
                     'description' => 'The name of the PlacementGroup to delete.',
                     'type' => 'string',
@@ -2110,13 +2091,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'routeTableId' => array(
+                'RouteTableId' => array(
                     'required' => true,
                     'description' => 'The ID of the route table where the route will be deleted.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'destinationCidrBlock' => array(
+                'DestinationCidrBlock' => array(
                     'required' => true,
                     'description' => 'The CIDR range for the route you want to delete. The value you specify must exactly match the CIDR for the route you want to delete.',
                     'type' => 'string',
@@ -2142,7 +2123,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'routeTableId' => array(
+                'RouteTableId' => array(
                     'required' => true,
                     'description' => 'The ID of the route table to be deleted.',
                     'type' => 'string',
@@ -2270,32 +2251,32 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'resources' => array(
+                'Resources' => array(
                     'required' => true,
                     'description' => 'A list of one or more resource IDs. This could be the ID of an AMI, an instance, an EBS volume, or snapshot, etc.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'resourceId',
+                    'sentAs' => 'ResourceId',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
                     ),
                 ),
-                'tags' => array(
+                'Tags' => array(
                     'description' => 'The tags to delete from the specified resources. Each tag item consists of a key-value pair.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'tag',
+                    'sentAs' => 'Tag',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
                         'type' => 'object',
                         'properties' => array(
-                            'key' => array(
+                            'Key' => array(
                                 'description' => 'The tag\'s key.',
                                 'type' => 'string',
                             ),
-                            'value' => array(
+                            'Value' => array(
                                 'description' => 'The tag\'s value.',
                                 'type' => 'string',
                             ),
@@ -2491,7 +2472,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Addresses. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -2510,14 +2491,14 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                     ),
                 ),
-                'allocationIds' => array(
+                'AllocationIds' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'AllocationId',
@@ -2556,7 +2537,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for AvailabilityZones. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -2575,7 +2556,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2612,7 +2593,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for BundleTasks. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -2631,7 +2612,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2657,10 +2638,10 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'filter',
+                    'sentAs' => 'Filter',
                     'items' => array(
                         'name' => 'Filter',
                         'description' => 'A filter used to limit results when describing tags. Multiple values can be specified per filter. A tag must match at least one of the specified values for it to be returned from an operation.',
@@ -2675,19 +2656,19 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                     ),
                 ),
-                'conversionTaskIds' => array(
+                'ConversionTaskIds' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'conversionTaskId',
+                    'sentAs' => 'ConversionTaskId',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'string',
                     ),
                 ),
@@ -2740,7 +2721,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2776,7 +2757,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for DhcpOptions. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -2795,7 +2776,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2821,10 +2802,10 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'exportTaskIds' => array(
+                'ExportTaskIds' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'exportTaskId',
+                    'sentAs' => 'ExportTaskId',
                     'items' => array(
                         'name' => 'ExportTaskId',
                         'type' => 'string',
@@ -2836,7 +2817,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DescribeImageAttributeResult',
+            'responseClass' => 'imageAttribute',
             'responseType' => 'model',
             'summary' => 'The DescribeImageAttribute operation returns information about an attribute of an AMI. Only one attribute can be specified per call.',
             'parameters' => array(
@@ -2912,7 +2893,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Images. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -2931,7 +2912,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2944,7 +2925,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DescribeInstanceAttributeResult',
+            'responseClass' => 'InstanceAttribute',
             'responseType' => 'model',
             'summary' => 'Returns information about an attribute of an instance. Only one attribute can be specified per call.',
             'parameters' => array(
@@ -2958,13 +2939,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'required' => true,
                     'description' => 'The ID of the instance whose instance attribute is being described.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'attribute' => array(
+                'Attribute' => array(
                     'required' => true,
                     'description' => 'The name of the attribute to describe.',
                     'type' => 'string',
@@ -3014,7 +2995,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'The list of filters to limit returned results.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3033,7 +3014,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3050,7 +3031,7 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'includeAllInstances' => array(
+                'IncludeAllInstances' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -3085,7 +3066,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Instances. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3104,7 +3085,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3131,17 +3112,17 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'internetGatewayIds' => array(
+                'InternetGatewayIds' => array(
                     'description' => 'One or more Internet gateway IDs.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'internetGatewayId',
+                    'sentAs' => 'InternetGatewayId',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Internet Gateways. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3160,7 +3141,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3197,7 +3178,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for KeyPairs. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3216,7 +3197,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3243,17 +3224,17 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'licenseIds' => array(
+                'LicenseIds' => array(
                     'description' => 'Specifies the license registration for which details are to be returned.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'licenseId',
+                    'sentAs' => 'LicenseId',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Licenses. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3272,7 +3253,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3299,17 +3280,17 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkAclIds' => array(
+                'NetworkAclIds' => array(
                     'description' => 'One or more network ACL IDs.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'NetworkAclId',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Network ACLs. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3328,7 +3309,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3354,25 +3335,25 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'sourceDestCheck' => array(
+                'SourceDestCheck' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'groups' => array(
+                'Groups' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'sentAs' => 'groupSet',
+                    'sentAs' => 'GroupSet',
                 ),
-                'attachment' => array(
+                'Attachment' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -3395,19 +3376,19 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceIds' => array(
+                'NetworkInterfaceIds' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'NetworkInterfaceId',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'filter',
+                    'sentAs' => 'Filter',
                     'items' => array(
                         'name' => 'Filter',
                         'description' => 'A filter used to limit results when describing tags. Multiple values can be specified per filter. A tag must match at least one of the specified values for it to be returned from an operation.',
@@ -3422,7 +3403,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3449,17 +3430,17 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'groupNames' => array(
+                'GroupNames' => array(
                     'description' => 'The name of the PlacementGroup.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'groupName',
+                    'sentAs' => 'GroupName',
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Placement Groups. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3478,7 +3459,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3515,7 +3496,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Regions. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3534,7 +3515,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3571,7 +3552,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for ReservedInstances. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3590,14 +3571,14 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                     ),
                 ),
-                'offeringType' => array(
+                'OfferingType' => array(
                     'description' => 'The Reserved Instance offering type.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -3621,15 +3602,15 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'reservedInstancesId' => array(
+                'ReservedInstancesId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'reservedInstancesListingId' => array(
+                'ReservedInstancesListingId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
@@ -3646,7 +3627,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3716,7 +3697,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for ReservedInstancesOfferings. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3735,28 +3716,28 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                     ),
                 ),
-                'instanceTenancy' => array(
+                'InstanceTenancy' => array(
                     'description' => 'The tenancy of the Reserved Instance offering. A Reserved Instance with tenancy of dedicated will run on single-tenant hardware and can only be launched within a VPC.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'offeringType' => array(
+                'OfferingType' => array(
                     'description' => 'The Reserved Instance offering type.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'nextToken' => array(
+                'NextToken' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'maxResults' => array(
+                'MaxResults' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -3780,17 +3761,17 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'routeTableIds' => array(
+                'RouteTableIds' => array(
                     'description' => 'One or more route table IDs.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'RouteTableId',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Route Tables. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3809,7 +3790,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3851,11 +3832,11 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'GroupId',
                     'items' => array(
-                        'name' => 'groupId',
+                        'name' => 'GroupId',
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for SecurityGroups. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3874,7 +3855,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3967,7 +3948,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Snapshots. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -3986,7 +3967,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4033,7 +4014,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'spotInstanceRequestIds' => array(
+                'SpotInstanceRequestIds' => array(
                     'description' => 'The ID of the request.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4043,7 +4024,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for SpotInstances. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4062,7 +4043,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4089,7 +4070,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'startTime' => array(
+                'StartTime' => array(
                     'description' => 'The start date and time of the Spot Instance price history data.',
                     'type' => array(
                         'object',
@@ -4099,7 +4080,7 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
                 ),
-                'endTime' => array(
+                'EndTime' => array(
                     'description' => 'The end date and time of the Spot Instance price history data.',
                     'type' => array(
                         'object',
@@ -4109,7 +4090,7 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
                 ),
-                'instanceTypes' => array(
+                'InstanceTypes' => array(
                     'description' => 'Specifies the instance type to return.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4137,7 +4118,7 @@ return array (
                         ),
                     ),
                 ),
-                'productDescriptions' => array(
+                'ProductDescriptions' => array(
                     'description' => 'The description of the AMI.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4147,7 +4128,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for SpotPriceHistory. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4166,24 +4147,24 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                     ),
                 ),
-                'availabilityZone' => array(
+                'AvailabilityZone' => array(
                     'description' => 'Filters the results by availability zone (ex: \'us-east-1a\').',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'maxResults' => array(
+                'MaxResults' => array(
                     'description' => 'Specifies the number of rows to return.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'nextToken' => array(
+                'NextToken' => array(
                     'description' => 'Specifies the next set of rows to return.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -4237,7 +4218,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4264,7 +4245,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for tags.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4283,7 +4264,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4351,7 +4332,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'Filter',
@@ -4369,7 +4350,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4414,7 +4395,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'filters' => array(
+                'Filters' => array(
                     'description' => 'A list of filters used to match properties for Volumes. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -4433,7 +4414,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4489,7 +4470,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4545,7 +4526,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4601,7 +4582,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4628,13 +4609,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'internetGatewayId' => array(
+                'InternetGatewayId' => array(
                     'required' => true,
                     'description' => 'The ID of the Internet gateway to detach.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'vpcId' => array(
+                'VpcId' => array(
                     'required' => true,
                     'description' => 'The ID of the VPC.',
                     'type' => 'string',
@@ -4659,12 +4640,12 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'attachmentId' => array(
+                'AttachmentId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'force' => array(
+                'Force' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -4675,7 +4656,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DetachVolumeResult',
+            'responseClass' => 'attachment',
             'responseType' => 'model',
             'summary' => 'Detach a previously attached volume from a running instance.',
             'parameters' => array(
@@ -4793,7 +4774,6 @@ return array (
                     'default' => '2012-12-01',
                 ),
                 'PublicIp' => array(
-                    'required' => true,
                     'description' => 'The elastic IP address that you are disassociating from the instance.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -4823,7 +4803,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'associationId' => array(
+                'AssociationId' => array(
                     'required' => true,
                     'description' => 'The association ID representing the current association between the route table and subnet.',
                     'type' => 'string',
@@ -4878,7 +4858,7 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'volumeId' => array(
+                'VolumeId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -4954,18 +4934,18 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'launchSpecification' => array(
+                'LaunchSpecification' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'architecture' => array(
+                        'Architecture' => array(
                             'type' => 'string',
                         ),
-                        'securityGroups' => array(
+                        'SecurityGroups' => array(
                             'type' => 'array',
                             'sentAs' => 'SecurityGroup',
                             'items' => array(
@@ -4973,13 +4953,13 @@ return array (
                                 'type' => 'string',
                             ),
                         ),
-                        'additionalInfo' => array(
+                        'AdditionalInfo' => array(
                             'type' => 'string',
                         ),
-                        'userData' => array(
+                        'UserData' => array(
                             'type' => 'string',
                         ),
-                        'instanceType' => array(
+                        'InstanceType' => array(
                             'type' => 'string',
                             'enum' => array(
                                 't1.micro',
@@ -5000,25 +4980,24 @@ return array (
                                 'cg1.4xlarge',
                             ),
                         ),
-                        'placement' => array(
+                        'Placement' => array(
                             'type' => 'object',
                             'properties' => array(
                                 'AvailabilityZone' => array(
                                     'description' => 'The availability zone in which an Amazon EC2 instance runs.',
                                     'type' => 'string',
-                                    'sentAs' => 'availabilityZone',
                                 ),
-                                'groupName' => array(
+                                'GroupName' => array(
                                     'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
                                     'type' => 'string',
                                 ),
-                                'tenancy' => array(
+                                'Tenancy' => array(
                                     'description' => 'The allowed tenancy of instances launched into the VPC. A value of default means instances can be launched with any tenancy; a value of dedicated means all instances launched into the VPC will be launched as dedicated tenancy regardless of the tenancy assigned to the instance at launch.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
-                        'blockDeviceMappings' => array(
+                        'BlockDeviceMappings' => array(
                             'type' => 'array',
                             'sentAs' => 'BlockDeviceMapping',
                             'items' => array(
@@ -5029,72 +5008,70 @@ return array (
                                     'VirtualName' => array(
                                         'description' => 'Specifies the virtual device name.',
                                         'type' => 'string',
-                                        'sentAs' => 'virtualName',
                                     ),
                                     'DeviceName' => array(
                                         'description' => 'Specifies the device name (e.g., /dev/sdh).',
                                         'type' => 'string',
-                                        'sentAs' => 'deviceName',
                                     ),
-                                    'ebs' => array(
+                                    'Ebs' => array(
                                         'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
                                         'type' => 'object',
                                         'properties' => array(
-                                            'snapshotId' => array(
+                                            'SnapshotId' => array(
                                                 'description' => 'The ID of the snapshot from which the volume will be created.',
                                                 'type' => 'string',
                                             ),
-                                            'volumeSize' => array(
+                                            'VolumeSize' => array(
                                                 'description' => 'The size of the volume, in gigabytes.',
                                                 'type' => 'numeric',
                                             ),
-                                            'deleteOnTermination' => array(
+                                            'DeleteOnTermination' => array(
                                                 'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                                 'type' => 'boolean',
                                                 'format' => 'boolean-string',
                                             ),
-                                            'volumeType' => array(
+                                            'VolumeType' => array(
                                                 'type' => 'string',
                                                 'enum' => array(
                                                     'standard',
                                                     'io1',
                                                 ),
                                             ),
-                                            'iops' => array(
+                                            'Iops' => array(
                                                 'type' => 'numeric',
                                             ),
                                         ),
                                     ),
-                                    'noDevice' => array(
+                                    'NoDevice' => array(
                                         'description' => 'Specifies the device name to suppress during instance launch.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
-                        'monitoring' => array(
+                        'Monitoring' => array(
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
-                        'subnetId' => array(
+                        'SubnetId' => array(
                             'type' => 'string',
                         ),
-                        'disableApiTermination' => array(
+                        'DisableApiTermination' => array(
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
-                        'instanceInitiatedShutdownBehavior' => array(
+                        'InstanceInitiatedShutdownBehavior' => array(
                             'type' => 'string',
                         ),
-                        'privateIpAddress' => array(
+                        'PrivateIpAddress' => array(
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'diskImages' => array(
+                'DiskImages' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'diskImage',
+                    'sentAs' => 'DiskImage',
                     'items' => array(
                         'name' => 'DiskImage',
                         'type' => 'object',
@@ -5102,15 +5079,15 @@ return array (
                             'Image' => array(
                                 'type' => 'object',
                                 'properties' => array(
-                                    'format' => array(
+                                    'Format' => array(
                                         'required' => true,
                                         'type' => 'string',
                                     ),
-                                    'bytes' => array(
+                                    'Bytes' => array(
                                         'required' => true,
                                         'type' => 'numeric',
                                     ),
-                                    'importManifestUrl' => array(
+                                    'ImportManifestUrl' => array(
                                         'required' => true,
                                         'type' => 'string',
                                     ),
@@ -5122,7 +5099,7 @@ return array (
                             'Volume' => array(
                                 'type' => 'object',
                                 'properties' => array(
-                                    'size' => array(
+                                    'Size' => array(
                                         'required' => true,
                                         'type' => 'numeric',
                                     ),
@@ -5131,7 +5108,7 @@ return array (
                         ),
                     ),
                 ),
-                'platform' => array(
+                'Platform' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -5156,13 +5133,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'keyName' => array(
+                'KeyName' => array(
                     'required' => true,
                     'description' => 'The unique name for the key pair.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'publicKeyMaterial' => array(
+                'PublicKeyMaterial' => array(
                     'required' => true,
                     'description' => 'The public key portion of the key pair being imported.',
                     'type' => 'string',
@@ -5187,37 +5164,37 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'availabilityZone' => array(
+                'AvailabilityZone' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'image' => array(
+                'Image' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'format' => array(
+                        'Format' => array(
                             'required' => true,
                             'type' => 'string',
                         ),
-                        'bytes' => array(
+                        'Bytes' => array(
                             'required' => true,
                             'type' => 'numeric',
                         ),
-                        'importManifestUrl' => array(
+                        'ImportManifestUrl' => array(
                             'required' => true,
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'volume' => array(
+                'Volume' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'size' => array(
+                        'Size' => array(
                             'required' => true,
                             'type' => 'numeric',
                         ),
@@ -5301,19 +5278,17 @@ return array (
                         'Add' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'item',
+                                'name' => 'Item',
                                 'description' => 'Describes a permission to launch an Amazon Machine Image (AMI).',
                                 'type' => 'object',
                                 'properties' => array(
                                     'UserId' => array(
                                         'description' => 'The AWS user ID of the user involved in this launch permission.',
                                         'type' => 'string',
-                                        'sentAs' => 'userId',
                                     ),
                                     'Group' => array(
                                         'description' => 'The AWS group of the user involved in this launch permission.',
                                         'type' => 'string',
-                                        'sentAs' => 'group',
                                     ),
                                 ),
                             ),
@@ -5321,19 +5296,17 @@ return array (
                         'Remove' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'item',
+                                'name' => 'Item',
                                 'description' => 'Describes a permission to launch an Amazon Machine Image (AMI).',
                                 'type' => 'object',
                                 'properties' => array(
                                     'UserId' => array(
                                         'description' => 'The AWS user ID of the user involved in this launch permission.',
                                         'type' => 'string',
-                                        'sentAs' => 'userId',
                                     ),
                                     'Group' => array(
                                         'description' => 'The AWS group of the user involved in this launch permission.',
                                         'type' => 'string',
-                                        'sentAs' => 'group',
                                     ),
                                 ),
                             ),
@@ -5344,7 +5317,7 @@ return array (
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
@@ -5370,13 +5343,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'required' => true,
                     'description' => 'The ID of the instance whose attribute is being modified.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'attribute' => array(
+                'Attribute' => array(
                     'description' => 'The name of the attribute being modified.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -5395,45 +5368,45 @@ return array (
                         'ebsOptimized',
                     ),
                 ),
-                'value' => array(
+                'Value' => array(
                     'description' => 'The new value of the instance attribute being modified.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'blockDeviceMappings' => array(
+                'BlockDeviceMappings' => array(
                     'description' => 'The new block device mappings for the instance whose attributes are being modified.',
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'blockDeviceMapping',
+                    'sentAs' => 'BlockDeviceMapping',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'Specifies how an instance\'s block devices should be mapped on a running instance.',
                         'type' => 'object',
                         'properties' => array(
-                            'deviceName' => array(
+                            'DeviceName' => array(
                                 'description' => 'The device name (e.g., /dev/sdh) at which the block device is exposed on the instance.',
                                 'type' => 'string',
                             ),
-                            'ebs' => array(
+                            'Ebs' => array(
                                 'description' => 'The EBS instance block device specification describing the EBS block device to map to the specified device name on a running instance.',
                                 'type' => 'object',
                                 'properties' => array(
-                                    'volumeId' => array(
+                                    'VolumeId' => array(
                                         'description' => 'The ID of the EBS volume that should be mounted as a block device on an Amazon EC2 instance.',
                                         'type' => 'string',
                                     ),
-                                    'deleteOnTermination' => array(
+                                    'DeleteOnTermination' => array(
                                         'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
                                     ),
                                 ),
                             ),
-                            'virtualName' => array(
+                            'VirtualName' => array(
                                 'description' => 'The virtual device name.',
                                 'type' => 'string',
                             ),
-                            'noDevice' => array(
+                            'NoDevice' => array(
                                 'description' => 'When set to the empty string, specifies that the device name in this object should not be mapped to any real device.',
                                 'type' => 'string',
                             ),
@@ -5444,88 +5417,88 @@ return array (
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'Boolean value',
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
                     ),
                 ),
-                'disableApiTermination' => array(
+                'DisableApiTermination' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'Boolean value',
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
                     ),
                 ),
-                'instanceType' => array(
+                'InstanceType' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'kernel' => array(
+                'Kernel' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'ramdisk' => array(
+                'Ramdisk' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'userData' => array(
+                'UserData' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'instanceInitiatedShutdownBehavior' => array(
+                'InstanceInitiatedShutdownBehavior' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'groups' => array(
+                'Groups' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'GroupId',
                     'items' => array(
-                        'name' => 'groupId',
+                        'name' => 'GroupId',
                         'type' => 'string',
                     ),
                 ),
-                'ebsOptimized' => array(
+                'EbsOptimized' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'Boolean value',
                             'type' => 'boolean',
                             'format' => 'boolean-string',
@@ -5551,33 +5524,33 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'sourceDestCheck' => array(
+                'SourceDestCheck' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'Boolean value',
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
                     ),
                 ),
-                'groups' => array(
+                'Groups' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'SecurityGroupId',
@@ -5586,14 +5559,14 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'attachment' => array(
+                'Attachment' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'attachmentId' => array(
+                        'AttachmentId' => array(
                             'type' => 'string',
                         ),
-                        'deleteOnTermination' => array(
+                        'DeleteOnTermination' => array(
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
@@ -5666,19 +5639,17 @@ return array (
                         'Add' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'item',
+                                'name' => 'Item',
                                 'description' => 'Describes a permission allowing either a user or group to create a new EBS volume from a snapshot.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'UserId' => array(
                                         'description' => 'The user ID of the user that can create volumes from the snapshot.',
                                         'type' => 'string',
-                                        'sentAs' => 'userId',
                                     ),
                                     'Group' => array(
                                         'description' => 'The group that is allowed to create volumes from the snapshot (currently supports "all").',
                                         'type' => 'string',
-                                        'sentAs' => 'group',
                                     ),
                                 ),
                             ),
@@ -5686,19 +5657,17 @@ return array (
                         'Remove' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'item',
+                                'name' => 'Item',
                                 'description' => 'Describes a permission allowing either a user or group to create a new EBS volume from a snapshot.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'UserId' => array(
                                         'description' => 'The user ID of the user that can create volumes from the snapshot.',
                                         'type' => 'string',
-                                        'sentAs' => 'userId',
                                     ),
                                     'Group' => array(
                                         'description' => 'The group that is allowed to create volumes from the snapshot (currently supports "all").',
                                         'type' => 'string',
-                                        'sentAs' => 'group',
                                     ),
                                 ),
                             ),
@@ -5797,14 +5766,14 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'limitPrice' => array(
+                'LimitPrice' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'amount' => array(
+                        'Amount' => array(
                             'type' => 'numeric',
                         ),
-                        'currencyCode' => array(
+                        'CurrencyCode' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -5865,37 +5834,37 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'name' => array(
+                'Name' => array(
                     'description' => 'The name to give the new Amazon Machine Image.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'description' => array(
+                'Description' => array(
                     'description' => 'The description describing the new AMI.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'architecture' => array(
+                'Architecture' => array(
                     'description' => 'The architecture of the image. Valid Values: i386, x86_64',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'kernelId' => array(
+                'KernelId' => array(
                     'description' => 'The optional ID of a specific kernel to register with the new AMI.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ramdiskId' => array(
+                'RamdiskId' => array(
                     'description' => 'The optional ID of a specific ramdisk to register with the new AMI.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'rootDeviceName' => array(
+                'RootDeviceName' => array(
                     'description' => 'The root device name (e.g., /dev/sda1).',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'blockDeviceMappings' => array(
+                'BlockDeviceMappings' => array(
                     'description' => 'The block device mappings for the new AMI, which specify how different block devices (ex: EBS volumes and ephemeral drives) will be exposed on instances launched from the new image.',
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -5908,43 +5877,41 @@ return array (
                             'VirtualName' => array(
                                 'description' => 'Specifies the virtual device name.',
                                 'type' => 'string',
-                                'sentAs' => 'virtualName',
                             ),
                             'DeviceName' => array(
                                 'description' => 'Specifies the device name (e.g., /dev/sdh).',
                                 'type' => 'string',
-                                'sentAs' => 'deviceName',
                             ),
-                            'ebs' => array(
+                            'Ebs' => array(
                                 'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
                                 'type' => 'object',
                                 'properties' => array(
-                                    'snapshotId' => array(
+                                    'SnapshotId' => array(
                                         'description' => 'The ID of the snapshot from which the volume will be created.',
                                         'type' => 'string',
                                     ),
-                                    'volumeSize' => array(
+                                    'VolumeSize' => array(
                                         'description' => 'The size of the volume, in gigabytes.',
                                         'type' => 'numeric',
                                     ),
-                                    'deleteOnTermination' => array(
+                                    'DeleteOnTermination' => array(
                                         'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
                                     ),
-                                    'volumeType' => array(
+                                    'VolumeType' => array(
                                         'type' => 'string',
                                         'enum' => array(
                                             'standard',
                                             'io1',
                                         ),
                                     ),
-                                    'iops' => array(
+                                    'Iops' => array(
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
-                            'noDevice' => array(
+                            'NoDevice' => array(
                                 'description' => 'Specifies the device name to suppress during instance launch.',
                                 'type' => 'string',
                             ),
@@ -6001,13 +5968,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'associationId' => array(
+                'AssociationId' => array(
                     'required' => true,
                     'description' => 'The ID representing the current association between the original network ACL and the subnet.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'networkAclId' => array(
+                'NetworkAclId' => array(
                     'required' => true,
                     'description' => 'The ID of the new ACL to associate with the subnet.',
                     'type' => 'string',
@@ -6033,25 +6000,25 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkAclId' => array(
+                'NetworkAclId' => array(
                     'required' => true,
                     'description' => 'ID of the ACL where the entry will be replaced.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ruleNumber' => array(
+                'RuleNumber' => array(
                     'required' => true,
                     'description' => 'Rule number of the entry to replace.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
-                'protocol' => array(
+                'Protocol' => array(
                     'required' => true,
                     'description' => 'IP protocol the rule applies to. Valid Values: tcp, udp, icmp or an IP protocol number.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ruleAction' => array(
+                'RuleAction' => array(
                     'required' => true,
                     'description' => 'Whether to allow or deny traffic that matches the rule.',
                     'type' => 'string',
@@ -6061,39 +6028,45 @@ return array (
                         'deny',
                     ),
                 ),
-                'egress' => array(
+                'Egress' => array(
                     'required' => true,
                     'description' => 'Whether this rule applies to egress traffic from the subnet (true) or ingress traffic (false).',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
-                'cidrBlock' => array(
+                'CidrBlock' => array(
                     'required' => true,
                     'description' => 'The CIDR range to allow or deny, in CIDR notation (e.g., 172.16.0.0/24).',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'icmpTypeCode' => array(
+                'IcmpTypeCode' => array(
                     'description' => 'ICMP values.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'sentAs' => 'Icmp',
                     'properties' => array(
-                        '' => array(
+                        'Type' => array(
+                            'description' => 'For the ICMP protocol, the ICMP type. A value of -1 is a wildcard meaning all types. Required if specifying icmp for the protocol.',
+                            'type' => 'numeric',
+                        ),
+                        'Code' => array(
+                            'description' => 'For the ICMP protocol, the ICMP code. A value of -1 is a wildcard meaning all codes. Required if specifying icmp for the protocol.',
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
-                'portRange' => array(
+                'PortRange' => array(
                     'description' => 'Port ranges.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'from' => array(
+                        'From' => array(
                             'description' => 'The first port in the range. Required if specifying tcp or udp for the protocol.',
                             'type' => 'numeric',
                         ),
-                        'to' => array(
+                        'To' => array(
                             'description' => 'The last port in the range. Required if specifying tcp or udp for the protocol.',
                             'type' => 'numeric',
                         ),
@@ -6119,29 +6092,29 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'routeTableId' => array(
+                'RouteTableId' => array(
                     'required' => true,
                     'description' => 'The ID of the route table where the route will be replaced.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'destinationCidrBlock' => array(
+                'DestinationCidrBlock' => array(
                     'required' => true,
                     'description' => 'The CIDR address block used for the destination match. For example: 0.0.0.0/0. The value you provide must match the CIDR of an existing route in the table.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'gatewayId' => array(
+                'GatewayId' => array(
                     'description' => 'The ID of a VPN or Internet gateway attached to your VPC.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'description' => 'The ID of a NAT instance in your VPC.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6165,13 +6138,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'associationId' => array(
+                'AssociationId' => array(
                     'required' => true,
                     'description' => 'The ID representing the current association between the original route table and the subnet.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'routeTableId' => array(
+                'RouteTableId' => array(
                     'required' => true,
                     'description' => 'The ID of the new route table to associate with the subnet.',
                     'type' => 'string',
@@ -6196,20 +6169,20 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'instances' => array(
+                'Instances' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'instanceId',
+                    'sentAs' => 'InstanceId',
                     'items' => array(
                         'name' => 'InstanceId',
                         'type' => 'string',
                     ),
                 ),
-                'status' => array(
+                'Status' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'startTime' => array(
+                'StartTime' => array(
                     'type' => array(
                         'object',
                         'string',
@@ -6218,7 +6191,7 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
                 ),
-                'endTime' => array(
+                'EndTime' => array(
                     'type' => array(
                         'object',
                         'string',
@@ -6227,16 +6200,16 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'aws.query',
                 ),
-                'reasonCodes' => array(
+                'ReasonCodes' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'reasonCode',
+                    'sentAs' => 'ReasonCode',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'string',
                     ),
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6260,8 +6233,267 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                '' => array(
+                'SpotPrice' => array(
+                    'required' => true,
+                    'description' => 'Specifies the maximum hourly price for any Spot Instance launched to fulfill the request.',
+                    'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'InstanceCount' => array(
+                    'description' => 'Specifies the maximum number of Spot Instances to launch.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Type' => array(
+                    'description' => 'Specifies the Spot Instance type.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'enum' => array(
+                        'one-time',
+                        'persistent',
+                    ),
+                ),
+                'ValidFrom' => array(
+                    'description' => 'Defines the start date of the request.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'aws.query',
+                ),
+                'ValidUntil' => array(
+                    'description' => 'End date of the request.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'aws.query',
+                ),
+                'LaunchGroup' => array(
+                    'description' => 'Specifies the instance launch group. Launch groups are Spot Instances that launch and terminate together.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AvailabilityZoneGroup' => array(
+                    'description' => 'Specifies the Availability Zone group.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'LaunchSpecification' => array(
+                    'description' => 'Specifies additional launch instance information.',
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'ImageId' => array(
+                            'description' => 'The AMI ID.',
+                            'type' => 'string',
+                        ),
+                        'KeyName' => array(
+                            'description' => 'The name of the key pair.',
+                            'type' => 'string',
+                        ),
+                        'UserData' => array(
+                            'description' => 'Optional data, specific to a user\'s application, to provide in the launch request. All instances that collectively comprise the launch request have access to this data. User data is never returned through API responses.',
+                            'type' => 'string',
+                        ),
+                        'InstanceType' => array(
+                            'description' => 'Specifies the instance type.',
+                            'type' => 'string',
+                            'enum' => array(
+                                't1.micro',
+                                'm1.small',
+                                'm1.medium',
+                                'm1.large',
+                                'm1.xlarge',
+                                'm2.xlarge',
+                                'm2.2xlarge',
+                                'm2.4xlarge',
+                                'm3.xlarge',
+                                'm3.2xlarge',
+                                'c1.medium',
+                                'c1.xlarge',
+                                'hi1.4xlarge',
+                                'cc1.4xlarge',
+                                'cc2.8xlarge',
+                                'cg1.4xlarge',
+                            ),
+                        ),
+                        'Placement' => array(
+                            'description' => 'Defines a placement item.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'AvailabilityZone' => array(
+                                    'description' => 'The availability zone in which an Amazon EC2 instance runs.',
+                                    'type' => 'string',
+                                ),
+                                'GroupName' => array(
+                                    'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'KernelId' => array(
+                            'description' => 'Specifies the ID of the kernel to select.',
+                            'type' => 'string',
+                        ),
+                        'RamdiskId' => array(
+                            'description' => 'Specifies the ID of the RAM disk to select. Some kernels require additional drivers at launch. Check the kernel requirements for information on whether or not you need to specify a RAM disk and search for the kernel ID.',
+                            'type' => 'string',
+                        ),
+                        'BlockDeviceMappings' => array(
+                            'description' => 'Specifies how block devices are exposed to the instance. Each mapping is made up of a virtualName and a deviceName.',
+                            'type' => 'array',
+                            'sentAs' => 'BlockDeviceMapping',
+                            'items' => array(
+                                'name' => 'Item',
+                                'description' => 'The BlockDeviceMappingItemType data type.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'VirtualName' => array(
+                                        'description' => 'Specifies the virtual device name.',
+                                        'type' => 'string',
+                                    ),
+                                    'DeviceName' => array(
+                                        'description' => 'Specifies the device name (e.g., /dev/sdh).',
+                                        'type' => 'string',
+                                    ),
+                                    'Ebs' => array(
+                                        'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'SnapshotId' => array(
+                                                'description' => 'The ID of the snapshot from which the volume will be created.',
+                                                'type' => 'string',
+                                            ),
+                                            'VolumeSize' => array(
+                                                'description' => 'The size of the volume, in gigabytes.',
+                                                'type' => 'numeric',
+                                            ),
+                                            'DeleteOnTermination' => array(
+                                                'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
+                                                'type' => 'boolean',
+                                                'format' => 'boolean-string',
+                                            ),
+                                            'VolumeType' => array(
+                                                'type' => 'string',
+                                                'enum' => array(
+                                                    'standard',
+                                                    'io1',
+                                                ),
+                                            ),
+                                            'Iops' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
+                                    'NoDevice' => array(
+                                        'description' => 'Specifies the device name to suppress during instance launch.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'MonitoringEnabled' => array(
+                            'description' => 'Enables monitoring for the instance.',
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'SubnetId' => array(
+                            'description' => 'Specifies the Amazon VPC subnet ID within which to launch the instance(s) for Amazon Virtual Private Cloud.',
+                            'type' => 'string',
+                        ),
+                        'NetworkInterfaces' => array(
+                            'type' => 'array',
+                            'sentAs' => 'NetworkInterfaceSet',
+                            'items' => array(
+                                'name' => 'Item',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'NetworkInterfaceId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'DeviceIndex' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'SubnetId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Description' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'PrivateIpAddress' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Groups' => array(
+                                        'type' => 'array',
+                                        'sentAs' => 'SecurityGroupId',
+                                        'items' => array(
+                                            'name' => 'SecurityGroupId',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'DeleteOnTermination' => array(
+                                        'type' => 'boolean',
+                                        'format' => 'boolean-string',
+                                    ),
+                                    'PrivateIpAddresses' => array(
+                                        'type' => 'array',
+                                        'sentAs' => 'PrivateIpAddressesSet',
+                                        'items' => array(
+                                            'name' => 'Item',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'PrivateIpAddress' => array(
+                                                    'required' => true,
+                                                    'type' => 'string',
+                                                ),
+                                                'Primary' => array(
+                                                    'type' => 'boolean',
+                                                    'format' => 'boolean-string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'SecondaryPrivateIpAddressCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'IamInstanceProfile' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Arn' => array(
+                                    'type' => 'string',
+                                ),
+                                'Name' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'EbsOptimized' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'SecurityGroupIds' => array(
+                            'type' => 'array',
+                            'sentAs' => 'SecurityGroupId',
+                            'items' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                        'SecurityGroups' => array(
+                            'type' => 'array',
+                            'sentAs' => 'SecurityGroup',
+                            'items' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -6315,13 +6547,13 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'instanceId' => array(
+                'InstanceId' => array(
                     'required' => true,
                     'description' => 'The ID of the Amazon EC2 instance whose attribute is being reset.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'attribute' => array(
+                'Attribute' => array(
                     'required' => true,
                     'description' => 'The name of the attribute being reset.',
                     'type' => 'string',
@@ -6360,12 +6592,12 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'sourceDestCheck' => array(
+                'SourceDestCheck' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6425,59 +6657,53 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'groupId' => array(
+                'GroupId' => array(
                     'required' => true,
                     'description' => 'ID of the VPC security group to modify.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ipPermissions' => array(
+                'IpPermissions' => array(
                     'description' => 'List of IP permissions to authorize on the specified security group. Specifying permissions through IP permissions is the preferred way of authorizing permissions since it offers more flexibility and control.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
                             'IpProtocol' => array(
                                 'description' => 'The IP protocol of this permission.',
                                 'type' => 'string',
-                                'sentAs' => 'ipProtocol',
                             ),
                             'FromPort' => array(
                                 'description' => 'Start of port range for the TCP and UDP protocols, or an ICMP type number. An ICMP type number of -1 indicates a wildcard (i.e., any ICMP type number).',
                                 'type' => 'numeric',
-                                'sentAs' => 'fromPort',
                             ),
                             'ToPort' => array(
                                 'description' => 'End of port range for the TCP and UDP protocols, or an ICMP code. An ICMP code of -1 indicates a wildcard (i.e., any ICMP code).',
                                 'type' => 'numeric',
-                                'sentAs' => 'toPort',
                             ),
                             'UserIdGroupPairs' => array(
                                 'description' => 'The list of AWS user IDs and groups included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'groups',
+                                'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'UserId' => array(
                                             'description' => 'The AWS user ID of an account.',
                                             'type' => 'string',
-                                            'sentAs' => 'userId',
                                         ),
                                         'GroupName' => array(
                                             'description' => 'Name of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupName',
                                         ),
                                         'GroupId' => array(
                                             'description' => 'ID of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupId',
                                         ),
                                     ),
                                 ),
@@ -6485,16 +6711,14 @@ return array (
                             'IpRanges' => array(
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'ipRanges',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'CidrIp' => array(
                                             'description' => 'The list of CIDR IP ranges.',
                                             'type' => 'string',
-                                            'sentAs' => 'cidrIp',
                                         ),
                                     ),
                                 ),
@@ -6537,48 +6761,42 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
                             'IpProtocol' => array(
                                 'description' => 'The IP protocol of this permission.',
                                 'type' => 'string',
-                                'sentAs' => 'ipProtocol',
                             ),
                             'FromPort' => array(
                                 'description' => 'Start of port range for the TCP and UDP protocols, or an ICMP type number. An ICMP type number of -1 indicates a wildcard (i.e., any ICMP type number).',
                                 'type' => 'numeric',
-                                'sentAs' => 'fromPort',
                             ),
                             'ToPort' => array(
                                 'description' => 'End of port range for the TCP and UDP protocols, or an ICMP code. An ICMP code of -1 indicates a wildcard (i.e., any ICMP code).',
                                 'type' => 'numeric',
-                                'sentAs' => 'toPort',
                             ),
                             'UserIdGroupPairs' => array(
                                 'description' => 'The list of AWS user IDs and groups included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'groups',
+                                'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'UserId' => array(
                                             'description' => 'The AWS user ID of an account.',
                                             'type' => 'string',
-                                            'sentAs' => 'userId',
                                         ),
                                         'GroupName' => array(
                                             'description' => 'Name of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupName',
                                         ),
                                         'GroupId' => array(
                                             'description' => 'ID of the security group in the specified AWS account. Cannot be used when specifying a CIDR IP address range.',
                                             'type' => 'string',
-                                            'sentAs' => 'groupId',
                                         ),
                                     ),
                                 ),
@@ -6586,16 +6804,14 @@ return array (
                             'IpRanges' => array(
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
-                                'sentAs' => 'ipRanges',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'CidrIp' => array(
                                             'description' => 'The list of CIDR IP ranges.',
                                             'type' => 'string',
-                                            'sentAs' => 'cidrIp',
                                         ),
                                     ),
                                 ),
@@ -6609,7 +6825,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'RunInstancesResult',
+            'responseClass' => 'reservation',
             'responseType' => 'model',
             'summary' => 'The RunInstances operation launches a specified number of instances.',
             'parameters' => array(
@@ -6705,13 +6921,12 @@ return array (
                         'AvailabilityZone' => array(
                             'description' => 'The availability zone in which an Amazon EC2 instance runs.',
                             'type' => 'string',
-                            'sentAs' => 'availabilityZone',
                         ),
-                        'groupName' => array(
+                        'GroupName' => array(
                             'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
                             'type' => 'string',
                         ),
-                        'tenancy' => array(
+                        'Tenancy' => array(
                             'description' => 'The allowed tenancy of instances launched into the VPC. A value of default means instances can be launched with any tenancy; a value of dedicated means all instances launched into the VPC will be launched as dedicated tenancy regardless of the tenancy assigned to the instance at launch.',
                             'type' => 'string',
                         ),
@@ -6740,43 +6955,41 @@ return array (
                             'VirtualName' => array(
                                 'description' => 'Specifies the virtual device name.',
                                 'type' => 'string',
-                                'sentAs' => 'virtualName',
                             ),
                             'DeviceName' => array(
                                 'description' => 'Specifies the device name (e.g., /dev/sdh).',
                                 'type' => 'string',
-                                'sentAs' => 'deviceName',
                             ),
-                            'ebs' => array(
+                            'Ebs' => array(
                                 'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
                                 'type' => 'object',
                                 'properties' => array(
-                                    'snapshotId' => array(
+                                    'SnapshotId' => array(
                                         'description' => 'The ID of the snapshot from which the volume will be created.',
                                         'type' => 'string',
                                     ),
-                                    'volumeSize' => array(
+                                    'VolumeSize' => array(
                                         'description' => 'The size of the volume, in gigabytes.',
                                         'type' => 'numeric',
                                     ),
-                                    'deleteOnTermination' => array(
+                                    'DeleteOnTermination' => array(
                                         'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                         'type' => 'boolean',
                                         'format' => 'boolean-string',
                                     ),
-                                    'volumeType' => array(
+                                    'VolumeType' => array(
                                         'type' => 'string',
                                         'enum' => array(
                                             'standard',
                                             'io1',
                                         ),
                                     ),
-                                    'iops' => array(
+                                    'Iops' => array(
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
-                            'noDevice' => array(
+                            'NoDevice' => array(
                                 'description' => 'Specifies the device name to suppress during instance launch.',
                                 'type' => 'string',
                             ),
@@ -6788,7 +7001,7 @@ return array (
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'enabled' => array(
+                        'Enabled' => array(
                             'required' => true,
                             'type' => 'boolean',
                             'format' => 'boolean-string',
@@ -6800,66 +7013,66 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'disableApiTermination' => array(
+                'DisableApiTermination' => array(
                     'description' => 'Specifies whether the instance can be terminated using the APIs. You must modify this attribute before you can terminate any "locked" instances from the APIs.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
-                'instanceInitiatedShutdownBehavior' => array(
+                'InstanceInitiatedShutdownBehavior' => array(
                     'description' => 'Specifies whether the instance\'s Amazon EBS volumes are stopped or terminated when the instance is shut down.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'license' => array(
+                'License' => array(
                     'description' => 'Specifies active licenses in use and attached to an Amazon EC2 instance.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'pool' => array(
+                        'Pool' => array(
                             'description' => 'The license pool from which to take a license when starting Amazon EC2 instances in the associated RunInstances request.',
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'privateIpAddress' => array(
+                'PrivateIpAddress' => array(
                     'description' => 'If you\'re using Amazon Virtual Private Cloud, you can optionally use this parameter to assign the instance a specific available IP address from the subnet.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'clientToken' => array(
+                'ClientToken' => array(
                     'description' => 'Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, go to How to Ensure Idempotency in the Amazon Elastic Compute Cloud User Guide.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'additionalInfo' => array(
+                'AdditionalInfo' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'networkInterfaces' => array(
+                'NetworkInterfaces' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'networkInterface',
+                    'sentAs' => 'NetworkInterface',
                     'items' => array(
-                        'name' => 'item',
+                        'name' => 'Item',
                         'type' => 'object',
                         'properties' => array(
-                            'networkInterfaceId' => array(
+                            'NetworkInterfaceId' => array(
                                 'type' => 'string',
                             ),
-                            'deviceIndex' => array(
+                            'DeviceIndex' => array(
                                 'type' => 'numeric',
                             ),
-                            'subnetId' => array(
+                            'SubnetId' => array(
                                 'type' => 'string',
                             ),
-                            'description' => array(
+                            'Description' => array(
                                 'type' => 'string',
                             ),
-                            'privateIpAddress' => array(
+                            'PrivateIpAddress' => array(
                                 'type' => 'string',
                             ),
-                            'groups' => array(
+                            'Groups' => array(
                                 'type' => 'array',
                                 'sentAs' => 'SecurityGroupId',
                                 'items' => array(
@@ -6867,47 +7080,47 @@ return array (
                                     'type' => 'string',
                                 ),
                             ),
-                            'deleteOnTermination' => array(
+                            'DeleteOnTermination' => array(
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
-                            'privateIpAddresses' => array(
+                            'PrivateIpAddresses' => array(
                                 'type' => 'array',
-                                'sentAs' => 'privateIpAddressesSet',
+                                'sentAs' => 'PrivateIpAddressesSet',
                                 'items' => array(
-                                    'name' => 'item',
+                                    'name' => 'Item',
                                     'type' => 'object',
                                     'properties' => array(
-                                        'privateIpAddress' => array(
+                                        'PrivateIpAddress' => array(
                                             'required' => true,
                                             'type' => 'string',
                                         ),
-                                        'primary' => array(
+                                        'Primary' => array(
                                             'type' => 'boolean',
                                             'format' => 'boolean-string',
                                         ),
                                     ),
                                 ),
                             ),
-                            'secondaryPrivateIpAddressCount' => array(
+                            'SecondaryPrivateIpAddressCount' => array(
                                 'type' => 'numeric',
                             ),
                         ),
                     ),
                 ),
-                'iamInstanceProfile' => array(
+                'IamInstanceProfile' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
-                        'arn' => array(
+                        'Arn' => array(
                             'type' => 'string',
                         ),
-                        'name' => array(
+                        'Name' => array(
                             'type' => 'string',
                         ),
                     ),
                 ),
-                'ebsOptimized' => array(
+                'EbsOptimized' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -6943,7 +7156,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'additionalInfo' => array(
+                'AdditionalInfo' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6978,7 +7191,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'force' => array(
+                'Force' => array(
                     'description' => 'Forces the instance to stop. The instance will not have an opportunity to flush file system caches nor file system meta data. If you use this option, you must perform file system check and repair procedures. This option is not recommended for Windows instances.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
@@ -7034,16 +7247,16 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-12-01',
                 ),
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'privateIpAddresses' => array(
+                'PrivateIpAddresses' => array(
                     'required' => true,
                     'type' => 'array',
                     'location' => 'aws.query',
-                    'sentAs' => 'privateIpAddress',
+                    'sentAs' => 'PrivateIpAddress',
                     'items' => array(
                         'name' => 'PrivateIpAddress',
                         'type' => 'string',
@@ -7098,13 +7311,15 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'publicIp',
                 ),
-                'domain' => array(
+                'Domain' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'domain',
                 ),
-                'allocationId' => array(
+                'AllocationId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'allocationId',
                 ),
             ),
         ),
@@ -7112,9 +7327,10 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'associationId' => array(
+                'AssociationId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'associationId',
                 ),
             ),
         ),
@@ -7122,9 +7338,10 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'associationId' => array(
+                'AssociationId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'associationId',
                 ),
             ),
         ),
@@ -7132,48 +7349,49 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'attachmentId' => array(
+                'AttachmentId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'attachmentId',
                 ),
             ),
         ),
-        'AttachVolumeResult' => array(
+        'attachment' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'Attachment' => array(
-                    'type' => 'object',
+                'VolumeId' => array(
+                    'type' => 'string',
                     'location' => 'xml',
-                    'sentAs' => 'attachment',
-                    'properties' => array(
-                        'VolumeId' => array(
-                            'type' => 'string',
-                            'sentAs' => 'volumeId',
-                        ),
-                        'InstanceId' => array(
-                            'type' => 'string',
-                            'sentAs' => 'instanceId',
-                        ),
-                        'Device' => array(
-                            'description' => 'How the device is exposed to the instance (e.g., /dev/sdh).',
-                            'type' => 'string',
-                            'sentAs' => 'device',
-                        ),
-                        'State' => array(
-                            'type' => 'string',
-                            'sentAs' => 'status',
-                        ),
-                        'AttachTime' => array(
-                            'description' => 'Timestamp when this attachment initiated.',
-                            'type' => 'string',
-                            'sentAs' => 'attachTime',
-                        ),
-                        'deleteOnTermination' => array(
-                            'description' => '` Whether this volume will be deleted or not when the associated instance is terminated.',
-                            'type' => 'boolean',
-                        ),
-                    ),
+                    'sentAs' => 'volumeId',
+                ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'instanceId',
+                ),
+                'Device' => array(
+                    'description' => 'How the device is exposed to the instance (e.g., /dev/sdh).',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'device',
+                ),
+                'State' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'status',
+                ),
+                'AttachTime' => array(
+                    'description' => 'Timestamp when this attachment initiated.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'attachTime',
+                ),
+                'DeleteOnTermination' => array(
+                    'description' => '` Whether this volume will be deleted or not when the associated instance is terminated.',
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                    'sentAs' => 'deleteOnTermination',
                 ),
             ),
         ),
@@ -7240,7 +7458,6 @@ return array (
                                 'S3' => array(
                                     'description' => 'The details of S3 storage for bundling a Windows instance.',
                                     'type' => 'object',
-                                    'sentAs' => 'S3',
                                     'properties' => array(
                                         'Bucket' => array(
                                             'description' => 'The bucket in which to store the AMI. You can specify a bucket that you already own or a new bucket that Amazon EC2 creates on your behalf.',
@@ -7339,7 +7556,6 @@ return array (
                                 'S3' => array(
                                     'description' => 'The details of S3 storage for bundling a Windows instance.',
                                     'type' => 'object',
-                                    'sentAs' => 'S3',
                                     'properties' => array(
                                         'Bucket' => array(
                                             'description' => 'The bucket in which to store the AMI. You can specify a bucket that you already own or a new bucket that Amazon EC2 creates on your behalf.',
@@ -7399,7 +7615,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'reservedInstancesListings' => array(
+                'ReservedInstancesListings' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'reservedInstancesListingsSet',
@@ -7408,63 +7624,77 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'reservedInstancesListingId' => array(
+                            'ReservedInstancesListingId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'reservedInstancesListingId',
                             ),
-                            'reservedInstancesId' => array(
+                            'ReservedInstancesId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'reservedInstancesId',
                             ),
-                            'createDate' => array(
+                            'CreateDate' => array(
                                 'type' => 'string',
+                                'sentAs' => 'createDate',
                             ),
-                            'updateDate' => array(
+                            'UpdateDate' => array(
                                 'type' => 'string',
+                                'sentAs' => 'updateDate',
                             ),
-                            'status' => array(
+                            'Status' => array(
                                 'type' => 'string',
+                                'sentAs' => 'status',
                             ),
-                            'statusMessage' => array(
+                            'StatusMessage' => array(
                                 'type' => 'string',
+                                'sentAs' => 'statusMessage',
                             ),
-                            'instanceCounts' => array(
+                            'InstanceCounts' => array(
                                 'type' => 'array',
+                                'sentAs' => 'instanceCounts',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'state' => array(
+                                        'State' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'state',
                                         ),
-                                        'instanceCount' => array(
+                                        'InstanceCount' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'instanceCount',
                                         ),
                                     ),
                                 ),
                             ),
-                            'priceSchedules' => array(
+                            'PriceSchedules' => array(
                                 'type' => 'array',
+                                'sentAs' => 'priceSchedules',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'term' => array(
+                                        'Term' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'term',
                                         ),
-                                        'price' => array(
+                                        'Price' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'price',
                                         ),
-                                        'currencyCode' => array(
+                                        'CurrencyCode' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'currencyCode',
                                         ),
-                                        'active' => array(
+                                        'Active' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'active',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -7473,19 +7703,22 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'clientToken' => array(
+                            'ClientToken' => array(
                                 'type' => 'string',
+                                'sentAs' => 'clientToken',
                             ),
                         ),
                     ),
@@ -7496,7 +7729,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'cancelledSpotInstanceRequests' => array(
+                'CancelledSpotInstanceRequests' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'spotInstanceRequestSet',
@@ -7505,11 +7738,13 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'spotInstanceRequestId' => array(
+                            'SpotInstanceRequestId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'spotInstanceRequestId',
                             ),
-                            'state' => array(
+                            'State' => array(
                                 'type' => 'string',
+                                'sentAs' => 'state',
                             ),
                         ),
                     ),
@@ -7574,7 +7809,7 @@ return array (
                             'type' => 'string',
                             'sentAs' => 'bgpAsn',
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'description' => 'A list of tags for the CustomerGateway.',
                             'type' => 'array',
                             'sentAs' => 'tagSet',
@@ -7584,13 +7819,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -7642,7 +7879,7 @@ return array (
                                 ),
                             ),
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'description' => 'A list of tags for the DhcpOptions.',
                             'type' => 'array',
                             'sentAs' => 'tagSet',
@@ -7652,13 +7889,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -7671,10 +7910,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'imageId' => array(
+                'ImageId' => array(
                     'description' => 'The ID of the new AMI.',
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'imageId',
                 ),
             ),
         ),
@@ -7682,49 +7922,60 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'exportTask' => array(
+                'ExportTask' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'exportTask',
                     'properties' => array(
-                        'exportTaskId' => array(
+                        'ExportTaskId' => array(
                             'type' => 'string',
+                            'sentAs' => 'exportTaskId',
                         ),
-                        'description' => array(
+                        'Description' => array(
                             'type' => 'string',
+                            'sentAs' => 'description',
                         ),
-                        'state' => array(
+                        'State' => array(
                             'type' => 'string',
+                            'sentAs' => 'state',
                         ),
-                        'statusMessage' => array(
+                        'StatusMessage' => array(
                             'type' => 'string',
+                            'sentAs' => 'statusMessage',
                         ),
-                        'instanceExportDetails' => array(
+                        'InstanceExportDetails' => array(
                             'type' => 'object',
                             'sentAs' => 'instanceExport',
                             'properties' => array(
-                                'instanceId' => array(
+                                'InstanceId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'instanceId',
                                 ),
-                                'targetEnvironment' => array(
+                                'TargetEnvironment' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'targetEnvironment',
                                 ),
                             ),
                         ),
-                        'exportToS3Task' => array(
+                        'ExportToS3Task' => array(
                             'type' => 'object',
                             'sentAs' => 'exportToS3',
                             'properties' => array(
-                                'diskImageFormat' => array(
+                                'DiskImageFormat' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'diskImageFormat',
                                 ),
-                                'containerFormat' => array(
+                                'ContainerFormat' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'containerFormat',
                                 ),
-                                's3Bucket' => array(
+                                'S3Bucket' => array(
                                     'type' => 'string',
+                                    'sentAs' => 's3Bucket',
                                 ),
-                                's3Key' => array(
+                                'S3Key' => array(
                                     'type' => 'string',
+                                    'sentAs' => 's3Key',
                                 ),
                             ),
                         ),
@@ -7736,14 +7987,16 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'internetGateway' => array(
+                'InternetGateway' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'internetGateway',
                     'properties' => array(
-                        'internetGatewayId' => array(
+                        'InternetGatewayId' => array(
                             'type' => 'string',
+                            'sentAs' => 'internetGatewayId',
                         ),
-                        'attachments' => array(
+                        'Attachments' => array(
                             'type' => 'array',
                             'sentAs' => 'attachmentSet',
                             'items' => array(
@@ -7751,16 +8004,18 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'vpcId' => array(
+                                    'VpcId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'vpcId',
                                     ),
-                                    'state' => array(
+                                    'State' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'state',
                                     ),
                                 ),
                             ),
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'type' => 'array',
                             'sentAs' => 'tagSet',
                             'items' => array(
@@ -7769,13 +8024,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -7817,21 +8074,24 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'networkAcl' => array(
+                'NetworkAcl' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'networkAcl',
                     'properties' => array(
-                        'networkAclId' => array(
+                        'NetworkAclId' => array(
                             'type' => 'string',
+                            'sentAs' => 'networkAclId',
                         ),
-                        'vpcId' => array(
+                        'VpcId' => array(
                             'type' => 'string',
+                            'sentAs' => 'vpcId',
                         ),
-                        'isDefault' => array(
+                        'IsDefault' => array(
                             'type' => 'boolean',
                             'sentAs' => 'default',
                         ),
-                        'entries' => array(
+                        'Entries' => array(
                             'type' => 'array',
                             'sentAs' => 'entrySet',
                             'items' => array(
@@ -7839,45 +8099,62 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'ruleNumber' => array(
+                                    'RuleNumber' => array(
                                         'type' => 'numeric',
+                                        'sentAs' => 'ruleNumber',
                                     ),
-                                    'protocol' => array(
+                                    'Protocol' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'protocol',
                                     ),
-                                    'ruleAction' => array(
+                                    'RuleAction' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'ruleAction',
                                     ),
-                                    'egress' => array(
+                                    'Egress' => array(
                                         'type' => 'boolean',
+                                        'sentAs' => 'egress',
                                     ),
-                                    'cidrBlock' => array(
+                                    'CidrBlock' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'cidrBlock',
                                     ),
-                                    'icmpTypeCode' => array(
+                                    'IcmpTypeCode' => array(
                                         'type' => 'object',
+                                        'sentAs' => 'icmpTypeCode',
                                         'properties' => array(
-                                            '' => array(
+                                            'Type' => array(
+                                                'description' => 'For the ICMP protocol, the ICMP type. A value of -1 is a wildcard meaning all types. Required if specifying icmp for the protocol.',
+                                                'type' => 'numeric',
+                                                'sentAs' => 'type',
+                                            ),
+                                            'Code' => array(
+                                                'description' => 'For the ICMP protocol, the ICMP code. A value of -1 is a wildcard meaning all codes. Required if specifying icmp for the protocol.',
+                                                'type' => 'numeric',
+                                                'sentAs' => 'code',
                                             ),
                                         ),
                                     ),
-                                    'portRange' => array(
+                                    'PortRange' => array(
                                         'type' => 'object',
+                                        'sentAs' => 'portRange',
                                         'properties' => array(
-                                            'from' => array(
+                                            'From' => array(
                                                 'description' => 'The first port in the range. Required if specifying tcp or udp for the protocol.',
                                                 'type' => 'numeric',
+                                                'sentAs' => 'from',
                                             ),
-                                            'to' => array(
+                                            'To' => array(
                                                 'description' => 'The last port in the range. Required if specifying tcp or udp for the protocol.',
                                                 'type' => 'numeric',
+                                                'sentAs' => 'to',
                                             ),
                                         ),
                                     ),
                                 ),
                             ),
                         ),
-                        'associations' => array(
+                        'Associations' => array(
                             'type' => 'array',
                             'sentAs' => 'associationSet',
                             'items' => array(
@@ -7885,19 +8162,22 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'networkAclAssociationId' => array(
+                                    'NetworkAclAssociationId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'networkAclAssociationId',
                                     ),
-                                    'networkAclId' => array(
+                                    'NetworkAclId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'networkAclId',
                                     ),
-                                    'subnetId' => array(
+                                    'SubnetId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'subnetId',
                                     ),
                                 ),
                             ),
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'type' => 'array',
                             'sentAs' => 'tagSet',
                             'items' => array(
@@ -7906,13 +8186,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -7925,50 +8207,64 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'networkInterface' => array(
+                'NetworkInterface' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'networkInterface',
                     'properties' => array(
-                        'networkInterfaceId' => array(
+                        'NetworkInterfaceId' => array(
                             'type' => 'string',
+                            'sentAs' => 'networkInterfaceId',
                         ),
-                        'subnetId' => array(
+                        'SubnetId' => array(
                             'type' => 'string',
+                            'sentAs' => 'subnetId',
                         ),
-                        'vpcId' => array(
+                        'VpcId' => array(
                             'type' => 'string',
+                            'sentAs' => 'vpcId',
                         ),
-                        'availabilityZone' => array(
+                        'AvailabilityZone' => array(
                             'type' => 'string',
+                            'sentAs' => 'availabilityZone',
                         ),
-                        'description' => array(
+                        'Description' => array(
                             'type' => 'string',
+                            'sentAs' => 'description',
                         ),
-                        'ownerId' => array(
+                        'OwnerId' => array(
                             'type' => 'string',
+                            'sentAs' => 'ownerId',
                         ),
-                        'requesterId' => array(
+                        'RequesterId' => array(
                             'type' => 'string',
+                            'sentAs' => 'requesterId',
                         ),
-                        'requesterManaged' => array(
+                        'RequesterManaged' => array(
                             'type' => 'boolean',
+                            'sentAs' => 'requesterManaged',
                         ),
-                        'status' => array(
+                        'Status' => array(
                             'type' => 'string',
+                            'sentAs' => 'status',
                         ),
-                        'macAddress' => array(
+                        'MacAddress' => array(
                             'type' => 'string',
+                            'sentAs' => 'macAddress',
                         ),
-                        'privateIpAddress' => array(
+                        'PrivateIpAddress' => array(
                             'type' => 'string',
+                            'sentAs' => 'privateIpAddress',
                         ),
-                        'privateDnsName' => array(
+                        'PrivateDnsName' => array(
                             'type' => 'string',
+                            'sentAs' => 'privateDnsName',
                         ),
-                        'sourceDestCheck' => array(
+                        'SourceDestCheck' => array(
                             'type' => 'boolean',
+                            'sentAs' => 'sourceDestCheck',
                         ),
-                        'groups' => array(
+                        'Groups' => array(
                             'type' => 'array',
                             'sentAs' => 'groupSet',
                             'items' => array(
@@ -7980,75 +8276,92 @@ return array (
                                         'type' => 'string',
                                         'sentAs' => 'groupName',
                                     ),
-                                    'groupId' => array(
+                                    'GroupId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'groupId',
                                     ),
                                 ),
                             ),
                         ),
-                        'attachment' => array(
+                        'Attachment' => array(
                             'type' => 'object',
+                            'sentAs' => 'attachment',
                             'properties' => array(
-                                'attachmentId' => array(
+                                'AttachmentId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'attachmentId',
                                 ),
-                                'instanceId' => array(
+                                'InstanceId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'instanceId',
                                 ),
-                                'instanceOwnerId' => array(
+                                'InstanceOwnerId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'instanceOwnerId',
                                 ),
-                                'deviceIndex' => array(
+                                'DeviceIndex' => array(
                                     'type' => 'numeric',
+                                    'sentAs' => 'deviceIndex',
                                 ),
-                                'status' => array(
+                                'Status' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'status',
                                 ),
-                                'attachTime' => array(
+                                'AttachTime' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'attachTime',
                                 ),
-                                'deleteOnTermination' => array(
+                                'DeleteOnTermination' => array(
                                     'type' => 'boolean',
+                                    'sentAs' => 'deleteOnTermination',
                                 ),
                             ),
                         ),
-                        'association' => array(
+                        'Association' => array(
                             'type' => 'object',
+                            'sentAs' => 'association',
                             'properties' => array(
-                                'publicIp' => array(
+                                'PublicIp' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'publicIp',
                                 ),
-                                'ipOwnerId' => array(
+                                'IpOwnerId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'ipOwnerId',
                                 ),
-                                'allocationId' => array(
+                                'AllocationId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'allocationId',
                                 ),
-                                'associationId' => array(
+                                'AssociationId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'associationId',
                                 ),
                             ),
                         ),
-                        'tagSet' => array(
+                        'TagSet' => array(
                             'type' => 'array',
+                            'sentAs' => 'tagSet',
                             'items' => array(
                                 'name' => 'item',
                                 'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
                         ),
-                        'privateIpAddresses' => array(
+                        'PrivateIpAddresses' => array(
                             'type' => 'array',
                             'sentAs' => 'privateIpAddressesSet',
                             'items' => array(
@@ -8056,26 +8369,33 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'privateIpAddress' => array(
+                                    'PrivateIpAddress' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'privateIpAddress',
                                     ),
-                                    'primary' => array(
+                                    'Primary' => array(
                                         'type' => 'boolean',
+                                        'sentAs' => 'primary',
                                     ),
-                                    'association' => array(
+                                    'Association' => array(
                                         'type' => 'object',
+                                        'sentAs' => 'association',
                                         'properties' => array(
-                                            'publicIp' => array(
+                                            'PublicIp' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'publicIp',
                                             ),
-                                            'ipOwnerId' => array(
+                                            'IpOwnerId' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'ipOwnerId',
                                             ),
-                                            'allocationId' => array(
+                                            'AllocationId' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'allocationId',
                                             ),
-                                            'associationId' => array(
+                                            'AssociationId' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'associationId',
                                             ),
                                         ),
                                     ),
@@ -8090,7 +8410,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'reservedInstancesListings' => array(
+                'ReservedInstancesListings' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'reservedInstancesListingsSet',
@@ -8099,63 +8419,77 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'reservedInstancesListingId' => array(
+                            'ReservedInstancesListingId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'reservedInstancesListingId',
                             ),
-                            'reservedInstancesId' => array(
+                            'ReservedInstancesId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'reservedInstancesId',
                             ),
-                            'createDate' => array(
+                            'CreateDate' => array(
                                 'type' => 'string',
+                                'sentAs' => 'createDate',
                             ),
-                            'updateDate' => array(
+                            'UpdateDate' => array(
                                 'type' => 'string',
+                                'sentAs' => 'updateDate',
                             ),
-                            'status' => array(
+                            'Status' => array(
                                 'type' => 'string',
+                                'sentAs' => 'status',
                             ),
-                            'statusMessage' => array(
+                            'StatusMessage' => array(
                                 'type' => 'string',
+                                'sentAs' => 'statusMessage',
                             ),
-                            'instanceCounts' => array(
+                            'InstanceCounts' => array(
                                 'type' => 'array',
+                                'sentAs' => 'instanceCounts',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'state' => array(
+                                        'State' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'state',
                                         ),
-                                        'instanceCount' => array(
+                                        'InstanceCount' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'instanceCount',
                                         ),
                                     ),
                                 ),
                             ),
-                            'priceSchedules' => array(
+                            'PriceSchedules' => array(
                                 'type' => 'array',
+                                'sentAs' => 'priceSchedules',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'term' => array(
+                                        'Term' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'term',
                                         ),
-                                        'price' => array(
+                                        'Price' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'price',
                                         ),
-                                        'currencyCode' => array(
+                                        'CurrencyCode' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'currencyCode',
                                         ),
-                                        'active' => array(
+                                        'Active' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'active',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -8164,19 +8498,22 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'clientToken' => array(
+                            'ClientToken' => array(
                                 'type' => 'string',
+                                'sentAs' => 'clientToken',
                             ),
                         ),
                     ),
@@ -8187,17 +8524,20 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'routeTable' => array(
+                'RouteTable' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'routeTable',
                     'properties' => array(
-                        'routeTableId' => array(
+                        'RouteTableId' => array(
                             'type' => 'string',
+                            'sentAs' => 'routeTableId',
                         ),
-                        'vpcId' => array(
+                        'VpcId' => array(
                             'type' => 'string',
+                            'sentAs' => 'vpcId',
                         ),
-                        'routes' => array(
+                        'Routes' => array(
                             'type' => 'array',
                             'sentAs' => 'routeSet',
                             'items' => array(
@@ -8205,28 +8545,34 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'destinationCidrBlock' => array(
+                                    'DestinationCidrBlock' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'destinationCidrBlock',
                                     ),
-                                    'gatewayId' => array(
+                                    'GatewayId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'gatewayId',
                                     ),
-                                    'instanceId' => array(
+                                    'InstanceId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'instanceId',
                                     ),
-                                    'instanceOwnerId' => array(
+                                    'InstanceOwnerId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'instanceOwnerId',
                                     ),
-                                    'networkInterfaceId' => array(
+                                    'NetworkInterfaceId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'networkInterfaceId',
                                     ),
-                                    'state' => array(
+                                    'State' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'state',
                                     ),
                                 ),
                             ),
                         ),
-                        'associations' => array(
+                        'Associations' => array(
                             'type' => 'array',
                             'sentAs' => 'associationSet',
                             'items' => array(
@@ -8234,22 +8580,26 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'routeTableAssociationId' => array(
+                                    'RouteTableAssociationId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'routeTableAssociationId',
                                     ),
-                                    'routeTableId' => array(
+                                    'RouteTableId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'routeTableId',
                                     ),
-                                    'subnetId' => array(
+                                    'SubnetId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'subnetId',
                                     ),
-                                    'main' => array(
+                                    'Main' => array(
                                         'type' => 'boolean',
+                                        'sentAs' => 'main',
                                     ),
                                 ),
                             ),
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'type' => 'array',
                             'sentAs' => 'tagSet',
                             'items' => array(
@@ -8258,18 +8608,20 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
                         ),
-                        'propagatingVgws' => array(
+                        'PropagatingVgws' => array(
                             'type' => 'array',
                             'sentAs' => 'propagatingVgwSet',
                             'items' => array(
@@ -8277,13 +8629,14 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'gatewayId' => array(
+                                    'GatewayId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'gatewayId',
                                     ),
                                 ),
                             ),
                         ),
-                        'propagatedRoutes' => array(
+                        'PropagatedRoutes' => array(
                             'type' => 'array',
                             'sentAs' => 'propagatedRouteSet',
                             'items' => array(
@@ -8291,17 +8644,21 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'destinationCidrBlock' => array(
+                                    'DestinationCidrBlock' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'destinationCidrBlock',
                                     ),
-                                    'gatewayId' => array(
+                                    'GatewayId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'gatewayId',
                                     ),
-                                    'status' => array(
+                                    'Status' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'status',
                                     ),
-                                    'sourceId' => array(
+                                    'SourceId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'sourceId',
                                     ),
                                 ),
                             ),
@@ -8314,85 +8671,91 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'groupId' => array(
+                'GroupId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'groupId',
                 ),
             ),
         ),
-        'CreateSnapshotResult' => array(
+        'snapshot' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'Snapshot' => array(
-                    'description' => 'The new snapshot.',
-                    'type' => 'object',
+                'SnapshotId' => array(
+                    'description' => 'The unique ID of this snapshot.',
+                    'type' => 'string',
                     'location' => 'xml',
-                    'sentAs' => 'snapshot',
-                    'properties' => array(
-                        'SnapshotId' => array(
-                            'description' => 'The unique ID of this snapshot.',
-                            'type' => 'string',
-                            'sentAs' => 'snapshotId',
-                        ),
-                        'VolumeId' => array(
-                            'description' => 'The ID of the volume from which this snapshot was created.',
-                            'type' => 'string',
-                            'sentAs' => 'volumeId',
-                        ),
-                        'State' => array(
-                            'description' => 'Snapshot state (e.g., pending, completed, or error).',
-                            'type' => 'string',
-                            'sentAs' => 'status',
-                        ),
-                        'StartTime' => array(
-                            'description' => 'Time stamp when the snapshot was initiated.',
-                            'type' => 'string',
-                            'sentAs' => 'startTime',
-                        ),
-                        'Progress' => array(
-                            'description' => 'The progress of the snapshot, in percentage.',
-                            'type' => 'string',
-                            'sentAs' => 'progress',
-                        ),
-                        'OwnerId' => array(
-                            'description' => 'AWS Access Key ID of the user who owns the snapshot.',
-                            'type' => 'string',
-                            'sentAs' => 'ownerId',
-                        ),
-                        'Description' => array(
-                            'description' => 'Description of the snapshot.',
-                            'type' => 'string',
-                            'sentAs' => 'description',
-                        ),
-                        'VolumeSize' => array(
-                            'description' => 'The size of the volume, in gigabytes.',
-                            'type' => 'numeric',
-                            'sentAs' => 'volumeSize',
-                        ),
-                        'ownerAlias' => array(
-                            'description' => 'The AWS account alias (e.g., "amazon", "redhat", "self", etc.) or AWS account ID that owns the AMI.',
-                            'type' => 'string',
-                        ),
-                        'tags' => array(
-                            'description' => 'A list of tags for the Snapshot.',
-                            'type' => 'array',
-                            'sentAs' => 'tagSet',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'key' => array(
-                                        'description' => 'The tag\'s key.',
-                                        'type' => 'string',
-                                    ),
-                                    'value' => array(
-                                        'description' => 'The tag\'s value.',
-                                        'type' => 'string',
-                                    ),
-                                ),
+                    'sentAs' => 'snapshotId',
+                ),
+                'VolumeId' => array(
+                    'description' => 'The ID of the volume from which this snapshot was created.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'volumeId',
+                ),
+                'State' => array(
+                    'description' => 'Snapshot state (e.g., pending, completed, or error).',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'status',
+                ),
+                'StartTime' => array(
+                    'description' => 'Time stamp when the snapshot was initiated.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'startTime',
+                ),
+                'Progress' => array(
+                    'description' => 'The progress of the snapshot, in percentage.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'progress',
+                ),
+                'OwnerId' => array(
+                    'description' => 'AWS Access Key ID of the user who owns the snapshot.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'ownerId',
+                ),
+                'Description' => array(
+                    'description' => 'Description of the snapshot.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'description',
+                ),
+                'VolumeSize' => array(
+                    'description' => 'The size of the volume, in gigabytes.',
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                    'sentAs' => 'volumeSize',
+                ),
+                'OwnerAlias' => array(
+                    'description' => 'The AWS account alias (e.g., "amazon", "redhat", "self", etc.) or AWS account ID that owns the AMI.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'ownerAlias',
+                ),
+                'Tags' => array(
+                    'description' => 'A list of tags for the Snapshot.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'tagSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'Key' => array(
+                                'description' => 'The tag\'s key.',
+                                'type' => 'string',
+                                'sentAs' => 'key',
+                            ),
+                            'Value' => array(
+                                'description' => 'The tag\'s value.',
+                                'type' => 'string',
+                                'sentAs' => 'value',
                             ),
                         ),
                     ),
@@ -8403,35 +8766,43 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'spotDatafeedSubscription' => array(
+                'SpotDatafeedSubscription' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'spotDatafeedSubscription',
                     'properties' => array(
-                        'ownerId' => array(
+                        'OwnerId' => array(
                             'description' => 'Specifies the AWS account ID of the account.',
                             'type' => 'string',
+                            'sentAs' => 'ownerId',
                         ),
-                        'bucket' => array(
+                        'Bucket' => array(
                             'description' => 'Specifies the Amazon S3 bucket where the Spot Instance data feed is located.',
                             'type' => 'string',
+                            'sentAs' => 'bucket',
                         ),
-                        'prefix' => array(
+                        'Prefix' => array(
                             'description' => 'Contains the prefix that is prepended to data feed files.',
                             'type' => 'string',
+                            'sentAs' => 'prefix',
                         ),
-                        'state' => array(
+                        'State' => array(
                             'description' => 'Specifies the state of the Spot Instance request.',
                             'type' => 'string',
+                            'sentAs' => 'state',
                         ),
-                        'fault' => array(
+                        'Fault' => array(
                             'description' => 'Specifies a fault code for the Spot Instance request, if present.',
                             'type' => 'object',
+                            'sentAs' => 'fault',
                             'properties' => array(
-                                'code' => array(
+                                'Code' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'code',
                                 ),
-                                'message' => array(
+                                'Message' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'message',
                                 ),
                             ),
                         ),
@@ -8478,7 +8849,7 @@ return array (
                             'type' => 'string',
                             'sentAs' => 'availabilityZone',
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'description' => 'A list of tags for the Subnet.',
                             'type' => 'array',
                             'sentAs' => 'tagSet',
@@ -8488,13 +8859,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -8503,113 +8876,120 @@ return array (
                 ),
             ),
         ),
-        'CreateVolumeResult' => array(
+        'volume' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'Volume' => array(
-                    'description' => 'The newly created EBS volume.',
-                    'type' => 'object',
+                'VolumeId' => array(
+                    'description' => 'The unique ID of this volume.',
+                    'type' => 'string',
                     'location' => 'xml',
-                    'sentAs' => 'volume',
-                    'properties' => array(
-                        'VolumeId' => array(
-                            'description' => 'The unique ID of this volume.',
-                            'type' => 'string',
-                            'sentAs' => 'volumeId',
-                        ),
-                        'Size' => array(
-                            'description' => 'The size of this volume, in gigabytes.',
-                            'type' => 'numeric',
-                            'sentAs' => 'size',
-                        ),
-                        'SnapshotId' => array(
-                            'description' => 'Optional snapshot from which this volume was created.',
-                            'type' => 'string',
-                            'sentAs' => 'snapshotId',
-                        ),
-                        'AvailabilityZone' => array(
-                            'description' => 'Availability zone in which this volume was created.',
-                            'type' => 'string',
-                            'sentAs' => 'availabilityZone',
-                        ),
-                        'State' => array(
-                            'description' => 'State of this volume (e.g., creating, available).',
-                            'type' => 'string',
-                            'sentAs' => 'status',
-                        ),
-                        'CreateTime' => array(
-                            'description' => 'Timestamp when volume creation was initiated.',
-                            'type' => 'string',
-                            'sentAs' => 'createTime',
-                        ),
-                        'Attachments' => array(
-                            'description' => 'Information on what this volume is attached to.',
-                            'type' => 'array',
-                            'sentAs' => 'attachmentSet',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'Specifies the details of a how an EC2 EBS volume is attached to an instance.',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'VolumeId' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'volumeId',
-                                    ),
-                                    'InstanceId' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'instanceId',
-                                    ),
-                                    'Device' => array(
-                                        'description' => 'How the device is exposed to the instance (e.g., /dev/sdh).',
-                                        'type' => 'string',
-                                        'sentAs' => 'device',
-                                    ),
-                                    'State' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'status',
-                                    ),
-                                    'AttachTime' => array(
-                                        'description' => 'Timestamp when this attachment initiated.',
-                                        'type' => 'string',
-                                        'sentAs' => 'attachTime',
-                                    ),
-                                    'deleteOnTermination' => array(
-                                        'description' => '` Whether this volume will be deleted or not when the associated instance is terminated.',
-                                        'type' => 'boolean',
-                                    ),
-                                ),
+                    'sentAs' => 'volumeId',
+                ),
+                'Size' => array(
+                    'description' => 'The size of this volume, in gigabytes.',
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                    'sentAs' => 'size',
+                ),
+                'SnapshotId' => array(
+                    'description' => 'Optional snapshot from which this volume was created.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'snapshotId',
+                ),
+                'AvailabilityZone' => array(
+                    'description' => 'Availability zone in which this volume was created.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'availabilityZone',
+                ),
+                'State' => array(
+                    'description' => 'State of this volume (e.g., creating, available).',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'status',
+                ),
+                'CreateTime' => array(
+                    'description' => 'Timestamp when volume creation was initiated.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'createTime',
+                ),
+                'Attachments' => array(
+                    'description' => 'Information on what this volume is attached to.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'attachmentSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'Specifies the details of a how an EC2 EBS volume is attached to an instance.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'VolumeId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'volumeId',
                             ),
-                        ),
-                        'tags' => array(
-                            'description' => 'A list of tags for the Volume.',
-                            'type' => 'array',
-                            'sentAs' => 'tagSet',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'key' => array(
-                                        'description' => 'The tag\'s key.',
-                                        'type' => 'string',
-                                    ),
-                                    'value' => array(
-                                        'description' => 'The tag\'s value.',
-                                        'type' => 'string',
-                                    ),
-                                ),
+                            'InstanceId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'instanceId',
                             ),
-                        ),
-                        'volumeType' => array(
-                            'type' => 'string',
-                        ),
-                        'iops' => array(
-                            'type' => 'numeric',
+                            'Device' => array(
+                                'description' => 'How the device is exposed to the instance (e.g., /dev/sdh).',
+                                'type' => 'string',
+                                'sentAs' => 'device',
+                            ),
+                            'State' => array(
+                                'type' => 'string',
+                                'sentAs' => 'status',
+                            ),
+                            'AttachTime' => array(
+                                'description' => 'Timestamp when this attachment initiated.',
+                                'type' => 'string',
+                                'sentAs' => 'attachTime',
+                            ),
+                            'DeleteOnTermination' => array(
+                                'description' => '` Whether this volume will be deleted or not when the associated instance is terminated.',
+                                'type' => 'boolean',
+                                'sentAs' => 'deleteOnTermination',
+                            ),
                         ),
                     ),
+                ),
+                'Tags' => array(
+                    'description' => 'A list of tags for the Volume.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'tagSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'Key' => array(
+                                'description' => 'The tag\'s key.',
+                                'type' => 'string',
+                                'sentAs' => 'key',
+                            ),
+                            'Value' => array(
+                                'description' => 'The tag\'s value.',
+                                'type' => 'string',
+                                'sentAs' => 'value',
+                            ),
+                        ),
+                    ),
+                ),
+                'VolumeType' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'volumeType',
+                ),
+                'Iops' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                    'sentAs' => 'iops',
                 ),
             ),
         ),
@@ -8643,7 +9023,7 @@ return array (
                             'type' => 'string',
                             'sentAs' => 'dhcpOptionsId',
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'description' => 'A list of tags for the VPC.',
                             'type' => 'array',
                             'sentAs' => 'tagSet',
@@ -8653,20 +9033,23 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
                         ),
-                        'instanceTenancy' => array(
+                        'InstanceTenancy' => array(
                             'description' => 'The allowed tenancy of instances launched into the VPC.',
                             'type' => 'string',
+                            'sentAs' => 'instanceTenancy',
                         ),
                     ),
                 ),
@@ -8711,7 +9094,7 @@ return array (
                             'type' => 'string',
                             'sentAs' => 'vpnGatewayId',
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'description' => 'A list of tags for the VpnConnection.',
                             'type' => 'array',
                             'sentAs' => 'tagSet',
@@ -8721,65 +9104,79 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
                         ),
-                        'vgwTelemetry' => array(
+                        'VgwTelemetry' => array(
                             'type' => 'array',
+                            'sentAs' => 'vgwTelemetry',
                             'items' => array(
                                 'name' => 'item',
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'outsideIpAddress' => array(
+                                    'OutsideIpAddress' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'outsideIpAddress',
                                     ),
-                                    'status' => array(
+                                    'Status' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'status',
                                     ),
-                                    'lastStatusChange' => array(
+                                    'LastStatusChange' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'lastStatusChange',
                                     ),
-                                    'statusMessage' => array(
+                                    'StatusMessage' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'statusMessage',
                                     ),
-                                    'acceptedRouteCount' => array(
+                                    'AcceptedRouteCount' => array(
                                         'type' => 'numeric',
+                                        'sentAs' => 'acceptedRouteCount',
                                     ),
                                 ),
                             ),
                         ),
-                        'options' => array(
+                        'Options' => array(
                             'type' => 'object',
+                            'sentAs' => 'options',
                             'properties' => array(
-                                'staticRoutesOnly' => array(
+                                'StaticRoutesOnly' => array(
                                     'type' => 'boolean',
+                                    'sentAs' => 'staticRoutesOnly',
                                 ),
                             ),
                         ),
-                        'routes' => array(
+                        'Routes' => array(
                             'type' => 'array',
+                            'sentAs' => 'routes',
                             'items' => array(
                                 'name' => 'item',
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'destinationCidrBlock' => array(
+                                    'DestinationCidrBlock' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'destinationCidrBlock',
                                     ),
-                                    'source' => array(
+                                    'Source' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'source',
                                     ),
-                                    'state' => array(
+                                    'State' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'state',
                                     ),
                                 ),
                             ),
@@ -8837,7 +9234,7 @@ return array (
                                 ),
                             ),
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'description' => 'A list of tags for the VpnGateway.',
                             'type' => 'array',
                             'sentAs' => 'tagSet',
@@ -8847,13 +9244,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -8884,23 +9283,29 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'publicIp',
                             ),
-                            'allocationId' => array(
+                            'AllocationId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'allocationId',
                             ),
-                            'associationId' => array(
+                            'AssociationId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'associationId',
                             ),
-                            'domain' => array(
+                            'Domain' => array(
                                 'type' => 'string',
+                                'sentAs' => 'domain',
                             ),
-                            'networkInterfaceId' => array(
+                            'NetworkInterfaceId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'networkInterfaceId',
                             ),
-                            'networkInterfaceOwnerId' => array(
+                            'NetworkInterfaceOwnerId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'networkInterfaceOwnerId',
                             ),
-                            'privateIpAddress' => array(
+                            'PrivateIpAddress' => array(
                                 'type' => 'string',
+                                'sentAs' => 'privateIpAddress',
                             ),
                         ),
                     ),
@@ -8922,20 +9327,22 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'zoneName' => array(
+                            'ZoneName' => array(
                                 'description' => 'Name of the Availability Zone.',
                                 'type' => 'string',
+                                'sentAs' => 'zoneName',
                             ),
                             'State' => array(
                                 'description' => 'State of the Availability Zone.',
                                 'type' => 'string',
                                 'sentAs' => 'zoneState',
                             ),
-                            'regionName' => array(
+                            'RegionName' => array(
                                 'description' => 'Name of the region in which this zone resides.',
                                 'type' => 'string',
+                                'sentAs' => 'regionName',
                             ),
-                            'messages' => array(
+                            'Messages' => array(
                                 'description' => 'A list of messages about the Availability Zone.',
                                 'type' => 'array',
                                 'sentAs' => 'messageSet',
@@ -8944,8 +9351,9 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'message' => array(
+                                        'Message' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'message',
                                         ),
                                     ),
                                 ),
@@ -9003,7 +9411,6 @@ return array (
                                     'S3' => array(
                                         'description' => 'The details of S3 storage for bundling a Windows instance.',
                                         'type' => 'object',
-                                        'sentAs' => 'S3',
                                         'properties' => array(
                                             'Bucket' => array(
                                                 'description' => 'The bucket in which to store the AMI. You can specify a bucket that you already own or a new bucket that Amazon EC2 creates on your behalf.',
@@ -9064,136 +9471,171 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'conversionTasks' => array(
+                'ConversionTasks' => array(
                     'type' => 'array',
                     'location' => 'xml',
+                    'sentAs' => 'conversionTasks',
                     'items' => array(
                         'name' => 'item',
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'conversionTaskId' => array(
+                            'ConversionTaskId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'conversionTaskId',
                             ),
-                            'expirationTime' => array(
+                            'ExpirationTime' => array(
                                 'type' => 'string',
+                                'sentAs' => 'expirationTime',
                             ),
-                            'importInstance' => array(
+                            'ImportInstance' => array(
                                 'type' => 'object',
+                                'sentAs' => 'importInstance',
                                 'properties' => array(
-                                    'volumes' => array(
+                                    'Volumes' => array(
                                         'type' => 'array',
+                                        'sentAs' => 'volumes',
                                         'items' => array(
                                             'name' => 'item',
                                             'type' => 'object',
                                             'sentAs' => 'item',
                                             'properties' => array(
-                                                'bytesConverted' => array(
+                                                'BytesConverted' => array(
                                                     'type' => 'numeric',
+                                                    'sentAs' => 'bytesConverted',
                                                 ),
-                                                'availabilityZone' => array(
+                                                'AvailabilityZone' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'availabilityZone',
                                                 ),
-                                                'image' => array(
+                                                'Image' => array(
                                                     'type' => 'object',
+                                                    'sentAs' => 'image',
                                                     'properties' => array(
-                                                        'format' => array(
+                                                        'Format' => array(
                                                             'type' => 'string',
+                                                            'sentAs' => 'format',
                                                         ),
-                                                        'size' => array(
+                                                        'Size' => array(
                                                             'type' => 'numeric',
+                                                            'sentAs' => 'size',
                                                         ),
-                                                        'importManifestUrl' => array(
+                                                        'ImportManifestUrl' => array(
                                                             'type' => 'string',
+                                                            'sentAs' => 'importManifestUrl',
                                                         ),
-                                                        'checksum' => array(
+                                                        'Checksum' => array(
                                                             'type' => 'string',
+                                                            'sentAs' => 'checksum',
                                                         ),
                                                     ),
                                                 ),
-                                                'volume' => array(
+                                                'Volume' => array(
                                                     'type' => 'object',
+                                                    'sentAs' => 'volume',
                                                     'properties' => array(
-                                                        'size' => array(
+                                                        'Size' => array(
                                                             'type' => 'numeric',
+                                                            'sentAs' => 'size',
                                                         ),
-                                                        'id' => array(
+                                                        'Id' => array(
                                                             'type' => 'string',
+                                                            'sentAs' => 'id',
                                                         ),
                                                     ),
                                                 ),
-                                                'status' => array(
+                                                'Status' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'status',
                                                 ),
-                                                'statusMessage' => array(
+                                                'StatusMessage' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'statusMessage',
                                                 ),
-                                                'description' => array(
+                                                'Description' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'description',
                                                 ),
                                             ),
                                         ),
                                     ),
-                                    'instanceId' => array(
+                                    'InstanceId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'instanceId',
                                     ),
-                                    'platform' => array(
+                                    'Platform' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'platform',
                                     ),
-                                    'description' => array(
+                                    'Description' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'description',
                                     ),
                                 ),
                             ),
-                            'importVolume' => array(
+                            'ImportVolume' => array(
                                 'type' => 'object',
+                                'sentAs' => 'importVolume',
                                 'properties' => array(
-                                    'bytesConverted' => array(
+                                    'BytesConverted' => array(
                                         'type' => 'numeric',
+                                        'sentAs' => 'bytesConverted',
                                     ),
-                                    'availabilityZone' => array(
+                                    'AvailabilityZone' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'availabilityZone',
                                     ),
-                                    'description' => array(
+                                    'Description' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'description',
                                     ),
-                                    'image' => array(
+                                    'Image' => array(
                                         'type' => 'object',
+                                        'sentAs' => 'image',
                                         'properties' => array(
-                                            'format' => array(
+                                            'Format' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'format',
                                             ),
-                                            'size' => array(
+                                            'Size' => array(
                                                 'type' => 'numeric',
+                                                'sentAs' => 'size',
                                             ),
-                                            'importManifestUrl' => array(
+                                            'ImportManifestUrl' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'importManifestUrl',
                                             ),
-                                            'checksum' => array(
+                                            'Checksum' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'checksum',
                                             ),
                                         ),
                                     ),
-                                    'volume' => array(
+                                    'Volume' => array(
                                         'type' => 'object',
+                                        'sentAs' => 'volume',
                                         'properties' => array(
-                                            'size' => array(
+                                            'Size' => array(
                                                 'type' => 'numeric',
+                                                'sentAs' => 'size',
                                             ),
-                                            'id' => array(
+                                            'Id' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'id',
                                             ),
                                         ),
                                     ),
                                 ),
                             ),
-                            'state' => array(
+                            'State' => array(
                                 'type' => 'string',
+                                'sentAs' => 'state',
                             ),
-                            'statusMessage' => array(
+                            'StatusMessage' => array(
                                 'type' => 'string',
+                                'sentAs' => 'statusMessage',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -9202,13 +9644,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -9257,7 +9701,7 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'bgpAsn',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the CustomerGateway.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -9267,13 +9711,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -9330,7 +9776,7 @@ return array (
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the DhcpOptions.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -9340,13 +9786,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -9360,7 +9808,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'exportTasks' => array(
+                'ExportTasks' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'exportTaskSet',
@@ -9369,45 +9817,55 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'exportTaskId' => array(
+                            'ExportTaskId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'exportTaskId',
                             ),
-                            'description' => array(
+                            'Description' => array(
                                 'type' => 'string',
+                                'sentAs' => 'description',
                             ),
-                            'state' => array(
+                            'State' => array(
                                 'type' => 'string',
+                                'sentAs' => 'state',
                             ),
-                            'statusMessage' => array(
+                            'StatusMessage' => array(
                                 'type' => 'string',
+                                'sentAs' => 'statusMessage',
                             ),
-                            'instanceExportDetails' => array(
+                            'InstanceExportDetails' => array(
                                 'type' => 'object',
                                 'sentAs' => 'instanceExport',
                                 'properties' => array(
-                                    'instanceId' => array(
+                                    'InstanceId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'instanceId',
                                     ),
-                                    'targetEnvironment' => array(
+                                    'TargetEnvironment' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'targetEnvironment',
                                     ),
                                 ),
                             ),
-                            'exportToS3Task' => array(
+                            'ExportToS3Task' => array(
                                 'type' => 'object',
                                 'sentAs' => 'exportToS3',
                                 'properties' => array(
-                                    'diskImageFormat' => array(
+                                    'DiskImageFormat' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'diskImageFormat',
                                     ),
-                                    'containerFormat' => array(
+                                    'ContainerFormat' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'containerFormat',
                                     ),
-                                    's3Bucket' => array(
+                                    'S3Bucket' => array(
                                         'type' => 'string',
+                                        'sentAs' => 's3Bucket',
                                     ),
-                                    's3Key' => array(
+                                    'S3Key' => array(
                                         'type' => 'string',
+                                        'sentAs' => 's3Key',
                                     ),
                                 ),
                             ),
@@ -9416,147 +9874,157 @@ return array (
                 ),
             ),
         ),
-        'DescribeImageAttributeResult' => array(
+        'imageAttribute' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ImageAttribute' => array(
-                    'description' => 'The described image attribute of the associated AMI.',
+                'ImageId' => array(
+                    'description' => 'The ID of the associated AMI.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'imageId',
+                ),
+                'LaunchPermissions' => array(
+                    'description' => 'Launch permissions for the associated AMI.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'launchPermission',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'Describes a permission to launch an Amazon Machine Image (AMI).',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'UserId' => array(
+                                'description' => 'The AWS user ID of the user involved in this launch permission.',
+                                'type' => 'string',
+                                'sentAs' => 'userId',
+                            ),
+                            'Group' => array(
+                                'description' => 'The AWS group of the user involved in this launch permission.',
+                                'type' => 'string',
+                                'sentAs' => 'group',
+                            ),
+                        ),
+                    ),
+                ),
+                'ProductCodes' => array(
+                    'description' => 'Product codes for the associated AMI.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'productCodes',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'An AWS DevPay product code.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'ProductCodeId' => array(
+                                'description' => 'The unique ID of an AWS DevPay product code.',
+                                'type' => 'string',
+                                'sentAs' => 'productCode',
+                            ),
+                            'ProductCodeType' => array(
+                                'type' => 'string',
+                                'sentAs' => 'type',
+                            ),
+                        ),
+                    ),
+                ),
+                'KernelId' => array(
+                    'description' => 'Kernel ID of the associated AMI.',
                     'type' => 'object',
                     'location' => 'xml',
-                    'sentAs' => 'imageAttribute',
+                    'sentAs' => 'kernel',
                     'properties' => array(
-                        'ImageId' => array(
-                            'description' => 'The ID of the associated AMI.',
+                        'Value' => array(
+                            'description' => 'String value',
                             'type' => 'string',
-                            'sentAs' => 'imageId',
+                            'sentAs' => 'value',
                         ),
-                        'LaunchPermissions' => array(
-                            'description' => 'Launch permissions for the associated AMI.',
-                            'type' => 'array',
-                            'sentAs' => 'launchPermission',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'Describes a permission to launch an Amazon Machine Image (AMI).',
+                    ),
+                ),
+                'RamdiskId' => array(
+                    'description' => 'Ramdisk ID of the associated AMI.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'ramdisk',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'Description' => array(
+                    'description' => 'User-created description of the associated AMI.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'description',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'BlockDeviceMappings' => array(
+                    'description' => 'Block device mappings for the associated AMI.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'blockDeviceMapping',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'The BlockDeviceMappingItemType data type.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'VirtualName' => array(
+                                'description' => 'Specifies the virtual device name.',
+                                'type' => 'string',
+                                'sentAs' => 'virtualName',
+                            ),
+                            'DeviceName' => array(
+                                'description' => 'Specifies the device name (e.g., /dev/sdh).',
+                                'type' => 'string',
+                                'sentAs' => 'deviceName',
+                            ),
+                            'Ebs' => array(
+                                'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
                                 'type' => 'object',
-                                'sentAs' => 'item',
+                                'sentAs' => 'ebs',
                                 'properties' => array(
-                                    'UserId' => array(
-                                        'description' => 'The AWS user ID of the user involved in this launch permission.',
+                                    'SnapshotId' => array(
+                                        'description' => 'The ID of the snapshot from which the volume will be created.',
                                         'type' => 'string',
-                                        'sentAs' => 'userId',
+                                        'sentAs' => 'snapshotId',
                                     ),
-                                    'Group' => array(
-                                        'description' => 'The AWS group of the user involved in this launch permission.',
+                                    'VolumeSize' => array(
+                                        'description' => 'The size of the volume, in gigabytes.',
+                                        'type' => 'numeric',
+                                        'sentAs' => 'volumeSize',
+                                    ),
+                                    'DeleteOnTermination' => array(
+                                        'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
+                                        'type' => 'boolean',
+                                        'sentAs' => 'deleteOnTermination',
+                                    ),
+                                    'VolumeType' => array(
                                         'type' => 'string',
-                                        'sentAs' => 'group',
+                                        'sentAs' => 'volumeType',
+                                    ),
+                                    'Iops' => array(
+                                        'type' => 'numeric',
+                                        'sentAs' => 'iops',
                                     ),
                                 ),
                             ),
-                        ),
-                        'ProductCodes' => array(
-                            'description' => 'Product codes for the associated AMI.',
-                            'type' => 'array',
-                            'sentAs' => 'productCodes',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'An AWS DevPay product code.',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'ProductCodeId' => array(
-                                        'description' => 'The unique ID of an AWS DevPay product code.',
-                                        'type' => 'string',
-                                        'sentAs' => 'productCode',
-                                    ),
-                                    'ProductCodeType' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'type',
-                                    ),
-                                ),
-                            ),
-                        ),
-                        'kernelId' => array(
-                            'description' => 'Kernel ID of the associated AMI.',
-                            'type' => 'object',
-                            'sentAs' => 'kernel',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'ramdiskId' => array(
-                            'description' => 'Ramdisk ID of the associated AMI.',
-                            'type' => 'object',
-                            'sentAs' => 'ramdisk',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'description' => array(
-                            'description' => 'User-created description of the associated AMI.',
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'BlockDeviceMappings' => array(
-                            'description' => 'Block device mappings for the associated AMI.',
-                            'type' => 'array',
-                            'sentAs' => 'blockDeviceMapping',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'The BlockDeviceMappingItemType data type.',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'VirtualName' => array(
-                                        'description' => 'Specifies the virtual device name.',
-                                        'type' => 'string',
-                                        'sentAs' => 'virtualName',
-                                    ),
-                                    'DeviceName' => array(
-                                        'description' => 'Specifies the device name (e.g., /dev/sdh).',
-                                        'type' => 'string',
-                                        'sentAs' => 'deviceName',
-                                    ),
-                                    'ebs' => array(
-                                        'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
-                                        'type' => 'object',
-                                        'properties' => array(
-                                            'snapshotId' => array(
-                                                'description' => 'The ID of the snapshot from which the volume will be created.',
-                                                'type' => 'string',
-                                            ),
-                                            'volumeSize' => array(
-                                                'description' => 'The size of the volume, in gigabytes.',
-                                                'type' => 'numeric',
-                                            ),
-                                            'deleteOnTermination' => array(
-                                                'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
-                                                'type' => 'boolean',
-                                            ),
-                                            'volumeType' => array(
-                                                'type' => 'string',
-                                            ),
-                                            'iops' => array(
-                                                'type' => 'numeric',
-                                            ),
-                                        ),
-                                    ),
-                                    'noDevice' => array(
-                                        'description' => 'Specifies the device name to suppress during instance launch.',
-                                        'type' => 'string',
-                                    ),
-                                ),
+                            'NoDevice' => array(
+                                'description' => 'Specifies the device name to suppress during instance launch.',
+                                'type' => 'string',
+                                'sentAs' => 'noDevice',
                             ),
                         ),
                     ),
@@ -9650,41 +10118,49 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'platform',
                             ),
-                            'stateReason' => array(
+                            'StateReason' => array(
                                 'description' => 'The reason for the state change.',
                                 'type' => 'object',
+                                'sentAs' => 'stateReason',
                                 'properties' => array(
-                                    'code' => array(
+                                    'Code' => array(
                                         'description' => 'Reason code for the state change.',
                                         'type' => 'string',
+                                        'sentAs' => 'code',
                                     ),
-                                    'message' => array(
+                                    'Message' => array(
                                         'description' => 'Descriptive message for the state change.',
                                         'type' => 'string',
+                                        'sentAs' => 'message',
                                     ),
                                 ),
                             ),
-                            'imageOwnerAlias' => array(
+                            'ImageOwnerAlias' => array(
                                 'description' => 'The AWS account alias (e.g., "amazon", "redhat", "self", etc.) or AWS account ID that owns the AMI.',
                                 'type' => 'string',
+                                'sentAs' => 'imageOwnerAlias',
                             ),
-                            'name' => array(
+                            'Name' => array(
                                 'description' => 'The name of the AMI that was provided during image creation.',
                                 'type' => 'string',
+                                'sentAs' => 'name',
                             ),
-                            'description' => array(
+                            'Description' => array(
                                 'description' => 'The description of the AMI that was provided during image creation.',
                                 'type' => 'string',
+                                'sentAs' => 'description',
                             ),
-                            'rootDeviceType' => array(
+                            'RootDeviceType' => array(
                                 'description' => 'The root device type used by the AMI. The AMI can use an Amazon EBS or instance store root device.',
                                 'type' => 'string',
+                                'sentAs' => 'rootDeviceType',
                             ),
-                            'rootDeviceName' => array(
+                            'RootDeviceName' => array(
                                 'description' => 'The root device name (e.g., /dev/sda1).',
                                 'type' => 'string',
+                                'sentAs' => 'rootDeviceName',
                             ),
-                            'blockDeviceMappings' => array(
+                            'BlockDeviceMappings' => array(
                                 'description' => 'Specifies how block devices are exposed to the instance.',
                                 'type' => 'array',
                                 'sentAs' => 'blockDeviceMapping',
@@ -9704,41 +10180,49 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'deviceName',
                                         ),
-                                        'ebs' => array(
+                                        'Ebs' => array(
                                             'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
                                             'type' => 'object',
+                                            'sentAs' => 'ebs',
                                             'properties' => array(
-                                                'snapshotId' => array(
+                                                'SnapshotId' => array(
                                                     'description' => 'The ID of the snapshot from which the volume will be created.',
                                                     'type' => 'string',
+                                                    'sentAs' => 'snapshotId',
                                                 ),
-                                                'volumeSize' => array(
+                                                'VolumeSize' => array(
                                                     'description' => 'The size of the volume, in gigabytes.',
                                                     'type' => 'numeric',
+                                                    'sentAs' => 'volumeSize',
                                                 ),
-                                                'deleteOnTermination' => array(
+                                                'DeleteOnTermination' => array(
                                                     'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                                     'type' => 'boolean',
+                                                    'sentAs' => 'deleteOnTermination',
                                                 ),
-                                                'volumeType' => array(
+                                                'VolumeType' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'volumeType',
                                                 ),
-                                                'iops' => array(
+                                                'Iops' => array(
                                                     'type' => 'numeric',
+                                                    'sentAs' => 'iops',
                                                 ),
                                             ),
                                         ),
-                                        'noDevice' => array(
+                                        'NoDevice' => array(
                                             'description' => 'Specifies the device name to suppress during instance launch.',
                                             'type' => 'string',
+                                            'sentAs' => 'noDevice',
                                         ),
                                     ),
                                 ),
                             ),
-                            'virtualizationType' => array(
+                            'VirtualizationType' => array(
                                 'type' => 'string',
+                                'sentAs' => 'virtualizationType',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the Image.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -9748,177 +10232,206 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'hypervisor' => array(
+                            'Hypervisor' => array(
                                 'type' => 'string',
+                                'sentAs' => 'hypervisor',
                             ),
                         ),
                     ),
                 ),
             ),
         ),
-        'DescribeInstanceAttributeResult' => array(
+        'InstanceAttribute' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'InstanceAttribute' => array(
-                    'description' => 'The described instance attribute.',
+                'InstanceId' => array(
+                    'description' => 'The ID of the associated instance.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'instanceId',
+                ),
+                'InstanceType' => array(
+                    'description' => 'The instance type (e.g., m1.small, c1.medium, m2.2xlarge, and so on).',
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'instanceType',
                     'properties' => array(
-                        'instanceId' => array(
-                            'description' => 'The ID of the associated instance.',
+                        'Value' => array(
+                            'description' => 'String value',
                             'type' => 'string',
+                            'sentAs' => 'value',
                         ),
-                        'instanceType' => array(
-                            'description' => 'The instance type (e.g., m1.small, c1.medium, m2.2xlarge, and so on).',
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
+                    ),
+                ),
+                'KernelId' => array(
+                    'description' => 'The kernel ID of the associated instance.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'kernel',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'RamdiskId' => array(
+                    'description' => 'The ramdisk ID of the associated instance.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'ramdisk',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'UserData' => array(
+                    'description' => 'MIME, Base64-encoded user data.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'userData',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'DisableApiTermination' => array(
+                    'description' => 'Whether this instance can be terminated. You must modify this attribute before you can terminate any "locked" instances.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'disableApiTermination',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'Boolean value',
+                            'type' => 'boolean',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'InstanceInitiatedShutdownBehavior' => array(
+                    'description' => 'Whether this instance\'s Amazon EBS volumes are deleted when the instance is shut down.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'instanceInitiatedShutdownBehavior',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'RootDeviceName' => array(
+                    'description' => 'The root device name (e.g., /dev/sda1).',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'rootDeviceName',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'String value',
+                            'type' => 'string',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'BlockDeviceMappings' => array(
+                    'description' => 'How block devices are exposed to this instance. Each mapping is made up of a virtualName and a deviceName.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'blockDeviceMapping',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'Describes how block devices are mapped on an Amazon EC2 instance.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'DeviceName' => array(
+                                'description' => 'The device name (e.g., /dev/sdh) at which the block device is exposed on the instance.',
+                                'type' => 'string',
+                                'sentAs' => 'deviceName',
                             ),
-                        ),
-                        'kernelId' => array(
-                            'description' => 'The kernel ID of the associated instance.',
-                            'type' => 'object',
-                            'sentAs' => 'kernel',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'ramdiskId' => array(
-                            'description' => 'The ramdisk ID of the associated instance.',
-                            'type' => 'object',
-                            'sentAs' => 'ramdisk',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'userData' => array(
-                            'description' => 'MIME, Base64-encoded user data.',
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'disableApiTermination' => array(
-                            'description' => 'Whether this instance can be terminated. You must modify this attribute before you can terminate any "locked" instances.',
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'Boolean value',
-                                    'type' => 'boolean',
-                                ),
-                            ),
-                        ),
-                        'instanceInitiatedShutdownBehavior' => array(
-                            'description' => 'Whether this instance\'s Amazon EBS volumes are deleted when the instance is shut down.',
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'rootDeviceName' => array(
-                            'description' => 'The root device name (e.g., /dev/sda1).',
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'String value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                        'blockDeviceMappings' => array(
-                            'description' => 'How block devices are exposed to this instance. Each mapping is made up of a virtualName and a deviceName.',
-                            'type' => 'array',
-                            'sentAs' => 'blockDeviceMapping',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'Describes how block devices are mapped on an Amazon EC2 instance.',
+                            'Ebs' => array(
+                                'description' => 'The optional EBS device mapped to the specified device name.',
                                 'type' => 'object',
-                                'sentAs' => 'item',
+                                'sentAs' => 'ebs',
                                 'properties' => array(
-                                    'deviceName' => array(
-                                        'description' => 'The device name (e.g., /dev/sdh) at which the block device is exposed on the instance.',
+                                    'VolumeId' => array(
+                                        'description' => 'The ID of the EBS volume.',
                                         'type' => 'string',
+                                        'sentAs' => 'volumeId',
                                     ),
-                                    'ebs' => array(
-                                        'description' => 'The optional EBS device mapped to the specified device name.',
-                                        'type' => 'object',
-                                        'properties' => array(
-                                            'volumeId' => array(
-                                                'description' => 'The ID of the EBS volume.',
-                                                'type' => 'string',
-                                            ),
-                                            'status' => array(
-                                                'description' => 'The status of the EBS volume.',
-                                                'type' => 'string',
-                                            ),
-                                            'attachTime' => array(
-                                                'description' => 'The time at which the EBS volume was attached to the associated instance.',
-                                                'type' => 'string',
-                                            ),
-                                            'deleteOnTermination' => array(
-                                                'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
-                                                'type' => 'boolean',
-                                            ),
-                                        ),
+                                    'Status' => array(
+                                        'description' => 'The status of the EBS volume.',
+                                        'type' => 'string',
+                                        'sentAs' => 'status',
+                                    ),
+                                    'AttachTime' => array(
+                                        'description' => 'The time at which the EBS volume was attached to the associated instance.',
+                                        'type' => 'string',
+                                        'sentAs' => 'attachTime',
+                                    ),
+                                    'DeleteOnTermination' => array(
+                                        'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
+                                        'type' => 'boolean',
+                                        'sentAs' => 'deleteOnTermination',
                                     ),
                                 ),
                             ),
                         ),
-                        'productCodes' => array(
-                            'type' => 'array',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'An AWS DevPay product code.',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'ProductCodeId' => array(
-                                        'description' => 'The unique ID of an AWS DevPay product code.',
-                                        'type' => 'string',
-                                        'sentAs' => 'productCode',
-                                    ),
-                                    'ProductCodeType' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'type',
-                                    ),
-                                ),
+                    ),
+                ),
+                'ProductCodes' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'productCodes',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'An AWS DevPay product code.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'ProductCodeId' => array(
+                                'description' => 'The unique ID of an AWS DevPay product code.',
+                                'type' => 'string',
+                                'sentAs' => 'productCode',
+                            ),
+                            'ProductCodeType' => array(
+                                'type' => 'string',
+                                'sentAs' => 'type',
                             ),
                         ),
-                        'ebsOptimized' => array(
-                            'type' => 'object',
-                            'properties' => array(
-                                'value' => array(
-                                    'description' => 'Boolean value',
-                                    'type' => 'boolean',
-                                ),
-                            ),
+                    ),
+                ),
+                'EbsOptimized' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'ebsOptimized',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'Boolean value',
+                            'type' => 'boolean',
+                            'sentAs' => 'value',
                         ),
                     ),
                 ),
@@ -9928,7 +10441,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'instanceStatuses' => array(
+                'InstanceStatuses' => array(
                     'description' => 'Collection of instance statuses describing the state of the requested instances.',
                     'type' => 'array',
                     'location' => 'xml',
@@ -9939,15 +10452,17 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'instanceId' => array(
+                            'InstanceId' => array(
                                 'description' => 'The ID of the Amazon EC2 instance.',
                                 'type' => 'string',
+                                'sentAs' => 'instanceId',
                             ),
-                            'availabilityZone' => array(
+                            'AvailabilityZone' => array(
                                 'description' => 'The Amazon EC2 instance\'s availability zone.',
                                 'type' => 'string',
+                                'sentAs' => 'availabilityZone',
                             ),
-                            'events' => array(
+                            'Events' => array(
                                 'description' => 'Events that affect the status of the associated Amazon EC2 instance.',
                                 'type' => 'array',
                                 'sentAs' => 'eventsSet',
@@ -9957,27 +10472,32 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'code' => array(
+                                        'Code' => array(
                                             'description' => 'The associated code of the event. Valid values: instance-reboot, system-reboot, instance-retirement',
                                             'type' => 'string',
+                                            'sentAs' => 'code',
                                         ),
-                                        'description' => array(
+                                        'Description' => array(
                                             'description' => 'A description of the event.',
                                             'type' => 'string',
+                                            'sentAs' => 'description',
                                         ),
-                                        'notBefore' => array(
+                                        'NotBefore' => array(
                                             'description' => 'The earliest scheduled start time for the event.',
                                             'type' => 'string',
+                                            'sentAs' => 'notBefore',
                                         ),
-                                        'notAfter' => array(
+                                        'NotAfter' => array(
                                             'description' => 'The latest scheduled end time for the event.',
                                             'type' => 'string',
+                                            'sentAs' => 'notAfter',
                                         ),
                                     ),
                                 ),
                             ),
-                            'instanceState' => array(
+                            'InstanceState' => array(
                                 'type' => 'object',
+                                'sentAs' => 'instanceState',
                                 'properties' => array(
                                     'Code' => array(
                                         'description' => 'A 16-bit unsigned integer. The high byte is an opaque internal value and should be ignored. The low byte is set based on the state represented.',
@@ -9991,54 +10511,66 @@ return array (
                                     ),
                                 ),
                             ),
-                            'systemStatus' => array(
+                            'SystemStatus' => array(
                                 'type' => 'object',
+                                'sentAs' => 'systemStatus',
                                 'properties' => array(
-                                    'status' => array(
+                                    'Status' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'status',
                                     ),
-                                    'details' => array(
+                                    'Details' => array(
                                         'type' => 'array',
+                                        'sentAs' => 'details',
                                         'items' => array(
                                             'name' => 'item',
                                             'type' => 'object',
                                             'sentAs' => 'item',
                                             'properties' => array(
-                                                'name' => array(
+                                                'Name' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'name',
                                                 ),
-                                                'status' => array(
+                                                'Status' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'status',
                                                 ),
-                                                'impairedSince' => array(
+                                                'ImpairedSince' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'impairedSince',
                                                 ),
                                             ),
                                         ),
                                     ),
                                 ),
                             ),
-                            'instanceStatus' => array(
+                            'InstanceStatus' => array(
                                 'type' => 'object',
+                                'sentAs' => 'instanceStatus',
                                 'properties' => array(
-                                    'status' => array(
+                                    'Status' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'status',
                                     ),
-                                    'details' => array(
+                                    'Details' => array(
                                         'type' => 'array',
+                                        'sentAs' => 'details',
                                         'items' => array(
                                             'name' => 'item',
                                             'type' => 'object',
                                             'sentAs' => 'item',
                                             'properties' => array(
-                                                'name' => array(
+                                                'Name' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'name',
                                                 ),
-                                                'status' => array(
+                                                'Status' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'status',
                                                 ),
-                                                'impairedSince' => array(
+                                                'ImpairedSince' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'impairedSince',
                                                 ),
                                             ),
                                         ),
@@ -10048,10 +10580,11 @@ return array (
                         ),
                     ),
                 ),
-                'nextToken' => array(
+                'NextToken' => array(
                     'description' => 'A string specifying the next paginated set of results to return.',
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'nextToken',
                 ),
             ),
         ),
@@ -10098,8 +10631,9 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'groupName',
                                         ),
-                                        'groupId' => array(
+                                        'GroupId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'groupId',
                                         ),
                                     ),
                                 ),
@@ -10208,13 +10742,15 @@ return array (
                                                     'type' => 'string',
                                                     'sentAs' => 'availabilityZone',
                                                 ),
-                                                'groupName' => array(
+                                                'GroupName' => array(
                                                     'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
                                                     'type' => 'string',
+                                                    'sentAs' => 'groupName',
                                                 ),
-                                                'tenancy' => array(
+                                                'Tenancy' => array(
                                                     'description' => 'The allowed tenancy of instances launched into the VPC. A value of default means instances can be launched with any tenancy; a value of dedicated means all instances launched into the VPC will be launched as dedicated tenancy regardless of the tenancy assigned to the instance at launch.',
                                                     'type' => 'string',
+                                                    'sentAs' => 'tenancy',
                                                 ),
                                             ),
                                         ),
@@ -10265,33 +10801,39 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'ipAddress',
                                         ),
-                                        'stateReason' => array(
+                                        'StateReason' => array(
                                             'description' => 'The reason for the state change.',
                                             'type' => 'object',
+                                            'sentAs' => 'stateReason',
                                             'properties' => array(
-                                                'code' => array(
+                                                'Code' => array(
                                                     'description' => 'Reason code for the state change.',
                                                     'type' => 'string',
+                                                    'sentAs' => 'code',
                                                 ),
-                                                'message' => array(
+                                                'Message' => array(
                                                     'description' => 'Descriptive message for the state change.',
                                                     'type' => 'string',
+                                                    'sentAs' => 'message',
                                                 ),
                                             ),
                                         ),
-                                        'architecture' => array(
+                                        'Architecture' => array(
                                             'description' => 'The architecture of this instance.',
                                             'type' => 'string',
+                                            'sentAs' => 'architecture',
                                         ),
-                                        'rootDeviceType' => array(
+                                        'RootDeviceType' => array(
                                             'description' => 'The root device type used by the AMI. The AMI can use an Amazon EBS or instance store root device.',
                                             'type' => 'string',
+                                            'sentAs' => 'rootDeviceType',
                                         ),
-                                        'rootDeviceName' => array(
+                                        'RootDeviceName' => array(
                                             'description' => 'The root device name (e.g., /dev/sda1).',
                                             'type' => 'string',
+                                            'sentAs' => 'rootDeviceName',
                                         ),
-                                        'blockDeviceMappings' => array(
+                                        'BlockDeviceMappings' => array(
                                             'description' => 'Block device mapping set.',
                                             'type' => 'array',
                                             'sentAs' => 'blockDeviceMapping',
@@ -10301,57 +10843,69 @@ return array (
                                                 'type' => 'object',
                                                 'sentAs' => 'item',
                                                 'properties' => array(
-                                                    'deviceName' => array(
+                                                    'DeviceName' => array(
                                                         'description' => 'The device name (e.g., /dev/sdh) at which the block device is exposed on the instance.',
                                                         'type' => 'string',
+                                                        'sentAs' => 'deviceName',
                                                     ),
-                                                    'ebs' => array(
+                                                    'Ebs' => array(
                                                         'description' => 'The optional EBS device mapped to the specified device name.',
                                                         'type' => 'object',
+                                                        'sentAs' => 'ebs',
                                                         'properties' => array(
-                                                            'volumeId' => array(
+                                                            'VolumeId' => array(
                                                                 'description' => 'The ID of the EBS volume.',
                                                                 'type' => 'string',
+                                                                'sentAs' => 'volumeId',
                                                             ),
-                                                            'status' => array(
+                                                            'Status' => array(
                                                                 'description' => 'The status of the EBS volume.',
                                                                 'type' => 'string',
+                                                                'sentAs' => 'status',
                                                             ),
-                                                            'attachTime' => array(
+                                                            'AttachTime' => array(
                                                                 'description' => 'The time at which the EBS volume was attached to the associated instance.',
                                                                 'type' => 'string',
+                                                                'sentAs' => 'attachTime',
                                                             ),
-                                                            'deleteOnTermination' => array(
+                                                            'DeleteOnTermination' => array(
                                                                 'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
                                                                 'type' => 'boolean',
+                                                                'sentAs' => 'deleteOnTermination',
                                                             ),
                                                         ),
                                                     ),
                                                 ),
                                             ),
                                         ),
-                                        'virtualizationType' => array(
+                                        'VirtualizationType' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'virtualizationType',
                                         ),
-                                        'instanceLifecycle' => array(
+                                        'InstanceLifecycle' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'instanceLifecycle',
                                         ),
-                                        'spotInstanceRequestId' => array(
+                                        'SpotInstanceRequestId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'spotInstanceRequestId',
                                         ),
-                                        'license' => array(
+                                        'License' => array(
                                             'type' => 'object',
+                                            'sentAs' => 'license',
                                             'properties' => array(
-                                                'pool' => array(
+                                                'Pool' => array(
                                                     'description' => 'The license pool from which this license was used (ex: \'windows\').',
                                                     'type' => 'string',
+                                                    'sentAs' => 'pool',
                                                 ),
                                             ),
                                         ),
-                                        'clientToken' => array(
+                                        'ClientToken' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'clientToken',
                                         ),
-                                        'tags' => array(
+                                        'Tags' => array(
                                             'description' => 'A list of tags for the Instance.',
                                             'type' => 'array',
                                             'sentAs' => 'tagSet',
@@ -10361,18 +10915,20 @@ return array (
                                                 'type' => 'object',
                                                 'sentAs' => 'item',
                                                 'properties' => array(
-                                                    'key' => array(
+                                                    'Key' => array(
                                                         'description' => 'The tag\'s key.',
                                                         'type' => 'string',
+                                                        'sentAs' => 'key',
                                                     ),
-                                                    'value' => array(
+                                                    'Value' => array(
                                                         'description' => 'The tag\'s value.',
                                                         'type' => 'string',
+                                                        'sentAs' => 'value',
                                                     ),
                                                 ),
                                             ),
                                         ),
-                                        'securityGroups' => array(
+                                        'SecurityGroups' => array(
                                             'type' => 'array',
                                             'sentAs' => 'groupSet',
                                             'items' => array(
@@ -10384,19 +10940,22 @@ return array (
                                                         'type' => 'string',
                                                         'sentAs' => 'groupName',
                                                     ),
-                                                    'groupId' => array(
+                                                    'GroupId' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'groupId',
                                                     ),
                                                 ),
                                             ),
                                         ),
-                                        'sourceDestCheck' => array(
+                                        'SourceDestCheck' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'sourceDestCheck',
                                         ),
-                                        'hypervisor' => array(
+                                        'Hypervisor' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'hypervisor',
                                         ),
-                                        'networkInterfaces' => array(
+                                        'NetworkInterfaces' => array(
                                             'type' => 'array',
                                             'sentAs' => 'networkInterfaceSet',
                                             'items' => array(
@@ -10404,34 +10963,43 @@ return array (
                                                 'type' => 'object',
                                                 'sentAs' => 'item',
                                                 'properties' => array(
-                                                    'networkInterfaceId' => array(
+                                                    'NetworkInterfaceId' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'networkInterfaceId',
                                                     ),
-                                                    'subnetId' => array(
+                                                    'SubnetId' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'subnetId',
                                                     ),
-                                                    'vpcId' => array(
+                                                    'VpcId' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'vpcId',
                                                     ),
-                                                    'description' => array(
+                                                    'Description' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'description',
                                                     ),
-                                                    'ownerId' => array(
+                                                    'OwnerId' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'ownerId',
                                                     ),
-                                                    'status' => array(
+                                                    'Status' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'status',
                                                     ),
-                                                    'privateIpAddress' => array(
+                                                    'PrivateIpAddress' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'privateIpAddress',
                                                     ),
-                                                    'privateDnsName' => array(
+                                                    'PrivateDnsName' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'privateDnsName',
                                                     ),
-                                                    'sourceDestCheck' => array(
+                                                    'SourceDestCheck' => array(
                                                         'type' => 'boolean',
+                                                        'sentAs' => 'sourceDestCheck',
                                                     ),
-                                                    'groups' => array(
+                                                    'Groups' => array(
                                                         'type' => 'array',
                                                         'sentAs' => 'groupSet',
                                                         'items' => array(
@@ -10443,59 +11011,73 @@ return array (
                                                                     'type' => 'string',
                                                                     'sentAs' => 'groupName',
                                                                 ),
-                                                                'groupId' => array(
+                                                                'GroupId' => array(
                                                                     'type' => 'string',
+                                                                    'sentAs' => 'groupId',
                                                                 ),
                                                             ),
                                                         ),
                                                     ),
-                                                    'attachment' => array(
+                                                    'Attachment' => array(
                                                         'type' => 'object',
+                                                        'sentAs' => 'attachment',
                                                         'properties' => array(
-                                                            'attachmentId' => array(
+                                                            'AttachmentId' => array(
                                                                 'type' => 'string',
+                                                                'sentAs' => 'attachmentId',
                                                             ),
-                                                            'deviceIndex' => array(
+                                                            'DeviceIndex' => array(
                                                                 'type' => 'numeric',
+                                                                'sentAs' => 'deviceIndex',
                                                             ),
-                                                            'status' => array(
+                                                            'Status' => array(
                                                                 'type' => 'string',
+                                                                'sentAs' => 'status',
                                                             ),
-                                                            'attachTime' => array(
+                                                            'AttachTime' => array(
                                                                 'type' => 'string',
+                                                                'sentAs' => 'attachTime',
                                                             ),
-                                                            'deleteOnTermination' => array(
+                                                            'DeleteOnTermination' => array(
                                                                 'type' => 'boolean',
+                                                                'sentAs' => 'deleteOnTermination',
                                                             ),
                                                         ),
                                                     ),
-                                                    'association' => array(
+                                                    'Association' => array(
                                                         'type' => 'object',
+                                                        'sentAs' => 'association',
                                                         'properties' => array(
-                                                            'publicIp' => array(
+                                                            'PublicIp' => array(
                                                                 'type' => 'string',
+                                                                'sentAs' => 'publicIp',
                                                             ),
-                                                            'ipOwnerId' => array(
+                                                            'IpOwnerId' => array(
                                                                 'type' => 'string',
+                                                                'sentAs' => 'ipOwnerId',
                                                             ),
                                                         ),
                                                     ),
                                                 ),
                                             ),
                                         ),
-                                        'iamInstanceProfile' => array(
+                                        'IamInstanceProfile' => array(
                                             'type' => 'object',
+                                            'sentAs' => 'iamInstanceProfile',
                                             'properties' => array(
-                                                'arn' => array(
+                                                'Arn' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'arn',
                                                 ),
-                                                'id' => array(
+                                                'Id' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'id',
                                                 ),
                                             ),
                                         ),
-                                        'ebsOptimized' => array(
+                                        'EbsOptimized' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'ebsOptimized',
                                         ),
                                     ),
                                 ),
@@ -10509,7 +11091,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'internetGateways' => array(
+                'InternetGateways' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'internetGatewaySet',
@@ -10518,10 +11100,11 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'internetGatewayId' => array(
+                            'InternetGatewayId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'internetGatewayId',
                             ),
-                            'attachments' => array(
+                            'Attachments' => array(
                                 'type' => 'array',
                                 'sentAs' => 'attachmentSet',
                                 'items' => array(
@@ -10529,16 +11112,18 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'vpcId' => array(
+                                        'VpcId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'vpcId',
                                         ),
-                                        'state' => array(
+                                        'State' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'state',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -10547,13 +11132,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -10597,7 +11184,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'licenses' => array(
+                'Licenses' => array(
                     'description' => 'Specifies active licenses in use and attached to an Amazon EC2 instance.',
                     'type' => 'array',
                     'location' => 'xml',
@@ -10608,7 +11195,76 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            '' => array(
+                            'LicenseId' => array(
+                                'description' => 'The unique ID identifying the license.',
+                                'type' => 'string',
+                                'sentAs' => 'licenseId',
+                            ),
+                            'Type' => array(
+                                'description' => 'The license type (ex. "Microsoft/Windows/Standard").',
+                                'type' => 'string',
+                                'sentAs' => 'type',
+                            ),
+                            'Pool' => array(
+                                'description' => 'The name of the pool in which the license is kept.',
+                                'type' => 'string',
+                                'sentAs' => 'pool',
+                            ),
+                            'Capacities' => array(
+                                'description' => 'The capacities available for this license, indicating how many licenses are in use, how many are available, how many Amazon EC2 instances can be supported, etc.',
+                                'type' => 'array',
+                                'sentAs' => 'capacitySet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'Represents the capacity that a license is able to support.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Capacity' => array(
+                                            'description' => 'The number of licenses available.',
+                                            'type' => 'numeric',
+                                            'sentAs' => 'capacity',
+                                        ),
+                                        'InstanceCapacity' => array(
+                                            'description' => 'The number of Amazon EC2 instances that can be supported with the license\'s capacity.',
+                                            'type' => 'numeric',
+                                            'sentAs' => 'instanceCapacity',
+                                        ),
+                                        'State' => array(
+                                            'description' => 'The state of this license capacity, indicating whether the license is actively being used or not.',
+                                            'type' => 'string',
+                                            'sentAs' => 'state',
+                                        ),
+                                        'EarliestAllowedDeactivationTime' => array(
+                                            'description' => 'The earliest allowed time at which a license can be deactivated. Some licenses have time restrictions on when they can be activated and reactivated.',
+                                            'type' => 'string',
+                                            'sentAs' => 'earliestAllowedDeactivationTime',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Tags' => array(
+                                'description' => 'A list of tags for the License.',
+                                'type' => 'array',
+                                'sentAs' => 'tagSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'description' => 'The tag\'s key.',
+                                            'type' => 'string',
+                                            'sentAs' => 'key',
+                                        ),
+                                        'Value' => array(
+                                            'description' => 'The tag\'s value.',
+                                            'type' => 'string',
+                                            'sentAs' => 'value',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -10619,7 +11275,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'networkAcls' => array(
+                'NetworkAcls' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'networkAclSet',
@@ -10628,17 +11284,19 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'networkAclId' => array(
+                            'NetworkAclId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'networkAclId',
                             ),
-                            'vpcId' => array(
+                            'VpcId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'vpcId',
                             ),
-                            'isDefault' => array(
+                            'IsDefault' => array(
                                 'type' => 'boolean',
                                 'sentAs' => 'default',
                             ),
-                            'entries' => array(
+                            'Entries' => array(
                                 'type' => 'array',
                                 'sentAs' => 'entrySet',
                                 'items' => array(
@@ -10646,45 +11304,62 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'ruleNumber' => array(
+                                        'RuleNumber' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'ruleNumber',
                                         ),
-                                        'protocol' => array(
+                                        'Protocol' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'protocol',
                                         ),
-                                        'ruleAction' => array(
+                                        'RuleAction' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'ruleAction',
                                         ),
-                                        'egress' => array(
+                                        'Egress' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'egress',
                                         ),
-                                        'cidrBlock' => array(
+                                        'CidrBlock' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'cidrBlock',
                                         ),
-                                        'icmpTypeCode' => array(
+                                        'IcmpTypeCode' => array(
                                             'type' => 'object',
+                                            'sentAs' => 'icmpTypeCode',
                                             'properties' => array(
-                                                '' => array(
+                                                'Type' => array(
+                                                    'description' => 'For the ICMP protocol, the ICMP type. A value of -1 is a wildcard meaning all types. Required if specifying icmp for the protocol.',
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'type',
+                                                ),
+                                                'Code' => array(
+                                                    'description' => 'For the ICMP protocol, the ICMP code. A value of -1 is a wildcard meaning all codes. Required if specifying icmp for the protocol.',
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'code',
                                                 ),
                                             ),
                                         ),
-                                        'portRange' => array(
+                                        'PortRange' => array(
                                             'type' => 'object',
+                                            'sentAs' => 'portRange',
                                             'properties' => array(
-                                                'from' => array(
+                                                'From' => array(
                                                     'description' => 'The first port in the range. Required if specifying tcp or udp for the protocol.',
                                                     'type' => 'numeric',
+                                                    'sentAs' => 'from',
                                                 ),
-                                                'to' => array(
+                                                'To' => array(
                                                     'description' => 'The last port in the range. Required if specifying tcp or udp for the protocol.',
                                                     'type' => 'numeric',
+                                                    'sentAs' => 'to',
                                                 ),
                                             ),
                                         ),
                                     ),
                                 ),
                             ),
-                            'associations' => array(
+                            'Associations' => array(
                                 'type' => 'array',
                                 'sentAs' => 'associationSet',
                                 'items' => array(
@@ -10692,19 +11367,22 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'networkAclAssociationId' => array(
+                                        'NetworkAclAssociationId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'networkAclAssociationId',
                                         ),
-                                        'networkAclId' => array(
+                                        'NetworkAclId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'networkAclId',
                                         ),
-                                        'subnetId' => array(
+                                        'SubnetId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'subnetId',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -10713,13 +11391,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -10733,31 +11413,36 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'networkInterfaceId' => array(
+                'NetworkInterfaceId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'networkInterfaceId',
                 ),
-                'description' => array(
+                'Description' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'description',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'String value',
                             'type' => 'string',
+                            'sentAs' => 'value',
                         ),
                     ),
                 ),
-                'sourceDestCheck' => array(
+                'SourceDestCheck' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'sourceDestCheck',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'Boolean value',
                             'type' => 'boolean',
+                            'sentAs' => 'value',
                         ),
                     ),
                 ),
-                'groups' => array(
+                'Groups' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'groupSet',
@@ -10770,36 +11455,45 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'groupName',
                             ),
-                            'groupId' => array(
+                            'GroupId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'groupId',
                             ),
                         ),
                     ),
                 ),
-                'attachment' => array(
+                'Attachment' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'attachment',
                     'properties' => array(
-                        'attachmentId' => array(
+                        'AttachmentId' => array(
                             'type' => 'string',
+                            'sentAs' => 'attachmentId',
                         ),
-                        'instanceId' => array(
+                        'InstanceId' => array(
                             'type' => 'string',
+                            'sentAs' => 'instanceId',
                         ),
-                        'instanceOwnerId' => array(
+                        'InstanceOwnerId' => array(
                             'type' => 'string',
+                            'sentAs' => 'instanceOwnerId',
                         ),
-                        'deviceIndex' => array(
+                        'DeviceIndex' => array(
                             'type' => 'numeric',
+                            'sentAs' => 'deviceIndex',
                         ),
-                        'status' => array(
+                        'Status' => array(
                             'type' => 'string',
+                            'sentAs' => 'status',
                         ),
-                        'attachTime' => array(
+                        'AttachTime' => array(
                             'type' => 'string',
+                            'sentAs' => 'attachTime',
                         ),
-                        'deleteOnTermination' => array(
+                        'DeleteOnTermination' => array(
                             'type' => 'boolean',
+                            'sentAs' => 'deleteOnTermination',
                         ),
                     ),
                 ),
@@ -10809,7 +11503,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'networkInterfaces' => array(
+                'NetworkInterfaces' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'networkInterfaceSet',
@@ -10818,46 +11512,59 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'networkInterfaceId' => array(
+                            'NetworkInterfaceId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'networkInterfaceId',
                             ),
-                            'subnetId' => array(
+                            'SubnetId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'subnetId',
                             ),
-                            'vpcId' => array(
+                            'VpcId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'vpcId',
                             ),
-                            'availabilityZone' => array(
+                            'AvailabilityZone' => array(
                                 'type' => 'string',
+                                'sentAs' => 'availabilityZone',
                             ),
-                            'description' => array(
+                            'Description' => array(
                                 'type' => 'string',
+                                'sentAs' => 'description',
                             ),
-                            'ownerId' => array(
+                            'OwnerId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'ownerId',
                             ),
-                            'requesterId' => array(
+                            'RequesterId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'requesterId',
                             ),
-                            'requesterManaged' => array(
+                            'RequesterManaged' => array(
                                 'type' => 'boolean',
+                                'sentAs' => 'requesterManaged',
                             ),
-                            'status' => array(
+                            'Status' => array(
                                 'type' => 'string',
+                                'sentAs' => 'status',
                             ),
-                            'macAddress' => array(
+                            'MacAddress' => array(
                                 'type' => 'string',
+                                'sentAs' => 'macAddress',
                             ),
-                            'privateIpAddress' => array(
+                            'PrivateIpAddress' => array(
                                 'type' => 'string',
+                                'sentAs' => 'privateIpAddress',
                             ),
-                            'privateDnsName' => array(
+                            'PrivateDnsName' => array(
                                 'type' => 'string',
+                                'sentAs' => 'privateDnsName',
                             ),
-                            'sourceDestCheck' => array(
+                            'SourceDestCheck' => array(
                                 'type' => 'boolean',
+                                'sentAs' => 'sourceDestCheck',
                             ),
-                            'groups' => array(
+                            'Groups' => array(
                                 'type' => 'array',
                                 'sentAs' => 'groupSet',
                                 'items' => array(
@@ -10869,75 +11576,92 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'groupName',
                                         ),
-                                        'groupId' => array(
+                                        'GroupId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'groupId',
                                         ),
                                     ),
                                 ),
                             ),
-                            'attachment' => array(
+                            'Attachment' => array(
                                 'type' => 'object',
+                                'sentAs' => 'attachment',
                                 'properties' => array(
-                                    'attachmentId' => array(
+                                    'AttachmentId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'attachmentId',
                                     ),
-                                    'instanceId' => array(
+                                    'InstanceId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'instanceId',
                                     ),
-                                    'instanceOwnerId' => array(
+                                    'InstanceOwnerId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'instanceOwnerId',
                                     ),
-                                    'deviceIndex' => array(
+                                    'DeviceIndex' => array(
                                         'type' => 'numeric',
+                                        'sentAs' => 'deviceIndex',
                                     ),
-                                    'status' => array(
+                                    'Status' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'status',
                                     ),
-                                    'attachTime' => array(
+                                    'AttachTime' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'attachTime',
                                     ),
-                                    'deleteOnTermination' => array(
+                                    'DeleteOnTermination' => array(
                                         'type' => 'boolean',
+                                        'sentAs' => 'deleteOnTermination',
                                     ),
                                 ),
                             ),
-                            'association' => array(
+                            'Association' => array(
                                 'type' => 'object',
+                                'sentAs' => 'association',
                                 'properties' => array(
-                                    'publicIp' => array(
+                                    'PublicIp' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'publicIp',
                                     ),
-                                    'ipOwnerId' => array(
+                                    'IpOwnerId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'ipOwnerId',
                                     ),
-                                    'allocationId' => array(
+                                    'AllocationId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'allocationId',
                                     ),
-                                    'associationId' => array(
+                                    'AssociationId' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'associationId',
                                     ),
                                 ),
                             ),
-                            'tagSet' => array(
+                            'TagSet' => array(
                                 'type' => 'array',
+                                'sentAs' => 'tagSet',
                                 'items' => array(
                                     'name' => 'item',
                                     'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'privateIpAddresses' => array(
+                            'PrivateIpAddresses' => array(
                                 'type' => 'array',
                                 'sentAs' => 'privateIpAddressesSet',
                                 'items' => array(
@@ -10945,26 +11669,33 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'privateIpAddress' => array(
+                                        'PrivateIpAddress' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'privateIpAddress',
                                         ),
-                                        'primary' => array(
+                                        'Primary' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'primary',
                                         ),
-                                        'association' => array(
+                                        'Association' => array(
                                             'type' => 'object',
+                                            'sentAs' => 'association',
                                             'properties' => array(
-                                                'publicIp' => array(
+                                                'PublicIp' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'publicIp',
                                                 ),
-                                                'ipOwnerId' => array(
+                                                'IpOwnerId' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'ipOwnerId',
                                                 ),
-                                                'allocationId' => array(
+                                                'AllocationId' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'allocationId',
                                                 ),
-                                                'associationId' => array(
+                                                'AssociationId' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'associationId',
                                                 ),
                                             ),
                                         ),
@@ -10980,7 +11711,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'placementGroups' => array(
+                'PlacementGroups' => array(
                     'description' => 'Contains information about the specified PlacementGroups.',
                     'type' => 'array',
                     'location' => 'xml',
@@ -10991,17 +11722,20 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'groupName' => array(
+                            'GroupName' => array(
                                 'description' => 'The name of this PlacementGroup.',
                                 'type' => 'string',
+                                'sentAs' => 'groupName',
                             ),
-                            'strategy' => array(
+                            'Strategy' => array(
                                 'description' => 'The strategy to use when allocating Amazon EC2 instances for the PlacementGroup.',
                                 'type' => 'string',
+                                'sentAs' => 'strategy',
                             ),
-                            'state' => array(
+                            'State' => array(
                                 'description' => 'The state of this PlacementGroup.',
                                 'type' => 'string',
+                                'sentAs' => 'state',
                             ),
                         ),
                     ),
@@ -11103,7 +11837,7 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'state',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the ReservedInstances.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -11113,45 +11847,53 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'instanceTenancy' => array(
+                            'InstanceTenancy' => array(
                                 'description' => 'The tenancy of the reserved instance (ex: default or dedicated).',
                                 'type' => 'string',
+                                'sentAs' => 'instanceTenancy',
                             ),
-                            'currencyCode' => array(
+                            'CurrencyCode' => array(
                                 'description' => 'The currency of the reserved instance. Specified using ISO 4217 standard (e.g., USD, JPY).',
                                 'type' => 'string',
+                                'sentAs' => 'currencyCode',
                             ),
-                            'offeringType' => array(
+                            'OfferingType' => array(
                                 'description' => 'The Reserved Instance offering type.',
                                 'type' => 'string',
+                                'sentAs' => 'offeringType',
                             ),
-                            'recurringCharges' => array(
+                            'RecurringCharges' => array(
                                 'description' => 'The recurring charge tag assigned to the resource.',
                                 'type' => 'array',
+                                'sentAs' => 'recurringCharges',
                                 'items' => array(
                                     'name' => 'item',
                                     'description' => 'Represents a usage charge for Amazon EC2 resources that repeats on a schedule.',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'frequency' => array(
+                                        'Frequency' => array(
                                             'description' => 'The frequency of the recurring charge.',
                                             'type' => 'string',
+                                            'sentAs' => 'frequency',
                                         ),
-                                        'amount' => array(
+                                        'Amount' => array(
                                             'description' => 'The amount of the recurring charge.',
                                             'type' => 'numeric',
+                                            'sentAs' => 'amount',
                                         ),
                                     ),
                                 ),
@@ -11165,7 +11907,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'reservedInstancesListings' => array(
+                'ReservedInstancesListings' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'reservedInstancesListingsSet',
@@ -11174,63 +11916,77 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'reservedInstancesListingId' => array(
+                            'ReservedInstancesListingId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'reservedInstancesListingId',
                             ),
-                            'reservedInstancesId' => array(
+                            'ReservedInstancesId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'reservedInstancesId',
                             ),
-                            'createDate' => array(
+                            'CreateDate' => array(
                                 'type' => 'string',
+                                'sentAs' => 'createDate',
                             ),
-                            'updateDate' => array(
+                            'UpdateDate' => array(
                                 'type' => 'string',
+                                'sentAs' => 'updateDate',
                             ),
-                            'status' => array(
+                            'Status' => array(
                                 'type' => 'string',
+                                'sentAs' => 'status',
                             ),
-                            'statusMessage' => array(
+                            'StatusMessage' => array(
                                 'type' => 'string',
+                                'sentAs' => 'statusMessage',
                             ),
-                            'instanceCounts' => array(
+                            'InstanceCounts' => array(
                                 'type' => 'array',
+                                'sentAs' => 'instanceCounts',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'state' => array(
+                                        'State' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'state',
                                         ),
-                                        'instanceCount' => array(
+                                        'InstanceCount' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'instanceCount',
                                         ),
                                     ),
                                 ),
                             ),
-                            'priceSchedules' => array(
+                            'PriceSchedules' => array(
                                 'type' => 'array',
+                                'sentAs' => 'priceSchedules',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'term' => array(
+                                        'Term' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'term',
                                         ),
-                                        'price' => array(
+                                        'Price' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'price',
                                         ),
-                                        'currencyCode' => array(
+                                        'CurrencyCode' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'currencyCode',
                                         ),
-                                        'active' => array(
+                                        'Active' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'active',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -11239,19 +11995,22 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'clientToken' => array(
+                            'ClientToken' => array(
                                 'type' => 'string',
+                                'sentAs' => 'clientToken',
                             ),
                         ),
                     ),
@@ -11308,42 +12067,49 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'productDescription',
                             ),
-                            'instanceTenancy' => array(
+                            'InstanceTenancy' => array(
                                 'description' => 'The tenancy of the reserved instance (ex: default or dedicated).',
                                 'type' => 'string',
+                                'sentAs' => 'instanceTenancy',
                             ),
-                            'currencyCode' => array(
+                            'CurrencyCode' => array(
                                 'description' => 'The currency of the reserved instance. Specified using ISO 4217 standard (e.g., USD, JPY).',
                                 'type' => 'string',
+                                'sentAs' => 'currencyCode',
                             ),
-                            'offeringType' => array(
+                            'OfferingType' => array(
                                 'description' => 'The Reserved Instance offering type.',
                                 'type' => 'string',
+                                'sentAs' => 'offeringType',
                             ),
-                            'recurringCharges' => array(
+                            'RecurringCharges' => array(
                                 'description' => 'The recurring charge tag assigned to the resource.',
                                 'type' => 'array',
+                                'sentAs' => 'recurringCharges',
                                 'items' => array(
                                     'name' => 'item',
                                     'description' => 'Represents a usage charge for Amazon EC2 resources that repeats on a schedule.',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'frequency' => array(
+                                        'Frequency' => array(
                                             'description' => 'The frequency of the recurring charge.',
                                             'type' => 'string',
+                                            'sentAs' => 'frequency',
                                         ),
-                                        'amount' => array(
+                                        'Amount' => array(
                                             'description' => 'The amount of the recurring charge.',
                                             'type' => 'numeric',
+                                            'sentAs' => 'amount',
                                         ),
                                     ),
                                 ),
                             ),
-                            'marketplace' => array(
+                            'Marketplace' => array(
                                 'type' => 'boolean',
+                                'sentAs' => 'marketplace',
                             ),
-                            'pricingDetails' => array(
+                            'PricingDetails' => array(
                                 'type' => 'array',
                                 'sentAs' => 'pricingDetailsSet',
                                 'items' => array(
@@ -11351,11 +12117,13 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'price' => array(
+                                        'Price' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'price',
                                         ),
-                                        'count' => array(
+                                        'Count' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'count',
                                         ),
                                     ),
                                 ),
@@ -11363,9 +12131,10 @@ return array (
                         ),
                     ),
                 ),
-                'nextToken' => array(
+                'NextToken' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'nextToken',
                 ),
             ),
         ),
@@ -11373,7 +12142,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'routeTables' => array(
+                'RouteTables' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'routeTableSet',
@@ -11382,13 +12151,15 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'routeTableId' => array(
+                            'RouteTableId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'routeTableId',
                             ),
-                            'vpcId' => array(
+                            'VpcId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'vpcId',
                             ),
-                            'routes' => array(
+                            'Routes' => array(
                                 'type' => 'array',
                                 'sentAs' => 'routeSet',
                                 'items' => array(
@@ -11396,28 +12167,34 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'destinationCidrBlock' => array(
+                                        'DestinationCidrBlock' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'destinationCidrBlock',
                                         ),
-                                        'gatewayId' => array(
+                                        'GatewayId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'gatewayId',
                                         ),
-                                        'instanceId' => array(
+                                        'InstanceId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'instanceId',
                                         ),
-                                        'instanceOwnerId' => array(
+                                        'InstanceOwnerId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'instanceOwnerId',
                                         ),
-                                        'networkInterfaceId' => array(
+                                        'NetworkInterfaceId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'networkInterfaceId',
                                         ),
-                                        'state' => array(
+                                        'State' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'state',
                                         ),
                                     ),
                                 ),
                             ),
-                            'associations' => array(
+                            'Associations' => array(
                                 'type' => 'array',
                                 'sentAs' => 'associationSet',
                                 'items' => array(
@@ -11425,22 +12202,26 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'routeTableAssociationId' => array(
+                                        'RouteTableAssociationId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'routeTableAssociationId',
                                         ),
-                                        'routeTableId' => array(
+                                        'RouteTableId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'routeTableId',
                                         ),
-                                        'subnetId' => array(
+                                        'SubnetId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'subnetId',
                                         ),
-                                        'main' => array(
+                                        'Main' => array(
                                             'type' => 'boolean',
+                                            'sentAs' => 'main',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -11449,18 +12230,20 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'propagatingVgws' => array(
+                            'PropagatingVgws' => array(
                                 'type' => 'array',
                                 'sentAs' => 'propagatingVgwSet',
                                 'items' => array(
@@ -11468,13 +12251,14 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'gatewayId' => array(
+                                        'GatewayId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'gatewayId',
                                         ),
                                     ),
                                 ),
                             ),
-                            'propagatedRoutes' => array(
+                            'PropagatedRoutes' => array(
                                 'type' => 'array',
                                 'sentAs' => 'propagatedRouteSet',
                                 'items' => array(
@@ -11482,17 +12266,21 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'destinationCidrBlock' => array(
+                                        'DestinationCidrBlock' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'destinationCidrBlock',
                                         ),
-                                        'gatewayId' => array(
+                                        'GatewayId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'gatewayId',
                                         ),
-                                        'status' => array(
+                                        'Status' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'status',
                                         ),
-                                        'sourceId' => array(
+                                        'SourceId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'sourceId',
                                         ),
                                     ),
                                 ),
@@ -11527,8 +12315,9 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'groupName',
                             ),
-                            'groupId' => array(
+                            'GroupId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'groupId',
                             ),
                             'Description' => array(
                                 'description' => 'The description of this security group.',
@@ -11609,8 +12398,9 @@ return array (
                                     ),
                                 ),
                             ),
-                            'ipPermissionsEgress' => array(
+                            'IpPermissionsEgress' => array(
                                 'type' => 'array',
+                                'sentAs' => 'ipPermissionsEgress',
                                 'items' => array(
                                     'name' => 'item',
                                     'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
@@ -11681,10 +12471,11 @@ return array (
                                     ),
                                 ),
                             ),
-                            'vpcId' => array(
+                            'VpcId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'vpcId',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
                                 'items' => array(
@@ -11693,13 +12484,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -11713,10 +12506,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'snapshotId' => array(
+                'SnapshotId' => array(
                     'description' => 'The ID of the snapshot whose attribute is being described.',
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'snapshotId',
                 ),
                 'CreateVolumePermissions' => array(
                     'description' => 'The list of permissions describing who can create a volume from the associated EBS snapshot.',
@@ -11742,9 +12536,10 @@ return array (
                         ),
                     ),
                 ),
-                'productCodes' => array(
+                'ProductCodes' => array(
                     'type' => 'array',
                     'location' => 'xml',
+                    'sentAs' => 'productCodes',
                     'items' => array(
                         'name' => 'item',
                         'description' => 'An AWS DevPay product code.',
@@ -11820,11 +12615,12 @@ return array (
                                 'type' => 'numeric',
                                 'sentAs' => 'volumeSize',
                             ),
-                            'ownerAlias' => array(
+                            'OwnerAlias' => array(
                                 'description' => 'The AWS account alias (e.g., "amazon", "redhat", "self", etc.) or AWS account ID that owns the AMI.',
                                 'type' => 'string',
+                                'sentAs' => 'ownerAlias',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the Snapshot.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -11834,13 +12630,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -11854,36 +12652,44 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'spotDatafeedSubscription' => array(
+                'SpotDatafeedSubscription' => array(
                     'description' => 'The Spot Instance datafeed subscription.',
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'spotDatafeedSubscription',
                     'properties' => array(
-                        'ownerId' => array(
+                        'OwnerId' => array(
                             'description' => 'Specifies the AWS account ID of the account.',
                             'type' => 'string',
+                            'sentAs' => 'ownerId',
                         ),
-                        'bucket' => array(
+                        'Bucket' => array(
                             'description' => 'Specifies the Amazon S3 bucket where the Spot Instance data feed is located.',
                             'type' => 'string',
+                            'sentAs' => 'bucket',
                         ),
-                        'prefix' => array(
+                        'Prefix' => array(
                             'description' => 'Contains the prefix that is prepended to data feed files.',
                             'type' => 'string',
+                            'sentAs' => 'prefix',
                         ),
-                        'state' => array(
+                        'State' => array(
                             'description' => 'Specifies the state of the Spot Instance request.',
                             'type' => 'string',
+                            'sentAs' => 'state',
                         ),
-                        'fault' => array(
+                        'Fault' => array(
                             'description' => 'Specifies a fault code for the Spot Instance request, if present.',
                             'type' => 'object',
+                            'sentAs' => 'fault',
                             'properties' => array(
-                                'code' => array(
+                                'Code' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'code',
                                 ),
-                                'message' => array(
+                                'Message' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'message',
                                 ),
                             ),
                         ),
@@ -11895,7 +12701,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'spotInstanceRequests' => array(
+                'SpotInstanceRequests' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'spotInstanceRequestSet',
@@ -11904,7 +12710,339 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            '' => array(
+                            'SpotInstanceRequestId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'spotInstanceRequestId',
+                            ),
+                            'SpotPrice' => array(
+                                'type' => 'string',
+                                'sentAs' => 'spotPrice',
+                            ),
+                            'Type' => array(
+                                'type' => 'string',
+                                'sentAs' => 'type',
+                            ),
+                            'State' => array(
+                                'type' => 'string',
+                                'sentAs' => 'state',
+                            ),
+                            'Fault' => array(
+                                'type' => 'object',
+                                'sentAs' => 'fault',
+                                'properties' => array(
+                                    'Code' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'code',
+                                    ),
+                                    'Message' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'message',
+                                    ),
+                                ),
+                            ),
+                            'Status' => array(
+                                'type' => 'object',
+                                'sentAs' => 'status',
+                                'properties' => array(
+                                    'Code' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'code',
+                                    ),
+                                    'UpdateTime' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'updateTime',
+                                    ),
+                                    'Message' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'message',
+                                    ),
+                                ),
+                            ),
+                            'ValidFrom' => array(
+                                'type' => 'string',
+                                'sentAs' => 'validFrom',
+                            ),
+                            'ValidUntil' => array(
+                                'type' => 'string',
+                                'sentAs' => 'validUntil',
+                            ),
+                            'LaunchGroup' => array(
+                                'type' => 'string',
+                                'sentAs' => 'launchGroup',
+                            ),
+                            'AvailabilityZoneGroup' => array(
+                                'type' => 'string',
+                                'sentAs' => 'availabilityZoneGroup',
+                            ),
+                            'LaunchSpecification' => array(
+                                'type' => 'object',
+                                'sentAs' => 'launchSpecification',
+                                'properties' => array(
+                                    'ImageId' => array(
+                                        'description' => 'The AMI ID.',
+                                        'type' => 'string',
+                                        'sentAs' => 'imageId',
+                                    ),
+                                    'KeyName' => array(
+                                        'description' => 'The name of the key pair.',
+                                        'type' => 'string',
+                                        'sentAs' => 'keyName',
+                                    ),
+                                    'SecurityGroups' => array(
+                                        'type' => 'array',
+                                        'sentAs' => 'groupSet',
+                                        'items' => array(
+                                            'name' => 'item',
+                                            'type' => 'object',
+                                            'sentAs' => 'item',
+                                            'properties' => array(
+                                                'GroupName' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'groupName',
+                                                ),
+                                                'GroupId' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'groupId',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'UserData' => array(
+                                        'description' => 'Optional data, specific to a user\'s application, to provide in the launch request. All instances that collectively comprise the launch request have access to this data. User data is never returned through API responses.',
+                                        'type' => 'string',
+                                        'sentAs' => 'userData',
+                                    ),
+                                    'AddressingType' => array(
+                                        'description' => 'Deprecated.',
+                                        'type' => 'string',
+                                        'sentAs' => 'addressingType',
+                                    ),
+                                    'InstanceType' => array(
+                                        'description' => 'Specifies the instance type.',
+                                        'type' => 'string',
+                                        'sentAs' => 'instanceType',
+                                    ),
+                                    'Placement' => array(
+                                        'description' => 'Defines a placement item.',
+                                        'type' => 'object',
+                                        'sentAs' => 'placement',
+                                        'properties' => array(
+                                            'AvailabilityZone' => array(
+                                                'description' => 'The availability zone in which an Amazon EC2 instance runs.',
+                                                'type' => 'string',
+                                                'sentAs' => 'availabilityZone',
+                                            ),
+                                            'GroupName' => array(
+                                                'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
+                                                'type' => 'string',
+                                                'sentAs' => 'groupName',
+                                            ),
+                                        ),
+                                    ),
+                                    'KernelId' => array(
+                                        'description' => 'Specifies the ID of the kernel to select.',
+                                        'type' => 'string',
+                                        'sentAs' => 'kernelId',
+                                    ),
+                                    'RamdiskId' => array(
+                                        'description' => 'Specifies the ID of the RAM disk to select. Some kernels require additional drivers at launch. Check the kernel requirements for information on whether or not you need to specify a RAM disk and search for the kernel ID.',
+                                        'type' => 'string',
+                                        'sentAs' => 'ramdiskId',
+                                    ),
+                                    'BlockDeviceMappings' => array(
+                                        'description' => 'Specifies how block devices are exposed to the instance. Each mapping is made up of a virtualName and a deviceName.',
+                                        'type' => 'array',
+                                        'sentAs' => 'blockDeviceMapping',
+                                        'items' => array(
+                                            'name' => 'item',
+                                            'description' => 'The BlockDeviceMappingItemType data type.',
+                                            'type' => 'object',
+                                            'sentAs' => 'item',
+                                            'properties' => array(
+                                                'VirtualName' => array(
+                                                    'description' => 'Specifies the virtual device name.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'virtualName',
+                                                ),
+                                                'DeviceName' => array(
+                                                    'description' => 'Specifies the device name (e.g., /dev/sdh).',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'deviceName',
+                                                ),
+                                                'Ebs' => array(
+                                                    'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
+                                                    'type' => 'object',
+                                                    'sentAs' => 'ebs',
+                                                    'properties' => array(
+                                                        'SnapshotId' => array(
+                                                            'description' => 'The ID of the snapshot from which the volume will be created.',
+                                                            'type' => 'string',
+                                                            'sentAs' => 'snapshotId',
+                                                        ),
+                                                        'VolumeSize' => array(
+                                                            'description' => 'The size of the volume, in gigabytes.',
+                                                            'type' => 'numeric',
+                                                            'sentAs' => 'volumeSize',
+                                                        ),
+                                                        'DeleteOnTermination' => array(
+                                                            'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
+                                                            'type' => 'boolean',
+                                                            'sentAs' => 'deleteOnTermination',
+                                                        ),
+                                                        'VolumeType' => array(
+                                                            'type' => 'string',
+                                                            'sentAs' => 'volumeType',
+                                                        ),
+                                                        'Iops' => array(
+                                                            'type' => 'numeric',
+                                                            'sentAs' => 'iops',
+                                                        ),
+                                                    ),
+                                                ),
+                                                'NoDevice' => array(
+                                                    'description' => 'Specifies the device name to suppress during instance launch.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'noDevice',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'MonitoringEnabled' => array(
+                                        'description' => 'Enables monitoring for the instance.',
+                                        'type' => 'boolean',
+                                        'sentAs' => 'monitoringEnabled',
+                                    ),
+                                    'SubnetId' => array(
+                                        'description' => 'Specifies the Amazon VPC subnet ID within which to launch the instance(s) for Amazon Virtual Private Cloud.',
+                                        'type' => 'string',
+                                        'sentAs' => 'subnetId',
+                                    ),
+                                    'NetworkInterfaces' => array(
+                                        'type' => 'array',
+                                        'sentAs' => 'networkInterfaceSet',
+                                        'items' => array(
+                                            'name' => 'item',
+                                            'type' => 'object',
+                                            'sentAs' => 'item',
+                                            'properties' => array(
+                                                'NetworkInterfaceId' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'networkInterfaceId',
+                                                ),
+                                                'DeviceIndex' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'deviceIndex',
+                                                ),
+                                                'SubnetId' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'subnetId',
+                                                ),
+                                                'Description' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'description',
+                                                ),
+                                                'PrivateIpAddress' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'privateIpAddress',
+                                                ),
+                                                'Groups' => array(
+                                                    'type' => 'array',
+                                                    'sentAs' => 'SecurityGroupId',
+                                                    'items' => array(
+                                                        'name' => 'SecurityGroupId',
+                                                        'type' => 'string',
+                                                        'sentAs' => 'SecurityGroupId',
+                                                    ),
+                                                ),
+                                                'DeleteOnTermination' => array(
+                                                    'type' => 'boolean',
+                                                    'sentAs' => 'deleteOnTermination',
+                                                ),
+                                                'PrivateIpAddresses' => array(
+                                                    'type' => 'array',
+                                                    'sentAs' => 'privateIpAddressesSet',
+                                                    'items' => array(
+                                                        'name' => 'item',
+                                                        'type' => 'object',
+                                                        'sentAs' => 'item',
+                                                        'properties' => array(
+                                                            'PrivateIpAddress' => array(
+                                                                'type' => 'string',
+                                                                'sentAs' => 'privateIpAddress',
+                                                            ),
+                                                            'Primary' => array(
+                                                                'type' => 'boolean',
+                                                                'sentAs' => 'primary',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                                'SecondaryPrivateIpAddressCount' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'secondaryPrivateIpAddressCount',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'IamInstanceProfile' => array(
+                                        'type' => 'object',
+                                        'sentAs' => 'iamInstanceProfile',
+                                        'properties' => array(
+                                            'Arn' => array(
+                                                'type' => 'string',
+                                                'sentAs' => 'arn',
+                                            ),
+                                            'Name' => array(
+                                                'type' => 'string',
+                                                'sentAs' => 'name',
+                                            ),
+                                        ),
+                                    ),
+                                    'EbsOptimized' => array(
+                                        'type' => 'boolean',
+                                        'sentAs' => 'ebsOptimized',
+                                    ),
+                                ),
+                            ),
+                            'InstanceId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'instanceId',
+                            ),
+                            'CreateTime' => array(
+                                'type' => 'string',
+                                'sentAs' => 'createTime',
+                            ),
+                            'ProductDescription' => array(
+                                'type' => 'string',
+                                'sentAs' => 'productDescription',
+                            ),
+                            'Tags' => array(
+                                'description' => 'A list of tags for this spot instance request.',
+                                'type' => 'array',
+                                'sentAs' => 'tagSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'description' => 'The tag\'s key.',
+                                            'type' => 'string',
+                                            'sentAs' => 'key',
+                                        ),
+                                        'Value' => array(
+                                            'description' => 'The tag\'s value.',
+                                            'type' => 'string',
+                                            'sentAs' => 'value',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'LaunchedAvailabilityZone' => array(
+                                'description' => 'The Availability Zone in which the bid is launched.',
+                                'type' => 'string',
+                                'sentAs' => 'launchedAvailabilityZone',
                             ),
                         ),
                     ),
@@ -11915,7 +13053,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'spotPriceHistory' => array(
+                'SpotPriceHistory' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'spotPriceHistorySet',
@@ -11924,28 +13062,34 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'instanceType' => array(
+                            'InstanceType' => array(
                                 'type' => 'string',
+                                'sentAs' => 'instanceType',
                             ),
-                            'productDescription' => array(
+                            'ProductDescription' => array(
                                 'type' => 'string',
+                                'sentAs' => 'productDescription',
                             ),
-                            'spotPrice' => array(
+                            'SpotPrice' => array(
                                 'type' => 'string',
+                                'sentAs' => 'spotPrice',
                             ),
-                            'timestamp' => array(
+                            'Timestamp' => array(
                                 'type' => 'string',
+                                'sentAs' => 'timestamp',
                             ),
-                            'availabilityZone' => array(
+                            'AvailabilityZone' => array(
                                 'type' => 'string',
+                                'sentAs' => 'availabilityZone',
                             ),
                         ),
                     ),
                 ),
-                'nextToken' => array(
+                'NextToken' => array(
                     'description' => 'The string marking the next set of results returned. Displays empty if there are no more results to be returned.',
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'nextToken',
                 ),
             ),
         ),
@@ -11994,7 +13138,7 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'availabilityZone',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the Subnet.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -12004,13 +13148,15 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
@@ -12024,7 +13170,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'tags' => array(
+                'Tags' => array(
                     'description' => 'A list of the tags for the specified resources.',
                     'type' => 'array',
                     'location' => 'xml',
@@ -12035,21 +13181,25 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'resourceId' => array(
+                            'ResourceId' => array(
                                 'description' => 'The resource ID for the tag.',
                                 'type' => 'string',
+                                'sentAs' => 'resourceId',
                             ),
-                            'resourceType' => array(
+                            'ResourceType' => array(
                                 'description' => 'The type of resource identified by the associated resource ID (ex: instance, AMI, EBS volume, etc).',
                                 'type' => 'string',
+                                'sentAs' => 'resourceType',
                             ),
-                            'key' => array(
+                            'Key' => array(
                                 'description' => 'The tag\'s key.',
                                 'type' => 'string',
+                                'sentAs' => 'key',
                             ),
-                            'value' => array(
+                            'Value' => array(
                                 'description' => 'The tag\'s value.',
                                 'type' => 'string',
+                                'sentAs' => 'value',
                             ),
                         ),
                     ),
@@ -12060,23 +13210,27 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'volumeId' => array(
+                'VolumeId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'volumeId',
                 ),
-                'autoEnableIO' => array(
+                'AutoEnableIO' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'autoEnableIO',
                     'properties' => array(
-                        'value' => array(
+                        'Value' => array(
                             'description' => 'Boolean value',
                             'type' => 'boolean',
+                            'sentAs' => 'value',
                         ),
                     ),
                 ),
-                'productCodes' => array(
+                'ProductCodes' => array(
                     'type' => 'array',
                     'location' => 'xml',
+                    'sentAs' => 'productCodes',
                     'items' => array(
                         'name' => 'item',
                         'description' => 'An AWS DevPay product code.',
@@ -12101,7 +13255,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'volumeStatuses' => array(
+                'VolumeStatuses' => array(
                     'type' => 'array',
                     'location' => 'xml',
                     'sentAs' => 'volumeStatusSet',
@@ -12110,37 +13264,44 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            'volumeId' => array(
+                            'VolumeId' => array(
                                 'type' => 'string',
+                                'sentAs' => 'volumeId',
                             ),
-                            'availabilityZone' => array(
+                            'AvailabilityZone' => array(
                                 'type' => 'string',
+                                'sentAs' => 'availabilityZone',
                             ),
-                            'volumeStatus' => array(
+                            'VolumeStatus' => array(
                                 'type' => 'object',
+                                'sentAs' => 'volumeStatus',
                                 'properties' => array(
-                                    'status' => array(
+                                    'Status' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'status',
                                     ),
-                                    'details' => array(
+                                    'Details' => array(
                                         'type' => 'array',
+                                        'sentAs' => 'details',
                                         'items' => array(
                                             'name' => 'item',
                                             'type' => 'object',
                                             'sentAs' => 'item',
                                             'properties' => array(
-                                                'name' => array(
+                                                'Name' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'name',
                                                 ),
-                                                'status' => array(
+                                                'Status' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'status',
                                                 ),
                                             ),
                                         ),
                                     ),
                                 ),
                             ),
-                            'events' => array(
+                            'Events' => array(
                                 'type' => 'array',
                                 'sentAs' => 'eventsSet',
                                 'items' => array(
@@ -12148,25 +13309,30 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'eventType' => array(
+                                        'EventType' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'eventType',
                                         ),
-                                        'description' => array(
+                                        'Description' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'description',
                                         ),
-                                        'notBefore' => array(
+                                        'NotBefore' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'notBefore',
                                         ),
-                                        'notAfter' => array(
+                                        'NotAfter' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'notAfter',
                                         ),
-                                        'eventId' => array(
+                                        'EventId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'eventId',
                                         ),
                                     ),
                                 ),
                             ),
-                            'actions' => array(
+                            'Actions' => array(
                                 'type' => 'array',
                                 'sentAs' => 'actionsSet',
                                 'items' => array(
@@ -12174,17 +13340,21 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'code' => array(
+                                        'Code' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'code',
                                         ),
-                                        'description' => array(
+                                        'Description' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'description',
                                         ),
-                                        'eventType' => array(
+                                        'EventType' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'eventType',
                                         ),
-                                        'eventId' => array(
+                                        'EventId' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'eventId',
                                         ),
                                     ),
                                 ),
@@ -12192,9 +13362,10 @@ return array (
                         ),
                     ),
                 ),
-                'nextToken' => array(
+                'NextToken' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'nextToken',
                 ),
             ),
         ),
@@ -12275,14 +13446,15 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'attachTime',
                                         ),
-                                        'deleteOnTermination' => array(
+                                        'DeleteOnTermination' => array(
                                             'description' => '` Whether this volume will be deleted or not when the associated instance is terminated.',
                                             'type' => 'boolean',
+                                            'sentAs' => 'deleteOnTermination',
                                         ),
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the Volume.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -12292,22 +13464,26 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'volumeType' => array(
+                            'VolumeType' => array(
                                 'type' => 'string',
+                                'sentAs' => 'volumeType',
                             ),
-                            'iops' => array(
+                            'Iops' => array(
                                 'type' => 'numeric',
+                                'sentAs' => 'iops',
                             ),
                         ),
                     ),
@@ -12348,7 +13524,7 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'dhcpOptionsId',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the VPC.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -12358,20 +13534,23 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'instanceTenancy' => array(
+                            'InstanceTenancy' => array(
                                 'description' => 'The allowed tenancy of instances launched into the VPC.',
                                 'type' => 'string',
+                                'sentAs' => 'instanceTenancy',
                             ),
                         ),
                     ),
@@ -12422,7 +13601,7 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'vpnGatewayId',
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the VpnConnection.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -12432,65 +13611,79 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                            'vgwTelemetry' => array(
+                            'VgwTelemetry' => array(
                                 'type' => 'array',
+                                'sentAs' => 'vgwTelemetry',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'outsideIpAddress' => array(
+                                        'OutsideIpAddress' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'outsideIpAddress',
                                         ),
-                                        'status' => array(
+                                        'Status' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'status',
                                         ),
-                                        'lastStatusChange' => array(
+                                        'LastStatusChange' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'lastStatusChange',
                                         ),
-                                        'statusMessage' => array(
+                                        'StatusMessage' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'statusMessage',
                                         ),
-                                        'acceptedRouteCount' => array(
+                                        'AcceptedRouteCount' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'acceptedRouteCount',
                                         ),
                                     ),
                                 ),
                             ),
-                            'options' => array(
+                            'Options' => array(
                                 'type' => 'object',
+                                'sentAs' => 'options',
                                 'properties' => array(
-                                    'staticRoutesOnly' => array(
+                                    'StaticRoutesOnly' => array(
                                         'type' => 'boolean',
+                                        'sentAs' => 'staticRoutesOnly',
                                     ),
                                 ),
                             ),
-                            'routes' => array(
+                            'Routes' => array(
                                 'type' => 'array',
+                                'sentAs' => 'routes',
                                 'items' => array(
                                     'name' => 'item',
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'destinationCidrBlock' => array(
+                                        'DestinationCidrBlock' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'destinationCidrBlock',
                                         ),
-                                        'source' => array(
+                                        'Source' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'source',
                                         ),
-                                        'state' => array(
+                                        'State' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'state',
                                         ),
                                     ),
                                 ),
@@ -12554,7 +13747,7 @@ return array (
                                     ),
                                 ),
                             ),
-                            'tags' => array(
+                            'Tags' => array(
                                 'description' => 'A list of tags for the VpnGateway.',
                                 'type' => 'array',
                                 'sentAs' => 'tagSet',
@@ -12564,57 +13757,19 @@ return array (
                                     'type' => 'object',
                                     'sentAs' => 'item',
                                     'properties' => array(
-                                        'key' => array(
+                                        'Key' => array(
                                             'description' => 'The tag\'s key.',
                                             'type' => 'string',
+                                            'sentAs' => 'key',
                                         ),
-                                        'value' => array(
+                                        'Value' => array(
                                             'description' => 'The tag\'s value.',
                                             'type' => 'string',
+                                            'sentAs' => 'value',
                                         ),
                                     ),
                                 ),
                             ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'DetachVolumeResult' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'Attachment' => array(
-                    'description' => 'The updated EBS volume attachment information after trying to detach the volume from the specified instance.',
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'sentAs' => 'attachment',
-                    'properties' => array(
-                        'VolumeId' => array(
-                            'type' => 'string',
-                            'sentAs' => 'volumeId',
-                        ),
-                        'InstanceId' => array(
-                            'type' => 'string',
-                            'sentAs' => 'instanceId',
-                        ),
-                        'Device' => array(
-                            'description' => 'How the device is exposed to the instance (e.g., /dev/sdh).',
-                            'type' => 'string',
-                            'sentAs' => 'device',
-                        ),
-                        'State' => array(
-                            'type' => 'string',
-                            'sentAs' => 'status',
-                        ),
-                        'AttachTime' => array(
-                            'description' => 'Timestamp when this attachment initiated.',
-                            'type' => 'string',
-                            'sentAs' => 'attachTime',
-                        ),
-                        'deleteOnTermination' => array(
-                            'description' => '` Whether this volume will be deleted or not when the associated instance is terminated.',
-                            'type' => 'boolean',
                         ),
                     ),
                 ),
@@ -12672,132 +13827,167 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'conversionTask' => array(
+                'ConversionTask' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'conversionTask',
                     'properties' => array(
-                        'conversionTaskId' => array(
+                        'ConversionTaskId' => array(
                             'type' => 'string',
+                            'sentAs' => 'conversionTaskId',
                         ),
-                        'expirationTime' => array(
+                        'ExpirationTime' => array(
                             'type' => 'string',
+                            'sentAs' => 'expirationTime',
                         ),
-                        'importInstance' => array(
+                        'ImportInstance' => array(
                             'type' => 'object',
+                            'sentAs' => 'importInstance',
                             'properties' => array(
-                                'volumes' => array(
+                                'Volumes' => array(
                                     'type' => 'array',
+                                    'sentAs' => 'volumes',
                                     'items' => array(
                                         'name' => 'item',
                                         'type' => 'object',
                                         'sentAs' => 'item',
                                         'properties' => array(
-                                            'bytesConverted' => array(
+                                            'BytesConverted' => array(
                                                 'type' => 'numeric',
+                                                'sentAs' => 'bytesConverted',
                                             ),
-                                            'availabilityZone' => array(
+                                            'AvailabilityZone' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'availabilityZone',
                                             ),
-                                            'image' => array(
+                                            'Image' => array(
                                                 'type' => 'object',
+                                                'sentAs' => 'image',
                                                 'properties' => array(
-                                                    'format' => array(
+                                                    'Format' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'format',
                                                     ),
-                                                    'size' => array(
+                                                    'Size' => array(
                                                         'type' => 'numeric',
+                                                        'sentAs' => 'size',
                                                     ),
-                                                    'importManifestUrl' => array(
+                                                    'ImportManifestUrl' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'importManifestUrl',
                                                     ),
-                                                    'checksum' => array(
+                                                    'Checksum' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'checksum',
                                                     ),
                                                 ),
                                             ),
-                                            'volume' => array(
+                                            'Volume' => array(
                                                 'type' => 'object',
+                                                'sentAs' => 'volume',
                                                 'properties' => array(
-                                                    'size' => array(
+                                                    'Size' => array(
                                                         'type' => 'numeric',
+                                                        'sentAs' => 'size',
                                                     ),
-                                                    'id' => array(
+                                                    'Id' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'id',
                                                     ),
                                                 ),
                                             ),
-                                            'status' => array(
+                                            'Status' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'status',
                                             ),
-                                            'statusMessage' => array(
+                                            'StatusMessage' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'statusMessage',
                                             ),
-                                            'description' => array(
+                                            'Description' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'description',
                                             ),
                                         ),
                                     ),
                                 ),
-                                'instanceId' => array(
+                                'InstanceId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'instanceId',
                                 ),
-                                'platform' => array(
+                                'Platform' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'platform',
                                 ),
-                                'description' => array(
+                                'Description' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'description',
                                 ),
                             ),
                         ),
-                        'importVolume' => array(
+                        'ImportVolume' => array(
                             'type' => 'object',
+                            'sentAs' => 'importVolume',
                             'properties' => array(
-                                'bytesConverted' => array(
+                                'BytesConverted' => array(
                                     'type' => 'numeric',
+                                    'sentAs' => 'bytesConverted',
                                 ),
-                                'availabilityZone' => array(
+                                'AvailabilityZone' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'availabilityZone',
                                 ),
-                                'description' => array(
+                                'Description' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'description',
                                 ),
-                                'image' => array(
+                                'Image' => array(
                                     'type' => 'object',
+                                    'sentAs' => 'image',
                                     'properties' => array(
-                                        'format' => array(
+                                        'Format' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'format',
                                         ),
-                                        'size' => array(
+                                        'Size' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'size',
                                         ),
-                                        'importManifestUrl' => array(
+                                        'ImportManifestUrl' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'importManifestUrl',
                                         ),
-                                        'checksum' => array(
+                                        'Checksum' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'checksum',
                                         ),
                                     ),
                                 ),
-                                'volume' => array(
+                                'Volume' => array(
                                     'type' => 'object',
+                                    'sentAs' => 'volume',
                                     'properties' => array(
-                                        'size' => array(
+                                        'Size' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'size',
                                         ),
-                                        'id' => array(
+                                        'Id' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'id',
                                         ),
                                     ),
                                 ),
                             ),
                         ),
-                        'state' => array(
+                        'State' => array(
                             'type' => 'string',
+                            'sentAs' => 'state',
                         ),
-                        'statusMessage' => array(
+                        'StatusMessage' => array(
                             'type' => 'string',
+                            'sentAs' => 'statusMessage',
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'type' => 'array',
                             'sentAs' => 'tagSet',
                             'items' => array(
@@ -12806,13 +13996,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -12825,15 +14017,17 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'keyName' => array(
+                'KeyName' => array(
                     'description' => 'The specified unique key pair name.',
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'keyName',
                 ),
-                'keyFingerprint' => array(
+                'KeyFingerprint' => array(
                     'description' => 'The MD5 public key fingerprint as specified in section 4 of RFC4716 .',
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'keyFingerprint',
                 ),
             ),
         ),
@@ -12841,132 +14035,167 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'conversionTask' => array(
+                'ConversionTask' => array(
                     'type' => 'object',
                     'location' => 'xml',
+                    'sentAs' => 'conversionTask',
                     'properties' => array(
-                        'conversionTaskId' => array(
+                        'ConversionTaskId' => array(
                             'type' => 'string',
+                            'sentAs' => 'conversionTaskId',
                         ),
-                        'expirationTime' => array(
+                        'ExpirationTime' => array(
                             'type' => 'string',
+                            'sentAs' => 'expirationTime',
                         ),
-                        'importInstance' => array(
+                        'ImportInstance' => array(
                             'type' => 'object',
+                            'sentAs' => 'importInstance',
                             'properties' => array(
-                                'volumes' => array(
+                                'Volumes' => array(
                                     'type' => 'array',
+                                    'sentAs' => 'volumes',
                                     'items' => array(
                                         'name' => 'item',
                                         'type' => 'object',
                                         'sentAs' => 'item',
                                         'properties' => array(
-                                            'bytesConverted' => array(
+                                            'BytesConverted' => array(
                                                 'type' => 'numeric',
+                                                'sentAs' => 'bytesConverted',
                                             ),
-                                            'availabilityZone' => array(
+                                            'AvailabilityZone' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'availabilityZone',
                                             ),
-                                            'image' => array(
+                                            'Image' => array(
                                                 'type' => 'object',
+                                                'sentAs' => 'image',
                                                 'properties' => array(
-                                                    'format' => array(
+                                                    'Format' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'format',
                                                     ),
-                                                    'size' => array(
+                                                    'Size' => array(
                                                         'type' => 'numeric',
+                                                        'sentAs' => 'size',
                                                     ),
-                                                    'importManifestUrl' => array(
+                                                    'ImportManifestUrl' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'importManifestUrl',
                                                     ),
-                                                    'checksum' => array(
+                                                    'Checksum' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'checksum',
                                                     ),
                                                 ),
                                             ),
-                                            'volume' => array(
+                                            'Volume' => array(
                                                 'type' => 'object',
+                                                'sentAs' => 'volume',
                                                 'properties' => array(
-                                                    'size' => array(
+                                                    'Size' => array(
                                                         'type' => 'numeric',
+                                                        'sentAs' => 'size',
                                                     ),
-                                                    'id' => array(
+                                                    'Id' => array(
                                                         'type' => 'string',
+                                                        'sentAs' => 'id',
                                                     ),
                                                 ),
                                             ),
-                                            'status' => array(
+                                            'Status' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'status',
                                             ),
-                                            'statusMessage' => array(
+                                            'StatusMessage' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'statusMessage',
                                             ),
-                                            'description' => array(
+                                            'Description' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'description',
                                             ),
                                         ),
                                     ),
                                 ),
-                                'instanceId' => array(
+                                'InstanceId' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'instanceId',
                                 ),
-                                'platform' => array(
+                                'Platform' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'platform',
                                 ),
-                                'description' => array(
+                                'Description' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'description',
                                 ),
                             ),
                         ),
-                        'importVolume' => array(
+                        'ImportVolume' => array(
                             'type' => 'object',
+                            'sentAs' => 'importVolume',
                             'properties' => array(
-                                'bytesConverted' => array(
+                                'BytesConverted' => array(
                                     'type' => 'numeric',
+                                    'sentAs' => 'bytesConverted',
                                 ),
-                                'availabilityZone' => array(
+                                'AvailabilityZone' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'availabilityZone',
                                 ),
-                                'description' => array(
+                                'Description' => array(
                                     'type' => 'string',
+                                    'sentAs' => 'description',
                                 ),
-                                'image' => array(
+                                'Image' => array(
                                     'type' => 'object',
+                                    'sentAs' => 'image',
                                     'properties' => array(
-                                        'format' => array(
+                                        'Format' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'format',
                                         ),
-                                        'size' => array(
+                                        'Size' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'size',
                                         ),
-                                        'importManifestUrl' => array(
+                                        'ImportManifestUrl' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'importManifestUrl',
                                         ),
-                                        'checksum' => array(
+                                        'Checksum' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'checksum',
                                         ),
                                     ),
                                 ),
-                                'volume' => array(
+                                'Volume' => array(
                                     'type' => 'object',
+                                    'sentAs' => 'volume',
                                     'properties' => array(
-                                        'size' => array(
+                                        'Size' => array(
                                             'type' => 'numeric',
+                                            'sentAs' => 'size',
                                         ),
-                                        'id' => array(
+                                        'Id' => array(
                                             'type' => 'string',
+                                            'sentAs' => 'id',
                                         ),
                                     ),
                                 ),
                             ),
                         ),
-                        'state' => array(
+                        'State' => array(
                             'type' => 'string',
+                            'sentAs' => 'state',
                         ),
-                        'statusMessage' => array(
+                        'StatusMessage' => array(
                             'type' => 'string',
+                            'sentAs' => 'statusMessage',
                         ),
-                        'tags' => array(
+                        'Tags' => array(
                             'type' => 'array',
                             'sentAs' => 'tagSet',
                             'items' => array(
@@ -12975,13 +14204,15 @@ return array (
                                 'type' => 'object',
                                 'sentAs' => 'item',
                                 'properties' => array(
-                                    'key' => array(
+                                    'Key' => array(
                                         'description' => 'The tag\'s key.',
                                         'type' => 'string',
+                                        'sentAs' => 'key',
                                     ),
-                                    'value' => array(
+                                    'Value' => array(
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
+                                        'sentAs' => 'value',
                                     ),
                                 ),
                             ),
@@ -13055,9 +14286,10 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'newAssociationId' => array(
+                'NewAssociationId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'newAssociationId',
                 ),
             ),
         ),
@@ -13065,9 +14297,10 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'newAssociationId' => array(
+                'NewAssociationId' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                    'sentAs' => 'newAssociationId',
                 ),
             ),
         ),
@@ -13075,7 +14308,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'spotInstanceRequests' => array(
+                'SpotInstanceRequests' => array(
                     'description' => 'Contains a list of Spot Instance requests.',
                     'type' => 'array',
                     'location' => 'xml',
@@ -13085,326 +14318,85 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'item',
                         'properties' => array(
-                            '' => array(
+                            'SpotInstanceRequestId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'spotInstanceRequestId',
                             ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'RunInstancesResult' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'Reservation' => array(
-                    'description' => 'The newly created reservation, containing the new instances.',
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'sentAs' => 'reservation',
-                    'properties' => array(
-                        'ReservationId' => array(
-                            'description' => 'The unique ID of this reservation.',
-                            'type' => 'string',
-                            'sentAs' => 'reservationId',
-                        ),
-                        'OwnerId' => array(
-                            'description' => 'The AWS Access Key ID of the user who owns the reservation.',
-                            'type' => 'string',
-                            'sentAs' => 'ownerId',
-                        ),
-                        'RequesterId' => array(
-                            'description' => 'The unique ID of the user who requested the instances in this reservation.',
-                            'type' => 'string',
-                            'sentAs' => 'requesterId',
-                        ),
-                        'Groups' => array(
-                            'description' => 'The list of security groups requested for the instances in this reservation.',
-                            'type' => 'array',
-                            'sentAs' => 'groupSet',
-                            'items' => array(
-                                'name' => 'item',
+                            'SpotPrice' => array(
+                                'type' => 'string',
+                                'sentAs' => 'spotPrice',
+                            ),
+                            'Type' => array(
+                                'type' => 'string',
+                                'sentAs' => 'type',
+                            ),
+                            'State' => array(
+                                'type' => 'string',
+                                'sentAs' => 'state',
+                            ),
+                            'Fault' => array(
                                 'type' => 'object',
-                                'sentAs' => 'item',
+                                'sentAs' => 'fault',
                                 'properties' => array(
-                                    'GroupName' => array(
+                                    'Code' => array(
                                         'type' => 'string',
-                                        'sentAs' => 'groupName',
+                                        'sentAs' => 'code',
                                     ),
-                                    'groupId' => array(
+                                    'Message' => array(
                                         'type' => 'string',
+                                        'sentAs' => 'message',
                                     ),
                                 ),
                             ),
-                        ),
-                        'Instances' => array(
-                            'description' => 'The list of Amazon EC2 instances included in this reservation.',
-                            'type' => 'array',
-                            'sentAs' => 'instancesSet',
-                            'items' => array(
-                                'name' => 'item',
-                                'description' => 'Represents an Amazon EC2 instance.',
+                            'Status' => array(
                                 'type' => 'object',
-                                'sentAs' => 'item',
+                                'sentAs' => 'status',
                                 'properties' => array(
-                                    'InstanceId' => array(
-                                        'description' => 'Unique ID of the instance launched.',
+                                    'Code' => array(
                                         'type' => 'string',
-                                        'sentAs' => 'instanceId',
+                                        'sentAs' => 'code',
                                     ),
+                                    'UpdateTime' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'updateTime',
+                                    ),
+                                    'Message' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'message',
+                                    ),
+                                ),
+                            ),
+                            'ValidFrom' => array(
+                                'type' => 'string',
+                                'sentAs' => 'validFrom',
+                            ),
+                            'ValidUntil' => array(
+                                'type' => 'string',
+                                'sentAs' => 'validUntil',
+                            ),
+                            'LaunchGroup' => array(
+                                'type' => 'string',
+                                'sentAs' => 'launchGroup',
+                            ),
+                            'AvailabilityZoneGroup' => array(
+                                'type' => 'string',
+                                'sentAs' => 'availabilityZoneGroup',
+                            ),
+                            'LaunchSpecification' => array(
+                                'type' => 'object',
+                                'sentAs' => 'launchSpecification',
+                                'properties' => array(
                                     'ImageId' => array(
-                                        'description' => 'Image ID of the AMI used to launch the instance.',
+                                        'description' => 'The AMI ID.',
                                         'type' => 'string',
                                         'sentAs' => 'imageId',
                                     ),
-                                    'State' => array(
-                                        'description' => 'The current state of the instance.',
-                                        'type' => 'object',
-                                        'sentAs' => 'instanceState',
-                                        'properties' => array(
-                                            'Code' => array(
-                                                'description' => 'A 16-bit unsigned integer. The high byte is an opaque internal value and should be ignored. The low byte is set based on the state represented.',
-                                                'type' => 'numeric',
-                                                'sentAs' => 'code',
-                                            ),
-                                            'Name' => array(
-                                                'description' => 'The current state of the instance.',
-                                                'type' => 'string',
-                                                'sentAs' => 'name',
-                                            ),
-                                        ),
-                                    ),
-                                    'PrivateDnsName' => array(
-                                        'description' => 'The private DNS name assigned to the instance. This DNS name can only be used inside the Amazon EC2 network. This element remains empty until the instance enters a running state.',
-                                        'type' => 'string',
-                                        'sentAs' => 'privateDnsName',
-                                    ),
-                                    'PublicDnsName' => array(
-                                        'description' => 'The public DNS name assigned to the instance. This DNS name is contactable from outside the Amazon EC2 network. This element remains empty until the instance enters a running state.',
-                                        'type' => 'string',
-                                        'sentAs' => 'dnsName',
-                                    ),
-                                    'StateTransitionReason' => array(
-                                        'description' => 'Reason for the most recent state transition. This might be an empty string.',
-                                        'type' => 'string',
-                                        'sentAs' => 'reason',
-                                    ),
                                     'KeyName' => array(
-                                        'description' => 'If this instance was launched with an associated key pair, this displays the key pair name.',
+                                        'description' => 'The name of the key pair.',
                                         'type' => 'string',
                                         'sentAs' => 'keyName',
                                     ),
-                                    'AmiLaunchIndex' => array(
-                                        'description' => 'The AMI launch index, which can be used to find this instance within the launch group.',
-                                        'type' => 'numeric',
-                                        'sentAs' => 'amiLaunchIndex',
-                                    ),
-                                    'ProductCodes' => array(
-                                        'description' => 'Product codes attached to this instance.',
-                                        'type' => 'array',
-                                        'sentAs' => 'productCodes',
-                                        'items' => array(
-                                            'name' => 'item',
-                                            'description' => 'An AWS DevPay product code.',
-                                            'type' => 'object',
-                                            'sentAs' => 'item',
-                                            'properties' => array(
-                                                'ProductCodeId' => array(
-                                                    'description' => 'The unique ID of an AWS DevPay product code.',
-                                                    'type' => 'string',
-                                                    'sentAs' => 'productCode',
-                                                ),
-                                                'ProductCodeType' => array(
-                                                    'type' => 'string',
-                                                    'sentAs' => 'type',
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                    'InstanceType' => array(
-                                        'description' => 'The instance type. For more information on instance types, please see the Amazon Elastic Compute Cloud Developer Guide.',
-                                        'type' => 'string',
-                                        'sentAs' => 'instanceType',
-                                    ),
-                                    'LaunchTime' => array(
-                                        'description' => 'The time this instance launched.',
-                                        'type' => 'string',
-                                        'sentAs' => 'launchTime',
-                                    ),
-                                    'Placement' => array(
-                                        'description' => 'The location where this instance launched.',
-                                        'type' => 'object',
-                                        'sentAs' => 'placement',
-                                        'properties' => array(
-                                            'AvailabilityZone' => array(
-                                                'description' => 'The availability zone in which an Amazon EC2 instance runs.',
-                                                'type' => 'string',
-                                                'sentAs' => 'availabilityZone',
-                                            ),
-                                            'groupName' => array(
-                                                'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
-                                                'type' => 'string',
-                                            ),
-                                            'tenancy' => array(
-                                                'description' => 'The allowed tenancy of instances launched into the VPC. A value of default means instances can be launched with any tenancy; a value of dedicated means all instances launched into the VPC will be launched as dedicated tenancy regardless of the tenancy assigned to the instance at launch.',
-                                                'type' => 'string',
-                                            ),
-                                        ),
-                                    ),
-                                    'KernelId' => array(
-                                        'description' => 'Kernel associated with this instance.',
-                                        'type' => 'string',
-                                        'sentAs' => 'kernelId',
-                                    ),
-                                    'RamdiskId' => array(
-                                        'description' => 'RAM disk associated with this instance.',
-                                        'type' => 'string',
-                                        'sentAs' => 'ramdiskId',
-                                    ),
-                                    'Platform' => array(
-                                        'description' => 'Platform of the instance (e.g., Windows).',
-                                        'type' => 'string',
-                                        'sentAs' => 'platform',
-                                    ),
-                                    'Monitoring' => array(
-                                        'description' => 'Monitoring status for this instance.',
-                                        'type' => 'object',
-                                        'sentAs' => 'monitoring',
-                                        'properties' => array(
-                                            'State' => array(
-                                                'description' => 'The state of monitoring on an Amazon EC2 instance (ex: enabled, disabled).',
-                                                'type' => 'string',
-                                                'sentAs' => 'state',
-                                            ),
-                                        ),
-                                    ),
-                                    'SubnetId' => array(
-                                        'description' => 'Specifies the Amazon VPC subnet ID in which the instance is running.',
-                                        'type' => 'string',
-                                        'sentAs' => 'subnetId',
-                                    ),
-                                    'VpcId' => array(
-                                        'description' => 'Specifies the Amazon VPC in which the instance is running.',
-                                        'type' => 'string',
-                                        'sentAs' => 'vpcId',
-                                    ),
-                                    'PrivateIpAddress' => array(
-                                        'description' => 'Specifies the private IP address that is assigned to the instance (Amazon VPC).',
-                                        'type' => 'string',
-                                        'sentAs' => 'privateIpAddress',
-                                    ),
-                                    'PublicIpAddress' => array(
-                                        'description' => 'Specifies the IP address of the instance.',
-                                        'type' => 'string',
-                                        'sentAs' => 'ipAddress',
-                                    ),
-                                    'stateReason' => array(
-                                        'description' => 'The reason for the state change.',
-                                        'type' => 'object',
-                                        'properties' => array(
-                                            'code' => array(
-                                                'description' => 'Reason code for the state change.',
-                                                'type' => 'string',
-                                            ),
-                                            'message' => array(
-                                                'description' => 'Descriptive message for the state change.',
-                                                'type' => 'string',
-                                            ),
-                                        ),
-                                    ),
-                                    'architecture' => array(
-                                        'description' => 'The architecture of this instance.',
-                                        'type' => 'string',
-                                    ),
-                                    'rootDeviceType' => array(
-                                        'description' => 'The root device type used by the AMI. The AMI can use an Amazon EBS or instance store root device.',
-                                        'type' => 'string',
-                                    ),
-                                    'rootDeviceName' => array(
-                                        'description' => 'The root device name (e.g., /dev/sda1).',
-                                        'type' => 'string',
-                                    ),
-                                    'blockDeviceMappings' => array(
-                                        'description' => 'Block device mapping set.',
-                                        'type' => 'array',
-                                        'sentAs' => 'blockDeviceMapping',
-                                        'items' => array(
-                                            'name' => 'item',
-                                            'description' => 'Describes how block devices are mapped on an Amazon EC2 instance.',
-                                            'type' => 'object',
-                                            'sentAs' => 'item',
-                                            'properties' => array(
-                                                'deviceName' => array(
-                                                    'description' => 'The device name (e.g., /dev/sdh) at which the block device is exposed on the instance.',
-                                                    'type' => 'string',
-                                                ),
-                                                'ebs' => array(
-                                                    'description' => 'The optional EBS device mapped to the specified device name.',
-                                                    'type' => 'object',
-                                                    'properties' => array(
-                                                        'volumeId' => array(
-                                                            'description' => 'The ID of the EBS volume.',
-                                                            'type' => 'string',
-                                                        ),
-                                                        'status' => array(
-                                                            'description' => 'The status of the EBS volume.',
-                                                            'type' => 'string',
-                                                        ),
-                                                        'attachTime' => array(
-                                                            'description' => 'The time at which the EBS volume was attached to the associated instance.',
-                                                            'type' => 'string',
-                                                        ),
-                                                        'deleteOnTermination' => array(
-                                                            'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
-                                                            'type' => 'boolean',
-                                                        ),
-                                                    ),
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                    'virtualizationType' => array(
-                                        'type' => 'string',
-                                    ),
-                                    'instanceLifecycle' => array(
-                                        'type' => 'string',
-                                    ),
-                                    'spotInstanceRequestId' => array(
-                                        'type' => 'string',
-                                    ),
-                                    'license' => array(
-                                        'type' => 'object',
-                                        'properties' => array(
-                                            'pool' => array(
-                                                'description' => 'The license pool from which this license was used (ex: \'windows\').',
-                                                'type' => 'string',
-                                            ),
-                                        ),
-                                    ),
-                                    'clientToken' => array(
-                                        'type' => 'string',
-                                    ),
-                                    'tags' => array(
-                                        'description' => 'A list of tags for the Instance.',
-                                        'type' => 'array',
-                                        'sentAs' => 'tagSet',
-                                        'items' => array(
-                                            'name' => 'item',
-                                            'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
-                                            'type' => 'object',
-                                            'sentAs' => 'item',
-                                            'properties' => array(
-                                                'key' => array(
-                                                    'description' => 'The tag\'s key.',
-                                                    'type' => 'string',
-                                                ),
-                                                'value' => array(
-                                                    'description' => 'The tag\'s value.',
-                                                    'type' => 'string',
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                    'securityGroups' => array(
+                                    'SecurityGroups' => array(
                                         'type' => 'array',
                                         'sentAs' => 'groupSet',
                                         'items' => array(
@@ -13416,19 +14408,124 @@ return array (
                                                     'type' => 'string',
                                                     'sentAs' => 'groupName',
                                                 ),
-                                                'groupId' => array(
+                                                'GroupId' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'groupId',
                                                 ),
                                             ),
                                         ),
                                     ),
-                                    'sourceDestCheck' => array(
-                                        'type' => 'boolean',
-                                    ),
-                                    'hypervisor' => array(
+                                    'UserData' => array(
+                                        'description' => 'Optional data, specific to a user\'s application, to provide in the launch request. All instances that collectively comprise the launch request have access to this data. User data is never returned through API responses.',
                                         'type' => 'string',
+                                        'sentAs' => 'userData',
                                     ),
-                                    'networkInterfaces' => array(
+                                    'AddressingType' => array(
+                                        'description' => 'Deprecated.',
+                                        'type' => 'string',
+                                        'sentAs' => 'addressingType',
+                                    ),
+                                    'InstanceType' => array(
+                                        'description' => 'Specifies the instance type.',
+                                        'type' => 'string',
+                                        'sentAs' => 'instanceType',
+                                    ),
+                                    'Placement' => array(
+                                        'description' => 'Defines a placement item.',
+                                        'type' => 'object',
+                                        'sentAs' => 'placement',
+                                        'properties' => array(
+                                            'AvailabilityZone' => array(
+                                                'description' => 'The availability zone in which an Amazon EC2 instance runs.',
+                                                'type' => 'string',
+                                                'sentAs' => 'availabilityZone',
+                                            ),
+                                            'GroupName' => array(
+                                                'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
+                                                'type' => 'string',
+                                                'sentAs' => 'groupName',
+                                            ),
+                                        ),
+                                    ),
+                                    'KernelId' => array(
+                                        'description' => 'Specifies the ID of the kernel to select.',
+                                        'type' => 'string',
+                                        'sentAs' => 'kernelId',
+                                    ),
+                                    'RamdiskId' => array(
+                                        'description' => 'Specifies the ID of the RAM disk to select. Some kernels require additional drivers at launch. Check the kernel requirements for information on whether or not you need to specify a RAM disk and search for the kernel ID.',
+                                        'type' => 'string',
+                                        'sentAs' => 'ramdiskId',
+                                    ),
+                                    'BlockDeviceMappings' => array(
+                                        'description' => 'Specifies how block devices are exposed to the instance. Each mapping is made up of a virtualName and a deviceName.',
+                                        'type' => 'array',
+                                        'sentAs' => 'blockDeviceMapping',
+                                        'items' => array(
+                                            'name' => 'item',
+                                            'description' => 'The BlockDeviceMappingItemType data type.',
+                                            'type' => 'object',
+                                            'sentAs' => 'item',
+                                            'properties' => array(
+                                                'VirtualName' => array(
+                                                    'description' => 'Specifies the virtual device name.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'virtualName',
+                                                ),
+                                                'DeviceName' => array(
+                                                    'description' => 'Specifies the device name (e.g., /dev/sdh).',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'deviceName',
+                                                ),
+                                                'Ebs' => array(
+                                                    'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
+                                                    'type' => 'object',
+                                                    'sentAs' => 'ebs',
+                                                    'properties' => array(
+                                                        'SnapshotId' => array(
+                                                            'description' => 'The ID of the snapshot from which the volume will be created.',
+                                                            'type' => 'string',
+                                                            'sentAs' => 'snapshotId',
+                                                        ),
+                                                        'VolumeSize' => array(
+                                                            'description' => 'The size of the volume, in gigabytes.',
+                                                            'type' => 'numeric',
+                                                            'sentAs' => 'volumeSize',
+                                                        ),
+                                                        'DeleteOnTermination' => array(
+                                                            'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
+                                                            'type' => 'boolean',
+                                                            'sentAs' => 'deleteOnTermination',
+                                                        ),
+                                                        'VolumeType' => array(
+                                                            'type' => 'string',
+                                                            'sentAs' => 'volumeType',
+                                                        ),
+                                                        'Iops' => array(
+                                                            'type' => 'numeric',
+                                                            'sentAs' => 'iops',
+                                                        ),
+                                                    ),
+                                                ),
+                                                'NoDevice' => array(
+                                                    'description' => 'Specifies the device name to suppress during instance launch.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'noDevice',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'MonitoringEnabled' => array(
+                                        'description' => 'Enables monitoring for the instance.',
+                                        'type' => 'boolean',
+                                        'sentAs' => 'monitoringEnabled',
+                                    ),
+                                    'SubnetId' => array(
+                                        'description' => 'Specifies the Amazon VPC subnet ID within which to launch the instance(s) for Amazon Virtual Private Cloud.',
+                                        'type' => 'string',
+                                        'sentAs' => 'subnetId',
+                                    ),
+                                    'NetworkInterfaces' => array(
                                         'type' => 'array',
                                         'sentAs' => 'networkInterfaceSet',
                                         'items' => array(
@@ -13436,100 +14533,614 @@ return array (
                                             'type' => 'object',
                                             'sentAs' => 'item',
                                             'properties' => array(
-                                                'networkInterfaceId' => array(
+                                                'NetworkInterfaceId' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'networkInterfaceId',
                                                 ),
-                                                'subnetId' => array(
+                                                'DeviceIndex' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'deviceIndex',
+                                                ),
+                                                'SubnetId' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'subnetId',
                                                 ),
-                                                'vpcId' => array(
+                                                'Description' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'description',
                                                 ),
-                                                'description' => array(
+                                                'PrivateIpAddress' => array(
                                                     'type' => 'string',
+                                                    'sentAs' => 'privateIpAddress',
                                                 ),
-                                                'ownerId' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'status' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'privateIpAddress' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'privateDnsName' => array(
-                                                    'type' => 'string',
-                                                ),
-                                                'sourceDestCheck' => array(
-                                                    'type' => 'boolean',
-                                                ),
-                                                'groups' => array(
+                                                'Groups' => array(
                                                     'type' => 'array',
-                                                    'sentAs' => 'groupSet',
+                                                    'sentAs' => 'SecurityGroupId',
+                                                    'items' => array(
+                                                        'name' => 'SecurityGroupId',
+                                                        'type' => 'string',
+                                                        'sentAs' => 'SecurityGroupId',
+                                                    ),
+                                                ),
+                                                'DeleteOnTermination' => array(
+                                                    'type' => 'boolean',
+                                                    'sentAs' => 'deleteOnTermination',
+                                                ),
+                                                'PrivateIpAddresses' => array(
+                                                    'type' => 'array',
+                                                    'sentAs' => 'privateIpAddressesSet',
                                                     'items' => array(
                                                         'name' => 'item',
                                                         'type' => 'object',
                                                         'sentAs' => 'item',
                                                         'properties' => array(
-                                                            'GroupName' => array(
+                                                            'PrivateIpAddress' => array(
                                                                 'type' => 'string',
-                                                                'sentAs' => 'groupName',
+                                                                'sentAs' => 'privateIpAddress',
                                                             ),
-                                                            'groupId' => array(
-                                                                'type' => 'string',
+                                                            'Primary' => array(
+                                                                'type' => 'boolean',
+                                                                'sentAs' => 'primary',
                                                             ),
                                                         ),
                                                     ),
                                                 ),
-                                                'attachment' => array(
-                                                    'type' => 'object',
-                                                    'properties' => array(
-                                                        'attachmentId' => array(
-                                                            'type' => 'string',
-                                                        ),
-                                                        'deviceIndex' => array(
-                                                            'type' => 'numeric',
-                                                        ),
-                                                        'status' => array(
-                                                            'type' => 'string',
-                                                        ),
-                                                        'attachTime' => array(
-                                                            'type' => 'string',
-                                                        ),
-                                                        'deleteOnTermination' => array(
-                                                            'type' => 'boolean',
-                                                        ),
-                                                    ),
-                                                ),
-                                                'association' => array(
-                                                    'type' => 'object',
-                                                    'properties' => array(
-                                                        'publicIp' => array(
-                                                            'type' => 'string',
-                                                        ),
-                                                        'ipOwnerId' => array(
-                                                            'type' => 'string',
-                                                        ),
-                                                    ),
+                                                'SecondaryPrivateIpAddressCount' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'secondaryPrivateIpAddressCount',
                                                 ),
                                             ),
                                         ),
                                     ),
-                                    'iamInstanceProfile' => array(
+                                    'IamInstanceProfile' => array(
                                         'type' => 'object',
+                                        'sentAs' => 'iamInstanceProfile',
                                         'properties' => array(
-                                            'arn' => array(
+                                            'Arn' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'arn',
                                             ),
-                                            'id' => array(
+                                            'Name' => array(
                                                 'type' => 'string',
+                                                'sentAs' => 'name',
                                             ),
                                         ),
                                     ),
-                                    'ebsOptimized' => array(
+                                    'EbsOptimized' => array(
                                         'type' => 'boolean',
+                                        'sentAs' => 'ebsOptimized',
                                     ),
                                 ),
+                            ),
+                            'InstanceId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'instanceId',
+                            ),
+                            'CreateTime' => array(
+                                'type' => 'string',
+                                'sentAs' => 'createTime',
+                            ),
+                            'ProductDescription' => array(
+                                'type' => 'string',
+                                'sentAs' => 'productDescription',
+                            ),
+                            'Tags' => array(
+                                'description' => 'A list of tags for this spot instance request.',
+                                'type' => 'array',
+                                'sentAs' => 'tagSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'description' => 'The tag\'s key.',
+                                            'type' => 'string',
+                                            'sentAs' => 'key',
+                                        ),
+                                        'Value' => array(
+                                            'description' => 'The tag\'s value.',
+                                            'type' => 'string',
+                                            'sentAs' => 'value',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'LaunchedAvailabilityZone' => array(
+                                'description' => 'The Availability Zone in which the bid is launched.',
+                                'type' => 'string',
+                                'sentAs' => 'launchedAvailabilityZone',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'reservation' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ReservationId' => array(
+                    'description' => 'The unique ID of this reservation.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'reservationId',
+                ),
+                'OwnerId' => array(
+                    'description' => 'The AWS Access Key ID of the user who owns the reservation.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'ownerId',
+                ),
+                'RequesterId' => array(
+                    'description' => 'The unique ID of the user who requested the instances in this reservation.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'requesterId',
+                ),
+                'Groups' => array(
+                    'description' => 'The list of security groups requested for the instances in this reservation.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'groupSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'GroupName' => array(
+                                'type' => 'string',
+                                'sentAs' => 'groupName',
+                            ),
+                            'GroupId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'groupId',
+                            ),
+                        ),
+                    ),
+                ),
+                'Instances' => array(
+                    'description' => 'The list of Amazon EC2 instances included in this reservation.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'instancesSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'description' => 'Represents an Amazon EC2 instance.',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'InstanceId' => array(
+                                'description' => 'Unique ID of the instance launched.',
+                                'type' => 'string',
+                                'sentAs' => 'instanceId',
+                            ),
+                            'ImageId' => array(
+                                'description' => 'Image ID of the AMI used to launch the instance.',
+                                'type' => 'string',
+                                'sentAs' => 'imageId',
+                            ),
+                            'State' => array(
+                                'description' => 'The current state of the instance.',
+                                'type' => 'object',
+                                'sentAs' => 'instanceState',
+                                'properties' => array(
+                                    'Code' => array(
+                                        'description' => 'A 16-bit unsigned integer. The high byte is an opaque internal value and should be ignored. The low byte is set based on the state represented.',
+                                        'type' => 'numeric',
+                                        'sentAs' => 'code',
+                                    ),
+                                    'Name' => array(
+                                        'description' => 'The current state of the instance.',
+                                        'type' => 'string',
+                                        'sentAs' => 'name',
+                                    ),
+                                ),
+                            ),
+                            'PrivateDnsName' => array(
+                                'description' => 'The private DNS name assigned to the instance. This DNS name can only be used inside the Amazon EC2 network. This element remains empty until the instance enters a running state.',
+                                'type' => 'string',
+                                'sentAs' => 'privateDnsName',
+                            ),
+                            'PublicDnsName' => array(
+                                'description' => 'The public DNS name assigned to the instance. This DNS name is contactable from outside the Amazon EC2 network. This element remains empty until the instance enters a running state.',
+                                'type' => 'string',
+                                'sentAs' => 'dnsName',
+                            ),
+                            'StateTransitionReason' => array(
+                                'description' => 'Reason for the most recent state transition. This might be an empty string.',
+                                'type' => 'string',
+                                'sentAs' => 'reason',
+                            ),
+                            'KeyName' => array(
+                                'description' => 'If this instance was launched with an associated key pair, this displays the key pair name.',
+                                'type' => 'string',
+                                'sentAs' => 'keyName',
+                            ),
+                            'AmiLaunchIndex' => array(
+                                'description' => 'The AMI launch index, which can be used to find this instance within the launch group.',
+                                'type' => 'numeric',
+                                'sentAs' => 'amiLaunchIndex',
+                            ),
+                            'ProductCodes' => array(
+                                'description' => 'Product codes attached to this instance.',
+                                'type' => 'array',
+                                'sentAs' => 'productCodes',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'An AWS DevPay product code.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'ProductCodeId' => array(
+                                            'description' => 'The unique ID of an AWS DevPay product code.',
+                                            'type' => 'string',
+                                            'sentAs' => 'productCode',
+                                        ),
+                                        'ProductCodeType' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'type',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'InstanceType' => array(
+                                'description' => 'The instance type. For more information on instance types, please see the Amazon Elastic Compute Cloud Developer Guide.',
+                                'type' => 'string',
+                                'sentAs' => 'instanceType',
+                            ),
+                            'LaunchTime' => array(
+                                'description' => 'The time this instance launched.',
+                                'type' => 'string',
+                                'sentAs' => 'launchTime',
+                            ),
+                            'Placement' => array(
+                                'description' => 'The location where this instance launched.',
+                                'type' => 'object',
+                                'sentAs' => 'placement',
+                                'properties' => array(
+                                    'AvailabilityZone' => array(
+                                        'description' => 'The availability zone in which an Amazon EC2 instance runs.',
+                                        'type' => 'string',
+                                        'sentAs' => 'availabilityZone',
+                                    ),
+                                    'GroupName' => array(
+                                        'description' => 'The name of the PlacementGroup in which an Amazon EC2 instance runs. Placement groups are primarily used for launching High Performance Computing instances in the same group to ensure fast connection speeds.',
+                                        'type' => 'string',
+                                        'sentAs' => 'groupName',
+                                    ),
+                                    'Tenancy' => array(
+                                        'description' => 'The allowed tenancy of instances launched into the VPC. A value of default means instances can be launched with any tenancy; a value of dedicated means all instances launched into the VPC will be launched as dedicated tenancy regardless of the tenancy assigned to the instance at launch.',
+                                        'type' => 'string',
+                                        'sentAs' => 'tenancy',
+                                    ),
+                                ),
+                            ),
+                            'KernelId' => array(
+                                'description' => 'Kernel associated with this instance.',
+                                'type' => 'string',
+                                'sentAs' => 'kernelId',
+                            ),
+                            'RamdiskId' => array(
+                                'description' => 'RAM disk associated with this instance.',
+                                'type' => 'string',
+                                'sentAs' => 'ramdiskId',
+                            ),
+                            'Platform' => array(
+                                'description' => 'Platform of the instance (e.g., Windows).',
+                                'type' => 'string',
+                                'sentAs' => 'platform',
+                            ),
+                            'Monitoring' => array(
+                                'description' => 'Monitoring status for this instance.',
+                                'type' => 'object',
+                                'sentAs' => 'monitoring',
+                                'properties' => array(
+                                    'State' => array(
+                                        'description' => 'The state of monitoring on an Amazon EC2 instance (ex: enabled, disabled).',
+                                        'type' => 'string',
+                                        'sentAs' => 'state',
+                                    ),
+                                ),
+                            ),
+                            'SubnetId' => array(
+                                'description' => 'Specifies the Amazon VPC subnet ID in which the instance is running.',
+                                'type' => 'string',
+                                'sentAs' => 'subnetId',
+                            ),
+                            'VpcId' => array(
+                                'description' => 'Specifies the Amazon VPC in which the instance is running.',
+                                'type' => 'string',
+                                'sentAs' => 'vpcId',
+                            ),
+                            'PrivateIpAddress' => array(
+                                'description' => 'Specifies the private IP address that is assigned to the instance (Amazon VPC).',
+                                'type' => 'string',
+                                'sentAs' => 'privateIpAddress',
+                            ),
+                            'PublicIpAddress' => array(
+                                'description' => 'Specifies the IP address of the instance.',
+                                'type' => 'string',
+                                'sentAs' => 'ipAddress',
+                            ),
+                            'StateReason' => array(
+                                'description' => 'The reason for the state change.',
+                                'type' => 'object',
+                                'sentAs' => 'stateReason',
+                                'properties' => array(
+                                    'Code' => array(
+                                        'description' => 'Reason code for the state change.',
+                                        'type' => 'string',
+                                        'sentAs' => 'code',
+                                    ),
+                                    'Message' => array(
+                                        'description' => 'Descriptive message for the state change.',
+                                        'type' => 'string',
+                                        'sentAs' => 'message',
+                                    ),
+                                ),
+                            ),
+                            'Architecture' => array(
+                                'description' => 'The architecture of this instance.',
+                                'type' => 'string',
+                                'sentAs' => 'architecture',
+                            ),
+                            'RootDeviceType' => array(
+                                'description' => 'The root device type used by the AMI. The AMI can use an Amazon EBS or instance store root device.',
+                                'type' => 'string',
+                                'sentAs' => 'rootDeviceType',
+                            ),
+                            'RootDeviceName' => array(
+                                'description' => 'The root device name (e.g., /dev/sda1).',
+                                'type' => 'string',
+                                'sentAs' => 'rootDeviceName',
+                            ),
+                            'BlockDeviceMappings' => array(
+                                'description' => 'Block device mapping set.',
+                                'type' => 'array',
+                                'sentAs' => 'blockDeviceMapping',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'Describes how block devices are mapped on an Amazon EC2 instance.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'DeviceName' => array(
+                                            'description' => 'The device name (e.g., /dev/sdh) at which the block device is exposed on the instance.',
+                                            'type' => 'string',
+                                            'sentAs' => 'deviceName',
+                                        ),
+                                        'Ebs' => array(
+                                            'description' => 'The optional EBS device mapped to the specified device name.',
+                                            'type' => 'object',
+                                            'sentAs' => 'ebs',
+                                            'properties' => array(
+                                                'VolumeId' => array(
+                                                    'description' => 'The ID of the EBS volume.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'volumeId',
+                                                ),
+                                                'Status' => array(
+                                                    'description' => 'The status of the EBS volume.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'status',
+                                                ),
+                                                'AttachTime' => array(
+                                                    'description' => 'The time at which the EBS volume was attached to the associated instance.',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'attachTime',
+                                                ),
+                                                'DeleteOnTermination' => array(
+                                                    'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
+                                                    'type' => 'boolean',
+                                                    'sentAs' => 'deleteOnTermination',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'VirtualizationType' => array(
+                                'type' => 'string',
+                                'sentAs' => 'virtualizationType',
+                            ),
+                            'InstanceLifecycle' => array(
+                                'type' => 'string',
+                                'sentAs' => 'instanceLifecycle',
+                            ),
+                            'SpotInstanceRequestId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'spotInstanceRequestId',
+                            ),
+                            'License' => array(
+                                'type' => 'object',
+                                'sentAs' => 'license',
+                                'properties' => array(
+                                    'Pool' => array(
+                                        'description' => 'The license pool from which this license was used (ex: \'windows\').',
+                                        'type' => 'string',
+                                        'sentAs' => 'pool',
+                                    ),
+                                ),
+                            ),
+                            'ClientToken' => array(
+                                'type' => 'string',
+                                'sentAs' => 'clientToken',
+                            ),
+                            'Tags' => array(
+                                'description' => 'A list of tags for the Instance.',
+                                'type' => 'array',
+                                'sentAs' => 'tagSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'description' => 'The tag\'s key.',
+                                            'type' => 'string',
+                                            'sentAs' => 'key',
+                                        ),
+                                        'Value' => array(
+                                            'description' => 'The tag\'s value.',
+                                            'type' => 'string',
+                                            'sentAs' => 'value',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'SecurityGroups' => array(
+                                'type' => 'array',
+                                'sentAs' => 'groupSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'GroupName' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'groupName',
+                                        ),
+                                        'GroupId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'groupId',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'SourceDestCheck' => array(
+                                'type' => 'boolean',
+                                'sentAs' => 'sourceDestCheck',
+                            ),
+                            'Hypervisor' => array(
+                                'type' => 'string',
+                                'sentAs' => 'hypervisor',
+                            ),
+                            'NetworkInterfaces' => array(
+                                'type' => 'array',
+                                'sentAs' => 'networkInterfaceSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'NetworkInterfaceId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'networkInterfaceId',
+                                        ),
+                                        'SubnetId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'subnetId',
+                                        ),
+                                        'VpcId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'vpcId',
+                                        ),
+                                        'Description' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'description',
+                                        ),
+                                        'OwnerId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'ownerId',
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'status',
+                                        ),
+                                        'PrivateIpAddress' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'privateIpAddress',
+                                        ),
+                                        'PrivateDnsName' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'privateDnsName',
+                                        ),
+                                        'SourceDestCheck' => array(
+                                            'type' => 'boolean',
+                                            'sentAs' => 'sourceDestCheck',
+                                        ),
+                                        'Groups' => array(
+                                            'type' => 'array',
+                                            'sentAs' => 'groupSet',
+                                            'items' => array(
+                                                'name' => 'item',
+                                                'type' => 'object',
+                                                'sentAs' => 'item',
+                                                'properties' => array(
+                                                    'GroupName' => array(
+                                                        'type' => 'string',
+                                                        'sentAs' => 'groupName',
+                                                    ),
+                                                    'GroupId' => array(
+                                                        'type' => 'string',
+                                                        'sentAs' => 'groupId',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'Attachment' => array(
+                                            'type' => 'object',
+                                            'sentAs' => 'attachment',
+                                            'properties' => array(
+                                                'AttachmentId' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'attachmentId',
+                                                ),
+                                                'DeviceIndex' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'deviceIndex',
+                                                ),
+                                                'Status' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'status',
+                                                ),
+                                                'AttachTime' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'attachTime',
+                                                ),
+                                                'DeleteOnTermination' => array(
+                                                    'type' => 'boolean',
+                                                    'sentAs' => 'deleteOnTermination',
+                                                ),
+                                            ),
+                                        ),
+                                        'Association' => array(
+                                            'type' => 'object',
+                                            'sentAs' => 'association',
+                                            'properties' => array(
+                                                'PublicIp' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'publicIp',
+                                                ),
+                                                'IpOwnerId' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'ipOwnerId',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'IamInstanceProfile' => array(
+                                'type' => 'object',
+                                'sentAs' => 'iamInstanceProfile',
+                                'properties' => array(
+                                    'Arn' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'arn',
+                                    ),
+                                    'Id' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'id',
+                                    ),
+                                ),
+                            ),
+                            'EbsOptimized' => array(
+                                'type' => 'boolean',
+                                'sentAs' => 'ebsOptimized',
                             ),
                         ),
                     ),
@@ -13540,7 +15151,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'startingInstances' => array(
+                'StartingInstances' => array(
                     'description' => 'The list of the starting instances and details on how their state has changed.',
                     'type' => 'array',
                     'location' => 'xml',
@@ -13599,7 +15210,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'stoppingInstances' => array(
+                'StoppingInstances' => array(
                     'description' => 'The list of the stopping instances and details on how their state has changed.',
                     'type' => 'array',
                     'location' => 'xml',
