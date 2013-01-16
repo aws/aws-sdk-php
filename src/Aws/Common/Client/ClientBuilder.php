@@ -433,7 +433,7 @@ class ClientBuilder
         $this->addSignature($description, $config);
 
         if (!$config->get(Options::SERVICE)) {
-            $config->set(Options::SERVICE, $description->getName());
+            $config->set(Options::SERVICE, $description->getData('endpointPrefix'));
         }
 
         if (!$config->get(Options::REGION)) {

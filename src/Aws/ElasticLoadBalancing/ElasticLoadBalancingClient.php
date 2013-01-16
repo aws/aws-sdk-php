@@ -94,7 +94,7 @@ class ElasticLoadBalancingClient extends AbstractClient
     {
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticloadbalancing-2012-06-01'))
+            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticloadbalancing-2012-06-01.php'))
             ->build();
     }
 }
