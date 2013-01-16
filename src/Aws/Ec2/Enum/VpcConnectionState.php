@@ -19,14 +19,12 @@ namespace Aws\Ec2\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Name values
+ * Contains enumerable VpcConnectionState values
  */
-class Name extends Enum
+class VpcConnectionState extends Enum
 {
-    const PENDING = 'pending';
-    const RUNNING = 'running';
-    const SHUTTING_DOWN = 'shutting-down';
-    const TERMINATED = 'terminated';
-    const STOPPING = 'stopping';
-    const STOPPED = 'stopped';
+    const ATTACHING = 'attaching';
+    const ATTACHED = 'attached';
+    const DETACHING = 'detaching';
+    const DETACHED = 'detached';
 }

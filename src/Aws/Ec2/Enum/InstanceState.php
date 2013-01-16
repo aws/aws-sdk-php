@@ -19,12 +19,14 @@ namespace Aws\Ec2\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable State values
+ * Contains enumerable InstanceState values
  */
-class State extends Enum
+class InstanceState extends Enum
 {
     const PENDING = 'pending';
-    const AVAILABLE = 'available';
-    const DELETING = 'deleting';
-    const DELETED = 'deleted';
+    const RUNNING = 'running';
+    const SHUTTING_DOWN = 'shutting-down';
+    const TERMINATED = 'terminated';
+    const STOPPING = 'stopping';
+    const STOPPED = 'stopped';
 }
