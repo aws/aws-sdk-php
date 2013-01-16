@@ -30,7 +30,7 @@ class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
         $credentials = $this->getMock('Aws\Common\Credentials\CredentialsInterface');
         $client = DefaultClient::factory(array(
             Options::CREDENTIALS => $credentials,
-            Options::SERVICE_DESCRIPTION => __DIR__ . '/../../../../../src/Aws/Sts/Resources/client.php'
+            Options::SERVICE_DESCRIPTION => __DIR__ . '/../../../../../src/Aws/Sts/Resources/sts-2011-06-15.php'
         ));
         $this->assertInstanceOf('Aws\Common\Signature\SignatureInterface', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\CredentialsInterface', $client->getCredentials());

@@ -31,6 +31,15 @@ use Guzzle\Plugin\Backoff\BackoffPlugin;
  */
 class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    protected $dynamoDbDescription;
+    protected $stsDescription;
+
+    public function setUp()
+    {
+        $this->dynamoDbDescription = __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-2011-12-05.php';
+        $this->stsDescription = __DIR__ . '/../../../../../src/Aws/Sts/Resources/sts-2011-06-15.php';
+    }
+
     public function testBuild()
     {
         $client = ClientBuilder::factory('Aws\\DynamoDb')
@@ -39,7 +48,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'scheme'   => 'https',
                 'region'   => 'us-east-1',
                 'service'  => 'dynamodb',
-                'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/client.php'
+                'service.description' => $this->dynamoDbDescription
             ))
             ->setConfigRequirements(array('scheme'))
             ->setExceptionParser(new JsonQueryExceptionParser())
@@ -55,7 +64,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setConfig(array())
             ->setConfigDefaults(array(
                 'service' => 'sts',
-                'service.description' => __DIR__ . '/../../../../../src/Aws/Sts/Resources/client.php'
+                'service.description' => $this->stsDescription
             ))
             ->build();
 
@@ -69,7 +78,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'scheme'  => 'https',
                 'region'  => 'us-west-1',
                 'service' => 'dynamodb',
-                'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/client.php'
+                'service.description' => $this->dynamoDbDescription
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
