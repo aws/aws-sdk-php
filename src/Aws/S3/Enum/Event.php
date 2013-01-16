@@ -14,10 +14,14 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Exception;
+namespace Aws\S3\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select
- *  a different name and try again.
+ * Contains enumerable Event values
  */
-class BucketAlreadyExistsException extends S3Exception {}
+class Event extends Enum
+{
+    const S3_REDUCED_REDUNDANCY_LOST_OBJECT = 's3:ReducedRedundancyLostObject';
+}

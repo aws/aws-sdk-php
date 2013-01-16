@@ -19,13 +19,13 @@ namespace Aws\S3\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Amazon S3 permission options for ACLs
+ * Contains enumerable Permission values
  */
 class Permission extends Enum
 {
-    const READ         = 'READ';
-    const WRITE        = 'WRITE';
-    const READ_ACP     = 'READ_ACP';
-    const WRITE_ACP    = 'WRITE_ACP';
     const FULL_CONTROL = 'FULL_CONTROL';
+    const WRITE = 'WRITE';
+    const WRITE_ACP = 'WRITE_ACP';
+    const READ = 'READ';
+    const READ_ACP = 'READ_ACP';
 }

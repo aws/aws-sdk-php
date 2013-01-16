@@ -19,11 +19,11 @@ namespace Aws\S3\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Amazon S3 grantee types
+ * Contains enumerable GranteeType values
  */
 class GranteeType extends Enum
 {
+    const USER = 'CanonicalUser';
     const EMAIL = 'AmazonCustomerByEmail';
     const GROUP = 'Group';
-    const USER  = 'CanonicalUser';
 }

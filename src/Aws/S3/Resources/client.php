@@ -15,12 +15,13 @@
  */
 
 return array (
-    'name' => 's3',
     'apiVersion' => '2006-03-01',
+    'endpointPrefix' => 's3',
+    'serviceFullName' => 'Amazon S3',
     'serviceType' => 'rest-xml',
     'timestampFormat' => 'rfc822',
-    'globalEndpoint' => true,
     'signatureVersion' => 's3',
+    'namespace' => 'S3',
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',
@@ -245,7 +246,7 @@ return array (
                     'sentAs' => 'x-amz-copy-source-if-modified-since',
                 ),
                 'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
+                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-storage-class',
@@ -484,7 +485,7 @@ return array (
                     'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
+                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-storage-class',
@@ -574,7 +575,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'DeleteBucketOutput',
             'responseType' => 'model',
-            'summary' => 'Deletes the bucket.    All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.',
+            'summary' => 'Deletes the bucket. All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -729,7 +730,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'DeleteObjectsOutput',
             'responseType' => 'model',
-            'summary' => 'This operation enables you to delete multiple objects from a bucket using a single HTTP request.    You may specify up to 1000 keys.',
+            'summary' => 'This operation enables you to delete multiple objects from a bucket using a single HTTP request. You may specify up to 1000 keys.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html',
             'data' => array(
                 'xmlRoot' => array(
@@ -2417,7 +2418,7 @@ return array (
                     'location' => 'body',
                 ),
                 'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object.    Defaults to \'STANDARD\'.',
+                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-storage-class',

@@ -14,10 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Exception;
+namespace Aws\S3\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select
- *  a different name and try again.
+ * Contains enumerable Status values
  */
-class BucketAlreadyExistsException extends S3Exception {}
+class Status extends Enum
+{
+    const ENABLED = 'Enabled';
+    const DISABLED = 'Disabled';
+}
