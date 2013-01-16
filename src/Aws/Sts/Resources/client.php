@@ -15,13 +15,12 @@
  */
 
 return array (
-    'name' => 'sts',
     'apiVersion' => '2011-06-15',
-    'description' => 'AWS Security Token Service',
-    'fullName' => 'AWS Security Token Service',
-    'abbr' => 'AWS STS',
+    'endpointPrefix' => 'sts',
+    'serviceFullName' => 'AWS Security Token Service',
+    'serviceAbbreviation' => 'AWS STS',
     'serviceType' => 'query',
-    'globalEndpoint' => true,
+    'globalEndpoint' => 'sts.amazonaws.com',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Sts',

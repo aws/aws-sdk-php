@@ -102,7 +102,6 @@ class ElasticBeanstalkClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        // Construct the STS client with the client builder
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'))

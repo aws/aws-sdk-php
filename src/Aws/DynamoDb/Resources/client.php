@@ -15,11 +15,10 @@
  */
 
 return array (
-    'name' => 'dynamodb',
     'apiVersion' => '2011-12-05',
-    'description' => 'Amazon DynamoDB is a fast, highly scalable, highly available, cost-effective non-relational database service.',
-    'fullName' => 'Amazon DynamoDB',
-    'abbr' => 'DynamoDB',
+    'endpointPrefix' => 'dynamodb',
+    'serviceFullName' => 'Amazon DynamoDB',
+    'serviceAbbreviation' => 'DynamoDB',
     'serviceType' => 'json',
     'jsonVersion' => '1.0',
     'targetPrefix' => 'DynamoDB_20111205.',

@@ -15,11 +15,10 @@
  */
 
 return array (
-    'name' => 'elasticbeanstalk',
     'apiVersion' => '2010-12-01',
-    'description' => 'AWS Elastic Beanstalk',
-    'fullName' => 'AWS Elastic Beanstalk',
-    'abbr' => 'Elastic Beanstalk',
+    'endpointPrefix' => 'elasticbeanstalk',
+    'serviceFullName' => 'AWS Elastic Beanstalk',
+    'serviceAbbreviation' => 'Elastic Beanstalk',
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',

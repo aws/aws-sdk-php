@@ -15,10 +15,9 @@
  */
 
 return array (
-    'name' => 'glacier',
     'apiVersion' => '2012-06-01',
-    'description' => 'Amazon Glacier is a storage solution for "cold data."',
-    'fullName' => 'Amazon Glacier',
+    'endpointPrefix' => 'glacier',
+    'serviceFullName' => 'Amazon Glacier',
     'serviceType' => 'rest-json',
     'signatureVersion' => 'v4',
     'namespace' => 'Glacier',
@@ -672,13 +671,14 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'limit' => array(
-                    'description' => 'Specifies the maximum number of uploads returned in the response body. If this value is not specified, the List Uploads operation returns up to 1,000 uploads.',
+                'uploadIdMarker' => array(
+                    'description' => 'An opaque string used for pagination. This value specifies the upload at which the listing of uploads should begin. Get the marker value from a previous List Uploads response. You need only include the marker if you are continuing the pagination of results started in a previous List Uploads request.',
                     'type' => 'string',
                     'location' => 'query',
+                    'sentAs' => 'marker',
                 ),
-                'marker' => array(
-                    'description' => 'An opaque string used for pagination. This value specifies the upload at which the listing of uploads should begin. Get the marker value from a previous List Uploads response. You need only include the marker if you are continuing the pagination of results started in a previous List Uploads request.',
+                'limit' => array(
+                    'description' => 'Specifies the maximum number of uploads returned in the response body. If this value is not specified, the List Uploads operation returns up to 1,000 uploads.',
                     'type' => 'string',
                     'location' => 'query',
                 ),

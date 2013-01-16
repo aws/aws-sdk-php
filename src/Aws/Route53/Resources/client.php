@@ -15,12 +15,12 @@
  */
 
 return array (
-    'name' => 'route53',
     'apiVersion' => '2012-02-29',
-    'fullName' => 'Amazon Route 53',
-    'abbr' => 'Route 53',
+    'endpointPrefix' => 'route53',
+    'serviceFullName' => 'Amazon Route 53',
+    'serviceAbbreviation' => 'Route 53',
     'serviceType' => 'rest-xml',
-    'globalEndpoint' => true,
+    'globalEndpoint' => 'route53.amazonaws.com',
     'signatureVersion' => 'v3https',
     'namespace' => 'Route53',
     'operations' => array(

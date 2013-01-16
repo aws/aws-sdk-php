@@ -15,10 +15,9 @@
  */
 
 return array (
-    'name' => 'elasticloadbalancing',
     'apiVersion' => '2012-06-01',
-    'description' => 'Elastic Load Balancing',
-    'fullName' => 'Elastic Load Balancing',
+    'endpointPrefix' => 'elasticloadbalancing',
+    'serviceFullName' => 'Elastic Load Balancing',
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v2',
