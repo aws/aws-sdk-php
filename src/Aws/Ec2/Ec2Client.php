@@ -174,6 +174,25 @@ use Guzzle\Service\Resource\Model;
  */
 class Ec2Client extends AbstractClient
 {
+    protected static $iteratorConfig = array(
+        'operations' => array(
+            'DescribeImages' => array('result_key' => 'Images'),
+            'DescribeInstanceStatus' => array(
+                'limit_key'   => 'MaxResults',
+                'result_key'  => 'Images',
+                'token_key'   => 'NextToken',
+                'token_param' => 'NextToken',
+            ),
+            'DescribeInstances',
+            'DescribeReservedInstancesOfferings' => array(
+                'limit_key'   => 'MaxResults',
+                'result_key'  => 'ReservedInstancesOfferingsSet',
+                'token_key'   => 'NextToken',
+                'token_param' => 'NextToken',
+            ),
+        )
+    );
+
     /**
      * Factory method to create a new AWS Elastic Beanstalk client using an array of configuration options:
      *
@@ -219,6 +238,7 @@ class Ec2Client extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'))
+            ->setIteratorsConfig(self::$iteratorConfig)
             ->build();
     }
 }

@@ -36,6 +36,11 @@ return array(
             'class'   => 'Aws\DynamoDb\DynamoDbClient'
         ),
 
+        'ec2' => array(
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Ec2\Ec2Client'
+        ),
+
         'elasticloadbalancing' => array(
             'extends' => 'default_settings',
             'class'   => 'Aws\ElasticLoadBalancing\ElasticLoadBalancingClient'
