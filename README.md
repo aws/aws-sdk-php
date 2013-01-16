@@ -1,13 +1,16 @@
 # AWS SDK for PHP 2
 
-The AWS SDK for PHP 2 enables PHP developers to build solutions with Amazon Simple Storage Service (Amazon S3), Amazon
-DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP 2, developers can get started in minutes with a single,
-downloadable `.phar` file, or by using [Composer](http://getcomposer.org).
+The **AWS SDK for PHP** enables PHP developers to easily interface with AWS services and build solutions with Amazon
+Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP, developers can
+get started in minutes by using Composer – by requiring the ``aws/aws-sdk-php`` package – or by downloading a `single
+phar file <http://pear.amazonwebservices.com/get/aws.phar>`_.
 
-This latest addition to the AWS SDKs family provides developers with a more modern, extensible, easy to use, and
-performant AWS client for PHP. This new version is built on top of [Guzzle](http://guzzlephp.org), a PHP HTTP client
-framework, which provides increased performance, persistent connection management, and an extensible plug-in system.
-The AWS SDK for PHP 2 requires PHP 5.3.2.
+* [AWS SDK for PHP website](http://aws.amazon.com/sdkforphp2)
+* [API documentation](http://docs.amazonwebservices.com/aws-sdk-php-2/latest/)
+* [AWS SDK for PHP forum](https://forums.aws.amazon.com/forum.jspa?forumID=80)
+* [Issue Tracker](https://github.com/aws/aws-sdk-php/issues)
+* [AWS SDK for PHP on Packagist](https://packagist.org/packages/aws/aws-sdk-php)
+* [License](http://aws.amazon.com/apache2.0/)
 
 ## Table of Contents
 
@@ -29,7 +32,6 @@ The AWS SDK for PHP 2 requires PHP 5.3.2.
     * [Using a Custom Configuration File](#using-a-custom-configuration-file)
 1. **[More Examples](#more-examples)**
 1. **[Contributing to the SDK](#contributing-to-the-sdk)**
-1. **[Additional Information](#additional-information)**
 
 ## New Features
 
@@ -568,12 +570,3 @@ GitHub. Here are a few things to keep in mind for your contributions:
    standards or goals.
 6. If you would like to implement support for an AWS service that is not yet available in the SDK, please talk to us
    beforehand to avoid any duplication of effort.
-
-## Additional Information
-
-* AWS SDK for PHP: <http://aws.amazon.com/sdkforphp2>
-* API documentation: <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/>
-* PHP discussion forum: <https://forums.aws.amazon.com/forum.jspa?forumID=80>
-* Issue Tracker: <https://github.com/aws/aws-sdk-php/issues>
-* Packagist: <https://packagist.org/packages/aws/aws-sdk-php>
-* License: <http://aws.amazon.com/apache2.0/>
