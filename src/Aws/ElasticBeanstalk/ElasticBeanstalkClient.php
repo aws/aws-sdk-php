@@ -104,7 +104,7 @@ class ElasticBeanstalkClient extends AbstractClient
     {
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'))
+            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticbeanstalk-2010-12-01.php'))
             ->build();
     }
 }

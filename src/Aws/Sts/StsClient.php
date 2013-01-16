@@ -81,7 +81,7 @@ class StsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sts-2011-06-15.php'
             ))
             ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
                 // Always need long term credentials

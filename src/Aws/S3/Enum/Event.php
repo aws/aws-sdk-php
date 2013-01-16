@@ -23,5 +23,5 @@ use Aws\Common\Enum;
  */
 class Event extends Enum
 {
-    const S3_REDUCED_REDUNDANCY_LOST_OBJECT = 's3:ReducedRedundancyLostObject';
+    const REDUCED_REDUNDANCY_LOST_OBJECT = 's3:ReducedRedundancyLostObject';
 }

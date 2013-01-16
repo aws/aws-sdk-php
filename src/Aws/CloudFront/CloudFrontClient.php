@@ -97,7 +97,7 @@ class CloudFrontClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php',
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudfront-2012-05-05.php',
                 Options::SIGNATURE => new CloudFrontSignature()
             ))
             ->setExceptionParser(new DefaultXmlExceptionParser())

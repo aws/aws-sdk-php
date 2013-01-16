@@ -237,7 +237,7 @@ class Ec2Client extends AbstractClient
     {
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'))
+            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-2012-12-01.php'))
             ->setIteratorsConfig(self::$iteratorConfig)
             ->build();
     }

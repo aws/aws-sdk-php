@@ -175,7 +175,7 @@ class S3Client extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SIGNATURE => new S3Signature(),
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-2006-03-01.php'
             ))
             ->setExceptionParser(new S3ExceptionParser())
             ->setIteratorsConfig(array(

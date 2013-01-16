@@ -97,7 +97,7 @@ class GlacierClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php',
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/glacier-2012-06-01.php',
                 // Set default value for "accountId" for all requests
                 'command.params' => array(
                     'accountId'               => '-',

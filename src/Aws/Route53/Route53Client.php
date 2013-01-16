@@ -82,7 +82,7 @@ class Route53Client extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/route53-2012-02-29.php'
             ))
             ->setIteratorsConfig(array(
                 'limit_param' => 'MaxItems',

@@ -121,7 +121,7 @@ class DynamoDbClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/dynamodb-2011-12-05.php'
             ))
             ->addClientResolver($exponentialBackoffResolver)
             ->setExceptionParser(new JsonQueryExceptionParser())

@@ -94,7 +94,7 @@ class DataPipelineClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/client.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/datapipeline-2012-10-29.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array(
