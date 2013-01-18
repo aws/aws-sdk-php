@@ -14,15 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElasticBeanstalk\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\ElasticBeanstalk\Exception;
 
 /**
- * Contains enumerable ValueType values
+ * The specified S3 bucket does not belong to the S3 region in which the service is running.
  */
-class ValueType extends Enum
-{
-    const SCALAR_TYPE = 'Scalar';
-    const LIST_TYPE = 'List';
-}
+class S3LocationNotInServiceRegionException extends ElasticBeanstalkException {}

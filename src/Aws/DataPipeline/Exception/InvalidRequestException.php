@@ -17,7 +17,7 @@
 namespace Aws\DataPipeline\Exception;
 
 /**
- * The request was not valid. Check that your request was properly formatted and signed with the correct authentication
- * .
+ * The request was not valid. Verify that your request was properly formatted, that the signature was generated with th
+ * e correct credentials, and that you haven&#039;t exceeded any of the service limits for your account.
  */
 class InvalidRequestException extends DataPipelineException {}

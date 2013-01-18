@@ -17,6 +17,6 @@
 namespace Aws\DataPipeline\Exception;
 
 /**
- * The specified pipeline was not found. Check that you used the correct identifier.
+ * The specified pipeline was not found. Verify that you used the correct user and account identifiers.
  */
 class PipelineNotFoundException extends DataPipelineException {}

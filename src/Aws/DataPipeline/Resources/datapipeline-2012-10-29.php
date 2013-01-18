@@ -15,7 +15,6 @@
  */
 
 return array (
-    'apiVersion' => '2012-10-29',
     'endpointPrefix' => 'datapipeline',
     'serviceFullName' => 'AWS Data Pipeline',
     'serviceType' => 'json',
@@ -23,6 +22,7 @@ return array (
     'targetPrefix' => 'DataPipeline.',
     'signatureVersion' => 'v4',
     'namespace' => 'DataPipeline',
+    'apiVersion' => '2012-10-29',
     'operations' => array(
         'ActivatePipeline' => array(
             'httpMethod' => 'POST',

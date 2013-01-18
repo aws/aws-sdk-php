@@ -14,15 +14,10 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElasticBeanstalk\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\ElasticBeanstalk\Exception;
 
 /**
- * Contains enumerable ValueType values
+ * Unable to perform the specified operation because the user does not have enough privileges for one of more downstrea
+ * m aws services
  */
-class ValueType extends Enum
-{
-    const SCALAR_TYPE = 'Scalar';
-    const LIST_TYPE = 'List';
-}
+class InsufficientPrivilegesException extends ElasticBeanstalkException {}

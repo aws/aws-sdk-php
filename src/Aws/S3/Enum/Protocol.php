@@ -14,15 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElasticBeanstalk\Enum;
+namespace Aws\S3\Enum;
 
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable ValueType values
+ * Contains enumerable Protocol values
  */
-class ValueType extends Enum
+class Protocol extends Enum
 {
-    const SCALAR_TYPE = 'Scalar';
-    const LIST_TYPE = 'List';
+    const HTTP = 'http';
+    const HTTPS = 'https';
 }

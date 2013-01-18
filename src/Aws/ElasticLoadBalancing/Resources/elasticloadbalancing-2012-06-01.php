@@ -15,7 +15,6 @@
  */
 
 return array (
-    'apiVersion' => '2012-06-01',
     'endpointPrefix' => 'elasticloadbalancing',
     'serviceFullName' => 'Elastic Load Balancing',
     'serviceType' => 'query',
@@ -23,6 +22,7 @@ return array (
     'signatureVersion' => 'v2',
     'memberedLists' => true,
     'namespace' => 'ElasticLoadBalancing',
+    'apiVersion' => '2012-06-01',
     'operations' => array(
         'ApplySecurityGroupsToLoadBalancer' => array(
             'httpMethod' => 'POST',
@@ -1894,6 +1894,22 @@ return array (
                     ),
                 ),
             ),
+        ),
+    ),
+    'iterators' => array(
+        'DescribeInstanceHealth' => array(
+            'result_key' => 'InstanceStates',
+        ),
+        'DescribeLoadBalancerPolicies' => array(
+            'result_key' => 'PolicyDescriptions',
+        ),
+        'DescribeLoadBalancerPolicyTypes' => array(
+            'result_key' => 'PolicyTypeDescriptions',
+        ),
+        'DescribeLoadBalancers' => array(
+            'token_param' => 'Marker',
+            'token_key' => 'NextMarker',
+            'result_key' => 'LoadBalancerDescriptions',
         ),
     ),
 );
