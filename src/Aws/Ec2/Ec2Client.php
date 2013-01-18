@@ -24,7 +24,7 @@ use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Client to interact with Amazon Elastic Compute Cloud
+ * Client to interact with Amazon EC2
  *
  * @method Model activateLicense(array $args = array()) {@command ec2 ActivateLicense}
  * @method Model allocateAddress(array $args = array()) {@command ec2 AllocateAddress}
@@ -174,63 +174,6 @@ use Guzzle\Service\Resource\Model;
  */
 class Ec2Client extends AbstractClient
 {
-    protected static $iteratorConfig = array(
-        'operations' => array(
-            'DescribeAddresses' => array('result_key' => 'Addresses'),
-            'DescribeAvailabilityZones' => array('result_key' => 'AvailabilityZones'),
-            'DescribeBundleTasks' => array('result_key' => 'BundleTasks'),
-            'DescribeConversionTasks' => array('result_key' => 'ConversionTasks'),
-            'DescribeCustomerGateways' => array('result_key' => 'CustomerGateways'),
-            'DescribeDhcpOptions' => array('result_key' => 'DhcpOptions'),
-            'DescribeExportTasks' => array('result_key' => 'ExportTasks'),
-            'DescribeImages' => array('result_key' => 'Images'),
-            'DescribeInstanceStatus' => array(
-                'result_key'  => 'InstanceStatuses',
-                'limit_key'   => 'MaxResults',
-                'token_key'   => 'NextToken',
-                'token_param' => 'NextToken'
-            ),
-            'DescribeInstances' => array('result_key' => 'Reservations'),
-            'DescribeInternetGateways' => array('result_key' => 'InternetGateways'),
-            'DescribeKeyPairs' => array('result_key' => 'KeyPairs'),
-            'DescribeLicenses' => array('result_key' => 'Licenses'),
-            'DescribeNetworkAcls' => array('result_key' => 'NetworkAcls'),
-            'DescribeNetworkInterfaces' => array('result_key' => 'NetworkInterfaces'),
-            'DescribePlacementGroups' => array('result_key' => 'PlacementGroups'),
-            'DescribeRegions' => array('result_key' => 'Regions'),
-            'DescribeReservedInstances' => array('result_key' => 'ReservedInstances'),
-            'DescribeReservedInstancesListings' => array('result_key' => 'ReservedInstancesListings'),
-            'DescribeReservedInstancesOfferings' => array(
-                'result_key'  => 'ReservedInstancesOfferings',
-                'limit_key'   => 'MaxResults',
-                'token_key'   => 'NextToken',
-                'token_param' => 'NextToken'
-            ),
-            'DescribeRouteTables' => array('result_key' => 'RouteTables'),
-            'DescribeSecurityGroups' => array('result_key' => 'SecurityGroups'),
-            'DescribeSnapshots' => array('result_key' => 'Snapshots'),
-            'DescribeSpotInstanceRequests' => array('result_key' => 'SpotInstanceRequests'),
-            'DescribeSpotPriceHistory' => array(
-                'result_key'  => 'SpotPriceHistory',
-                'limit_key'   => 'MaxResults',
-                'token_key'   => 'NextToken',
-                'token_param' => 'NextToken'
-            ),
-            'DescribeSubnets' => array('result_key' => 'Subnets'),
-            'DescribeTags' => array('result_key' => 'Tags'),
-            'DescribeVolumeStatus' => array(
-                'result_key'  => 'VolumeStatuses',
-                'limit_key'   => 'MaxResults',
-                'token_key'   => 'NextToken',
-                'token_param' => 'NextToken'
-            ),
-            'DescribeVolumes' => array('result_key' => 'Volumes'),
-            'DescribeVpcs' => array('result_key' => 'Vpcs'),
-            'DescribeVpnConnections' => array('result_key' => 'VpnConnections'),
-            'DescribeVpnGateways' => array('result_key' => 'VpnGateways'),
-        )
-    );
-
     /**
      * Factory method to create a new AWS Elastic Beanstalk client using an array of configuration options:
      *
@@ -276,7 +219,6 @@ class Ec2Client extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-2012-12-01.php'))
-            ->setIteratorsConfig(self::$iteratorConfig)
             ->build();
     }
 }

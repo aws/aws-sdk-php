@@ -436,6 +436,10 @@ class ClientBuilder
             $config->set(Options::SERVICE, $description->getData('endpointPrefix'));
         }
 
+        if ($iterators = $description->getData('iterators')) {
+            $this->setIteratorsConfig($iterators);
+        }
+
         if (!$config->get(Options::REGION)) {
             if (!$description->getData('globalEndpoint')) {
                 throw new InvalidArgumentException('A region is required when using ' . $config->get(Options::SERVICE));
