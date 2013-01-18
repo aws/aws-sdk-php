@@ -15,13 +15,15 @@
  */
 
 return array (
-    'apiVersion' => '2006-03-01',
     'endpointPrefix' => 's3',
-    'serviceFullName' => 'Amazon S3',
+    'serviceFullName' => 'Amazon Simple Storage Solution',
+    'serviceAbbreviation' => 'Amazon S3',
     'serviceType' => 'rest-xml',
     'timestampFormat' => 'rfc822',
+    'globalEndpoint' => 's3.amazonaws.com',
     'signatureVersion' => 's3',
     'namespace' => 'S3',
+    'apiVersion' => '2006-03-01',
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',
@@ -2311,6 +2313,25 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'RedirectAllRequestsTo' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'HostName' => array(
+                            'required' => true,
+                            'description' => 'Name of the host where requests will be redirected.',
+                            'type' => 'string',
+                        ),
+                        'Protocol' => array(
+                            'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
+                            'type' => 'string',
+                            'enum' => array(
+                                'http',
+                                'https',
+                            ),
+                        ),
+                    ),
+                ),
                 'IndexDocument' => array(
                     'type' => 'object',
                     'location' => 'xml',
@@ -2330,6 +2351,62 @@ return array (
                             'required' => true,
                             'description' => 'The object key name to use when a 4XX class error occurs.',
                             'type' => 'string',
+                        ),
+                    ),
+                ),
+                'RoutingRules' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'RoutingRule',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Condition' => array(
+                                'description' => 'A container for describing a condition that must be met for the specified redirect to apply. For example, 1. If request is for pages in the /docs folder, redirect to the /documents folder. 2. If request results in HTTP error 4xx, redirect request to another host where you might process the error.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'KeyPrefixEquals' => array(
+                                        'description' => 'The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied.',
+                                        'type' => 'string',
+                                    ),
+                                    'HttpErrorCodeReturnedEquals' => array(
+                                        'description' => 'The HTTP error code when the redirect is applied. In the event of an error, if the error code equals this value, then the specified redirect is applied. Required when parent element Condition is specified and sibling KeyPrefixEquals is not specified. If both are specified, then both must be true for the redirect to be applied.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'Redirect' => array(
+                                'required' => true,
+                                'description' => 'Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can can specify a different error code to return.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'ReplaceKeyPrefixWith' => array(
+                                        'description' => 'The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with KeyPrefixEquals set to docs/ and in the Redirect set ReplaceKeyPrefixWith to /documents. Not required if one of the siblings is present. Can be present only if ReplaceKeyWith is not provided.',
+                                        'type' => 'string',
+                                    ),
+                                    'ReplaceKeyWith' => array(
+                                        'description' => 'The specific object key to use in the redirect request. For example, redirect request to error.html. Not required if one of the sibling is present. Can be present only if ReplaceKeyPrefixWith is not provided.',
+                                        'type' => 'string',
+                                    ),
+                                    'HttpRedirectCode' => array(
+                                        'description' => 'The HTTP redirect code to use on the response. Not required if one of the siblings is present.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'HostName' => array(
+                                'required' => true,
+                                'description' => 'Name of the host where requests will be redirected.',
+                                'type' => 'string',
+                            ),
+                            'Protocol' => array(
+                                'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
+                                'type' => 'string',
+                                'enum' => array(
+                                    'http',
+                                    'https',
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3558,6 +3635,20 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'RedirectAllRequestsTo' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'HostName' => array(
+                            'description' => 'Name of the host where requests will be redirected.',
+                            'type' => 'string',
+                        ),
+                        'Protocol' => array(
+                            'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
                 'IndexDocument' => array(
                     'type' => 'object',
                     'location' => 'xml',
@@ -3575,6 +3666,57 @@ return array (
                         'Key' => array(
                             'description' => 'The object key name to use when a 4XX class error occurs.',
                             'type' => 'string',
+                        ),
+                    ),
+                ),
+                'RoutingRules' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'RoutingRule',
+                        'type' => 'object',
+                        'sentAs' => 'RoutingRule',
+                        'properties' => array(
+                            'Condition' => array(
+                                'description' => 'A container for describing a condition that must be met for the specified redirect to apply. For example, 1. If request is for pages in the /docs folder, redirect to the /documents folder. 2. If request results in HTTP error 4xx, redirect request to another host where you might process the error.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'KeyPrefixEquals' => array(
+                                        'description' => 'The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied.',
+                                        'type' => 'string',
+                                    ),
+                                    'HttpErrorCodeReturnedEquals' => array(
+                                        'description' => 'The HTTP error code when the redirect is applied. In the event of an error, if the error code equals this value, then the specified redirect is applied. Required when parent element Condition is specified and sibling KeyPrefixEquals is not specified. If both are specified, then both must be true for the redirect to be applied.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'Redirect' => array(
+                                'description' => 'Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can can specify a different error code to return.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'ReplaceKeyPrefixWith' => array(
+                                        'description' => 'The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with KeyPrefixEquals set to docs/ and in the Redirect set ReplaceKeyPrefixWith to /documents. Not required if one of the siblings is present. Can be present only if ReplaceKeyWith is not provided.',
+                                        'type' => 'string',
+                                    ),
+                                    'ReplaceKeyWith' => array(
+                                        'description' => 'The specific object key to use in the redirect request. For example, redirect request to error.html. Not required if one of the sibling is present. Can be present only if ReplaceKeyPrefixWith is not provided.',
+                                        'type' => 'string',
+                                    ),
+                                    'HttpRedirectCode' => array(
+                                        'description' => 'The HTTP redirect code to use on the response. Not required if one of the siblings is present.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'HostName' => array(
+                                'description' => 'Name of the host where requests will be redirected.',
+                                'type' => 'string',
+                            ),
+                            'Protocol' => array(
+                                'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -3606,6 +3748,12 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-expiration',
+                ),
+                'Restore' => array(
+                    'description' => 'Provides information about object restoration operation and expiration time of the restored object copy.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-restore',
                 ),
                 'WebsiteRedirectLocation' => array(
                     'description' => 'When a bucket is configured as a website, you can set this metadata on the object so the website endpoint will evaluate the request for the object as a 301 redirect to another object in the same bucket or an external URL.',
@@ -3782,6 +3930,12 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-expiration',
+                ),
+                'Restore' => array(
+                    'description' => 'Provides information about object restoration operation and expiration time of the restored object copy.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-restore',
                 ),
                 'WebsiteRedirectLocation' => array(
                     'description' => 'When a bucket is configured as a website, you can set this metadata on the object so the website endpoint will evaluate the request for the object as a 301 redirect to another object in the same bucket or an external URL.',
