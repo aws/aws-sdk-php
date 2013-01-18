@@ -179,9 +179,9 @@ class Ec2Client extends AbstractClient
             'DescribeImages' => array('result_key' => 'Images'),
             'DescribeInstanceStatus' => array(
                 'limit_key'   => 'MaxResults',
-                'result_key'  => 'Images',
+                'result_key'  => 'InstanceStatuses',
                 'token_key'   => 'NextToken',
-                'token_param' => 'NextToken',
+                'token_param' => 'NextToken'
             ),
             'DescribeInstances',
             'DescribeReservedInstancesOfferings' => array(

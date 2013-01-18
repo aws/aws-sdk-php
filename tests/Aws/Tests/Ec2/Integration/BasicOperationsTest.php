@@ -80,11 +80,9 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Get the IDs of those two instances.');
         $instanceIds = array();
-        foreach ($result->get('Reservations') as $reservation) {
-            foreach ($reservation['Instances'] as $instance) {
-                $this->assertRegExp('/^i\-[a-f0-9]{8}/', $instance['InstanceId']);
-                $instanceIds[] = $instance['InstanceId'];
-            }
+        foreach ($result['Instances'] as $instance) {
+            $this->assertRegExp('/^i\-[a-f0-9]{8}/', $instance['InstanceId']);
+            $instanceIds[] = $instance['InstanceId'];
         }
         $this->assertCount(2, $instanceIds);
 

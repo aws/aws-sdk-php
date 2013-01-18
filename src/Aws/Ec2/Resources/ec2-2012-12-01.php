@@ -5141,9 +5141,12 @@ return array (
                 ),
                 'PublicKeyMaterial' => array(
                     'required' => true,
-                    'description' => 'The public key portion of the key pair being imported.',
+                    'description' => 'The public key portion of the key pair being imported. This value will be base64 encoded for you automatically.',
                     'type' => 'string',
                     'location' => 'aws.query',
+                    'filters' => array(
+                        'base64_encode',
+                    ),
                 ),
             ),
         ),
