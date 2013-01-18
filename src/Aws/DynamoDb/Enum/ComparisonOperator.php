@@ -25,11 +25,19 @@ class ComparisonOperator extends Enum
 {
     const EQ = 'EQ';
     const NE = 'NE';
-    const IN = 'IN';
     const LE = 'LE';
     const LT = 'LT';
     const GE = 'GE';
     const GT = 'GT';
+
+    const EQUAL = 'EQ';
+    const NOT_EQUAL = 'NE';
+    const LESS_THAN_OR_EQUAL = 'LE';
+    const LESS_THAN = 'LT';
+    const GREATER_THAN_OR_EQUAL = 'GE';
+    const GREATER_THAN = 'GT';
+
+    const IN = 'IN';
     const BETWEEN = 'BETWEEN';
     const NOT_NULL = 'NOT_NULL';
     const NULL = 'NULL';
