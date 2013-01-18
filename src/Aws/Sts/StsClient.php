@@ -28,6 +28,7 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with AWS Security Token Service
  *
+ * @method Model assumeRole(array $args = array()) {@command sts AssumeRole}
  * @method Model getFederationToken(array $args = array()) {@command sts GetFederationToken}
  * @method Model getSessionToken(array $args = array()) {@command sts GetSessionToken}
  */

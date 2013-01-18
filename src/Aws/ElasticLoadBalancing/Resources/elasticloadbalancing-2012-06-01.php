@@ -1897,19 +1897,21 @@ return array (
         ),
     ),
     'iterators' => array(
-        'DescribeInstanceHealth' => array(
-            'result_key' => 'InstanceStates',
-        ),
-        'DescribeLoadBalancerPolicies' => array(
-            'result_key' => 'PolicyDescriptions',
-        ),
-        'DescribeLoadBalancerPolicyTypes' => array(
-            'result_key' => 'PolicyTypeDescriptions',
-        ),
-        'DescribeLoadBalancers' => array(
-            'token_param' => 'Marker',
-            'token_key' => 'NextMarker',
-            'result_key' => 'LoadBalancerDescriptions',
+        'operations' => array(
+            'DescribeInstanceHealth' => array(
+                'result_key' => 'InstanceStates',
+            ),
+            'DescribeLoadBalancerPolicies' => array(
+                'result_key' => 'PolicyDescriptions',
+            ),
+            'DescribeLoadBalancerPolicyTypes' => array(
+                'result_key' => 'PolicyTypeDescriptions',
+            ),
+            'DescribeLoadBalancers' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'NextMarker',
+                'result_key' => 'LoadBalancerDescriptions',
+            ),
         ),
     ),
 );

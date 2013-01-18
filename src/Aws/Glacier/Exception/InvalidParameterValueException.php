@@ -17,6 +17,6 @@
 namespace Aws\Glacier\Exception;
 
 /**
- * Exception that occurs when a InvalidParameterValueException error is encountered
+ * Returned if a parameter of the request is incorrectly specified.
  */
 class InvalidParameterValueException extends GlacierException {}

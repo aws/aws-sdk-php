@@ -15,7 +15,6 @@
  */
 
 return array (
-    'apiVersion' => '2012-02-29',
     'endpointPrefix' => 'route53',
     'serviceFullName' => 'Amazon Route 53',
     'serviceAbbreviation' => 'Route 53',
@@ -23,6 +22,7 @@ return array (
     'globalEndpoint' => 'route53.amazonaws.com',
     'signatureVersion' => 'v3https',
     'namespace' => 'Route53',
+    'apiVersion' => '2012-02-29',
     'operations' => array(
         'ChangeResourceRecordSets' => array(
             'httpMethod' => 'POST',

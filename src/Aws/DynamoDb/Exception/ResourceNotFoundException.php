@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * The resource which is being requested does not exist.
+ * This exception is thrown when the resource which is being attempted to be changed is in use.
  */
 class ResourceNotFoundException extends DynamoDbException {}

@@ -19,7 +19,7 @@ namespace Aws\Route53\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Record Type values
+ * Contains enumerable RecordType values
  */
 class RecordType extends Enum
 {

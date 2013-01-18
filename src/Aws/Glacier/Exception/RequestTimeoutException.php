@@ -17,6 +17,6 @@
 namespace Aws\Glacier\Exception;
 
 /**
- * Exception that occurs when a RequestTimeoutException error is encountered
+ * Returned if, when uploading an archive, Amazon Glacier times out while receiving the upload.
  */
 class RequestTimeoutException extends GlacierException {}

@@ -14,9 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Glacier\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Returned if a required header or parameter is missing from the request.
+ * Contains enumerable AttributeType values
  */
-class MissingParameterValueException extends GlacierException {}
+class AttributeType extends Enum
+{
+    const S = 'S';
+    const N = 'N';
+    const B = 'B';
+}

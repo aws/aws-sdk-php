@@ -37,7 +37,7 @@ use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Client to interact with Amazon S3
+ * Client to interact with Amazon Simple Storage Solution
  *
  * @method Model abortMultipartUpload(array $args = array()) {@command s3 AbortMultipartUpload}
  * @method Model completeMultipartUpload(array $args = array()) {@command s3 CompleteMultipartUpload}

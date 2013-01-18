@@ -17,6 +17,6 @@
 namespace Aws\Glacier\Exception;
 
 /**
- * Exception that occurs when a LimitExceededException error is encountered
+ * Returned if the request results in a vault or account limit being exceeded.
  */
 class LimitExceededException extends GlacierException {}

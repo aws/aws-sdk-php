@@ -17,6 +17,6 @@
 namespace Aws\Glacier\Exception;
 
 /**
- * Exception that occurs when a ResourceNotFoundException error is encountered
+ * Returned if the specified resource, such as a vault, upload ID, or job ID, does not exist.
  */
 class ResourceNotFoundException extends GlacierException {}

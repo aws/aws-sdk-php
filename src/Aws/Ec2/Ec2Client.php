@@ -24,7 +24,7 @@ use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Client to interact with Amazon EC2
+ * Client to interact with Amazon Elastic Compute Cloud
  *
  * @method Model activateLicense(array $args = array()) {@command ec2 ActivateLicense}
  * @method Model allocateAddress(array $args = array()) {@command ec2 AllocateAddress}

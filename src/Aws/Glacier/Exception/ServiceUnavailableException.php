@@ -17,6 +17,6 @@
 namespace Aws\Glacier\Exception;
 
 /**
- * Exception that occurs when a ServiceUnavailableException error is encountered
+ * Returned if the service cannot complete the request.
  */
 class ServiceUnavailableException extends GlacierException {}

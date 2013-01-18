@@ -15,7 +15,6 @@
  */
 
 return array (
-    'apiVersion' => '2011-12-05',
     'endpointPrefix' => 'dynamodb',
     'serviceFullName' => 'Amazon DynamoDB',
     'serviceAbbreviation' => 'DynamoDB',
@@ -24,6 +23,7 @@ return array (
     'targetPrefix' => 'DynamoDB_20111205.',
     'signatureVersion' => 'v4',
     'namespace' => 'DynamoDb',
+    'apiVersion' => '2011-12-05',
     'operations' => array(
         'BatchGetItem' => array(
             'httpMethod' => 'POST',

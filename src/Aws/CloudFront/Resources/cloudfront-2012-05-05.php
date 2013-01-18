@@ -15,7 +15,6 @@
  */
 
 return array (
-    'apiVersion' => '2012-05-05',
     'endpointPrefix' => 'cloudfront',
     'serviceFullName' => 'Amazon CloudFront',
     'serviceAbbreviation' => 'CloudFront',
@@ -23,6 +22,7 @@ return array (
     'globalEndpoint' => 'cloudfront.amazonaws.com',
     'signatureVersion' => 'cloudfront',
     'namespace' => 'CloudFront',
+    'apiVersion' => '2012-05-05',
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',

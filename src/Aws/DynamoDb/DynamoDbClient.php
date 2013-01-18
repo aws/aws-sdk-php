@@ -32,7 +32,7 @@ use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Client for interacting with Amazon DynamoDB
+ * Client to interact with Amazon DynamoDB
  *
  * @method Model batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
  * @method Model batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
@@ -45,7 +45,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model putItem(array $args = array()) {@command dynamodb PutItem}
  * @method Model query(array $args = array()) {@command dynamodb Query}
  * @method Model scan(array $args = array()) {@command dynamodb Scan}
- * @method Model updateItem(array $arg = array()) {@command dynamodb UpdateItem}
+ * @method Model updateItem(array $args = array()) {@command dynamodb UpdateItem}
  * @method Model updateTable(array $args = array()) {@command dynamodb UpdateTable}
  */
 class DynamoDbClient extends AbstractClient
