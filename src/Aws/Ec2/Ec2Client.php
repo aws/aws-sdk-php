@@ -227,7 +227,7 @@ class Ec2Client extends AbstractClient
             'DescribeVolumes' => array('result_key' => 'Volumes'),
             'DescribeVpcs' => array('result_key' => 'Vpcs'),
             'DescribeVpnConnections' => array('result_key' => 'VpnConnections'),
-            'DescribeVpnGateways' => array('result_key' => 'VpnConnections'),
+            'DescribeVpnGateways' => array('result_key' => 'VpnGateways'),
         )
     );
 
