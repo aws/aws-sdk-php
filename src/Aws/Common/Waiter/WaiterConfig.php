@@ -32,10 +32,10 @@ class WaiterConfig extends Collection
     const IGNORE_ERRORS = 'ignore_errors';
     const DESCRIPTION = 'description';
     const SUCCESS_TYPE = 'success.type';
-    const SUCCESS_OUTPUT_KEY = 'success.output_key';
+    const SUCCESS_PATH = 'success.path';
     const SUCCESS_VALUE = 'success.value';
     const FAILURE_TYPE = 'failure.type';
-    const FAILURE_OUTPUT_KEY = 'failure.output_key';
+    const FAILURE_PATH = 'failure.path';
     const FAILURE_VALUE = 'failure.value';
 
     /**

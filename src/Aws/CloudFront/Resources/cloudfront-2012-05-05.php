@@ -4514,7 +4514,7 @@ return array (
     'waiters' => array(
         '__default__' => array(
             'success.type' => 'output',
-            'success.output_key' => 'Status',
+            'success.path' => 'Status',
         ),
         'StreamingDistributionDeployed' => array(
             'operation' => 'GetStreamingDistribution',

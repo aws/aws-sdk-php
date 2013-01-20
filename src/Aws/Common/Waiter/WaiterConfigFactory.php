@@ -31,27 +31,19 @@ class WaiterConfigFactory implements WaiterFactoryInterface
     protected $config;
 
     /**
-     * @var WaiterFactoryInterface Waiter factory that has precedence over the configuration factory
-     */
-    protected $beforeFactory;
-
-    /**
      * @var InflectorInterface Inflector used to inflect class names
      */
     protected $inflector;
 
     /**
      * @param array                  $config        Array of configuration directives
-     * @param WaiterFactoryInterface $beforeFactory Factory to check before invoking the config factory
      * @param InflectorInterface $inflector  Inflector used to resolve class names
      */
     public function __construct(
         array $config,
-        WaiterFactoryInterface $beforeFactory = null,
         InflectorInterface $inflector = null
     ) {
         $this->config = $config;
-        $this->beforeFactory = $beforeFactory;
         $this->inflector = $inflector ?: Inflector::getDefault();
     }
 
@@ -60,17 +52,17 @@ class WaiterConfigFactory implements WaiterFactoryInterface
      */
     public function factory($waiter)
     {
-        $waiterName = $this->inflector->camel($waiter);
+        return new ConfigResourceWaiter(
+            $this->getWaiterConfig($this->inflector->camel($waiter))
+        );
+    }
 
-        if ($this->beforeFactory) {
-            try {
-                return $this->beforeFactory->factory($waiterName);
-            } catch (\Exception $e) {
-                // Ignore this exception
-            }
-        }
-
-        return new ConfigResourceWaiter($this->getWaiterConfig($waiterName));
+    /**
+     * {@inheritdoc}
+     */
+    public function canCreate($waiter)
+    {
+        return isset($this->config[$waiter]);
     }
 
     /**
@@ -83,7 +75,7 @@ class WaiterConfigFactory implements WaiterFactoryInterface
      */
     protected function getWaiterConfig($name)
     {
-        if (!isset($this->config[$name])) {
+        if (!$this->canCreate($name)) {
             throw new InvalidArgumentException('No waiter found matching "' . $name . '"');
         }
 

@@ -3432,7 +3432,7 @@ return array (
         'TableExists' => array(
             'extends' => 'TableState',
             'success.type' => 'output',
-            'success.output_key' => 'Table/TableStatus',
+            'success.path' => 'Table/TableStatus',
             'success.value' => 'ACTIVE',
             'ignore_errors' => array(
                 'ResourceNotFoundException',

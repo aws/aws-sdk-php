@@ -66,6 +66,30 @@ class WaiterClassFactory implements WaiterFactoryInterface
      */
     public function factory($waiter)
     {
+        if (!($className = $this->getClassName($waiter))) {
+            throw new InvalidArgumentException("Waiter was not found matching {$waiter}.");
+        }
+
+        return new $className();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function canCreate($waiter)
+    {
+        return $this->getClassName($waiter) !== null;
+    }
+
+    /**
+     * Get the name of a waiter class
+     *
+     * @param string $waiter Waiter name
+     *
+     * @return string|null
+     */
+    protected function getClassName($waiter)
+    {
         $waiterName = $this->inflector->camel($waiter);
 
         // Determine the name of the class to load
@@ -73,15 +97,10 @@ class WaiterClassFactory implements WaiterFactoryInterface
         foreach ($this->namespaces as $namespace) {
             $potentialClassName = $namespace . '\\' . $waiterName;
             if (class_exists($potentialClassName)) {
-                $className = $potentialClassName;
-                break;
+                return $potentialClassName;
             }
         }
 
-        if (!$className) {
-            throw new InvalidArgumentException("Waiter was not found matching {$waiterName}.");
-        }
-
-        return new $className();
+        return null;
     }
 }

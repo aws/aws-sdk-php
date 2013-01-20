@@ -15486,7 +15486,7 @@ return array (
         'InstanceState' => array(
             'operation' => 'DescribeInstances',
             'input' => 'InstanceIds',
-            'acceptor.output_key' => 'Reservations/Instances/*/State/Name',
+            'acceptor.path' => 'Reservations/Instances/*/State/Name',
         ),
         'InstanceRunning' => array(
             'extends' => 'InstanceState',
@@ -15518,7 +15518,7 @@ return array (
         'ExportTaskState' => array(
             'operation' => 'DescribeExportTasks',
             'input' => 'ExportTaskIds',
-            'acceptor.output_key' => 'ExportTasks/*/State',
+            'acceptor.path' => 'ExportTasks/*/State',
         ),
         'ExportTaskCompleted' => array(
             'extends' => 'ExportTaskState',
@@ -15531,13 +15531,13 @@ return array (
         'SnapshotCompleted' => array(
             'operation' => 'DescribeSnapshots',
             'input' => 'SnapshotIds',
-            'success.output_key' => 'Snapshots/*/State',
+            'success.path' => 'Snapshots/*/State',
             'success.value' => 'completed',
         ),
         'SubnetAvailable' => array(
             'operation' => 'DescribeSubnets',
             'input' => 'SubnetIds',
-            'success.output_key' => 'Subnets/*/State',
+            'success.path' => 'Subnets/*/State',
             'success.value' => 'available',
         ),
         'VolumeStatus' => array(
@@ -15566,13 +15566,13 @@ return array (
         'VpcAvailable' => array(
             'operation' => 'DescribeVpc',
             'input' => 'VpcIds',
-            'success.output_key' => 'Vpcs/*/State',
+            'success.path' => 'Vpcs/*/State',
             'success.value' => 'available',
         ),
         'VpnConnectionState' => array(
             'Operation' => 'DescribeVpnConnections',
             'input' => 'VpnConnectionIds',
-            'acceptor.output_key' => 'VpnConnections/*/State',
+            'acceptor.path' => 'VpnConnections/*/State',
         ),
         'VpnConnectionAvailable' => array(
             'extends' => 'VpnConnectionState',
@@ -15592,7 +15592,7 @@ return array (
         'BundleTaskComplete' => array(
             'operation' => 'DescribeBundleTasks',
             'input' => 'BundleIds',
-            'acceptor.output_key' => 'BundleTasks/*/State',
+            'acceptor.path' => 'BundleTasks/*/State',
             'success.value' => 'complete',
             'failure.value' => array(
                 'failed',
@@ -15601,7 +15601,7 @@ return array (
         'ConversionTaskState' => array(
             'operation' => 'DescribeConversionTasks',
             'input' => 'ConversionTaskIds',
-            'acceptor.output_key' => 'ConversionTasks/*/State',
+            'acceptor.path' => 'ConversionTasks/*/State',
         ),
         'ConversionTaskCompleted' => array(
             'extends' => 'ConversionTaskState',
@@ -15618,7 +15618,7 @@ return array (
         'CustomerGatewayState' => array(
             'operation' => 'DescribeCustomerGateways',
             'input' => 'CustomerGatewayIds',
-            'acceptor.output_key' => 'CustomerGateways/*/State',
+            'acceptor.path' => 'CustomerGateways/*/State',
         ),
         'CustomerGatewayAvailable' => array(
             'extends' => 'CustomerGatewayState',

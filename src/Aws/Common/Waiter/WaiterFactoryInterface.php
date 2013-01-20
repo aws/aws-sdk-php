@@ -29,4 +29,13 @@ interface WaiterFactoryInterface
      * @return WaiterInterface
      */
     public function factory($waiter);
+
+    /**
+     * Check if the factory can create a waiter by a specific name
+     *
+     * @param string $waiter Name of the waiter to check
+     *
+     * @return bool
+     */
+    public function canCreate($waiter);
 }

@@ -26,6 +26,7 @@ use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Waiter\WaiterClassFactory;
+use Aws\Common\Waiter\CompositeWaiterFactory;
 use Aws\Common\Waiter\WaiterFactoryInterface;
 use Aws\Common\Waiter\WaiterConfigFactory;
 use Guzzle\Common\Collection;
@@ -189,10 +190,11 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     {
         if (!$this->waiterFactory) {
             $clientClass = get_class($this);
-            $this->waiterFactory = new WaiterConfigFactory(
-                $this->getDescription()->getData('waiters'),
-                new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter')
-            );
+            // Use a composite factory that checks for classes first, then config waiters
+            $this->waiterFactory = new CompositeWaiterFactory(array(
+                new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter'),
+                new WaiterConfigFactory($this->getDescription()->getData('waiters'))
+            ));
         }
 
         return $this->waiterFactory;

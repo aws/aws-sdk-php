@@ -174,7 +174,7 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
         if ($this->waiterConfig->get(WaiterConfig::SUCCESS_TYPE) == 'output' &&
             $this->checkPath(
                 $result,
-                $this->waiterConfig->get(WaiterConfig::SUCCESS_OUTPUT_KEY),
+                $this->waiterConfig->get(WaiterConfig::SUCCESS_PATH),
                 $this->waiterConfig->get(WaiterConfig::SUCCESS_VALUE)
             )
         ) {
@@ -183,7 +183,7 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
 
         // It did not finish waiting yet. Determine if we need to fail-fast based on the failure acceptor.
         if ($this->waiterConfig->get(WaiterConfig::FAILURE_TYPE) == 'output') {
-            $key = $this->waiterConfig->get(WaiterConfig::FAILURE_OUTPUT_KEY);
+            $key = $this->waiterConfig->get(WaiterConfig::FAILURE_PATH);
             if ($this->checkPath($result, $key, $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE))) {
                 // fast fail because the failure case was satisfied
                 throw new RuntimeException(
