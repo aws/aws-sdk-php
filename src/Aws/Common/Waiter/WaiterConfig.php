@@ -39,7 +39,7 @@ class WaiterConfig extends Collection
     const FAILURE_VALUE = 'failure.value';
 
     /**
-     * @param array $config Array of configuration directives
+     * @param array $data Array of configuration directives
      */
     public function __construct(array $data = array())
     {
