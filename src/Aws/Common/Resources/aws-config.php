@@ -22,51 +22,61 @@ return array(
         ),
 
         'cloudfront' => array(
+            'alias'   => 'CloudFront',
             'extends' => 'default_settings',
             'class'   => 'Aws\CloudFront\CloudFrontClient'
         ),
 
         'datapipeline' => array(
+            'alias'   => 'DataPipeline',
             'extends' => 'default_settings',
             'class'   => 'Aws\DataPipeline\DataPipelineClient'
         ),
 
         'dynamodb' => array(
+            'alias'   => 'DynamoDb',
             'extends' => 'default_settings',
             'class'   => 'Aws\DynamoDb\DynamoDbClient'
         ),
 
         'ec2' => array(
+            'alias'   => 'Ec2',
             'extends' => 'default_settings',
             'class'   => 'Aws\Ec2\Ec2Client'
         ),
 
         'elasticloadbalancing' => array(
+            'alias'   => 'ElasticLoadBalancing',
             'extends' => 'default_settings',
             'class'   => 'Aws\ElasticLoadBalancing\ElasticLoadBalancingClient'
         ),
 
         'elasticbeanstalk' => array(
+            'alias'   => 'ElasticBeanstalk',
             'extends' => 'default_settings',
             'class'   => 'Aws\ElasticBeanstalk\ElasticBeanstalkClient'
         ),
 
         'glacier' => array(
+            'alias'   => 'Glacier',
             'extends' => 'default_settings',
             'class'   => 'Aws\Glacier\GlacierClient'
         ),
 
         'route53' => array(
+            'alias'   => 'Route53',
             'extends' => 'default_settings',
             'class'   => 'Aws\Route53\Route53Client'
         ),
 
         's3' => array(
+            'alias'   => 'S3',
             'extends' => 'default_settings',
             'class'   => 'Aws\S3\S3Client'
         ),
 
         'sts' => array(
+            'alias'   => 'Sts',
             'extends' => 'default_settings',
             'class'   => 'Aws\Sts\StsClient'
         )
