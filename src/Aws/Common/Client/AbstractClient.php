@@ -27,6 +27,7 @@ use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Waiter\WaiterClassFactory;
 use Aws\Common\Waiter\WaiterFactoryInterface;
+use Aws\Common\Waiter\WaiterConfigFactory;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 
@@ -157,7 +158,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     public function waitUntil($waiter, $value = null, array $options = array())
     {
         $this->getWaiterFactory()->factory($waiter)
-            ->setResourceId($value)
+            ->setResource($value)
             ->setClient($this)
             ->setConfig($options)
             ->wait();
@@ -188,8 +189,9 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     {
         if (!$this->waiterFactory) {
             $clientClass = get_class($this);
-            $this->waiterFactory = new WaiterClassFactory(
-                substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter'
+            $this->waiterFactory = new WaiterConfigFactory(
+                $this->getDescription()->getData('waiters'),
+                new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter')
             );
         }
 

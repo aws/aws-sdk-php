@@ -30,14 +30,9 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
     protected $client;
 
     /**
-     * @var array Configuration data
-     */
-    protected $config;
-
-    /**
      * @var string Resource identifier
      */
-    protected $resourceId;
+    protected $resource;
 
     /**
      * Set the client associated with the waiter
@@ -56,13 +51,13 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
     /**
      * Set the way in which a resource is uniquely identified
      *
-     * @param string $resourceId Resource ID
+     * @param string $resource Resource ID
      *
      * @return self
      */
-    public function setResourceId($resourceId)
+    public function setResource($resource)
     {
-        $this->resourceId = $resourceId;
+        $this->resource = $resource;
 
         return $this;
     }
@@ -76,8 +71,8 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
             throw new RuntimeException('No client has been specified on the waiter');
         }
 
-        if (!$this->resourceId) {
-            throw new RuntimeException('No resource ID has been specified on the waiter');
+        if (!$this->resource) {
+            throw new RuntimeException('No resource has been specified on the waiter');
         }
 
         parent::wait();

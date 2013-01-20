@@ -24,10 +24,9 @@ use Aws\Common\Exception\RuntimeException;
 abstract class AbstractWaiter implements WaiterInterface
 {
     protected $attempts = 0;
-    protected $failures = 0;
-    protected $maxFailures = 3;
     protected $maxAttempts = 10;
     protected $interval = 0;
+    protected $config = array();
 
     /**
      * {@inheritdoc}
@@ -35,16 +34,6 @@ abstract class AbstractWaiter implements WaiterInterface
     public function setMaxAttempts($maxAttempts)
     {
         $this->maxAttempts = $maxAttempts;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setMaxFailures($maxFailures)
-    {
-        $this->maxFailures = $maxFailures;
 
         return $this;
     }
@@ -78,10 +67,6 @@ abstract class AbstractWaiter implements WaiterInterface
             $this->maxAttempts = $config['max_attempts'];
         }
 
-        if (isset($config['max_failures'])) {
-            $this->maxFailures = $config['max_failures'];
-        }
-
         return $this;
     }
 
@@ -91,21 +76,10 @@ abstract class AbstractWaiter implements WaiterInterface
     public function wait()
     {
         $this->attempts = 0;
-        $this->failures = 0;
 
         do {
-            try {
-                if ($this->doWait()) {
-                    break;
-                }
-            } catch (\Exception $e) {
-                if (++$this->failures >= $this->maxFailures) {
-                    throw new RuntimeException(
-                        'Maximum number of failures while waiting: ' . $this->failures,
-                        $e->getCode(),
-                        $e
-                    );
-                }
+            if ($this->doWait()) {
+                break;
             }
 
             if (++$this->attempts >= $this->maxAttempts) {

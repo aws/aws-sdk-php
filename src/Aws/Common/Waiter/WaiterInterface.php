@@ -31,15 +31,6 @@ interface WaiterInterface
     public function setMaxAttempts($maxAttempts);
 
     /**
-     * Set the maximum number of failures to allow while waiting
-     *
-     * @param int $maxFailures Max failures
-     *
-     * @return self
-     */
-    public function setMaxFailures($maxFailures);
-
-    /**
      * Set the amount of time to interval between attempts
      *
      * @param int $interval Interval in seconds

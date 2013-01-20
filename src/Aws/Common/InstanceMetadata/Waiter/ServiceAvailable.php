@@ -17,6 +17,7 @@
 namespace Aws\Common\InstanceMetadata\Waiter;
 
 use Aws\Common\Waiter\AbstractResourceWaiter;
+use Guzzle\Http\Exception\CurlException;
 
 /**
  * Waits until the instance metadata service is responding.  Will send up to
@@ -28,7 +29,7 @@ use Aws\Common\Waiter\AbstractResourceWaiter;
 class ServiceAvailable extends AbstractResourceWaiter
 {
     protected $interval = 5;
-    protected $maxFailures = 4;
+    protected $maxAttempts = 4;
 
     /**
      * {@inheritdoc}
@@ -36,10 +37,13 @@ class ServiceAvailable extends AbstractResourceWaiter
     public function doWait()
     {
         $request = $this->client->get();
-        $request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, 10)
-            ->set(CURLOPT_TIMEOUT, 10);
-        $request->send();
-
-        return true;
+        try {
+            $request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, 10)
+                ->set(CURLOPT_TIMEOUT, 10);
+            $request->send();
+            return true;
+        } catch (CurlException $e) {
+            return false;
+        }
     }
 }

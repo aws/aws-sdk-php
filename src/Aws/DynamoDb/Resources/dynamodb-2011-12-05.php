@@ -3420,4 +3420,28 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 20,
+            'max_attempts' => 25,
+        ),
+        'TableState' => array(
+            'operation' => 'DescribeTable',
+            'input' => 'TableName',
+        ),
+        'TableExists' => array(
+            'extends' => 'TableState',
+            'success.type' => 'output',
+            'success.output_key' => 'Table/TableStatus',
+            'success.value' => 'ACTIVE',
+            'ignore_errors' => array(
+                'ResourceNotFoundException',
+            ),
+        ),
+        'TableNotExists' => array(
+            'extends' => 'TableState',
+            'success.type' => 'error',
+            'success.value' => 'ResourceNotFoundException',
+        ),
+    ),
 );

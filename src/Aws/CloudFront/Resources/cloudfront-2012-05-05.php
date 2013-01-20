@@ -4511,4 +4511,37 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'success.type' => 'output',
+            'success.output_key' => 'Status',
+        ),
+        'StreamingDistributionDeployed' => array(
+            'operation' => 'GetStreamingDistribution',
+            'description' => 'Wait until a streaming distribution is deployed',
+            'interval' => 60,
+            'max_attempts' => 25,
+            'input' => 'vaultName',
+            'success.value' => 'Deployed',
+        ),
+        'DistributionDeployed' => array(
+            'operation' => 'GetDistribution',
+            'description' => 'Wait until a distribution is deployed',
+            'interval' => 60,
+            'max_attempts' => 25,
+            'input' => 'Id',
+            'success.value' => 'Deployed',
+        ),
+        'InvalidationCompleted' => array(
+            'operation' => 'GetInvalidation',
+            'description' => 'Wait until an invalidation has completed by specifying the distribution ID and invalidation ID.',
+            'interval' => 20,
+            'max_attempts' => 30,
+            'input' => array(
+                'DistributionId',
+                'Id',
+            ),
+            'success.value' => 'Completed',
+        ),
+    ),
 );

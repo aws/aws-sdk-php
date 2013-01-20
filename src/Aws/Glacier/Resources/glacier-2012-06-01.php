@@ -1506,4 +1506,26 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 3,
+            'max_attempts' => 15,
+        ),
+        'VaultState' => array(
+            'operation' => 'DescribeVault',
+            'input' => 'vaultName',
+        ),
+        'VaultExists' => array(
+            'extends' => 'VaultState',
+            'success.type' => 'output',
+            'ignore_errors' => array(
+                'ResourceNotFoundException',
+            ),
+        ),
+        'VaultNotExists' => array(
+            'extends' => 'VaultState',
+            'success.type' => 'error',
+            'success.value' => 'ResourceNotFoundException',
+        ),
+    ),
 );

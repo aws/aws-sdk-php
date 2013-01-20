@@ -4714,4 +4714,38 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 5,
+            'max_attempts' => 20,
+        ),
+        'BucketExists' => array(
+            'operation' => 'HeadBucket',
+            'description' => 'Wait until a bucket exists',
+            'input' => 'Bucket',
+            'success.type' => 'output',
+            'ignore_errors' => array(
+                'NoSuchBucket',
+            ),
+        ),
+        'BucketNotExists' => array(
+            'operation' => 'HeadBucket',
+            'description' => 'Wait until a bucket does not exist',
+            'input' => 'Bucket',
+            'success.type' => 'error',
+            'success.value' => 'NoSuchBucket',
+        ),
+        'ObjectExists' => array(
+            'operation' => 'HeadObject',
+            'description' => 'Wait until an object exists',
+            'input' => array(
+                'Bucket',
+                'Key',
+            ),
+            'success.type' => 'output',
+            'ignore_errors' => array(
+                'NoSuchKey',
+            ),
+        ),
+    ),
 );

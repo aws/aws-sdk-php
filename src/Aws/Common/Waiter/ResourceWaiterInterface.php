@@ -39,5 +39,5 @@ interface ResourceWaiterInterface extends WaiterInterface
      *
      * @return self
      */
-    public function setResourceId($resourceId);
+    public function setResource($resource);
 }
