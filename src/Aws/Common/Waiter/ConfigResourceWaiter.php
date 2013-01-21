@@ -109,18 +109,11 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
     protected function doWait()
     {
         $input = $this->waiterConfig->get(WaiterConfig::INPUT);
-        if (is_array($input)) {
-            $params = $this->resource;
-        } else {
-            $params = array($input => $this->resource);
-        }
-
+        $params = is_array($input) ? $this->resource : array($input => $this->resource);
         $operation = $this->client->getCommand($this->waiterConfig->get(WaiterConfig::OPERATION), $params);
 
         try {
-
             return $this->checkResult($this->client->execute($operation));
-
         } catch (ServiceResponseException $e) {
 
             // Check if this exception satisfies a success or failure acceptor
@@ -158,13 +151,6 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
             }
         }
 
-        if ($this->waiterConfig->get(WaiterConfig::FAILURE_TYPE) == 'error') {
-            if ($e->getExceptionCode() == $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE)) {
-                // Mark as a failure
-                return true;
-            }
-        }
-
         // Mark as an attempt
         return null;
     }
@@ -192,11 +178,16 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
         // It did not finish waiting yet. Determine if we need to fail-fast based on the failure acceptor.
         if ($this->waiterConfig->get(WaiterConfig::FAILURE_TYPE) == 'output') {
             $key = $this->waiterConfig->get(WaiterConfig::FAILURE_PATH);
-            if ($this->checkPath($result, $key, $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE))) {
+            if ($this->checkPath($result, $key, $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE), false)) {
+                // Determine which of the results triggered the failure
+                $triggered = array_intersect(
+                    (array) $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE),
+                    array_unique((array) $result->getPath($key))
+                );
                 // fast fail because the failure case was satisfied
                 throw new RuntimeException(
                     'A resource entered into an invalid state of "'
-                    . implode(', ', array_unique((array) $result->getPath($key))) . '" while waiting with the "'
+                    . implode(', ', $triggered) . '" while waiting with the "'
                     . $this->waiterConfig->get(WaiterConfig::WAITER_NAME) . '" waiter.'
                 );
             }
@@ -211,10 +202,11 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
      * @param Model  $model      Result model
      * @param string $key        Key to check
      * @param string $checkValue Compare the key to the value
+     * @param bool   $all        Set to true to ensure all value match or false to only match one
      *
      * @return bool
      */
-    public function checkPath(Model $model, $key = null, $checkValue)
+    protected function checkPath(Model $model, $key = null, $checkValue, $all = true)
     {
         // If no key is set, then just assume true because the request succeeded
         if (!$key) {
@@ -225,15 +217,22 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
             return false;
         }
 
+        $total = $matches = 0;
         foreach ((array) $result as $value) {
+            $total++;
             foreach ((array) $checkValue as $check) {
                 if ($value == $check) {
-                    continue 2;
+                    $matches++;
+                    break;
                 }
             }
+        }
+
+        // When matching all values, ensure that the match count matches the total count
+        if ($all && $total != $matches) {
             return false;
         }
 
-        return true;
+        return $matches > 0;
     }
 }
