@@ -53,7 +53,7 @@ class CompositeWaiterFactory implements WaiterFactoryInterface
      */
     public function canBuild($waiter)
     {
-        return $this->getFactory($waiter) !== false;
+        return (bool) $this->getFactory($waiter);
     }
 
     /**

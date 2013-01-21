@@ -60,7 +60,7 @@ class WaiterConfigFactory implements WaiterFactoryInterface
      */
     public function canBuild($waiter)
     {
-        return isset($this->config[$this->inflector->camel($waiter)]);
+        return isset($this->config[$waiter]) || isset($this->config[$this->inflector->camel($waiter)]);
     }
 
     /**
@@ -73,11 +73,12 @@ class WaiterConfigFactory implements WaiterFactoryInterface
      */
     protected function getWaiterConfig($name)
     {
-        $name = $this->inflector->camel($name);
         if (!$this->canBuild($name)) {
             throw new InvalidArgumentException('No waiter found matching "' . $name . '"');
         }
 
+        // inflect the name if needed
+        $name = isset($this->config[$name]) ? $name : $this->inflector->camel($name);
         $waiter = new WaiterConfig($this->config[$name]);
         $waiter['name'] = $name;
 
