@@ -30,19 +30,16 @@ class DistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
             'cloudfront/GetDistribution_InProgress',
             'cloudfront/GetDistribution_Deployed'
         ));
-        $client->waitUntil('distribution_deployed', 'foo', array(
-            'interval' => 0
-        ));
+        $client->waitUntil('distribution_deployed', 'bar', array('interval' => 0));
     }
 
     /**
      * @expectedException \Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage Maximum number of failures while waiting: 1
      */
     public function testDoesNotBufferOtherExceptions()
     {
         $client = $this->getServiceBuilder()->get('cloudfront');
         $this->setMockResponse($client, array(new Response(404)));
-        $client->waitUntil('distribution_deployed', 'foo');
+        $client->waitUntil('distribution_deployed', 'bar');
     }
 }

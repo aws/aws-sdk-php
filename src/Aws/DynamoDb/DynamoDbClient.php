@@ -47,6 +47,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model scan(array $args = array()) {@command dynamodb Scan}
  * @method Model updateItem(array $args = array()) {@command dynamodb UpdateItem}
  * @method Model updateTable(array $args = array()) {@command dynamodb UpdateTable}
+ * @method waitUntilTableState(string $tableName) Wait using the TableState waiter
+ * @method waitUntilTableExists(string $tableName) Wait until a table exists and can be accessed
+ * @method waitUntilTableNotExists(string $tableName) Wait until a table is deleted
  */
 class DynamoDbClient extends AbstractClient
 {

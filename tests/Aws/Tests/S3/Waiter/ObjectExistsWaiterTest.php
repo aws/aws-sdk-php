@@ -28,7 +28,7 @@ class ObjectExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $mock = $this->setMockResponse($client, 's3/head_success');
-        $client->waitUntil('object_exists', 'foo/bar');
+        $client->waitUntil('object_exists', array('Bucket' => 'foo', 'Key' => 'bar'));
         $this->assertEquals(1, count($this->getMockedRequests()));
         $requests = $mock->getReceivedRequests();
         $this->assertEquals('foo.s3.amazonaws.com', $requests[0]->getHost());
@@ -39,15 +39,14 @@ class ObjectExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_failure', 's3/head_success'));
-        $client->waitUntil('object_exists', 'foo/bar', array(
+        $client->waitUntil('object_exists', array('Bucket' => 'foo', 'Key' => 'bar'), array(
             'interval' => 0
         ));
         $this->assertEquals(2, count($this->getMockedRequests()));
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The resource ID must be in the form of bucket/key
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testErrorsOutWhenAnInvalidResourceIdIsSpecified()
     {

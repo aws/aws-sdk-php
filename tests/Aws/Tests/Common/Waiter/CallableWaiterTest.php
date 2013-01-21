@@ -24,7 +24,7 @@ use Aws\Common\Waiter\CallableWaiter;
 class CallableWaiterTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testEnsuresMethodIsCallable()
     {
@@ -33,7 +33,7 @@ class CallableWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\RuntimeException
+     * @expectedException \Aws\Common\Exception\RuntimeException
      */
     public function testEnsureCallableIsSetBeforeWaiting()
     {

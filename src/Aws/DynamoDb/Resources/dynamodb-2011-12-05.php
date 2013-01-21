@@ -15,6 +15,7 @@
  */
 
 return array (
+    'apiVersion' => '2011-12-05',
     'endpointPrefix' => 'dynamodb',
     'serviceFullName' => 'Amazon DynamoDB',
     'serviceAbbreviation' => 'DynamoDB',
@@ -23,7 +24,6 @@ return array (
     'targetPrefix' => 'DynamoDB_20111205.',
     'signatureVersion' => 'v4',
     'namespace' => 'DynamoDb',
-    'apiVersion' => '2011-12-05',
     'operations' => array(
         'BatchGetItem' => array(
             'httpMethod' => 'POST',
@@ -3431,6 +3431,7 @@ return array (
         ),
         'TableExists' => array(
             'extends' => 'TableState',
+            'description' => 'Wait until a table exists and can be accessed',
             'success.type' => 'output',
             'success.path' => 'Table/TableStatus',
             'success.value' => 'ACTIVE',
@@ -3440,6 +3441,7 @@ return array (
         ),
         'TableNotExists' => array(
             'extends' => 'TableState',
+            'description' => 'Wait until a table is deleted',
             'success.type' => 'error',
             'success.value' => 'ResourceNotFoundException',
         ),

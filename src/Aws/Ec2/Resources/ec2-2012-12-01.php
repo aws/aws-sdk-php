@@ -15,13 +15,13 @@
  */
 
 return array (
+    'apiVersion' => '2012-12-01',
     'endpointPrefix' => 'ec2',
     'serviceFullName' => 'Amazon Elastic Compute Cloud',
     'serviceAbbreviation' => 'Amazon EC2',
     'serviceType' => 'query',
     'signatureVersion' => 'v2',
     'namespace' => 'Ec2',
-    'apiVersion' => '2012-12-01',
     'operations' => array(
         'ActivateLicense' => array(
             'httpMethod' => 'POST',
@@ -15486,7 +15486,7 @@ return array (
         'InstanceState' => array(
             'operation' => 'DescribeInstances',
             'input' => 'InstanceIds',
-            'acceptor.path' => 'Reservations/Instances/*/State/Name',
+            'acceptor.path' => 'Reservations/*/Instances/*/State/Name',
         ),
         'InstanceRunning' => array(
             'extends' => 'InstanceState',
@@ -15564,13 +15564,13 @@ return array (
             'success.value' => 'deleted',
         ),
         'VpcAvailable' => array(
-            'operation' => 'DescribeVpc',
+            'operation' => 'DescribeVpcs',
             'input' => 'VpcIds',
             'success.path' => 'Vpcs/*/State',
             'success.value' => 'available',
         ),
         'VpnConnectionState' => array(
-            'Operation' => 'DescribeVpnConnections',
+            'operation' => 'DescribeVpnConnections',
             'input' => 'VpnConnectionIds',
             'acceptor.path' => 'VpnConnections/*/State',
         ),

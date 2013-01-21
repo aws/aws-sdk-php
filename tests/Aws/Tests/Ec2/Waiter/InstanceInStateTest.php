@@ -32,10 +32,9 @@ class InstanceInStateTest extends \Guzzle\Tests\GuzzleTestCase
             'ec2/describe_instances_two_instances_different_state',
             'ec2/describe_instances_two_instances_same_state'
         ));
-        $this->assertEquals(0, count($this->getMockedRequests()));
-        $client->waitUntil('instance_in_state', 'foo', array(
-            'state'    => InstanceState::RUNNING,
-            'interval' => 1
+        $client->waitUntil('instance_state', array('i-xxxxxxx1', 'i-xxxxxxx2'), array(
+            'success.value' => InstanceState::RUNNING,
+            'interval'      => 0
         ));
         $this->assertEquals(3, count($this->getMockedRequests()));
     }

@@ -51,8 +51,7 @@ class TableExistsTest extends AbstractWaiter
     }
 
     /**
-     * @expectedException Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage Maximum number of failures while waiting: 1
+     * @expectedException \Aws\Common\Exception\RuntimeException
      */
     public function testDoesNotBufferOtherExceptions()
     {

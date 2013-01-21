@@ -15,12 +15,12 @@
  */
 
 return array (
+    'apiVersion' => '2012-06-01',
     'endpointPrefix' => 'glacier',
     'serviceFullName' => 'Amazon Glacier',
     'serviceType' => 'rest-json',
     'signatureVersion' => 'v4',
     'namespace' => 'Glacier',
-    'apiVersion' => '2012-06-01',
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',
@@ -1518,12 +1518,14 @@ return array (
         'VaultExists' => array(
             'extends' => 'VaultState',
             'success.type' => 'output',
+            'description' => 'Wait until a vault can be accessed.',
             'ignore_errors' => array(
                 'ResourceNotFoundException',
             ),
         ),
         'VaultNotExists' => array(
             'extends' => 'VaultState',
+            'description' => 'Wait until a vault is deleted.',
             'success.type' => 'error',
             'success.value' => 'ResourceNotFoundException',
         ),

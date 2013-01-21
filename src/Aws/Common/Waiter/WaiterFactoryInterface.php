@@ -28,7 +28,7 @@ interface WaiterFactoryInterface
      *
      * @return WaiterInterface
      */
-    public function factory($waiter);
+    public function build($waiter);
 
     /**
      * Check if the factory can create a waiter by a specific name
@@ -37,5 +37,5 @@ interface WaiterFactoryInterface
      *
      * @return bool
      */
-    public function canCreate($waiter);
+    public function canBuild($waiter);
 }

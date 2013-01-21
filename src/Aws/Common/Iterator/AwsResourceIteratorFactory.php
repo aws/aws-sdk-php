@@ -4,7 +4,6 @@ namespace Aws\Common\Iterator;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Collection;
-use Guzzle\Common\Exception\InvalidArgumentException as GuzzleInvalidArgumentException;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Resource\ResourceIteratorFactoryInterface;
 
@@ -37,20 +36,12 @@ class AwsResourceIteratorFactory implements ResourceIteratorFactoryInterface
     protected $operations;
 
     /**
-     * @var ResourceIteratorFactoryInterface Another factory that will be used first to instantiate the iterator
-     */
-    protected $primaryIteratorFactory;
-
-    /**
-     * @param array                            $config                 An array of configuration values for the factory
-     * @param ResourceIteratorFactoryInterface $primaryIteratorFactory Another factory to use for chain of command
+     * @param array $config An array of configuration values for the factory
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(array $config, ResourceIteratorFactoryInterface $primaryIteratorFactory = null)
+    public function __construct(array $config)
     {
-        $this->primaryIteratorFactory = $primaryIteratorFactory;
-
         // Set up the config with default values
         $this->config = Collection::fromConfig($config, self::$defaultConfig);
 
@@ -72,42 +63,27 @@ class AwsResourceIteratorFactory implements ResourceIteratorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function build($data, array $options = array())
+    public function build(CommandInterface $command, array $options = array())
     {
-        // Make sure $data is a command
-        if ($data instanceof CommandInterface) {
-            /** @var $command CommandInterface */
-            $command = $data;
-        } else {
-            throw new InvalidArgumentException('The first argument must be an instance of CommandInterface');
-        }
-
         // Get the configuration data for the command
         $commandName = $command->getName();
         $iteratorConfig = $this->operations->get($commandName) ?: array();
         $options = array_replace($this->config->getAll(), $iteratorConfig, $options);
 
-        // Instantiate the iterator using the primary factory (if there is one)
-        $iterator = null;
-        if ($this->primaryIteratorFactory) {
-            try {
-                $iterator = $this->primaryIteratorFactory->build($data, $options);
-            } catch (GuzzleInvalidArgumentException $e) {
-                // Noop. Leave the iterator as null
-            }
+        // If the primary factory and this factory cannot find the requested iterator, throw an exception
+        if (!$this->operations->hasKey($commandName)) {
+            throw new InvalidArgumentException("Iterator was not found for {$commandName}.");
         }
 
-        // Fallback to this factory for creating the iterator if the primary factory did not work
-        if (!$iterator) {
-            // If the primary factory and this factory cannot find the requested iterator, throw an exception
-            if (!$this->operations->hasKey($commandName)) {
-                throw new InvalidArgumentException("Iterator was not found for {$commandName}.");
-            }
+        // Create a configure default AWS iterator
+        return new AwsResourceIterator($command, $options);
+    }
 
-            // Create a configure default AWS iterator
-            $iterator = new AwsResourceIterator($data, $options);
-        }
-
-        return $iterator;
+    /**
+     * {@inheritdoc}
+     */
+    public function canBuild(CommandInterface $command)
+    {
+        return $this->operations->hasKey($command->getName());
     }
 }

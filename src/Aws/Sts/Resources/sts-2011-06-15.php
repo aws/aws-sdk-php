@@ -15,6 +15,7 @@
  */
 
 return array (
+    'apiVersion' => '2011-06-15',
     'endpointPrefix' => 'sts',
     'serviceFullName' => 'AWS Security Token Service',
     'serviceAbbreviation' => 'AWS STS',
@@ -23,7 +24,6 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Sts',
-    'apiVersion' => '2011-06-15',
     'operations' => array(
         'AssumeRole' => array(
             'httpMethod' => 'POST',

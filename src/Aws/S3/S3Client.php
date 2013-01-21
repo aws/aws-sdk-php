@@ -88,6 +88,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model restoreObject(array $args = array()) {@command s3 RestoreObject}
  * @method Model uploadPart(array $args = array()) {@command s3 UploadPart}
  * @method Model uploadPartCopy(array $args = array()) {@command s3 UploadPartCopy}
+ * @method waitUntilBucketExists(string $bucket) Wait until a bucket exists.
+ * @method waitUntilBucketNotExists(string $bucket) Wait until a bucket does not exist.
+ * @method waitUntilObjectExists(array $args) Wait until an object exists. Input array requires the following keys: Bucket, Key
  */
 class S3Client extends AbstractClient
 {

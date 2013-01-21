@@ -92,7 +92,13 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      */
     public function __call($method, $args = null)
     {
-        return parent::__call(ucfirst($method), $args);
+        if (substr($method, 0, 9) == 'waitUntil') {
+            // Allow magic method calls for waiters (e.g. $client->waitUntil<WaiterName>($resource, $options))
+            array_unshift($args, substr($method, 9));
+            return call_user_func_array(array($this, 'waitUntil'), $args);
+        } else {
+            return parent::__call(ucfirst($method), $args);
+        }
     }
 
     /**
@@ -158,7 +164,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      */
     public function waitUntil($waiter, $value = null, array $options = array())
     {
-        $this->getWaiterFactory()->factory($waiter)
+        $this->getWaiterFactory()->build($waiter)
             ->setResource($value)
             ->setClient($this)
             ->setConfig($options)
@@ -192,9 +198,11 @@ abstract class AbstractClient extends Client implements AwsClientInterface
             $clientClass = get_class($this);
             // Use a composite factory that checks for classes first, then config waiters
             $this->waiterFactory = new CompositeWaiterFactory(array(
-                new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter'),
-                new WaiterConfigFactory($this->getDescription()->getData('waiters'))
+                new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter')
             ));
+            if ($this->getDescription()) {
+                $this->waiterFactory->addFactory(new WaiterConfigFactory($this->getDescription()->getData('waiters')));
+            }
         }
 
         return $this->waiterFactory;

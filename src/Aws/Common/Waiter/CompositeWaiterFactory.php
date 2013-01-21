@@ -39,21 +39,35 @@ class CompositeWaiterFactory implements WaiterFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function factory($waiter)
+    public function build($waiter)
     {
         if (!($factory = $this->getFactory($waiter))) {
             throw new InvalidArgumentException("Waiter was not found matching {$waiter}.");
         }
 
-        return $factory->factory($waiter);
+        return $factory->build($waiter);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function canCreate($waiter)
+    public function canBuild($waiter)
     {
         return $this->getFactory($waiter) !== false;
+    }
+
+    /**
+     * Add a factory to the composite factory
+     *
+     * @param WaiterFactoryInterface $factory Factory to add
+     *
+     * @return self
+     */
+    public function addFactory(WaiterFactoryInterface $factory)
+    {
+        $this->factories[] = $factory;
+
+        return $this;
     }
 
     /**
@@ -66,7 +80,7 @@ class CompositeWaiterFactory implements WaiterFactoryInterface
     protected function getFactory($waiter)
     {
         foreach ($this->factories as $factory) {
-            if ($factory->canCreate($waiter)) {
+            if ($factory->canBuild($waiter)) {
                 return $factory;
             }
         }

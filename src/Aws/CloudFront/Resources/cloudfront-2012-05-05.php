@@ -15,6 +15,7 @@
  */
 
 return array (
+    'apiVersion' => '2012-05-05',
     'endpointPrefix' => 'cloudfront',
     'serviceFullName' => 'Amazon CloudFront',
     'serviceAbbreviation' => 'CloudFront',
@@ -22,7 +23,6 @@ return array (
     'globalEndpoint' => 'cloudfront.amazonaws.com',
     'signatureVersion' => 'cloudfront',
     'namespace' => 'CloudFront',
-    'apiVersion' => '2012-05-05',
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',
@@ -4518,15 +4518,15 @@ return array (
         ),
         'StreamingDistributionDeployed' => array(
             'operation' => 'GetStreamingDistribution',
-            'description' => 'Wait until a streaming distribution is deployed',
+            'description' => 'Wait until a streaming distribution is deployed.',
             'interval' => 60,
             'max_attempts' => 25,
-            'input' => 'vaultName',
+            'input' => 'Id',
             'success.value' => 'Deployed',
         ),
         'DistributionDeployed' => array(
             'operation' => 'GetDistribution',
-            'description' => 'Wait until a distribution is deployed',
+            'description' => 'Wait until a distribution is deployed.',
             'interval' => 60,
             'max_attempts' => 25,
             'input' => 'Id',
@@ -4534,7 +4534,7 @@ return array (
         ),
         'InvalidationCompleted' => array(
             'operation' => 'GetInvalidation',
-            'description' => 'Wait until an invalidation has completed by specifying the distribution ID and invalidation ID.',
+            'description' => 'Wait until an invalidation has completed.',
             'interval' => 20,
             'max_attempts' => 30,
             'input' => array(

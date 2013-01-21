@@ -15,6 +15,7 @@
  */
 
 return array (
+    'apiVersion' => '2012-06-01',
     'endpointPrefix' => 'elasticloadbalancing',
     'serviceFullName' => 'Elastic Load Balancing',
     'serviceType' => 'query',
@@ -22,7 +23,6 @@ return array (
     'signatureVersion' => 'v2',
     'memberedLists' => true,
     'namespace' => 'ElasticLoadBalancing',
-    'apiVersion' => '2012-06-01',
     'operations' => array(
         'ApplySecurityGroupsToLoadBalancer' => array(
             'httpMethod' => 'POST',

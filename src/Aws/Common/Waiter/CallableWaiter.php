@@ -57,6 +57,6 @@ class CallableWaiter extends AbstractWaiter
             throw new RuntimeException('No callable was specified for the wait method');
         }
 
-        return call_user_func($this->callable, $this->attempts, $this->failures);
+        return call_user_func($this->callable, $this->attempts);
     }
 }

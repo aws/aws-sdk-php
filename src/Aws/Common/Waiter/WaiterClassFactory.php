@@ -64,7 +64,7 @@ class WaiterClassFactory implements WaiterFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function factory($waiter)
+    public function build($waiter)
     {
         if (!($className = $this->getClassName($waiter))) {
             throw new InvalidArgumentException("Waiter was not found matching {$waiter}.");
@@ -76,7 +76,7 @@ class WaiterClassFactory implements WaiterFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function canCreate($waiter)
+    public function canBuild($waiter)
     {
         return $this->getClassName($waiter) !== null;
     }

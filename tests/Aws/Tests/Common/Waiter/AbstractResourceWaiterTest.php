@@ -24,7 +24,7 @@ use Aws\Common\InstanceMetadata\InstanceMetadataClient;
 class AbstractResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @expectedException Aws\Common\Exception\RuntimeException
+     * @expectedException \Aws\Common\Exception\RuntimeException
      * @expectedExceptionMessage No client has been specified on the waiter
      */
     public function testEnsuresClientIsSetBeforeWaiting()
@@ -35,10 +35,10 @@ class AbstractResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage No resource ID has been specified on the waiter
+     * @expectedException \Aws\Common\Exception\RuntimeException
+     * @expectedExceptionMessage No resource has been specified on the waiter
      */
-    public function testEnsuresResourceIdIsSetBeforeWaiting()
+    public function testEnsuresResourceIsSetBeforeWaiting()
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractResourceWaiter')
             ->getMockForAbstractClass();
@@ -60,9 +60,9 @@ class AbstractResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
         $waiter->setConfig($config);
         $this->assertSame($config, $this->readAttribute($waiter, 'config'));
 
-        $resourceId = 'foo';
-        $waiter->setResourceId($resourceId);
-        $this->assertSame($resourceId, $this->readAttribute($waiter, 'resourceId'));
+        $resource = 'foo';
+        $waiter->setResource($resource);
+        $this->assertSame($resource, $this->readAttribute($waiter, 'resource'));
 
         try {
             $waiter->wait();

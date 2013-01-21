@@ -15,6 +15,7 @@
  */
 
 return array (
+    'apiVersion' => '2010-12-01',
     'endpointPrefix' => 'elasticbeanstalk',
     'serviceFullName' => 'AWS Elastic Beanstalk',
     'serviceAbbreviation' => 'Elastic Beanstalk',
@@ -23,7 +24,6 @@ return array (
     'signatureVersion' => 'v4',
     'memberedLists' => true,
     'namespace' => 'ElasticBeanstalk',
-    'apiVersion' => '2010-12-01',
     'operations' => array(
         'CheckDNSAvailability' => array(
             'httpMethod' => 'POST',

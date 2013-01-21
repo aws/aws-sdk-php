@@ -39,7 +39,11 @@ class InvalidationCompletedTest extends \Guzzle\Tests\GuzzleTestCase
             'cloudfront/GetInvalidation_InProgress',
             'cloudfront/GetInvalidation_Completed'
         ));
-        $client->waitUntil('InvalidationCompleted', 'foo/bar', array('interval' => 0));
+        $client->waitUntil(
+            'InvalidationCompleted',
+            array('DistributionId' => 'foo', 'Id' => 'bar'),
+            array('interval' => 0)
+        );
         $requests = $this->getMockedRequests();
         $this->assertEquals(2, count($requests));
         $this->assertContains('/distribution/foo/invalidation/bar', $requests[0]->getUrl());
@@ -47,12 +51,11 @@ class InvalidationCompletedTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage Maximum number of failures while waiting: 1
      */
     public function testDoesNotBufferOtherExceptions()
     {
         $client = $this->getServiceBuilder()->get('cloudfront');
         $this->setMockResponse($client, array(new Response(404)));
-        $client->waitUntil('streaming_distribution_deployed', 'foo');
+        $client->waitUntil('invalidation_completed', array('DistributionId' => 'foo', 'Id' => 'bar'));
     }
 }

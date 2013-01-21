@@ -123,7 +123,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->getMockForAbstractClass();
 
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\ResourceWaiterInterface')
-            ->setMethods(array('wait', 'setResourceId', 'setConfig', 'setClient'))
+            ->setMethods(array('wait', 'setResource', 'setConfig', 'setClient'))
             ->getMockForAbstractClass();
 
         $waiter->expects($this->once())
@@ -131,7 +131,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->will($this->returnValue($client));
 
         $waiter->expects($this->once())
-            ->method('setResourceId')
+            ->method('setResource')
             ->will($this->returnValue($waiter));
 
         $waiter->expects($this->once())
@@ -143,11 +143,11 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->will($this->returnValue($waiter));
 
         $factory = $this->getMockBuilder('Aws\Common\Waiter\WaiterFactoryInterface')
-            ->setMethods(array('factory'))
+            ->setMethods(array('build', 'canBuild'))
             ->getMock();
 
         $factory->expects($this->once())
-            ->method('factory')
+            ->method('build')
             ->will($this->returnValue($waiter));
 
         $client->setWaiterFactory($factory);
@@ -209,5 +209,22 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertNotEmpty($regionName2);
         $this->assertNotEquals($baseUrl1, $baseUrl2);
         $this->assertNotEquals($regionName1, $regionName2);
+    }
+
+    public function testAllowsMagicWaiters()
+    {
+        /** @var $client AbstractClient */
+        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
+            ->setConstructorArgs(array(
+                new Credentials('test', '123'),
+                new SignatureV4(),
+                new Collection(array(Options::ENDPOINT_PROVIDER => new XmlEndpointProvider()))
+            ))
+            ->setMethods(array('waitUntil'))
+            ->getMockForAbstractClass();
+        $client->expects($this->once())
+            ->method('waitUntil')
+            ->with('Foo', 'bar');
+        $client->waitUntilFoo('bar');
     }
 }

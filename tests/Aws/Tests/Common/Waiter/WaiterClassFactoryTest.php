@@ -24,13 +24,13 @@ use Aws\Common\Waiter\WaiterClassFactory;
 class WaiterClassFactoryTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testEnsuresClassExists()
     {
         $factory = new WaiterClassFactory();
         $factory->registerNamespace('Foo');
-        $factory->factory('bar');
+        $factory->build('bar');
     }
 
     public function testCreatesWaiter()
@@ -40,7 +40,7 @@ class WaiterClassFactoryTest extends \Guzzle\Tests\GuzzleTestCase
         $factory->registerNamespace('Foo\Bar');
 
         $expectedClass = 'Aws\Common\InstanceMetadata\Waiter\ServiceAvailable';
-        $this->assertInstanceOf($expectedClass, $factory->factory('service_available'));
-        $this->assertInstanceOf($expectedClass, $factory->factory('ServiceAvailable'));
+        $this->assertInstanceOf($expectedClass, $factory->build('service_available'));
+        $this->assertInstanceOf($expectedClass, $factory->build('ServiceAvailable'));
     }
 }

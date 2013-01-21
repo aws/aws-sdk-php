@@ -50,19 +50,17 @@ class WaiterConfigFactory implements WaiterFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function factory($waiter)
+    public function build($waiter)
     {
-        return new ConfigResourceWaiter(
-            $this->getWaiterConfig($this->inflector->camel($waiter))
-        );
+        return new ConfigResourceWaiter($this->getWaiterConfig($waiter));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function canCreate($waiter)
+    public function canBuild($waiter)
     {
-        return isset($this->config[$waiter]);
+        return isset($this->config[$this->inflector->camel($waiter)]);
     }
 
     /**
@@ -75,7 +73,8 @@ class WaiterConfigFactory implements WaiterFactoryInterface
      */
     protected function getWaiterConfig($name)
     {
-        if (!$this->canCreate($name)) {
+        $name = $this->inflector->camel($name);
+        if (!$this->canBuild($name)) {
             throw new InvalidArgumentException('No waiter found matching "' . $name . '"');
         }
 

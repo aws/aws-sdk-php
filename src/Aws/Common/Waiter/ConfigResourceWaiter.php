@@ -42,6 +42,16 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
     }
 
     /**
+     * Get the waiter's configuration data
+     *
+     * @return WaiterConfig
+     */
+    public function getWaiterConfig()
+    {
+        return $this->waiterConfig;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setConfig(array $config)
@@ -100,7 +110,7 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
     {
         $input = $this->waiterConfig->get(WaiterConfig::INPUT);
         if (is_array($input)) {
-            $params = $input;
+            $params = $this->resource;
         } else {
             $params = array($input => $this->resource);
         }
@@ -111,19 +121,17 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
 
             return $this->checkResult($this->client->execute($operation));
 
-        } catch (\Exception $e) {
+        } catch (ServiceResponseException $e) {
 
             // Check if this exception satisfies a success or failure acceptor
-            if ($e instanceof ServiceResponseException) {
-                $transition = $this->checkErrorAcceptor($e);
-                if (null !== $transition) {
-                    return $transition;
-                }
+            $transition = $this->checkErrorAcceptor($e);
+            if (null !== $transition) {
+                return $transition;
             }
 
             // Check if this exception should be ignored
             foreach ((array) $this->waiterConfig->get(WaiterConfig::IGNORE_ERRORS) as $ignore) {
-                if ($e instanceof $ignore) {
+                if ($e->getExceptionCode() == $ignore) {
                     // This exception is ignored, so it counts as a failed attempt rather than a fast-fail
                     return false;
                 }
@@ -217,7 +225,7 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
             return false;
         }
 
-        foreach ($result as $value) {
+        foreach ((array) $result as $value) {
             foreach ((array) $checkValue as $check) {
                 if ($value == $check) {
                     continue 2;

@@ -37,6 +37,7 @@ use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
+use Guzzle\Service\Resource\CompositeResourceIteratorFactory;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
 
 /**
@@ -301,10 +302,10 @@ class ClientBuilder
         );
 
         // Set the iterator resource factory based on the provided iterators config
-        $client->setResourceIteratorFactory(new AwsResourceIteratorFactory(
-            $this->iteratorsConfig,
-            new ResourceIteratorClassFactory($this->clientNamespace . '\\Iterator')
-        ));
+        $client->setResourceIteratorFactory(new CompositeResourceIteratorFactory(array(
+            new ResourceIteratorClassFactory($this->clientNamespace . '\\Iterator'),
+            new AwsResourceIteratorFactory($this->iteratorsConfig)
+        )));
 
         return $client;
     }

@@ -73,22 +73,9 @@ class AwsResourceIteratorFactoryTest extends \Guzzle\Tests\GuzzleTestCase
             ->method('getName')
             ->will($this->returnValue('FooBar'));
 
-        $iterator = $this->getMockBuilder('Aws\Common\Iterator\AwsResourceIterator')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $primaryFactory = $this->getMockBuilder('Guzzle\Service\Resource\ResourceIteratorFactoryInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $primaryFactory->expects($this->any())
-            ->method('build')
-            ->will($this->returnValue($iterator));
-
         return array(
-            array('not-a-command', array(), null, false),
             array($command, array('FooBar'), null, true),
-            array($command, array(), null, false),
-            array($command, array(), $primaryFactory, true),
+            array($command, array(), null, false)
         );
     }
 

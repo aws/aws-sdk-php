@@ -37,7 +37,6 @@ class StreamingDistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage Maximum number of failures while waiting: 1
      */
     public function testDoesNotBufferOtherExceptions()
     {
