@@ -30,6 +30,7 @@ use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Command\AbstractCommand as Cmd;
 
 /**
  * Client to interact with Amazon DynamoDB
@@ -124,7 +125,9 @@ class DynamoDbClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/dynamodb-2011-12-05.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/dynamodb-2011-12-05.php',
+                // DynamoDB does not require response processing other than turning JSON into an array
+                self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)
             ))
             ->addClientResolver($exponentialBackoffResolver)
             ->setExceptionParser(new JsonQueryExceptionParser())

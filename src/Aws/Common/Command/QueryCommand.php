@@ -29,6 +29,11 @@ class QueryCommand extends OperationCommand
     protected static $queryVisitor;
 
     /**
+     * @var XmlResponseLocationVisitor
+     */
+    protected static $xmlVisitor;
+
+    /**
      * Register the aws.query visitor
      */
     protected function init()
@@ -37,9 +42,12 @@ class QueryCommand extends OperationCommand
         if (!self::$queryVisitor) {
             self::$queryVisitor = new AwsQueryVisitor();
         }
-
+        if (!self::$xmlVisitor) {
+            self::$xmlVisitor = new XmlResponseLocationVisitor();
+        }
         // @codeCoverageIgnoreEnd
+
         $this->getRequestSerializer()->addVisitor('aws.query', self::$queryVisitor);
-        $this->setResponseParser(QueryXmlResponseParser::getInstance());
+        $this->getResponseParser()->addVisitor('xml', self::$xmlVisitor);
     }
 }

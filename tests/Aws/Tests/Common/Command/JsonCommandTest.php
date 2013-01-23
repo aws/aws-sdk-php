@@ -91,45 +91,4 @@ class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements ToArrayInt
     {
         return array('baz' => 'bar');
     }
-
-    public function testUsesProcessedModelsWhenEnabled()
-    {
-        $d = ServiceDescription::factory(array(
-            'operations' => array(
-                'foobar' =>array(
-                    'name'          => 'foobar',
-                    'httpMethod'    => 'PUT',
-                    'responseClass' => 'foo',
-                    'responseType'  => 'model',
-                    'class'         => 'Aws\Common\Command\JsonCommand',
-                    'parameters' => array(
-                        'test'      => array('location' => 'query')
-                    )
-                )
-            ),
-            'models' => array(
-                'foo' => array(
-                    'type'       => 'object',
-                    'properties' => array(
-                        'test' => array(
-                            'type'     => 'string',
-                            'location' => 'json',
-                            'filters'  => array('strtoupper')
-                        )
-                    )
-                )
-            )
-        ));
-
-        $response = new Response(200, array('Content-Type' => 'application/json'), '{"test":"bar"}');
-        $client = new Client('http://localhost:1245');
-        $client->setDescription($d);
-        $this->setMockResponse($client, array($response));
-        $command = $client->getCommand('foobar');
-        $this->assertEquals(array('test' => 'bar'), $command->execute()->toArray());
-        $this->setMockResponse($client, array($response));
-        $command = $client->getCommand('foobar');
-        $command->set('command.model_processing', true);
-        $this->assertEquals(array('test' => 'BAR'), $command->execute()->toArray());
-    }
 }

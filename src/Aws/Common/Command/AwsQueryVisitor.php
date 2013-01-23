@@ -32,29 +32,32 @@ class AwsQueryVisitor extends AbstractRequestVisitor
      */
     protected function customResolver($value, Parameter $param, array &$query, $prefix = '')
     {
-        if ($param->getType() == 'object') {
-            foreach ($value as $name => $v) {
-                if ($subParam = $param->getProperty($name)) {
-                    $key = $prefix . '.' . $subParam->getWireName();
-                    if (is_array($v)) {
-                        $this->customResolver($v, $subParam, $query, $key);
-                    } else {
-                        $query[$key] = $v;
+        switch ($param->getType()) {
+            case 'object':
+                foreach ($value as $name => $v) {
+                    if ($subParam = $param->getProperty($name)) {
+                        $key = $prefix . '.' . $subParam->getWireName();
+                        if (is_array($v)) {
+                            $this->customResolver($v, $subParam, $query, $key);
+                        } else {
+                            $query[$key] = $v;
+                        }
                     }
                 }
-            }
-        } elseif ($param->getType() == 'array') {
-            $offset = $param->getData('offset') ?: 1;
-            foreach ($value as $index => $v) {
-                $index += $offset;
-                if (is_array($v) && $items = $param->getItems()) {
-                    $this->customResolver($v, $items, $query, $prefix . '.' . $index);
-                } else {
-                    $query[$prefix . '.' . $index] = $v;
+                break;
+            case 'array':
+                $offset = $param->getData('offset') ?: 1;
+                foreach ($value as $index => $v) {
+                    $index += $offset;
+                    if (is_array($v) && $items = $param->getItems()) {
+                        $this->customResolver($v, $items, $query, $prefix . '.' . $index);
+                    } else {
+                        $query[$prefix . '.' . $index] = $v;
+                    }
                 }
-            }
-        } else {
-            $query[$prefix] = $value;
+                break;
+            default:
+                $query[$prefix] = $value;
         }
     }
 }
