@@ -291,7 +291,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertNull($command->getRequest()->getHeader('Expect'));
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
         $this->assertNotEmpty($result['ETag']);
-        $this->client->waitUntil('object_exists', $this->bucket . '/' . self::TEST_KEY);
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => self::TEST_KEY));
 
         self::log("HEAD the object");
         $result = $this->client->headObject(array(
@@ -337,7 +337,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals(200, $this->client->put('/' . $this->bucket . '/hello', array(), 'testing')->send()->getStatusCode());
         $this->client->get('/' . self::getResourcePrefix() . '_path')->send();
         $path = self::getResourcePrefix() . '_path/' . self::TEST_KEY;
-        $this->client->waitUntil('object_exists', $path);
         $this->client->get("/{$path}")->send();
     }
 
@@ -400,7 +399,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $command->execute();
         $this->assertEquals("/{$this->bucket}-foo", $command->getRequest()->getPath());
         $this->assertEquals("{$this->bucket}.s3.amazonaws.com", $command->getRequest()->getHost());
-        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
     }
 
     /**
@@ -423,7 +422,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             echo $e->getResponse() . "\n";
             throw $e;
         }
-        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
     }
 
     /**
@@ -459,7 +458,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertNotEmpty($result['ETag']);
         $this->assertEquals('AES256', $result['ServerSideEncryption']);
         $this->assertNotEmpty($result['LastModified']);
-        $this->client->waitUntil('object_exists', "{$this->bucket}/copy-key");
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => 'copy-key'));
     }
 
     /**
@@ -571,7 +570,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'Body'   => 'hi'
         ));
         self::log("Waiting until the object exists");
-        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
         self::log("Moving the object to glacier by setting a lifecycle policy on the object");
         $this->client->waitUntil('bucket_exists', $this->bucket);
         $command = $this->client->getCommand('PutBucketLifecycle', array(
@@ -662,7 +661,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         // Ensure the key is not an array and is returned to it's previous value
         $this->assertEquals($key, $command['Key']);
 
-        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
         $result = $this->client->getObject(array('Bucket' => $this->bucket, 'Key' => $key));
         $this->assertEquals(file_get_contents(__FILE__), (string) $result['Body']);
 
@@ -689,7 +688,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'Key'    => $key,
             'Body'   => 'hi'
         ));
-        $this->client->waitUntil('object_exists', "{$this->bucket}/{$key}");
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
 
         self::log('Creating an downloading using a pre-signed URL');
         $extra = urlencode("attachment; filename=\"{$key}\"");
