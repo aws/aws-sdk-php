@@ -2593,4 +2593,32 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 20,
+            'max_attempts' => 40,
+            'acceptor.type' => 'output',
+        ),
+        '__EnvironmentState' => array(
+            'operation' => 'DescribeEnvironments',
+            'input' => 'EnvironmentIds',
+            'acceptor.path' => 'Environments/*/Status',
+        ),
+        'EnvironmentReady' => array(
+            'extends' => '__EnvironmentState',
+            'success.value' => 'Ready',
+            'failure.value' => array(
+                'Terminated',
+                'Terminating',
+            ),
+        ),
+        'EnvironmentTerminated' => array(
+            'extends' => '__EnvironmentState',
+            'success.value' => 'Terminated',
+            'failure.value' => array(
+                'Launching',
+                'Updating',
+            ),
+        ),
+    ),
 );
