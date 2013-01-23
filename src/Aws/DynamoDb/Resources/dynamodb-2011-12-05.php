@@ -3425,12 +3425,12 @@ return array (
             'interval' => 20,
             'max_attempts' => 25,
         ),
-        'TableState' => array(
+        '__TableState' => array(
             'operation' => 'DescribeTable',
             'input' => 'TableName',
         ),
         'TableExists' => array(
-            'extends' => 'TableState',
+            'extends' => '__TableState',
             'description' => 'Wait until a table exists and can be accessed',
             'success.type' => 'output',
             'success.path' => 'Table/TableStatus',
@@ -3440,7 +3440,7 @@ return array (
             ),
         ),
         'TableNotExists' => array(
-            'extends' => 'TableState',
+            'extends' => '__TableState',
             'description' => 'Wait until a table is deleted',
             'success.type' => 'error',
             'success.value' => 'ResourceNotFoundException',

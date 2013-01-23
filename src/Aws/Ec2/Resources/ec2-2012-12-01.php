@@ -15483,13 +15483,13 @@ return array (
             'max_attempts' => 40,
             'acceptor.type' => 'output',
         ),
-        'InstanceState' => array(
+        '__InstanceState' => array(
             'operation' => 'DescribeInstances',
             'input' => 'InstanceIds',
             'acceptor.path' => 'Reservations/*/Instances/*/State/Name',
         ),
         'InstanceRunning' => array(
-            'extends' => 'InstanceState',
+            'extends' => '__InstanceState',
             'success.value' => 'running',
             'failure.value' => array(
                 'shutting-down',
@@ -15499,7 +15499,7 @@ return array (
             ),
         ),
         'InstanceStopped' => array(
-            'extends' => 'InstanceState',
+            'extends' => '__InstanceState',
             'success.value' => 'stopped',
             'failure.value' => array(
                 'pending',
@@ -15507,7 +15507,7 @@ return array (
             ),
         ),
         'InstanceTerminated' => array(
-            'extends' => 'InstanceState',
+            'extends' => '__InstanceState',
             'success.value' => 'terminated',
             'failure.value' => array(
                 'pending',
@@ -15515,17 +15515,17 @@ return array (
                 'stopped',
             ),
         ),
-        'ExportTaskState' => array(
+        '__ExportTaskState' => array(
             'operation' => 'DescribeExportTasks',
             'input' => 'ExportTaskIds',
             'acceptor.path' => 'ExportTasks/*/State',
         ),
         'ExportTaskCompleted' => array(
-            'extends' => 'ExportTaskState',
+            'extends' => '__ExportTaskState',
             'success.value' => 'completed',
         ),
         'ExportTaskCancelled' => array(
-            'extends' => 'ExportTaskState',
+            'extends' => '__ExportTaskState',
             'success.value' => 'cancelled',
         ),
         'SnapshotCompleted' => array(
@@ -15540,27 +15540,27 @@ return array (
             'success.path' => 'Subnets/*/State',
             'success.value' => 'available',
         ),
-        'VolumeStatus' => array(
+        '__VolumeStatus' => array(
             'operation' => 'DescribeVolumes',
             'input' => 'VolumeIds',
             'acceptor.key' => 'VolumeStatuses/*/VolumeStatus/Status',
         ),
         'VolumeAvailable' => array(
-            'extends' => 'VolumeStatus',
+            'extends' => '__VolumeStatus',
             'success.value' => 'available',
             'failure.value' => array(
                 'deleted',
             ),
         ),
         'VolumeInUse' => array(
-            'extends' => 'VolumeStatus',
+            'extends' => '__VolumeStatus',
             'success.value' => 'in-use',
             'failure.value' => array(
                 'deleted',
             ),
         ),
         'VolumeDeleted' => array(
-            'extends' => 'VolumeStatus',
+            'extends' => '__VolumeStatus',
             'success.value' => 'deleted',
         ),
         'VpcAvailable' => array(
@@ -15569,13 +15569,13 @@ return array (
             'success.path' => 'Vpcs/*/State',
             'success.value' => 'available',
         ),
-        'VpnConnectionState' => array(
+        '__VpnConnectionState' => array(
             'operation' => 'DescribeVpnConnections',
             'input' => 'VpnConnectionIds',
             'acceptor.path' => 'VpnConnections/*/State',
         ),
         'VpnConnectionAvailable' => array(
-            'extends' => 'VpnConnectionState',
+            'extends' => '__VpnConnectionState',
             'success.value' => 'available',
             'failure.value' => array(
                 'deleting',
@@ -15583,7 +15583,7 @@ return array (
             ),
         ),
         'VpnConnectionDeleted' => array(
-            'extends' => 'VpnConnectionState',
+            'extends' => '__VpnConnectionState',
             'success.value' => 'deleted',
             'failure.value' => array(
                 'pending',
@@ -15598,13 +15598,13 @@ return array (
                 'failed',
             ),
         ),
-        'ConversionTaskState' => array(
+        '__ConversionTaskState' => array(
             'operation' => 'DescribeConversionTasks',
             'input' => 'ConversionTaskIds',
             'acceptor.path' => 'ConversionTasks/*/State',
         ),
         'ConversionTaskCompleted' => array(
-            'extends' => 'ConversionTaskState',
+            'extends' => '__ConversionTaskState',
             'success.value' => 'completed',
             'failure.value' => array(
                 'cancelled',
@@ -15612,16 +15612,16 @@ return array (
             ),
         ),
         'ConversionTaskCancelled' => array(
-            'extends' => 'ConversionTaskState',
+            'extends' => '__ConversionTaskState',
             'success.value' => 'cancelled',
         ),
-        'CustomerGatewayState' => array(
+        '__CustomerGatewayState' => array(
             'operation' => 'DescribeCustomerGateways',
             'input' => 'CustomerGatewayIds',
             'acceptor.path' => 'CustomerGateways/*/State',
         ),
         'CustomerGatewayAvailable' => array(
-            'extends' => 'CustomerGatewayState',
+            'extends' => '__CustomerGatewayState',
             'success.value' => 'available',
             'failure.value' => array(
                 'deleted',
@@ -15629,7 +15629,7 @@ return array (
             ),
         ),
         'ConversionTaskDeleted' => array(
-            'extends' => 'CustomerGatewayState',
+            'extends' => '__CustomerGatewayState',
             'success.value' => 'deleted',
         ),
     ),

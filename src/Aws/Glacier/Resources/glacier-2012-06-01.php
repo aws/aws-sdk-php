@@ -1511,12 +1511,12 @@ return array (
             'interval' => 3,
             'max_attempts' => 15,
         ),
-        'VaultState' => array(
+        '__VaultState' => array(
             'operation' => 'DescribeVault',
             'input' => 'vaultName',
         ),
         'VaultExists' => array(
-            'extends' => 'VaultState',
+            'extends' => '__VaultState',
             'success.type' => 'output',
             'description' => 'Wait until a vault can be accessed.',
             'ignore_errors' => array(
@@ -1524,7 +1524,7 @@ return array (
             ),
         ),
         'VaultNotExists' => array(
-            'extends' => 'VaultState',
+            'extends' => '__VaultState',
             'description' => 'Wait until a vault is deleted.',
             'success.type' => 'error',
             'success.value' => 'ResourceNotFoundException',

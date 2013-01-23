@@ -171,28 +171,22 @@ use Guzzle\Service\Resource\Model;
  * @method Model terminateInstances(array $args = array()) {@command ec2 TerminateInstances}
  * @method Model unassignPrivateIpAddresses(array $args = array()) {@command ec2 UnassignPrivateIpAddresses}
  * @method Model unmonitorInstances(array $args = array()) {@command ec2 UnmonitorInstances}
- * @method waitUntilInstanceState(array $instanceIds) Wait using the InstanceState waiter
  * @method waitUntilInstanceRunning(array $instanceIds) Wait using the InstanceRunning waiter
  * @method waitUntilInstanceStopped(array $instanceIds) Wait using the InstanceStopped waiter
  * @method waitUntilInstanceTerminated(array $instanceIds) Wait using the InstanceTerminated waiter
- * @method waitUntilExportTaskState(array $exportTaskIds) Wait using the ExportTaskState waiter
  * @method waitUntilExportTaskCompleted(array $exportTaskIds) Wait using the ExportTaskCompleted waiter
  * @method waitUntilExportTaskCancelled(array $exportTaskIds) Wait using the ExportTaskCancelled waiter
  * @method waitUntilSnapshotCompleted(array $snapshotIds) Wait using the SnapshotCompleted waiter
  * @method waitUntilSubnetAvailable(array $subnetIds) Wait using the SubnetAvailable waiter
- * @method waitUntilVolumeStatus(array $volumeIds) Wait using the VolumeStatus waiter
  * @method waitUntilVolumeAvailable(array $volumeIds) Wait using the VolumeAvailable waiter
  * @method waitUntilVolumeInUse(array $volumeIds) Wait using the VolumeInUse waiter
  * @method waitUntilVolumeDeleted(array $volumeIds) Wait using the VolumeDeleted waiter
  * @method waitUntilVpcAvailable(array $vpcIds) Wait using the VpcAvailable waiter
- * @method waitUntilVpnConnectionState(array $vpnConnectionIds) Wait using the VpnConnectionState waiter
  * @method waitUntilVpnConnectionAvailable(array $vpnConnectionIds) Wait using the VpnConnectionAvailable waiter
  * @method waitUntilVpnConnectionDeleted(array $vpnConnectionIds) Wait using the VpnConnectionDeleted waiter
  * @method waitUntilBundleTaskComplete(array $bundleIds) Wait using the BundleTaskComplete waiter
- * @method waitUntilConversionTaskState(array $conversionTaskIds) Wait using the ConversionTaskState waiter
  * @method waitUntilConversionTaskCompleted(array $conversionTaskIds) Wait using the ConversionTaskCompleted waiter
  * @method waitUntilConversionTaskCancelled(array $conversionTaskIds) Wait using the ConversionTaskCancelled waiter
- * @method waitUntilCustomerGatewayState(array $customerGatewayIds) Wait using the CustomerGatewayState waiter
  * @method waitUntilCustomerGatewayAvailable(array $customerGatewayIds) Wait using the CustomerGatewayAvailable waiter
  * @method waitUntilConversionTaskDeleted(array $customerGatewayIds) Wait using the ConversionTaskDeleted waiter
  */
