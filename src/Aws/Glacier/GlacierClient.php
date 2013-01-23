@@ -136,9 +136,7 @@ class GlacierClient extends AbstractClient
             ->build();
 
         // Add the Glacier version header required for all operations
-        $client->setDefaultHeaders(array(
-            'x-amz-glacier-version' => $client->getDescription()->getApiVersion()
-        ));
+        $client->getDefaultHeaders()->set('x-amz-glacier-version', $client->getDescription()->getApiVersion());
 
         // Allow for specifying bodies with file paths and file handles
         $uploadOperations = array('UploadArchive', 'UploadMultipartPart');
