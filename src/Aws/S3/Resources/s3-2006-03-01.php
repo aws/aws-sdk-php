@@ -1203,6 +1203,12 @@ return array (
                     'location' => 'response_body',
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified key does not exist.',
+                    'class' => 'NoSuchKeyException',
+                ),
+            ),
         ),
         'GetObjectAcl' => array(
             'httpMethod' => 'GET',
@@ -1242,6 +1248,12 @@ return array (
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified key does not exist.',
+                    'class' => 'NoSuchKeyException',
                 ),
             ),
         ),
@@ -1289,6 +1301,12 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified bucket does not exist.',
+                    'class' => 'NoSuchBucketException',
                 ),
             ),
         ),
@@ -1358,6 +1376,12 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'If-None-Match',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified key does not exist.',
+                    'class' => 'NoSuchKeyException',
                 ),
             ),
         ),
@@ -1531,6 +1555,12 @@ return array (
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified bucket does not exist.',
+                    'class' => 'NoSuchBucketException',
                 ),
             ),
         ),
@@ -2739,6 +2769,12 @@ return array (
                     'default' => true,
                 ),
             ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified key does not exist.',
+                    'class' => 'NoSuchKeyException',
+                ),
+            ),
         ),
         'RestoreObject' => array(
             'httpMethod' => 'POST',
@@ -3787,7 +3823,8 @@ return array (
                 'MissingMeta' => array(
                     'description' => 'This is set to the number of metadata entries not returned in x-amz-meta headers. This can happen if you create metadata using an API like SOAP that supports more flexible metadata than the REST API. For example, using SOAP, you can create metadata whose values are not legal HTTP headers.',
                     'type' => 'numeric',
-                    'location' => 'x-amz-missing-meta',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-missing-meta',
                 ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
@@ -3969,7 +4006,8 @@ return array (
                 'MissingMeta' => array(
                     'description' => 'This is set to the number of metadata entries not returned in x-amz-meta headers. This can happen if you create metadata using an API like SOAP that supports more flexible metadata than the REST API. For example, using SOAP, you can create metadata whose values are not legal HTTP headers.',
                     'type' => 'numeric',
-                    'location' => 'x-amz-missing-meta',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-missing-meta',
                 ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
