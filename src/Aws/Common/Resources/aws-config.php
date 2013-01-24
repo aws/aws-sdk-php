@@ -27,6 +27,12 @@ return array(
             'class'   => 'Aws\CloudFront\CloudFrontClient'
         ),
 
+        'iam' => array(
+            'alias'   => 'Iam',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Iam\IamClient'
+        ),
+
         'datapipeline' => array(
             'alias'   => 'DataPipeline',
             'extends' => 'default_settings',
