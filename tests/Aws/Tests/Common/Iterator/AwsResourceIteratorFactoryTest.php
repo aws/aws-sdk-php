@@ -18,7 +18,8 @@ namespace Aws\Tests\Common\Iterator;
 
 use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\Common\Iterator\AwsResourceIteratorFactory;
-use Guzzle\Service\Resource\ResourceIteratorFactoryInterface;
+use Guzzle\Service\Command\AbstractCommand;
+use Guzzle\Service\Description\Parameter;
 
 /**
  * @covers Aws\Common\Iterator\AwsResourceIteratorFactory
@@ -73,9 +74,24 @@ class AwsResourceIteratorFactoryTest extends \Guzzle\Tests\GuzzleTestCase
             ->method('getName')
             ->will($this->returnValue('FooBar'));
 
+        $iterator = $this->getMockBuilder('Aws\Common\Iterator\AwsResourceIterator')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $primaryFactory = $this->getMockBuilder('Guzzle\Service\Resource\ResourceIteratorFactoryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $primaryFactory->expects($this->any())
+            ->method('build')
+            ->will($this->returnValue($iterator));
+        $primaryFactory->expects($this->any())
+            ->method('canBuild')
+            ->will($this->returnValue(true));
+
         return array(
             array($command, array('FooBar'), null, true),
-            array($command, array(), null, false)
+            array($command, array(), null, false),
+            array($command, array(), $primaryFactory, true),
         );
     }
 

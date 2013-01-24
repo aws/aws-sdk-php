@@ -32,7 +32,7 @@ class InstanceInStateTest extends \Guzzle\Tests\GuzzleTestCase
             'ec2/describe_instances_two_instances_different_state',
             'ec2/describe_instances_two_instances_same_state'
         ));
-        $client->waitUntil('instance_state', array('i-xxxxxxx1', 'i-xxxxxxx2'), array(
+        $client->waitUntil('__InstanceState', array('i-xxxxxxx1', 'i-xxxxxxx2'), array(
             'success.value' => InstanceState::RUNNING,
             'interval'      => 0
         ));

@@ -25,14 +25,10 @@ class IteratorsTest extends \Aws\Tests\IntegrationTestCase
     {
         /** @var $client \Guzzle\Service\ClientInterface */
         $client = $this->getServiceBuilder()->get('s3');
-        $mock = $this->setMockResponse($client, array(
-            's3/list_buckets'
-        ));
+        $mock = $this->setMockResponse($client, array('s3/list_buckets'));
 
         // Create an iterator that will exercise the most code paths
-        $iterator = $client->getIterator('ListBuckets', null, array(
-            'names_only' => true
-        ));
+        $iterator = $client->getIterator('ListBuckets', null, array('names_only' => true));
 
         // Verify that we got back everything back
         $expectedObjects = array('bucket-1', 'bucket-2');

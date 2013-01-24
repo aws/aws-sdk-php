@@ -36,12 +36,19 @@ class AwsResourceIteratorFactory implements ResourceIteratorFactoryInterface
     protected $operations;
 
     /**
-     * @param array $config An array of configuration values for the factory
+     * @var ResourceIteratorFactoryInterface Another factory that will be used first to instantiate the iterator
+     */
+    protected $primaryIteratorFactory;
+
+    /**
+     * @param array                            $config                 An array of configuration values for the factory
+     * @param ResourceIteratorFactoryInterface $primaryIteratorFactory Another factory to use for chain of command
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(array $config)
+    public function __construct(array $config, ResourceIteratorFactoryInterface $primaryIteratorFactory = null)
     {
+        $this->primaryIteratorFactory = $primaryIteratorFactory;
         // Set up the config with default values
         $this->config = Collection::fromConfig($config, self::$defaultConfig);
 
@@ -70,13 +77,17 @@ class AwsResourceIteratorFactory implements ResourceIteratorFactoryInterface
         $iteratorConfig = $this->operations->get($commandName) ?: array();
         $options = array_replace($this->config->getAll(), $iteratorConfig, $options);
 
-        // If the primary factory and this factory cannot find the requested iterator, throw an exception
-        if (!$this->operations->hasKey($commandName)) {
+        // Instantiate the iterator using the primary factory (if there is one)
+        if ($this->primaryIteratorFactory && $this->primaryIteratorFactory->canBuild($command)) {
+            $iterator = $this->primaryIteratorFactory->build($command, $options);
+        } elseif (!$this->operations->hasKey($commandName)) {
             throw new InvalidArgumentException("Iterator was not found for {$commandName}.");
+        } else {
+            // Fallback to this factory for creating the iterator if the primary factory did not work
+            $iterator = new AwsResourceIterator($command, $options);
         }
 
-        // Create a configure default AWS iterator
-        return new AwsResourceIterator($command, $options);
+        return $iterator;
     }
 
     /**
@@ -84,6 +95,7 @@ class AwsResourceIteratorFactory implements ResourceIteratorFactoryInterface
      */
     public function canBuild(CommandInterface $command)
     {
-        return $this->operations->hasKey($command->getName());
+        return ($this->primaryIteratorFactory && $this->primaryIteratorFactory->canBuild($command))
+            || $this->operations->hasKey($command->getName());
     }
 }

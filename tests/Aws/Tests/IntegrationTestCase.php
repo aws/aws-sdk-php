@@ -35,7 +35,7 @@ class IntegrationTestCase extends \Guzzle\Tests\GuzzleTestCase
     /**
      * Log a message to STDERR
      *
-     * @param $message Message to log
+     * @param string $message Message to log
      */
     public static function log($message)
     {
