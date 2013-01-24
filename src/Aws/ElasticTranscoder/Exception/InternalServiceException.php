@@ -14,26 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception\Parser;
-
-use Guzzle\Http\Message\Response;
+namespace Aws\ElasticTranscoder\Exception;
 
 /**
- * Parses JSON encoded exception responses from query services
+ * Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.
  */
-class JsonQueryExceptionParser extends AbstractJsonExceptionParser
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, Response $response)
-    {
-        if ($json = $data['parsed']) {
-            $parts = explode('#', $json['__type']);
-            $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
-            $data['message'] = isset($json['message']) ? $json['message'] : null;
-        }
-
-        return $data;
-    }
-}
+class InternalServiceException extends ElasticTranscoderException {}

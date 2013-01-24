@@ -63,6 +63,12 @@ return array(
             'class'   => 'Aws\ElasticBeanstalk\ElasticBeanstalkClient'
         ),
 
+        'elastictranscoder' => array(
+            'alias'   => 'ElasticTranscoder',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\ElasticTranscoder\ElasticTranscoderClient'
+        ),
+
         'glacier' => array(
             'alias'   => 'Glacier',
             'extends' => 'default_settings',

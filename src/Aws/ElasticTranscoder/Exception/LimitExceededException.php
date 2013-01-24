@@ -14,26 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Exception\Parser;
-
-use Guzzle\Http\Message\Response;
+namespace Aws\ElasticTranscoder\Exception;
 
 /**
- * Parses JSON encoded exception responses from query services
+ * Too many operations for a given AWS account. For example, the number of pipelines exceeds the maximum allowed.
  */
-class JsonQueryExceptionParser extends AbstractJsonExceptionParser
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, Response $response)
-    {
-        if ($json = $data['parsed']) {
-            $parts = explode('#', $json['__type']);
-            $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
-            $data['message'] = isset($json['message']) ? $json['message'] : null;
-        }
-
-        return $data;
-    }
-}
+class LimitExceededException extends ElasticTranscoderException {}

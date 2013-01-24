@@ -28,6 +28,7 @@ abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
      */
     public function parse(Response $response)
     {
+        // Build array of default error data
         $data = array(
             'code'       => null,
             'message'    => null,
@@ -36,22 +37,22 @@ abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
             'parsed'     => null
         );
 
+        // Parse the json and normalize key casings
         if (null !== $json = json_decode($response->getBody(true), true)) {
-            $data['parsed'] = $json;
-            $json = array_change_key_case($json);
-            $data = $this->doParse($data, $json);
+            $data['parsed'] = array_change_key_case($json);
         }
 
-        return $data;
+        // Do additional, protocol-specific parsing and return the result
+        return $this->doParse($data, $response);
     }
 
     /**
      * Pull relevant exception data out of the parsed json
      *
-     * @param array $data The exception data
-     * @param array $json The JSON data
+     * @param array    $data     The exception data
+     * @param Response $response The response from the service containing the error
      *
      * @return array
      */
-    abstract protected function doParse(array $data, array $json);
+    abstract protected function doParse(array $data, Response $response);
 }

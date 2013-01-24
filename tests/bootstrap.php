@@ -58,4 +58,15 @@ if (!isset($_SERVER['PREFIX']) || $_SERVER['PREFIX'] == 'hostname') {
     $_SERVER['PREFIX'] = crc32(gethostname());
 }
 
-Guzzle\Tests\GuzzleTestCase::setServiceBuilder(Aws\Common\Aws::factory($_SERVER['CONFIG']));
+// Instantiate the service builder
+$aws = Aws\Common\Aws::factory($_SERVER['CONFIG']);
+
+// Turn on wire logging if configured
+$aws->getEventDispatcher()->addListener('service_builder.create_client', function (\Guzzle\Common\Event $event) {
+    if (isset($_SERVER['WIRE_LOGGING']) && $_SERVER['WIRE_LOGGING']) {
+        $event['client']->addSubscriber(Guzzle\Plugin\Log\LogPlugin::getDebugPlugin());
+    }
+});
+
+// Configure the tests to ise the instantiated AWS service builder
+Guzzle\Tests\GuzzleTestCase::setServiceBuilder($aws);

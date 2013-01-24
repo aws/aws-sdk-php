@@ -49,9 +49,9 @@ class IntegrationTestCase extends \Guzzle\Tests\GuzzleTestCase
      */
     public static function getResourcePrefix()
     {
-        return !isset($_SERVER['prefix']) || $_SERVER['prefix'] == 'hostname'
+        return !isset($_SERVER['PREFIX']) || $_SERVER['PREFIX'] == 'hostname'
             ? crc32(gethostname())
-            : $_SERVER['prefix'];
+            : $_SERVER['PREFIX'];
     }
 
     /**

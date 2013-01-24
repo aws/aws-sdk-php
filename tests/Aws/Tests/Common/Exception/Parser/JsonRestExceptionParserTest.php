@@ -45,4 +45,25 @@ class JsonRestExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
             )
         ), $parser->parse($response));
     }
+
+    public function testParsesClientErrorResponseWithCodeInHeader()
+    {
+        $response = Response::fromMessage(
+            "HTTP/1.1 400 Bad Request\r\n" .
+            "x-amzn-RequestId: xyz\r\n" .
+            "x-amzn-ErrorType: foo:bar\r\n\r\n" .
+            '{ "message": "lorem ipsum"}'
+        );
+
+        $parser = new JsonRestExceptionParser();
+        $this->assertEquals(array(
+            'code'       => 'foo',
+            'message'    => 'lorem ipsum',
+            'type'       => 'client',
+            'request_id' => 'xyz',
+            'parsed'     => array(
+                'message' => 'lorem ipsum',
+            )
+        ), $parser->parse($response));
+    }
 }

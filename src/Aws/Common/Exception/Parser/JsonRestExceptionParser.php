@@ -16,6 +16,8 @@
 
 namespace Aws\Common\Exception\Parser;
 
+use Guzzle\Http\Message\Response;
+
 /**
  * Parses JSON encoded exception responses from REST services
  */
@@ -24,10 +26,22 @@ class JsonRestExceptionParser extends AbstractJsonExceptionParser
     /**
      * {@inheritdoc}
      */
-    protected function doParse(array $data, array $json)
+    protected function doParse(array $data, Response $response)
     {
-        $data = array_replace($data, $json);
-        $data['type'] = strtolower($data['type']);
+        // Merge in error data from the JSON body
+        if ($json = $data['parsed']) {
+            $data = array_replace($data, $json);
+        }
+
+        // Correct error type from services like Amazon Glacier
+        if (!empty($data['type'])) {
+            $data['type'] = strtolower($data['type']);
+        }
+
+        // Retrieve the error code from services like Amazon Elastic Transcoder
+        if ($code = (string) $response->getHeader('x-amzn-ErrorType')) {
+            $data['code'] = substr($code, 0, strpos($code, ':'));
+        }
 
         return $data;
     }

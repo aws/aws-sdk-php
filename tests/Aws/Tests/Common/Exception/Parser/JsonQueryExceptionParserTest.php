@@ -61,8 +61,8 @@ class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
             'type'       => 'server',
             'request_id' => '123',
             'parsed'     => array(
-                '__Type'  => 'abc#baz',
-                'Message' => 'dolor'
+                '__type'  => 'abc#baz',
+                'message' => 'dolor'
             )
         ), $parser->parse($response));
     }
