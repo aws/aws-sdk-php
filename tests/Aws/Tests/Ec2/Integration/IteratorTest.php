@@ -17,7 +17,6 @@
 namespace Aws\Tests\Ec2\Integration;
 
 use Aws\Ec2\Ec2Client;
-use Aws\Common\Enum\Region;
 use Guzzle\Service\Description\Operation;
 
 /**

@@ -18,10 +18,8 @@ namespace Aws\Tests\Common\Command;
 
 use Aws\Common\Command\JsonCommand;
 use Guzzle\Common\ToArrayInterface;
-use Guzzle\Http\Message\Response;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\Operation;
-use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * @covers Aws\Common\Command\JsonCommand

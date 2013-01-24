@@ -18,8 +18,6 @@ namespace Aws\Tests\Common\Iterator;
 
 use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\Common\Iterator\AwsResourceIteratorFactory;
-use Guzzle\Service\Command\AbstractCommand;
-use Guzzle\Service\Description\Parameter;
 
 /**
  * @covers Aws\Common\Iterator\AwsResourceIteratorFactory

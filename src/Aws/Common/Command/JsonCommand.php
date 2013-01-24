@@ -16,7 +16,6 @@
 
 namespace Aws\Common\Command;
 
-use Guzzle\Service\Command\DefaultResponseParser;
 use Guzzle\Service\Command\OperationCommand;
 
 /**

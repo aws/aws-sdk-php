@@ -17,7 +17,6 @@
 namespace Aws\Common\Waiter;
 
 use Guzzle\Common\Collection;
-use Guzzle\Inflection\Inflector;
 
 /**
  * Configuration info of a waiter object

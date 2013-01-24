@@ -17,7 +17,6 @@
 namespace Aws\Tests\Ec2\Waiter;
 
 use Aws\Ec2\Enum\InstanceState;
-use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\Ec2\Waiter\InstanceInState

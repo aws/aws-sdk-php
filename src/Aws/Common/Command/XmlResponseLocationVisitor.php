@@ -3,7 +3,6 @@
 namespace Aws\Common\Command;
 
 use Guzzle\Service\Description\Operation;
-use Guzzle\Service\Description\Parameter;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\LocationVisitor\Response\XmlVisitor;
 

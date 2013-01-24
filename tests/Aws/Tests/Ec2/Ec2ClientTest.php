@@ -17,8 +17,6 @@
 namespace Aws\Tests\Ec2;
 
 use Aws\Ec2\Ec2Client;
-use Guzzle\Http\Url;
-use Guzzle\Http\Message\Request;
 
 /**
  * @covers Aws\Ec2\Ec2Client
