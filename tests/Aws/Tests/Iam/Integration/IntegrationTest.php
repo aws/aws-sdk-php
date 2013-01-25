@@ -37,7 +37,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function setUp()
     {
         $this->iam = $this->getServiceBuilder()->get('iam');
-        $this->iam->addSubscriber(\Guzzle\Plugin\Log\LogPlugin::getDebugPlugin());
     }
 
     public static function cleanUp()
@@ -105,7 +104,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Make sure the policies are there.');
         //print_r($this->iam->listRolePolicies(array('RoleName' => $roleName))->toArray());
         $policies = $this->iam->getIterator('ListRolePolicies', array('RoleName' => $roleName));
-        var_export($policies->toArray());
         $this->assertEquals(self::$policies, iterator_to_array($policies));
 
         self::log('Delete the policies from the IAM Role.');

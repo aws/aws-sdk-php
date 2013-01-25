@@ -23,6 +23,7 @@ return array (
     'globalEndpoint' => 'iam.amazonaws.com',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
+    'memberedLists' => true,
     'namespace' => 'Iam',
     'operations' => array(
         'AddRoleToInstanceProfile' => array(
@@ -3220,6 +3221,7 @@ return array (
                                 'name' => 'Role',
                                 'description' => 'The Role data type contains information about a role.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Path' => array(
                                         'description' => 'Path to the role. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -3526,6 +3528,7 @@ return array (
                         'name' => 'User',
                         'description' => 'The User data type contains information about a user.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the user. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -3619,6 +3622,7 @@ return array (
                                 'name' => 'Role',
                                 'description' => 'The Role data type contains information about a role.',
                                 'type' => 'object',
+                                'sentAs' => 'member',
                                 'properties' => array(
                                     'Path' => array(
                                         'description' => 'Path to the role. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -3843,6 +3847,7 @@ return array (
                         'name' => 'AccessKeyMetadata',
                         'description' => 'The AccessKey data type contains information about an AWS access key, without its secret key.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'UserName' => array(
                                 'description' => 'Name of the user the key is associated with.',
@@ -3886,6 +3891,7 @@ return array (
                     'items' => array(
                         'name' => 'accountAliasType',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'IsTruncated' => array(
@@ -3911,6 +3917,7 @@ return array (
                     'items' => array(
                         'name' => 'policyNameType',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'IsTruncated' => array(
@@ -3937,6 +3944,7 @@ return array (
                         'name' => 'Group',
                         'description' => 'The Group data type contains information about a group.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the group. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -3985,6 +3993,7 @@ return array (
                         'name' => 'Group',
                         'description' => 'The Group data type contains information about a group.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the group. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4033,6 +4042,7 @@ return array (
                         'name' => 'InstanceProfile',
                         'description' => 'The InstanceProfile data type contains information about an instance profile.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the instance profile. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4061,6 +4071,7 @@ return array (
                                     'name' => 'Role',
                                     'description' => 'The Role data type contains information about a role.',
                                     'type' => 'object',
+                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'Path' => array(
                                             'description' => 'Path to the role. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4116,6 +4127,7 @@ return array (
                         'name' => 'InstanceProfile',
                         'description' => 'The InstanceProfile data type contains information about an instance profile.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the instance profile. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4144,6 +4156,7 @@ return array (
                                     'name' => 'Role',
                                     'description' => 'The Role data type contains information about a role.',
                                     'type' => 'object',
+                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'Path' => array(
                                             'description' => 'Path to the role. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4199,6 +4212,7 @@ return array (
                         'name' => 'MFADevice',
                         'description' => 'The MFADevice data type contains information about an MFA device.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'UserName' => array(
                                 'description' => 'The user with whom the MFA device is associated.',
@@ -4238,6 +4252,7 @@ return array (
                     'items' => array(
                         'name' => 'policyNameType',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'IsTruncated' => array(
@@ -4264,6 +4279,7 @@ return array (
                         'name' => 'Role',
                         'description' => 'The Role data type contains information about a role.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the role. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4316,6 +4332,7 @@ return array (
                         'name' => 'ServerCertificateMetadata',
                         'description' => 'ServerCertificateMetadata contains information about a server certificate without its certificate body, certificate chain, and private key.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the server certificate. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4364,6 +4381,7 @@ return array (
                         'name' => 'SigningCertificate',
                         'description' => 'The SigningCertificate data type contains information about an X.509 signing certificate.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'UserName' => array(
                                 'description' => 'Name of the user the signing certificate is associated with.',
@@ -4411,6 +4429,7 @@ return array (
                     'items' => array(
                         'name' => 'policyNameType',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'IsTruncated' => array(
@@ -4437,6 +4456,7 @@ return array (
                         'name' => 'User',
                         'description' => 'The User data type contains information about a user.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Path' => array(
                                 'description' => 'Path to the user. For more information about paths, see Identifiers for IAM Entities in Using AWS Identity and Access Management.',
@@ -4484,6 +4504,7 @@ return array (
                         'name' => 'VirtualMFADevice',
                         'description' => 'The VirtualMFADevice data type contains information about a virtual MFA device.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'SerialNumber' => array(
                                 'description' => 'The serial number associated with VirtualMFADevice.',
