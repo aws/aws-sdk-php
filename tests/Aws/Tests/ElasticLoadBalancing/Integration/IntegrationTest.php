@@ -21,10 +21,19 @@ namespace Aws\Tests\ElasticLoadBalancing\Integration;
  */
 class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    /**
+     * @var \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient
+     */
+    protected $client;
+
+    public function setUp()
+    {
+        $this->client = $this->getServiceBuilder()->get('elasticloadbalancing');
+    }
+
     public function testDescribesLoadBalancers()
     {
-        $client = $this->getServiceBuilder()->get('elasticloadbalancing');
-        $command = $client->getCommand('DescribeLoadBalancers');
+        $command = $this->client->getCommand('DescribeLoadBalancers');
         $result = $command->execute();
         $this->assertNotNull($result->getPath('ResponseMetadata/RequestId'));
         $this->assertInternalType('array', $result['LoadBalancerDescriptions']);
@@ -59,7 +68,7 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
         }
 
         $client = $this->getServiceBuilder()->get('elasticloadbalancing');
-        $command = $client->getCommand('DescribeLoadBalancers', array('LoadBalancerNames' => $ids));
+        $command = $this->client->getCommand('DescribeLoadBalancers', array('LoadBalancerNames' => $ids));
         $result = $command->execute();
 
         if ($result['NextMarker']) {
@@ -72,7 +81,7 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
     public function testDescribesLoadBalancerPolicyTypes()
     {
         $client = $this->getServiceBuilder()->get('elasticloadbalancing');
-        $command = $client->getCommand('DescribeLoadBalancerPolicies');
+        $command = $this->client->getCommand('DescribeLoadBalancerPolicies');
         $result = $command->execute();
         $this->assertNotNull($result->getPath('ResponseMetadata/RequestId'));
         $this->assertInternalType('array', $result['PolicyDescriptions']);
