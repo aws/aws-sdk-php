@@ -2591,6 +2591,9 @@ return array (
                 'limit_key' => 'MaxRecords',
                 'result_key' => 'Events',
             ),
+            'ListAvailableSolutionStacks' => array(
+                'result_key' => 'SolutionStacks',
+            ),
         ),
     ),
     'waiters' => array(

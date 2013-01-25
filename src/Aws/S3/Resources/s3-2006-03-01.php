@@ -792,7 +792,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
                 'command.expects' => array(
@@ -1762,7 +1761,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -1848,7 +1846,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -1962,7 +1959,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2061,7 +2057,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2115,7 +2110,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2152,7 +2146,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2198,7 +2191,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2256,7 +2248,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2316,7 +2307,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2449,7 +2439,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
@@ -2765,7 +2754,6 @@ return array (
                 ),
                 'ContentMD5' => array(
                     'required' => true,
-                    'static' => true,
                     'default' => true,
                 ),
             ),
