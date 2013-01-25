@@ -21,10 +21,19 @@ namespace Aws\Tests\ElasticBeanstalk\Integration;
  */
 class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    /**
+     * @var \Aws\ElasticBeanstalk\ElasticBeanstalkClient
+     */
+    protected $client;
+
+    public function setUp()
+    {
+        $this->client = $this->getServiceBuilder()->get('elasticbeanstalk');
+    }
+
     public function testListsApplications()
     {
-        $eb = $this->getServiceBuilder()->get('elasticbeanstalk');
-        $command = $eb->getCommand('DescribeApplications');
+        $command = $this->client->getCommand('DescribeApplications');
         $result = $command->execute();
         $this->assertNotNull($result->getPath('ResponseMetadata/RequestId'));
         $this->assertInternalType('array', $result['Applications']);
@@ -57,8 +66,7 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
             return;
         }
 
-        $eb = $this->getServiceBuilder()->get('elasticbeanstalk');
-        $command = $eb->getCommand('DescribeApplications', array(
+        $command = $this->client->getCommand('DescribeApplications', array(
             'ApplicationNames' => $ids
         ));
         $result = $command->execute();

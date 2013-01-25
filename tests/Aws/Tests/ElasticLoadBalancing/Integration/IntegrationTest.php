@@ -67,7 +67,6 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
             return;
         }
 
-        $client = $this->getServiceBuilder()->get('elasticloadbalancing');
         $command = $this->client->getCommand('DescribeLoadBalancers', array('LoadBalancerNames' => $ids));
         $result = $command->execute();
 
@@ -80,7 +79,6 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testDescribesLoadBalancerPolicyTypes()
     {
-        $client = $this->getServiceBuilder()->get('elasticloadbalancing');
         $command = $this->client->getCommand('DescribeLoadBalancerPolicies');
         $result = $command->execute();
         $this->assertNotNull($result->getPath('ResponseMetadata/RequestId'));
