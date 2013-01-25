@@ -83,6 +83,19 @@ class SimpleDbClient extends AbstractClient
             ->setConfigDefaults(array(
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sdb-2009-04-15.php'
             ))
+            ->setIteratorsConfig(array(
+                'token_key' => 'NextToken',
+                'token_param' => 'NextToken',
+                'operations' => array(
+                    'ListDomains' => array(
+                        'result_key' => 'DomainNames',
+                        'limit_key' => 'MaxNumberOfDomains'
+                    ),
+                    'Select' => array(
+                        'result_key' => 'Items'
+                    )
+                )
+            ))
             ->build();
     }
 }

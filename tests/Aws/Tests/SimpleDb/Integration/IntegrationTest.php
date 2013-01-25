@@ -25,27 +25,53 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      * @var \Aws\SimpleDb\SimpleDbClient
      */
     protected $client;
-    protected $domain;
+    protected $domainName;
 
     public function setUp()
     {
         $this->client = $this->getServiceBuilder()->get('sdb');
-        $this->domain = 'foo123';
+        $this->domainName = 'foo123';
     }
 
+    public function testCreatesDomain()
+    {
+        $this->client->createDomain(array('DomainName' => $this->domainName));
+    }
+
+    /**
+     * @depends testCreatesDomain
+     */
     public function testListsDomainsResultIsProcessedCorrectly()
     {
         $result = $this->client->listDomains();
         $this->assertInternalType('array', $result['DomainNames']);
         $this->assertNull($result['DomainName']);
-    }
 
-    /**
-     * @depends testListsDomainsResultIsProcessedCorrectly
-     */
-    public function testCreatesDomain()
-    {
-        $this->client->createDomain(array('DomainName' => $this->domain));
+        $found = false;
+        foreach ($result['DomainNames'] as $n) {
+            if ($n == $this->domainName) {
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $this->fail('Did not find ' . $this->domainName . ' in domain list');
+        }
+
+        // Ensure that the iterator works
+        $i = $this->client->getIterator('ListDomains');
+        $found = false;
+        foreach ($i as $n) {
+            if ($n == $this->domainName) {
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $this->fail('Did not find ' . $this->domainName . ' in domain list');
+        }
     }
 
     /**
@@ -54,7 +80,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testAddsItem()
     {
         $this->client->putAttributes(array(
-            'DomainName' => $this->domain,
+            'DomainName' => $this->domainName,
             'ItemName'   => 'test',
             'Attributes' => array(
                 array('Name' => 'a', 'Value' => 1),
@@ -63,7 +89,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ));
 
         $result = $this->client->getAttributes(array(
-            'DomainName' => $this->domain,
+            'DomainName' => $this->domainName,
             'ItemName'   => 'test',
             'Attributes' => array(
                 'a', 'b'
@@ -84,7 +110,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testSelectsItems()
     {
         $result = $this->client->select(array(
-            'SelectExpression' => 'select * from ' . $this->domain,
+            'SelectExpression' => 'select * from ' . $this->domainName,
             'ConsistentRead' => true
         ));
         $this->assertCount(1, $result['Items']);
@@ -101,6 +127,27 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 ),
             ),
         ), $result['Items'][0]);
+
+        // Ensure that the select iterator works
+        $i = $this->client->getIterator('Select', array(
+            'SelectExpression' => 'select * from ' . $this->domainName,
+            'ConsistentRead' => true
+        ));
+        $this->assertEquals(array(
+            array(
+                'Name' => 'test',
+                'Attributes' => array(
+                    array(
+                        'Name' => 'b',
+                        'Value' => '2',
+                    ),
+                    array(
+                        'Name' => 'a',
+                        'Value' => '1',
+                    ),
+                ),
+            )
+        ), iterator_to_array($i));
     }
 
     /**
@@ -108,6 +155,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testDeleteDomains()
     {
-        $this->client->deleteDomain(array('DomainName' => $this->domain));
+        $this->client->deleteDomain(array('DomainName' => $this->domainName));
     }
 }

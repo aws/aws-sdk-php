@@ -70,7 +70,7 @@ class SignatureV2 extends AbstractSignature
     public function addParameter(RequestInterface $request, $key, $value)
     {
         if ($request->getMethod() == 'POST') {
-            $request->addPostFields(array($key => $value));
+            $request->setPostField($key, $value);
         } else {
             $request->getQuery()->set($key, $value);
         }
