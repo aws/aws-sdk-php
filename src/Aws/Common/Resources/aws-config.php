@@ -75,6 +75,12 @@ return array(
             'class'   => 'Aws\Route53\Route53Client'
         ),
 
+        'sdb' => array(
+            'alias'   => 'SimpleDb',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\SimpleDb\SimpleDbClient'
+        ),
+
         's3' => array(
             'alias'   => 'S3',
             'extends' => 'default_settings',
