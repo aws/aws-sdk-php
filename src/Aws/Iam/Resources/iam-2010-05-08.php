@@ -3440,6 +3440,24 @@ return array (
                     'description' => 'A set of key value pairs containing account-level information.',
                     'type' => 'array',
                     'location' => 'xml',
+                    'data' => array(
+                        'xmlMap' => array(
+                            'Users',
+                            'UsersQuota',
+                            'Groups',
+                            'GroupsQuota',
+                            'ServerCertificates',
+                            'ServerCertificatesQuota',
+                            'UserPolicySizeQuota',
+                            'GroupPolicySizeQuota',
+                            'GroupsPerUserQuota',
+                            'SigningCertificatesPerUserQuota',
+                            'AccessKeysPerUserQuota',
+                            'MFADevices',
+                            'MFADevicesInUse',
+                            'AccountMFAEnabled',
+                        ),
+                    ),
                     'filters' => array(
                         array(
                             'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
