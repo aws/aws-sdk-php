@@ -156,46 +156,6 @@ return array (
                         'REPLACE',
                     ),
                 ),
-                'CacheControl' => array(
-                    'description' => 'Can be used to specify caching behavior along the request/reply chain.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Cache-Control',
-                ),
-                'ContentDisposition' => array(
-                    'description' => 'Specifies presentational information for the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Disposition',
-                ),
-                'ContentEncoding' => array(
-                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Encoding',
-                ),
-                'ContentType' => array(
-                    'description' => 'A standard MIME type describing the format of the object data.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Type',
-                ),
-                'Expires' => array(
-                    'description' => 'The date and time at which the object is no longer cacheable.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
-                ),
                 'CopySource' => array(
                     'required' => true,
                     'description' => 'The name of the source bucket and key name of the source object, separated by a slash (/). Must be URL-encoded.',
@@ -294,6 +254,52 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
+                ),
+                'CacheControl' => array(
+                    'description' => 'Specifies caching behavior along the request/reply chain.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Cache-Control',
+                ),
+                'ContentDisposition' => array(
+                    'description' => 'Specifies presentational information for the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Disposition',
+                ),
+                'ContentEncoding' => array(
+                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Encoding',
+                ),
+                'ContentLanguage' => array(
+                    'description' => 'The language the content is in.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Language',
+                ),
+                'ContentType' => array(
+                    'description' => 'A standard MIME type describing the format of the object data.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Type',
+                ),
+                'Expires' => array(
+                    'description' => 'The date and time at which the object is no longer cacheable.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
@@ -446,46 +452,6 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'CacheControl' => array(
-                    'description' => 'Can be used to specify caching behavior along the request/reply chain.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Cache-Control',
-                ),
-                'ContentDisposition' => array(
-                    'description' => 'Specifies presentational information for the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Disposition',
-                ),
-                'ContentEncoding' => array(
-                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Encoding',
-                ),
-                'ContentType' => array(
-                    'description' => 'A standard MIME type describing the format of the object data.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Type',
-                ),
-                'Expires' => array(
-                    'description' => 'The date and time at which the object is no longer cacheable.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
-                ),
                 'StorageClass' => array(
                     'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
                     'type' => 'string',
@@ -533,6 +499,52 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
+                ),
+                'CacheControl' => array(
+                    'description' => 'Specifies caching behavior along the request/reply chain.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Cache-Control',
+                ),
+                'ContentDisposition' => array(
+                    'description' => 'Specifies presentational information for the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Disposition',
+                ),
+                'ContentEncoding' => array(
+                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Encoding',
+                ),
+                'ContentLanguage' => array(
+                    'description' => 'The language the content is in.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Language',
+                ),
+                'ContentType' => array(
+                    'description' => 'A standard MIME type describing the format of the object data.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Type',
+                ),
+                'Expires' => array(
+                    'description' => 'The date and time at which the object is no longer cacheable.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
@@ -783,16 +795,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
                 ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'delete',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -1747,6 +1759,9 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
@@ -1758,10 +1773,6 @@ return array (
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add an access control policy to the operation',
                     'type' => 'object',
                     'additionalProperties' => true,
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -1837,16 +1848,15 @@ return array (
                         ),
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'cors',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -1950,16 +1960,15 @@ return array (
                         ),
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'lifecycle',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2048,16 +2057,15 @@ return array (
                         ),
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'logging',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2101,16 +2109,15 @@ return array (
                         ),
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'notification',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2137,16 +2144,15 @@ return array (
                     ),
                     'location' => 'body',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'policy',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2182,16 +2188,15 @@ return array (
                         'BucketOwner',
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'requestPayment',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2239,16 +2244,15 @@ return array (
                         ),
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'tagging',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2298,16 +2302,15 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'versioning',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2430,16 +2433,15 @@ return array (
                         ),
                     ),
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
                     'location' => 'query',
                     'sentAs' => 'website',
                     'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
         ),
@@ -2464,46 +2466,6 @@ return array (
                     'filters' => array(
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
-                ),
-                'CacheControl' => array(
-                    'description' => 'Can be used to specify caching behavior along the request/reply chain.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Cache-Control',
-                ),
-                'ContentDisposition' => array(
-                    'description' => 'Specifies presentational information for the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Disposition',
-                ),
-                'ContentEncoding' => array(
-                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Encoding',
-                ),
-                'ContentType' => array(
-                    'description' => 'A standard MIME type describing the format of the object data.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Type',
-                ),
-                'Expires' => array(
-                    'description' => 'The date and time at which the object is no longer cacheable.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'Body' => array(
                     'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
@@ -2560,6 +2522,52 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
+                ),
+                'CacheControl' => array(
+                    'description' => 'Specifies caching behavior along the request/reply chain.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Cache-Control',
+                ),
+                'ContentDisposition' => array(
+                    'description' => 'Specifies presentational information for the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Disposition',
+                ),
+                'ContentEncoding' => array(
+                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Encoding',
+                ),
+                'ContentLanguage' => array(
+                    'description' => 'The language the content is in.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Language',
+                ),
+                'ContentType' => array(
+                    'description' => 'A standard MIME type describing the format of the object data.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Type',
+                ),
+                'Expires' => array(
+                    'description' => 'The date and time at which the object is no longer cacheable.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
@@ -2740,6 +2748,9 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'SubResource' => array(
                     'required' => true,
                     'static' => true,
@@ -2751,10 +2762,6 @@ return array (
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add an access control policy to the operation',
                     'type' => 'object',
                     'additionalProperties' => true,
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
             ),
             'errorResponses' => array(
@@ -3779,23 +3786,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-restore',
                 ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'When a bucket is configured as a website, you can set this metadata on the object so the website endpoint will evaluate the request for the object as a 301 redirect to another object in the same bucket or an external URL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-redirect-location',
-                ),
                 'LastModified' => array(
                     'description' => 'Last modified date of the object',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'Last-Modified',
-                ),
-                'ContentType' => array(
-                    'description' => 'Content type of the object',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Type',
                 ),
                 'ContentLength' => array(
                     'description' => 'Size of the body in bytes.',
@@ -3814,17 +3809,58 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-missing-meta',
                 ),
-                'ServerSideEncryption' => array(
-                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption',
-                ),
                 'VersionId' => array(
                     'description' => 'Version of the object.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
+                ),
+                'CacheControl' => array(
+                    'description' => 'Specifies caching behavior along the request/reply chain.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Cache-Control',
+                ),
+                'ContentDisposition' => array(
+                    'description' => 'Specifies presentational information for the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Disposition',
+                ),
+                'ContentEncoding' => array(
+                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Encoding',
+                ),
+                'ContentLanguage' => array(
+                    'description' => 'The language the content is in.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Language',
+                ),
+                'ContentType' => array(
+                    'description' => 'A standard MIME type describing the format of the object data.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Type',
+                ),
+                'Expires' => array(
+                    'description' => 'The date and time at which the object is no longer cacheable.',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
+                ),
+                'ServerSideEncryption' => array(
+                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
                 ),
                 'Metadata' => array(
                     'description' => 'A map of metadata to store with the object in S3.',
@@ -3962,23 +3998,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-restore',
                 ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'When a bucket is configured as a website, you can set this metadata on the object so the website endpoint will evaluate the request for the object as a 301 redirect to another object in the same bucket or an external URL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-redirect-location',
-                ),
                 'LastModified' => array(
                     'description' => 'Last modified date of the object',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'Last-Modified',
-                ),
-                'ContentType' => array(
-                    'description' => 'Content type of the object',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'Content-Type',
                 ),
                 'ContentLength' => array(
                     'description' => 'Size of the body in bytes.',
@@ -3997,17 +4021,58 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-missing-meta',
                 ),
-                'ServerSideEncryption' => array(
-                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption',
-                ),
                 'VersionId' => array(
                     'description' => 'Version of the object.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
+                ),
+                'CacheControl' => array(
+                    'description' => 'Specifies caching behavior along the request/reply chain.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Cache-Control',
+                ),
+                'ContentDisposition' => array(
+                    'description' => 'Specifies presentational information for the object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Disposition',
+                ),
+                'ContentEncoding' => array(
+                    'description' => 'Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Encoding',
+                ),
+                'ContentLanguage' => array(
+                    'description' => 'The language the content is in.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Language',
+                ),
+                'ContentType' => array(
+                    'description' => 'A standard MIME type describing the format of the object data.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Type',
+                ),
+                'Expires' => array(
+                    'description' => 'The date and time at which the object is no longer cacheable.',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
+                ),
+                'ServerSideEncryption' => array(
+                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
                 ),
                 'Metadata' => array(
                     'description' => 'A map of metadata to store with the object in S3.',
