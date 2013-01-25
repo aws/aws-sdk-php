@@ -26,6 +26,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     const IAM_POLICY_ASSUME_ROLE = '{"Statement":[{"Effect":"Allow","Principal":{"Service":["ec2.amazonaws.com"]},"Action":["sts:AssumeRole"]}]}';
     const IAM_POLICY_ALLOW_S3 = '{"Statement":[{"Effect":"Allow","Action":"s3:*","Resource":"*"}]}';
 
+    protected static $roleName = 'php-integ-iam-test-role';
+    protected static $policies = array('php-integ-iam-test-policy-1', 'php-integ-iam-test-policy-2');
+
     /**
      * @var IamClient
      */
@@ -35,6 +38,33 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         $this->iam = $this->getServiceBuilder()->get('iam');
         $this->iam->addSubscriber(\Guzzle\Plugin\Log\LogPlugin::getDebugPlugin());
+    }
+
+    public static function cleanUp()
+    {
+        $iam = self::getServiceBuilder()->get('iam');
+        foreach (self::$policies as $policy) {
+            try {
+                $iam->deleteRolePolicy(array(
+                    'PolicyName' => $policy,
+                    'RoleName'   => self::$roleName,
+                ));
+            } catch (\Exception $e) {}
+        }
+
+        try {
+            $iam->deleteRole(array('RoleName' => self::$roleName));
+        } catch (\Exception $e) {}
+    }
+
+    public static function setUpBeforeClass()
+    {
+        self::cleanUp();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        self::cleanUp();
     }
 
     public function testGetsAccountSummary()
@@ -47,8 +77,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testWorkingWithRoles()
     {
         $roleName = 'php-integ-iam-test-role';
-        $policyName1 = 'php-integ-iam-test-policy-1';
-        $policyName2 = 'php-integ-iam-test-policy-2';
 
         self::log('Create an IAM Role.');
         $result = $this->iam->getCommand('CreateRole', array(
@@ -59,14 +87,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Put a policy on the IAM Role.');
         $result = $this->iam->getCommand('PutRolePolicy', array(
-            'PolicyName'     => $policyName1,
+            'PolicyName'     => self::$policies[0],
             'RoleName'       => $roleName,
             'PolicyDocument' => self::IAM_POLICY_ALLOW_S3,
         ))->getResult();
 
         self::log('Put another policy on the IAM Role.');
         $result = $this->iam->getCommand('PutRolePolicy', array(
-            'PolicyName'     => $policyName2,
+            'PolicyName'     => self::$policies[1],
             'RoleName'       => $roleName,
             'PolicyDocument' => self::IAM_POLICY_ALLOW_S3,
         ))->getResult();
@@ -77,18 +105,17 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Make sure the policies are there.');
         //print_r($this->iam->listRolePolicies(array('RoleName' => $roleName))->toArray());
         $policies = $this->iam->getIterator('ListRolePolicies', array('RoleName' => $roleName));
-        $this->assertEquals(array($policyName1, $policyName2), iterator_to_array($policies));
+        var_export($policies->toArray());
+        $this->assertEquals(self::$policies, iterator_to_array($policies));
 
         self::log('Delete the policies from the IAM Role.');
         $commands = array();
-        $commands[] = $this->iam->getCommand('DeleteRolePolicy', array(
-            'PolicyName' => $policyName1,
-            'RoleName'   => $roleName,
-        ));
-        $commands[] = $this->iam->getCommand('DeleteRolePolicy', array(
-            'PolicyName' => $policyName2,
-            'RoleName'   => $roleName,
-        ));
+        foreach (self::$policies as $policy) {
+            $commands[] = $this->iam->getCommand('DeleteRolePolicy', array(
+                'PolicyName' => $policy,
+                'RoleName'   => $roleName,
+            ));
+        }
         $this->iam->execute($commands);
 
         self::log('Delete the IAM Role.');
