@@ -52,6 +52,7 @@ return array (
                     'description' => 'A list of items on which to perform the operation.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Item',
                     'items' => array(
                         'name' => 'Item',
                         'type' => 'object',
@@ -63,6 +64,7 @@ return array (
                             ),
                             'Attributes' => array(
                                 'type' => 'array',
+                                'sentAs' => 'Attribute',
                                 'items' => array(
                                     'name' => 'Attribute',
                                     'type' => 'object',
@@ -120,6 +122,7 @@ return array (
                     'description' => 'A list of items on which to perform the operation.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Item',
                     'items' => array(
                         'name' => 'Item',
                         'type' => 'object',
@@ -134,6 +137,7 @@ return array (
                                 'required' => true,
                                 'description' => 'The list of attributes for a replaceable item.',
                                 'type' => 'array',
+                                'sentAs' => 'Attribute',
                                 'items' => array(
                                     'name' => 'Attribute',
                                     'type' => 'object',
@@ -273,6 +277,7 @@ return array (
                     'description' => 'A list of Attributes. Similar to columns on a spreadsheet, attributes represent categories of data that can be assigned to items.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Attribute',
                     'items' => array(
                         'name' => 'Attribute',
                         'type' => 'object',
@@ -438,6 +443,7 @@ return array (
                     'description' => 'The names of the attributes.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'AttributeName',
                     'items' => array(
                         'name' => 'AttributeName',
                         'type' => 'string',
@@ -540,6 +546,7 @@ return array (
                     'description' => 'The list of attributes.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Attribute',
                     'items' => array(
                         'name' => 'Attribute',
                         'type' => 'object',

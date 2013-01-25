@@ -57,7 +57,7 @@ class AwsQueryVisitor extends AbstractRequestVisitor
                 }
                 break;
             default:
-                $query[$prefix] = $value;
+                $query[$prefix] = $param->filter($value);
         }
     }
 }
