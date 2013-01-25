@@ -3438,10 +3438,33 @@ return array (
             'properties' => array(
                 'SummaryMap' => array(
                     'description' => 'A set of key value pairs containing account-level information.',
-                    'type' => 'object',
+                    'type' => 'array',
                     'location' => 'xml',
-                    'additionalProperties' => array(
-                        'type' => 'numeric',
+                    'filters' => array(
+                        array(
+                            'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
+                            'args' => array(
+                                '@value',
+                                'entry',
+                                'key',
+                                'value',
+                            ),
+                        ),
+                    ),
+                    'additionalProperties' => false,
+                    'items' => array(
+                        'name' => 'entry',
+                        'type' => 'object',
+                        'sentAs' => 'entry',
+                        'additionalProperties' => true,
+                        'properties' => array(
+                            'key' => array(
+                                'type' => 'string',
+                            ),
+                            'value' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
                     ),
                 ),
             ),

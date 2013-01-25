@@ -28,4 +28,24 @@ class XmlResponseLocationVisitor extends XmlVisitor
             }
         }
     }
+
+    /**
+     * Filter used when converting XML maps into associative arrays in service descriptions
+     *
+     * @param array  $value     Value to filter
+     * @param string $entryName Name of each entry
+     * @param string $keyName   Name of each key
+     * @param string $valueName Name of each value
+     *
+     * @return array Returns the map of the XML data
+     */
+    public static function xmlMap($value, $entryName, $keyName, $valueName)
+    {
+        $result = array();
+        foreach ($value as $entry) {
+            $result[$entry[$keyName]] = $entry[$valueName];
+        }
+
+        return $result;
+    }
 }
