@@ -16,16 +16,84 @@
 
 namespace Aws\Tests\Iam\Integration;
 
+use Aws\Iam\IamClient;
+
 /**
  * @group integration
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
+    const IAM_POLICY_ASSUME_ROLE = '{"Statement":[{"Effect":"Allow","Principal":{"Service":["ec2.amazonaws.com"]},"Action":["sts:AssumeRole"]}]}';
+    const IAM_POLICY_ALLOW_S3 = '{"Statement":[{"Effect":"Allow","Action":"s3:*","Resource":"*"}]}';
+
+    /**
+     * @var IamClient
+     */
+    protected $iam;
+
+    public function setUp()
+    {
+        $this->iam = $this->getServiceBuilder()->get('iam');
+        $this->iam->addSubscriber(\Guzzle\Plugin\Log\LogPlugin::getDebugPlugin());
+    }
+
     public function testGetsAccountSummary()
     {
-        $c = $this->getServiceBuilder()->get('iam');
-        $result = $c->getAccountSummary();
+        $result = $this->iam->getAccountSummary();
         // Ensure that the XML map was converted correctly
         $this->assertArrayHasKey('SummaryMap', $result->toArray());
+    }
+
+    public function testWorkingWithRoles()
+    {
+        $roleName = 'php-integ-iam-test-role';
+        $policyName1 = 'php-integ-iam-test-policy-1';
+        $policyName2 = 'php-integ-iam-test-policy-2';
+
+        self::log('Create an IAM Role.');
+        $result = $this->iam->getCommand('CreateRole', array(
+            'RoleName'                 => $roleName,
+            'AssumeRolePolicyDocument' => self::IAM_POLICY_ASSUME_ROLE,
+        ))->getResult();
+        $roleArn = $result->getPath('Role/Arn');
+
+        self::log('Put a policy on the IAM Role.');
+        $result = $this->iam->getCommand('PutRolePolicy', array(
+            'PolicyName'     => $policyName1,
+            'RoleName'       => $roleName,
+            'PolicyDocument' => self::IAM_POLICY_ALLOW_S3,
+        ))->getResult();
+
+        self::log('Put another policy on the IAM Role.');
+        $result = $this->iam->getCommand('PutRolePolicy', array(
+            'PolicyName'     => $policyName2,
+            'RoleName'       => $roleName,
+            'PolicyDocument' => self::IAM_POLICY_ALLOW_S3,
+        ))->getResult();
+
+        self::log('make sure the IAM Role exists.');
+        // @TODO do a ListRoles-related assertion
+
+        self::log('Make sure the policies are there.');
+        //print_r($this->iam->listRolePolicies(array('RoleName' => $roleName))->toArray());
+        $policies = $this->iam->getIterator('ListRolePolicies', array('RoleName' => $roleName));
+        $this->assertEquals(array($policyName1, $policyName2), iterator_to_array($policies));
+
+        self::log('Delete the policies from the IAM Role.');
+        $commands = array();
+        $commands[] = $this->iam->getCommand('DeleteRolePolicy', array(
+            'PolicyName' => $policyName1,
+            'RoleName'   => $roleName,
+        ));
+        $commands[] = $this->iam->getCommand('DeleteRolePolicy', array(
+            'PolicyName' => $policyName2,
+            'RoleName'   => $roleName,
+        ));
+        $this->iam->execute($commands);
+
+        self::log('Delete the IAM Role.');
+        $result = $this->iam->getCommand('DeleteRole', array(
+            'RoleName' => $roleName,
+        ))->getResult();
     }
 }
