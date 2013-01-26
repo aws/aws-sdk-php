@@ -43,7 +43,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function setUp()
     {
         $this->dataPipeline = self::getServiceBuilder()->get('datapipeline');
-        $this->dataPipeline->addSubscriber(\Guzzle\Plugin\Log\LogPlugin::getDebugPlugin());
     }
 
     public function testCrudOperationsForPipelines()

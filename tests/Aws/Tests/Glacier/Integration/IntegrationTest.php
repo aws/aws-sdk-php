@@ -68,7 +68,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         // Create vaults and verify existence
         foreach ($vaults as $vault) {
             $this->client->createVault(array('vaultName' => $vault));
-            $this->client->waitUntil('VaultExists', array('VaultName' => $vault, 'waiter.max_attempts' => 3));
+            $this->client->waitUntil('VaultExists', array('vaultName' => $vault, 'waiter.max_attempts' => 3));
         }
         $listVaults = $this->client->getIterator('ListVaults', array('limit' => '5'));
         $vaultList = array_filter(iterator_to_array($listVaults), $getVaultList);
@@ -77,7 +77,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         // Delete vaults and verify deletion
         foreach ($vaults as $vault) {
             $this->client->deleteVault(array('vaultName' => $vault));
-            $this->client->waitUntil('VaultNotExists', array('VaultName' => $vault));
+            $this->client->waitUntil('VaultNotExists', array('vaultName' => $vault));
         }
         $listVaults = $this->client->getIterator('ListVaults');
         $vaultList = array_filter(iterator_to_array($listVaults), $getVaultList);
