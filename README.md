@@ -249,7 +249,7 @@ $result = $client->createTable(array(
 ));
 
 // Wait until the table is created and active
-$client->waitUntil('TableExists', $table);
+$client->waitUntil('TableExists', array('TableName' => $table));
 
 echo "The {$table} table has been created.\n";
 ```
