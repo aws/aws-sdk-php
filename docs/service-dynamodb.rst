@@ -63,7 +63,7 @@ table until it becomes ``ACTIVE``.
 .. code-block:: php
 
     // Wait until the table is created and active
-    $client->waitUntil('TableExists', 'errors');
+    $client->waitUntilTableExists(array('TableName' => 'errors'));
 
 A full list of the parameters available to the ``createTable()`` operation can be found in the
 `API documentation <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_createTable>`_.

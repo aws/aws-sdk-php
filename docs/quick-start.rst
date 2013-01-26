@@ -49,7 +49,7 @@ response model, and what exceptions are thrown by calling the operation.
     ));
 
     // Wait until the bucket is created
-    $client->waitUntil('BucketExists', $bucket);
+    $client->waitUntil('BucketExists', array('Bucket' => $bucket));
 
 Executing commands
 ~~~~~~~~~~~~~~~~~~
@@ -220,27 +220,25 @@ Waiters
 
 One of the high-level abstractions provided by the SDK is the concept of "waiters". Waiters help make it easier to work
 with eventually consistent systems by providing an easy way to wait on a resource to enter into a particular state by
-polling the resource. You can see the available waiters of a client by looking in the Waiter/ directory of a client
-namespace. For example, ``src/Aws/S3/Waiter/`` contains a BucketsExists.php, BucketNotExists.php, and ObjectExists.php
-file. You can then use the ``waitUntil()`` method of a client and pass in the waiter's name (the filename without the
-".php").
+polling the resource. You can find a list of the iterators supported by a client by viewing the docblock of a client.
+Any ``@method`` tag that starts with "waitUntil" will utilize a waiter.
 
 .. code-block:: php
 
-    $client->waitUntil('BucketExists', 'mybucket');
+    $client->waitUntil('BucketExists', array('Bucket' => 'mybucket'));
 
-The above method invocation will instantiate the ``Aws\S3\Waiter\BucketExists`` class and call its ``wait()`` method.
-The waiter will then poll the bucket until it exists. If the waiter has to poll the bucket too many times, it will
-throw an ``Aws\Common\Exception\RuntimeException`` exception.
+The above method invocation will instantiate a waiter and poll the bucket until it exists. If the waiter has to poll
+the bucket too many times, it will throw an ``Aws\Common\Exception\RuntimeException`` exception.
 
 You can tune the number of polling attempts issued by a waiter or the number of seconds to delay between each poll by
-passing an optional third argument containing an array of parameters.
+passing optional values prefixed with "waiter.":
 
 .. code-block:: php
 
-    $client->waitUntil('BucketExists', 'mybucket', array(
-        'interval'     => 10.5,
-        'max_attempts' => 3
+    $client->waitUntil('BucketExists', array(
+        'Bucket ' => 'mybucket',
+        'waiter.interval'     => 10.5,
+        'waiter.max_attempts' => 3
     ));
 
 Iterators
@@ -265,6 +263,3 @@ second argument is only used when passing a string and instructs the client on w
 
     $command = $client->getCommand('ListObjects', array('Bucket' => 'mybucket'));
     $iterator = $client->getIterator($command);
-
-You can find a list of the iterators supported by a client by viewing the Iterator/ directory of a client
-(e.g. ``src/Aws/S3/Iterator/``).

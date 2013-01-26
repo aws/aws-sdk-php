@@ -72,12 +72,12 @@ Waiting until the bucket exists
 -------------------------------
 
 Now that we've created a bucket, let's force our application to wait until the bucket exists. This can be done easily
-using a *waiter* object. The following snippet of code will poll the bucket until it exists or the maximum number of
+using a *waiter*. The following snippet of code will poll the bucket until it exists or the maximum number of
 polling attempts are completed.
 
 .. code-block:: php
 
-    $client->waitUntil('bucket_exists', 'mybucket');
+    $client->waitUntilBucketExists(array('Bucket' => 'mybucket'));
 
 Uploading objects
 -----------------
