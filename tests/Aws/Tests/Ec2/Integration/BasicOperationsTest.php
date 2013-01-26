@@ -107,4 +107,111 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             $this->assertEquals(InstanceState::TERMINATED, $instance['State']['Name']);
         }
     }
+
+    public function testBasicAddressOperations()
+    {
+        self::log("\n[#3] Test basic operations for address.");
+
+        $instanceId = $this->runAnInstance();
+
+        self::log('Allocate a new Elastic IP address.');
+        $result = $this->client->getCommand('AllocateAddress')->getResult();
+        $publicIp = $result->get('PublicIp');
+
+        self::log('Associate the address with the instance.');
+        $this->client->getCommand('AssociateAddress', array(
+            'PublicIp'   => $publicIp,
+            'InstanceId' => $instanceId,
+        ))->execute();
+
+        self::log('Make sure the address and instance are associated.');
+        $result = $this->client->getCommand('DescribeAddresses')->getResult();
+        $publicIps = $result->getPath('Addresses/*/PublicIp');
+        $instanceIds = $result->getPath('Addresses/*/InstanceId');
+        $this->assertContains($publicIp, $publicIps);
+        $this->assertContains($instanceId, $instanceIds);
+
+        self::log('Disassociate the address with from instance.');
+        $this->client->getCommand('DisassociateAddress', array(
+            'PublicIp'   => $publicIp,
+        ))->execute();
+
+        self::log('Release the Elastic IP address.');
+        $this->client->getCommand('ReleaseAddress', array(
+            'PublicIp'   => $publicIp,
+        ))->execute();
+
+        $this->terminateAnInstance($instanceId);
+    }
+
+    /** @group current */
+    public function testModifyingAnInstanceAttribute()
+    {
+        self::log("\n[#4] Modify the attributes of an instance.");
+
+        $instanceId = $this->runAnInstance();
+
+        self::log('Stop the instance.');
+        $this->client->getCommand('StopInstances', array(
+            'InstanceIds' => array($instanceId),
+        ))->execute();
+
+        self::log('Wait until the instance is stopped.');
+        $this->client->waitUntilInstanceStopped(array(
+            'InstanceIds' => array($instanceId),
+        ));
+
+        self::log('Change the stopped instance from a micro to a small.');
+        $this->client->getCommand('ModifyInstanceAttribute', array(
+            'InstanceId' => $instanceId,
+            'Attribute'  => 'instanceType',
+            'Value'      => InstanceType::M1_SMALL
+        ))->execute();
+
+        self::log('Start the instance back up.');
+        $this->client->getCommand('StartInstances', array(
+            'InstanceIds' => array($instanceId),
+        ))->execute();
+
+        self::log('Wait until the instance is running.');
+        $this->client->waitUntilInstanceRunning(array(
+            'InstanceIds' => array($instanceId),
+        ));
+
+        $this->terminateAnInstance($instanceId);
+    }
+
+    /**
+     * @return string The ID of a running instance
+     */
+    protected function runAnInstance()
+    {
+        self::log('Launch an instance.');
+        $result = $this->client->getCommand('RunInstances', array(
+            'ImageId'      => self::TEST_AMI,
+            'MinCount'     => 1,
+            'MaxCount'     => 1,
+            'InstanceType' => InstanceType::T1_MICRO,
+        ))->getResult();
+        $instanceId = current($result->getPath('Instances/*/InstanceId'));
+
+        self::log('Wait until the instance is running.');
+        $this->client->waitUntilInstanceRunning(array('InstanceIds' => array($instanceId)));
+
+        return $instanceId;
+    }
+
+    /**
+     * @param string $instanceId The ID of a running instance to terminate
+     */
+    protected function terminateAnInstance($instanceId)
+    {
+        self::log('Terminate the instance.');
+        $this->client->getCommand('TerminateInstances', array(
+            'InstanceIds' => array($instanceId),
+        ))->execute();
+
+        self::log('Wait until the instance is terminated.');
+        $this->client->waitUntilInstanceTerminated(array('InstanceIds' => array($instanceId)));
+    }
 }
