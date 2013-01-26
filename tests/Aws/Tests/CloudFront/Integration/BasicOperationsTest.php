@@ -41,7 +41,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         // Create the test bucket
         self::log('Creating bucket for testing distributions: ' . self::$bucketName);
         $s3->createBucket(array('Bucket' => self::$bucketName));
-        $s3->waitUntil('bucket_exists', self::$bucketName);
+        $s3->waitUntil('bucket_exists', array('Bucket' => self::$bucketName));
 
         // Add the test object
         self::log('Bucket created, adding test object...');
@@ -51,7 +51,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'ACL'    => 'public-read',
             'Body'   => 'hello!'
         ));
-        $s3->waitUntil('object_exists', self::$bucketName . '/foo.txt');
+        $s3->waitUntil('object_exists', array('Bucket' => self::$bucketName, 'Key' => 'foo.txt'));
     }
 
     public static function tearDownAfterClass()
@@ -200,7 +200,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
     {
         self::log('Waiting until the distribution becomes active');
         $client = $this->getServiceBuilder()->get('cloudfront');
-        $client->waitUntil('DistributionDeployed', self::$distributionId);
+        $client->waitUntil('DistributionDeployed', array('Id' => self::$distributionId));
         $url = $client->getSignedUrl(array(
             'url'     => 'https://' . self::$distributionUrl . '/foo.txt',
             'expires' => time() + 10000

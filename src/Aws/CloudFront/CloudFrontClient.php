@@ -51,9 +51,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront UpdateCloudFrontOriginAccessIdentity}
  * @method Model updateDistribution(array $args = array()) {@command cloudfront UpdateDistribution}
  * @method Model updateStreamingDistribution(array $args = array()) {@command cloudfront UpdateStreamingDistribution}
- * @method waitUntilStreamingDistributionDeployed(string $id) Wait until a streaming distribution is deployed.
- * @method waitUntilDistributionDeployed(string $id) Wait until a distribution is deployed.
- * @method waitUntilInvalidationCompleted(array $args) Wait until an invalidation has completed. Input array requires the following keys: DistributionId, Id
+ * @method waitUntilStreamingDistributionDeployed(array $input) Wait until a streaming distribution is deployed. The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
+ * @method waitUntilDistributionDeployed(array $input) Wait until a distribution is deployed. The input array uses the parameters of the GetDistribution operation and waiter specific settings
+ * @method waitUntilInvalidationCompleted(array $input) Wait until an invalidation has completed. The input array uses the parameters of the GetInvalidation operation and waiter specific settings
  */
 class CloudFrontClient extends AbstractClient
 {

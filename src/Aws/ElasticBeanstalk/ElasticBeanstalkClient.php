@@ -55,8 +55,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateConfigurationTemplate(array $args = array()) {@command elasticbeanstalk UpdateConfigurationTemplate}
  * @method Model updateEnvironment(array $args = array()) {@command elasticbeanstalk UpdateEnvironment}
  * @method Model validateConfigurationSettings(array $args = array()) {@command elasticbeanstalk ValidateConfigurationSettings}
- * @method waitUntilEnvironmentReady(array $environmentIds) Wait using the EnvironmentReady waiter
- * @method waitUntilEnvironmentTerminated(array $environmentIds) Wait using the EnvironmentTerminated waiter
+ * @method waitUntilEnvironmentReady(array $input) Wait using the EnvironmentReady waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
+ * @method waitUntilEnvironmentTerminated(array $input) Wait using the EnvironmentTerminated waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
  */
 class ElasticBeanstalkClient extends AbstractClient
 {

@@ -3427,7 +3427,6 @@ return array (
         ),
         '__TableState' => array(
             'operation' => 'DescribeTable',
-            'input' => 'TableName',
         ),
         'TableExists' => array(
             'extends' => '__TableState',

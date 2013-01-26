@@ -171,24 +171,24 @@ use Guzzle\Service\Resource\Model;
  * @method Model terminateInstances(array $args = array()) {@command ec2 TerminateInstances}
  * @method Model unassignPrivateIpAddresses(array $args = array()) {@command ec2 UnassignPrivateIpAddresses}
  * @method Model unmonitorInstances(array $args = array()) {@command ec2 UnmonitorInstances}
- * @method waitUntilInstanceRunning(array $instanceIds) Wait using the InstanceRunning waiter
- * @method waitUntilInstanceStopped(array $instanceIds) Wait using the InstanceStopped waiter
- * @method waitUntilInstanceTerminated(array $instanceIds) Wait using the InstanceTerminated waiter
- * @method waitUntilExportTaskCompleted(array $exportTaskIds) Wait using the ExportTaskCompleted waiter
- * @method waitUntilExportTaskCancelled(array $exportTaskIds) Wait using the ExportTaskCancelled waiter
- * @method waitUntilSnapshotCompleted(array $snapshotIds) Wait using the SnapshotCompleted waiter
- * @method waitUntilSubnetAvailable(array $subnetIds) Wait using the SubnetAvailable waiter
- * @method waitUntilVolumeAvailable(array $volumeIds) Wait using the VolumeAvailable waiter
- * @method waitUntilVolumeInUse(array $volumeIds) Wait using the VolumeInUse waiter
- * @method waitUntilVolumeDeleted(array $volumeIds) Wait using the VolumeDeleted waiter
- * @method waitUntilVpcAvailable(array $vpcIds) Wait using the VpcAvailable waiter
- * @method waitUntilVpnConnectionAvailable(array $vpnConnectionIds) Wait using the VpnConnectionAvailable waiter
- * @method waitUntilVpnConnectionDeleted(array $vpnConnectionIds) Wait using the VpnConnectionDeleted waiter
- * @method waitUntilBundleTaskComplete(array $bundleIds) Wait using the BundleTaskComplete waiter
- * @method waitUntilConversionTaskCompleted(array $conversionTaskIds) Wait using the ConversionTaskCompleted waiter
- * @method waitUntilConversionTaskCancelled(array $conversionTaskIds) Wait using the ConversionTaskCancelled waiter
- * @method waitUntilCustomerGatewayAvailable(array $customerGatewayIds) Wait using the CustomerGatewayAvailable waiter
- * @method waitUntilConversionTaskDeleted(array $customerGatewayIds) Wait using the ConversionTaskDeleted waiter
+ * @method waitUntilInstanceRunning(array $input) Wait using the InstanceRunning waiter. The input array uses the parameters of the DescribeInstances operation and waiter specific settings
+ * @method waitUntilInstanceStopped(array $input) Wait using the InstanceStopped waiter. The input array uses the parameters of the DescribeInstances operation and waiter specific settings
+ * @method waitUntilInstanceTerminated(array $input) Wait using the InstanceTerminated waiter. The input array uses the parameters of the DescribeInstances operation and waiter specific settings
+ * @method waitUntilExportTaskCompleted(array $input) Wait using the ExportTaskCompleted waiter. The input array uses the parameters of the DescribeExportTasks operation and waiter specific settings
+ * @method waitUntilExportTaskCancelled(array $input) Wait using the ExportTaskCancelled waiter. The input array uses the parameters of the DescribeExportTasks operation and waiter specific settings
+ * @method waitUntilSnapshotCompleted(array $input) Wait using the SnapshotCompleted waiter. The input array uses the parameters of the DescribeSnapshots operation and waiter specific settings
+ * @method waitUntilSubnetAvailable(array $input) Wait using the SubnetAvailable waiter. The input array uses the parameters of the DescribeSubnets operation and waiter specific settings
+ * @method waitUntilVolumeAvailable(array $input) Wait using the VolumeAvailable waiter. The input array uses the parameters of the DescribeVolumes operation and waiter specific settings
+ * @method waitUntilVolumeInUse(array $input) Wait using the VolumeInUse waiter. The input array uses the parameters of the DescribeVolumes operation and waiter specific settings
+ * @method waitUntilVolumeDeleted(array $input) Wait using the VolumeDeleted waiter. The input array uses the parameters of the DescribeVolumes operation and waiter specific settings
+ * @method waitUntilVpcAvailable(array $input) Wait using the VpcAvailable waiter. The input array uses the parameters of the DescribeVpcs operation and waiter specific settings
+ * @method waitUntilVpnConnectionAvailable(array $input) Wait using the VpnConnectionAvailable waiter. The input array uses the parameters of the DescribeVpnConnections operation and waiter specific settings
+ * @method waitUntilVpnConnectionDeleted(array $input) Wait using the VpnConnectionDeleted waiter. The input array uses the parameters of the DescribeVpnConnections operation and waiter specific settings
+ * @method waitUntilBundleTaskComplete(array $input) Wait using the BundleTaskComplete waiter. The input array uses the parameters of the DescribeBundleTasks operation and waiter specific settings
+ * @method waitUntilConversionTaskCompleted(array $input) Wait using the ConversionTaskCompleted waiter. The input array uses the parameters of the DescribeConversionTasks operation and waiter specific settings
+ * @method waitUntilConversionTaskCancelled(array $input) Wait using the ConversionTaskCancelled waiter. The input array uses the parameters of the DescribeConversionTasks operation and waiter specific settings
+ * @method waitUntilCustomerGatewayAvailable(array $input) Wait using the CustomerGatewayAvailable waiter. The input array uses the parameters of the DescribeCustomerGateways operation and waiter specific settings
+ * @method waitUntilConversionTaskDeleted(array $input) Wait using the ConversionTaskDeleted waiter. The input array uses the parameters of the DescribeCustomerGateways operation and waiter specific settings
  */
 class Ec2Client extends AbstractClient
 {

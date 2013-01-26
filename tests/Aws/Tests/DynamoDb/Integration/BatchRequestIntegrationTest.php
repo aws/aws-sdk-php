@@ -39,7 +39,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
             $result = $client->describeTable(array('TableName' => $table));
             self::log('Table exists. Waiting until the status is ACTIVE');
             // Wait until the table is active
-            $client->waitUntil('table_exists', $table);
+            $client->waitUntil('table_exists', array('TableName' => $table));
         } catch (ResourceNotFoundException $e) {
             self::log("Creating table {$table}...");
             $client->createTable(array(
@@ -56,7 +56,7 @@ class BatchRequestIntegrationTest extends \Aws\Tests\IntegrationTestCase
                 )
             ));
 
-            $client->waitUntil('table_exists', $table);
+            $client->waitUntil('table_exists', array('TableName' => $table));
             self::log("Table created.");
         }
 

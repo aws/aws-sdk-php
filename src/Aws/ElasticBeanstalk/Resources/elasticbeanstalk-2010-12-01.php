@@ -2604,7 +2604,6 @@ return array (
         ),
         '__EnvironmentState' => array(
             'operation' => 'DescribeEnvironments',
-            'input' => 'EnvironmentIds',
             'acceptor.path' => 'Environments/*/Status',
         ),
         'EnvironmentReady' => array(

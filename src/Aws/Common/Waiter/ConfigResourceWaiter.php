@@ -49,10 +49,16 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
     {
         foreach ($config as $key => $value) {
             if (substr($key, 0, 7) == 'waiter.') {
-                unset($config[$key]);
-                $key = substr($key, 7);
-                $this->waiterConfig->set($key, $value);
+                $this->waiterConfig->set(substr($key, 7), $value);
             }
+        }
+
+        if (!isset($config[self::INTERVAL])) {
+            $config[self::INTERVAL] = $this->waiterConfig->get(WaiterConfig::INTERVAL);
+        }
+
+        if (!isset($config[self::MAX_ATTEMPTS])) {
+            $config[self::MAX_ATTEMPTS] = $this->waiterConfig->get(WaiterConfig::MAX_ATTEMPTS);
         }
 
         return parent::setConfig($config);

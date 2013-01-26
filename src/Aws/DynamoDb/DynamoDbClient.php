@@ -48,8 +48,8 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
  * @method Model scan(array $args = array()) {@command dynamodb Scan}
  * @method Model updateItem(array $args = array()) {@command dynamodb UpdateItem}
  * @method Model updateTable(array $args = array()) {@command dynamodb UpdateTable}
- * @method waitUntilTableExists(string $tableName) Wait until a table exists and can be accessed
- * @method waitUntilTableNotExists(string $tableName) Wait until a table is deleted
+ * @method waitUntilTableExists(array $input) Wait until a table exists and can be accessed The input array uses the parameters of the DescribeTable operation and waiter specific settings
+ * @method waitUntilTableNotExists(array $input) Wait until a table is deleted The input array uses the parameters of the DescribeTable operation and waiter specific settings
  */
 class DynamoDbClient extends AbstractClient
 {

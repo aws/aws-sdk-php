@@ -46,8 +46,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model setVaultNotifications(array $args = array()) {@command glacier SetVaultNotifications}
  * @method Model uploadArchive(array $args = array()) {@command glacier UploadArchive}
  * @method Model uploadMultipartPart(array $args = array()) {@command glacier UploadMultipartPart}
- * @method waitUntilVaultExists(string $vaultName) Wait until a vault can be accessed.
- * @method waitUntilVaultNotExists(string $vaultName) Wait until a vault is deleted.
+ * @method waitUntilVaultExists(array $input) Wait until a vault can be accessed. The input array uses the parameters of the DescribeVault operation and waiter specific settings
+ * @method waitUntilVaultNotExists(array $input) Wait until a vault is deleted. The input array uses the parameters of the DescribeVault operation and waiter specific settings
  */
 class GlacierClient extends AbstractClient
 {

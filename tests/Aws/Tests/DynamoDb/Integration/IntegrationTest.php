@@ -58,13 +58,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             $result = $client->describeTable(array('TableName' => $table));
             self::log('Table exists. Waiting until the status is ACTIVE');
             // Wait until the table is active
-            $client->waitUntil('TableExists', $table, array('status' => 'ACTIVE'));
+            $client->waitUntil('TableExists', array('TableName' => $table));
             self::log('Deleting the table');
             // Delete the table to clear out its contents
             $client->deleteTable(array('TableName' => $table));
             self::log('Waiting until the table does not exist');
             // Wait until the table does not exist
-            $client->waitUntil('TableNotExists', $table);
+            $client->waitUntil('TableNotExists', array('TableName' => $table));
         } catch (ResourceNotFoundException $e) {
             // The table does not exist so we are good
         }
@@ -94,7 +94,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testCreatesTable()
     {
         self::log("Waiting until {$this->table} does not exist");
-        $this->client->waitUntil('TableNotExists', $this->table);
+        $this->client->waitUntil('TableNotExists', array('TableName' => $this->table));
 
         self::log("Attempting to create {$this->table}");
 
@@ -118,7 +118,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Check/wait until the table exists
         self::log("Table created.  Waiting until it exists.");
-        $this->client->waitUntil('TableExists', $this->table);
+        $this->client->waitUntil('TableExists', array('TableName' => $this->table));
         self::log("Table exists");
 
         // Ensure that the fields were set properly
@@ -169,7 +169,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Updating table');
 
         // Need to wait until the table is active
-        $this->client->waitUntil('TableExists', $this->table, array('status' => 'active'));
+        $this->client->waitUntil('TableExists', array('TableName' => $this->table));
 
         $this->client->updateTable(array(
             'TableName' => $this->table,
@@ -181,7 +181,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Wait until the table is active
         self::log('Waiting for the table to become active after updating');
-        $this->client->waitUntil('table_exists', $this->table, array('status' => 'ACTIVE'));
+        $this->client->waitUntil('table_exists', array('TableName' => $this->table));
 
         // Ensure the table is updated
         $result = $this->client->describeTable(array('TableName' => $this->table));

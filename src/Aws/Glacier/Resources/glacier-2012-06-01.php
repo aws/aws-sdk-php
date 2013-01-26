@@ -1513,7 +1513,6 @@ return array (
         ),
         '__VaultState' => array(
             'operation' => 'DescribeVault',
-            'input' => 'vaultName',
         ),
         'VaultExists' => array(
             'extends' => '__VaultState',

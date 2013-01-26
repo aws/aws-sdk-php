@@ -64,7 +64,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $client->createBucket(array('Bucket' => $bucket));
         // Create the bucket
         self::log("Waiting for the bucket to exist");
-        $client->waitUntil('bucket_exists', $bucket);
+        $client->waitUntil('bucket_exists', array('Bucket' => $bucket));
         sleep(5);
         // Create the bucket
         self::log("Getting owner id and display name");
@@ -85,7 +85,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Deleting the {$bucket} bucket");
         $client->deleteBucket(array('Bucket' => $bucket));
         self::log("Waiting for {$bucket} to not exist");
-        $client->waitUntil('bucket_not_exists', $bucket);
+        $client->waitUntil('bucket_not_exists', array('Bucket' => $bucket));
         // Delete the other bucket
         $bucket = self::getResourcePrefix() . '_path';
         $clear = new ClearBucket($client, $bucket);
@@ -93,7 +93,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Deleting the {$bucket} bucket");
         $client->deleteBucket(array('Bucket' => $bucket));
         self::log("Waiting for {$bucket} to not exist");
-        $client->waitUntil('bucket_not_exists', $bucket);
+        $client->waitUntil('bucket_not_exists', array('Bucket' => $bucket));
     }
 
     public function setUp()
@@ -116,13 +116,13 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             $client->createBucket(array('Bucket' => $bucket));
             // Create the bucket
             self::log("Waiting for the bucket to exist");
-            $client->waitUntil('bucket_exists', $bucket);
+            $client->waitUntil('bucket_exists', array('Bucket' => $bucket));
             $this->client->putObject(array(
                 'Bucket' => $bucket,
                 'Key'    => self::TEST_KEY,
                 'Body'   => '123'
             ));
-            $this->client->waitUntil('bucket_exists', $bucket);
+            $this->client->waitUntil('bucket_exists', array('Bucket' => $bucket));
             $this->client->getBucketLocation(array('Bucket' => $bucket));
         } catch (\Aws\S3\Exception\SignatureDoesNotMatchException $e) {
             echo $e->getResponse()->getRequest()->getParams()->get('aws.string_to_sign') . "\n";
@@ -202,7 +202,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'LocationConstraint' => 'EU'
             ));
         }
-        $this->client->waitUntil('bucket_exists', $bucketName);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $bucketName));
         $result = $this->client->getBucketLocation(array('Bucket' => $bucketName));
         $this->assertEquals('EU', $result['Location']);
         $this->client->deleteBucket(array('Bucket' => $bucketName));
@@ -271,7 +271,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testPutAndListObjects()
     {
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $command = $this->client->getCommand('PutObject', array(
             'Bucket'       => $this->bucket,
             'Key'          => self::TEST_KEY,
@@ -332,7 +332,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testCanSendRawHttpRequests()
     {
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $this->assertEquals(200, $this->client->get('/')->send()->getStatusCode());
         $this->assertEquals(200, $this->client->put('/' . $this->bucket . '/hello', array(), 'testing')->send()->getStatusCode());
         $this->client->get('/' . self::getResourcePrefix() . '_path')->send();
@@ -346,7 +346,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPutObjectAcl()
     {
         self::log("Setting a custom object ACL");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $command = $this->client->getCommand('PutObjectAcl', array(
             'Bucket' => $this->bucket,
             'Key'    => self::TEST_KEY,
@@ -389,7 +389,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testUploadsObjectsWithKeysMatchingBucketName()
     {
         self::log("Uploading an object with a name the same as the bucket");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $key = $this->bucket . '-foo';
         $command = $this->client->getCommand('PutObject', array(
             'Bucket' => $this->bucket,
@@ -408,7 +408,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPutObjectsWithUtf8Keys()
     {
         self::log("Uploading an object with a UTF-8 key");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $key = 'åbc';
 
         try {
@@ -431,7 +431,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPutObjectGuessesContentType()
     {
         self::log("Uploading an object and guessing Content-Type");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $key = 'file';
         $command = $this->client->getCommand('PutObject', array(
             'Bucket' => $this->bucket,
@@ -466,7 +466,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testMultipartUploads()
     {
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $this->log('Initiating an upload');
         $result = $this->client->createMultipartUpload(array(
             'Bucket'   => $this->bucket,
@@ -490,7 +490,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertSame(false, $result['IsTruncated']);
         $this->log('Aborting the upload');
         sleep(2);
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $command = $this->client->getCommand('AbortMultipartUpload', array(
             'Bucket'   => $this->bucket,
             'Key'      => 'big',
@@ -506,7 +506,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPutBucketTagging()
     {
         self::log("Adding tags to a bucket");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $command = $this->client->getCommand('PutBucketTagging', array(
             'Bucket' => $this->bucket,
             'TagSet' => array(
@@ -562,7 +562,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testUsesTieredStorage()
     {
         self::log("Uploading an object then placing in Glacier");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $key = 'abc';
         $this->client->putObject(array(
             'Bucket' => $this->bucket,
@@ -572,7 +572,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log("Waiting until the object exists");
         $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
         self::log("Moving the object to glacier by setting a lifecycle policy on the object");
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $command = $this->client->getCommand('PutBucketLifecycle', array(
             'Bucket' => $this->bucket,
             'Rules' => array(
@@ -598,7 +598,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testMultipartUpload()
     {
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         self::log('Creating a 100MB object in /tmp/large-object.jpg');
         $handle = fopen('/tmp/large-object.jpg', 'w+');
         $part = str_repeat('.', 1000);
@@ -649,7 +649,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testWorksWithPrefixKeys($key, $cleaned, $encoded)
     {
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $command = $this->client->getCommand('PutObject', array(
             'Bucket'     => $this->bucket,
             'Key'        => $key,
@@ -681,7 +681,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testPreSignedUrlAllowsSpaces()
     {
         self::log('Uploading an object with a space in the key');
-        $this->client->waitUntil('bucket_exists', $this->bucket);
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $key = 'foo baz bar';
         $this->client->putObject(array(
             'Bucket' => $this->bucket,

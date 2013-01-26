@@ -15485,7 +15485,6 @@ return array (
         ),
         '__InstanceState' => array(
             'operation' => 'DescribeInstances',
-            'input' => 'InstanceIds',
             'acceptor.path' => 'Reservations/*/Instances/*/State/Name',
         ),
         'InstanceRunning' => array(
@@ -15517,7 +15516,6 @@ return array (
         ),
         '__ExportTaskState' => array(
             'operation' => 'DescribeExportTasks',
-            'input' => 'ExportTaskIds',
             'acceptor.path' => 'ExportTasks/*/State',
         ),
         'ExportTaskCompleted' => array(
@@ -15530,19 +15528,16 @@ return array (
         ),
         'SnapshotCompleted' => array(
             'operation' => 'DescribeSnapshots',
-            'input' => 'SnapshotIds',
             'success.path' => 'Snapshots/*/State',
             'success.value' => 'completed',
         ),
         'SubnetAvailable' => array(
             'operation' => 'DescribeSubnets',
-            'input' => 'SubnetIds',
             'success.path' => 'Subnets/*/State',
             'success.value' => 'available',
         ),
         '__VolumeStatus' => array(
             'operation' => 'DescribeVolumes',
-            'input' => 'VolumeIds',
             'acceptor.key' => 'VolumeStatuses/*/VolumeStatus/Status',
         ),
         'VolumeAvailable' => array(
@@ -15565,13 +15560,11 @@ return array (
         ),
         'VpcAvailable' => array(
             'operation' => 'DescribeVpcs',
-            'input' => 'VpcIds',
             'success.path' => 'Vpcs/*/State',
             'success.value' => 'available',
         ),
         '__VpnConnectionState' => array(
             'operation' => 'DescribeVpnConnections',
-            'input' => 'VpnConnectionIds',
             'acceptor.path' => 'VpnConnections/*/State',
         ),
         'VpnConnectionAvailable' => array(
@@ -15591,7 +15584,6 @@ return array (
         ),
         'BundleTaskComplete' => array(
             'operation' => 'DescribeBundleTasks',
-            'input' => 'BundleIds',
             'acceptor.path' => 'BundleTasks/*/State',
             'success.value' => 'complete',
             'failure.value' => array(
@@ -15600,7 +15592,6 @@ return array (
         ),
         '__ConversionTaskState' => array(
             'operation' => 'DescribeConversionTasks',
-            'input' => 'ConversionTaskIds',
             'acceptor.path' => 'ConversionTasks/*/State',
         ),
         'ConversionTaskCompleted' => array(
@@ -15617,7 +15608,6 @@ return array (
         ),
         '__CustomerGatewayState' => array(
             'operation' => 'DescribeCustomerGateways',
-            'input' => 'CustomerGatewayIds',
             'acceptor.path' => 'CustomerGateways/*/State',
         ),
         'CustomerGatewayAvailable' => array(
