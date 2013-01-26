@@ -23,6 +23,6 @@ use Aws\Common\Enum;
  */
 class Status extends Enum
 {
-    const IN_PROGRESS = 'InProgress';
-    const DEPLOYED = 'Deployed';
+    const PENDING = 'PENDING';
+    const INSYNC = 'INSYNC';
 }
