@@ -21,6 +21,9 @@ namespace Aws\Common\Waiter;
  */
 interface WaiterInterface
 {
+    const INTERVAL = 'waiter.interval';
+    const MAX_ATTEMPTS = 'waiter.max_attempts';
+
     /**
      * Set the maximum number of attempts to make when waiting
      *
@@ -40,9 +43,9 @@ interface WaiterInterface
     public function setInterval($interval);
 
     /**
-     * Set config options associated with the waiter
+     * Set configuration options associated with the waiter
      *
-     * @param array $config Options to set
+     * @param array $config Configuration options to set
      *
      * @return self
      */

@@ -20,6 +20,7 @@ use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\ServiceResponseException;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Exception\ValidationException;
 
 /**
  * Resource waiter driven by configuration options
@@ -37,8 +38,24 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
     public function __construct(WaiterConfig $waiterConfig)
     {
         $this->waiterConfig = $waiterConfig;
-        $this->interval = $waiterConfig->get(WaiterConfig::INTERVAL);
-        $this->maxAttempts = $waiterConfig->get(WaiterConfig::MAX_ATTEMPTS);
+        $this->setInterval($waiterConfig->get(WaiterConfig::INTERVAL));
+        $this->setMaxAttempts($waiterConfig->get(WaiterConfig::MAX_ATTEMPTS));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConfig(array $config)
+    {
+        foreach ($config as $key => $value) {
+            if (substr($key, 0, 7) == 'waiter.') {
+                unset($config[$key]);
+                $key = substr($key, 7);
+                $this->waiterConfig->set($key, $value);
+            }
+        }
+
+        return parent::setConfig($config);
     }
 
     /**
@@ -54,66 +71,26 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
     /**
      * {@inheritdoc}
      */
-    public function setConfig(array $config)
-    {
-        // Overwrite default waiter settings
-        foreach ($config as $key => $value) {
-            $this->waiterConfig->set($key, $value);
-        }
-
-        return parent::setConfig($config);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setResource($resource)
-    {
-        $this->validateResource($resource);
-
-        return parent::setResource($resource);
-    }
-
-    /**
-     * Validate that a resource satisfies the configuration settings
-     *
-     * @param $resource Resource to validate
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function validateResource($resource)
-    {
-        $input = $this->waiterConfig->get(WaiterConfig::INPUT);
-        $name = $this->waiterConfig->get(WaiterConfig::WAITER_NAME);
-
-        if (is_array($input)) {
-            // Ensure that the input is an array
-            if (!is_array($resource)) {
-                throw new InvalidArgumentException(
-                    "{$name} waiter requires a resource specified using an associative array containing the following "
-                    . "keys: " . implode(', ', $input)
-                );
-            }
-            // Ensure that the input include the required keys
-            foreach ($input as $key) {
-                if (!array_key_exists($key, $resource)) {
-                    throw new InvalidArgumentException("{$name} waiter requires that a {$key} value is specified.");
-                }
-            }
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function doWait()
     {
-        $input = $this->waiterConfig->get(WaiterConfig::INPUT);
-        $params = is_array($input) ? $this->resource : array($input => $this->resource);
+        $params = $this->config;
+        // remove waiter settings from the operation's input
+        foreach (array_keys($params) as $key) {
+            if (substr($key, 0, 7) == 'waiter.') {
+                unset($params[$key]);
+            }
+        }
+
         $operation = $this->client->getCommand($this->waiterConfig->get(WaiterConfig::OPERATION), $params);
 
         try {
             return $this->checkResult($this->client->execute($operation));
+        } catch (ValidationException $e) {
+            throw new InvalidArgumentException(
+                $this->waiterConfig->get(WaiterConfig::WAITER_NAME) . ' waiter validation failed:  ' . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
         } catch (ServiceResponseException $e) {
 
             // Check if this exception satisfies a success or failure acceptor

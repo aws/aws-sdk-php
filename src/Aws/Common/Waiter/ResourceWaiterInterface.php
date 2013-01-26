@@ -31,13 +31,4 @@ interface ResourceWaiterInterface extends WaiterInterface
      * @return self
      */
     public function setClient(AwsClientInterface $client);
-
-    /**
-     * Set the way in which a resource is uniquely identified
-     *
-     * @param string $resourceId Resource ID
-     *
-     * @return self
-     */
-    public function setResource($resource);
 }

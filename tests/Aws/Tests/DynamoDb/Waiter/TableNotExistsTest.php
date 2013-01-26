@@ -28,9 +28,7 @@ class TableNotExistsTest extends AbstractWaiter
     {
         $client = $this->getClient();
         $this->setMockResponse($client, array('dynamodb/describe_table', 'dynamodb/describe_table_not_found'));
-        $client->waitUntil('table_not_exists', 'foo', array(
-            'interval' => 0
-        ));
+        $client->waitUntil('table_not_exists', array('TableName' => 'foo', 'waiter.interval' => 0));
     }
 
     /**
@@ -43,6 +41,6 @@ class TableNotExistsTest extends AbstractWaiter
             new Response(404)
         ));
         $client->getEventDispatcher()->addSubscriber($mock);
-        $client->waitUntil('table_not_exists', 'foo');
+        $client->waitUntil('table_not_exists', array('TableName' => 'foo'));
     }
 }

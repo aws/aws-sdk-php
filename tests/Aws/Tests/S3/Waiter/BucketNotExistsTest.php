@@ -27,7 +27,7 @@ class BucketNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, 's3/head_failure');
-        $client->waitUntil('bucket_not_exists', 'foo');
+        $client->waitUntil('bucket_not_exists', array('Bucket' => 'foo'));
         $this->assertEquals(1, count($this->getMockedRequests()));
     }
 
@@ -35,7 +35,7 @@ class BucketNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_success', 's3/head_failure'));
-        $client->waitUntil('bucket_not_exists', 'foo', array('interval' => 0));
+        $client->waitUntil('bucket_not_exists', array('Bucket' => 'foo', 'waiter.interval' => 0));
         $this->assertEquals(2, count($this->getMockedRequests()));
     }
 
@@ -46,6 +46,6 @@ class BucketNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array(new Response(501)));
-        $client->waitUntil('bucket_not_exists', 'foo', array('interval' => 0));
+        $client->waitUntil('bucket_not_exists', array('Bucket' => 'foo', 'waiter.interval' => 0));
     }
 }

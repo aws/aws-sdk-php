@@ -28,66 +28,32 @@ class ConfigResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     public function testConstructorAddsWaiterSettings()
     {
         $c = new WaiterConfig(array(
-            'max_attempts' => 10,
+            'max_attempts' => 3,
             'interval'     => 5
         ));
         $w = new ConfigResourceWaiter($c);
         $this->assertSame($c, $w->getWaiterConfig());
-        $this->assertEquals(10, $this->readAttribute($w, 'maxAttempts'));
-        $this->assertEquals(5, $this->readAttribute($w, 'interval'));
+        $this->assertEquals(3, $w->getMaxAttempts());
+        $this->assertEquals(5, $w->getInterval());
     }
 
-    public function testSettingConfigUpdatesWaiterConfig()
+    public function testWaiterConfigsCanBeSetInSetConfig()
     {
-        $w = new ConfigResourceWaiter(new WaiterConfig(array()));
-        $w->setConfig(array('foo' => 'bar'));
-        $this->assertEquals('bar', $w->getWaiterConfig()->get('foo'));
-    }
-
-    public function testSettingResourceIsValidated()
-    {
-        $w = $this->getMockBuilder('Aws\Common\Waiter\ConfigResourceWaiter')
-            ->setConstructorArgs(array(new WaiterConfig(array())))
-            ->setMethods(array('validateResource'))
-            ->getMock();
-        $w->expects($this->once())
-            ->method('validateResource');
-        $w->setResource('foo');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage foo waiter requires a resource specified using an associative array containing the following keys: baz, bar
-     */
-    public function testValidatesResourceWithException()
-    {
-        $w = new ConfigResourceWaiter(new WaiterConfig(array('input' => 'foo', 'name' => 'foo')));
-        $w->setResource('bar');
-        $w->getWaiterConfig()->set('input', array('baz', 'bar'));
-        $w->setResource('foo');
-    }
-
-    public function testValidatesResourceWithSuccessfulArray()
-    {
-        $w = new ConfigResourceWaiter(new WaiterConfig(array('input' => array('foo', 'bar'), 'name' => 'foo')));
-        $w->setResource(array('foo' => 1, 'bar' => 2));
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage foo waiter requires that a bar value is specified
-     */
-    public function testValidatesResourceWithUnsuccessfulArray()
-    {
-        $w = new ConfigResourceWaiter(new WaiterConfig(array('input' => array('foo', 'bar'), 'name' => 'foo')));
-        $w->setResource(array('foo' => 1));
+        $c = new WaiterConfig();
+        $w = new ConfigResourceWaiter($c);
+        $w->setConfig(array(
+            'waiter.foo' => 'baz',
+            'waiter.success.path' => 'test/*'
+        ));
+        $this->assertEquals('baz', $c->get('foo'));
+        $this->assertEquals('test/*', $c->get('success.path'));
     }
 
     public function testWaiterCanIgnoreExceptions()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_failure', 's3/head_success'));
-        $client->waitUntil('bucket_exists', 'foo', array('interval' => 0));
+        $client->waitUntil('bucket_exists', array('Bucket' => 'foo'), array('interval' => 0));
         $this->assertEquals(2, count($this->getMockedRequests()));
     }
 
@@ -98,14 +64,14 @@ class ConfigResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array(new Response(409)));
-        $client->waitUntil('bucket_not_exists', 'foo', array('interval' => 0));
+        $client->waitUntil('bucket_not_exists', array('Bucket' => 'foo', 'waiter.interval' => 0));
     }
 
     public function testWaiterCanSucceedOnException()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_failure'));
-        $client->waitUntil('bucket_not_exists', 'foo');
+        $client->waitUntil('bucket_not_exists', array('Bucket' => 'foo'));
     }
 
     public function testWaiterCanSucceedOnOutput()
@@ -116,7 +82,7 @@ class ConfigResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
             'ec2/describe_instances_two_instances_different_state',
             'ec2/describe_instances_two_instances_same_state'
         ));
-        $client->waitUntil('instance_running', array('i-xxxxxxx1'), array('interval' => 0));
+        $client->waitUntil('instance_running', array('InstanceIds' => array('i-xxxxxxx1'), 'waiter.interval' => 0));
     }
 
     /**
@@ -127,6 +93,16 @@ class ConfigResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('ec2', true);
         $this->setMockResponse($client, array('ec2/describe_instances_two_instances_different_state'));
-        $client->waitUntil('instance_stopped', array('i-xxxxxxx1'), array('interval' => 0));
+        $client->waitUntil('instance_stopped', array('InstanceIds' => array('i-xxxxxxx1'), 'waiter.interval' => 0));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage InstanceStopped waiter validation failed:  Validation errors: [InstanceIds] must be of type array
+     */
+    public function testWaiterProvidesHelpfulMessageWhenValidationFails()
+    {
+        $client = $this->getServiceBuilder()->get('ec2', true);
+        $client->waitUntil('instance_stopped', array('InstanceIds' => 'i-xxxxxxx1'));
     }
 }

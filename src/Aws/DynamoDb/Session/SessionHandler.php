@@ -228,9 +228,7 @@ class SessionHandler
             Ua::OPTION => Ua::SESSION
         ))->execute();
 
-        $this->client->waitUntil('table_exists', $tableName, array(
-            'status' => 'ACTIVE'
-        ));
+        $this->client->waitUntil('table_exists', array('TableName' => $tableName));
 
         return $result;
     }

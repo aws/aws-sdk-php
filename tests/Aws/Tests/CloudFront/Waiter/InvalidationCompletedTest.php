@@ -29,7 +29,7 @@ class InvalidationCompletedTest extends \Guzzle\Tests\GuzzleTestCase
     public function testValidatesInvalidationResource()
     {
         $client = $this->getServiceBuilder()->get('cloudfront');
-        $client->waitUntil('InvalidationCompleted', 'foo');
+        $client->waitUntil('InvalidationCompleted', array('Id' => 'foo'));
     }
 
     public function testReturnsTrueIfDeployed()

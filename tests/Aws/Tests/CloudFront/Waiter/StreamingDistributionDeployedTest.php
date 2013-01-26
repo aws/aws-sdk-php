@@ -30,9 +30,7 @@ class StreamingDistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
             'cloudfront/GetStreamingDistribution_InProgress',
             'cloudfront/GetStreamingDistribution_Deployed'
         ));
-        $client->waitUntil('streaming_distribution_deployed', 'foo', array(
-            'interval' => 0
-        ));
+        $client->waitUntil('streaming_distribution_deployed', array('Id' => 'foo', 'waiter.interval' => 0));
     }
 
     /**
@@ -42,6 +40,6 @@ class StreamingDistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('cloudfront');
         $this->setMockResponse($client, array(new Response(404)));
-        $client->waitUntil('streaming_distribution_deployed', 'foo');
+        $client->waitUntil('streaming_distribution_deployed', array('Id' => 'foo'));
     }
 }

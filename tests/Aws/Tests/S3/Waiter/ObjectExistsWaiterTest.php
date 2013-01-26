@@ -39,20 +39,7 @@ class ObjectExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_failure', 's3/head_success'));
-        $client->waitUntil('object_exists', array('Bucket' => 'foo', 'Key' => 'bar'), array(
-            'interval' => 0
-        ));
+        $client->waitUntil('object_exists', array('Bucket' => 'foo', 'Key' => 'bar', 'waiter.interval' => 0));
         $this->assertEquals(2, count($this->getMockedRequests()));
-    }
-
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     */
-    public function testErrorsOutWhenAnInvalidResourceIdIsSpecified()
-    {
-        $client = $this->getServiceBuilder()->get('s3', true);
-        $mock = new MockPlugin(array(new Response(500)));
-        $client->getEventDispatcher()->addSubscriber($mock);
-        $client->waitUntil('object_exists', 'foo');
     }
 }

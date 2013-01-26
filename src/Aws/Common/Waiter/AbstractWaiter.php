@@ -24,16 +24,34 @@ use Aws\Common\Exception\RuntimeException;
 abstract class AbstractWaiter implements WaiterInterface
 {
     protected $attempts = 0;
-    protected $maxAttempts = 10;
-    protected $interval = 0;
     protected $config = array();
+
+    /**
+     * The max attempts allowed by the waiter
+     *
+     * @return int
+     */
+    public function getMaxAttempts()
+    {
+        return isset($this->config[self::MAX_ATTEMPTS]) ? $this->config[self::MAX_ATTEMPTS] : 10;
+    }
+
+    /**
+     * Get the amount of time in seconds to delay between attempts
+     *
+     * @return int
+     */
+    public function getInterval()
+    {
+        return isset($this->config[self::INTERVAL]) ? $this->config[self::INTERVAL] : 0;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function setMaxAttempts($maxAttempts)
     {
-        $this->maxAttempts = $maxAttempts;
+        $this->config[self::MAX_ATTEMPTS] = $maxAttempts;
 
         return $this;
     }
@@ -43,7 +61,7 @@ abstract class AbstractWaiter implements WaiterInterface
      */
     public function setInterval($interval)
     {
-        $this->interval = $interval;
+        $this->config[self::INTERVAL] = $interval;
 
         return $this;
     }
@@ -58,14 +76,6 @@ abstract class AbstractWaiter implements WaiterInterface
     public function setConfig(array $config)
     {
         $this->config = $config;
-
-        if (isset($config['interval'])) {
-            $this->interval = $config['interval'];
-        }
-
-        if (isset($config['max_attempts'])) {
-            $this->maxAttempts = $config['max_attempts'];
-        }
 
         return $this;
     }
@@ -82,12 +92,12 @@ abstract class AbstractWaiter implements WaiterInterface
                 break;
             }
 
-            if (++$this->attempts >= $this->maxAttempts) {
+            if (++$this->attempts >= $this->getMaxAttempts()) {
                 throw new RuntimeException('Wait method never resolved to true after ' . $this->attempts . ' attempts');
             }
 
-            if ($this->interval) {
-                usleep($this->interval * 1000000);
+            if ($this->getInterval()) {
+                usleep($this->getInterval() * 1000000);
             }
 
         } while (1);

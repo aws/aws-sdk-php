@@ -62,7 +62,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Ensure that the user agent string is correct
         $expectedUserAgent = 'aws-sdk-php2/' . Aws::VERSION . ' Guzzle';
-        $actualUserAgent = $client->getDefaultHeaders()->get('User-Agent');
+        $actualUserAgent = $this->readAttribute($client, 'userAgent');
         $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
     }
 
@@ -112,7 +112,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->getMockForAbstractClass();
 
         try {
-            $client->waitUntil('foo', 'bar');
+            $client->waitUntil('foo', array('baz' => 'bar'));
         } catch (\Exception $e) {}
     }
 
@@ -129,10 +129,6 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $waiter->expects($this->once())
             ->method('wait')
             ->will($this->returnValue($client));
-
-        $waiter->expects($this->once())
-            ->method('setResource')
-            ->will($this->returnValue($waiter));
 
         $waiter->expects($this->once())
             ->method('setConfig')
@@ -153,7 +149,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client->setWaiterFactory($factory);
         $this->assertSame($factory, $this->readAttribute($client, 'waiterFactory'));
 
-        $this->assertSame($client, $client->waitUntil('foo', 'bar'));
+        $this->assertSame($client, $client->waitUntil('foo', array('baz' => 'bar')));
     }
 
     public function testClientUpperCasesMagicMethodCallsToCommands()
@@ -224,7 +220,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->getMockForAbstractClass();
         $client->expects($this->once())
             ->method('waitUntil')
-            ->with('Foo', 'bar');
-        $client->waitUntilFoo('bar');
+            ->with('Foo', array('baz' => 'bar'));
+        $client->waitUntilFoo(array('baz' => 'bar'));
     }
 }

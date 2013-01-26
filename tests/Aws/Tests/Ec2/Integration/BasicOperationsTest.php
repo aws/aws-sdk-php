@@ -87,7 +87,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertCount(2, $instanceIds);
 
         self::log('Wait until they are running.');
-        $this->client->waitUntil('instance_in_state', $instanceIds, array('state' => InstanceState::RUNNING));
+        $this->client->waitUntilInstanceRunning($instanceIds, array('state' => InstanceState::RUNNING));
 
         self::log('Terminate the instances and verify that they are shutting-down.');
         $result = $this->client->getCommand('TerminateInstances', array(
@@ -97,7 +97,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals(InstanceState::SHUTTING_DOWN, $result->getPath('TerminatingInstances/1/CurrentState/Name'));
 
         self::log('Wait until they are terminated.');
-        $this->client->waitUntil('instance_in_state', $instanceIds, array('state' => InstanceState::TERMINATED));
+        $this->client->waitUntilInstanceTerminated($instanceIds, array('state' => InstanceState::TERMINATED));
 
         self::log('Verify that the instances are terminated using the DescribeInstances iterator.');
         $instances = $this->client->getIterator('DescribeInstances', array(

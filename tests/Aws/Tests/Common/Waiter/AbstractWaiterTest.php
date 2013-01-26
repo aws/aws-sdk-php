@@ -27,10 +27,10 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
             ->getMockForAbstractClass();
 
         $waiter->setInterval(10);
-        $this->assertEquals(10, $this->readAttribute($waiter, 'interval'));
+        $this->assertEquals(10, $waiter->getInterval());
 
         $waiter->setMaxAttempts(5);
-        $this->assertEquals(5, $this->readAttribute($waiter, 'maxAttempts'));
+        $this->assertEquals(5, $waiter->getMaxAttempts());
     }
 
     public function testPerformsWait()
@@ -90,8 +90,8 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractWaiter')
             ->getMockForAbstractClass();
-        $waiter->setConfig(array('interval' => 100, 'max_attempts' => 50));
-        $this->assertEquals(100, $this->readAttribute($waiter, 'interval'));
-        $this->assertEquals(50, $this->readAttribute($waiter, 'maxAttempts'));
+        $waiter->setConfig(array('waiter.interval' => 100, 'waiter.max_attempts' => 50));
+        $this->assertEquals(100, $waiter->getInterval());
+        $this->assertEquals(50, $waiter->getMaxAttempts());
     }
 }

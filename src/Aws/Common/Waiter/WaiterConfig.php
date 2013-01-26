@@ -24,7 +24,6 @@ use Guzzle\Common\Collection;
 class WaiterConfig extends Collection
 {
     const WAITER_NAME = 'name';
-    const INPUT = 'input';
     const MAX_ATTEMPTS = 'max_attempts';
     const INTERVAL = 'interval';
     const OPERATION = 'operation';

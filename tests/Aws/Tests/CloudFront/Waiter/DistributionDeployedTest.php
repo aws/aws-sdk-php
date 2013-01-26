@@ -30,7 +30,7 @@ class DistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
             'cloudfront/GetDistribution_InProgress',
             'cloudfront/GetDistribution_Deployed'
         ));
-        $client->waitUntil('distribution_deployed', 'bar', array('interval' => 0));
+        $client->waitUntil('distribution_deployed', array('Id' => 'bar', 'waiter.interval' => 0));
     }
 
     /**
@@ -40,6 +40,6 @@ class DistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('cloudfront');
         $this->setMockResponse($client, array(new Response(404)));
-        $client->waitUntil('distribution_deployed', 'bar');
+        $client->waitUntil('distribution_deployed', array('Id' => 'bar'));
     }
 }

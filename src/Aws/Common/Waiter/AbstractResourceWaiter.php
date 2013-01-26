@@ -30,34 +30,11 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
     protected $client;
 
     /**
-     * @var string Resource identifier
-     */
-    protected $resource;
-
-    /**
-     * Set the client associated with the waiter
-     *
-     * @param AwsClientInterface $client Client to use with the waiter
-     *
-     * @return self
+     * {@inheritdoc}
      */
     public function setClient(AwsClientInterface $client)
     {
         $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Set the way in which a resource is uniquely identified
-     *
-     * @param string $resource Resource ID
-     *
-     * @return self
-     */
-    public function setResource($resource)
-    {
-        $this->resource = $resource;
 
         return $this;
     }
@@ -69,10 +46,6 @@ abstract class AbstractResourceWaiter extends AbstractWaiter implements Resource
     {
         if (!$this->client) {
             throw new RuntimeException('No client has been specified on the waiter');
-        }
-
-        if (!$this->resource) {
-            throw new RuntimeException('No resource has been specified on the waiter');
         }
 
         parent::wait();

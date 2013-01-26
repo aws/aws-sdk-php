@@ -28,25 +28,21 @@ class TableExistsTest extends AbstractWaiter
     {
         $client = $this->getClient();
         $this->setMockResponse($client, 'dynamodb/describe_table');
-        $client->waitUntil('table_exists', 'foo');
+        $client->waitUntil('table_exists', array('TableName' => 'foo'));
     }
 
     public function testReturnsTrueIfTableExistsAndHasStatusMatching()
     {
         $client = $this->getClient();
         $this->setMockResponse($client, 'dynamodb/describe_table');
-        $client->waitUntil('table_exists', 'foo', array(
-            'status' => 'ACTIVE'
-        ));
+        $client->waitUntil('table_exists', array('TableName' => 'foo'));
     }
 
     public function testBuffersResourceNotFoundExceptions()
     {
         $client = $this->getClient();
         $this->setMockResponse($client, array('dynamodb/describe_table_not_found', 'dynamodb/describe_table'));
-        $client->waitUntil('table_exists', 'foobazbar', array(
-            'interval' => 0
-        ));
+        $client->waitUntil('table_exists', array('TableName' => 'foobazbar', 'waiter.interval' => 0));
         $this->assertEquals(2, count($this->getMockedRequests()));
     }
 
@@ -60,6 +56,6 @@ class TableExistsTest extends AbstractWaiter
             new Response(404)
         ));
         $client->getEventDispatcher()->addSubscriber($mock);
-        $client->waitUntil('table_exists', 'foo');
+        $client->waitUntil('table_exists', array('TableName' => 'foo'));
     }
 }

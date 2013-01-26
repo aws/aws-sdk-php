@@ -34,18 +34,6 @@ class AbstractResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
         $waiter->wait();
     }
 
-    /**
-     * @expectedException \Aws\Common\Exception\RuntimeException
-     * @expectedExceptionMessage No resource has been specified on the waiter
-     */
-    public function testEnsuresResourceIsSetBeforeWaiting()
-    {
-        $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractResourceWaiter')
-            ->getMockForAbstractClass();
-        $waiter->setClient(InstanceMetadataClient::factory());
-        $waiter->wait();
-    }
-
     public function testCanWait()
     {
         $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractResourceWaiter')
@@ -60,9 +48,9 @@ class AbstractResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
         $waiter->setConfig($config);
         $this->assertSame($config, $this->readAttribute($waiter, 'config'));
 
-        $resource = 'foo';
-        $waiter->setResource($resource);
-        $this->assertSame($resource, $this->readAttribute($waiter, 'resource'));
+        $resource = array('foo' => 'bar');
+        $waiter->setConfig($resource);
+        $this->assertSame($resource, $this->readAttribute($waiter, 'config'));
 
         try {
             $waiter->wait();

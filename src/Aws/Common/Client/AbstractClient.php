@@ -154,20 +154,13 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Wait until a resource is available or an associated waiter returns true
-     *
-     * @param string $waiter  Name of the waiter in snake_case
-     * @param mixed  $value   Value to pass to the waiter
-     * @param array  $options Options to pass to the waiter
-     *
-     * @return self
+     * {@inheritdoc}
      */
-    public function waitUntil($waiter, $value = null, array $options = array())
+    public function waitUntil($waiter, array $input = array())
     {
         $this->getWaiterFactory()->build($waiter)
-            ->setResource($value)
             ->setClient($this)
-            ->setConfig($options)
+            ->setConfig($input)
             ->wait();
 
         return $this;

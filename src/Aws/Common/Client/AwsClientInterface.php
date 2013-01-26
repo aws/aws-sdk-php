@@ -60,11 +60,10 @@ interface AwsClientInterface extends ClientInterface
     /**
      * Wait until a resource is available or an associated waiter returns true
      *
-     * @param string $waiter  Name of the waiter in snake_case
-     * @param mixed  $value   Value to pass to the waiter
-     * @param array  $options Options to pass to the waiter
+     * @param string $waiter Name of the waiter in snake_case
+     * @param array  $input  Values used as input for the underlying operation and values used to control the waiter
      *
      * @return self
      */
-    public function waitUntil($waiter, $value = null, array $options = array());
+    public function waitUntil($waiter, array $input = array());
 }
