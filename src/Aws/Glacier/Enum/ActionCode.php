@@ -19,10 +19,9 @@ namespace Aws\Glacier\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Action values
- * @deprecated Will be removed in a future release. Use ActionCode.
+ * Contains enumerable ActionCode values
  */
-class Action extends Enum
+class ActionCode extends Enum
 {
     const ARCHIVE_RETRIEVAL = 'ArchiveRetrieval';
     const INVENTORY_RETRIEVAL = 'InventoryRetrieval';
