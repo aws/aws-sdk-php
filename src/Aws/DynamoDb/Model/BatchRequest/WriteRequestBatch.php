@@ -38,83 +38,83 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class WriteRequestBatch extends AbstractBatchDecorator
 {
-    /**
-     * Factory for creating a DynamoDB BatchWriteItemQueue
-     *
-     * @param AwsClientInterface $client    Client used to transfer requests
-     * @param int                $batchSize Size of each batch. The WriteRequestBatch works most efficiently with a
-     *                                      batch size that is a multiple of 25
-     * @param mixed              $notify    Callback to be run after each flush
-     *
-     * @return WriteRequestBatch
-     */
-    public static function factory(
-        AwsClientInterface $client,
-        $batchSize = WriteRequestBatchTransfer::BATCH_WRITE_MAX_SIZE,
-        $notify = null
-    ) {
-        $builder = BatchBuilder::factory()
-            ->createBatchesWith(new BatchSizeDivisor($batchSize))
-            ->transferWith(new WriteRequestBatchTransfer($client));
+		/**
+		 * Factory for creating a DynamoDB BatchWriteItemQueue
+		 *
+		 * @param AwsClientInterface $client		Client used to transfer requests
+		 * @param int								$batchSize Size of each batch. The WriteRequestBatch works most efficiently with a
+		 *																			batch size that is a multiple of 25
+		 * @param mixed							$notify		Callback to be run after each flush
+		 *
+		 * @return WriteRequestBatch
+		 */
+		public static function factory(
+				AwsClientInterface $client,
+				$batchSize = WriteRequestBatchTransfer::BATCH_WRITE_MAX_SIZE,
+				$notify = null
+		) {
+				$builder = BatchBuilder::factory()
+						->createBatchesWith(new BatchSizeDivisor($batchSize))
+						->transferWith(new WriteRequestBatchTransfer($client));
 
-        if ($notify) {
-            $builder->notify($notify);
-        }
+				if ($notify) {
+						$builder->notify($notify);
+				}
 
-        $batch = new self($builder->build());
-        $batch = new FlushingBatch($batch, $batchSize);
+				$batch = new self($builder->build());
+				$batch = new FlushingBatch($batch, $batchSize);
 
-        return $batch;
-    }
+				return $batch;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function add($item)
-    {
-        if ($item instanceof AbstractCommand) {
-            // Convert PutItem and DeleteItem into the correct format
-            $name = $item->getName();
-            if (in_array($name, array('PutItem', 'DeleteItem'))) {
-                $class = __NAMESPACE__ . '\\' . str_replace('Item', 'Request', $name);
-                $item  = $class::fromCommand($item);
-            } else {
-                throw new InvalidArgumentException('The command provided was not a PutItem or DeleteItem command.');
-            }
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function add($item)
+		{
+				if ($item instanceof AbstractCommand) {
+						// Convert PutItem and DeleteItem into the correct format
+						$name = $item->getName();
+						if (in_array($name, array('PutItem', 'DeleteItem'))) {
+								$class = __NAMESPACE__ . '\\' . str_replace('Item', 'Request', $name);
+								$item	= $class::fromCommand($item);
+						} else {
+								throw new InvalidArgumentException('The command provided was not a PutItem or DeleteItem command.');
+						}
+				}
 
-        if (!($item instanceof WriteRequestInterface)) {
-            throw new InvalidArgumentException('The item are are trying to add to the batch queue is invalid.');
-        }
+				if (!($item instanceof WriteRequestInterface)) {
+						throw new InvalidArgumentException('The item are are trying to add to the batch queue is invalid.');
+				}
 
-        return $this->decoratedBatch->add($item);
-    }
+				return $this->decoratedBatch->add($item);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function flush()
-    {
-        // Flush the queue
-        $items = array();
-        while (!$this->decoratedBatch->isEmpty()) {
-            try {
-                $items = array_merge($items, $this->decoratedBatch->flush());
-            } catch (BatchTransferException $e) {
-                $unprocessed = $e->getPrevious();
-                if ($unprocessed instanceof UnprocessedWriteRequestsException) {
-                    // Handles the UnprocessedItemsException that may occur for
-                    // throttled items the batch. These are re-queued here
-                    foreach ($unprocessed as $unprocessedItem) {
-                        $this->add($unprocessedItem);
-                    }
-                } else {
-                    // Re-throw the exception if not handled
-                    throw $e;
-                }
-            }
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function flush()
+		{
+				// Flush the queue
+				$items = array();
+				while (!$this->decoratedBatch->isEmpty()) {
+						try {
+								$items = array_merge($items, $this->decoratedBatch->flush());
+						} catch (BatchTransferException $e) {
+								$unprocessed = $e->getPrevious();
+								if ($unprocessed instanceof UnprocessedWriteRequestsException) {
+										// Handles the UnprocessedItemsException that may occur for
+										// throttled items the batch. These are re-queued here
+										foreach ($unprocessed as $unprocessedItem) {
+												$this->add($unprocessedItem);
+										}
+								} else {
+										// Re-throw the exception if not handled
+										throw $e;
+								}
+						}
+				}
 
-        return $items;
-    }
+				return $items;
+		}
 }

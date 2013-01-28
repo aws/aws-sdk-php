@@ -24,15 +24,15 @@ use Aws\Common\Waiter\AbstractResourceWaiter;
  */
 class BucketNotExists extends AbstractResourceWaiter
 {
-    protected $interval = 5;
-    protected $maxAttempts = 20;
-    protected $maxFailures = 0;
+		protected $interval = 5;
+		protected $maxAttempts = 20;
+		protected $maxFailures = 0;
 
-    /**
-     * Wait until a bucket does not exist
-     */
-    protected function doWait()
-    {
-        return !$this->client->doesBucketExist($this->resourceId, true, array(Ua::OPTION => Ua::WAITER));
-    }
+		/**
+		 * Wait until a bucket does not exist
+		 */
+		protected function doWait()
+		{
+				return !$this->client->doesBucketExist($this->resourceId, true, array(Ua::OPTION => Ua::WAITER));
+		}
 }

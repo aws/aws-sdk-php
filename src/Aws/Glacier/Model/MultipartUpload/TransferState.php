@@ -26,54 +26,54 @@ use Aws\Common\Model\MultipartUpload\UploadIdInterface;
  */
 class TransferState extends AbstractTransferState
 {
-    const ALREADY_UPLOADED = '-';
+		const ALREADY_UPLOADED = '-';
 
-    /**
-     * @var UploadPartGenerator Glacier upload helper object that contains part information
-     */
-    protected $partGenerator;
+		/**
+		 * @var UploadPartGenerator Glacier upload helper object that contains part information
+		 */
+		protected $partGenerator;
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
-    {
-        $transferState = new self($uploadId);
-        $listParts = $client->getIterator('ListParts', $uploadId->toParams());
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
+		{
+				$transferState = new self($uploadId);
+				$listParts = $client->getIterator('ListParts', $uploadId->toParams());
 
-        foreach ($listParts as $part) {
-            list($firstByte, $lastByte) = explode('-', $part['RangeInBytes']);
-            $partSize = (float) $listParts->getLastResult()->get('PartSizeInBytes');
-            $partData = array(
-                'partNumber'  => $firstByte / $partSize + 1,
-                'checksum'    => $part['SHA256TreeHash'],
-                'contentHash' => self::ALREADY_UPLOADED,
-                'size'        => $lastByte - $firstByte + 1,
-                'offset'      => $firstByte
-            );
-            $transferState->addPart(UploadPart::fromArray($partData));
-        }
+				foreach ($listParts as $part) {
+						list($firstByte, $lastByte) = explode('-', $part['RangeInBytes']);
+						$partSize = (float) $listParts->getLastResult()->get('PartSizeInBytes');
+						$partData = array(
+								'partNumber'	=> $firstByte / $partSize + 1,
+								'checksum'		=> $part['SHA256TreeHash'],
+								'contentHash' => self::ALREADY_UPLOADED,
+								'size'				=> $lastByte - $firstByte + 1,
+								'offset'			=> $firstByte
+						);
+						$transferState->addPart(UploadPart::fromArray($partData));
+				}
 
-        return $transferState;
-    }
+				return $transferState;
+		}
 
-    /**
-     * @param UploadPartGenerator $partGenerator Glacier upload helper object
-     *
-     * @return self
-     */
-    public function setPartGenerator(UploadPartGenerator $partGenerator)
-    {
-        $this->partGenerator = $partGenerator;
+		/**
+		 * @param UploadPartGenerator $partGenerator Glacier upload helper object
+		 *
+		 * @return self
+		 */
+		public function setPartGenerator(UploadPartGenerator $partGenerator)
+		{
+				$this->partGenerator = $partGenerator;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * @return UploadPartGenerator Glacier upload helper object
-     */
-    public function getPartGenerator()
-    {
-        return $this->partGenerator;
-    }
+		/**
+		 * @return UploadPartGenerator Glacier upload helper object
+		 */
+		public function getPartGenerator()
+		{
+				return $this->partGenerator;
+		}
 }

@@ -14,14 +14,14 @@ CHANGELOG
 ------------------
 
 * Fixed an issue with the Amazon S3 client where non-DNS compatible buckets that was previously causing a signature
-  mismatch error
+	mismatch error
 * Fixed an issue with the service description for the Amazon S3 `UploadPart` operation so that it works correctly
 * Fixed an issue with the Amazon S3 service description dealing with `response-*` query parameters of `GetObject`
 * Fixed an issue with the Amazon S3 client where object keys prefixed by the bucket name were being treated incorrectly
 * Fixed an issue with `Aws\S3\Model\MultipartUpload\ParallelTransfer` class
 * Added support for the `AssumeRole` operation for AWS STS
 * Added a the `UploadBodyListener` which allows upload operations in Amazon S3 and Amazon Glacier to accept file handles
-  in the `Body` parameter and file paths in the `SourceFile` parameter
+	in the `Body` parameter and file paths in the `SourceFile` parameter
 * Added Content-Type guessing for uploads
 * Added new region endpoints, including sa-east-1 and us-gov-west-1 for Amazon DynamoDB
 * Added methods to `Aws\S3\Model\MultipartUpload\UploadBuilder` class to make setting ACL and Content-Type easier

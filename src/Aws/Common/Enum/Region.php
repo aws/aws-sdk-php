@@ -26,32 +26,32 @@ use Aws\Common\Enum;
  */
 class Region extends Enum
 {
-    const US_EAST_1           = 'us-east-1';
-    const VIRGINIA            = self::US_EAST_1;
-    const NORTHERN_VIRGINIA   = self::US_EAST_1;
+		const US_EAST_1					 = 'us-east-1';
+		const VIRGINIA						= self::US_EAST_1;
+		const NORTHERN_VIRGINIA	 = self::US_EAST_1;
 
-    const US_WEST_1           = 'us-west-1';
-    const CALIFORNIA          = self::US_WEST_1;
-    const NORTHERN_CALIFORNIA = self::US_WEST_1;
+		const US_WEST_1					 = 'us-west-1';
+		const CALIFORNIA					= self::US_WEST_1;
+		const NORTHERN_CALIFORNIA = self::US_WEST_1;
 
-    const US_WEST_2           = 'us-west-2';
-    const OREGON              = self::US_WEST_2;
+		const US_WEST_2					 = 'us-west-2';
+		const OREGON							= self::US_WEST_2;
 
-    const EU_WEST_1           = 'eu-west-1';
-    const IRELAND             = self::EU_WEST_1;
+		const EU_WEST_1					 = 'eu-west-1';
+		const IRELAND						 = self::EU_WEST_1;
 
-    const AP_SOUTHEAST_1      = 'ap-southeast-1';
-    const SINGAPORE           = self::AP_SOUTHEAST_1;
+		const AP_SOUTHEAST_1			= 'ap-southeast-1';
+		const SINGAPORE					 = self::AP_SOUTHEAST_1;
 
-    const AP_SOUTHEAST_2      = 'ap-southeast-2';
-    const SYDNEY              = self::AP_SOUTHEAST_2;
+		const AP_SOUTHEAST_2			= 'ap-southeast-2';
+		const SYDNEY							= self::AP_SOUTHEAST_2;
 
-    const AP_NORTHEAST_1      = 'ap-northeast-1';
-    const TOKYO               = self::AP_NORTHEAST_1;
+		const AP_NORTHEAST_1			= 'ap-northeast-1';
+		const TOKYO							 = self::AP_NORTHEAST_1;
 
-    const SA_EAST_1           = 'sa-east-1';
-    const SAO_PAULO           = self::SA_EAST_1;
+		const SA_EAST_1					 = 'sa-east-1';
+		const SAO_PAULO					 = self::SA_EAST_1;
 
-    const US_GOV_WEST_1       = 'us-gov-west-1';
-    const GOV_CLOUD_US        = self::US_GOV_WEST_1;
+		const US_GOV_WEST_1			 = 'us-gov-west-1';
+		const GOV_CLOUD_US				= self::US_GOV_WEST_1;
 }

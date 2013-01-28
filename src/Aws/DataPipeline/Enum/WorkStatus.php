@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class WorkStatus extends Enum
 {
-    const FINISHED = 'FINISHED';
-    const FAILED = 'FAILED';
-    const FALSE = 'FALSE';
+		const FINISHED = 'FINISHED';
+		const FAILED = 'FAILED';
+		const FALSE = 'FALSE';
 }

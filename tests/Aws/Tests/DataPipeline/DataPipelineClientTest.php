@@ -24,31 +24,31 @@ use Aws\DataPipeline\DataPipelineClient;
  */
 class DataPipelineClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testFactoryInitializesClient()
-    {
-        $client = DataPipelineClient::factory(array(
-            ClientOptions::KEY    => 'foo',
-            ClientOptions::SECRET => 'bar',
-            ClientOptions::REGION => 'us-east-1'
-        ));
+		public function testFactoryInitializesClient()
+		{
+				$client = DataPipelineClient::factory(array(
+						ClientOptions::KEY		=> 'foo',
+						ClientOptions::SECRET => 'bar',
+						ClientOptions::REGION => 'us-east-1'
+				));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
-        $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
-        $this->assertEquals('https://datapipeline.us-east-1.amazonaws.com', $client->getBaseUrl());
-    }
+				$this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
+				$this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
+				$this->assertEquals('https://datapipeline.us-east-1.amazonaws.com', $client->getBaseUrl());
+		}
 
-    public function testLongPollingEnabledForPollForWorkOperation()
-    {
-        $client = DataPipelineClient::factory(array(
-            ClientOptions::KEY    => 'foo',
-            ClientOptions::SECRET => 'bar',
-            ClientOptions::REGION => 'us-east-1'
-        ));
+		public function testLongPollingEnabledForPollForWorkOperation()
+		{
+				$client = DataPipelineClient::factory(array(
+						ClientOptions::KEY		=> 'foo',
+						ClientOptions::SECRET => 'bar',
+						ClientOptions::REGION => 'us-east-1'
+				));
 
-        $command = $client->getCommand('PollForTask');
-        $curlopts = $command->get('curl.options') ?: array();
+				$command = $client->getCommand('PollForTask');
+				$curlopts = $command->get('curl.options') ?: array();
 
-        $this->assertArrayHasKey('CURLOPT_TIMEOUT', $curlopts);
-        $this->assertEquals($curlopts['CURLOPT_TIMEOUT'], 90);
-    }
+				$this->assertArrayHasKey('CURLOPT_TIMEOUT', $curlopts);
+				$this->assertEquals($curlopts['CURLOPT_TIMEOUT'], 90);
+		}
 }

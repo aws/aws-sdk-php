@@ -27,19 +27,19 @@ use Aws\Common\Iterator\AwsResourceIterator;
  */
 class ListMultipartUploadsIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function handleResults(Model $result)
-    {
-        // Get the list of uploads
-        $uploads = $result->get('Uploads') ?: array();
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function handleResults(Model $result)
+		{
+				// Get the list of uploads
+				$uploads = $result->get('Uploads') ?: array();
 
-        // If there are prefixes and we want them, merge them in
-        if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
-            $uploads = array_merge($uploads, $result->get('CommonPrefixes'));
-        }
+				// If there are prefixes and we want them, merge them in
+				if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
+						$uploads = array_merge($uploads, $result->get('CommonPrefixes'));
+				}
 
-        return $uploads;
-    }
+				return $uploads;
+		}
 }

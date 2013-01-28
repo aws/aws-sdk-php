@@ -24,20 +24,20 @@ use Aws\Common\Waiter\AbstractResourceWaiter;
  */
 class DistributionDeployed extends AbstractResourceWaiter
 {
-    protected $interval = 60;
-    protected $maxAttempts = 25;
-    protected $maxFailures = 0;
+		protected $interval = 60;
+		protected $maxAttempts = 25;
+		protected $maxFailures = 0;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function doWait()
-    {
-        $result = $this->client->getCommand('GetDistribution', array(
-            'Id'        => $this->resourceId,
-            Ua::OPTION  => Ua::WAITER
-        ))->execute();
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function doWait()
+		{
+				$result = $this->client->getCommand('GetDistribution', array(
+						'Id'				=> $this->resourceId,
+						Ua::OPTION	=> Ua::WAITER
+				))->execute();
 
-        return !strcasecmp($result['Status'], 'Deployed');
-    }
+				return !strcasecmp($result['Status'], 'Deployed');
+		}
 }

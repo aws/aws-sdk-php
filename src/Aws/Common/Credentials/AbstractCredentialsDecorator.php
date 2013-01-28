@@ -21,116 +21,116 @@ namespace Aws\Common\Credentials;
  */
 class AbstractCredentialsDecorator implements CredentialsInterface
 {
-    /**
-     * @var CredentialsInterface Wrapped credentials object
-     */
-    protected $credentials;
+		/**
+		 * @var CredentialsInterface Wrapped credentials object
+		 */
+		protected $credentials;
 
-    /**
-     * Constructs a new BasicAWSCredentials object, with the specified AWS
-     * access key and AWS secret key
-     *
-     * @param CredentialsInterface $credentials
-     */
-    public function __construct(CredentialsInterface $credentials)
-    {
-        $this->credentials = $credentials;
-    }
+		/**
+		 * Constructs a new BasicAWSCredentials object, with the specified AWS
+		 * access key and AWS secret key
+		 *
+		 * @param CredentialsInterface $credentials
+		 */
+		public function __construct(CredentialsInterface $credentials)
+		{
+				$this->credentials = $credentials;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return $this->credentials->serialize();
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function serialize()
+		{
+				return $this->credentials->serialize();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $this->credentials = new Credentials('', '');
-        $this->credentials->unserialize($serialized);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function unserialize($serialized)
+		{
+				$this->credentials = new Credentials('', '');
+				$this->credentials->unserialize($serialized);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAccessKeyId()
-    {
-        return $this->credentials->getAccessKeyId();
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getAccessKeyId()
+		{
+				return $this->credentials->getAccessKeyId();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSecretKey()
-    {
-        return $this->credentials->getSecretKey();
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getSecretKey()
+		{
+				return $this->credentials->getSecretKey();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSecurityToken()
-    {
-        return $this->credentials->getSecurityToken();
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getSecurityToken()
+		{
+				return $this->credentials->getSecurityToken();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getExpiration()
-    {
-        return $this->credentials->getExpiration();
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getExpiration()
+		{
+				return $this->credentials->getExpiration();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isExpired()
-    {
-        return $this->credentials->isExpired();
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function isExpired()
+		{
+				return $this->credentials->isExpired();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setAccessKeyId($key)
-    {
-        $this->credentials->setAccessKeyId($key);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setAccessKeyId($key)
+		{
+				$this->credentials->setAccessKeyId($key);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setSecretKey($secret)
-    {
-        $this->credentials->setSecretKey($secret);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setSecretKey($secret)
+		{
+				$this->credentials->setSecretKey($secret);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setSecurityToken($token)
-    {
-        $this->credentials->setSecurityToken($token);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setSecurityToken($token)
+		{
+				$this->credentials->setSecurityToken($token);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setExpiration($timestamp)
-    {
-        $this->credentials->setExpiration($timestamp);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setExpiration($timestamp)
+		{
+				$this->credentials->setExpiration($timestamp);
 
-        return $this;
-    }
+				return $this;
+		}
 }

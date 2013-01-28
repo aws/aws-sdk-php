@@ -25,46 +25,46 @@ use Aws\Common\Exception\InvalidArgumentException;
  */
 abstract class AbstractMissingFunctionOptionResolver implements OptionResolverInterface
 {
-    /**
-     * @var null|string Function to call if the option is missing
-     */
-    protected $missingFunction;
+		/**
+		 * @var null|string Function to call if the option is missing
+		 */
+		protected $missingFunction;
 
-    /**
-     * @var string|null Ensure that the option implements this class/interface
-     */
-    protected $mustImplement;
+		/**
+		 * @var string|null Ensure that the option implements this class/interface
+		 */
+		protected $mustImplement;
 
-    /**
-     * Provide a callable function to call if an expected parameter is not found
-     *
-     * @param mixed $missingFunction Callable to execute if the param is missing
-     *
-     * @return self
-     */
-    public function setMissingFunction($missingFunction)
-    {
-        if (!is_callable($missingFunction)) {
-            throw new InvalidArgumentException('Method is not callable');
-        }
+		/**
+		 * Provide a callable function to call if an expected parameter is not found
+		 *
+		 * @param mixed $missingFunction Callable to execute if the param is missing
+		 *
+		 * @return self
+		 */
+		public function setMissingFunction($missingFunction)
+		{
+				if (!is_callable($missingFunction)) {
+						throw new InvalidArgumentException('Method is not callable');
+				}
 
-        $this->missingFunction = $missingFunction;
+				$this->missingFunction = $missingFunction;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Set the name of a class or interface that the option must implement if
-     * it is explicitly provided.
-     *
-     * @param string $mustImplement Name of the class or interface
-     *
-     * @return self
-     */
-    public function setMustImplement($mustImplement)
-    {
-        $this->mustImplement = $mustImplement;
+		/**
+		 * Set the name of a class or interface that the option must implement if
+		 * it is explicitly provided.
+		 *
+		 * @param string $mustImplement Name of the class or interface
+		 *
+		 * @return self
+		 */
+		public function setMustImplement($mustImplement)
+		{
+				$this->mustImplement = $mustImplement;
 
-        return $this;
-    }
+				return $this;
+		}
 }

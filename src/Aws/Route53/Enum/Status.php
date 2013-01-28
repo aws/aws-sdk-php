@@ -23,6 +23,6 @@ use Aws\Common\Enum;
  */
 class Status extends Enum
 {
-    const PENDING = 'PENDING';
-    const INSYNC  = 'INSYNC';
+		const PENDING = 'PENDING';
+		const INSYNC	= 'INSYNC';
 }

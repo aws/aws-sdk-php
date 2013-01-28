@@ -23,6 +23,6 @@ use Aws\Common\Enum;
  */
 class Action extends Enum
 {
-    const ARCHIVE_RETRIEVAL = 'ArchiveRetrieval';
-    const INVENTORY_RETRIEVAL = 'InventoryRetrieval';
+		const ARCHIVE_RETRIEVAL = 'ArchiveRetrieval';
+		const INVENTORY_RETRIEVAL = 'InventoryRetrieval';
 }

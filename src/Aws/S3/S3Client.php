@@ -91,332 +91,332 @@ use Guzzle\Service\Resource\Model;
  */
 class S3Client extends AbstractClient
 {
-    /**
-     * @var array Aliases for S3 operations
-     */
-    protected static $commandAliases = array(
-        // REST API Docs Aliases
-        'GetService' => 'ListBuckets',
-        'GetBucket'  => 'ListObjects',
-        'PutBucket'  => 'CreateBucket',
+		/**
+		 * @var array Aliases for S3 operations
+		 */
+		protected static $commandAliases = array(
+				// REST API Docs Aliases
+				'GetService' => 'ListBuckets',
+				'GetBucket'	=> 'ListObjects',
+				'PutBucket'	=> 'CreateBucket',
 
-        // SDK 1.x Aliases
-        'GetBucketHeaders'              => 'HeadBucket',
-        'GetObjectHeaders'              => 'HeadObject',
-        'SetBucketAcl'                  => 'PutBucketAcl',
-        'CreateObject'                  => 'PutObject',
-        'DeleteObjects'                 => 'DeleteMultipleObjects',
-        'CopyObject'                    => 'PutObjectCopy',
-        'SetObjectAcl'                  => 'PutObjectAcl',
-        'GetLogs'                       => 'GetBucketLogging',
-        'GetVersioningStatus'           => 'GetBucketVersioning',
-        'SetBucketPolicy'               => 'PutBucketPolicy',
-        'CreateBucketNotification'      => 'PutBucketNotification',
-        'GetBucketNotifications'        => 'GetBucketNotification',
-        'CopyPart'                      => 'UploadPartCopy',
-        'CreateWebsiteConfig'           => 'PutBucketWebsite',
-        'GetWebsiteConfig'              => 'GetBucketWebsite',
-        'DeleteWebsiteConfig'           => 'DeleteBucketWebsite',
-        'CreateObjectExpirationConfig'  => 'PutBucketLifecycle',
-        'GetObjectExpirationConfig'     => 'GetBucketLifecycle',
-        'DeleteObjectExpirationConfig'  => 'DeleteBucketLifecycle',
-    );
+				// SDK 1.x Aliases
+				'GetBucketHeaders'							=> 'HeadBucket',
+				'GetObjectHeaders'							=> 'HeadObject',
+				'SetBucketAcl'									=> 'PutBucketAcl',
+				'CreateObject'									=> 'PutObject',
+				'DeleteObjects'								 => 'DeleteMultipleObjects',
+				'CopyObject'										=> 'PutObjectCopy',
+				'SetObjectAcl'									=> 'PutObjectAcl',
+				'GetLogs'											 => 'GetBucketLogging',
+				'GetVersioningStatus'					 => 'GetBucketVersioning',
+				'SetBucketPolicy'							 => 'PutBucketPolicy',
+				'CreateBucketNotification'			=> 'PutBucketNotification',
+				'GetBucketNotifications'				=> 'GetBucketNotification',
+				'CopyPart'											=> 'UploadPartCopy',
+				'CreateWebsiteConfig'					 => 'PutBucketWebsite',
+				'GetWebsiteConfig'							=> 'GetBucketWebsite',
+				'DeleteWebsiteConfig'					 => 'DeleteBucketWebsite',
+				'CreateObjectExpirationConfig'	=> 'PutBucketLifecycle',
+				'GetObjectExpirationConfig'		 => 'GetBucketLifecycle',
+				'DeleteObjectExpirationConfig'	=> 'DeleteBucketLifecycle',
+		);
 
-    /**
-     * @inheritdoc
-     */
-    protected $directory = __DIR__;
+		/**
+		 * @inheritdoc
+		 */
+		protected $directory = __DIR__;
 
-    /**
-     * Factory method to create a new Amazon S3 client using an array of configuration options.
-     *
-     * The following array keys and values are available options:
-     *
-     * Credential options (key, secret, and optional token OR credentials is required)
-     *
-     * - key - AWS Access Key ID
-     * - secret - AWS secret access key
-     * - credentials - You can optionally provide a custom `Aws\Common\Credentials\CredentialsInterface` object
-     * - token - Custom AWS security token to use with request authentication
-     * - token.ttd - UNIX timestamp for when the custom credentials expire
-     * - credentials.cache - Used to cache credentials when using providers that require HTTP requests. Set the true
-     *   to use the default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
-     * - credentials.cache.key - Optional custom cache key to use with the credentials
-     * - credentials.client - Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
-     *   credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
-     *
-     * Region and Endpoint options (a `region` and optional `scheme` OR a `base_url` is required)
-     *
-     * - region - Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
-     * - scheme - URI Scheme of the base URL (e.g. 'https', 'http').
-     * - base_url - Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
-     * - endpoint_provider - Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
-     *
-     * Generic client options
-     *
-     * - ssl.certificate_authority: Set to true to use the bundled CA cert (default), system to use the certificate
-     *   bundled with your system, or pass the full path to an SSL certificate bundle. This option should be used when
-     *   you encounter curl error code 60.
-     * - curl.options - Array of cURL options to apply to every request.
-     *   See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
-     * - signature - You can optionally provide a custom signature implementation used to sign requests
-     * - client.backoff.logger - `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use
-     *   'debug' to emit PHP warnings when a retry is issued.
-     * - client.backoff.logger.template - Optional template to use for exponential backoff log messages. See
-     *   `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
-     *
-     * @param array|Collection $config Client configuration data
-     *
-     * @return self
-     */
-    public static function factory($config = array())
-    {
-        $client = ClientBuilder::factory(__NAMESPACE__)
-            ->setConfig($config)
-            ->setConfigDefaults(array(
-                Options::SCHEME  => 'https',
-                Options::SERVICE => 's3',
-                Options::REGION  => Region::US_EAST_1
-            ))
-            ->setSignature(new S3Signature())
-            ->setExceptionParser(new S3ExceptionParser())
-            ->setIteratorsConfig(array(
-                'more_key' => 'IsTruncated',
-                'operations' => array(
-                    'ListBuckets',
-                    'ListMultipartUploads' => array(
-                        'limit_param' => 'MaxUploads',
-                        'token_param' => array('KeyMarker', 'UploadIdMarker'),
-                        'token_key'   => array('NextKeyMarker', 'NextUploadIdMarker'),
-                    ),
-                    'ListObjects' => array(
-                        'limit_param' => 'MaxKeys',
-                        'token_param' => 'Marker',
-                        'token_key'   => 'NextMarker',
-                    ),
-                    'ListObjectVersions' => array(
-                        'limit_param' => 'MaxKeys',
-                        'token_param' => array('KeyMarker', 'VersionIdMarker'),
-                        'token_key'   => array('nextKeyMarker', 'nextVersionIdMarker'),
-                    ),
-                    'ListParts' => array(
-                        'limit_param' => 'MaxParts',
-                        'result_key'  => 'Parts',
-                        'token_param' => 'PartNumberMarker',
-                        'token_key'   => 'NextPartNumberMarker',
-                    ),
-                )
-            ))
-            ->build();
+		/**
+		 * Factory method to create a new Amazon S3 client using an array of configuration options.
+		 *
+		 * The following array keys and values are available options:
+		 *
+		 * Credential options (key, secret, and optional token OR credentials is required)
+		 *
+		 * - key - AWS Access Key ID
+		 * - secret - AWS secret access key
+		 * - credentials - You can optionally provide a custom `Aws\Common\Credentials\CredentialsInterface` object
+		 * - token - Custom AWS security token to use with request authentication
+		 * - token.ttd - UNIX timestamp for when the custom credentials expire
+		 * - credentials.cache - Used to cache credentials when using providers that require HTTP requests. Set the true
+		 *	 to use the default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
+		 * - credentials.cache.key - Optional custom cache key to use with the credentials
+		 * - credentials.client - Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
+		 *	 credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
+		 *
+		 * Region and Endpoint options (a `region` and optional `scheme` OR a `base_url` is required)
+		 *
+		 * - region - Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
+		 * - scheme - URI Scheme of the base URL (e.g. 'https', 'http').
+		 * - base_url - Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
+		 * - endpoint_provider - Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
+		 *
+		 * Generic client options
+		 *
+		 * - ssl.certificate_authority: Set to true to use the bundled CA cert (default), system to use the certificate
+		 *	 bundled with your system, or pass the full path to an SSL certificate bundle. This option should be used when
+		 *	 you encounter curl error code 60.
+		 * - curl.options - Array of cURL options to apply to every request.
+		 *	 See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
+		 * - signature - You can optionally provide a custom signature implementation used to sign requests
+		 * - client.backoff.logger - `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use
+		 *	 'debug' to emit PHP warnings when a retry is issued.
+		 * - client.backoff.logger.template - Optional template to use for exponential backoff log messages. See
+		 *	 `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
+		 *
+		 * @param array|Collection $config Client configuration data
+		 *
+		 * @return self
+		 */
+		public static function factory($config = array())
+		{
+				$client = ClientBuilder::factory(__NAMESPACE__)
+						->setConfig($config)
+						->setConfigDefaults(array(
+								Options::SCHEME	=> 'https',
+								Options::SERVICE => 's3',
+								Options::REGION	=> Region::US_EAST_1
+						))
+						->setSignature(new S3Signature())
+						->setExceptionParser(new S3ExceptionParser())
+						->setIteratorsConfig(array(
+								'more_key' => 'IsTruncated',
+								'operations' => array(
+										'ListBuckets',
+										'ListMultipartUploads' => array(
+												'limit_param' => 'MaxUploads',
+												'token_param' => array('KeyMarker', 'UploadIdMarker'),
+												'token_key'	 => array('NextKeyMarker', 'NextUploadIdMarker'),
+										),
+										'ListObjects' => array(
+												'limit_param' => 'MaxKeys',
+												'token_param' => 'Marker',
+												'token_key'	 => 'NextMarker',
+										),
+										'ListObjectVersions' => array(
+												'limit_param' => 'MaxKeys',
+												'token_param' => array('KeyMarker', 'VersionIdMarker'),
+												'token_key'	 => array('nextKeyMarker', 'nextVersionIdMarker'),
+										),
+										'ListParts' => array(
+												'limit_param' => 'MaxParts',
+												'result_key'	=> 'Parts',
+												'token_param' => 'PartNumberMarker',
+												'token_key'	 => 'NextPartNumberMarker',
+										),
+								)
+						))
+						->build();
 
-        // Use virtual hosted buckets when possible
-        $client->addSubscriber(new BucketStyleListener());
+				// Use virtual hosted buckets when possible
+				$client->addSubscriber(new BucketStyleListener());
 
-        // Ensure that ACP headers are applied when needed
-        $client->addSubscriber(new AcpListener());
+				// Ensure that ACP headers are applied when needed
+				$client->addSubscriber(new AcpListener());
 
-        // Validate and add Content-MD5 hashes
-        $client->addSubscriber(new CommandContentMd5Plugin());
+				// Validate and add Content-MD5 hashes
+				$client->addSubscriber(new CommandContentMd5Plugin());
 
-        // Allow for specifying bodies with file paths and file handles
-        $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
+				// Allow for specifying bodies with file paths and file handles
+				$client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
 
-        return $client;
-    }
+				return $client;
+		}
 
-    /**
-     * @param CredentialsInterface $credentials AWS credentials
-     * @param S3SignatureInterface $signature   Amazon S3 Signature implementation
-     * @param Collection           $config      Configuration options
-     */
-    public function __construct(CredentialsInterface $credentials, S3SignatureInterface $signature, Collection $config)
-    {
-        parent::__construct($credentials, $signature, $config);
+		/**
+		 * @param CredentialsInterface $credentials AWS credentials
+		 * @param S3SignatureInterface $signature	 Amazon S3 Signature implementation
+		 * @param Collection					 $config			Configuration options
+		 */
+		public function __construct(CredentialsInterface $credentials, S3SignatureInterface $signature, Collection $config)
+		{
+				parent::__construct($credentials, $signature, $config);
 
-        // Add aliases for some S3 operations
-        $this->getCommandFactory()->add(
-            new AliasFactory($this, self::$commandAliases),
-            'Guzzle\Service\Command\Factory\ServiceDescriptionFactory'
-        );
-    }
+				// Add aliases for some S3 operations
+				$this->getCommandFactory()->add(
+						new AliasFactory($this, self::$commandAliases),
+						'Guzzle\Service\Command\Factory\ServiceDescriptionFactory'
+				);
+		}
 
-    /**
-     * Find out if a string is a valid name for an Amazon S3 bucket.
-     *
-     * @param string $bucket The name of the bucket to check.
-     *
-     * @return bool TRUE if the bucket name is valid or FALSE if it is invalid.
-     */
-    public static function isValidBucketName($bucket)
-    {
-        $bucketLen = strlen($bucket);
-        if (!$bucket || $bucketLen < 3 || $bucketLen > 63
-            // Cannot start or end with a '.'
-            || $bucket[0] == '.'
-            || $bucket[$bucketLen - 1] == '.'
-            // Cannot look like an IP address
-            || preg_match('/^\d+\.\d+\.\d+\.\d+$/', $bucket)
-            // Cannot include special characters, must start and end with lower alnum
-            || !preg_match('/^[a-z0-9]([a-z0-9\\-.]*[a-z0-9])?$/', $bucket)) {
-            return false;
-        }
+		/**
+		 * Find out if a string is a valid name for an Amazon S3 bucket.
+		 *
+		 * @param string $bucket The name of the bucket to check.
+		 *
+		 * @return bool TRUE if the bucket name is valid or FALSE if it is invalid.
+		 */
+		public static function isValidBucketName($bucket)
+		{
+				$bucketLen = strlen($bucket);
+				if (!$bucket || $bucketLen < 3 || $bucketLen > 63
+						// Cannot start or end with a '.'
+						|| $bucket[0] == '.'
+						|| $bucket[$bucketLen - 1] == '.'
+						// Cannot look like an IP address
+						|| preg_match('/^\d+\.\d+\.\d+\.\d+$/', $bucket)
+						// Cannot include special characters, must start and end with lower alnum
+						|| !preg_match('/^[a-z0-9]([a-z0-9\\-.]*[a-z0-9])?$/', $bucket)) {
+						return false;
+				}
 
-        return true;
-    }
+				return true;
+		}
 
-    /**
-     * Create a pre-signed URL for a request
-     *
-     * @param RequestInterface $request Request to generate the URL for. Use the factory methods of the client to create
-     *                                  this request object.
-     * @param int|string       $expires The Unix timestamp to expire at or a string that can be evaluated by strtotime
-     *
-     * @return string
-     * @throws InvalidArgumentException if the request is not associated with this client object
-     */
-    public function createPresignedUrl(RequestInterface $request, $expires)
-    {
-        if ($request->getClient() !== $this) {
-            throw new InvalidArgumentException('The request object must be associated with the client. Use the '
-                . '$client->get(), $client->head(), $client->post(), $client->put(), etc. methods when passing in a '
-                . 'request object');
-        }
+		/**
+		 * Create a pre-signed URL for a request
+		 *
+		 * @param RequestInterface $request Request to generate the URL for. Use the factory methods of the client to create
+		 *																	this request object.
+		 * @param int|string			 $expires The Unix timestamp to expire at or a string that can be evaluated by strtotime
+		 *
+		 * @return string
+		 * @throws InvalidArgumentException if the request is not associated with this client object
+		 */
+		public function createPresignedUrl(RequestInterface $request, $expires)
+		{
+				if ($request->getClient() !== $this) {
+						throw new InvalidArgumentException('The request object must be associated with the client. Use the '
+								. '$client->get(), $client->head(), $client->post(), $client->put(), etc. methods when passing in a '
+								. 'request object');
+				}
 
-        if (!is_numeric($expires)) {
-            $expires = strtotime($expires);
-        }
+				if (!is_numeric($expires)) {
+						$expires = strtotime($expires);
+				}
 
-        $copy = clone $request;
-        $copy->getQuery()
-            ->set('AWSAccessKeyId', $this->credentials->getAccessKeyId())
-            ->set('Expires', $expires)
-            ->set('Signature', $this->signature->signString(
-                $this->signature->createCanonicalizedString($request, $expires),
-                $this->credentials
-            ));
+				$copy = clone $request;
+				$copy->getQuery()
+						->set('AWSAccessKeyId', $this->credentials->getAccessKeyId())
+						->set('Expires', $expires)
+						->set('Signature', $this->signature->signString(
+								$this->signature->createCanonicalizedString($request, $expires),
+								$this->credentials
+						));
 
-        return $copy->getUrl();
-    }
+				return $copy->getUrl();
+		}
 
-    /**
-     * Helper used to clear the contents of a bucket. Use the {@see ClearBucket} object directly
-     * for more advanced options and control.
-     *
-     * @param string $bucket Name of the bucket to clear.
-     *
-     * @return int Returns the number of deleted keys
-     */
-    public function clearBucket($bucket)
-    {
-        $clear = new ClearBucket($this, $bucket);
+		/**
+		 * Helper used to clear the contents of a bucket. Use the {@see ClearBucket} object directly
+		 * for more advanced options and control.
+		 *
+		 * @param string $bucket Name of the bucket to clear.
+		 *
+		 * @return int Returns the number of deleted keys
+		 */
+		public function clearBucket($bucket)
+		{
+				$clear = new ClearBucket($this, $bucket);
 
-        return $clear->clear();
-    }
+				return $clear->clear();
+		}
 
-    /**
-     * Determines whether or not a bucket exists by name
-     *
-     * @param string $bucket    The name of the bucket
-     * @param bool   $accept403 Set to true if 403s are acceptable
-     * @param array  $options   Additional options to add to the executed command
-     *
-     * @return bool
-     */
-    public function doesBucketExist($bucket, $accept403 = true, array $options = array())
-    {
-        return $this->checkExistenceWithCommand(
-            $this->getCommand('HeadBucket', array_merge($options, array(
-                'Bucket' => $bucket
-            ))), $accept403
-        );
-    }
+		/**
+		 * Determines whether or not a bucket exists by name
+		 *
+		 * @param string $bucket		The name of the bucket
+		 * @param bool	 $accept403 Set to true if 403s are acceptable
+		 * @param array	$options	 Additional options to add to the executed command
+		 *
+		 * @return bool
+		 */
+		public function doesBucketExist($bucket, $accept403 = true, array $options = array())
+		{
+				return $this->checkExistenceWithCommand(
+						$this->getCommand('HeadBucket', array_merge($options, array(
+								'Bucket' => $bucket
+						))), $accept403
+				);
+		}
 
-    /**
-     * Determines whether or not an object exists by name
-     *
-     * @param string $bucket  The name of the bucket
-     * @param string $key     The key of the object
-     * @param array  $options Additional options to add to the executed command
-     *
-     * @return bool
-     */
-    public function doesObjectExist($bucket, $key, array $options = array())
-    {
-        return $this->checkExistenceWithCommand(
-            $this->getCommand('HeadObject', array_merge($options, array(
-                'Bucket' => $bucket,
-                'Key'    => $key
-            )))
-        );
-    }
+		/**
+		 * Determines whether or not an object exists by name
+		 *
+		 * @param string $bucket	The name of the bucket
+		 * @param string $key		 The key of the object
+		 * @param array	$options Additional options to add to the executed command
+		 *
+		 * @return bool
+		 */
+		public function doesObjectExist($bucket, $key, array $options = array())
+		{
+				return $this->checkExistenceWithCommand(
+						$this->getCommand('HeadObject', array_merge($options, array(
+								'Bucket' => $bucket,
+								'Key'		=> $key
+						)))
+				);
+		}
 
-    /**
-     * Determines whether or not a bucket policy exists for a bucket
-     *
-     * @param string $bucket  The name of the bucket
-     * @param array  $options Additional options to add to the executed command
-     *
-     * @return bool
-     */
-    public function doesBucketPolicyExist($bucket, array $options = array())
-    {
-        return $this->checkExistenceWithCommand(
-            $this->getCommand('GetBucketPolicy', array_merge($options, array(
-                'Bucket' => $bucket
-            )))
-        );
-    }
+		/**
+		 * Determines whether or not a bucket policy exists for a bucket
+		 *
+		 * @param string $bucket	The name of the bucket
+		 * @param array	$options Additional options to add to the executed command
+		 *
+		 * @return bool
+		 */
+		public function doesBucketPolicyExist($bucket, array $options = array())
+		{
+				return $this->checkExistenceWithCommand(
+						$this->getCommand('GetBucketPolicy', array_merge($options, array(
+								'Bucket' => $bucket
+						)))
+				);
+		}
 
-    /**
-     * Raw URL encode a key and allow for '/' characters
-     *
-     * @param string $key Key to encode
-     *
-     * @return string Returns the encoded key
-     */
-    public static function encodeKey($key)
-    {
-        return str_replace('%2F', '/', rawurlencode(str_replace('%20', ' ', $key)));
-    }
+		/**
+		 * Raw URL encode a key and allow for '/' characters
+		 *
+		 * @param string $key Key to encode
+		 *
+		 * @return string Returns the encoded key
+		 */
+		public static function encodeKey($key)
+		{
+				return str_replace('%2F', '/', rawurlencode(str_replace('%20', ' ', $key)));
+		}
 
-    /**
-     * Explode a prefixed key into an array of values
-     *
-     * @param string $key Key to explode
-     *
-     * @return array Returns the exploded
-     */
-    public static function explodeKey($key)
-    {
-        // Remove a leading slash if one is found
-        return explode('/', $key && $key[0] == '/' ? substr($key, 1) : $key);
-    }
+		/**
+		 * Explode a prefixed key into an array of values
+		 *
+		 * @param string $key Key to explode
+		 *
+		 * @return array Returns the exploded
+		 */
+		public static function explodeKey($key)
+		{
+				// Remove a leading slash if one is found
+				return explode('/', $key && $key[0] == '/' ? substr($key, 1) : $key);
+		}
 
-    /**
-     * Determines whether or not a resource exists using a command
-     *
-     * @param CommandInterface $command   Command used to poll for the resource
-     * @param bool             $accept403 Set to true if 403s are acceptable
-     *
-     * @return bool
-     * @throws S3Exception if there is an unhandled exception
-     */
-    protected function checkExistenceWithCommand(CommandInterface $command, $accept403 = false)
-    {
-        try {
-            $command->execute();
-            $exists = true;
-        } catch (AccessDeniedException $e) {
-            $exists = (bool) $accept403;
-        } catch (S3Exception $e) {
-            $exists = false;
-            if ($e->getResponse()->getStatusCode() >= 500) {
-                // @codeCoverageIgnoreStart
-                throw $e;
-                // @codeCoverageIgnoreEnd
-            }
-        }
+		/**
+		 * Determines whether or not a resource exists using a command
+		 *
+		 * @param CommandInterface $command	 Command used to poll for the resource
+		 * @param bool						 $accept403 Set to true if 403s are acceptable
+		 *
+		 * @return bool
+		 * @throws S3Exception if there is an unhandled exception
+		 */
+		protected function checkExistenceWithCommand(CommandInterface $command, $accept403 = false)
+		{
+				try {
+						$command->execute();
+						$exists = true;
+				} catch (AccessDeniedException $e) {
+						$exists = (bool) $accept403;
+				} catch (S3Exception $e) {
+						$exists = false;
+						if ($e->getResponse()->getStatusCode() >= 500) {
+								// @codeCoverageIgnoreStart
+								throw $e;
+								// @codeCoverageIgnoreEnd
+						}
+				}
 
-        return $exists;
-    }
+				return $exists;
+		}
 }

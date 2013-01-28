@@ -34,47 +34,47 @@ use Guzzle\Common\Collection;
  */
 class SignatureOptionResolver extends AbstractMissingFunctionOptionResolver
 {
-    /**
-     * @param string $missingFunction Provide a callable function to call if the 'signature' parameter is not set
-     * @param string $mustImplement   Provide the name of a class or interface that the 'signature' option must extend
-     */
-    public function __construct(
-        $missingFunction = null,
-        $mustImplement = 'Aws\\Common\\Signature\\SignatureInterface')
-    {
-        if ($missingFunction) {
-            $this->setMissingFunction($missingFunction);
-        }
-        $this->setMustImplement($mustImplement);
-    }
+		/**
+		 * @param string $missingFunction Provide a callable function to call if the 'signature' parameter is not set
+		 * @param string $mustImplement	 Provide the name of a class or interface that the 'signature' option must extend
+		 */
+		public function __construct(
+				$missingFunction = null,
+				$mustImplement = 'Aws\\Common\\Signature\\SignatureInterface')
+		{
+				if ($missingFunction) {
+						$this->setMissingFunction($missingFunction);
+				}
+				$this->setMustImplement($mustImplement);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function resolve(Collection $config, AwsClientInterface $client = null)
-    {
-        $signature = $config->get(Options::SIGNATURE);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function resolve(Collection $config, AwsClientInterface $client = null)
+		{
+				$signature = $config->get(Options::SIGNATURE);
 
-        // Ensure that a signature object is passed to the client
-        if (!$signature && $this->missingFunction) {
-            // The signature was not provided, so use the callback to get one
-            $signature = call_user_func($this->missingFunction, $config);
-            $config->set(Options::SIGNATURE, $signature);
-        } elseif (!($signature instanceof $this->mustImplement)) {
-            throw new InvalidArgumentException(
-                'An explicitly provided ' . Options::SIGNATURE . ' option must implement SignatureInterface'
-            );
-        }
+				// Ensure that a signature object is passed to the client
+				if (!$signature && $this->missingFunction) {
+						// The signature was not provided, so use the callback to get one
+						$signature = call_user_func($this->missingFunction, $config);
+						$config->set(Options::SIGNATURE, $signature);
+				} elseif (!($signature instanceof $this->mustImplement)) {
+						throw new InvalidArgumentException(
+								'An explicitly provided ' . Options::SIGNATURE . ' option must implement SignatureInterface'
+						);
+				}
 
-        // If this is a region and service specific signature object then add
-        // these values to the signature object if they are present in the config
-        if ($signature instanceof EndpointSignatureInterface) {
-            if ($serviceName = $config->get(Options::SIGNATURE_SERVICE)) {
-                $signature->setServiceName($serviceName);
-            }
-            if ($regionName = $config->get(Options::SIGNATURE_REGION)) {
-                $signature->setRegionName($regionName);
-            }
-        }
-    }
+				// If this is a region and service specific signature object then add
+				// these values to the signature object if they are present in the config
+				if ($signature instanceof EndpointSignatureInterface) {
+						if ($serviceName = $config->get(Options::SIGNATURE_SERVICE)) {
+								$signature->setServiceName($serviceName);
+						}
+						if ($regionName = $config->get(Options::SIGNATURE_REGION)) {
+								$signature->setRegionName($regionName);
+						}
+				}
+		}
 }

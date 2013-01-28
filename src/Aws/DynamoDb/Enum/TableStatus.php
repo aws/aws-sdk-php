@@ -23,8 +23,8 @@ use Aws\Common\Enum;
  */
 class TableStatus extends Enum
 {
-    const CREATING = 'CREATING';
-    const UPDATING = 'UPDATING';
-    const DELETING = 'DELETING';
-    const ACTIVE = 'ACTIVE';
+		const CREATING = 'CREATING';
+		const UPDATING = 'UPDATING';
+		const DELETING = 'DELETING';
+		const ACTIVE = 'ACTIVE';
 }

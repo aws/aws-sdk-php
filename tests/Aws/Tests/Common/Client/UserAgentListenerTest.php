@@ -25,28 +25,28 @@ use Guzzle\Http\Message\RequestFactory;
  */
 class UserAgentListenerTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testAppendsStringsToUserAgentHeader()
-    {
-        $this->assertInternalType('array', UserAgentListener::getSubscribedEvents());
+		public function testAppendsStringsToUserAgentHeader()
+		{
+				$this->assertInternalType('array', UserAgentListener::getSubscribedEvents());
 
-        $listener = new UserAgentListener();
-        $request = RequestFactory::getInstance()->create('GET', 'http://www.foo.com', array(
-            'User-Agent' => 'Aws/Foo Baz/Bar'
-        ));
+				$listener = new UserAgentListener();
+				$request = RequestFactory::getInstance()->create('GET', 'http://www.foo.com', array(
+						'User-Agent' => 'Aws/Foo Baz/Bar'
+				));
 
-        $command = $this->getMockBuilder('Aws\Common\Command\JsonCommand')
-            ->setMethods(array('getRequest'))
-            ->getMock();
+				$command = $this->getMockBuilder('Aws\Common\Command\JsonCommand')
+						->setMethods(array('getRequest'))
+						->getMock();
 
-        $command->expects($this->any())
-            ->method('getRequest')
-            ->will($this->returnValue($request));
+				$command->expects($this->any())
+						->method('getRequest')
+						->will($this->returnValue($request));
 
-        $command->add(UserAgentListener::OPTION, 'Test/123')
-            ->add(UserAgentListener::OPTION, 'Other/456');
+				$command->add(UserAgentListener::OPTION, 'Test/123')
+						->add(UserAgentListener::OPTION, 'Other/456');
 
-        $event = new Event(array('command' => $command));
-        $listener->onBeforeSend($event);
-        $this->assertEquals('Aws/Foo Baz/Bar Test/123 Other/456', (string) $request->getHeader('User-Agent'));
-    }
+				$event = new Event(array('command' => $command));
+				$listener->onBeforeSend($event);
+				$this->assertEquals('Aws/Foo Baz/Bar Test/123 Other/456', (string) $request->getHeader('User-Agent'));
+		}
 }

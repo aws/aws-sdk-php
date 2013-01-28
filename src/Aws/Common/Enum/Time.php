@@ -23,24 +23,24 @@ use Aws\Common\Enum;
  */
 class Time extends Enum
 {
-    const SECOND  = 1;
-    const SECONDS = self::SECOND;
+		const SECOND	= 1;
+		const SECONDS = self::SECOND;
 
-    const MINUTE  = 60;
-    const MINUTES = self::MINUTE;
+		const MINUTE	= 60;
+		const MINUTES = self::MINUTE;
 
-    const HOUR    = 3600;
-    const HOURS   = self::HOUR;
+		const HOUR		= 3600;
+		const HOURS	 = self::HOUR;
 
-    const DAY     = 86400;
-    const DAYS    = self::DAY;
+		const DAY		 = 86400;
+		const DAYS		= self::DAY;
 
-    const WEEK    = 604800;
-    const WEEKS   = self::WEEK;
+		const WEEK		= 604800;
+		const WEEKS	 = self::WEEK;
 
-    const MONTH   = 2592000;
-    const MONTHS  = self::MONTH;
+		const MONTH	 = 2592000;
+		const MONTHS	= self::MONTH;
 
-    const YEAR    = 31557600;
-    const YEARS   = self::YEAR;
+		const YEAR		= 31557600;
+		const YEARS	 = self::YEAR;
 }

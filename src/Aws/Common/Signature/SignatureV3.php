@@ -27,73 +27,73 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
  */
 class SignatureV3 extends AbstractSignature
 {
-    /**
-     * Get an array of headers to be signed
-     *
-     * @param RequestInterface $request Request to get headers from
-     *
-     * @return array
-     */
-    protected function getHeadersToSign(RequestInterface $request)
-    {
-        $headers = array();
-        foreach ($request->getHeaders() as $k => $v) {
-            $k = strtolower($k);
-            if ($k == 'host' || strpos($k, 'x-amz-') !== false) {
-                $headers[$k] = implode(',', $v);
-            }
-        }
+		/**
+		 * Get an array of headers to be signed
+		 *
+		 * @param RequestInterface $request Request to get headers from
+		 *
+		 * @return array
+		 */
+		protected function getHeadersToSign(RequestInterface $request)
+		{
+				$headers = array();
+				foreach ($request->getHeaders() as $k => $v) {
+						$k = strtolower($k);
+						if ($k == 'host' || strpos($k, 'x-amz-') !== false) {
+								$headers[$k] = implode(',', $v);
+						}
+				}
 
-        // Sort the headers alphabetically and add them to the string to sign
-        ksort($headers);
+				// Sort the headers alphabetically and add them to the string to sign
+				ksort($headers);
 
-        return $headers;
-    }
+				return $headers;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
-        // Refresh the cached timestamp
-        $this->getTimestamp(true);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
+		{
+				// Refresh the cached timestamp
+				$this->getTimestamp(true);
 
-        // Add default headers
-        $request->setHeader('x-amz-date', $this->getDateTime(DateFormat::RFC1123));
+				// Add default headers
+				$request->setHeader('x-amz-date', $this->getDateTime(DateFormat::RFC1123));
 
-        // Add the security token if one is present
-        if ($credentials->getSecurityToken()) {
-            $request->setHeader('x-amz-security-token', $credentials->getSecurityToken());
-        }
+				// Add the security token if one is present
+				if ($credentials->getSecurityToken()) {
+						$request->setHeader('x-amz-security-token', $credentials->getSecurityToken());
+				}
 
-        // Begin building the string to sign
-        $sign = $request->getMethod() . "\n"
-            . $request->getUrl(true)->normalizePath()->getPath() . "\n"
-            . $this->getCanonicalizedQueryString($request) . "\n";
+				// Begin building the string to sign
+				$sign = $request->getMethod() . "\n"
+						. $request->getUrl(true)->normalizePath()->getPath() . "\n"
+						. $this->getCanonicalizedQueryString($request) . "\n";
 
-        // Get all of the headers that must be signed (host and x-amz-*)
-        $headers = $this->getHeadersToSign($request);
-        foreach ($headers as $key => $value) {
-            $sign .= $key . ':' . $value . "\n";
-        }
+				// Get all of the headers that must be signed (host and x-amz-*)
+				$headers = $this->getHeadersToSign($request);
+				foreach ($headers as $key => $value) {
+						$sign .= $key . ':' . $value . "\n";
+				}
 
-        $sign .= "\n";
+				$sign .= "\n";
 
-        // Add the body of the request if a body is present
-        if ($request instanceof EntityEnclosingRequestInterface) {
-            $sign .= (string) $request->getBody();
-        }
+				// Add the body of the request if a body is present
+				if ($request instanceof EntityEnclosingRequestInterface) {
+						$sign .= (string) $request->getBody();
+				}
 
-        // Add the string to sign to the request for debugging purposes
-        $request->getParams()->set('aws.string_to_sign', $sign);
+				// Add the string to sign to the request for debugging purposes
+				$request->getParams()->set('aws.string_to_sign', $sign);
 
-        $signature = base64_encode(hash_hmac('sha256',
-            hash('sha256', $sign, true), $credentials->getSecretKey(), true));
+				$signature = base64_encode(hash_hmac('sha256',
+						hash('sha256', $sign, true), $credentials->getSecretKey(), true));
 
-        // Add the authorization header to the request
-        $request->setHeader('x-amzn-authorization', sprintf('AWS3 AWSAccessKeyId=%s,Algorithm=HmacSHA256,SignedHeaders=%s,Signature=%s',
-            $credentials->getAccessKeyId(),
-            implode(';', array_keys($headers)),
-            $signature));
-    }
+				// Add the authorization header to the request
+				$request->setHeader('x-amzn-authorization', sprintf('AWS3 AWSAccessKeyId=%s,Algorithm=HmacSHA256,SignedHeaders=%s,Signature=%s',
+						$credentials->getAccessKeyId(),
+						implode(';', array_keys($headers)),
+						$signature));
+		}
 }

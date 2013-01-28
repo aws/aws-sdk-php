@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class GranteeType extends Enum
 {
-    const EMAIL = 'AmazonCustomerByEmail';
-    const GROUP = 'Group';
-    const USER  = 'CanonicalUser';
+		const EMAIL = 'AmazonCustomerByEmail';
+		const GROUP = 'Group';
+		const USER	= 'CanonicalUser';
 }

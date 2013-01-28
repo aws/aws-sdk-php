@@ -25,114 +25,114 @@ use Aws\Common\Exception\LogicException;
  */
 class UploadPartContext
 {
-    /**
-     * @var TreeHash Tree hash context of the data
-     */
-    protected $treeHash;
+		/**
+		 * @var TreeHash Tree hash context of the data
+		 */
+		protected $treeHash;
 
-    /**
-     * @var ChunkHash Chunk hash context of the data
-     */
-    protected $chunkHash;
+		/**
+		 * @var ChunkHash Chunk hash context of the data
+		 */
+		protected $chunkHash;
 
-    /**
-     * @var int The size (or content-length) in bytes of the upload body
-     */
-    protected $size;
+		/**
+		 * @var int The size (or content-length) in bytes of the upload body
+		 */
+		protected $size;
 
-    /**
-     * @var int The starting offset byte of the upload body
-     */
-    protected $offset;
+		/**
+		 * @var int The starting offset byte of the upload body
+		 */
+		protected $offset;
 
-    /**
-     * @var int The maximum size of the upload in bytes
-     */
-    protected $maxSize;
+		/**
+		 * @var int The maximum size of the upload in bytes
+		 */
+		protected $maxSize;
 
-    /**
-     * @var UploadPart The calculated upload part
-     */
-    protected $uploadPart;
+		/**
+		 * @var UploadPart The calculated upload part
+		 */
+		protected $uploadPart;
 
-    /**
-     * @param int $maxSize Maximum allowed size of this upload context
-     * @param int $offset  The starting offset byte of the upload body
-     */
-    public function __construct($maxSize, $offset = 0)
-    {
-        $this->maxSize = $maxSize;
-        $this->offset  = $offset;
-        $this->size    = 0;
+		/**
+		 * @param int $maxSize Maximum allowed size of this upload context
+		 * @param int $offset	The starting offset byte of the upload body
+		 */
+		public function __construct($maxSize, $offset = 0)
+		{
+				$this->maxSize = $maxSize;
+				$this->offset	= $offset;
+				$this->size		= 0;
 
-        $this->treeHash  = new TreeHash();
-        $this->chunkHash = new ChunkHash();
-    }
+				$this->treeHash	= new TreeHash();
+				$this->chunkHash = new ChunkHash();
+		}
 
-    /**
-     * Adds data to the context. This adds data to both the tree and chunk hashes and increases the size
-     *
-     * @param string $data Data to add to the context
-     *
-     * @return self
-     * @throws LogicException when the context is already finalized
-     */
-    public function addData($data)
-    {
-        $size = strlen($data);
+		/**
+		 * Adds data to the context. This adds data to both the tree and chunk hashes and increases the size
+		 *
+		 * @param string $data Data to add to the context
+		 *
+		 * @return self
+		 * @throws LogicException when the context is already finalized
+		 */
+		public function addData($data)
+		{
+				$size = strlen($data);
 
-        if ($this->size + $size > $this->maxSize) {
-            throw new LogicException('You cannot add data that will exceed the maximum size of this upload.');
-        }
+				if ($this->size + $size > $this->maxSize) {
+						throw new LogicException('You cannot add data that will exceed the maximum size of this upload.');
+				}
 
-        try {
-            $this->treeHash->addData($data);
-            $this->chunkHash->addData($data);
-            $this->size += $size;
-        } catch (LogicException $e) {
-            throw new LogicException('You cannot add data to a finalized UploadPartContext.', 0, $e);
-        }
+				try {
+						$this->treeHash->addData($data);
+						$this->chunkHash->addData($data);
+						$this->size += $size;
+				} catch (LogicException $e) {
+						throw new LogicException('You cannot add data to a finalized UploadPartContext.', 0, $e);
+				}
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Finalizes the context by calculating the final hashes and generates an upload part object
-     *
-     * @return UploadPart
-     */
-    public function generatePart()
-    {
-        if (!$this->uploadPart) {
-            $this->uploadPart = UploadPart::fromArray(array(
-                'partNumber'  => (int) ($this->offset / $this->maxSize + 1),
-                'checksum'    => $this->treeHash->getHash(),
-                'contentHash' => $this->chunkHash->getHash(),
-                'size'        => $this->size,
-                'offset'      => $this->offset
-            ));
-        }
+		/**
+		 * Finalizes the context by calculating the final hashes and generates an upload part object
+		 *
+		 * @return UploadPart
+		 */
+		public function generatePart()
+		{
+				if (!$this->uploadPart) {
+						$this->uploadPart = UploadPart::fromArray(array(
+								'partNumber'	=> (int) ($this->offset / $this->maxSize + 1),
+								'checksum'		=> $this->treeHash->getHash(),
+								'contentHash' => $this->chunkHash->getHash(),
+								'size'				=> $this->size,
+								'offset'			=> $this->offset
+						));
+				}
 
-        return $this->uploadPart;
-    }
+				return $this->uploadPart;
+		}
 
-    /**
-     * Checks if the size of the context is the same as the maximum size
-     *
-     * @return bool
-     */
-    public function isFull()
-    {
-        return $this->size === $this->maxSize;
-    }
+		/**
+		 * Checks if the size of the context is the same as the maximum size
+		 *
+		 * @return bool
+		 */
+		public function isFull()
+		{
+				return $this->size === $this->maxSize;
+		}
 
-    /**
-     * Checks if the size of the context is 0
-     *
-     * @return bool
-     */
-    public function isEmpty()
-    {
-        return $this->size === 0;
-    }
+		/**
+		 * Checks if the size of the context is 0
+		 *
+		 * @return bool
+		 */
+		public function isEmpty()
+		{
+				return $this->size === 0;
+		}
 }

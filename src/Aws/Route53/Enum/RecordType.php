@@ -23,14 +23,14 @@ use Aws\Common\Enum;
  */
 class RecordType extends Enum
 {
-    const SOA = 'SOA';
-    const A = 'A';
-    const TXT = 'TXT';
-    const NS = 'NS';
-    const CNAME = 'CNAME';
-    const MX = 'MX';
-    const PTR = 'PTR';
-    const SRV = 'SRV';
-    const SPF = 'SPF';
-    const AAAA = 'AAAA';
+		const SOA = 'SOA';
+		const A = 'A';
+		const TXT = 'TXT';
+		const NS = 'NS';
+		const CNAME = 'CNAME';
+		const MX = 'MX';
+		const PTR = 'PTR';
+		const SRV = 'SRV';
+		const SPF = 'SPF';
+		const AAAA = 'AAAA';
 }

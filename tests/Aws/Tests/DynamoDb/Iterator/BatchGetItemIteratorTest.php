@@ -24,23 +24,23 @@ use Guzzle\Service\Resource\Model;
  */
 class BatchGetItemIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testConcreteResultHandlingWorks()
-    {
-        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
-        $iterator = new BatchGetItemIterator($command);
-        $model = new Model(array(
-            'Responses' => array(
-                'Table1' => array(
-                    'Items' => array(1, 2, 3)
-                )
-            )
-        ));
+		public function testConcreteResultHandlingWorks()
+		{
+				$command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+				$iterator = new BatchGetItemIterator($command);
+				$model = new Model(array(
+						'Responses' => array(
+								'Table1' => array(
+										'Items' => array(1, 2, 3)
+								)
+						)
+				));
 
-        $class = new \ReflectionObject($iterator);
-        $method = $class->getMethod('handleResults');
-        $method->setAccessible(true);
-        $items = $method->invoke($iterator, $model);
+				$class = new \ReflectionObject($iterator);
+				$method = $class->getMethod('handleResults');
+				$method->setAccessible(true);
+				$items = $method->invoke($iterator, $model);
 
-        $this->assertCount(3, $items);
-    }
+				$this->assertCount(3, $items);
+		}
 }

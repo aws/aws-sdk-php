@@ -37,55 +37,55 @@ use Guzzle\Common\Collection;
  */
 class CredentialsOptionResolver extends AbstractMissingFunctionOptionResolver
 {
-    /**
-     * @param string $missingFunction Provide a callable function to call if the 'credentials' parameter is not set.
-     * @param string $mustImplement   Provide the name of a class or interface that the 'signature' option must extend
-     */
-    public function __construct(
-        $missingFunction = null,
-        $mustImplement = 'Aws\\Common\\Credentials\\CredentialsInterface'
-    ) {
-        if ($missingFunction) {
-            $this->setMissingFunction($missingFunction);
-        } else {
-            $this->setMissingFunction(array($this, 'defaultMissingFunction'));
-        }
-        $this->setMustImplement($mustImplement);
-    }
+		/**
+		 * @param string $missingFunction Provide a callable function to call if the 'credentials' parameter is not set.
+		 * @param string $mustImplement	 Provide the name of a class or interface that the 'signature' option must extend
+		 */
+		public function __construct(
+				$missingFunction = null,
+				$mustImplement = 'Aws\\Common\\Credentials\\CredentialsInterface'
+		) {
+				if ($missingFunction) {
+						$this->setMissingFunction($missingFunction);
+				} else {
+						$this->setMissingFunction(array($this, 'defaultMissingFunction'));
+				}
+				$this->setMustImplement($mustImplement);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function resolve(Collection $config, AwsClientInterface $client = null)
-    {
-        $credentials = $config->get(Options::CREDENTIALS);
+		/**
+		 * {@inheritdoc}
+		 */
+		public function resolve(Collection $config, AwsClientInterface $client = null)
+		{
+				$credentials = $config->get(Options::CREDENTIALS);
 
-        if (!$credentials && $this->missingFunction) {
-            $credentials = call_user_func($this->missingFunction, $config);
-            $config->set(Options::CREDENTIALS, $credentials);
-        }
+				if (!$credentials && $this->missingFunction) {
+						$credentials = call_user_func($this->missingFunction, $config);
+						$config->set(Options::CREDENTIALS, $credentials);
+				}
 
-        // Ensure that the credentials are valid
-        if ($credentials && !($credentials instanceof $this->mustImplement)) {
-            throw new InvalidArgumentException('The credentials you provided do not implement ' . $this->mustImplement);
-        }
-    }
+				// Ensure that the credentials are valid
+				if ($credentials && !($credentials instanceof $this->mustImplement)) {
+						throw new InvalidArgumentException('The credentials you provided do not implement ' . $this->mustImplement);
+				}
+		}
 
-    /**
-     * Default method to execute when credentials are not specified
-     *
-     * @param Collection $config Config options
-     *
-     * @return CredentialsInterface
-     */
-    protected function defaultMissingFunction(Collection $config)
-    {
-        if ($config->get(Options::KEY) && $config->get(Options::SECRET)) {
-            // Credentials were not provided, so create them using keys
-            return Credentials::factory($config->getAll());
-        }
+		/**
+		 * Default method to execute when credentials are not specified
+		 *
+		 * @param Collection $config Config options
+		 *
+		 * @return CredentialsInterface
+		 */
+		protected function defaultMissingFunction(Collection $config)
+		{
+				if ($config->get(Options::KEY) && $config->get(Options::SECRET)) {
+						// Credentials were not provided, so create them using keys
+						return Credentials::factory($config->getAll());
+				}
 
-        // Attempt to get credentials from the EC2 instance profile server
-        return new RefreshableInstanceProfileCredentials(new Credentials('', '', '', 1));
-    }
+				// Attempt to get credentials from the EC2 instance profile server
+				return new RefreshableInstanceProfileCredentials(new Credentials('', '', '', 1));
+		}
 }

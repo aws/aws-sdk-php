@@ -21,15 +21,15 @@ namespace Aws\Common\Exception\Parser;
  */
 class JsonQueryExceptionParser extends AbstractJsonExceptionParser
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, array $json)
-    {
-        $parts = explode('#', $json['__type']);
-        $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
-        $data['message'] = isset($json['message']) ? $json['message'] : null;
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function doParse(array $data, array $json)
+		{
+				$parts = explode('#', $json['__type']);
+				$data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
+				$data['message'] = isset($json['message']) ? $json['message'] : null;
 
-        return $data;
-    }
+				return $data;
+		}
 }

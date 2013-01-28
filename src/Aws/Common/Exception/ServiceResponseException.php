@@ -23,128 +23,128 @@ use Guzzle\Http\Message\Response;
  */
 class ServiceResponseException extends RuntimeException
 {
-    /**
-     * @var Response Response
-     */
-    protected $response;
+		/**
+		 * @var Response Response
+		 */
+		protected $response;
 
-    /**
-     * @var string Request ID
-     */
-    protected $requestId;
+		/**
+		 * @var string Request ID
+		 */
+		protected $requestId;
 
-    /**
-     * @var string Exception type (client / server)
-     */
-    protected $exceptionType;
+		/**
+		 * @var string Exception type (client / server)
+		 */
+		protected $exceptionType;
 
-    /**
-     * @var string Exception code
-     */
-    protected $exceptionCode;
+		/**
+		 * @var string Exception code
+		 */
+		protected $exceptionCode;
 
-    /**
-     * Set the exception code
-     *
-     * @param string $code Exception code
-     */
-    public function setExceptionCode($code)
-    {
-        $this->exceptionCode = $code;
-    }
+		/**
+		 * Set the exception code
+		 *
+		 * @param string $code Exception code
+		 */
+		public function setExceptionCode($code)
+		{
+				$this->exceptionCode = $code;
+		}
 
-    /**
-     * Get the exception code
-     *
-     * @return string|null
-     */
-    public function getExceptionCode()
-    {
-        return $this->exceptionCode;
-    }
+		/**
+		 * Get the exception code
+		 *
+		 * @return string|null
+		 */
+		public function getExceptionCode()
+		{
+				return $this->exceptionCode;
+		}
 
-    /**
-     * Set the exception type
-     *
-     * @param string $type Exception type
-     */
-    public function setExceptionType($type)
-    {
-        $this->exceptionType = $type;
-    }
+		/**
+		 * Set the exception type
+		 *
+		 * @param string $type Exception type
+		 */
+		public function setExceptionType($type)
+		{
+				$this->exceptionType = $type;
+		}
 
-    /**
-     * Get the exception type (one of client or server)
-     *
-     * @return string|null
-     */
-    public function getExceptionType()
-    {
-        return $this->exceptionType;
-    }
+		/**
+		 * Get the exception type (one of client or server)
+		 *
+		 * @return string|null
+		 */
+		public function getExceptionType()
+		{
+				return $this->exceptionType;
+		}
 
-    /**
-     * Set the request ID
-     *
-     * @param string $id Request ID
-     */
-    public function setRequestId($id)
-    {
-        $this->requestId = $id;
-    }
+		/**
+		 * Set the request ID
+		 *
+		 * @param string $id Request ID
+		 */
+		public function setRequestId($id)
+		{
+				$this->requestId = $id;
+		}
 
-    /**
-     * Get the Request ID
-     *
-     * @return string|null
-     */
-    public function getRequestId()
-    {
-        return $this->requestId;
-    }
+		/**
+		 * Get the Request ID
+		 *
+		 * @return string|null
+		 */
+		public function getRequestId()
+		{
+				return $this->requestId;
+		}
 
-    /**
-     * Set the associated response
-     *
-     * @param Response $response Response
-     */
-    public function setResponse(Response $response)
-    {
-        $this->response = $response;
-    }
+		/**
+		 * Set the associated response
+		 *
+		 * @param Response $response Response
+		 */
+		public function setResponse(Response $response)
+		{
+				$this->response = $response;
+		}
 
-    /**
-     * Get the associated response object
-     *
-     * @return Response|null
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
+		/**
+		 * Get the associated response object
+		 *
+		 * @return Response|null
+		 */
+		public function getResponse()
+		{
+				return $this->response;
+		}
 
-    /**
-     * Get the status code of the response
-     *
-     * @return int|null
-     */
-    public function getStatusCode()
-    {
-        return $this->response ? $this->response->getStatusCode() : null;
-    }
+		/**
+		 * Get the status code of the response
+		 *
+		 * @return int|null
+		 */
+		public function getStatusCode()
+		{
+				return $this->response ? $this->response->getStatusCode() : null;
+		}
 
-    /**
-     * Cast to a string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return get_class($this) . ': '
-            . 'AWS Error Code: ' . $this->getExceptionCode() . ', '
-            . 'Status Code: ' . $this->getStatusCode() . ', '
-            . 'AWS Request ID: ' . $this->getRequestId() . ', '
-            . 'AWS Error Type: ' . $this->getExceptionType() . ', '
-            . 'AWS Error Message: ' . $this->getMessage();
-    }
+		/**
+		 * Cast to a string
+		 *
+		 * @return string
+		 */
+		public function __toString()
+		{
+				return get_class($this) . ': '
+						. 'AWS Error Code: ' . $this->getExceptionCode() . ', '
+						. 'Status Code: ' . $this->getStatusCode() . ', '
+						. 'AWS Request ID: ' . $this->getRequestId() . ', '
+						. 'AWS Error Type: ' . $this->getExceptionType() . ', '
+						. 'AWS Error Message: ' . $this->getMessage();
+		}
 }

@@ -23,6 +23,6 @@ use Aws\Common\Enum;
  */
 class Action extends Enum
 {
-    const CREATE = 'CREATE';
-    const DELETE = 'DELETE';
+		const CREATE = 'CREATE';
+		const DELETE = 'DELETE';
 }

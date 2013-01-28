@@ -21,44 +21,44 @@ namespace Aws\Common\Credentials;
  */
 abstract class AbstractRefreshableCredentials extends AbstractCredentialsDecorator
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getAccessKeyId()
-    {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getAccessKeyId()
+		{
+				if ($this->credentials->isExpired()) {
+						$this->refresh();
+				}
 
-        return $this->credentials->getAccessKeyId();
-    }
+				return $this->credentials->getAccessKeyId();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSecretKey()
-    {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getSecretKey()
+		{
+				if ($this->credentials->isExpired()) {
+						$this->refresh();
+				}
 
-        return $this->credentials->getSecretKey();
-    }
+				return $this->credentials->getSecretKey();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSecurityToken()
-    {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getSecurityToken()
+		{
+				if ($this->credentials->isExpired()) {
+						$this->refresh();
+				}
 
-        return $this->credentials->getSecurityToken();
-    }
+				return $this->credentials->getSecurityToken();
+		}
 
-    /**
-     * Attempt to get new credentials
-     */
-    abstract protected function refresh();
+		/**
+		 * Attempt to get new credentials
+		 */
+		abstract protected function refresh();
 }

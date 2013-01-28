@@ -23,13 +23,13 @@ use Aws\DynamoDb\Model\BatchRequest\AbstractWriteRequest;
  */
 class AbstractWriteRequestTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testCanGetTable()
-    {
-        $writeRequest = $this->getMockForAbstractClass('Aws\DynamoDb\Model\BatchRequest\AbstractWriteRequest');
-        $reflected = new \ReflectionProperty('Aws\DynamoDb\Model\BatchRequest\AbstractWriteRequest', 'tableName');
-        $reflected->setAccessible(true);
-        $reflected->setValue($writeRequest, 'table');
+		public function testCanGetTable()
+		{
+				$writeRequest = $this->getMockForAbstractClass('Aws\DynamoDb\Model\BatchRequest\AbstractWriteRequest');
+				$reflected = new \ReflectionProperty('Aws\DynamoDb\Model\BatchRequest\AbstractWriteRequest', 'tableName');
+				$reflected->setAccessible(true);
+				$reflected->setValue($writeRequest, 'table');
 
-        $this->assertSame('table', $writeRequest->getTableName());
-    }
+				$this->assertSame('table', $writeRequest->getTableName());
+		}
 }

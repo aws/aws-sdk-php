@@ -24,20 +24,20 @@ use Guzzle\Service\Resource\Model;
  */
 class BatchGetItemIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function handleResults(Model $result)
-    {
-        $items = array();
-        if ($responses = $result->get('Responses')) {
-            foreach ($responses as $table) {
-                foreach ($table['Items'] as $item) {
-                    $items[] = $item;
-                }
-            }
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function handleResults(Model $result)
+		{
+				$items = array();
+				if ($responses = $result->get('Responses')) {
+						foreach ($responses as $table) {
+								foreach ($table['Items'] as $item) {
+										$items[] = $item;
+								}
+						}
+				}
 
-        return $items;
-    }
+				return $items;
+		}
 }

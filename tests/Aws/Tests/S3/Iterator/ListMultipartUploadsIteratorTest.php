@@ -24,23 +24,23 @@ use Guzzle\Service\Resource\Model;
  */
 class ListMultipartUploadsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testResultHandlingWorks()
-    {
-        // Prepare an iterator that will execute all LOC in handleResults
-        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
-        $iterator = new ListMultipartUploadsIterator($command, array(
-            'return_prefixes' => true
-        ));
-        $model = new Model(array(
-            'Uploads'        => array(1, 2),
-            'CommonPrefixes' => array(3, 4)
-        ));
+		public function testResultHandlingWorks()
+		{
+				// Prepare an iterator that will execute all LOC in handleResults
+				$command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+				$iterator = new ListMultipartUploadsIterator($command, array(
+						'return_prefixes' => true
+				));
+				$model = new Model(array(
+						'Uploads'				=> array(1, 2),
+						'CommonPrefixes' => array(3, 4)
+				));
 
-        $class = new \ReflectionObject($iterator);
-        $method = $class->getMethod('handleResults');
-        $method->setAccessible(true);
-        $items = $method->invoke($iterator, $model);
+				$class = new \ReflectionObject($iterator);
+				$method = $class->getMethod('handleResults');
+				$method->setAccessible(true);
+				$items = $method->invoke($iterator, $model);
 
-        $this->assertCount(4, $items);
-    }
+				$this->assertCount(4, $items);
+		}
 }

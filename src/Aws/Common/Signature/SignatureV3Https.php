@@ -26,30 +26,30 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class SignatureV3Https extends AbstractSignature
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
-        // Add a date header if one is not set
-        if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123));
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
+		{
+				// Add a date header if one is not set
+				if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
+						$request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123));
+				}
 
-        // Add the security token if one is present
-        if ($credentials->getSecurityToken()) {
-            $request->setHeader('x-amz-security-token', $credentials->getSecurityToken());
-        }
+				// Add the security token if one is present
+				if ($credentials->getSecurityToken()) {
+						$request->setHeader('x-amz-security-token', $credentials->getSecurityToken());
+				}
 
-        // Determine the string to sign
-        $stringToSign = $request->getHeader('Date', true) ?: $request->getHeader('x-amz-date', true);
-        $request->getParams()->set('aws.string_to_sign', $stringToSign);
+				// Determine the string to sign
+				$stringToSign = $request->getHeader('Date', true) ?: $request->getHeader('x-amz-date', true);
+				$request->getParams()->set('aws.string_to_sign', $stringToSign);
 
-        // Calculate the signature
-        $signature = base64_encode(hash_hmac('sha256', $stringToSign, $credentials->getSecretKey(), true));
+				// Calculate the signature
+				$signature = base64_encode(hash_hmac('sha256', $stringToSign, $credentials->getSecretKey(), true));
 
-        // Add the authorization header to the request
-        $headerFormat = 'AWS3-HTTPS AWSAccessKeyId=%s,Algorithm=HmacSHA256,Signature=%s';
-        $request->setHeader('X-Amzn-Authorization', sprintf($headerFormat, $credentials->getAccessKeyId(), $signature));
-    }
+				// Add the authorization header to the request
+				$headerFormat = 'AWS3-HTTPS AWSAccessKeyId=%s,Algorithm=HmacSHA256,Signature=%s';
+				$request->setHeader('X-Amzn-Authorization', sprintf($headerFormat, $credentials->getAccessKeyId(), $signature));
+		}
 }

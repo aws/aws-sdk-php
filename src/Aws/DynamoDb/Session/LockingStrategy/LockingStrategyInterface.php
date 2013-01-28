@@ -21,32 +21,32 @@ namespace Aws\DynamoDb\Session\LockingStrategy;
  */
 interface LockingStrategyInterface
 {
-    /**
-     * Reads the session data from Dynamo DB
-     *
-     * @param string $id The session ID
-     *
-     * @return array
-     */
-    public function doRead($id);
+		/**
+		 * Reads the session data from Dynamo DB
+		 *
+		 * @param string $id The session ID
+		 *
+		 * @return array
+		 */
+		public function doRead($id);
 
-    /**
-     * Writes the session data to Dynamo DB
-     *
-     * @param string  $id            The session ID
-     * @param string  $data          The serialized session data
-     * @param bool    $isDataChanged Whether or not the data has changed
-     *
-     * @return bool
-     */
-    public function doWrite($id, $data, $isDataChanged);
+		/**
+		 * Writes the session data to Dynamo DB
+		 *
+		 * @param string	$id						The session ID
+		 * @param string	$data					The serialized session data
+		 * @param bool		$isDataChanged Whether or not the data has changed
+		 *
+		 * @return bool
+		 */
+		public function doWrite($id, $data, $isDataChanged);
 
-    /**
-     * Deletes a session record from Dynamo DB
-     *
-     * @param string $id The session ID
-     *
-     * @return bool
-     */
-    public function doDestroy($id);
+		/**
+		 * Deletes a session record from Dynamo DB
+		 *
+		 * @param string $id The session ID
+		 *
+		 * @return bool
+		 */
+		public function doDestroy($id);
 }

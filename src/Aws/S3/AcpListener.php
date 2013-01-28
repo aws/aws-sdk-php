@@ -26,50 +26,50 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AcpListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
-    {
-        return array('command.before_prepare' => array('onCommandBeforePrepare', -255));
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function getSubscribedEvents()
+		{
+				return array('command.before_prepare' => array('onCommandBeforePrepare', -255));
+		}
 
-    /**
-     * An event handler for constructing ACP definitions.
-     *
-     * @param  Event  $event The event to respond to.
-     *
-     * @throws InvalidArgumentException
-     */
-    public function onCommandBeforePrepare(Event $event)
-    {
-        /** @var $command \Guzzle\Service\Command\AbstractCommand */
-        $command = $event['command'];
-        $operation = $command->getOperation();
-        if ($operation->hasParam('ACP') && $command->hasKey('ACP')) {
-            if ($acp = $command->get('ACP')) {
-                // Ensure that the correct object was passed
-                if (!($acp instanceof Acp)) {
-                    throw new InvalidArgumentException('ACP must be an instance of Aws\S3\Model\Acp');
-                }
+		/**
+		 * An event handler for constructing ACP definitions.
+		 *
+		 * @param	Event	$event The event to respond to.
+		 *
+		 * @throws InvalidArgumentException
+		 */
+		public function onCommandBeforePrepare(Event $event)
+		{
+				/** @var $command \Guzzle\Service\Command\AbstractCommand */
+				$command = $event['command'];
+				$operation = $command->getOperation();
+				if ($operation->hasParam('ACP') && $command->hasKey('ACP')) {
+						if ($acp = $command->get('ACP')) {
+								// Ensure that the correct object was passed
+								if (!($acp instanceof Acp)) {
+										throw new InvalidArgumentException('ACP must be an instance of Aws\S3\Model\Acp');
+								}
 
-                // Check if the user specified both an ACP and Grants
-                if ($command->hasKey('Grants')) {
-                    throw new InvalidArgumentException(
-                        'Use either the ACP parameter or the Grants parameter. Do not use both.'
-                    );
-                }
+								// Check if the user specified both an ACP and Grants
+								if ($command->hasKey('Grants')) {
+										throw new InvalidArgumentException(
+												'Use either the ACP parameter or the Grants parameter. Do not use both.'
+										);
+								}
 
-                // Add the correct headers/body based parameters to the command
-                if ($operation->hasParam('Grants')) {
-                    $command->merge($acp->toArray());
-                } else {
-                    $acp->updateCommand($command);
-                }
-            }
+								// Add the correct headers/body based parameters to the command
+								if ($operation->hasParam('Grants')) {
+										$command->merge($acp->toArray());
+								} else {
+										$acp->updateCommand($command);
+								}
+						}
 
-            // Remove the ACP parameter
-            $command->remove('ACP');
-        }
-    }
+						// Remove the ACP parameter
+						$command->remove('ACP');
+				}
+		}
 }

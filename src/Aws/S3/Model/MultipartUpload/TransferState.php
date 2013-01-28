@@ -25,17 +25,17 @@ use Aws\Common\Model\MultipartUpload\UploadIdInterface;
  */
 class TransferState extends AbstractTransferState
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
-    {
-        $transferState = new self($uploadId);
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
+		{
+				$transferState = new self($uploadId);
 
-        foreach ($client->getIterator('ListParts', $uploadId->toParams()) as $part) {
-            $transferState->addPart(UploadPart::fromArray($part));
-        }
+				foreach ($client->getIterator('ListParts', $uploadId->toParams()) as $part) {
+						$transferState->addPart(UploadPart::fromArray($part));
+				}
 
-        return $transferState;
-    }
+				return $transferState;
+		}
 }

@@ -21,28 +21,28 @@ namespace Aws\DynamoDb\Model\BatchRequest;
  */
 class UnprocessedRequest extends AbstractWriteRequest
 {
-    /**
-     * @var array The raw data from a batch write request's response
-     */
-    protected $data;
+		/**
+		 * @var array The raw data from a batch write request's response
+		 */
+		protected $data;
 
-    /**
-     * @param array  $data
-     * @param string $tableName The name of the DynamoDB table
-     */
-    public function __construct(array $data, $tableName)
-    {
-        $this->data      = $data;
-        $this->tableName = $tableName;
-    }
+		/**
+		 * @param array	$data
+		 * @param string $tableName The name of the DynamoDB table
+		 */
+		public function __construct(array $data, $tableName)
+		{
+				$this->data			= $data;
+				$this->tableName = $tableName;
+		}
 
-    /**
-     * The parameter form of the request
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->data;
-    }
+		/**
+		 * The parameter form of the request
+		 *
+		 * @return array
+		 */
+		public function toArray()
+		{
+				return $this->data;
+		}
 }

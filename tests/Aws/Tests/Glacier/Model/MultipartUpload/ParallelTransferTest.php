@@ -24,10 +24,10 @@ use Guzzle\Http\EntityBodyInterface;
 
 // Special test class for cheating the partSize :-(
 class SpecialUploadPartGenerator extends UploadPartGenerator {
-    protected function generateUploadParts(EntityBodyInterface $body) {
-        $this->partSize = 1024;
-        parent::generateUploadParts($body);
-    }
+		protected function generateUploadParts(EntityBodyInterface $body) {
+				$this->partSize = 1024;
+				parent::generateUploadParts($body);
+		}
 }
 
 /**
@@ -35,93 +35,93 @@ class SpecialUploadPartGenerator extends UploadPartGenerator {
  */
 class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    protected function getMockUploadId()
-    {
-        $uploadId = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadId')
-            ->setMethods(array('toParams'))
-            ->getMock();
-        $uploadId->expects($this->any())
-            ->method('toParams')
-            ->will($this->returnValue(array(
-                'accountId' => '-',
-                'vaultName' => 'foo',
-                'uploadId'  => 'bar'
-            )
-        ));
+		protected function getMockUploadId()
+		{
+				$uploadId = $this->getMockBuilder('Aws\Glacier\Model\MultipartUpload\UploadId')
+						->setMethods(array('toParams'))
+						->getMock();
+				$uploadId->expects($this->any())
+						->method('toParams')
+						->will($this->returnValue(array(
+								'accountId' => '-',
+								'vaultName' => 'foo',
+								'uploadId'	=> 'bar'
+						)
+				));
 
-        return $uploadId;
-    }
+				return $uploadId;
+		}
 
-    protected function prepComponents()
-    {
-        $uploadId = $this->getMockUploadId();
-        $body = EntityBody::factory(fopen(__FILE__, 'r'));
+		protected function prepComponents()
+		{
+				$uploadId = $this->getMockUploadId();
+				$body = EntityBody::factory(fopen(__FILE__, 'r'));
 
-        $generator = SpecialUploadPartGenerator::factory($body, 1024 * 1024);
-        $client = $this->getServiceBuilder()->get('glacier', true);
-        $state = new TransferState($uploadId);
-        $state->setPartGenerator($generator);
-        $transfer = new ParallelTransfer($client, $state, $body, array('concurrency' => 2));
+				$generator = SpecialUploadPartGenerator::factory($body, 1024 * 1024);
+				$client = $this->getServiceBuilder()->get('glacier', true);
+				$state = new TransferState($uploadId);
+				$state->setPartGenerator($generator);
+				$transfer = new ParallelTransfer($client, $state, $body, array('concurrency' => 2));
 
-        return array($transfer, $client, $state);
-    }
+				return array($transfer, $client, $state);
+		}
 
-    public function testSuccessfulTransfer()
-    {
-        list($transfer, $client) = $this->prepComponents();
+		public function testSuccessfulTransfer()
+		{
+				list($transfer, $client) = $this->prepComponents();
 
-        $mocks = array();
-        for ($i = 0; $i < intval(ceil(filesize(__FILE__) / 1024)); $i++) {
-            $mocks[] = 'glacier/upload_part';
-        }
-        $mocks[] = 'glacier/complete_multipart_upload';
-        $mock = $this->setMockResponse($client, $mocks);
+				$mocks = array();
+				for ($i = 0; $i < intval(ceil(filesize(__FILE__) / 1024)); $i++) {
+						$mocks[] = 'glacier/upload_part';
+				}
+				$mocks[] = 'glacier/complete_multipart_upload';
+				$mock = $this->setMockResponse($client, $mocks);
 
-        $result = $transfer->upload();
+				$result = $transfer->upload();
 
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals($i + 1, count($requests));
-        for ($j = 0; $j < $i; $j++) {
-            $this->assertEquals('PUT', $requests[$j]->getMethod());
-        }
-        $this->assertEquals('PUT', $requests[4]->getMethod());
-        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
-    }
+				$requests = $mock->getReceivedRequests();
+				$this->assertEquals($i + 1, count($requests));
+				for ($j = 0; $j < $i; $j++) {
+						$this->assertEquals('PUT', $requests[$j]->getMethod());
+				}
+				$this->assertEquals('PUT', $requests[4]->getMethod());
+				$this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+		}
 
-    public function testStoppingWillStopTransfer()
-    {
-        list($transfer) = $this->prepComponents();
+		public function testStoppingWillStopTransfer()
+		{
+				list($transfer) = $this->prepComponents();
 
-        $transfer->getEventDispatcher()->addListener(ParallelTransfer::BEFORE_PART_UPLOAD, function($event) {
-            $event['transfer']->stop();
-        });
+				$transfer->getEventDispatcher()->addListener(ParallelTransfer::BEFORE_PART_UPLOAD, function($event) {
+						$event['transfer']->stop();
+				});
 
-        $result = $transfer->upload();
+				$result = $transfer->upload();
 
-        $this->assertNull($result);
-    }
+				$this->assertNull($result);
+		}
 
-    /**
-     * @expectedException Aws\Common\Exception\RuntimeException
-     */
-    public function testEnsuresTheFileIsLocalAndSeekable()
-    {
-        $transfer = new ParallelTransfer(
-            $this->getServiceBuilder()->get('glacier'),
-            new TransferState($this->getMockUploadId()),
-            EntityBody::factory('foo')
-        );
-    }
+		/**
+		 * @expectedException Aws\Common\Exception\RuntimeException
+		 */
+		public function testEnsuresTheFileIsLocalAndSeekable()
+		{
+				$transfer = new ParallelTransfer(
+						$this->getServiceBuilder()->get('glacier'),
+						new TransferState($this->getMockUploadId()),
+						EntityBody::factory('foo')
+				);
+		}
 
-    /**
-     * @expectedException Aws\Common\Exception\RuntimeException
-     */
-    public function testEnsuresConcurrencyIsSpecified()
-    {
-        $transfer = new ParallelTransfer(
-            $this->getServiceBuilder()->get('glacier'),
-            new TransferState($this->getMockUploadId()),
-            EntityBody::factory(fopen(__FILE__, 'r'))
-        );
-    }
+		/**
+		 * @expectedException Aws\Common\Exception\RuntimeException
+		 */
+		public function testEnsuresConcurrencyIsSpecified()
+		{
+				$transfer = new ParallelTransfer(
+						$this->getServiceBuilder()->get('glacier'),
+						new TransferState($this->getMockUploadId()),
+						EntityBody::factory(fopen(__FILE__, 'r'))
+				);
+		}
 }

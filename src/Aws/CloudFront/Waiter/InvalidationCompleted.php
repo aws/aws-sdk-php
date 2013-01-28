@@ -25,36 +25,36 @@ use Aws\Common\Waiter\AbstractResourceWaiter;
  */
 class InvalidationCompleted extends AbstractResourceWaiter
 {
-    protected $interval = 20;
-    protected $maxAttempts = 30;
-    protected $maxFailures = 0;
+		protected $interval = 20;
+		protected $maxAttempts = 30;
+		protected $maxFailures = 0;
 
-    /**
-     * {@inheritdoc}
-     * @throws InvalidArgumentException if the resource ID format is invalid
-     */
-    public function setResourceId($resourceId)
-    {
-        if (!strpos($resourceId, '/')) {
-            throw new InvalidArgumentException('The resource ID must be in the form of DistributionId/InvalidationId');
-        }
+		/**
+		 * {@inheritdoc}
+		 * @throws InvalidArgumentException if the resource ID format is invalid
+		 */
+		public function setResourceId($resourceId)
+		{
+				if (!strpos($resourceId, '/')) {
+						throw new InvalidArgumentException('The resource ID must be in the form of DistributionId/InvalidationId');
+				}
 
-        return parent::setResourceId($resourceId);
-    }
+				return parent::setResourceId($resourceId);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function doWait()
-    {
-        list($distributionId, $invalidationId) = explode('/', $this->resourceId, 2);
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function doWait()
+		{
+				list($distributionId, $invalidationId) = explode('/', $this->resourceId, 2);
 
-        $result = $this->client->getCommand('GetInvalidation', array(
-            'DistributionId' => $distributionId,
-            'Id'             => $invalidationId,
-            Ua::OPTION       => Ua::WAITER
-        ))->execute();
+				$result = $this->client->getCommand('GetInvalidation', array(
+						'DistributionId' => $distributionId,
+						'Id'						 => $invalidationId,
+						Ua::OPTION			 => Ua::WAITER
+				))->execute();
 
-        return !strcasecmp($result['Status'], 'Completed');
-    }
+				return !strcasecmp($result['Status'], 'Completed');
+		}
 }

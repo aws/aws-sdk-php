@@ -24,105 +24,105 @@ use Aws\Common\Model\MultipartUpload\AbstractUploadId;
  */
 class AbstractTransferStateTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /**
-     * @var UploadId
-     */
-    protected $mockUploadId;
+		/**
+		 * @var UploadId
+		 */
+		protected $mockUploadId;
 
-    public function setUp()
-    {
-        $this->mockUploadId = $this->getMockBuilder('Aws\Common\Model\MultipartUpload\AbstractUploadId')
-            ->setMethods(array('toParams'))
-            ->getMock();
-        $this->mockUploadId->expects($this->any())
-            ->method('toParams')
-            ->will($this->returnValue(array(
-                'accountId' => '-',
-                'vaultName' => 'foo',
-                'uploadId'  => 'bar'
-            )
-        ));
-    }
+		public function setUp()
+		{
+				$this->mockUploadId = $this->getMockBuilder('Aws\Common\Model\MultipartUpload\AbstractUploadId')
+						->setMethods(array('toParams'))
+						->getMock();
+				$this->mockUploadId->expects($this->any())
+						->method('toParams')
+						->will($this->returnValue(array(
+								'accountId' => '-',
+								'vaultName' => 'foo',
+								'uploadId'	=> 'bar'
+						)
+				));
+		}
 
-    protected function getMockedPart($number)
-    {
-        $part = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractUploadPart');
-        $r = new \ReflectionClass('Aws\Common\Model\MultipartUpload\AbstractUploadPart');
-        $p = $r->getProperty('partNumber');
-        $p->setAccessible(true);
-        $p->setValue($part, $number);
+		protected function getMockedPart($number)
+		{
+				$part = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractUploadPart');
+				$r = new \ReflectionClass('Aws\Common\Model\MultipartUpload\AbstractUploadPart');
+				$p = $r->getProperty('partNumber');
+				$p->setAccessible(true);
+				$p->setValue($part, $number);
 
-        return $part;
-    }
+				return $part;
+		}
 
-    public function testConstructorInitializesState()
-    {
-        $state = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
-            array($this->mockUploadId)
-        );
+		public function testConstructorInitializesState()
+		{
+				$state = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
+						array($this->mockUploadId)
+				);
 
-        $this->assertSame($this->mockUploadId, $state->getUploadId());
-    }
+				$this->assertSame($this->mockUploadId, $state->getUploadId());
+		}
 
-    public function testHandlesParts()
-    {
-        $state = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
-            array($this->mockUploadId)
-        );
+		public function testHandlesParts()
+		{
+				$state = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
+						array($this->mockUploadId)
+				);
 
-        $part1 = $this->getMockedPart(1);
-        $part2 = $this->getMockedPart(2);
-        $this->assertSame($state, $state->addPart($part1));
-        $this->assertSame($state, $state->addPart($part2));
-        $this->assertTrue($state->hasPart(1));
-        $this->assertTrue($state->hasPart(2));
-        $this->assertSame($part1, $state->getPart(1));
-        $this->assertSame($part2, $state->getPart(2));
-        $this->assertEquals(2, count($state));
-        $this->assertEquals(array(1, 2), $state->getPartNumbers());
-        $this->assertInstanceOf('ArrayIterator', $state->getIterator());
-    }
+				$part1 = $this->getMockedPart(1);
+				$part2 = $this->getMockedPart(2);
+				$this->assertSame($state, $state->addPart($part1));
+				$this->assertSame($state, $state->addPart($part2));
+				$this->assertTrue($state->hasPart(1));
+				$this->assertTrue($state->hasPart(2));
+				$this->assertSame($part1, $state->getPart(1));
+				$this->assertSame($part2, $state->getPart(2));
+				$this->assertEquals(2, count($state));
+				$this->assertEquals(array(1, 2), $state->getPartNumbers());
+				$this->assertInstanceOf('ArrayIterator', $state->getIterator());
+		}
 
-    public function testCanMarkStateAsAborted()
-    {
-        $state = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
-            array($this->mockUploadId)
-        );
+		public function testCanMarkStateAsAborted()
+		{
+				$state = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
+						array($this->mockUploadId)
+				);
 
-        $this->assertSame($state, $state->setAborted(true));
-        $this->assertTrue($state->isAborted());
-        $this->assertSame($state, $state->setAborted(false));
-        $this->assertFalse($state->isAborted());
-    }
+				$this->assertSame($state, $state->setAborted(true));
+				$this->assertTrue($state->isAborted());
+				$this->assertSame($state, $state->setAborted(false));
+				$this->assertFalse($state->isAborted());
+		}
 
-    public function testSerializationWorks()
-    {
-        $state1 = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
-            array($this->mockUploadId)
-        );
+		public function testSerializationWorks()
+		{
+				$state1 = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
+						array($this->mockUploadId)
+				);
 
-        $this->assertInstanceOf('Aws\Common\Model\MultipartUpload\AbstractUploadId', $state1->getUploadId());
-        $this->assertEquals(array(), $state1->getPartNumbers());
-        $this->assertFalse($state1->isAborted());
+				$this->assertInstanceOf('Aws\Common\Model\MultipartUpload\AbstractUploadId', $state1->getUploadId());
+				$this->assertEquals(array(), $state1->getPartNumbers());
+				$this->assertFalse($state1->isAborted());
 
-        $serialized = serialize($state1);
-        $state2 = unserialize($serialized);
+				$serialized = serialize($state1);
+				$state2 = unserialize($serialized);
 
-        $this->assertInstanceOf('Aws\Common\Model\MultipartUpload\AbstractUploadId', $state2->getUploadId());
-        $this->assertEquals(array(), $state2->getPartNumbers());
-        $this->assertFalse($state2->isAborted());
-    }
+				$this->assertInstanceOf('Aws\Common\Model\MultipartUpload\AbstractUploadId', $state2->getUploadId());
+				$this->assertEquals(array(), $state2->getPartNumbers());
+				$this->assertFalse($state2->isAborted());
+		}
 
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testSerializationFailsWhenPropertyIsMissing()
-    {
-        $state1 = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
-            array($this->mockUploadId)
-        );
+		/**
+		 * @expectedException \RuntimeException
+		 */
+		public function testSerializationFailsWhenPropertyIsMissing()
+		{
+				$state1 = $this->getMockForAbstractClass('Aws\Common\Model\MultipartUpload\AbstractTransferState',
+						array($this->mockUploadId)
+				);
 
-        $serialized = str_replace('uploadId', 'xxxxxxxx', serialize($state1));
-        unserialize($serialized);
-    }
+				$serialized = str_replace('uploadId', 'xxxxxxxx', serialize($state1));
+				unserialize($serialized);
+		}
 }

@@ -23,20 +23,20 @@ use Aws\Common\Credentials\Credentials;
  */
 class AbstractRefreshableCredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testCallsRefreshWhenExpired()
-    {
-        $c = new Credentials('a', 'b', 'c', 10);
+		public function testCallsRefreshWhenExpired()
+		{
+				$c = new Credentials('a', 'b', 'c', 10);
 
-        $mock = $this->getMockBuilder('Aws\\Common\\Credentials\\AbstractRefreshableCredentials')
-            ->setConstructorArgs(array($c))
-            ->setMethods(array('refresh'))
-            ->getMock();
+				$mock = $this->getMockBuilder('Aws\\Common\\Credentials\\AbstractRefreshableCredentials')
+						->setConstructorArgs(array($c))
+						->setMethods(array('refresh'))
+						->getMock();
 
-        $mock->expects($this->exactly(3))
-            ->method('refresh');
+				$mock->expects($this->exactly(3))
+						->method('refresh');
 
-        $mock->getAccessKeyId();
-        $mock->getSecretKey();
-        $mock->getSecurityToken();
-    }
+				$mock->getAccessKeyId();
+				$mock->getSecretKey();
+				$mock->getSecurityToken();
+		}
 }

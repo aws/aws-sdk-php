@@ -21,55 +21,55 @@ namespace Aws\Common\Region;
  */
 class Service
 {
-    /**
-     * @var string Full name of the service (e.g. AWS Security Token Service)
-     */
-    protected $fullName;
+		/**
+		 * @var string Full name of the service (e.g. AWS Security Token Service)
+		 */
+		protected $fullName;
 
-    /**
-     * @var string Name of the service
-     */
-    protected $name;
+		/**
+		 * @var string Name of the service
+		 */
+		protected $name;
 
-    /**
-     * Create a new Service object
-     *
-     * @param string $name     Name of the service (e.g. us-west-1)
-     * @param string $fullName Full name of the service (e.g. Amazon Simple Storage Service)
-     */
-    public function __construct($name, $fullName)
-    {
-        $this->name = $name;
-        $this->fullName = $fullName;
-    }
+		/**
+		 * Create a new Service object
+		 *
+		 * @param string $name		 Name of the service (e.g. us-west-1)
+		 * @param string $fullName Full name of the service (e.g. Amazon Simple Storage Service)
+		 */
+		public function __construct($name, $fullName)
+		{
+				$this->name = $name;
+				$this->fullName = $fullName;
+		}
 
-    /**
-     * Convert to a string representing the service name
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->name;
-    }
+		/**
+		 * Convert to a string representing the service name
+		 *
+		 * @return string
+		 */
+		public function __toString()
+		{
+				return $this->name;
+		}
 
-    /**
-     * Get the name of the service
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+		/**
+		 * Get the name of the service
+		 *
+		 * @return string
+		 */
+		public function getName()
+		{
+				return $this->name;
+		}
 
-    /**
-     * Get the full name of the service
-     *
-     * @return string
-     */
-    public function getFullName()
-    {
-        return $this->fullName;
-    }
+		/**
+		 * Get the full name of the service
+		 *
+		 * @return string
+		 */
+		public function getFullName()
+		{
+				return $this->fullName;
+		}
 }

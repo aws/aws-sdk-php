@@ -23,34 +23,34 @@ use Aws\Common\Client\UploadBodyListener;
  */
 class UploadBodyListenerTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testFilePathsGetConvertedToBodies()
-    {
-        $this->assertInternalType('array', UploadBodyListener::getSubscribedEvents());
+		public function testFilePathsGetConvertedToBodies()
+		{
+				$this->assertInternalType('array', UploadBodyListener::getSubscribedEvents());
 
-        $client = $this->getServiceBuilder()->get('s3');
-        $command = $client->getCommand('PutObject', array(
-            'Bucket'     => 'foo',
-            'Key'        => 'bar',
-            'SourceFile' => __FILE__
-        ));
+				$client = $this->getServiceBuilder()->get('s3');
+				$command = $client->getCommand('PutObject', array(
+						'Bucket'		 => 'foo',
+						'Key'				=> 'bar',
+						'SourceFile' => __FILE__
+				));
 
-        $command->prepare();
+				$command->prepare();
 
-        $this->assertInstanceOf('Guzzle\Http\EntityBody', $command->get('Body'));
-        $this->assertNull($command->get('Source'));
-    }
+				$this->assertInstanceOf('Guzzle\Http\EntityBody', $command->get('Body'));
+				$this->assertNull($command->get('Source'));
+		}
 
-    public function testFileHandlesGetConvertedToBodies()
-    {
-        $client = $this->getServiceBuilder()->get('s3');
-        $command = $client->getCommand('PutObject', array(
-            'Bucket' => 'foo',
-            'Key'    => 'bar',
-            'Body'   => fopen(__FILE__, 'r')
-        ));
+		public function testFileHandlesGetConvertedToBodies()
+		{
+				$client = $this->getServiceBuilder()->get('s3');
+				$command = $client->getCommand('PutObject', array(
+						'Bucket' => 'foo',
+						'Key'		=> 'bar',
+						'Body'	 => fopen(__FILE__, 'r')
+				));
 
-        $command->prepare();
-        $this->assertInstanceOf('Guzzle\Http\EntityBody', $command->get('Body'));
-        $this->assertEquals('text/x-php', $command->get('ContentType'));
-    }
+				$command->prepare();
+				$this->assertInstanceOf('Guzzle\Http\EntityBody', $command->get('Body'));
+				$this->assertEquals('text/x-php', $command->get('ContentType'));
+		}
 }

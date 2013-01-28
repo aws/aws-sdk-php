@@ -27,37 +27,37 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class GlacierUploadListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'command.before_send' => array('onCommandBeforeSend'),
-        );
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function getSubscribedEvents()
+		{
+				return array(
+						'command.before_send' => array('onCommandBeforeSend'),
+				);
+		}
 
-    /**
-     * Retrieve bodies passed in as UploadPartContext objects and set the real hash, length, etc. values on the command
-     *
-     * @param Event $event Event emitted
-     */
-    public function onCommandBeforeSend(Event $event)
-    {
-        /** @var $command AbstractCommand */
-        $command = $event['command'];
-        $contentHash = $command->get('ContentSHA256');
-        if ($contentHash === true) {
-            /** @var $request EntityEnclosingRequest */
-            $request = $command->getRequest();
-            $upload = UploadPartGenerator::createSingleUploadPart($request->getBody());
-            $request->addHeader('x-amz-content-sha256', $upload->getContentHash());
-            if (!$command->get('checksum')) {
-                $request->addHeader('x-amz-sha256-tree-hash', $upload->getChecksum());
-            }
-        } elseif (is_string($contentHash)) {
-            $request = $command->getRequest();
-            $request->addHeader('x-amz-content-sha256', $contentHash);
-        }
-    }
+		/**
+		 * Retrieve bodies passed in as UploadPartContext objects and set the real hash, length, etc. values on the command
+		 *
+		 * @param Event $event Event emitted
+		 */
+		public function onCommandBeforeSend(Event $event)
+		{
+				/** @var $command AbstractCommand */
+				$command = $event['command'];
+				$contentHash = $command->get('ContentSHA256');
+				if ($contentHash === true) {
+						/** @var $request EntityEnclosingRequest */
+						$request = $command->getRequest();
+						$upload = UploadPartGenerator::createSingleUploadPart($request->getBody());
+						$request->addHeader('x-amz-content-sha256', $upload->getContentHash());
+						if (!$command->get('checksum')) {
+								$request->addHeader('x-amz-sha256-tree-hash', $upload->getChecksum());
+						}
+				} elseif (is_string($contentHash)) {
+						$request = $command->getRequest();
+						$request->addHeader('x-amz-content-sha256', $contentHash);
+				}
+		}
 }

@@ -19,4 +19,4 @@ namespace Aws\DynamoDb\Exception;
 /**
  * The service is currently unavailable or busy.
  */
-class ServiceUnavailableException  extends DynamoDbException {}
+class ServiceUnavailableException	extends DynamoDbException {}

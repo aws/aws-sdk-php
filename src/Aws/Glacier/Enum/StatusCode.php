@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class StatusCode extends Enum
 {
-    const IN_PROGRESS = 'InProgress';
-    const SUCCEEDED = 'Succeeded';
-    const FAILED = 'Failed';
+		const IN_PROGRESS = 'InProgress';
+		const SUCCEEDED = 'Succeeded';
+		const FAILED = 'Failed';
 }

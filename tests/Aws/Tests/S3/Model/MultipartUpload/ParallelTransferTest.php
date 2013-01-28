@@ -25,96 +25,96 @@ use Guzzle\Http\EntityBody;
  */
 class ParallelTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    protected function getMockUploadId()
-    {
-        $uploadId = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\UploadId')
-            ->setMethods(array('toParams'))
-            ->getMock();
-        $uploadId->expects($this->any())
-            ->method('toParams')
-            ->will($this->returnValue(array(
-                'Bucket'   => 'foo',
-                'Key'      => 'bar',
-                'UploadId' => 'baz'
-            )
-        ));
+		protected function getMockUploadId()
+		{
+				$uploadId = $this->getMockBuilder('Aws\S3\Model\MultipartUpload\UploadId')
+						->setMethods(array('toParams'))
+						->getMock();
+				$uploadId->expects($this->any())
+						->method('toParams')
+						->will($this->returnValue(array(
+								'Bucket'	 => 'foo',
+								'Key'			=> 'bar',
+								'UploadId' => 'baz'
+						)
+				));
 
-        return $uploadId;
-    }
+				return $uploadId;
+		}
 
-    protected function prepComponents()
-    {
-        $uploadId = $this->getMockUploadId();
-        $body = EntityBody::factory(fopen(__FILE__, 'r'));
+		protected function prepComponents()
+		{
+				$uploadId = $this->getMockUploadId();
+				$body = EntityBody::factory(fopen(__FILE__, 'r'));
 
-        $client = $this->getServiceBuilder()->get('s3', true);
-        $state = new TransferState($uploadId);
-        $transfer = new ParallelTransfer($client, $state, $body, array('concurrency' => 2));
+				$client = $this->getServiceBuilder()->get('s3', true);
+				$state = new TransferState($uploadId);
+				$transfer = new ParallelTransfer($client, $state, $body, array('concurrency' => 2));
 
-        $refClass = new \ReflectionClass($transfer);
-        $property = $refClass->getProperty('partSize');
-        $property->setAccessible(true);
-        $property->setValue($transfer, 1024);
+				$refClass = new \ReflectionClass($transfer);
+				$property = $refClass->getProperty('partSize');
+				$property->setAccessible(true);
+				$property->setValue($transfer, 1024);
 
-        return array($transfer, $client, $state);
-    }
+				return array($transfer, $client, $state);
+		}
 
-    public function testSuccessfulTransfer()
-    {
-        list($transfer, $client) = $this->prepComponents();
+		public function testSuccessfulTransfer()
+		{
+				list($transfer, $client) = $this->prepComponents();
 
-        $mocks = array();
-        for ($i = 0; $i < intval(ceil(filesize(__FILE__) / 1024)); $i++) {
-            $mocks[] = 's3/upload_part';
-        }
-        $mocks[] = 's3/complete_multipart_upload';
-        $mock = $this->setMockResponse($client, $mocks);
+				$mocks = array();
+				for ($i = 0; $i < intval(ceil(filesize(__FILE__) / 1024)); $i++) {
+						$mocks[] = 's3/upload_part';
+				}
+				$mocks[] = 's3/complete_multipart_upload';
+				$mock = $this->setMockResponse($client, $mocks);
 
-        $result = $transfer->upload();
+				$result = $transfer->upload();
 
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals($i + 1, count($requests));
-        for ($j = 0; $j < $i; $j++) {
-            $this->assertEquals('PUT', $requests[$j]->getMethod());
-        }
-        $this->assertEquals('POST', $requests[4]->getMethod());
-        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
-    }
+				$requests = $mock->getReceivedRequests();
+				$this->assertEquals($i + 1, count($requests));
+				for ($j = 0; $j < $i; $j++) {
+						$this->assertEquals('PUT', $requests[$j]->getMethod());
+				}
+				$this->assertEquals('POST', $requests[4]->getMethod());
+				$this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+		}
 
-    public function testStoppingWillStopTransfer()
-    {
-        list($transfer) = $this->prepComponents();
+		public function testStoppingWillStopTransfer()
+		{
+				list($transfer) = $this->prepComponents();
 
-        $transfer->getEventDispatcher()->addListener(ParallelTransfer::BEFORE_PART_UPLOAD, function($event) {
-            $event['transfer']->stop();
-        });
+				$transfer->getEventDispatcher()->addListener(ParallelTransfer::BEFORE_PART_UPLOAD, function($event) {
+						$event['transfer']->stop();
+				});
 
-        $result = $transfer->upload();
+				$result = $transfer->upload();
 
-        $this->assertNull($result);
-    }
+				$this->assertNull($result);
+		}
 
-    /**
-     * @expectedException Aws\Common\Exception\RuntimeException
-     */
-    public function testEnsuresTheFileIsLocalAndSeekable()
-    {
-        $transfer = new ParallelTransfer(
-            $this->getServiceBuilder()->get('s3'),
-            new TransferState($this->getMockUploadId()),
-            EntityBody::factory('foo')
-        );
-    }
+		/**
+		 * @expectedException Aws\Common\Exception\RuntimeException
+		 */
+		public function testEnsuresTheFileIsLocalAndSeekable()
+		{
+				$transfer = new ParallelTransfer(
+						$this->getServiceBuilder()->get('s3'),
+						new TransferState($this->getMockUploadId()),
+						EntityBody::factory('foo')
+				);
+		}
 
-    /**
-     * @expectedException Aws\Common\Exception\RuntimeException
-     */
-    public function testEnsuresConcurrencyIsSpecified()
-    {
-        $transfer = new ParallelTransfer(
-            $this->getServiceBuilder()->get('s3'),
-            new TransferState($this->getMockUploadId()),
-            EntityBody::factory(fopen(__FILE__, 'r'))
-        );
-    }
+		/**
+		 * @expectedException Aws\Common\Exception\RuntimeException
+		 */
+		public function testEnsuresConcurrencyIsSpecified()
+		{
+				$transfer = new ParallelTransfer(
+						$this->getServiceBuilder()->get('s3'),
+						new TransferState($this->getMockUploadId()),
+						EntityBody::factory(fopen(__FILE__, 'r'))
+				);
+		}
 }

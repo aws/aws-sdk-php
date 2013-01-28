@@ -25,61 +25,61 @@ use Aws\Common\Exception\InstanceProfileCredentialsException;
  */
 class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentials
 {
-    /**
-     * @var InstanceMetadataClient
-     */
-    protected $client;
+		/**
+		 * @var InstanceMetadataClient
+		 */
+		protected $client;
 
-    /**
-     * Constructs a new instance profile credentials decorator
-     *
-     * @param CredentialsInterface   $credentials Credentials to adapt
-     * @param InstanceMetadataClient $client      Client used to get new credentials
-     */
-    public function __construct(CredentialsInterface $credentials, InstanceMetadataClient $client = null)
-    {
-        $this->credentials = $credentials;
-        $this->client = $client ?: InstanceMetadataClient::factory();
-    }
+		/**
+		 * Constructs a new instance profile credentials decorator
+		 *
+		 * @param CredentialsInterface	 $credentials Credentials to adapt
+		 * @param InstanceMetadataClient $client			Client used to get new credentials
+		 */
+		public function __construct(CredentialsInterface $credentials, InstanceMetadataClient $client = null)
+		{
+				$this->credentials = $credentials;
+				$this->client = $client ?: InstanceMetadataClient::factory();
+		}
 
-    /**
-     * Attempt to get new credentials from the instance profile
-     *
-     * @throws InstanceProfileCredentialsException On error
-     */
-    protected function refresh()
-    {
-        try {
+		/**
+		 * Attempt to get new credentials from the instance profile
+		 *
+		 * @throws InstanceProfileCredentialsException On error
+		 */
+		protected function refresh()
+		{
+				try {
 
-            $request = $this->client->get('meta-data/iam/security-credentials/');
+						$request = $this->client->get('meta-data/iam/security-credentials/');
 
-            $request->getCurlOptions()
-                ->set(CURLOPT_TIMEOUT, 1)
-                ->set(CURLOPT_CONNECTTIMEOUT, 1);
+						$request->getCurlOptions()
+								->set(CURLOPT_TIMEOUT, 1)
+								->set(CURLOPT_CONNECTTIMEOUT, 1);
 
-            $credentials = trim($request->send()->getBody(true));
-            $json = $this->client->get("meta-data/iam/security-credentials/{$credentials}")->send()->getBody(true);
-            $result = json_decode($json, true);
+						$credentials = trim($request->send()->getBody(true));
+						$json = $this->client->get("meta-data/iam/security-credentials/{$credentials}")->send()->getBody(true);
+						$result = json_decode($json, true);
 
-        } catch (\Exception $e) {
-            $message = 'Error retrieving credentials from the instance profile metadata server.  When you are not'
-                . ' running inside of Amazon EC2, you must provide your AWS access key ID and secret access key in'
-                . ' the "key" and "secret" options when creating a client or provide an instantiated'
-                . ' Aws\\Common\\Credentials\\CredentialsInterface object.';
-            throw new InstanceProfileCredentialsException($message, $e->getCode(), $e);
-        }
+				} catch (\Exception $e) {
+						$message = 'Error retrieving credentials from the instance profile metadata server.	When you are not'
+								. ' running inside of Amazon EC2, you must provide your AWS access key ID and secret access key in'
+								. ' the "key" and "secret" options when creating a client or provide an instantiated'
+								. ' Aws\\Common\\Credentials\\CredentialsInterface object.';
+						throw new InstanceProfileCredentialsException($message, $e->getCode(), $e);
+				}
 
-        // Ensure that the status code was successful
-        if ($result['Code'] !== 'Success') {
-            $e = new InstanceProfileCredentialsException('Unexpected response code: ' . $result['Code']);
-            $e->setStatusCode($result['Code']);
-            throw $e;
-        }
+				// Ensure that the status code was successful
+				if ($result['Code'] !== 'Success') {
+						$e = new InstanceProfileCredentialsException('Unexpected response code: ' . $result['Code']);
+						$e->setStatusCode($result['Code']);
+						throw $e;
+				}
 
-        $this->credentials
-            ->setAccessKeyId($result['AccessKeyId'])
-            ->setSecretKey($result['SecretAccessKey'])
-            ->setSecurityToken($result['Token'])
-            ->setExpiration(strtotime($result['Expiration']));
-    }
+				$this->credentials
+						->setAccessKeyId($result['AccessKeyId'])
+						->setSecretKey($result['SecretAccessKey'])
+						->setSecurityToken($result['Token'])
+						->setExpiration(strtotime($result['Expiration']));
+		}
 }

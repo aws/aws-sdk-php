@@ -23,7 +23,7 @@ use Aws\Common\Model\MultipartUpload\AbstractUploadId;
  */
 class UploadId extends AbstractUploadId
 {
-    protected static $expectedValues = array('foo' => null, 'bar' => null);
+		protected static $expectedValues = array('foo' => null, 'bar' => null);
 }
 
 /**
@@ -31,22 +31,22 @@ class UploadId extends AbstractUploadId
  */
 class AbstractUploadIdTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testUploadIdCorrectlyManagesData()
-    {
-        $startingParams = array('foo' => 1, 'bar' => 2);
-        $uploadId = UploadId::fromParams($startingParams);
-        $serialized = serialize($uploadId);
-        $unserialized = unserialize($serialized);
-        $endingParams = $unserialized->toParams();
+		public function testUploadIdCorrectlyManagesData()
+		{
+				$startingParams = array('foo' => 1, 'bar' => 2);
+				$uploadId = UploadId::fromParams($startingParams);
+				$serialized = serialize($uploadId);
+				$unserialized = unserialize($serialized);
+				$endingParams = $unserialized->toParams();
 
-        $this->assertEquals($startingParams, $endingParams);
-    }
+				$this->assertEquals($startingParams, $endingParams);
+		}
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testThrowsExceptionWhenMissingData()
-    {
-        UploadId::fromParams(array('wrongKey' => 'dummyData'));
-    }
+		/**
+		 * @expectedException \InvalidArgumentException
+		 */
+		public function testThrowsExceptionWhenMissingData()
+		{
+				UploadId::fromParams(array('wrongKey' => 'dummyData'));
+		}
 }

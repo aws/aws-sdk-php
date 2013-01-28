@@ -23,128 +23,128 @@ use Aws\Common\Exception\RuntimeException;
  */
 abstract class AbstractTransferState implements TransferStateInterface
 {
-    /**
-     * @var UploadIdInterface Object holding params used to identity the upload part
-     */
-    protected $uploadId;
+		/**
+		 * @var UploadIdInterface Object holding params used to identity the upload part
+		 */
+		protected $uploadId;
 
-    /**
-     * @var array Array of parts where the part number is the index
-     */
-    protected $parts = array();
+		/**
+		 * @var array Array of parts where the part number is the index
+		 */
+		protected $parts = array();
 
-    /**
-     * @var bool Whether or not the transfer was aborted
-     */
-    protected $aborted = false;
+		/**
+		 * @var bool Whether or not the transfer was aborted
+		 */
+		protected $aborted = false;
 
-    /**
-     * Construct a new transfer state object
-     *
-     * @param UploadIdInterface $uploadId Upload identifier object
-     */
-    public function __construct(UploadIdInterface $uploadId)
-    {
-        $this->uploadId = $uploadId;
-    }
+		/**
+		 * Construct a new transfer state object
+		 *
+		 * @param UploadIdInterface $uploadId Upload identifier object
+		 */
+		public function __construct(UploadIdInterface $uploadId)
+		{
+				$this->uploadId = $uploadId;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUploadId()
-    {
-        return $this->uploadId;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getUploadId()
+		{
+				return $this->uploadId;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPart($partNumber)
-    {
-        return isset($this->parts[$partNumber]) ? $this->parts[$partNumber] : null;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getPart($partNumber)
+		{
+				return isset($this->parts[$partNumber]) ? $this->parts[$partNumber] : null;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addPart(UploadPartInterface $part)
-    {
-        $partNumber = $part->getPartNumber();
-        $this->parts[$partNumber] = $part;
+		/**
+		 * {@inheritdoc}
+		 */
+		public function addPart(UploadPartInterface $part)
+		{
+				$partNumber = $part->getPartNumber();
+				$this->parts[$partNumber] = $part;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function hasPart($partNumber)
-    {
-        return isset($this->parts[$partNumber]);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function hasPart($partNumber)
+		{
+				return isset($this->parts[$partNumber]);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPartNumbers()
-    {
-        return array_keys($this->parts);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getPartNumbers()
+		{
+				return array_keys($this->parts);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setAborted($aborted)
-    {
-        $this->aborted = (bool) $aborted;
+		/**
+		 * {@inheritdoc}
+		 */
+		public function setAborted($aborted)
+		{
+				$this->aborted = (bool) $aborted;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isAborted()
-    {
-        return $this->aborted;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function isAborted()
+		{
+				return $this->aborted;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        return count($this->parts);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function count()
+		{
+				return count($this->parts);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->parts);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getIterator()
+		{
+				return new \ArrayIterator($this->parts);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return serialize(get_object_vars($this));
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function serialize()
+		{
+				return serialize(get_object_vars($this));
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-        foreach (get_object_vars($this) as $property => $oldValue) {
-            if (array_key_exists($property, $data)) {
-                $this->{$property} = $data[$property];
-            } else {
-                throw new RuntimeException("The {$property} property could be restored during unserialization.");
-            }
-        }
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function unserialize($serialized)
+		{
+				$data = unserialize($serialized);
+				foreach (get_object_vars($this) as $property => $oldValue) {
+						if (array_key_exists($property, $data)) {
+								$this->{$property} = $data[$property];
+						} else {
+								throw new RuntimeException("The {$property} property could be restored during unserialization.");
+						}
+				}
+		}
 }

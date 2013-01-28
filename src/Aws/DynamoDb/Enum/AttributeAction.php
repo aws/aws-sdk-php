@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class AttributeAction extends Enum
 {
-    const ADD = 'ADD';
-    const PUT = 'PUT';
-    const DELETE = 'DELETE';
+		const ADD = 'ADD';
+		const PUT = 'PUT';
+		const DELETE = 'DELETE';
 }

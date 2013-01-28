@@ -24,59 +24,59 @@ use Guzzle\Http\EntityBody;
  */
 class AbstractUploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    protected $className;
-    protected $mockBuilder;
+		protected $className;
+		protected $mockBuilder;
 
-    public function setUp()
-    {
-        $this->className = 'Aws\Common\Model\MultipartUpload\AbstractUploadBuilder';
-        $this->mockBuilder = $this->getMockForAbstractClass($this->className);
-    }
+		public function setUp()
+		{
+				$this->className = 'Aws\Common\Model\MultipartUpload\AbstractUploadBuilder';
+				$this->mockBuilder = $this->getMockForAbstractClass($this->className);
+		}
 
-    public function testHasChainableMethodToInstantiate()
-    {
-        $uploadBuilder = $this->mockBuilder;
-        $this->assertInstanceOf($this->className, $uploadBuilder::newInstance());
-    }
+		public function testHasChainableMethodToInstantiate()
+		{
+				$uploadBuilder = $this->mockBuilder;
+				$this->assertInstanceOf($this->className, $uploadBuilder::newInstance());
+		}
 
-    public function testCanUploadFromFilename()
-    {
-        $b = $this->mockBuilder->setSource(__FILE__);
-        $this->assertEquals(__FILE__, $this->readAttribute($b, 'source')->getUri());
-    }
+		public function testCanUploadFromFilename()
+		{
+				$b = $this->mockBuilder->setSource(__FILE__);
+				$this->assertEquals(__FILE__, $this->readAttribute($b, 'source')->getUri());
+		}
 
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage File does not exist
-     */
-    public function testEnsuresFilesExistsWhenSettingSource()
-    {
-        $this->mockBuilder->setSource('/path/to/missing/file/yall');
-    }
+		/**
+		 * @expectedException \Aws\Common\Exception\InvalidArgumentException
+		 * @expectedExceptionMessage File does not exist
+		 */
+		public function testEnsuresFilesExistsWhenSettingSource()
+		{
+				$this->mockBuilder->setSource('/path/to/missing/file/yall');
+		}
 
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Empty body provided to upload builder
-     */
-    public function testEnsuresFileIsNotEmptyWhenSettingSource()
-    {
-        $this->mockBuilder->setSource(EntityBody::factory(''));
-    }
+		/**
+		 * @expectedException \Aws\Common\Exception\InvalidArgumentException
+		 * @expectedExceptionMessage Empty body provided to upload builder
+		 */
+		public function testEnsuresFileIsNotEmptyWhenSettingSource()
+		{
+				$this->mockBuilder->setSource(EntityBody::factory(''));
+		}
 
-    public function testHasChainableSetterMethods()
-    {
-        $client =  $this->getServiceBuilder()->get('s3');
-        $body = EntityBody::factory('foo');
-        $b = $this->mockBuilder
-            ->resumeFrom('foo')
-            ->setClient($client)
-            ->setSource($body)
-            ->setHeaders(array(
-                'Foo' => 'Bar'
-            ));
+		public function testHasChainableSetterMethods()
+		{
+				$client =	$this->getServiceBuilder()->get('s3');
+				$body = EntityBody::factory('foo');
+				$b = $this->mockBuilder
+						->resumeFrom('foo')
+						->setClient($client)
+						->setSource($body)
+						->setHeaders(array(
+								'Foo' => 'Bar'
+						));
 
-        $this->assertEquals('foo', $this->readAttribute($b, 'state'));
-        $this->assertSame($client, $this->readAttribute($b, 'client'));
-        $this->assertSame($body, $this->readAttribute($b, 'source'));
-    }
+				$this->assertEquals('foo', $this->readAttribute($b, 'state'));
+				$this->assertSame($client, $this->readAttribute($b, 'client'));
+				$this->assertSame($body, $this->readAttribute($b, 'source'));
+		}
 }

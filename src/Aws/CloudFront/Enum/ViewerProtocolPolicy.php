@@ -23,6 +23,6 @@ use Aws\Common\Enum;
  */
 class ViewerProtocolPolicy extends Enum
 {
-    const ALLOW_ALL = 'allow-all';
-    const HTTPS_ONLY = 'https-only';
+		const ALLOW_ALL = 'allow-all';
+		const HTTPS_ONLY = 'https-only';
 }

@@ -23,9 +23,9 @@ use Aws\Common\Enum;
  */
 class Permission extends Enum
 {
-    const READ         = 'READ';
-    const WRITE        = 'WRITE';
-    const READ_ACP     = 'READ_ACP';
-    const WRITE_ACP    = 'WRITE_ACP';
-    const FULL_CONTROL = 'FULL_CONTROL';
+		const READ				 = 'READ';
+		const WRITE				= 'WRITE';
+		const READ_ACP		 = 'READ_ACP';
+		const WRITE_ACP		= 'WRITE_ACP';
+		const FULL_CONTROL = 'FULL_CONTROL';
 }

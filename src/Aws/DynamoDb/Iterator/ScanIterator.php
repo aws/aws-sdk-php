@@ -24,28 +24,28 @@ use Guzzle\Service\Resource\Model;
  */
 class ScanIterator extends AwsResourceIterator
 {
-    /**
-     * @var int Total number of scanned items
-     */
-    protected $scannedCount = 0;
+		/**
+		 * @var int Total number of scanned items
+		 */
+		protected $scannedCount = 0;
 
-    /**
-     * Get the total number of scanned items
-     *
-     * @return int
-     */
-    public function getScannedCount()
-    {
-        return $this->scannedCount;
-    }
+		/**
+		 * Get the total number of scanned items
+		 *
+		 * @return int
+		 */
+		public function getScannedCount()
+		{
+				return $this->scannedCount;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function handleResults(Model $result)
-    {
-        $this->scannedCount += (int) $result->get('ScannedCount');
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function handleResults(Model $result)
+		{
+				$this->scannedCount += (int) $result->get('ScannedCount');
 
-        return parent::handleResults($result);
-    }
+				return parent::handleResults($result);
+		}
 }

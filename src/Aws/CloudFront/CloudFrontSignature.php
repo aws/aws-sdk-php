@@ -27,35 +27,35 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class CloudFrontSignature implements SignatureInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
-        // Add a date header if one is not set
-        if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', gmdate(DateFormat::RFC2822));
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
+		{
+				// Add a date header if one is not set
+				if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
+						$request->setHeader('Date', gmdate(DateFormat::RFC2822));
+				}
 
-        $stringToSign = (string) $request->getHeader('Date') ?: (string) $request->getHeader('x-amz-date');
-        $request->getParams()->set('aws.string_to_sign', $stringToSign);
+				$stringToSign = (string) $request->getHeader('Date') ?: (string) $request->getHeader('x-amz-date');
+				$request->getParams()->set('aws.string_to_sign', $stringToSign);
 
-        $request->setHeader(
-            'Authorization',
-            'AWS ' . $credentials->getAccessKeyId() . ':' . $this->signString($stringToSign, $credentials)
-        );
-    }
+				$request->setHeader(
+						'Authorization',
+						'AWS ' . $credentials->getAccessKeyId() . ':' . $this->signString($stringToSign, $credentials)
+				);
+		}
 
-    /**
-     * Sign a signature string by applying SHA-1 HMAC hashing.
-     *
-     * @param  string               $string      The signature string to hash.
-     * @param  CredentialsInterface $credentials Signing credentials.
-     *
-     * @return string                            The hashed signature string.
-     */
-    public function signString($string, CredentialsInterface $credentials)
-    {
-        return base64_encode(hash_hmac('sha1', $string, $credentials->getSecretKey(), true));
-    }
+		/**
+		 * Sign a signature string by applying SHA-1 HMAC hashing.
+		 *
+		 * @param	string							 $string			The signature string to hash.
+		 * @param	CredentialsInterface $credentials Signing credentials.
+		 *
+		 * @return string														The hashed signature string.
+		 */
+		public function signString($string, CredentialsInterface $credentials)
+		{
+				return base64_encode(hash_hmac('sha1', $string, $credentials->getSecretKey(), true));
+		}
 }

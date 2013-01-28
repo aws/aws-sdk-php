@@ -24,62 +24,62 @@ use Aws\Common\Exception\InvalidArgumentException;
  */
 class SessionHandlerConfig
 {
-    /**
-     * @var array The configuration data
-     */
-    protected $data;
+		/**
+		 * @var array The configuration data
+		 */
+		protected $data;
 
-    /**
-     * Constructs the session handler config with default values
-     *
-     * @param array $data The config data
-     *
-     * @throws InvalidArgumentException If a valid client isn't provided
-     */
-    public function __construct(array $data = array())
-    {
-        $this->data = $data;
+		/**
+		 * Constructs the session handler config with default values
+		 *
+		 * @param array $data The config data
+		 *
+		 * @throws InvalidArgumentException If a valid client isn't provided
+		 */
+		public function __construct(array $data = array())
+		{
+				$this->data = $data;
 
-        // Make sure the DynamoDB client has been provided
-        if (!($this->get('dynamodb_client') instanceof DynamoDbClient)) {
-            throw new InvalidArgumentException('The DynamoDB Session Handler '
-                . 'must be provided an instance of the DynamoDbClient.');
-        }
+				// Make sure the DynamoDB client has been provided
+				if (!($this->get('dynamodb_client') instanceof DynamoDbClient)) {
+						throw new InvalidArgumentException('The DynamoDB Session Handler '
+								. 'must be provided an instance of the DynamoDbClient.');
+				}
 
-        // Merge provided data with defaults
-        $this->addDefaults(array(
-            'table_name'       => 'sessions',
-            'hash_key'         => 'id',
-            'session_lifetime' => (int) ini_get('session.gc_maxlifetime'),
-            'consistent_read'  => true,
-            'automatic_gc'     => (bool) ini_get('session.gc_probability'),
-            'gc_batch_size'    => 25
-        ));
-    }
+				// Merge provided data with defaults
+				$this->addDefaults(array(
+						'table_name'			 => 'sessions',
+						'hash_key'				 => 'id',
+						'session_lifetime' => (int) ini_get('session.gc_maxlifetime'),
+						'consistent_read'	=> true,
+						'automatic_gc'		 => (bool) ini_get('session.gc_probability'),
+						'gc_batch_size'		=> 25
+				));
+		}
 
-    /**
-     * Gets a config value if it exists, otherwise it returns null
-     *
-     * @param string $key The key of the config item
-     *
-     * @return mixed
-     */
-    public function get($key)
-    {
-        return array_key_exists($key, $this->data) ? $this->data[$key] : null;
-    }
+		/**
+		 * Gets a config value if it exists, otherwise it returns null
+		 *
+		 * @param string $key The key of the config item
+		 *
+		 * @return mixed
+		 */
+		public function get($key)
+		{
+				return array_key_exists($key, $this->data) ? $this->data[$key] : null;
+		}
 
-    /**
-     * Applies default values by merging underneath the current data
-     *
-     * @param array $defaults The new default data to merge underneath
-     *
-     * @return SessionHandlerConfig
-     */
-    public function addDefaults(array $defaults)
-    {
-        $this->data = array_replace($defaults, $this->data);
+		/**
+		 * Applies default values by merging underneath the current data
+		 *
+		 * @param array $defaults The new default data to merge underneath
+		 *
+		 * @return SessionHandlerConfig
+		 */
+		public function addDefaults(array $defaults)
+		{
+				$this->data = array_replace($defaults, $this->data);
 
-        return $this;
-    }
+				return $this;
+		}
 }

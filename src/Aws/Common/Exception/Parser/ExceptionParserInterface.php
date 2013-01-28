@@ -23,18 +23,18 @@ use Guzzle\Http\Message\Response;
  */
 interface ExceptionParserInterface
 {
-    /**
-     * Parses an exception into an array of data containing at minimum the
-     * following array keys:
-     * - type:       Exception type
-     * - code:       Exception code
-     * - message:    Exception message
-     * - request_id: Request ID
-     * - parsed:     The parsed representation of the data (array, SimpleXMLElement, etc)
-     *
-     * @param Response $response Unsuccessful response
-     *
-     * @return array
-     */
-    public function parse(Response $response);
+		/**
+		 * Parses an exception into an array of data containing at minimum the
+		 * following array keys:
+		 * - type:			 Exception type
+		 * - code:			 Exception code
+		 * - message:		Exception message
+		 * - request_id: Request ID
+		 * - parsed:		 The parsed representation of the data (array, SimpleXMLElement, etc)
+		 *
+		 * @param Response $response Unsuccessful response
+		 *
+		 * @return array
+		 */
+		public function parse(Response $response);
 }

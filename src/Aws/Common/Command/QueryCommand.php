@@ -23,22 +23,22 @@ use Guzzle\Service\Command\OperationCommand;
  */
 class QueryCommand extends OperationCommand
 {
-    /**
-     * @var AwsQueryVisitor
-     */
-    protected static $queryVisitor;
+		/**
+		 * @var AwsQueryVisitor
+		 */
+		protected static $queryVisitor;
 
-    /**
-     * Register the aws.query visitor
-     */
-    protected function init()
-    {
-        // @codeCoverageIgnoreStart
-        if (!self::$queryVisitor) {
-            self::$queryVisitor = new AwsQueryVisitor();
-        }
+		/**
+		 * Register the aws.query visitor
+		 */
+		protected function init()
+		{
+				// @codeCoverageIgnoreStart
+				if (!self::$queryVisitor) {
+						self::$queryVisitor = new AwsQueryVisitor();
+				}
 
-        // @codeCoverageIgnoreEnd
-        $this->getRequestSerializer()->addVisitor('aws.query', self::$queryVisitor);
-    }
+				// @codeCoverageIgnoreEnd
+				$this->getRequestSerializer()->addVisitor('aws.query', self::$queryVisitor);
+		}
 }

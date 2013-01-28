@@ -19,27 +19,27 @@ namespace Aws\Common\InstanceMetadata\Waiter;
 use Aws\Common\Waiter\AbstractResourceWaiter;
 
 /**
- * Waits until the instance metadata service is responding.  Will send up to
- * 4 requests with a 5 second delay between each try.  Each try can last up to
+ * Waits until the instance metadata service is responding.	Will send up to
+ * 4 requests with a 5 second delay between each try.	Each try can last up to
  * 11 seconds to complete if the service is not responding.
  *
  * @codeCoverageIgnore
  */
 class ServiceAvailable extends AbstractResourceWaiter
 {
-    protected $interval = 5;
-    protected $maxFailures = 4;
+		protected $interval = 5;
+		protected $maxFailures = 4;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doWait()
-    {
-        $request = $this->client->get();
-        $request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, 10)
-            ->set(CURLOPT_TIMEOUT, 10);
-        $request->send();
+		/**
+		 * {@inheritdoc}
+		 */
+		public function doWait()
+		{
+				$request = $this->client->get();
+				$request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, 10)
+						->set(CURLOPT_TIMEOUT, 10);
+				$request->send();
 
-        return true;
-    }
+				return true;
+		}
 }

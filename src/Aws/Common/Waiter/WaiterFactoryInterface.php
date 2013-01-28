@@ -21,12 +21,12 @@ namespace Aws\Common\Waiter;
  */
 interface WaiterFactoryInterface
 {
-    /**
-     * Create a waiter by name
-     *
-     * @param string $waiter Name of the waiter to create
-     *
-     * @return WaiterInterface
-     */
-    public function factory($waiter);
+		/**
+		 * Create a waiter by name
+		 *
+		 * @param string $waiter Name of the waiter to create
+		 *
+		 * @return WaiterInterface
+		 */
+		public function factory($waiter);
 }

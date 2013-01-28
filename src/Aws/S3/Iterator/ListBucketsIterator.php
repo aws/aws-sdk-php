@@ -27,21 +27,21 @@ use Guzzle\Service\Resource\Model;
  */
 class ListBucketsIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function handleResults(Model $result)
-    {
-        // Get the results
-        $buckets = $result->get('Buckets') ?: array();
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function handleResults(Model $result)
+		{
+				// Get the results
+				$buckets = $result->get('Buckets') ?: array();
 
-        // If only the names_only set, change arrays to a string
-        if ($this->get('names_only')) {
-            foreach ($buckets as &$bucket) {
-                $bucket = $bucket['Name'];
-            }
-        }
+				// If only the names_only set, change arrays to a string
+				if ($this->get('names_only')) {
+						foreach ($buckets as &$bucket) {
+								$bucket = $bucket['Name'];
+						}
+				}
 
-        return $buckets;
-    }
+				return $buckets;
+		}
 }
