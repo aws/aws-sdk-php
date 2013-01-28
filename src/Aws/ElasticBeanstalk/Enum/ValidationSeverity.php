@@ -19,13 +19,10 @@ namespace Aws\ElasticBeanstalk\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Status values
+ * Contains enumerable ValidationSeverity values
  */
-class Status extends Enum
+class ValidationSeverity extends Enum
 {
-    const LAUNCHING = 'Launching';
-    const UPDATING = 'Updating';
-    const READY = 'Ready';
-    const TERMINATING = 'Terminating';
-    const TERMINATED = 'Terminated';
+    const ERROR = 'error';
+    const WARNING = 'warning';
 }

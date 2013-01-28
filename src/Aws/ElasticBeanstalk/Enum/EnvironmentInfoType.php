@@ -19,10 +19,9 @@ namespace Aws\ElasticBeanstalk\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable Severity values
+ * Contains enumerable EnvironmentInfoType values
  */
-class Severity extends Enum
+class EnvironmentInfoType extends Enum
 {
-    const ERROR = 'error';
-    const WARNING = 'warning';
+    const TAIL = 'tail';
 }

@@ -19,11 +19,12 @@ namespace Aws\ElasticBeanstalk\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable DeploymentStatus values
+ * Contains enumerable EnvironmentHealth values
  */
-class DeploymentStatus extends Enum
+class EnvironmentHealth extends Enum
 {
-    const DEPLOYED = 'deployed';
-    const PENDING = 'pending';
-    const FAILED = 'failed';
+    const GREEN = 'Green';
+    const YELLOW = 'Yellow';
+    const RED = 'Red';
+    const GREY = 'Grey';
 }

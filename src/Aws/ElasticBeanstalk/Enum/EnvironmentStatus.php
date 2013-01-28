@@ -19,9 +19,13 @@ namespace Aws\ElasticBeanstalk\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable InfoType values
+ * Contains enumerable EnvironmentStatus values
  */
-class InfoType extends Enum
+class EnvironmentStatus extends Enum
 {
-    const TAIL = 'tail';
+    const LAUNCHING = 'Launching';
+    const UPDATING = 'Updating';
+    const READY = 'Ready';
+    const TERMINATING = 'Terminating';
+    const TERMINATED = 'Terminated';
 }

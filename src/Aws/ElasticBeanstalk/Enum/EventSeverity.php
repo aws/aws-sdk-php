@@ -19,10 +19,14 @@ namespace Aws\ElasticBeanstalk\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable ValueType values
+ * Contains enumerable EventSeverity values
  */
-class ValueType extends Enum
+class EventSeverity extends Enum
 {
-    const SCALAR_TYPE = 'Scalar';
-    const LIST_TYPE = 'List';
+    const TRACE = 'TRACE';
+    const DEBUG = 'DEBUG';
+    const INFO = 'INFO';
+    const WARN = 'WARN';
+    const ERROR = 'ERROR';
+    const FATAL = 'FATAL';
 }
