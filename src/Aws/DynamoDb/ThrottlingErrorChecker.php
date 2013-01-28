@@ -28,43 +28,43 @@ use Guzzle\Plugin\Backoff\AbstractBackoffStrategy;
  */
 class ThrottlingErrorChecker extends AbstractBackoffStrategy
 {
-    /**
-     * @var JsonQueryExceptionParser Parser used to parse exception responses
-     */
-    protected $parser;
+		/**
+		 * @var JsonQueryExceptionParser Parser used to parse exception responses
+		 */
+		protected $parser;
 
-    /**
-     * Create the internal parser
-     */
-    public function __construct(BackoffStrategyInterface $next = null)
-    {
-        $this->parser = new JsonQueryExceptionParser();
-        if ($next) {
-            $this->setNext($next);
-        }
-    }
+		/**
+		 * Create the internal parser
+		 */
+		public function __construct(BackoffStrategyInterface $next = null)
+		{
+				$this->parser = new JsonQueryExceptionParser();
+				if ($next) {
+						$this->setNext($next);
+				}
+		}
 
-    /**
-     * {@inheridoc}
-     */
-    public function makesDecision()
-    {
-        return true;
-    }
+		/**
+		 * {@inheridoc}
+		 */
+		public function makesDecision()
+		{
+				return true;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
-        if ($response && $response->isClientError()) {
-            $parts = $this->parser->parse($response);
-            return $parts['code'] == 'ProvisionedThroughputExceededException'
-                || $parts['code'] == 'ThrottlingException' ? true : null;
-        }
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function getDelay(
+				$retries,
+				RequestInterface $request,
+				Response $response = null,
+				HttpException $e = null
+		) {
+				if ($response && $response->isClientError()) {
+						$parts = $this->parser->parse($response);
+						return $parts['code'] == 'ProvisionedThroughputExceededException'
+								|| $parts['code'] == 'ThrottlingException' ? true : null;
+				}
+		}
 }

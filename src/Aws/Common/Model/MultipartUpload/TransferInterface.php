@@ -24,33 +24,33 @@ use Guzzle\Service\Resource\Model;
  */
 interface TransferInterface extends HasDispatcherInterface
 {
-    /**
-     * Upload the source to using a multipart upload
-     *
-     * @return Model|null Result of the complete multipart upload command or null if uploading was stopped
-     */
-    public function upload();
+		/**
+		 * Upload the source to using a multipart upload
+		 *
+		 * @return Model|null Result of the complete multipart upload command or null if uploading was stopped
+		 */
+		public function upload();
 
-    /**
-     * Abort the upload
-     *
-     * @return Model Returns the result of the abort multipart upload command
-     */
-    public function abort();
+		/**
+		 * Abort the upload
+		 *
+		 * @return Model Returns the result of the abort multipart upload command
+		 */
+		public function abort();
 
-    /**
-     * Get the current state of the upload
-     *
-     * @return TransferStateInterface
-     */
-    public function getState();
+		/**
+		 * Get the current state of the upload
+		 *
+		 * @return TransferStateInterface
+		 */
+		public function getState();
 
-    /**
-     * Stop the transfer and retrieve the current state.
-     *
-     * This allows you to stop and later resume a long running transfer if needed.
-     *
-     * @return TransferStateInterface
-     */
-    public function stop();
+		/**
+		 * Stop the transfer and retrieve the current state.
+		 *
+		 * This allows you to stop and later resume a long running transfer if needed.
+		 *
+		 * @return TransferStateInterface
+		 */
+		public function stop();
 }

@@ -21,30 +21,30 @@ namespace Aws\Tests\Route53\Integration;
  */
 class IteratorsTest extends \Aws\Tests\IntegrationTestCase
 {
-    public function testIteratesListResourceRecordSetsCommand()
-    {
-        $client = $this->getServiceBuilder()->get('route53');
-        $mock = $this->setMockResponse($client, array(
-            'route53/list_rrs_page_1',
-            'route53/list_rrs_page_2',
-            'route53/list_rrs_page_3',
-        ));
+		public function testIteratesListResourceRecordSetsCommand()
+		{
+				$client = $this->getServiceBuilder()->get('route53');
+				$mock = $this->setMockResponse($client, array(
+						'route53/list_rrs_page_1',
+						'route53/list_rrs_page_2',
+						'route53/list_rrs_page_3',
+				));
 
-        $resourceRecordSets = $client->getIterator('ListResourceRecordSets', array(
-            'HostedZoneId' => '0123456789'
-        ));
+				$resourceRecordSets = $client->getIterator('ListResourceRecordSets', array(
+						'HostedZoneId' => '0123456789'
+				));
 
-        $resourceRecords = array();
-        foreach ($resourceRecordSets as $resourceRecordSet) {
-            $this->assertEquals('www.example.com.', $resourceRecordSet['Name']);
-            foreach ($resourceRecordSet['ResourceRecords'] as $resourceRecord) {
-                $resourceRecords[] = $resourceRecord['Value'];
-            }
-        }
+				$resourceRecords = array();
+				foreach ($resourceRecordSets as $resourceRecordSet) {
+						$this->assertEquals('www.example.com.', $resourceRecordSet['Name']);
+						foreach ($resourceRecordSet['ResourceRecords'] as $resourceRecord) {
+								$resourceRecords[] = $resourceRecord['Value'];
+						}
+				}
 
-        $this->assertSame(array('a', 'b', 'c', 'd', 'e', 'f'), $resourceRecords);
+				$this->assertSame(array('a', 'b', 'c', 'd', 'e', 'f'), $resourceRecords);
 
-        $requests = $mock->getReceivedRequests();
-        $this->assertEquals(3, count($requests));
-    }
+				$requests = $mock->getReceivedRequests();
+				$this->assertEquals(3, count($requests));
+		}
 }

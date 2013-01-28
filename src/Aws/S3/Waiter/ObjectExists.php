@@ -26,33 +26,33 @@ use Aws\Common\Waiter\AbstractResourceWaiter;
  */
 class ObjectExists extends AbstractResourceWaiter
 {
-    protected $interval = 5;
-    protected $maxAttempts = 20;
-    protected $maxFailures = 0;
+		protected $interval = 5;
+		protected $maxAttempts = 20;
+		protected $maxFailures = 0;
 
-    /**
-     * {@inheritdoc}
-     * @throws InvalidArgumentException if the resource ID format is invalid
-     */
-    public function setResourceId($resourceId)
-    {
-        if (!strpos($resourceId, '/')) {
-            throw new InvalidArgumentException('The resource ID must be in the form of bucket/key');
-        }
-        parent::setResourceId($resourceId);
+		/**
+		 * {@inheritdoc}
+		 * @throws InvalidArgumentException if the resource ID format is invalid
+		 */
+		public function setResourceId($resourceId)
+		{
+				if (!strpos($resourceId, '/')) {
+						throw new InvalidArgumentException('The resource ID must be in the form of bucket/key');
+				}
+				parent::setResourceId($resourceId);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Wait until an object exists
-     */
-    protected function doWait()
-    {
-        list($bucket, $key) = explode('/', $this->resourceId, 2);
+		/**
+		 * Wait until an object exists
+		 */
+		protected function doWait()
+		{
+				list($bucket, $key) = explode('/', $this->resourceId, 2);
 
-        return $this->client->doesObjectExist($bucket, $key, array(
-            Ua::OPTION => Ua::WAITER
-        ));
-    }
+				return $this->client->doesObjectExist($bucket, $key, array(
+						Ua::OPTION => Ua::WAITER
+				));
+		}
 }

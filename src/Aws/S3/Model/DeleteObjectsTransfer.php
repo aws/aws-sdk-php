@@ -30,104 +30,104 @@ use Guzzle\Service\Command\CommandInterface;
  */
 class DeleteObjectsTransfer implements BatchTransferInterface
 {
-    /**
-     * @var AwsClientInterface The Amazon S3 client for doing transfers
-     */
-    protected $client;
+		/**
+		 * @var AwsClientInterface The Amazon S3 client for doing transfers
+		 */
+		protected $client;
 
-    /**
-     * @var string Bucket from which to delete the objects
-     */
-    protected $bucket;
+		/**
+		 * @var string Bucket from which to delete the objects
+		 */
+		protected $bucket;
 
-    /**
-     * @var string MFA token to apply to the request
-     */
-    protected $mfa;
+		/**
+		 * @var string MFA token to apply to the request
+		 */
+		protected $mfa;
 
-    /**
-     * Constructs a transfer using the injected client
-     *
-     * @param AwsClientInterface $client Client used to transfer the requests
-     * @param string             $bucket Name of the bucket that stores the objects
-     * @param string             $mfa    MFA token used when contacting the Amazon S3 API
-     */
-    public function __construct(AwsClientInterface $client, $bucket, $mfa = null)
-    {
-        $this->client = $client;
-        $this->bucket = $bucket;
-        $this->mfa = $mfa;
-    }
+		/**
+		 * Constructs a transfer using the injected client
+		 *
+		 * @param AwsClientInterface $client Client used to transfer the requests
+		 * @param string						 $bucket Name of the bucket that stores the objects
+		 * @param string						 $mfa		MFA token used when contacting the Amazon S3 API
+		 */
+		public function __construct(AwsClientInterface $client, $bucket, $mfa = null)
+		{
+				$this->client = $client;
+				$this->bucket = $bucket;
+				$this->mfa = $mfa;
+		}
 
-    /**
-     * Set a new MFA token value
-     *
-     * @param string $token MFA token
-     *
-     * @return self
-     */
-    public function setMfa($token)
-    {
-        $this->mfa = $token;
+		/**
+		 * Set a new MFA token value
+		 *
+		 * @param string $token MFA token
+		 *
+		 * @return self
+		 */
+		public function setMfa($token)
+		{
+				$this->mfa = $token;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     * @throws OverflowException if a batch has more than 1000 items
-     * @throws InvalidArgumentException when an invalid batch item is encountered
-     */
-    public function transfer(array $batch)
-    {
-        if (empty($batch)) {
-            return;
-        }
+		/**
+		 * {@inheritdoc}
+		 * @throws OverflowException if a batch has more than 1000 items
+		 * @throws InvalidArgumentException when an invalid batch item is encountered
+		 */
+		public function transfer(array $batch)
+		{
+				if (empty($batch)) {
+						return;
+				}
 
-        if (count($batch) > 1000) {
-            throw new OverflowException('Batches should be divided into chunks of no larger than 1000 keys');
-        }
+				if (count($batch) > 1000) {
+						throw new OverflowException('Batches should be divided into chunks of no larger than 1000 keys');
+				}
 
-        $del = array();
-        $command = $this->client->getCommand('DeleteObjects', array(
-            'Bucket'   => $this->bucket,
-            Ua::OPTION => Ua::BATCH
-        ));
+				$del = array();
+				$command = $this->client->getCommand('DeleteObjects', array(
+						'Bucket'	 => $this->bucket,
+						Ua::OPTION => Ua::BATCH
+				));
 
-        if ($this->mfa) {
-            $command->getRequestHeaders()->set('x-amz-mfa', $this->mfa);
-        }
+				if ($this->mfa) {
+						$command->getRequestHeaders()->set('x-amz-mfa', $this->mfa);
+				}
 
-        foreach ($batch as $object) {
-            // Ensure that the batch item is valid
-            if (!is_array($object) || !isset($object['Key'])) {
-                throw new InvalidArgumentException('Invalid batch item encountered: ' . var_export($batch, true));
-            }
-            $del[] = array(
-                'Key'       => $object['Key'],
-                'VersionId' => isset($object['VersionId']) ? $object['VersionId'] : null
-            );
-        }
+				foreach ($batch as $object) {
+						// Ensure that the batch item is valid
+						if (!is_array($object) || !isset($object['Key'])) {
+								throw new InvalidArgumentException('Invalid batch item encountered: ' . var_export($batch, true));
+						}
+						$del[] = array(
+								'Key'			 => $object['Key'],
+								'VersionId' => isset($object['VersionId']) ? $object['VersionId'] : null
+						);
+				}
 
-        $command['Objects'] = $del;
+				$command['Objects'] = $del;
 
-        $command->execute();
-        $this->processResponse($command);
-    }
+				$command->execute();
+				$this->processResponse($command);
+		}
 
-    /**
-     * Process the response of the DeleteMultipleObjects request
-     *
-     * @paramCommandInterface $command Command executed
-     */
-    protected function processResponse(CommandInterface $command)
-    {
-        $result = $command->getResult();
+		/**
+		 * Process the response of the DeleteMultipleObjects request
+		 *
+		 * @paramCommandInterface $command Command executed
+		 */
+		protected function processResponse(CommandInterface $command)
+		{
+				$result = $command->getResult();
 
-        // Ensure that the objects were deleted successfully
-        if (!empty($result['Errors'])) {
-            $errors = $result['Errors'];
-            throw new DeleteMultipleObjectsException($errors);
-        }
-    }
+				// Ensure that the objects were deleted successfully
+				if (!empty($result['Errors'])) {
+						$errors = $result['Errors'];
+						throw new DeleteMultipleObjectsException($errors);
+				}
+		}
 }

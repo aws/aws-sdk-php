@@ -23,79 +23,79 @@ use Aws\Common\Exception\InvalidArgumentException;
  */
 abstract class AbstractUploadPart implements UploadPartInterface
 {
-    /**
-     * @var array A map of external array keys to internal property names
-     */
-    protected static $keyMap = array();
+		/**
+		 * @var array A map of external array keys to internal property names
+		 */
+		protected static $keyMap = array();
 
-    /**
-     * @var int The number of the upload part representing its order in the overall upload
-     */
-    protected $partNumber;
+		/**
+		 * @var int The number of the upload part representing its order in the overall upload
+		 */
+		protected $partNumber;
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function fromArray($data)
-    {
-        $part = new static();
-        $part->loadData($data);
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function fromArray($data)
+		{
+				$part = new static();
+				$part->loadData($data);
 
-        return $part;
-    }
+				return $part;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPartNumber()
-    {
-        return $this->partNumber;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getPartNumber()
+		{
+				return $this->partNumber;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $array = array();
-        foreach (static::$keyMap as $key => $property) {
-            $array[$key] = $this->{$property};
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function toArray()
+		{
+				$array = array();
+				foreach (static::$keyMap as $key => $property) {
+						$array[$key] = $this->{$property};
+				}
 
-        return $array;
-    }
+				return $array;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return serialize($this->toArray());
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function serialize()
+		{
+				return serialize($this->toArray());
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $this->loadData(unserialize($serialized));
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function unserialize($serialized)
+		{
+				$this->loadData(unserialize($serialized));
+		}
 
-    /**
-     * Loads an array of data into the upload part by extracting only the needed keys
-     *
-     * @param array|\Traversable $data Data to load into the upload part value object
-     *
-     * @throws InvalidArgumentException if a required key is missing
-     */
-    protected function loadData($data)
-    {
-        foreach (static::$keyMap as $key => $property) {
-            if (isset($data[$key])) {
-                $this->{$property} = $data[$key];
-            } else {
-                throw new InvalidArgumentException("A required key [$key] was missing from the upload part.");
-            }
-        }
-    }
+		/**
+		 * Loads an array of data into the upload part by extracting only the needed keys
+		 *
+		 * @param array|\Traversable $data Data to load into the upload part value object
+		 *
+		 * @throws InvalidArgumentException if a required key is missing
+		 */
+		protected function loadData($data)
+		{
+				foreach (static::$keyMap as $key => $property) {
+						if (isset($data[$key])) {
+								$this->{$property} = $data[$key];
+						} else {
+								throw new InvalidArgumentException("A required key [$key] was missing from the upload part.");
+						}
+				}
+		}
 }

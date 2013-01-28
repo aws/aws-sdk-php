@@ -26,23 +26,23 @@ use Guzzle\Http\Message\RequestInterface;
  */
 interface S3SignatureInterface extends SignatureInterface
 {
-    /**
-     * Sign a string for Amazon S3
-     *
-     * @param string               $string      String to sign
-     * @param CredentialsInterface $credentials Credentials used to sign
-     *
-     * @return string
-     */
-    public function signString($string, CredentialsInterface $credentials);
+		/**
+		 * Sign a string for Amazon S3
+		 *
+		 * @param string							 $string			String to sign
+		 * @param CredentialsInterface $credentials Credentials used to sign
+		 *
+		 * @return string
+		 */
+		public function signString($string, CredentialsInterface $credentials);
 
-    /**
-     * Create a canonicalized string for a signature.
-     *
-     * @param RequestInterface $request Base on the request
-     * @param string           $expires Pass a UNIX timestamp if creating a query signature
-     *
-     * @return string Returns a canonicalized string for an Amazon S3 signature.
-     */
-    public function createCanonicalizedString(RequestInterface $request, $expires = null);
+		/**
+		 * Create a canonicalized string for a signature.
+		 *
+		 * @param RequestInterface $request Base on the request
+		 * @param string					 $expires Pass a UNIX timestamp if creating a query signature
+		 *
+		 * @return string Returns a canonicalized string for an Amazon S3 signature.
+		 */
+		public function createCanonicalizedString(RequestInterface $request, $expires = null);
 }

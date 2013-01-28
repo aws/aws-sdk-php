@@ -25,13 +25,13 @@ use Guzzle\Http\Message\RequestInterface;
  */
 interface SignatureInterface
 {
-    /**
-     * Signs the specified request with an AWS signing protocol by using the
-     * provided AWS account credentials and adding the required headers to the
-     * request.
-     *
-     * @param RequestInterface     $request     Request to add a signature to
-     * @param CredentialsInterface $credentials Signing credentials
-     */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials);
+		/**
+		 * Signs the specified request with an AWS signing protocol by using the
+		 * provided AWS account credentials and adding the required headers to the
+		 * request.
+		 *
+		 * @param RequestInterface		 $request		 Request to add a signature to
+		 * @param CredentialsInterface $credentials Signing credentials
+		 */
+		public function signRequest(RequestInterface $request, CredentialsInterface $credentials);
 }

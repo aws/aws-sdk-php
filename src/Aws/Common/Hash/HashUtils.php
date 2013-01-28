@@ -23,50 +23,50 @@ use Aws\Common\Exception\InvalidArgumentException;
  */
 class HashUtils
 {
-    /**
-     * Converts a hash in hex form to binary form
-     *
-     * @param string $hash Hash in hex form
-     *
-     * @return string Hash in binary form
-     */
-    public static function hexToBin($hash)
-    {
-        // If using PHP 5.4, there is a native function to convert from hex to binary
-        static $useNative;
-        if ($useNative === null) {
-            $useNative = function_exists('hex2bin');
-        }
+		/**
+		 * Converts a hash in hex form to binary form
+		 *
+		 * @param string $hash Hash in hex form
+		 *
+		 * @return string Hash in binary form
+		 */
+		public static function hexToBin($hash)
+		{
+				// If using PHP 5.4, there is a native function to convert from hex to binary
+				static $useNative;
+				if ($useNative === null) {
+						$useNative = function_exists('hex2bin');
+				}
 
-        return $useNative ? hex2bin($hash) : pack("H*", $hash);
-    }
+				return $useNative ? hex2bin($hash) : pack("H*", $hash);
+		}
 
-    /**
-     * Converts a hash in binary form to hex form
-     *
-     * @param string $hash Hash in binary form
-     *
-     * @return string Hash in hex form
-     */
-    public static function binToHex($hash)
-    {
-        return bin2hex($hash);
-    }
+		/**
+		 * Converts a hash in binary form to hex form
+		 *
+		 * @param string $hash Hash in binary form
+		 *
+		 * @return string Hash in hex form
+		 */
+		public static function binToHex($hash)
+		{
+				return bin2hex($hash);
+		}
 
-    /**
-     * Checks if the algorithm specified exists and throws an exception if it does not
-     *
-     * @param string $algorithm Name of the algorithm to validate
-     *
-     * @return bool
-     * @throws InvalidArgumentException if the algorithm doesn't exist
-     */
-    public static function validateAlgorithm($algorithm)
-    {
-        if (!in_array($algorithm, hash_algos(), true)) {
-            throw new InvalidArgumentException("The hashing algorithm specified ({$algorithm}) does not exist.");
-        }
+		/**
+		 * Checks if the algorithm specified exists and throws an exception if it does not
+		 *
+		 * @param string $algorithm Name of the algorithm to validate
+		 *
+		 * @return bool
+		 * @throws InvalidArgumentException if the algorithm doesn't exist
+		 */
+		public static function validateAlgorithm($algorithm)
+		{
+				if (!in_array($algorithm, hash_algos(), true)) {
+						throw new InvalidArgumentException("The hashing algorithm specified ({$algorithm}) does not exist.");
+				}
 
-        return true;
-    }
+				return true;
+		}
 }

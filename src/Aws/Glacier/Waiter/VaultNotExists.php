@@ -25,24 +25,24 @@ use Aws\Glacier\Exception\ResourceNotFoundException;
  */
 class VaultNotExists extends AbstractResourceWaiter
 {
-    protected $interval = 3;
-    protected $maxAttempts = 15;
-    protected $maxFailures = 0;
+		protected $interval = 3;
+		protected $maxAttempts = 15;
+		protected $maxFailures = 0;
 
-    /**
-     * Wait until a bucket exists
-     */
-    protected function doWait()
-    {
-        try {
-            $this->client->getCommand('DescribeVault', array(
-                'vaultName' => $this->resourceId,
-                Ua::OPTION  => Ua::WAITER
-            ))->execute();
+		/**
+		 * Wait until a bucket exists
+		 */
+		protected function doWait()
+		{
+				try {
+						$this->client->getCommand('DescribeVault', array(
+								'vaultName' => $this->resourceId,
+								Ua::OPTION	=> Ua::WAITER
+						))->execute();
 
-            return false;
-        } catch (ResourceNotFoundException $e) {
-            return true;
-        }
-    }
+						return false;
+				} catch (ResourceNotFoundException $e) {
+						return true;
+				}
+		}
 }

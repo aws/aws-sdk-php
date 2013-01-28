@@ -23,67 +23,67 @@ use Aws\Common\Exception\InvalidArgumentException;
  */
 abstract class AbstractUploadId implements UploadIdInterface
 {
-    /**
-     * @var array Expected values (with defaults)
-     */
-    protected static $expectedValues = array();
+		/**
+		 * @var array Expected values (with defaults)
+		 */
+		protected static $expectedValues = array();
 
-    /**
-     * @var array Params representing the identifying information
-     */
-    protected $data = array();
+		/**
+		 * @var array Params representing the identifying information
+		 */
+		protected $data = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function fromParams($data)
-    {
-        $uploadId = new static();
-        $uploadId->loadData($data);
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function fromParams($data)
+		{
+				$uploadId = new static();
+				$uploadId->loadData($data);
 
-        return $uploadId;
-    }
+				return $uploadId;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toParams()
-    {
-        return $this->data;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function toParams()
+		{
+				return $this->data;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return serialize($this->data);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function serialize()
+		{
+				return serialize($this->data);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $this->loadData(unserialize($serialized));
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function unserialize($serialized)
+		{
+				$this->loadData(unserialize($serialized));
+		}
 
-    /**
-     * Loads an array of data into the UploadId by extracting only the needed keys
-     *
-     * @param array $data Data to load
-     *
-     * @throws InvalidArgumentException if a required key is missing
-     */
-    protected function loadData($data)
-    {
-        $data = array_replace(static::$expectedValues, array_intersect_key($data, static::$expectedValues));
-        foreach ($data as $key => $value) {
-            if (isset($data[$key])) {
-                $this->data[$key] = $data[$key];
-            } else {
-                throw new InvalidArgumentException("A required key [$key] was missing from the UploadId.");
-            }
-        }
-    }
+		/**
+		 * Loads an array of data into the UploadId by extracting only the needed keys
+		 *
+		 * @param array $data Data to load
+		 *
+		 * @throws InvalidArgumentException if a required key is missing
+		 */
+		protected function loadData($data)
+		{
+				$data = array_replace(static::$expectedValues, array_intersect_key($data, static::$expectedValues));
+				foreach ($data as $key => $value) {
+						if (isset($data[$key])) {
+								$this->data[$key] = $data[$key];
+						} else {
+								throw new InvalidArgumentException("A required key [$key] was missing from the UploadId.");
+						}
+				}
+		}
 }

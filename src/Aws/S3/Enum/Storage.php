@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class Storage extends Enum
 {
-    const STANDARD = 'STANDARD';
-    const REDUCED  = 'REDUCED_REDUNDANCY';
-    const GLACIER = 'GLACIER';
+		const STANDARD = 'STANDARD';
+		const REDUCED	= 'REDUCED_REDUNDANCY';
+		const GLACIER = 'GLACIER';
 }

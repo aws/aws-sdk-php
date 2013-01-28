@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class ScalarAttributeType extends Enum
 {
-    const S = 'S';
-    const N = 'N';
-    const B = 'B';
+		const S = 'S';
+		const N = 'N';
+		const B = 'B';
 }

@@ -23,70 +23,70 @@ use Aws\Common\Client\AwsClientInterface;
  */
 interface TransferStateInterface extends \Countable, \IteratorAggregate, \Serializable
 {
-    /**
-     * Create the transfer state from the results of list parts request
-     *
-     * @param AwsClientInterface $client   Client used to send the request
-     * @param UploadIdInterface  $uploadId Params needed to identify the upload and form the request
-     *
-     * @return self
-     */
-    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId);
+		/**
+		 * Create the transfer state from the results of list parts request
+		 *
+		 * @param AwsClientInterface $client	 Client used to send the request
+		 * @param UploadIdInterface	$uploadId Params needed to identify the upload and form the request
+		 *
+		 * @return self
+		 */
+		public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId);
 
-    /**
-     * Get the params used to identify an upload part
-     *
-     * @return UploadIdInterface
-     */
-    public function getUploadId();
+		/**
+		 * Get the params used to identify an upload part
+		 *
+		 * @return UploadIdInterface
+		 */
+		public function getUploadId();
 
-    /**
-     * Get the part information of a specific part
-     *
-     * @param int $partNumber Part to retrieve
-     *
-     * @return UploadPartInterface
-     */
-    public function getPart($partNumber);
+		/**
+		 * Get the part information of a specific part
+		 *
+		 * @param int $partNumber Part to retrieve
+		 *
+		 * @return UploadPartInterface
+		 */
+		public function getPart($partNumber);
 
-    /**
-     * Add a part to the transfer state
-     *
-     * @param UploadPartInterface $part The part to add
-     *
-     * @return self
-     */
-    public function addPart(UploadPartInterface $part);
+		/**
+		 * Add a part to the transfer state
+		 *
+		 * @param UploadPartInterface $part The part to add
+		 *
+		 * @return self
+		 */
+		public function addPart(UploadPartInterface $part);
 
-    /**
-     * Check if a specific part has been uploaded
-     *
-     * @param int $partNumber Part to check
-     *
-     * @return bool
-     */
-    public function hasPart($partNumber);
+		/**
+		 * Check if a specific part has been uploaded
+		 *
+		 * @param int $partNumber Part to check
+		 *
+		 * @return bool
+		 */
+		public function hasPart($partNumber);
 
-    /**
-     * Get a list of all of the uploaded part numbers
-     *
-     * @return array
-     */
-    public function getPartNumbers();
+		/**
+		 * Get a list of all of the uploaded part numbers
+		 *
+		 * @return array
+		 */
+		public function getPartNumbers();
 
-    /**
-     * Set whether or not the transfer has been aborted
-     *
-     * @param bool $aborted Set to true to mark the transfer as aborted
-     *
-     * @return self
-     */
-    public function setAborted($aborted);
+		/**
+		 * Set whether or not the transfer has been aborted
+		 *
+		 * @param bool $aborted Set to true to mark the transfer as aborted
+		 *
+		 * @return self
+		 */
+		public function setAborted($aborted);
 
-    /**
-     * Check if the transfer has been marked as aborted
-     *
-     * @return bool
-     */
-    public function isAborted();
+		/**
+		 * Check if the transfer has been marked as aborted
+		 *
+		 * @return bool
+		 */
+		public function isAborted();
 }

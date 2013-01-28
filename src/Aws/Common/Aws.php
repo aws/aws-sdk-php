@@ -24,77 +24,77 @@ use Guzzle\Service\Builder\ServiceBuilderLoader;
  */
 class Aws extends ServiceBuilderLoader
 {
-    /**
-     * @var string Current version of the SDK
-     */
-    const VERSION = '2.0.3';
+		/**
+		 * @var string Current version of the SDK
+		 */
+		const VERSION = '2.0.3';
 
-    /**
-     * Create a new service locator for the AWS SDK
-     *
-     * You can configure the service locator is four different ways:
-     *
-     * 1. Use the default configuration file shipped with the SDK that wires
-     *   class names with service short names and specify global parameters to
-     *   add to every definition (e.g. key, secret, credentials, etc)
-     *
-     * 2. Use a custom configuration file that extends the default config and
-     *   supplies credentials for each service.
-     *
-     * 3. Use a custom config file that wires services to custom short names for
-     *    services.
-     *
-     * 4. If you are on Amazon EC2, you can use the default configuration file
-     *    and not provide any credentials so that you are using InstanceProfile
-     *    credentials.
-     *
-     * @param array|string|\SimpleXMLElement $config           An instantiated SimpleXMLElement containing configuration
-     *                                                         data, the full path to an .xml or .js|.json file, or when
-     *                                                         using the default configuration file, an associative
-     *                                                         array of data to use as global parameters to pass to each
-     *                                                         service as it is instantiated.
-     * @param array                          $globalParameters Array of global parameters to pass to every service as it
-     *                                                         is instantiated.
-     * @return ServiceBuilder
-     */
-    public static function factory($config = null, array $globalParameters = array())
-    {
-        $defaultDefinition = self::getDefaultServiceDefinition();
+		/**
+		 * Create a new service locator for the AWS SDK
+		 *
+		 * You can configure the service locator is four different ways:
+		 *
+		 * 1. Use the default configuration file shipped with the SDK that wires
+		 *	 class names with service short names and specify global parameters to
+		 *	 add to every definition (e.g. key, secret, credentials, etc)
+		 *
+		 * 2. Use a custom configuration file that extends the default config and
+		 *	 supplies credentials for each service.
+		 *
+		 * 3. Use a custom config file that wires services to custom short names for
+		 *		services.
+		 *
+		 * 4. If you are on Amazon EC2, you can use the default configuration file
+		 *		and not provide any credentials so that you are using InstanceProfile
+		 *		credentials.
+		 *
+		 * @param array|string|\SimpleXMLElement $config					 An instantiated SimpleXMLElement containing configuration
+		 *																												 data, the full path to an .xml or .js|.json file, or when
+		 *																												 using the default configuration file, an associative
+		 *																												 array of data to use as global parameters to pass to each
+		 *																												 service as it is instantiated.
+		 * @param array													$globalParameters Array of global parameters to pass to every service as it
+		 *																												 is instantiated.
+		 * @return ServiceBuilder
+		 */
+		public static function factory($config = null, array $globalParameters = array())
+		{
+				$defaultDefinition = self::getDefaultServiceDefinition();
 
-        if (!$config) {
-            // If nothing is passed in, then use the default configuration file
-            // with Instance profile credentials
-            $config = $defaultDefinition;
-        } elseif (is_array($config)) {
-            // If an array was passed, then use the default configuration file
-            // with global parameter overrides in the first argument
-            $globalParameters = $config;
-            $config = $defaultDefinition;
-        }
+				if (!$config) {
+						// If nothing is passed in, then use the default configuration file
+						// with Instance profile credentials
+						$config = $defaultDefinition;
+				} elseif (is_array($config)) {
+						// If an array was passed, then use the default configuration file
+						// with global parameter overrides in the first argument
+						$globalParameters = $config;
+						$config = $defaultDefinition;
+				}
 
-        $loader = new static();
+				$loader = new static();
 
-        return $loader->load($config, $globalParameters);
-    }
+				return $loader->load($config, $globalParameters);
+		}
 
-    /**
-     * Get the full path to the default JSON service definition file
-     *
-     * @return string
-     */
-    public static function getDefaultServiceDefinition()
-    {
-        return __DIR__  . '/Resources/aws-config.php';
-    }
+		/**
+		 * Get the full path to the default JSON service definition file
+		 *
+		 * @return string
+		 */
+		public static function getDefaultServiceDefinition()
+		{
+				return __DIR__	. '/Resources/aws-config.php';
+		}
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $defaultDefinition = self::getDefaultServiceDefinition();
-        $sdk1CompatibilityDefinition = str_replace('aws-config', 'sdk1-config', $defaultDefinition);
-        $this->addAlias('_aws', $defaultDefinition);
-        $this->addAlias('_sdk1', $sdk1CompatibilityDefinition);
-    }
+		/**
+		 * Constructor
+		 */
+		public function __construct()
+		{
+				$defaultDefinition = self::getDefaultServiceDefinition();
+				$sdk1CompatibilityDefinition = str_replace('aws-config', 'sdk1-config', $defaultDefinition);
+				$this->addAlias('_aws', $defaultDefinition);
+				$this->addAlias('_sdk1', $sdk1CompatibilityDefinition);
+		}
 }

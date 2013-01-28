@@ -23,58 +23,58 @@ use Guzzle\Cache\CacheAdapterInterface;
  */
 class CachingEndpointProvider implements EndpointProviderInterface
 {
-    /**
-     * @var EndpointProviderInterface The decorated endpoint provider
-     */
-    protected $provider;
+		/**
+		 * @var EndpointProviderInterface The decorated endpoint provider
+		 */
+		protected $provider;
 
-    /**
-     * @var CacheAdapterInterface Cache used to cache previously fetched endpoints
-     */
-    protected $cache;
+		/**
+		 * @var CacheAdapterInterface Cache used to cache previously fetched endpoints
+		 */
+		protected $cache;
 
-    /**
-     * Create a new CachingEndpointProvider
-     *
-     * @param EndpointProviderInterface $provider The decorated endpoint provider to cache
-     * @param CacheAdapterInterface     $cache    Cache used to cache previously fetched endpoints
-     *
-     * @return self
-     */
-    public function __construct(EndpointProviderInterface $provider, CacheAdapterInterface $cache)
-    {
-        $this->provider = $provider;
-        $this->cache = $cache;
-    }
+		/**
+		 * Create a new CachingEndpointProvider
+		 *
+		 * @param EndpointProviderInterface $provider The decorated endpoint provider to cache
+		 * @param CacheAdapterInterface		 $cache		Cache used to cache previously fetched endpoints
+		 *
+		 * @return self
+		 */
+		public function __construct(EndpointProviderInterface $provider, CacheAdapterInterface $cache)
+		{
+				$this->provider = $provider;
+				$this->cache = $cache;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getRegions($serviceName = null)
-    {
-        return $this->provider->getRegions($serviceName);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getRegions($serviceName = null)
+		{
+				return $this->provider->getRegions($serviceName);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getServices($regionName = null)
-    {
-        return $this->provider->getServices($regionName);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getServices($regionName = null)
+		{
+				return $this->provider->getServices($regionName);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getEndpoint($serviceName, $regionName)
-    {
-        $id = "{$serviceName}_{$regionName}";
-        if ($endpoint = $this->cache->fetch($id)) {
-            return $endpoint;
-        } else {
-            $endpoint = $this->provider->getEndpoint($serviceName, $regionName);
-            $this->cache->save($id, $endpoint, 86400);
-            return $endpoint;
-        }
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getEndpoint($serviceName, $regionName)
+		{
+				$id = "{$serviceName}_{$regionName}";
+				if ($endpoint = $this->cache->fetch($id)) {
+						return $endpoint;
+				} else {
+						$endpoint = $this->provider->getEndpoint($serviceName, $regionName);
+						$this->cache->save($id, $endpoint, 86400);
+						return $endpoint;
+				}
+		}
 }

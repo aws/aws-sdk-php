@@ -23,7 +23,7 @@ use Aws\Common\Enum;
  */
 class Group extends Enum
 {
-    const AUTHENTICATED_USERS = 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers';
-    const ALL_USERS           = 'http://acs.amazonaws.com/groups/global/AllUsers';
-    const LOG_DELIVERY        = 'http://acs.amazonaws.com/groups/s3/LogDelivery';
+		const AUTHENTICATED_USERS = 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers';
+		const ALL_USERS					 = 'http://acs.amazonaws.com/groups/global/AllUsers';
+		const LOG_DELIVERY				= 'http://acs.amazonaws.com/groups/s3/LogDelivery';
 }

@@ -31,57 +31,57 @@ use Guzzle\Batch\AbstractBatchDecorator;
  */
 class DeleteObjectsBatch extends AbstractBatchDecorator
 {
-    /**
-     * Factory for creating a DeleteObjectsBatch
-     *
-     * @param AwsClientInterface $client Client used to transfer requests
-     * @param string             $bucket Bucket that contains the objects to delete
-     * @param string             $mfa    MFA token to use with the request
-     *
-     * @return self
-     */
-    public static function factory(AwsClientInterface $client, $bucket, $mfa = null)
-    {
-        $batch = BatchBuilder::factory()
-            ->createBatchesWith(new BatchSizeDivisor(1000))
-            ->transferWith(new DeleteObjectsTransfer($client, $bucket, $mfa))
-            ->build();
+		/**
+		 * Factory for creating a DeleteObjectsBatch
+		 *
+		 * @param AwsClientInterface $client Client used to transfer requests
+		 * @param string						 $bucket Bucket that contains the objects to delete
+		 * @param string						 $mfa		MFA token to use with the request
+		 *
+		 * @return self
+		 */
+		public static function factory(AwsClientInterface $client, $bucket, $mfa = null)
+		{
+				$batch = BatchBuilder::factory()
+						->createBatchesWith(new BatchSizeDivisor(1000))
+						->transferWith(new DeleteObjectsTransfer($client, $bucket, $mfa))
+						->build();
 
-        return new self($batch);
-    }
+				return new self($batch);
+		}
 
-    /**
-     * Add an object to be deleted
-     *
-     * @param string $key       Key of the object
-     * @param string $versionId VersionID of the object
-     *
-     * @return self
-     */
-    public function addKey($key, $versionId = null)
-    {
-        return $this->add(array(
-            'Key'       => $key,
-            'VersionId' => $versionId
-        ));
-    }
+		/**
+		 * Add an object to be deleted
+		 *
+		 * @param string $key			 Key of the object
+		 * @param string $versionId VersionID of the object
+		 *
+		 * @return self
+		 */
+		public function addKey($key, $versionId = null)
+		{
+				return $this->add(array(
+						'Key'			 => $key,
+						'VersionId' => $versionId
+				));
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function add($item)
-    {
-        if ($item instanceof AbstractCommand && $item->getName() == 'DeleteObject') {
-            $item = array(
-                'Key'       => $item['Key'],
-                'VersionId' => $item['VersionId']
-            );
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function add($item)
+		{
+				if ($item instanceof AbstractCommand && $item->getName() == 'DeleteObject') {
+						$item = array(
+								'Key'			 => $item['Key'],
+								'VersionId' => $item['VersionId']
+						);
+				}
 
-        if (!is_array($item) || (!isset($item['Key']))) {
-            throw new InvalidArgumentException('Item must be a DeleteObject command or array containing a Key and VersionId key.');
-        }
+				if (!is_array($item) || (!isset($item['Key']))) {
+						throw new InvalidArgumentException('Item must be a DeleteObject command or array containing a Key and VersionId key.');
+				}
 
-        return $this->decoratedBatch->add($item);
-    }
+				return $this->decoratedBatch->add($item);
+		}
 }

@@ -24,13 +24,13 @@ use Aws\DynamoDb\Session\SessionHandlerConfig;
  */
 interface LockingStrategyFactoryInterface
 {
-    /**
-     * Creates a session handler locking strategy object
-     *
-     * @param string               $lockingStrategy The name of the locking strategy
-     * @param SessionHandlerConfig $config          The session handler config data
-     *
-     * @return LockingStrategyInterface
-     */
-    public function factory($lockingStrategy, SessionHandlerConfig $config);
+		/**
+		 * Creates a session handler locking strategy object
+		 *
+		 * @param string							 $lockingStrategy The name of the locking strategy
+		 * @param SessionHandlerConfig $config					The session handler config data
+		 *
+		 * @return LockingStrategyInterface
+		 */
+		public function factory($lockingStrategy, SessionHandlerConfig $config);
 }

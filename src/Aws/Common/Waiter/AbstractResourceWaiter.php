@@ -24,62 +24,62 @@ use Aws\Common\Exception\RuntimeException;
  */
 abstract class AbstractResourceWaiter extends AbstractWaiter implements ResourceWaiterInterface
 {
-    /**
-     * @var AwsClientInterface
-     */
-    protected $client;
+		/**
+		 * @var AwsClientInterface
+		 */
+		protected $client;
 
-    /**
-     * @var array Configuration data
-     */
-    protected $config;
+		/**
+		 * @var array Configuration data
+		 */
+		protected $config;
 
-    /**
-     * @var string Resource identifier
-     */
-    protected $resourceId;
+		/**
+		 * @var string Resource identifier
+		 */
+		protected $resourceId;
 
-    /**
-     * Set the client associated with the waiter
-     *
-     * @param AwsClientInterface $client Client to use with the waiter
-     *
-     * @return self
-     */
-    public function setClient(AwsClientInterface $client)
-    {
-        $this->client = $client;
+		/**
+		 * Set the client associated with the waiter
+		 *
+		 * @param AwsClientInterface $client Client to use with the waiter
+		 *
+		 * @return self
+		 */
+		public function setClient(AwsClientInterface $client)
+		{
+				$this->client = $client;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Set the way in which a resource is uniquely identified
-     *
-     * @param string $resourceId Resource ID
-     *
-     * @return self
-     */
-    public function setResourceId($resourceId)
-    {
-        $this->resourceId = $resourceId;
+		/**
+		 * Set the way in which a resource is uniquely identified
+		 *
+		 * @param string $resourceId Resource ID
+		 *
+		 * @return self
+		 */
+		public function setResourceId($resourceId)
+		{
+				$this->resourceId = $resourceId;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function wait()
-    {
-        if (!$this->client) {
-            throw new RuntimeException('No client has been specified on the waiter');
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function wait()
+		{
+				if (!$this->client) {
+						throw new RuntimeException('No client has been specified on the waiter');
+				}
 
-        if (!$this->resourceId) {
-            throw new RuntimeException('No resource ID has been specified on the waiter');
-        }
+				if (!$this->resourceId) {
+						throw new RuntimeException('No resource ID has been specified on the waiter');
+				}
 
-        parent::wait();
-    }
+				parent::wait();
+		}
 }

@@ -24,37 +24,37 @@ use Guzzle\Service\Resource\Model;
  */
 class ListObjectsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testResultHandlingWorks()
-    {
-        // Prepare an iterator that will execute all LOC in handleResults
-        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
-        $iterator = new ListObjectsIterator($command, array(
-            'names_only'      => true,
-            'return_prefixes' => true,
-            'sort_results'    => true,
-            'token_key'       => 'NextMarker'
-        ));
-        $model = new Model(array(
-            'Contents' => array(
-                array('Key' => 'Foo'),
-                array('Key' => 'Bar'),
-                array('Key' => 'Baz'),
-            ),
-            'CommonPrefixes' => array(
-                array('Prefix' => 'Fizz'),
-                array('Prefix' => 'Buzz'),
-            )
-        ));
+		public function testResultHandlingWorks()
+		{
+				// Prepare an iterator that will execute all LOC in handleResults
+				$command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+				$iterator = new ListObjectsIterator($command, array(
+						'names_only'			=> true,
+						'return_prefixes' => true,
+						'sort_results'		=> true,
+						'token_key'			 => 'NextMarker'
+				));
+				$model = new Model(array(
+						'Contents' => array(
+								array('Key' => 'Foo'),
+								array('Key' => 'Bar'),
+								array('Key' => 'Baz'),
+						),
+						'CommonPrefixes' => array(
+								array('Prefix' => 'Fizz'),
+								array('Prefix' => 'Buzz'),
+						)
+				));
 
-        $class = new \ReflectionObject($iterator);
-        $method = $class->getMethod('handleResults');
-        $method->setAccessible(true);
-        $items = $method->invoke($iterator, $model);
+				$class = new \ReflectionObject($iterator);
+				$method = $class->getMethod('handleResults');
+				$method->setAccessible(true);
+				$items = $method->invoke($iterator, $model);
 
-        // We should get the names of all objects and prefixes in a sorted array
-        $this->assertSame(array('Bar', 'Baz', 'Buzz', 'Fizz', 'Foo'), $items);
+				// We should get the names of all objects and prefixes in a sorted array
+				$this->assertSame(array('Bar', 'Baz', 'Buzz', 'Fizz', 'Foo'), $items);
 
-        // The last key should be set as the NextMarker in the result
-        $this->assertEquals('Baz', $model->get('NextMarker'));
-    }
+				// The last key should be set as the NextMarker in the result
+				$this->assertEquals('Baz', $model->get('NextMarker'));
+		}
 }

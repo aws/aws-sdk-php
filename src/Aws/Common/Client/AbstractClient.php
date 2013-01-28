@@ -36,201 +36,201 @@ use Guzzle\Service\Description\ServiceDescription;
  */
 abstract class AbstractClient extends Client implements AwsClientInterface
 {
-    /**
-     * @var CredentialsInterface AWS credentials
-     */
-    protected $credentials;
+		/**
+		 * @var CredentialsInterface AWS credentials
+		 */
+		protected $credentials;
 
-    /**
-     * @var SignatureInterface Signature implementation of the service
-     */
-    protected $signature;
+		/**
+		 * @var SignatureInterface Signature implementation of the service
+		 */
+		protected $signature;
 
-    /**
-     * @var WaiterFactoryInterface Factory used to create waiter classes
-     */
-    protected $waiterFactory;
+		/**
+		 * @var WaiterFactoryInterface Factory used to create waiter classes
+		 */
+		protected $waiterFactory;
 
-    /**
-     * @var string The directory of the client set by the child class
-     */
-    protected $directory;
+		/**
+		 * @var string The directory of the client set by the child class
+		 */
+		protected $directory;
 
-    /**
-     * @var EndpointProviderInterface Endpoint provider used to retrieve region/service endpoints
-     */
-    protected $endpointProvider;
+		/**
+		 * @var EndpointProviderInterface Endpoint provider used to retrieve region/service endpoints
+		 */
+		protected $endpointProvider;
 
-    /**
-     * @param CredentialsInterface $credentials AWS credentials
-     * @param SignatureInterface   $signature   Signature implementation
-     * @param Collection           $config      Configuration options
-     *
-     * @throws InvalidArgumentException if an endpoint provider isn't provided
-     */
-    public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
-    {
-        // Bootstrap with Guzzle
-        parent::__construct($config->get(Options::BASE_URL), $config);
-        $this->credentials = $credentials;
-        $this->signature = $signature;
-        $this->endpointProvider = $config->get(Options::ENDPOINT_PROVIDER);
+		/**
+		 * @param CredentialsInterface $credentials AWS credentials
+		 * @param SignatureInterface	 $signature	 Signature implementation
+		 * @param Collection					 $config			Configuration options
+		 *
+		 * @throws InvalidArgumentException if an endpoint provider isn't provided
+		 */
+		public function __construct(CredentialsInterface $credentials, SignatureInterface $signature, Collection $config)
+		{
+				// Bootstrap with Guzzle
+				parent::__construct($config->get(Options::BASE_URL), $config);
+				$this->credentials = $credentials;
+				$this->signature = $signature;
+				$this->endpointProvider = $config->get(Options::ENDPOINT_PROVIDER);
 
-        // Make sure an endpoint provider was provided in the config
-        if (! ($this->endpointProvider instanceof EndpointProviderInterface)) {
-            throw new InvalidArgumentException('An endpoint provider must be provided to instantiate an AWS client');
-        }
+				// Make sure an endpoint provider was provided in the config
+				if (! ($this->endpointProvider instanceof EndpointProviderInterface)) {
+						throw new InvalidArgumentException('An endpoint provider must be provided to instantiate an AWS client');
+				}
 
-        // Make sure the user agent is prefixed by the SDK version
-        $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
+				// Make sure the user agent is prefixed by the SDK version
+				$this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
 
-        // Set the service description on the client
-        $this->addServiceDescriptionFromConfig();
+				// Set the service description on the client
+				$this->addServiceDescriptionFromConfig();
 
-        // Add the event listener so that requests are signed before they are sent
-        $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
+				// Add the event listener so that requests are signed before they are sent
+				$this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
 
-        // Resolve any config options on the client that require a client to be instantiated
-        $this->resolveOptions();
-    }
+				// Resolve any config options on the client that require a client to be instantiated
+				$this->resolveOptions();
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __call($method, $args = null)
-    {
-        return parent::__call(ucfirst($method), $args);
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function __call($method, $args = null)
+		{
+				return parent::__call(ucfirst($method), $args);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCredentials()
-    {
-        return $this->credentials;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getCredentials()
+		{
+				return $this->credentials;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSignature()
-    {
-        return $this->signature;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getSignature()
+		{
+				return $this->signature;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getEndpointProvider()
-    {
-        return $this->endpointProvider;
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function getEndpointProvider()
+		{
+				return $this->endpointProvider;
+		}
 
-    /**
-     * Change the region of the client
-     *
-     * @param string $region Name of the region to change to
-     *
-     * @return self
-     */
-    public function setRegion($region)
-    {
-        $config = $this->getConfig();
+		/**
+		 * Change the region of the client
+		 *
+		 * @param string $region Name of the region to change to
+		 *
+		 * @return self
+		 */
+		public function setRegion($region)
+		{
+				$config = $this->getConfig();
 
-        // Set the new base URL
-        $endpoint = $this->endpointProvider->getEndpoint($config->get(Options::SERVICE), $region);
-        $baseUrl = $endpoint->getBaseUrl($config->get(Options::SCHEME));
-        $this->setBaseUrl($baseUrl);
-        $config->set(Options::BASE_URL, $baseUrl);
-        $config->set(Options::REGION, $region);
+				// Set the new base URL
+				$endpoint = $this->endpointProvider->getEndpoint($config->get(Options::SERVICE), $region);
+				$baseUrl = $endpoint->getBaseUrl($config->get(Options::SCHEME));
+				$this->setBaseUrl($baseUrl);
+				$config->set(Options::BASE_URL, $baseUrl);
+				$config->set(Options::REGION, $region);
 
-        // Update the signature if necessary
-        $signature = $this->getSignature();
-        if ($signature instanceof EndpointSignatureInterface) {
-            /** @var $signature EndpointSignatureInterface */
-            $signature->setRegionName($region);
-        }
+				// Update the signature if necessary
+				$signature = $this->getSignature();
+				if ($signature instanceof EndpointSignatureInterface) {
+						/** @var $signature EndpointSignatureInterface */
+						$signature->setRegionName($region);
+				}
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Wait until a resource is available or an associated waiter returns true
-     *
-     * @param string $waiter  Name of the waiter in snake_case
-     * @param mixed  $value   Value to pass to the waiter
-     * @param array  $options Options to pass to the waiter
-     *
-     * @return self
-     */
-    public function waitUntil($waiter, $value = null, array $options = array())
-    {
-        $this->getWaiterFactory()->factory($waiter)
-            ->setResourceId($value)
-            ->setClient($this)
-            ->setConfig($options)
-            ->wait();
+		/**
+		 * Wait until a resource is available or an associated waiter returns true
+		 *
+		 * @param string $waiter	Name of the waiter in snake_case
+		 * @param mixed	$value	 Value to pass to the waiter
+		 * @param array	$options Options to pass to the waiter
+		 *
+		 * @return self
+		 */
+		public function waitUntil($waiter, $value = null, array $options = array())
+		{
+				$this->getWaiterFactory()->factory($waiter)
+						->setResourceId($value)
+						->setClient($this)
+						->setConfig($options)
+						->wait();
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Set the waiter factory to use with the client
-     *
-     * @param WaiterFactoryInterface $waiterFactory Factory used to create waiters
-     *
-     * @return self
-     */
-    public function setWaiterFactory(WaiterFactoryInterface $waiterFactory)
-    {
-        $this->waiterFactory = $waiterFactory;
+		/**
+		 * Set the waiter factory to use with the client
+		 *
+		 * @param WaiterFactoryInterface $waiterFactory Factory used to create waiters
+		 *
+		 * @return self
+		 */
+		public function setWaiterFactory(WaiterFactoryInterface $waiterFactory)
+		{
+				$this->waiterFactory = $waiterFactory;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Get the waiter factory used with the class
-     *
-     * @return WaiterFactoryInterface
-     */
-    protected function getWaiterFactory()
-    {
-        if (!$this->waiterFactory) {
-            $clientClass = get_class($this);
-            $this->waiterFactory = new WaiterClassFactory(
-                substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter'
-            );
-        }
+		/**
+		 * Get the waiter factory used with the class
+		 *
+		 * @return WaiterFactoryInterface
+		 */
+		protected function getWaiterFactory()
+		{
+				if (!$this->waiterFactory) {
+						$clientClass = get_class($this);
+						$this->waiterFactory = new WaiterClassFactory(
+								substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter'
+						);
+				}
 
-        return $this->waiterFactory;
-    }
+				return $this->waiterFactory;
+		}
 
-    /**
-     * Execute any option resolvers
-     */
-    protected function resolveOptions()
-    {
-        $config = $this->getConfig();
-        if ($resolvers = $config->get(Options::RESOLVERS)) {
-            foreach ($resolvers as $resolver) {
-                $resolver->resolve($config, $this);
-            }
-            $config->remove(Options::RESOLVERS);
-        }
-    }
+		/**
+		 * Execute any option resolvers
+		 */
+		protected function resolveOptions()
+		{
+				$config = $this->getConfig();
+				if ($resolvers = $config->get(Options::RESOLVERS)) {
+						foreach ($resolvers as $resolver) {
+								$resolver->resolve($config, $this);
+						}
+						$config->remove(Options::RESOLVERS);
+				}
+		}
 
-    /**
-     * Add a service description to the client
-     */
-    protected function addServiceDescriptionFromConfig()
-    {
-        // Set the service description
-        $description = $this->getConfig(Options::SERVICE_DESCRIPTION) || !$this->directory
-            ? $this->getConfig(Options::SERVICE_DESCRIPTION)
-            : require "{$this->directory}/Resources/client.php";
+		/**
+		 * Add a service description to the client
+		 */
+		protected function addServiceDescriptionFromConfig()
+		{
+				// Set the service description
+				$description = $this->getConfig(Options::SERVICE_DESCRIPTION) || !$this->directory
+						? $this->getConfig(Options::SERVICE_DESCRIPTION)
+						: require "{$this->directory}/Resources/client.php";
 
-        if ($description) {
-            $this->setDescription(ServiceDescription::factory($description));
-        }
-    }
+				if ($description) {
+						$this->setDescription(ServiceDescription::factory($description));
+				}
+		}
 }

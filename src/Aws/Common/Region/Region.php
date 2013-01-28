@@ -21,36 +21,36 @@ namespace Aws\Common\Region;
  */
 class Region
 {
-    /**
-     * @var string The name of the region (e.g. us-east-1)
-     */
-    protected $name;
+		/**
+		 * @var string The name of the region (e.g. us-east-1)
+		 */
+		protected $name;
 
-    /**
-     * Create a new Region object
-     *
-     * @param string $name Name of the region
-     */
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
+		/**
+		 * Create a new Region object
+		 *
+		 * @param string $name Name of the region
+		 */
+		public function __construct($name)
+		{
+				$this->name = $name;
+		}
 
-    /**
-     * Convert to a string representing the region name
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->name;
-    }
+		/**
+		 * Convert to a string representing the region name
+		 *
+		 * @return string
+		 */
+		public function __toString()
+		{
+				return $this->name;
+		}
 
-    /**
-     * Get the name of the region (e.g. us-west-1)
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+		/**
+		 * Get the name of the region (e.g. us-west-1)
+		 */
+		public function getName()
+		{
+				return $this->name;
+		}
 }

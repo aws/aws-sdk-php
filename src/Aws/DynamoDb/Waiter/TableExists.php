@@ -25,31 +25,31 @@ use Aws\DynamoDb\Exception\ResourceNotFoundException;
  */
 class TableExists extends AbstractResourceWaiter
 {
-    protected $interval = 20;
-    protected $maxAttempts = 25;
-    protected $maxFailures = 0;
+		protected $interval = 20;
+		protected $maxAttempts = 25;
+		protected $maxFailures = 0;
 
-    /**
-     * Wait until a table exists, and optionally has a status of ACTIVE
-     */
-    protected function doWait()
-    {
-        try {
-            $result = $this->client->getCommand('DescribeTable', array(
-                'TableName' => $this->resourceId,
-                Ua::OPTION  => Ua::WAITER
-            ))->execute();
+		/**
+		 * Wait until a table exists, and optionally has a status of ACTIVE
+		 */
+		protected function doWait()
+		{
+				try {
+						$result = $this->client->getCommand('DescribeTable', array(
+								'TableName' => $this->resourceId,
+								Ua::OPTION	=> Ua::WAITER
+						))->execute();
 
-            $this->config['status'] = isset($this->config['status']) ? $this->config['status'] : 'ACTIVE';
+						$this->config['status'] = isset($this->config['status']) ? $this->config['status'] : 'ACTIVE';
 
-            // If a status was specified, check if the table has that status
-            // Otherwise, return true because the table exists
-            return isset($this->config['status'])
-                ? !strcasecmp($result['Table']['TableStatus'], $this->config['status'])
-                : true;
+						// If a status was specified, check if the table has that status
+						// Otherwise, return true because the table exists
+						return isset($this->config['status'])
+								? !strcasecmp($result['Table']['TableStatus'], $this->config['status'])
+								: true;
 
-        } catch (ResourceNotFoundException $e) {
-            return false;
-        }
-    }
+				} catch (ResourceNotFoundException $e) {
+						return false;
+				}
+		}
 }

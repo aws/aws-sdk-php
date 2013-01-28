@@ -24,33 +24,33 @@ use Guzzle\Http\Message\Response;
  */
 class S3ExceptionParser extends DefaultXmlExceptionParser
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function parseHeaders(Response $response, array &$data)
-    {
-        parent::parseHeaders($response, $data);
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function parseHeaders(Response $response, array &$data)
+		{
+				parent::parseHeaders($response, $data);
 
-        // Get the request
-        /** @var $request \Guzzle\Http\Message\Request */
-        $request = $response->getRequest();
-        $status  = $response->getStatusCode();
-        $method  = $request->getMethod();
+				// Get the request
+				/** @var $request \Guzzle\Http\Message\Request */
+				$request = $response->getRequest();
+				$status	= $response->getStatusCode();
+				$method	= $request->getMethod();
 
-        // Attempt to determine code for 403s and 404s
-        if ($status === 403) {
-            $data['code'] = 'AccessDenied';
-        } elseif ($method === 'HEAD' && $status === 404) {
-            $path   = explode('/', trim($request->getPath(), '/'));
-            $host   = explode('.', $request->getHost());
-            $bucket = (count($host) === 4) ? $host[0] : array_shift($path);
-            $object = array_shift($path);
+				// Attempt to determine code for 403s and 404s
+				if ($status === 403) {
+						$data['code'] = 'AccessDenied';
+				} elseif ($method === 'HEAD' && $status === 404) {
+						$path	 = explode('/', trim($request->getPath(), '/'));
+						$host	 = explode('.', $request->getHost());
+						$bucket = (count($host) === 4) ? $host[0] : array_shift($path);
+						$object = array_shift($path);
 
-            if ($bucket && $object) {
-                $data['code'] = 'NoSuchKey';
-            } elseif ($bucket) {
-                $data['code'] = 'NoSuchBucket';
-            }
-        }
-    }
+						if ($bucket && $object) {
+								$data['code'] = 'NoSuchKey';
+						} elseif ($bucket) {
+								$data['code'] = 'NoSuchBucket';
+						}
+				}
+		}
 }

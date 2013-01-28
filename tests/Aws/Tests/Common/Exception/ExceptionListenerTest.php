@@ -26,36 +26,36 @@ use Guzzle\Common\Event;
  */
 class ExceptionListenerTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testSubscribesToEvents()
-    {
-        $this->assertArrayHasKey('request.error', ExceptionListener::getSubscribedEvents());
-    }
+		public function testSubscribesToEvents()
+		{
+				$this->assertArrayHasKey('request.error', ExceptionListener::getSubscribedEvents());
+		}
 
-    public function testThrowsServiceSpecificExceptions()
-    {
-        $e = new ServiceResponseException('Foo');
-        $response = new Response(200);
+		public function testThrowsServiceSpecificExceptions()
+		{
+				$e = new ServiceResponseException('Foo');
+				$response = new Response(200);
 
-        $factory = $this->getMockBuilder('Aws\Common\Exception\ExceptionFactoryInterface')
-            ->setMethods(array('fromResponse'))
-            ->getMock();
+				$factory = $this->getMockBuilder('Aws\Common\Exception\ExceptionFactoryInterface')
+						->setMethods(array('fromResponse'))
+						->getMock();
 
-        $factory->expects($this->once())
-            ->method('fromResponse')
-            ->with($response)
-            ->will($this->returnValue($e));
+				$factory->expects($this->once())
+						->method('fromResponse')
+						->with($response)
+						->will($this->returnValue($e));
 
-        $listener = new ExceptionListener($factory);
+				$listener = new ExceptionListener($factory);
 
-        $event = new Event(array(
-            'response' => $response
-        ));
+				$event = new Event(array(
+						'response' => $response
+				));
 
-        try {
-            $listener->onRequestError($event);
-            $this->fail('Did not throw expected exception');
-        } catch (ServiceResponseException $thrown) {
-            $this->assertSame($e, $thrown);
-        }
-    }
+				try {
+						$listener->onRequestError($event);
+						$this->fail('Did not throw expected exception');
+				} catch (ServiceResponseException $thrown) {
+						$this->assertSame($e, $thrown);
+				}
+		}
 }

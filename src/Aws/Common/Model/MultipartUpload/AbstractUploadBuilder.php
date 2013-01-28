@@ -26,125 +26,125 @@ use Guzzle\Http\EntityBody;
  */
 abstract class AbstractUploadBuilder
 {
-    /**
-     * @var AwsClientInterface Client used to transfer requests
-     */
-    protected $client;
+		/**
+		 * @var AwsClientInterface Client used to transfer requests
+		 */
+		protected $client;
 
-    /**
-     * @var TransferStateInterface State of the transfer
-     */
-    protected $state;
+		/**
+		 * @var TransferStateInterface State of the transfer
+		 */
+		protected $state;
 
-    /**
-     * @var EntityBody Source of the data
-     */
-    protected $source;
+		/**
+		 * @var EntityBody Source of the data
+		 */
+		protected $source;
 
-    /**
-     * @var array Array of headers to set on the object
-     */
-    protected $headers = array();
+		/**
+		 * @var array Array of headers to set on the object
+		 */
+		protected $headers = array();
 
-    /**
-     * Return a new instance of the UploadBuilder
-     *
-     * @return self
-     */
-    public static function newInstance()
-    {
-        return new static;
-    }
+		/**
+		 * Return a new instance of the UploadBuilder
+		 *
+		 * @return self
+		 */
+		public static function newInstance()
+		{
+				return new static;
+		}
 
-    /**
-     * Set the client used to connect to the AWS service
-     *
-     * @param AwsClientInterface $client Client to use
-     *
-     * @return self
-     */
-    public function setClient(AwsClientInterface $client)
-    {
-        $this->client = $client;
+		/**
+		 * Set the client used to connect to the AWS service
+		 *
+		 * @param AwsClientInterface $client Client to use
+		 *
+		 * @return self
+		 */
+		public function setClient(AwsClientInterface $client)
+		{
+				$this->client = $client;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Set the state of the upload. This is useful for resuming from a previously started multipart upload.
-     * You must use a local file stream as the data source if you wish to resume from a previous upload.
-     *
-     * @param TransferStateInterface|string $state Pass a TransferStateInterface object or the ID of the initiated
-     *                                             multipart upload. When an ID is passed, the builder will create a
-     *                                             state object using the data from a ListParts API response.
-     *
-     * @return self
-     */
-    public function resumeFrom($state)
-    {
-        $this->state = $state;
+		/**
+		 * Set the state of the upload. This is useful for resuming from a previously started multipart upload.
+		 * You must use a local file stream as the data source if you wish to resume from a previous upload.
+		 *
+		 * @param TransferStateInterface|string $state Pass a TransferStateInterface object or the ID of the initiated
+		 *																						 multipart upload. When an ID is passed, the builder will create a
+		 *																						 state object using the data from a ListParts API response.
+		 *
+		 * @return self
+		 */
+		public function resumeFrom($state)
+		{
+				$this->state = $state;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Set the data source of the transfer
-     *
-     * @param resource|string|EntityBody $source Source of the transfer. Pass a string to transfer from a file on disk.
-     *                                           You can also stream from a resource returned from fopen or a Guzzle
-     *                                           {@see EntityBody} object.
-     *
-     * @return self
-     * @throws InvalidArgumentException when the source cannot be found or opened
-     */
-    public function setSource($source)
-    {
-        // Use the contents of a file as the data source
-        if (is_string($source)) {
-            if (!file_exists($source)) {
-                throw new InvalidArgumentException("File does not exist: {$source}");
-            }
-            if (!$source = fopen($source, 'r')) {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException("Unable to open {$source} for reading");
-                // @codeCoverageIgnoreEnd
-            }
-        }
+		/**
+		 * Set the data source of the transfer
+		 *
+		 * @param resource|string|EntityBody $source Source of the transfer. Pass a string to transfer from a file on disk.
+		 *																					 You can also stream from a resource returned from fopen or a Guzzle
+		 *																					 {@see EntityBody} object.
+		 *
+		 * @return self
+		 * @throws InvalidArgumentException when the source cannot be found or opened
+		 */
+		public function setSource($source)
+		{
+				// Use the contents of a file as the data source
+				if (is_string($source)) {
+						if (!file_exists($source)) {
+								throw new InvalidArgumentException("File does not exist: {$source}");
+						}
+						if (!$source = fopen($source, 'r')) {
+								// @codeCoverageIgnoreStart
+								throw new InvalidArgumentException("Unable to open {$source} for reading");
+								// @codeCoverageIgnoreEnd
+						}
+				}
 
-        $this->source = EntityBody::factory($source);
+				$this->source = EntityBody::factory($source);
 
-        if ($this->source->isSeekable() && $this->source->getSize() == 0) {
-            throw new InvalidArgumentException('Empty body provided to upload builder');
-        }
+				if ($this->source->isSeekable() && $this->source->getSize() == 0) {
+						throw new InvalidArgumentException('Empty body provided to upload builder');
+				}
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Specify the headers to set on the upload
-     *
-     * @param array $headers Headers to add to the uploaded object
-     *
-     * @return self
-     */
-    public function setHeaders(array $headers)
-    {
-        $this->headers = $headers;
+		/**
+		 * Specify the headers to set on the upload
+		 *
+		 * @param array $headers Headers to add to the uploaded object
+		 *
+		 * @return self
+		 */
+		public function setHeaders(array $headers)
+		{
+				$this->headers = $headers;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Build the appropriate uploader based on the builder options
-     *
-     * @return TransferInterface
-     */
-    abstract public function build();
+		/**
+		 * Build the appropriate uploader based on the builder options
+		 *
+		 * @return TransferInterface
+		 */
+		abstract public function build();
 
-    /**
-     * Initiate the multipart upload
-     *
-     * @return TransferStateInterface
-     */
-    abstract protected function initiateMultipartUpload();
+		/**
+		 * Initiate the multipart upload
+		 *
+		 * @return TransferStateInterface
+		 */
+		abstract protected function initiateMultipartUpload();
 }

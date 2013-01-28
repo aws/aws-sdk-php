@@ -24,22 +24,22 @@ use Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface;
  */
 class UnprocessedWriteRequestsExceptionTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testCanAddItemsToException()
-    {
-        $exception    = new UnprocessedWriteRequestsException();
-        $interface    = 'Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface';
-        $unprocessed1 = $this->getMock($interface);
-        $unprocessed2 = $this->getMock($interface);
+		public function testCanAddItemsToException()
+		{
+				$exception		= new UnprocessedWriteRequestsException();
+				$interface		= 'Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface';
+				$unprocessed1 = $this->getMock($interface);
+				$unprocessed2 = $this->getMock($interface);
 
-        $exception
-            ->addItem($unprocessed1)
-            ->addItem($unprocessed2);
+				$exception
+						->addItem($unprocessed1)
+						->addItem($unprocessed2);
 
-        try {
-            throw $exception;
-        } catch (UnprocessedWriteRequestsException $e) {
-            $this->assertEquals(2, count($e));
-            $this->assertInstanceOf('\ArrayIterator', $e->getIterator());
-        }
-    }
+				try {
+						throw $exception;
+				} catch (UnprocessedWriteRequestsException $e) {
+						$this->assertEquals(2, count($e));
+						$this->assertInstanceOf('\ArrayIterator', $e->getIterator());
+				}
+		}
 }

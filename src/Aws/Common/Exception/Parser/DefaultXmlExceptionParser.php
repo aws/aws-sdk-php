@@ -23,76 +23,76 @@ use Guzzle\Http\Message\Response;
  */
 class DefaultXmlExceptionParser implements ExceptionParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function parse(Response $response)
-    {
-        $data = array(
-            'code'       => null,
-            'message'    => null,
-            'type'       => $response->isClientError() ? 'client' : 'server',
-            'request_id' => null,
-            'parsed'     => null
-        );
+		/**
+		 * {@inheritdoc}
+		 */
+		public function parse(Response $response)
+		{
+				$data = array(
+						'code'			 => null,
+						'message'		=> null,
+						'type'			 => $response->isClientError() ? 'client' : 'server',
+						'request_id' => null,
+						'parsed'		 => null
+				);
 
-        if ($body = $response->getBody(true)) {
-            $this->parseBody(new \SimpleXMLElement($body), $data);
-        } else {
-            $this->parseHeaders($response, $data);
-        }
+				if ($body = $response->getBody(true)) {
+						$this->parseBody(new \SimpleXMLElement($body), $data);
+				} else {
+						$this->parseHeaders($response, $data);
+				}
 
-        return $data;
-    }
+				return $data;
+		}
 
-    /**
-     * Parses additional exception information from the response headers
-     *
-     * @param Response $response The response from the request
-     * @param array    $data     The current set of exception data
-     */
-    protected function parseHeaders(Response $response, array &$data)
-    {
-        $data['message'] = $response->getStatusCode() . ' ' . $response->getReasonPhrase();
-        if ($requestId = $response->getHeader('x-amz-request-id')) {
-            $data['request_id'] = $requestId;
-            $data['message'] .= " (Request-ID: $requestId)";
-        }
-    }
+		/**
+		 * Parses additional exception information from the response headers
+		 *
+		 * @param Response $response The response from the request
+		 * @param array		$data		 The current set of exception data
+		 */
+		protected function parseHeaders(Response $response, array &$data)
+		{
+				$data['message'] = $response->getStatusCode() . ' ' . $response->getReasonPhrase();
+				if ($requestId = $response->getHeader('x-amz-request-id')) {
+						$data['request_id'] = $requestId;
+						$data['message'] .= " (Request-ID: $requestId)";
+				}
+		}
 
-    /**
-     * Parses additional exception information from the response body
-     *
-     * @param \SimpleXMLElement $body The response body as XML
-     * @param array             $data The current set of exception data
-     */
-    protected function parseBody(\SimpleXMLElement $body, array &$data)
-    {
-        $data['parsed'] = $body;
+		/**
+		 * Parses additional exception information from the response body
+		 *
+		 * @param \SimpleXMLElement $body The response body as XML
+		 * @param array						 $data The current set of exception data
+		 */
+		protected function parseBody(\SimpleXMLElement $body, array &$data)
+		{
+				$data['parsed'] = $body;
 
-        $namespaces = $body->getDocNamespaces();
-        if (isset($namespaces[''])) {
-            // Account for the default namespace being defined and PHP not being able to handle it :(
-            $body->registerXPathNamespace('ns', $namespaces['']);
-            $prefix = 'ns:';
-        } else {
-            $prefix = '';
-        }
+				$namespaces = $body->getDocNamespaces();
+				if (isset($namespaces[''])) {
+						// Account for the default namespace being defined and PHP not being able to handle it :(
+						$body->registerXPathNamespace('ns', $namespaces['']);
+						$prefix = 'ns:';
+				} else {
+						$prefix = '';
+				}
 
-        if ($tempXml = $body->xpath("//{$prefix}Code[1]")) {
-            $data['code'] = (string) $tempXml[0];
-        }
+				if ($tempXml = $body->xpath("//{$prefix}Code[1]")) {
+						$data['code'] = (string) $tempXml[0];
+				}
 
-        if ($tempXml = $body->xpath("//{$prefix}Message[1]")) {
-            $data['message'] = (string) $tempXml[0];
-        }
+				if ($tempXml = $body->xpath("//{$prefix}Message[1]")) {
+						$data['message'] = (string) $tempXml[0];
+				}
 
-        $tempXml = $body->xpath("//{$prefix}RequestId[1]");
-        if (empty($tempXml)) {
-            $tempXml = $body->xpath("//{$prefix}RequestID[1]");
-        }
-        if (isset($tempXml[0])) {
-            $data['request_id'] = (string) $tempXml[0];
-        }
-    }
+				$tempXml = $body->xpath("//{$prefix}RequestId[1]");
+				if (empty($tempXml)) {
+						$tempXml = $body->xpath("//{$prefix}RequestID[1]");
+				}
+				if (isset($tempXml[0])) {
+						$data['request_id'] = (string) $tempXml[0];
+				}
+		}
 }

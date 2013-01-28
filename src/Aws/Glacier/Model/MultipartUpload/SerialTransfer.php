@@ -21,32 +21,32 @@ namespace Aws\Glacier\Model\MultipartUpload;
  */
 class SerialTransfer extends AbstractTransfer
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function transfer()
-    {
-        /** @var $partGenerator UploadPartGenerator */
-        $partGenerator = $this->state->getPartGenerator();
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function transfer()
+		{
+				/** @var $partGenerator UploadPartGenerator */
+				$partGenerator = $this->state->getPartGenerator();
 
-        /** @var $part UploadPart */
-        foreach ($partGenerator as $part) {
-            $command = $this->getCommandForPart($part);
+				/** @var $part UploadPart */
+				foreach ($partGenerator as $part) {
+						$command = $this->getCommandForPart($part);
 
-            // Notify observers that the part is about to be uploaded
-            $eventData = $this->getEventData($command);
-            $this->dispatch(self::BEFORE_PART_UPLOAD, $eventData);
+						// Notify observers that the part is about to be uploaded
+						$eventData = $this->getEventData($command);
+						$this->dispatch(self::BEFORE_PART_UPLOAD, $eventData);
 
-            // Allow listeners to stop the transfer if needed
-            if ($this->stopped) {
-                break;
-            }
+						// Allow listeners to stop the transfer if needed
+						if ($this->stopped) {
+								break;
+						}
 
-            $command->execute();
-            $this->state->addPart($part);
+						$command->execute();
+						$this->state->addPart($part);
 
-            // Notify observers that the part was uploaded
-            $this->dispatch(self::AFTER_PART_UPLOAD, $eventData);
-        }
-    }
+						// Notify observers that the part was uploaded
+						$this->dispatch(self::AFTER_PART_UPLOAD, $eventData);
+				}
+		}
 }

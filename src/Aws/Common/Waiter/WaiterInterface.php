@@ -21,46 +21,46 @@ namespace Aws\Common\Waiter;
  */
 interface WaiterInterface
 {
-    /**
-     * Set the maximum number of attempts to make when waiting
-     *
-     * @param int $maxAttempts Max number of attempts
-     *
-     * @return self
-     */
-    public function setMaxAttempts($maxAttempts);
+		/**
+		 * Set the maximum number of attempts to make when waiting
+		 *
+		 * @param int $maxAttempts Max number of attempts
+		 *
+		 * @return self
+		 */
+		public function setMaxAttempts($maxAttempts);
 
-    /**
-     * Set the maximum number of failures to allow while waiting
-     *
-     * @param int $maxFailures Max failures
-     *
-     * @return self
-     */
-    public function setMaxFailures($maxFailures);
+		/**
+		 * Set the maximum number of failures to allow while waiting
+		 *
+		 * @param int $maxFailures Max failures
+		 *
+		 * @return self
+		 */
+		public function setMaxFailures($maxFailures);
 
-    /**
-     * Set the amount of time to interval between attempts
-     *
-     * @param int $interval Interval in seconds
-     *
-     * @return self
-     */
-    public function setInterval($interval);
+		/**
+		 * Set the amount of time to interval between attempts
+		 *
+		 * @param int $interval Interval in seconds
+		 *
+		 * @return self
+		 */
+		public function setInterval($interval);
 
-    /**
-     * Set config options associated with the waiter
-     *
-     * @param array $config Options to set
-     *
-     * @return self
-     */
-    public function setConfig(array $config);
+		/**
+		 * Set config options associated with the waiter
+		 *
+		 * @param array $config Options to set
+		 *
+		 * @return self
+		 */
+		public function setConfig(array $config);
 
-    /**
-     * Begin the waiting loop
-     *
-     * @throw RuntimeException if the method never resolves to true
-     */
-    public function wait();
+		/**
+		 * Begin the waiting loop
+		 *
+		 * @throw RuntimeException if the method never resolves to true
+		 */
+		public function wait();
 }

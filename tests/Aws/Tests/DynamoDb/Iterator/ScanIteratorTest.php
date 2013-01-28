@@ -24,21 +24,21 @@ use Guzzle\Service\Resource\Model;
  */
 class ScanIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testCanGetScannedCount()
-    {
-        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
-        $iterator = new ScanIterator($command, array('result_key' => 'Items'));
-        $model = new Model(array(
-            'Items' => array(1, 2, 3),
-            'ScannedCount' => 4
-        ));
+		public function testCanGetScannedCount()
+		{
+				$command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+				$iterator = new ScanIterator($command, array('result_key' => 'Items'));
+				$model = new Model(array(
+						'Items' => array(1, 2, 3),
+						'ScannedCount' => 4
+				));
 
-        $class = new \ReflectionObject($iterator);
-        $method = $class->getMethod('handleResults');
-        $method->setAccessible(true);
-        $items = $method->invoke($iterator, $model);
+				$class = new \ReflectionObject($iterator);
+				$method = $class->getMethod('handleResults');
+				$method->setAccessible(true);
+				$items = $method->invoke($iterator, $model);
 
-        $this->assertEquals(4, $iterator->getScannedCount());
-        $this->assertCount(3, $items);
-    }
+				$this->assertEquals(4, $iterator->getScannedCount());
+				$this->assertCount(3, $items);
+		}
 }

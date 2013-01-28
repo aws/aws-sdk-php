@@ -25,38 +25,38 @@ use Guzzle\Http\Message\Response;
  */
 class Crc32ErrorCheckerTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testPassesWhenHeaderIsNotSet()
-    {
-        $request = new Request('GET', 'http://example.com');
-        $response = new Response(200);
-        $checker = new Crc32ErrorChecker();
-        $this->assertFalse($checker->getBackoffPeriod(0, $request, $response));
-    }
+		public function testPassesWhenHeaderIsNotSet()
+		{
+				$request = new Request('GET', 'http://example.com');
+				$response = new Response(200);
+				$checker = new Crc32ErrorChecker();
+				$this->assertFalse($checker->getBackoffPeriod(0, $request, $response));
+		}
 
-    public function testOnlyListensForCompletedRequests()
-    {
-        $request = new Request('GET', 'http://example.com');
-        $checker = new Crc32ErrorChecker();
-        $this->assertFalse($checker->getBackoffPeriod(0, $request));
-    }
+		public function testOnlyListensForCompletedRequests()
+		{
+				$request = new Request('GET', 'http://example.com');
+				$checker = new Crc32ErrorChecker();
+				$this->assertFalse($checker->getBackoffPeriod(0, $request));
+		}
 
-    public function testReturnsTrueForMismatchedChecksums()
-    {
-        $request = new Request('GET', 'http://example.com');
-        $response = new Response(200, array(
-                'content-type' => 'application/x-amz-json-1.0',
-                'x-amz-crc32'  => 123
-            ), '{"foo":"bar"}'
-        );
-        $checker = new Crc32ErrorChecker();
-        $this->assertSame(0, $checker->getBackoffPeriod(1, $request, $response));
-    }
+		public function testReturnsTrueForMismatchedChecksums()
+		{
+				$request = new Request('GET', 'http://example.com');
+				$response = new Response(200, array(
+								'content-type' => 'application/x-amz-json-1.0',
+								'x-amz-crc32'	=> 123
+						), '{"foo":"bar"}'
+				);
+				$checker = new Crc32ErrorChecker();
+				$this->assertSame(0, $checker->getBackoffPeriod(1, $request, $response));
+		}
 
-    public function testReturnsFalseWhenCrc32Matches()
-    {
-        $request = new Request('GET', 'http://example.com');
-        $response = new Response(200, array('x-amz-crc32' => '3632233996'), 'test');
-        $checker = new Crc32ErrorChecker();
-        $this->assertFalse($checker->getBackoffPeriod(1, $request, $response));
-    }
+		public function testReturnsFalseWhenCrc32Matches()
+		{
+				$request = new Request('GET', 'http://example.com');
+				$response = new Response(200, array('x-amz-crc32' => '3632233996'), 'test');
+				$checker = new Crc32ErrorChecker();
+				$this->assertFalse($checker->getBackoffPeriod(1, $request, $response));
+		}
 }

@@ -29,80 +29,80 @@ use Guzzle\Http\Message\RequestFactory;
  */
 class BackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage client.backoff must be an instance of Guzzle\Plugin\Backoff\BackoffPlugin
-     */
-    public function testEnsuresProvidedPluginIsValid()
-    {
-        $resolver = new BackoffOptionResolver();
-        $resolver->resolve(new Collection(array(
-            Options::BACKOFF => new \stdClass()
-        )));
-    }
+		/**
+		 * @expectedException Aws\Common\Exception\InvalidArgumentException
+		 * @expectedExceptionMessage client.backoff must be an instance of Guzzle\Plugin\Backoff\BackoffPlugin
+		 */
+		public function testEnsuresProvidedPluginIsValid()
+		{
+				$resolver = new BackoffOptionResolver();
+				$resolver->resolve(new Collection(array(
+						Options::BACKOFF => new \stdClass()
+				)));
+		}
 
-    public function testCreatesDefaultPluginForConfig()
-    {
-        list($config, $plugin, $resolver) = $this->getMocks();
-        // Ensure that an backoff plugin is on the client
-        $config->set('resolvers', array($resolver));
-        $client = Client::factory();
-        $resolver->resolve($config, $client);
-        $this->assertTrue($this->hasSubscriber($client, $plugin));
-    }
+		public function testCreatesDefaultPluginForConfig()
+		{
+				list($config, $plugin, $resolver) = $this->getMocks();
+				// Ensure that an backoff plugin is on the client
+				$config->set('resolvers', array($resolver));
+				$client = Client::factory();
+				$resolver->resolve($config, $client);
+				$this->assertTrue($this->hasSubscriber($client, $plugin));
+		}
 
-    /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage client.backoff.logger must be set to `debug` or an instance of
-     */
-    public function testValidatesCorrectLogger()
-    {
-        list($config, $plugin, $resolver) = $this->getMocks();
-        $config->set(Options::BACKOFF_LOGGER, 'foo');
-        $resolver->resolve($config, $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false));
-    }
+		/**
+		 * @expectedException Aws\Common\Exception\InvalidArgumentException
+		 * @expectedExceptionMessage client.backoff.logger must be set to `debug` or an instance of
+		 */
+		public function testValidatesCorrectLogger()
+		{
+				list($config, $plugin, $resolver) = $this->getMocks();
+				$config->set(Options::BACKOFF_LOGGER, 'foo');
+				$resolver->resolve($config, $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false));
+		}
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     * @expectedExceptionMessage GET http://www.example.com/ - 503 Service Unavailable
-     */
-    public function testAddsDebugLoggerWhenSetToDebug()
-    {
-        list($config, $plugin, $resolver) = $this->getMocks();
-        $config->set(Options::BACKOFF_LOGGER, 'debug');
-        $client = $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false);
-        $resolver->resolve($config, $client);
-        $listeners = $plugin->getEventDispatcher()->getListeners();
-        $this->assertArrayHasKey('plugins.backoff.retry', $listeners);
+		/**
+		 * @expectedException PHPUnit_Framework_Error
+		 * @expectedExceptionMessage GET http://www.example.com/ - 503 Service Unavailable
+		 */
+		public function testAddsDebugLoggerWhenSetToDebug()
+		{
+				list($config, $plugin, $resolver) = $this->getMocks();
+				$config->set(Options::BACKOFF_LOGGER, 'debug');
+				$client = $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false);
+				$resolver->resolve($config, $client);
+				$listeners = $plugin->getEventDispatcher()->getListeners();
+				$this->assertArrayHasKey('plugins.backoff.retry', $listeners);
 
-        $plugin->dispatch('plugins.backoff.retry', array(
-            'request'  => RequestFactory::getInstance()->create('GET', 'http://www.example.com'),
-            'response' => new Response(503),
-            'retries'  => 3,
-            'delay'    => 2
-        ));
-    }
+				$plugin->dispatch('plugins.backoff.retry', array(
+						'request'	=> RequestFactory::getInstance()->create('GET', 'http://www.example.com'),
+						'response' => new Response(503),
+						'retries'	=> 3,
+						'delay'		=> 2
+				));
+		}
 
-    public function testSetsLoggerFormatWhenSpecified()
-    {
-        list($config, $plugin, $resolver) = $this->getMocks();
-        $config->set(Options::BACKOFF_LOGGER, 'debug');
-        $config->set(Options::BACKOFF_LOGGER_TEMPLATE, '[{ts}] {url}');
-        $client = $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false);
-        $resolver->resolve($config, $client);
-        $listeners = $plugin->getEventDispatcher()->getListeners();
-        $logger = $listeners['plugins.backoff.retry'][0][0];
-        $this->assertEquals('[{ts}] {url}', $this->readAttribute($this->readAttribute($logger, 'formatter'), 'template'));
-    }
+		public function testSetsLoggerFormatWhenSpecified()
+		{
+				list($config, $plugin, $resolver) = $this->getMocks();
+				$config->set(Options::BACKOFF_LOGGER, 'debug');
+				$config->set(Options::BACKOFF_LOGGER_TEMPLATE, '[{ts}] {url}');
+				$client = $this->getMock('Aws\Common\Client\DefaultClient', array(), array(), '', false);
+				$resolver->resolve($config, $client);
+				$listeners = $plugin->getEventDispatcher()->getListeners();
+				$logger = $listeners['plugins.backoff.retry'][0][0];
+				$this->assertEquals('[{ts}] {url}', $this->readAttribute($this->readAttribute($logger, 'formatter'), 'template'));
+		}
 
-    private function getMocks()
-    {
-        $config = new Collection();
-        $plugin = BackoffPlugin::getExponentialBackoff();
-        $resolver = new BackoffOptionResolver(function($config, $client = null) use ($plugin) {
-            return $plugin;
-        });
+		private function getMocks()
+		{
+				$config = new Collection();
+				$plugin = BackoffPlugin::getExponentialBackoff();
+				$resolver = new BackoffOptionResolver(function($config, $client = null) use ($plugin) {
+						return $plugin;
+				});
 
-        return array($config, $plugin, $resolver);
-    }
+				return array($config, $plugin, $resolver);
+		}
 }

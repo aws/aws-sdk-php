@@ -27,34 +27,34 @@ use Guzzle\Service\Description\OperationInterface;
  */
 class JsonCommand extends OperationCommand
 {
-    /**
-     * @var NoTranslationOperationResponseParser
-     */
-    protected static $cachedResponseParser;
+		/**
+		 * @var NoTranslationOperationResponseParser
+		 */
+		protected static $cachedResponseParser;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function build()
-    {
-        // By default, JSON commands with AWS require no response model processing
-        if ($this->operation->getResponseType() == OperationInterface::TYPE_MODEL
-            && $this->get(self::RESPONSE_PROCESSING) == self::TYPE_MODEL) {
-            $this->responseParser = $this->get('command.model_processing')
-                ? OperationResponseParser::getInstance()
-                : NoTranslationOperationResponseParser::getInstance();
-        } else {
-            $this->responseParser = DefaultResponseParser::getInstance();
-        }
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function build()
+		{
+				// By default, JSON commands with AWS require no response model processing
+				if ($this->operation->getResponseType() == OperationInterface::TYPE_MODEL
+						&& $this->get(self::RESPONSE_PROCESSING) == self::TYPE_MODEL) {
+						$this->responseParser = $this->get('command.model_processing')
+								? OperationResponseParser::getInstance()
+								: NoTranslationOperationResponseParser::getInstance();
+				} else {
+						$this->responseParser = DefaultResponseParser::getInstance();
+				}
 
-        parent::build();
+				parent::build();
 
-        // Ensure that the body of the request ALWAYS includes some JSON. By default, this is an empty object.
-        if (!$this->request->getBody()) {
-            $this->request->setBody('{}');
-        }
+				// Ensure that the body of the request ALWAYS includes some JSON. By default, this is an empty object.
+				if (!$this->request->getBody()) {
+						$this->request->setBody('{}');
+				}
 
-        // Never send the Expect header when interacting with a JSON query service
-        $this->request->removeHeader('Expect');
-    }
+				// Never send the Expect header when interacting with a JSON query service
+				$this->request->removeHeader('Expect');
+		}
 }

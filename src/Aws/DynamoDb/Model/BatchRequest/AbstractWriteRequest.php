@@ -21,16 +21,16 @@ namespace Aws\DynamoDb\Model\BatchRequest;
  */
 abstract class AbstractWriteRequest implements WriteRequestInterface
 {
-    /**
-     * @var string The name of the DynamoDB table
-     */
-    protected $tableName;
+		/**
+		 * @var string The name of the DynamoDB table
+		 */
+		protected $tableName;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTableName()
-    {
-        return $this->tableName;
-    }
+		/**
+		 * {@inheritDoc}
+		 */
+		public function getTableName()
+		{
+				return $this->tableName;
+		}
 }

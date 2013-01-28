@@ -27,149 +27,149 @@ use Guzzle\Batch\Exception\BatchTransferException;
  */
 class WriteRequestBatchTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /**
-     * @return \Aws\DynamoDb\DynamoDbClient
-     */
-    public function getMockedClient()
-    {
-        return $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
+		/**
+		 * @return \Aws\DynamoDb\DynamoDbClient
+		 */
+		public function getMockedClient()
+		{
+				return $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
+						->disableOriginalConstructor()
+						->getMock();
+		}
 
-    /**
-     * @param \PHPUnit_Framework_MockObject_Stub_Return $will
-     *
-     * @return FlushingBatch
-     */
-    protected function getWriteRequestBatchWithMockedBatch($will)
-    {
-        $batch = $this->getMock('Guzzle\Batch\BatchInterface');
-        $batch->expects($this->any())
-            ->method('isEmpty')
-            ->will($this->onConsecutiveCalls(false, true));
-        $batch->expects($this->any())
-            ->method('flush')
-            ->will($will);
-        $batch = new FlushingBatch(new WriteRequestBatch($batch), 5);
+		/**
+		 * @param \PHPUnit_Framework_MockObject_Stub_Return $will
+		 *
+		 * @return FlushingBatch
+		 */
+		protected function getWriteRequestBatchWithMockedBatch($will)
+		{
+				$batch = $this->getMock('Guzzle\Batch\BatchInterface');
+				$batch->expects($this->any())
+						->method('isEmpty')
+						->will($this->onConsecutiveCalls(false, true));
+				$batch->expects($this->any())
+						->method('flush')
+						->will($will);
+				$batch = new FlushingBatch(new WriteRequestBatch($batch), 5);
 
-        return $batch;
-    }
+				return $batch;
+		}
 
-    public function testFactoryCreatesCorrectBatch()
-    {
-        $batch = WriteRequestBatch::factory($this->getMockedClient());
-        $decorators = array();
-        foreach ($batch->getDecorators() as $decorator) {
-            $decorators[] = get_class($decorator);
-        }
+		public function testFactoryCreatesCorrectBatch()
+		{
+				$batch = WriteRequestBatch::factory($this->getMockedClient());
+				$decorators = array();
+				foreach ($batch->getDecorators() as $decorator) {
+						$decorators[] = get_class($decorator);
+				}
 
-        $this->assertEquals(array(
-            'Guzzle\Batch\FlushingBatch',
-            'Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch',
-        ), $decorators);
-    }
+				$this->assertEquals(array(
+						'Guzzle\Batch\FlushingBatch',
+						'Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch',
+				), $decorators);
+		}
 
-    public function testFactoryCanAddNotifyingBatchDecorator()
-    {
-        $batch = WriteRequestBatch::factory($this->getMockedClient(), 10, function () {});
-        $decorators = array_map('get_class', $batch->getDecorators());
-        $this->assertContains('Guzzle\Batch\NotifyingBatch', $decorators);
-    }
+		public function testFactoryCanAddNotifyingBatchDecorator()
+		{
+				$batch = WriteRequestBatch::factory($this->getMockedClient(), 10, function () {});
+				$decorators = array_map('get_class', $batch->getDecorators());
+				$this->assertContains('Guzzle\Batch\NotifyingBatch', $decorators);
+		}
 
-    public function getAddItemData()
-    {
-        $client = $this->getServiceBuilder()->get('dynamodb');
-        $data   = array();
+		public function getAddItemData()
+		{
+				$client = $this->getServiceBuilder()->get('dynamodb');
+				$data	 = array();
 
-        // Exception when not a write request or command
-        $data[] = array(null, true);
+				// Exception when not a write request or command
+				$data[] = array(null, true);
 
-        // Works with a delete_item command
-        $data[] = array(
-            $client->getCommand('DeleteItem')
-                ->set('TableName', 'foo')
-                ->set('Key', array(
-                    'HashKeyElement' => array('S' => 'bar')
-                )),
-            false
-        );
+				// Works with a delete_item command
+				$data[] = array(
+						$client->getCommand('DeleteItem')
+								->set('TableName', 'foo')
+								->set('Key', array(
+										'HashKeyElement' => array('S' => 'bar')
+								)),
+						false
+				);
 
-        // Works with a put_item command
-        $data[] = array(
-            $client->getCommand('PutItem')
-                ->set('TableName', 'foo')
-                ->set('Item', array(
-                    'id' => array('S' => 'bar')
-                )),
-            false
-        );
+				// Works with a put_item command
+				$data[] = array(
+						$client->getCommand('PutItem')
+								->set('TableName', 'foo')
+								->set('Item', array(
+										'id' => array('S' => 'bar')
+								)),
+						false
+				);
 
-        // Exception with a arbitrary command
-        $data[] = array($client->getCommand('ListTables'), true);
+				// Exception with a arbitrary command
+				$data[] = array($client->getCommand('ListTables'), true);
 
-        // Works with a write request
-        $data[] = array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface'), false);
+				// Works with a write request
+				$data[] = array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface'), false);
 
-        return $data;
-    }
+				return $data;
+		}
 
-    /**
-     * @dataProvider getAddItemData
-     */
-    public function testAddItem($item, $isEmpty)
-    {
-        $batch = WriteRequestBatch::factory($this->getMockedClient());
+		/**
+		 * @dataProvider getAddItemData
+		 */
+		public function testAddItem($item, $isEmpty)
+		{
+				$batch = WriteRequestBatch::factory($this->getMockedClient());
 
-        try {
-            $batch->add($item);
-        } catch (\Aws\Common\Exception\InvalidArgumentException $e) {
-            // Silently fail
-        }
+				try {
+						$batch->add($item);
+				} catch (\Aws\Common\Exception\InvalidArgumentException $e) {
+						// Silently fail
+				}
 
-        $this->assertSame($isEmpty, $batch->isEmpty());
-    }
+				$this->assertSame($isEmpty, $batch->isEmpty());
+		}
 
-    public function testFlush()
-    {
-        $batch = $this->getWriteRequestBatchWithMockedBatch($this->returnValue(array()));
+		public function testFlush()
+		{
+				$batch = $this->getWriteRequestBatchWithMockedBatch($this->returnValue(array()));
 
-        $this->assertEquals(array(), $batch->flush());
-    }
+				$this->assertEquals(array(), $batch->flush());
+		}
 
-    public function testFlushUnprocessedItems()
-    {
-        // Prepare the unprocessed items exception
-        $item = new UnprocessedRequest(array('foo'), 'foo');
-        $exceptionUnprocessed = new UnprocessedWriteRequestsException;
-        $exceptionUnprocessed->addItem($item);
-        $exceptionBatchTransfer = new BatchTransferException(
-            array($item),
-            array(),
-            $exceptionUnprocessed,
-            $this->getMock('Guzzle\Batch\BatchTransferInterface'),
-            $this->getMock('Guzzle\Batch\BatchDivisorInterface')
-        );
+		public function testFlushUnprocessedItems()
+		{
+				// Prepare the unprocessed items exception
+				$item = new UnprocessedRequest(array('foo'), 'foo');
+				$exceptionUnprocessed = new UnprocessedWriteRequestsException;
+				$exceptionUnprocessed->addItem($item);
+				$exceptionBatchTransfer = new BatchTransferException(
+						array($item),
+						array(),
+						$exceptionUnprocessed,
+						$this->getMock('Guzzle\Batch\BatchTransferInterface'),
+						$this->getMock('Guzzle\Batch\BatchDivisorInterface')
+				);
 
-        $batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
+				$batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
 
-        $this->assertEquals(array(), $batch->flush());
-    }
+				$this->assertEquals(array(), $batch->flush());
+		}
 
-    /**
-     * @expectedException \Guzzle\Batch\Exception\BatchTransferException
-     */
-    public function testFlushRandomExceptionFails()
-    {
-        $exceptionBatchTransfer = new \Guzzle\Batch\Exception\BatchTransferException(
-            array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface')),
-            array(),
-            $this->getMock('\Exception'),
-            $this->getMock('Guzzle\Batch\BatchTransferInterface'),
-            $this->getMock('Guzzle\Batch\BatchDivisorInterface')
-        );
+		/**
+		 * @expectedException \Guzzle\Batch\Exception\BatchTransferException
+		 */
+		public function testFlushRandomExceptionFails()
+		{
+				$exceptionBatchTransfer = new \Guzzle\Batch\Exception\BatchTransferException(
+						array($this->getMock('Aws\DynamoDb\Model\BatchRequest\WriteRequestInterface')),
+						array(),
+						$this->getMock('\Exception'),
+						$this->getMock('Guzzle\Batch\BatchTransferInterface'),
+						$this->getMock('Guzzle\Batch\BatchDivisorInterface')
+				);
 
-        $batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
-        $batch->flush();
-    }
+				$batch = $this->getWriteRequestBatchWithMockedBatch($this->throwException($exceptionBatchTransfer));
+				$batch->flush();
+		}
 }

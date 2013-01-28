@@ -23,35 +23,35 @@ use Guzzle\Http\Message\Response;
  */
 abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function parse(Response $response)
-    {
-        $data = array(
-            'code'       => null,
-            'message'    => null,
-            'type'       => $response->isClientError() ? 'client' : 'server',
-            'request_id' => (string) $response->getHeader('x-amzn-RequestId'),
-            'parsed'     => null
-        );
+		/**
+		 * {@inheritdoc}
+		 */
+		public function parse(Response $response)
+		{
+				$data = array(
+						'code'			 => null,
+						'message'		=> null,
+						'type'			 => $response->isClientError() ? 'client' : 'server',
+						'request_id' => (string) $response->getHeader('x-amzn-RequestId'),
+						'parsed'		 => null
+				);
 
-        if (null !== $json = json_decode($response->getBody(true), true)) {
-            $data['parsed'] = $json;
-            $json = array_change_key_case($json);
-            $data = $this->doParse($data, $json);
-        }
+				if (null !== $json = json_decode($response->getBody(true), true)) {
+						$data['parsed'] = $json;
+						$json = array_change_key_case($json);
+						$data = $this->doParse($data, $json);
+				}
 
-        return $data;
-    }
+				return $data;
+		}
 
-    /**
-     * Pull relevant exception data out of the parsed json
-     *
-     * @param array $data The exception data
-     * @param array $json The JSON data
-     *
-     * @return array
-     */
-    abstract protected function doParse(array $data, array $json);
+		/**
+		 * Pull relevant exception data out of the parsed json
+		 *
+		 * @param array $data The exception data
+		 * @param array $json The JSON data
+		 *
+		 * @return array
+		 */
+		abstract protected function doParse(array $data, array $json);
 }

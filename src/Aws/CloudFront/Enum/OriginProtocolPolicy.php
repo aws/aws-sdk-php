@@ -23,6 +23,6 @@ use Aws\Common\Enum;
  */
 class OriginProtocolPolicy extends Enum
 {
-    const HTTP_ONLY = 'http-only';
-    const MATCH_VIEWER = 'match-viewer';
+		const HTTP_ONLY = 'http-only';
+		const MATCH_VIEWER = 'match-viewer';
 }

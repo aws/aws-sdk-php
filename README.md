@@ -16,20 +16,20 @@ phar file](http://pear.amazonwebservices.com/get/aws.phar).
 
 1. **[New Features](#new-features)**
 1. **[Before Using the SDK](#before-using-the-sdk)**
-    * [Signing Up for AWS](#signing-up-for-aws)
-        * [To sign up for AWS](#to-sign-up-for-aws)
-        * [To view your AWS credentials](#to-view-your-aws-credentials)
-    * [Getting your AWS credentials](#getting-your-aws-credentials)
-    * [Minimum requirements](#minimum-requirements)
+		* [Signing Up for AWS](#signing-up-for-aws)
+				* [To sign up for AWS](#to-sign-up-for-aws)
+				* [To view your AWS credentials](#to-view-your-aws-credentials)
+		* [Getting your AWS credentials](#getting-your-aws-credentials)
+		* [Minimum requirements](#minimum-requirements)
 1. **[Installing the SDK](#installing-the-sdk)**
-    * [Installing via Composer](#installing-via-composer)
-    * [Installing via Phar](#installing-via-phar)
-    * [Installing via PEAR](#installing-via-pear)
+		* [Installing via Composer](#installing-via-composer)
+		* [Installing via Phar](#installing-via-phar)
+		* [Installing via PEAR](#installing-via-pear)
 1. **[Using the SDK](#using-the-sdk)**
-    * [Quick Start](#quick-start)
-    * [Using the Service Builder](#using-the-service-builder)
-    * [Configuration](#configuration)
-    * [Using a Custom Configuration File](#using-a-custom-configuration-file)
+		* [Quick Start](#quick-start)
+		* [Using the Service Builder](#using-the-service-builder)
+		* [Configuration](#configuration)
+		* [Using a Custom Configuration File](#using-a-custom-configuration-file)
 1. **[More Examples](#more-examples)**
 1. **[Contributing to the SDK](#contributing-to-the-sdk)**
 
@@ -40,7 +40,7 @@ phar file](http://pear.amazonwebservices.com/get/aws.phar).
 - Built on [Guzzle](http://guzzlephp.org) and utilizes the Guzzle feature set
 - Persistent connection management for both serial and parallel requests
 - Event hooks (via [Symfony2 EventDispatcher](http://symfony.com/doc/2.0/components/event_dispatcher/introduction.html))
-  for event-driven, custom behavior
+	for event-driven, custom behavior
 - Request and response entity bodies are stored in `php://temp` streams to reduce memory usage
 - Transient networking and cURL failures are automatically retried using truncated exponential backoff
 - Plug-ins for over-the-wire logging and response caching
@@ -56,7 +56,7 @@ phar file](http://pear.amazonwebservices.com/get/aws.phar).
 - [Phing](http://phing.info) `build.xml` for installing dev tools, driving testing, and producing `.phar` files
 - Fast Amazon DynamoDB batch PutItem and DeleteItem system
 - Multipart upload system for Amazon Simple Storage Service (Amazon S3) and Amazon Glacier that can be paused and
-  resumed.
+	resumed.
 - Redesigned DynamoDB Session Handler
 - Improved multi-region support
 
@@ -85,7 +85,7 @@ charges and account activity and download usage reports.
 1. Under **Your Account**, click **Security Credentials**.
 1. In the spaces provided, type your user name and password, and then click **Sign in using our secure server**.
 1. Under **Access Credentials**, on the **Access Keys** tab, your access key ID is displayed. To view your secret key,
-   under **Secret Access Key**, click **Show**.
+	 under **Secret Access Key**, click **Show**.
 
 Your secret key must remain a secret that is known only by you and AWS. Keep it confidential in order to protect your
 account. Store it securely in a safe place, and never email it. Do not share it outside your organization, even if an
@@ -100,9 +100,9 @@ To get your AWS Access Key ID and Secret Access Key
 
 - Go to http://aws.amazon.com/.
 - Click **Account** and then click **Security Credentials**. The Security Credentials page displays (you might be
-  prompted to log in).
+	prompted to log in).
 - Scroll down to Access Credentials and make sure the **Access Keys** tab is selected. The AWS Access Key ID appears in
-  the Access Key column.
+	the Access Key column.
 - To view the Secret Access Key, click **Show**.
 
 **Important: your Secret Access Key is a secret**, which only you and AWS should know. It is important to keep it
@@ -117,16 +117,16 @@ few minimum system requirements to start using the AWS SDK for PHP 2. The extens
 with PHP 5.3 by default in most environments.
 
 - Minimum requirements
-    - PHP 5.3.2+ compiled with the cURL extension
-    - A recent version of cURL 7.16.2+ compiled with OpenSSL and zlib
+		- PHP 5.3.2+ compiled with the cURL extension
+		- A recent version of cURL 7.16.2+ compiled with OpenSSL and zlib
 - To use Amazon CloudFront private distributions, you must have the [OpenSSL PHP extension](http://us2.php.net/openssl)
-  (which is not the same as any low-level OpenSSL libraries you may have installed on your system) to sign private
-  CloudFront URLs.
+	(which is not the same as any low-level OpenSSL libraries you may have installed on your system) to sign private
+	CloudFront URLs.
 - To improve the overall performance of your PHP environment, as well as to enable in-memory caching, it is **highly
-  recommended** that you install an [opcode cache](https://secure.wikimedia.org/wikipedia/en/wiki/PHP_accelerator) such
-  as [APC](http://php.net/apc), [XCache](http://xcache.lighttpd.net), or another extension that can be used by
-  [Doctrine\Common\Cache](https://github.com/doctrine/common/tree/master/lib/Doctrine/Common/Cache>). For APC, it is
-  recommended that you set the `apc.shm_size` INI setting to be `64MB` or higher.
+	recommended** that you install an [opcode cache](https://secure.wikimedia.org/wikipedia/en/wiki/PHP_accelerator) such
+	as [APC](http://php.net/apc), [XCache](http://xcache.lighttpd.net), or another extension that can be used by
+	[Doctrine\Common\Cache](https://github.com/doctrine/common/tree/master/lib/Doctrine/Common/Cache>). For APC, it is
+	recommended that you set the `apc.shm_size` INI setting to be `64MB` or higher.
 
 ## Installing the SDK
 
@@ -138,31 +138,31 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
 
 1. Add `"aws/aws-sdk-php"` as a dependency in your project's `composer.json` file.
 
-    ```json
-        {
-            "require": {
-                "aws/aws-sdk-php": "2.*"
-            }
-        }
-    ```
+		```json
+				{
+						"require": {
+								"aws/aws-sdk-php": "2.*"
+						}
+				}
+		```
 
-    Consider tightening your dependencies to a known version when deploying mission critical applications (e.g.,
-    `2.0.*`).
+		Consider tightening your dependencies to a known version when deploying mission critical applications (e.g.,
+		`2.0.*`).
 
 1. Download and install Composer.
 
-        curl -s "http://getcomposer.org/installer" | php
+				curl -s "http://getcomposer.org/installer" | php
 
 1. Install your dependencies.
 
-        php composer.phar install
+				php composer.phar install
 
 1. Require Composer's autoloader.
 
-    Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries
-    that it downloads. To use it, just add the following line to your code's bootstrap process.
+		Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries
+		that it downloads. To use it, just add the following line to your code's bootstrap process.
 
-        require '/path/to/sdk/vendor/autoload.php';
+				require '/path/to/sdk/vendor/autoload.php';
 
 You can find out more on how to install Composer, configure autoloading, and other best-practices for defining
 dependencies at [getcomposer.org](http://getcomposer.org).
@@ -174,21 +174,21 @@ containing all of the classes and dependencies you need to run the SDK. Addition
 registers a class autoloader for the AWS SDK for PHP and all of its dependencies when included. Bundled with the phar
 file are the following required and suggested libraries:
 
--  [Guzzle](https://github.com/guzzle/guzzle) for HTTP requests
--  [Symfony2 EventDispatcher](http://symfony.com/doc/master/components/event_dispatcher/introduction.html) for events
--  [Monolog](https://github.com/seldaek/monolog) for logging
--  [Doctrine](https://github.com/doctrine/common) for caching
+-	[Guzzle](https://github.com/guzzle/guzzle) for HTTP requests
+-	[Symfony2 EventDispatcher](http://symfony.com/doc/master/components/event_dispatcher/introduction.html) for events
+-	[Monolog](https://github.com/seldaek/monolog) for logging
+-	[Doctrine](https://github.com/doctrine/common) for caching
 
 You can download the packaged Phar at http://pear.amazonwebservices.com/get/aws.phar. Simply include it in your scripts
 to get started:
 
-    require 'aws.phar';
+		require 'aws.phar';
 
 **Note:** If you are using PHP with the Suhosin patch (especially common on Ubuntu and Debian distributions), you will
 need to enable the use of phars in the `suhosin.ini`. Without this, including a phar file in your code will cause it to
 silently fail. You should modify the `suhosin.ini` file by adding the line:
 
-    suhosin.executor.include.whitelist = phar
+		suhosin.executor.include.whitelist = phar
 
 ### Installing via PEAR
 
@@ -202,11 +202,11 @@ any PHP project. PEAR packages are not specific to your project, but rather to t
 From the command-line, you can install the SDK with PEAR as follows. _**Note:** You may need to use `sudo` for the
 following command._
 
-    pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
+		pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
 
 Once the SDK has been installed via PEAR, you can load the phar into your project with:
 
-    require 'AWSSDKforPHP/aws.phar';
+		require 'AWSSDKforPHP/aws.phar';
 
 ## Using the SDK
 
@@ -226,26 +226,26 @@ use Aws\Common\Enum\Region;
 
 // Instantiate the DynamoDB client with your AWS credentials
 $client = DynamoDbClient::factory(array(
-    'key'    => 'your-aws-access-key-id',
-    'secret' => 'your-aws-secret-access-key',
-    'region' => Region::US_WEST_2
+		'key'		=> 'your-aws-access-key-id',
+		'secret' => 'your-aws-secret-access-key',
+		'region' => Region::US_WEST_2
 ));
 
 $table = 'posts';
 
 // Create a "posts" table
 $result = $client->createTable(array(
-    'TableName' => $table,
-    'KeySchema' => array(
-        'HashKeyElement' => array(
-            'AttributeName' => 'slug',
-            'AttributeType' => 'S'
-        )
-    ),
-    'ProvisionedThroughput' => array(
-        'ReadCapacityUnits'  => 10,
-        'WriteCapacityUnits' => 5
-    )
+		'TableName' => $table,
+		'KeySchema' => array(
+				'HashKeyElement' => array(
+						'AttributeName' => 'slug',
+						'AttributeType' => 'S'
+				)
+		),
+		'ProvisionedThroughput' => array(
+				'ReadCapacityUnits'	=> 10,
+				'WriteCapacityUnits' => 5
+		)
 ));
 
 // Wait until the table is created and active
@@ -286,9 +286,9 @@ several commands in parallel. It also supports a chainable syntax.
 <?php
 
 $result = $client->getCommand('ListTables')
-    ->set('Limit', 5)
-    ->set('ExclusiveStartTableName', 'some-table-name')
-    ->getResult();
+		->set('Limit', 5)
+		->set('ExclusiveStartTableName', 'some-table-name')
+		->getResult();
 ```
 
 ### Using the Service Builder
@@ -320,9 +320,9 @@ use Aws\DynamoDb\Exception\DynamoDbException;
 
 // Create a service building using shared credentials for each service
 $aws = Aws::factory(array(
-    'key'    => 'your-aws-access-key-id',
-    'secret' => 'your-aws-secret-access-key',
-    'region' => Region::US_WEST_2
+		'key'		=> 'your-aws-access-key-id',
+		'secret' => 'your-aws-secret-access-key',
+		'region' => Region::US_WEST_2
 ));
 
 // Retrieve the DynamoDB client by its short name from the service builder
@@ -330,17 +330,17 @@ $client = $aws->get('dynamodb');
 
 // Get an item from the "posts"
 try {
-    $result = $client->getItem(array(
-        'TableName' => 'posts',
-        'Key' => $client->formatAttributes(array(
-            'HashKeyElement' => 'using-dynamodb-with-the-php-sdk'
-        )),
-        'ConsistentRead' => true
-    ));
+		$result = $client->getItem(array(
+				'TableName' => 'posts',
+				'Key' => $client->formatAttributes(array(
+						'HashKeyElement' => 'using-dynamodb-with-the-php-sdk'
+				)),
+				'ConsistentRead' => true
+		));
 
-    print_r($result['Item']);
+		print_r($result['Item']);
 } catch (DynamoDbException $e) {
-    echo 'The item could not be retrieved.';
+		echo 'The item could not be retrieved.';
 }
 ```
 
@@ -358,19 +358,19 @@ Excerpt from `src/Aws/Common/Resources/aws-config.php`:
 ```php
 <?php
 return array(
-    'services' => array(
-        'default_settings' => array(
-            'params' => array()
-        ),
-        'dynamodb' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\DynamoDb\DynamoDbClient'
-        ),
-        's3' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\S3\S3Client'
-        )
-    )
+		'services' => array(
+				'default_settings' => array(
+						'params' => array()
+				),
+				'dynamodb' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\DynamoDb\DynamoDbClient'
+				),
+				's3' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\S3\S3Client'
+				)
+		)
 );
 ```
 
@@ -394,16 +394,16 @@ service:
 ```php
 <?php
 return array(
-    'includes' => array('_aws'),
-    'services' => array(
-        'default_settings' => array(
-            'params' => array(
-                'key'    => 'your-aws-access-key-id',
-                'secret' => 'your-aws-secret-access-key',
-                'region' => 'us-west-2'
-            )
-        )
-    )
+		'includes' => array('_aws'),
+		'services' => array(
+				'default_settings' => array(
+						'params' => array(
+								'key'		=> 'your-aws-access-key-id',
+								'secret' => 'your-aws-secret-access-key',
+								'region' => 'us-west-2'
+						)
+				)
+		)
 );
 ```
 
@@ -424,25 +424,25 @@ You can create custom named services if you need to use multiple accounts with t
 ```php
 <?php
 return array(
-    'includes' => array('_aws'),
-    'services' => array(
-        'foo.dynamodb' => array(
-            'extends' => 'dynamodb',
-            'params'  => array(
-                'key'    => 'your-aws-access-key-id-for-foo',
-                'secret' => 'your-aws-secret-access-key-for-foo',
-                'region' => 'us-west-2'
-            )
-        ),
-        'bar.dynamodb' => array(
-            'extends' => 'dynamodb',
-            'params'  => array(
-                'key'    => 'your-aws-access-key-id-for-bar',
-                'secret' => 'your-aws-secret-access-key-for-bar',
-                'region' => 'us-west-2'
-            )
-        )
-    )
+		'includes' => array('_aws'),
+		'services' => array(
+				'foo.dynamodb' => array(
+						'extends' => 'dynamodb',
+						'params'	=> array(
+								'key'		=> 'your-aws-access-key-id-for-foo',
+								'secret' => 'your-aws-secret-access-key-for-foo',
+								'region' => 'us-west-2'
+						)
+				),
+				'bar.dynamodb' => array(
+						'extends' => 'dynamodb',
+						'params'	=> array(
+								'key'		=> 'your-aws-access-key-id-for-bar',
+								'secret' => 'your-aws-secret-access-key-for-bar',
+								'region' => 'us-west-2'
+						)
+				)
+		)
 );
 ```
 
@@ -450,16 +450,16 @@ If you prefer JSON syntax, you can define your configuration in JSON format inst
 
 ```json
 {
-    "includes": ["_aws"],
-    "services": {
-        "default_settings": {
-            "params": {
-                "key": "your-aws-access-key-id",
-                "secret": "your-aws-secret-access-key",
-                "region": "us-west-2"
-            }
-        }
-    }
+		"includes": ["_aws"],
+		"services": {
+				"default_settings": {
+						"params": {
+								"key": "your-aws-access-key-id",
+								"secret": "your-aws-secret-access-key",
+								"region": "us-west-2"
+						}
+				}
+		}
 }
 ```
 
@@ -481,14 +481,14 @@ $s3 = Aws::factory('/path/to/config.php')->get('s3');
 
 // Upload a publicly accessible file. File size, file type, and md5 hash are automatically calculated by the SDK
 try {
-    $s3->putObject(array(
-        'Bucket' => 'my-bucket',
-        'Key'    => 'my-object',
-        'Body'   => fopen('/path/to/file', 'r'),
-        'ACL'    => CannedAcl::PUBLIC_READ
-    ));
+		$s3->putObject(array(
+				'Bucket' => 'my-bucket',
+				'Key'		=> 'my-object',
+				'Body'	 => fopen('/path/to/file', 'r'),
+				'ACL'		=> CannedAcl::PUBLIC_READ
+		));
 } catch (S3Exception $e) {
-    echo "The file was not uploaded.\n";
+		echo "The file was not uploaded.\n";
 }
 ```
 
@@ -505,9 +505,9 @@ use Aws\Common\Aws;
 $s3 = Aws::factory('/path/to/config.php')->get('s3');
 
 foreach ($s3->getIterator('ListBuckets') as $bucket) {
-    foreach ($s3->getIterator('ListObjects', array('Bucket' => $bucket['Name'])) as $object) {
-        echo $bucket['Name'] . '/' . $object['Key'] . PHP_EOL;
-    }
+		foreach ($s3->getIterator('ListObjects', array('Bucket' => $bucket['Name'])) as $object) {
+				echo $bucket['Name'] . '/' . $object['Key'] . PHP_EOL;
+		}
 }
 ```
 
@@ -528,20 +528,20 @@ $s3 = Aws::factory('/path/to/config.php')->get('s3');
 
 // Prepare the upload parameters
 $uploader = UploadBuilder::newInstance()
-    ->setClient($s3)
-    ->setSource('/path/to/large/file.mov')
-    ->setBucket('my-bucket')
-    ->setKey('my-object-key')
-    ->setMinPartSize(10 * Size::MB)
-    ->build();
+		->setClient($s3)
+		->setSource('/path/to/large/file.mov')
+		->setBucket('my-bucket')
+		->setKey('my-object-key')
+		->setMinPartSize(10 * Size::MB)
+		->build();
 
 // Perform the upload. Abort the upload if something goes wrong
 try {
-    $uploader->upload();
-    echo "Upload complete.\n";
+		$uploader->upload();
+		echo "Upload complete.\n";
 } catch (MultipartUploadException $e) {
-    $uploader->abort();
-    echo "Upload failed.\n";
+		$uploader->abort();
+		echo "Upload failed.\n";
 }
 ```
 
@@ -554,19 +554,19 @@ version 2 of the SDK, we've tried to make our development even more open than be
 GitHub. Here are a few things to keep in mind for your contributions:
 
 1. The SDK is released under the [Apache license](http://aws.amazon.com/apache2.0/). Any code you submit will be
-   released under that license. For substantial contributions, we may ask you to sign a [Contributor License Agreement
-   (CLA)](http://en.wikipedia.org/wiki/Contributor_License_Agreement).
+	 released under that license. For substantial contributions, we may ask you to sign a [Contributor License Agreement
+	 (CLA)](http://en.wikipedia.org/wiki/Contributor_License_Agreement).
 2. We follow the [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md),
-   [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), and
-   [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) recommendations
-   from the [PHP Framework Interop Group](http://php-fig.org). Please submit code that follows these standards. The
-   [PHP CS Fixer](http://cs.sensiolabs.org/) tool can be helpful for formatting your code.
+	 [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), and
+	 [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) recommendations
+	 from the [PHP Framework Interop Group](http://php-fig.org). Please submit code that follows these standards. The
+	 [PHP CS Fixer](http://cs.sensiolabs.org/) tool can be helpful for formatting your code.
 3. We maintain a high percentage of code coverage in our unit tests. If you make changes to the code, please add,
-   update, and/or remove unit (and integration) tests as appropriate.
+	 update, and/or remove unit (and integration) tests as appropriate.
 4. We do not accept pull requests that change `client.php` files (i.e., `src/Aws/*/Resources/client.php`). We generate
-   these files based on our internal knowledge of the AWS services.
+	 these files based on our internal knowledge of the AWS services.
 5. If your code does not conform to the PSR standards or does not include adequate tests, we may ask you to update your
-   pull requests before we accept them. We also reserve the right to deny any pull requests that do not align with our
-   standards or goals.
+	 pull requests before we accept them. We also reserve the right to deny any pull requests that do not align with our
+	 standards or goals.
 6. If you would like to implement support for an AWS service that is not yet available in the SDK, please talk to us
-   beforehand to avoid any duplication of effort.
+	 beforehand to avoid any duplication of effort.

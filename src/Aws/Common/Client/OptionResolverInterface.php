@@ -24,14 +24,14 @@ use Guzzle\Common\Collection;
  */
 interface OptionResolverInterface
 {
-    /**
-     * Ensures that a configuration collection has required parameters and
-     * if not tries to add default values based on context,
-     *
-     * @param Collection         $config Configuration data to check and update
-     * @param AwsClientInterface $client Client to pass to the resolver
-     *
-     * @throws InvalidArgumentException if the provided configuration is invalid
-     */
-    public function resolve(Collection $config, AwsClientInterface $client = null);
+		/**
+		 * Ensures that a configuration collection has required parameters and
+		 * if not tries to add default values based on context,
+		 *
+		 * @param Collection				 $config Configuration data to check and update
+		 * @param AwsClientInterface $client Client to pass to the resolver
+		 *
+		 * @throws InvalidArgumentException if the provided configuration is invalid
+		 */
+		public function resolve(Collection $config, AwsClientInterface $client = null);
 }

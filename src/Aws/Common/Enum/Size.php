@@ -23,31 +23,31 @@ use Aws\Common\Enum;
  */
 class Size extends Enum
 {
-    const B         = 1;
-    const BYTE      = self::B;
-    const BYTES     = self::B;
+		const B				 = 1;
+		const BYTE			= self::B;
+		const BYTES		 = self::B;
 
-    const KB        = 1024;
-    const KILOBYTE  = self::KB;
-    const KILOBYTES = self::KB;
+		const KB				= 1024;
+		const KILOBYTE	= self::KB;
+		const KILOBYTES = self::KB;
 
-    const MB        = 1048576;
-    const MEGABYTE  = self::MB;
-    const MEGABYTES = self::MB;
+		const MB				= 1048576;
+		const MEGABYTE	= self::MB;
+		const MEGABYTES = self::MB;
 
-    const GB        = 1073741824;
-    const GIGABYTE  = self::GB;
-    const GIGABYTES = self::GB;
+		const GB				= 1073741824;
+		const GIGABYTE	= self::GB;
+		const GIGABYTES = self::GB;
 
-    const TB        = 1099511627776;
-    const TERABYTE  = self::TB;
-    const TERABYTES = self::TB;
+		const TB				= 1099511627776;
+		const TERABYTE	= self::TB;
+		const TERABYTES = self::TB;
 
-    const PB        = 1125899906842624;
-    const PETABYTE  = self::PB;
-    const PETABYTES = self::PB;
+		const PB				= 1125899906842624;
+		const PETABYTE	= self::PB;
+		const PETABYTES = self::PB;
 
-    const EB        = 1152921504606846976;
-    const EXABYTE   = self::EB;
-    const EXABYTES  = self::EB;
+		const EB				= 1152921504606846976;
+		const EXABYTE	 = self::EB;
+		const EXABYTES	= self::EB;
 }

@@ -23,21 +23,21 @@ use Aws\Common\Client\AwsClientInterface;
  */
 interface ResourceWaiterInterface extends WaiterInterface
 {
-    /**
-     * Set the client associated with the waiter
-     *
-     * @param AwsClientInterface $client Client to use with the waiter
-     *
-     * @return self
-     */
-    public function setClient(AwsClientInterface $client);
+		/**
+		 * Set the client associated with the waiter
+		 *
+		 * @param AwsClientInterface $client Client to use with the waiter
+		 *
+		 * @return self
+		 */
+		public function setClient(AwsClientInterface $client);
 
-    /**
-     * Set the way in which a resource is uniquely identified
-     *
-     * @param string $resourceId Resource ID
-     *
-     * @return self
-     */
-    public function setResourceId($resourceId);
+		/**
+		 * Set the way in which a resource is uniquely identified
+		 *
+		 * @param string $resourceId Resource ID
+		 *
+		 * @return self
+		 */
+		public function setResourceId($resourceId);
 }

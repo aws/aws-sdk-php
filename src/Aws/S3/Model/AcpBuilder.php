@@ -23,112 +23,112 @@ use Aws\S3\Enum\GranteeType;
  */
 class AcpBuilder
 {
-    /**
-     * @var Grantee The owner for the ACL
-     */
-    protected $owner;
+		/**
+		 * @var Grantee The owner for the ACL
+		 */
+		protected $owner;
 
-    /**
-     * @var array An array of Grant objects for the ACL
-     */
-    protected $grants = array();
+		/**
+		 * @var array An array of Grant objects for the ACL
+		 */
+		protected $grants = array();
 
-    /**
-     * Static method for chainable instantiation
-     *
-     * @return self
-     */
-    public static function newInstance()
-    {
-        return new self;
-    }
+		/**
+		 * Static method for chainable instantiation
+		 *
+		 * @return self
+		 */
+		public static function newInstance()
+		{
+				return new self;
+		}
 
-    /**
-     * Sets the owner to be set on the ACL
-     *
-     * @param string $id          Owner identifier
-     * @param string $displayName Owner display name
-     *
-     * @return self
-     */
-    public function setOwner($id, $displayName = null)
-    {
-        $this->owner = new Grantee($id, $displayName ?: $id, GranteeType::USER);
+		/**
+		 * Sets the owner to be set on the ACL
+		 *
+		 * @param string $id					Owner identifier
+		 * @param string $displayName Owner display name
+		 *
+		 * @return self
+		 */
+		public function setOwner($id, $displayName = null)
+		{
+				$this->owner = new Grantee($id, $displayName ?: $id, GranteeType::USER);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Create and store a Grant with a CanonicalUser Grantee for the ACL
-     *
-     * @param string $permission  Permission for the Grant
-     * @param string $id          Grantee identifier
-     * @param string $displayName Grantee display name
-     *
-     * @return self
-     */
-    public function addGrantForUser($permission, $id, $displayName = null)
-    {
-        $grantee = new Grantee($id, $displayName ?: $id, GranteeType::USER);
-        $this->addGrant($permission, $grantee);
+		/**
+		 * Create and store a Grant with a CanonicalUser Grantee for the ACL
+		 *
+		 * @param string $permission	Permission for the Grant
+		 * @param string $id					Grantee identifier
+		 * @param string $displayName Grantee display name
+		 *
+		 * @return self
+		 */
+		public function addGrantForUser($permission, $id, $displayName = null)
+		{
+				$grantee = new Grantee($id, $displayName ?: $id, GranteeType::USER);
+				$this->addGrant($permission, $grantee);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Create and store a Grant with a AmazonCustomerByEmail Grantee for the ACL
-     *
-     * @param string $permission  Permission for the Grant
-     * @param string $email       Grantee email address
-     *
-     * @return self
-     */
-    public function addGrantForEmail($permission, $email)
-    {
-        $grantee = new Grantee($email, null, GranteeType::EMAIL);
-        $this->addGrant($permission, $grantee);
+		/**
+		 * Create and store a Grant with a AmazonCustomerByEmail Grantee for the ACL
+		 *
+		 * @param string $permission	Permission for the Grant
+		 * @param string $email			 Grantee email address
+		 *
+		 * @return self
+		 */
+		public function addGrantForEmail($permission, $email)
+		{
+				$grantee = new Grantee($email, null, GranteeType::EMAIL);
+				$this->addGrant($permission, $grantee);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Create and store a Grant with a Group Grantee for the ACL
-     *
-     * @param string $permission  Permission for the Grant
-     * @param string $group       Grantee group
-     *
-     * @return self
-     */
-    public function addGrantForGroup($permission, $group)
-    {
-        $grantee = new Grantee($group, null, GranteeType::GROUP);
-        $this->addGrant($permission, $grantee);
+		/**
+		 * Create and store a Grant with a Group Grantee for the ACL
+		 *
+		 * @param string $permission	Permission for the Grant
+		 * @param string $group			 Grantee group
+		 *
+		 * @return self
+		 */
+		public function addGrantForGroup($permission, $group)
+		{
+				$grantee = new Grantee($group, null, GranteeType::GROUP);
+				$this->addGrant($permission, $grantee);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Create and store a Grant for the ACL
-     *
-     * @param string  $permission Permission for the Grant
-     * @param Grantee $grantee    The Grantee for the Grant
-     *
-     * @return self
-     */
-    public function addGrant($permission, Grantee $grantee)
-    {
-        $this->grants[] = new Grant($grantee, $permission);
+		/**
+		 * Create and store a Grant for the ACL
+		 *
+		 * @param string	$permission Permission for the Grant
+		 * @param Grantee $grantee		The Grantee for the Grant
+		 *
+		 * @return self
+		 */
+		public function addGrant($permission, Grantee $grantee)
+		{
+				$this->grants[] = new Grant($grantee, $permission);
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Builds the ACP and returns it
-     *
-     * @return Acp
-     */
-    public function build()
-    {
-        return new Acp($this->owner, $this->grants);
-    }
+		/**
+		 * Builds the ACP and returns it
+		 *
+		 * @return Acp
+		 */
+		public function build()
+		{
+				return new Acp($this->owner, $this->grants);
+		}
 }

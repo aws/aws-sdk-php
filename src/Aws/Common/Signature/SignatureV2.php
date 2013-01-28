@@ -25,79 +25,79 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class SignatureV2 extends AbstractSignature
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
-        // refresh the cached timestamp
-        $this->getTimestamp(true);
+		/**
+		 * {@inheritDoc}
+		 */
+		public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
+		{
+				// refresh the cached timestamp
+				$this->getTimestamp(true);
 
-        // set values we need in CanonicalizedParameterString
-        $this->addParameter($request, 'Timestamp', $this->getDateTime('c'));
-        $this->addParameter($request, 'SignatureVersion', '2');
-        $this->addParameter($request, 'SignatureMethod', 'HmacSHA256');
-        $this->addParameter($request, 'AWSAccessKeyId', $credentials->getAccessKeyId());
+				// set values we need in CanonicalizedParameterString
+				$this->addParameter($request, 'Timestamp', $this->getDateTime('c'));
+				$this->addParameter($request, 'SignatureVersion', '2');
+				$this->addParameter($request, 'SignatureMethod', 'HmacSHA256');
+				$this->addParameter($request, 'AWSAccessKeyId', $credentials->getAccessKeyId());
 
-        // build string to sign
-        $sign = $request->getMethod() . "\n"
-            . $request->getHost() . "\n"
-            . $request->getUrl(true)->normalizePath()->getPath() . "\n"
-            . $this->getCanonicalizedParameterString($request);
+				// build string to sign
+				$sign = $request->getMethod() . "\n"
+						. $request->getHost() . "\n"
+						. $request->getUrl(true)->normalizePath()->getPath() . "\n"
+						. $this->getCanonicalizedParameterString($request);
 
-        // Add the string to sign to the request for debugging purposes
-        $request->getParams()->set('aws.string_to_sign', $sign);
+				// Add the string to sign to the request for debugging purposes
+				$request->getParams()->set('aws.string_to_sign', $sign);
 
-        $signature = base64_encode(
-            hash_hmac(
-                'sha256',
-                $sign,
-                $credentials->getSecretKey(),
-                true
-            )
-        );
+				$signature = base64_encode(
+						hash_hmac(
+								'sha256',
+								$sign,
+								$credentials->getSecretKey(),
+								true
+						)
+				);
 
-        $this->addParameter($request, 'Signature', $signature);
-    }
+				$this->addParameter($request, 'Signature', $signature);
+		}
 
-    /**
-     * Add a parameter key and value to the request according to type
-     *
-     * @param RequestInterface $request The request
-     * @param string           $key     The name of the parameter
-     * @param string           $value   The value of the parameter
-     */
-    public function addParameter(RequestInterface $request, $key, $value)
-    {
-        if ($request->getMethod() == 'POST') {
-            $request->addPostFields(array($key => $value));
-        } else {
-            $request->getQuery()->set($key, $value);
-        }
-    }
+		/**
+		 * Add a parameter key and value to the request according to type
+		 *
+		 * @param RequestInterface $request The request
+		 * @param string					 $key		 The name of the parameter
+		 * @param string					 $value	 The value of the parameter
+		 */
+		public function addParameter(RequestInterface $request, $key, $value)
+		{
+				if ($request->getMethod() == 'POST') {
+						$request->addPostFields(array($key => $value));
+				} else {
+						$request->getQuery()->set($key, $value);
+				}
+		}
 
-    /**
-     * Get the canonicalized query/parameter string for a request
-     *
-     * @param RequestInterface $request Request used to build canonicalized string
-     *
-     * @return string
-     */
-    public function getCanonicalizedParameterString(RequestInterface $request)
-    {
-        if ($request->getMethod() == 'POST') {
-            $params = $request->getPostFields()->toArray();
-        } else {
-            $params = $request->getQuery()->toArray();
-        }
+		/**
+		 * Get the canonicalized query/parameter string for a request
+		 *
+		 * @param RequestInterface $request Request used to build canonicalized string
+		 *
+		 * @return string
+		 */
+		public function getCanonicalizedParameterString(RequestInterface $request)
+		{
+				if ($request->getMethod() == 'POST') {
+						$params = $request->getPostFields()->toArray();
+				} else {
+						$params = $request->getQuery()->toArray();
+				}
 
-        uksort($params, 'strcmp');
+				uksort($params, 'strcmp');
 
-        $str = '';
-        foreach ($params as $key => $val) {
-            $str .= rawurlencode($key) . '=' . rawurlencode($val) . '&';
-        }
+				$str = '';
+				foreach ($params as $key => $val) {
+						$str .= rawurlencode($key) . '=' . rawurlencode($val) . '&';
+				}
 
-        return substr($str, 0, -1);
-    }
+				return substr($str, 0, -1);
+		}
 }

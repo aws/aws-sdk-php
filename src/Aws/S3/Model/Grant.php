@@ -25,115 +25,115 @@ use Guzzle\Common\ToArrayInterface;
  */
 class Grant implements ToArrayInterface
 {
-    /**
-     * @var array A map of permissions to operation parameters
-     */
-    protected static $parameterMap = array(
-        Permission::READ         => 'GrantRead',
-        Permission::WRITE        => 'GrantWrite',
-        Permission::READ_ACP     => 'GrantReadACP',
-        Permission::WRITE_ACP    => 'GrantWriteACP',
-        Permission::FULL_CONTROL => 'GrantFullControl'
-    );
+		/**
+		 * @var array A map of permissions to operation parameters
+		 */
+		protected static $parameterMap = array(
+				Permission::READ				 => 'GrantRead',
+				Permission::WRITE				=> 'GrantWrite',
+				Permission::READ_ACP		 => 'GrantReadACP',
+				Permission::WRITE_ACP		=> 'GrantWriteACP',
+				Permission::FULL_CONTROL => 'GrantFullControl'
+		);
 
-    /**
-     * @var Grantee The grantee affected by the grant
-     */
-    protected $grantee;
+		/**
+		 * @var Grantee The grantee affected by the grant
+		 */
+		protected $grantee;
 
-    /**
-     * @var string The permission set by the grant
-     */
-    protected $permission;
+		/**
+		 * @var string The permission set by the grant
+		 */
+		protected $permission;
 
-    /**
-     * Constructs an ACL
-     *
-     * @param Grantee $grantee    Affected grantee
-     * @param string  $permission Permission applied
-     */
-    public function __construct(Grantee $grantee, $permission)
-    {
-        $this->setGrantee($grantee);
-        $this->setPermission($permission);
-    }
+		/**
+		 * Constructs an ACL
+		 *
+		 * @param Grantee $grantee		Affected grantee
+		 * @param string	$permission Permission applied
+		 */
+		public function __construct(Grantee $grantee, $permission)
+		{
+				$this->setGrantee($grantee);
+				$this->setPermission($permission);
+		}
 
-    /**
-     * Set the grantee affected by the grant
-     *
-     * @param Grantee $grantee Affected grantee
-     *
-     * @return self
-     */
-    public function setGrantee(Grantee $grantee)
-    {
-        $this->grantee = $grantee;
+		/**
+		 * Set the grantee affected by the grant
+		 *
+		 * @param Grantee $grantee Affected grantee
+		 *
+		 * @return self
+		 */
+		public function setGrantee(Grantee $grantee)
+		{
+				$this->grantee = $grantee;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Get the grantee affected by the grant
-     *
-     * @return Grantee
-     */
-    public function getGrantee()
-    {
-        return $this->grantee;
-    }
+		/**
+		 * Get the grantee affected by the grant
+		 *
+		 * @return Grantee
+		 */
+		public function getGrantee()
+		{
+				return $this->grantee;
+		}
 
-    /**
-     * Set the permission set by the grant
-     *
-     * @param string $permission Permission applied
-     *
-     * @return self
-     *
-     * @throws InvalidArgumentException
-     */
-    public function setPermission($permission)
-    {
-        $valid = Permission::values();
-        if (!in_array($permission, $valid)) {
-            throw new InvalidArgumentException('The permission must be one of '
-                . 'the following: ' . implode(', ', $valid) . '.');
-        }
+		/**
+		 * Set the permission set by the grant
+		 *
+		 * @param string $permission Permission applied
+		 *
+		 * @return self
+		 *
+		 * @throws InvalidArgumentException
+		 */
+		public function setPermission($permission)
+		{
+				$valid = Permission::values();
+				if (!in_array($permission, $valid)) {
+						throw new InvalidArgumentException('The permission must be one of '
+								. 'the following: ' . implode(', ', $valid) . '.');
+				}
 
-        $this->permission = $permission;
+				$this->permission = $permission;
 
-        return $this;
-    }
+				return $this;
+		}
 
-    /**
-     * Get the permission set by the grant
-     *
-     * @return string
-     */
-    public function getPermission()
-    {
-        return $this->permission;
-    }
+		/**
+		 * Get the permission set by the grant
+		 *
+		 * @return string
+		 */
+		public function getPermission()
+		{
+				return $this->permission;
+		}
 
-    /**
-     * Returns an array of the operation parameter and value to set on the operation
-     *
-     * @return array
-     */
-    public function getParameterArray()
-    {
-        return array(
-            self::$parameterMap[$this->permission] => $this->grantee->getHeaderValue()
-        );
-    }
+		/**
+		 * Returns an array of the operation parameter and value to set on the operation
+		 *
+		 * @return array
+		 */
+		public function getParameterArray()
+		{
+				return array(
+						self::$parameterMap[$this->permission] => $this->grantee->getHeaderValue()
+				);
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return array(
-            'Grantee'    => $this->grantee->toArray(),
-            'Permission' => $this->permission
-        );
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function toArray()
+		{
+				return array(
+						'Grantee'		=> $this->grantee->toArray(),
+						'Permission' => $this->permission
+				);
+		}
 }

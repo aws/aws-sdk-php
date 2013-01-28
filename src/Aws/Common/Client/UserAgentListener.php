@@ -25,34 +25,34 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class UserAgentListener implements EventSubscriberInterface
 {
-    /**
-     * @var string Option used to store User-Agent modifiers
-     */
-    const OPTION = 'ua.append';
+		/**
+		 * @var string Option used to store User-Agent modifiers
+		 */
+		const OPTION = 'ua.append';
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
-    {
-        return array('command.before_send' => 'onBeforeSend');
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function getSubscribedEvents()
+		{
+				return array('command.before_send' => 'onBeforeSend');
+		}
 
-    /**
-     * Adds strings to the User-Agent header using the `ua.append` parameter of a command
-     *
-     * @param Event $event Event emitted
-     */
-    public function onBeforeSend(Event $event)
-    {
-        $command = $event['command'];
-        if ($userAgentAppends = $command->get(self::OPTION)) {
-            $request = $command->getRequest();
-            $userAgent = (string) $request->getHeader('User-Agent');
-            foreach ((array) $userAgentAppends as $append) {
-                $userAgent .= " {$append}";
-            }
-            $request->setHeader('User-Agent', $userAgent);
-        }
-    }
+		/**
+		 * Adds strings to the User-Agent header using the `ua.append` parameter of a command
+		 *
+		 * @param Event $event Event emitted
+		 */
+		public function onBeforeSend(Event $event)
+		{
+				$command = $event['command'];
+				if ($userAgentAppends = $command->get(self::OPTION)) {
+						$request = $command->getRequest();
+						$userAgent = (string) $request->getHeader('User-Agent');
+						foreach ((array) $userAgentAppends as $append) {
+								$userAgent .= " {$append}";
+						}
+						$request->setHeader('User-Agent', $userAgent);
+				}
+		}
 }

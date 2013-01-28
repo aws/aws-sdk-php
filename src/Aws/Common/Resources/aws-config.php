@@ -15,45 +15,45 @@
  */
 
 return array(
-    'services' => array(
+		'services' => array(
 
-        'default_settings' => array(
-            'params' => array()
-        ),
+				'default_settings' => array(
+						'params' => array()
+				),
 
-        'cloudfront' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\CloudFront\CloudFrontClient'
-        ),
+				'cloudfront' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\CloudFront\CloudFrontClient'
+				),
 
-        'datapipeline' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\DataPipeline\DataPipelineClient'
-        ),
+				'datapipeline' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\DataPipeline\DataPipelineClient'
+				),
 
-        'dynamodb' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\DynamoDb\DynamoDbClient'
-        ),
+				'dynamodb' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\DynamoDb\DynamoDbClient'
+				),
 
-        'glacier' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\Glacier\GlacierClient'
-        ),
+				'glacier' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\Glacier\GlacierClient'
+				),
 
-        'route53' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\Route53\Route53Client'
-        ),
+				'route53' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\Route53\Route53Client'
+				),
 
-        's3' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\S3\S3Client'
-        ),
+				's3' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\S3\S3Client'
+				),
 
-        'sts' => array(
-            'extends' => 'default_settings',
-            'class'   => 'Aws\Sts\StsClient'
-        )
-    )
+				'sts' => array(
+						'extends' => 'default_settings',
+						'class'	 => 'Aws\Sts\StsClient'
+				)
+		)
 );

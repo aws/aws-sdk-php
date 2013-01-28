@@ -22,21 +22,21 @@ namespace Aws\Common\Signature;
  */
 interface EndpointSignatureInterface extends SignatureInterface
 {
-    /**
-     * Set the service name instead of inferring it from a request URL
-     *
-     * @param string $service Name of the service used when signing
-     *
-     * @return self
-     */
-    public function setServiceName($service);
+		/**
+		 * Set the service name instead of inferring it from a request URL
+		 *
+		 * @param string $service Name of the service used when signing
+		 *
+		 * @return self
+		 */
+		public function setServiceName($service);
 
-    /**
-     * Set the region name instead of inferring it from a request URL
-     *
-     * @param string $region Name of the region used when signing
-     *
-     * @return self
-     */
-    public function setRegionName($region);
+		/**
+		 * Set the region name instead of inferring it from a request URL
+		 *
+		 * @param string $region Name of the region used when signing
+		 *
+		 * @return self
+		 */
+		public function setRegionName($region);
 }

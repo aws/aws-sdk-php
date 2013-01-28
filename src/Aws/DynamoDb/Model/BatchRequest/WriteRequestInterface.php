@@ -23,10 +23,10 @@ use Guzzle\Common\ToArrayInterface;
  */
 interface WriteRequestInterface extends ToArrayInterface
 {
-    /**
-     * Returns the table name that the write request is for.
-     *
-     * @return string The table name
-     */
-    public function getTableName();
+		/**
+		 * Returns the table name that the write request is for.
+		 *
+		 * @return string The table name
+		 */
+		public function getTableName();
 }

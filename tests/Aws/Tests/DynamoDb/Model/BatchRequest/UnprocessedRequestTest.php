@@ -23,12 +23,12 @@ use Aws\DynamoDb\Model\BatchRequest\UnprocessedRequest;
  */
 class UnprocessedRequestTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testConstructorSetsValues()
-    {
-        $data = array('foo' => 'bar');
-        $unprocessedRequest = new UnprocessedRequest($data, 'table');
+		public function testConstructorSetsValues()
+		{
+				$data = array('foo' => 'bar');
+				$unprocessedRequest = new UnprocessedRequest($data, 'table');
 
-        $this->assertSame($data, $unprocessedRequest->toArray());
-        $this->assertSame('table', $unprocessedRequest->getTableName());
-    }
+				$this->assertSame($data, $unprocessedRequest->toArray());
+				$this->assertSame('table', $unprocessedRequest->getTableName());
+		}
 }

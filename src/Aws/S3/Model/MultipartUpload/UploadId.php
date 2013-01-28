@@ -24,12 +24,12 @@ use Aws\Common\Model\MultipartUpload\AbstractUploadId;
  */
 class UploadId extends AbstractUploadId
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected static $expectedValues = array(
-        'Bucket'   => false,
-        'Key'      => false,
-        'UploadId' => false
-    );
+		/**
+		 * {@inheritdoc}
+		 */
+		protected static $expectedValues = array(
+				'Bucket'	 => false,
+				'Key'			=> false,
+				'UploadId' => false
+		);
 }

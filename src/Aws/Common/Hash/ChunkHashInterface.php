@@ -21,32 +21,32 @@ namespace Aws\Common\Hash;
  */
 interface ChunkHashInterface
 {
-    const DEFAULT_ALGORITHM = 'sha256';
+		const DEFAULT_ALGORITHM = 'sha256';
 
-    /**
-     * Constructs the chunk hash and sets the algorithm to use for hashing
-     *
-     * @param string $algorithm A valid hash algorithm name as returned by `hash_algos()`
-     *
-     * @return self
-     */
-    public function __construct($algorithm = 'sha256');
+		/**
+		 * Constructs the chunk hash and sets the algorithm to use for hashing
+		 *
+		 * @param string $algorithm A valid hash algorithm name as returned by `hash_algos()`
+		 *
+		 * @return self
+		 */
+		public function __construct($algorithm = 'sha256');
 
-    /**
-     * Add a chunk of data to be hashed
-     *
-     * @param string $data Data to be hashed
-     *
-     * @return self
-     */
-    public function addData($data);
+		/**
+		 * Add a chunk of data to be hashed
+		 *
+		 * @param string $data Data to be hashed
+		 *
+		 * @return self
+		 */
+		public function addData($data);
 
-    /**
-     * Return the results of the hash
-     *
-     * @param bool $returnBinaryForm If true, returns the hash in binary form instead of hex form
-     *
-     * @return string
-     */
-    public function getHash($returnBinaryForm = false);
+		/**
+		 * Return the results of the hash
+		 *
+		 * @param bool $returnBinaryForm If true, returns the hash in binary form instead of hex form
+		 *
+		 * @return string
+		 */
+		public function getHash($returnBinaryForm = false);
 }

@@ -22,11 +22,11 @@ require_once 'phar://aws.phar/vendor/symfony/class-loader/Symfony/Component/Clas
 
 $classLoader = new Symfony\Component\ClassLoader\UniversalClassLoader();
 $classLoader->registerNamespaces(array(
-    'Aws'      => 'phar://aws.phar/src',
-    'Guzzle'   => 'phar://aws.phar/vendor/guzzle/guzzle/src',
-    'Symfony\\Component\\EventDispatcher' => 'phar://aws.phar/vendor/symfony/event-dispatcher',
-    'Doctrine' => 'phar://aws.phar/vendor/doctrine/common/lib',
-    'Monolog'  => 'phar://aws.phar/vendor/monolog/monolog/src'
+		'Aws'			=> 'phar://aws.phar/src',
+		'Guzzle'	 => 'phar://aws.phar/vendor/guzzle/guzzle/src',
+		'Symfony\\Component\\EventDispatcher' => 'phar://aws.phar/vendor/symfony/event-dispatcher',
+		'Doctrine' => 'phar://aws.phar/vendor/doctrine/common/lib',
+		'Monolog'	=> 'phar://aws.phar/vendor/monolog/monolog/src'
 ));
 $classLoader->register();
 

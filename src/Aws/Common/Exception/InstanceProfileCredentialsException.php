@@ -23,28 +23,28 @@ use Aws\Common\Exception\RuntimeException;
  */
 class InstanceProfileCredentialsException extends RuntimeException
 {
-    /**
-     * @var string
-     */
-    protected $statusCode;
+		/**
+		 * @var string
+		 */
+		protected $statusCode;
 
-    /**
-     * Set the error response code received from the instance metadata
-     *
-     * @param string $code Response code
-     */
-    public function setStatusCode($code)
-    {
-        $this->statusCode = $code;
-    }
+		/**
+		 * Set the error response code received from the instance metadata
+		 *
+		 * @param string $code Response code
+		 */
+		public function setStatusCode($code)
+		{
+				$this->statusCode = $code;
+		}
 
-    /**
-     * Get the error response code from the service
-     *
-     * @return string|null
-     */
-    public function getStatusCode()
-    {
-        return $this->statusCode;
-    }
+		/**
+		 * Get the error response code from the service
+		 *
+		 * @return string|null
+		 */
+		public function getStatusCode()
+		{
+				return $this->statusCode;
+		}
 }

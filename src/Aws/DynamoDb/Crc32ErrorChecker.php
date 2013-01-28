@@ -28,39 +28,39 @@ use Guzzle\Stream\Stream;
  */
 class Crc32ErrorChecker extends AbstractBackoffStrategy
 {
-    /**
-     * Create the internal parser
-     */
-    public function __construct(BackoffStrategyInterface $next = null)
-    {
-        if ($next) {
-            $this->setNext($next);
-        }
-    }
+		/**
+		 * Create the internal parser
+		 */
+		public function __construct(BackoffStrategyInterface $next = null)
+		{
+				if ($next) {
+						$this->setNext($next);
+				}
+		}
 
-    /**
-     * {@inheridoc}
-     */
-    public function makesDecision()
-    {
-        return true;
-    }
+		/**
+		 * {@inheridoc}
+		 */
+		public function makesDecision()
+		{
+				return true;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
-        if ($response) {
-            // Validate the checksum against our computed checksum
-            if ($checksum = (string) $response->getHeader('x-amz-crc32')) {
-                // Retry the request if the checksums don't match, otherwise, return null
-                return $checksum != hexdec(Stream::getHash($response->getBody(), 'crc32b')) ? true : null;
-            }
-        }
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function getDelay(
+				$retries,
+				RequestInterface $request,
+				Response $response = null,
+				HttpException $e = null
+		) {
+				if ($response) {
+						// Validate the checksum against our computed checksum
+						if ($checksum = (string) $response->getHeader('x-amz-crc32')) {
+								// Retry the request if the checksums don't match, otherwise, return null
+								return $checksum != hexdec(Stream::getHash($response->getBody(), 'crc32b')) ? true : null;
+						}
+				}
+		}
 }

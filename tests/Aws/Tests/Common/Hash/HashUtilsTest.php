@@ -23,25 +23,25 @@ use Aws\Common\Hash\HashUtils;
  */
 class HashUtilsTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testHexBinConversionsWorkCorrectly()
-    {
-        $hex = "5a4b";
-        $bin = "ZK";
+		public function testHexBinConversionsWorkCorrectly()
+		{
+				$hex = "5a4b";
+				$bin = "ZK";
 
-        $this->assertEquals($hex, HashUtils::binToHex($bin));
-        $this->assertEquals($bin, HashUtils::hexToBin($hex));
-    }
+				$this->assertEquals($hex, HashUtils::binToHex($bin));
+				$this->assertEquals($bin, HashUtils::hexToBin($hex));
+		}
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testThrowsExceptionForInvalidAlgorithm()
-    {
-        HashUtils::validateAlgorithm('foobar');
-    }
+		/**
+		 * @expectedException \InvalidArgumentException
+		 */
+		public function testThrowsExceptionForInvalidAlgorithm()
+		{
+				HashUtils::validateAlgorithm('foobar');
+		}
 
-    public function testReturnsTrueForValidAlgorithm()
-    {
-        $this->assertTrue(HashUtils::validateAlgorithm('md5'));
-    }
+		public function testReturnsTrueForValidAlgorithm()
+		{
+				$this->assertTrue(HashUtils::validateAlgorithm('md5'));
+		}
 }

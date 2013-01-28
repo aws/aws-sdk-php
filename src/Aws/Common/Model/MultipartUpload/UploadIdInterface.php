@@ -21,19 +21,19 @@ namespace Aws\Common\Model\MultipartUpload;
  */
 interface UploadIdInterface extends \Serializable
 {
-    /**
-     * Create an UploadId from an array
-     *
-     * @param array $data Data representing the upload identification
-     *
-     * @return self
-     */
-    public static function fromParams($data);
+		/**
+		 * Create an UploadId from an array
+		 *
+		 * @param array $data Data representing the upload identification
+		 *
+		 * @return self
+		 */
+		public static function fromParams($data);
 
-    /**
-     * Returns the array form of the upload identification for use as command params
-     *
-     * @return array
-     */
-    public function toParams();
+		/**
+		 * Returns the array form of the upload identification for use as command params
+		 *
+		 * @return array
+		 */
+		public function toParams();
 }

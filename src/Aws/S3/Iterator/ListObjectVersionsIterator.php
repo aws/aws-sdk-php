@@ -27,21 +27,21 @@ use Guzzle\Service\Resource\Model;
  */
 class ListObjectVersionsIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function handleResults(Model $result)
-    {
-        // Get the list of object versions
-        $versions = $result->get('Versions') ?: array();
-        $deleteMarkers = $result->get('DeleteMarkers') ?: array();
-        $versions = array_merge($versions, $deleteMarkers);
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function handleResults(Model $result)
+		{
+				// Get the list of object versions
+				$versions = $result->get('Versions') ?: array();
+				$deleteMarkers = $result->get('DeleteMarkers') ?: array();
+				$versions = array_merge($versions, $deleteMarkers);
 
-        // If there are prefixes and we want them, merge them in
-        if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
-            $versions = array_merge($versions, $result->get('CommonPrefixes'));
-        }
+				// If there are prefixes and we want them, merge them in
+				if ($this->get('return_prefixes') && $result->hasKey('CommonPrefixes')) {
+						$versions = array_merge($versions, $result->get('CommonPrefixes'));
+				}
 
-        return $versions;
-    }
+				return $versions;
+		}
 }

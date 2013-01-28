@@ -25,26 +25,26 @@ use Aws\DynamoDb\Exception\ResourceNotFoundException;
  */
 class TableNotExists extends AbstractResourceWaiter
 {
-    protected $interval = 30;
-    protected $maxAttempts = 60;
-    protected $maxFailures = 0;
+		protected $interval = 30;
+		protected $maxAttempts = 60;
+		protected $maxFailures = 0;
 
-    /**
-     * Wait until a table exists, and optionally has a status of ACTIVE
-     */
-    protected function doWait()
-    {
-        try {
+		/**
+		 * Wait until a table exists, and optionally has a status of ACTIVE
+		 */
+		protected function doWait()
+		{
+				try {
 
-            $this->client->getCommand('DescribeTable', array(
-                'TableName' => $this->resourceId,
-                Ua::OPTION  => Ua::WAITER
-            ))->execute();
+						$this->client->getCommand('DescribeTable', array(
+								'TableName' => $this->resourceId,
+								Ua::OPTION	=> Ua::WAITER
+						))->execute();
 
-            return false;
+						return false;
 
-        } catch (ResourceNotFoundException $e) {
-            return true;
-        }
-    }
+				} catch (ResourceNotFoundException $e) {
+						return true;
+				}
+		}
 }

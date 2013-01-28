@@ -27,71 +27,71 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class UploadBodyListener implements EventSubscriberInterface
 {
-    /**
-     * @var array The names of the commands of which to modify the body parameter
-     */
-    protected $commands;
+		/**
+		 * @var array The names of the commands of which to modify the body parameter
+		 */
+		protected $commands;
 
-    /**
-     * @var string The key for the upload body parameter
-     */
-    protected $bodyParameter;
+		/**
+		 * @var string The key for the upload body parameter
+		 */
+		protected $bodyParameter;
 
-    /**
-     * @var string The key for the source file parameter
-     */
-    protected $sourceParameter;
+		/**
+		 * @var string The key for the source file parameter
+		 */
+		protected $sourceParameter;
 
-    /**
-     * @param array  $commands        The commands to modify
-     * @param string $bodyParameter   The key for the body parameter
-     * @param string $sourceParameter The key for the source file parameter
-     */
-    public function __construct(array $commands, $bodyParameter = 'Body', $sourceParameter = 'SourceFile')
-    {
-        $this->commands = $commands;
-        $this->bodyParameter = (string) $bodyParameter;
-        $this->sourceParameter = (string) $sourceParameter;
-    }
+		/**
+		 * @param array	$commands				The commands to modify
+		 * @param string $bodyParameter	 The key for the body parameter
+		 * @param string $sourceParameter The key for the source file parameter
+		 */
+		public function __construct(array $commands, $bodyParameter = 'Body', $sourceParameter = 'SourceFile')
+		{
+				$this->commands = $commands;
+				$this->bodyParameter = (string) $bodyParameter;
+				$this->sourceParameter = (string) $sourceParameter;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
-    {
-        return array('command.before_prepare' => array('onCommandBeforePrepare'));
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function getSubscribedEvents()
+		{
+				return array('command.before_prepare' => array('onCommandBeforePrepare'));
+		}
 
-    /**
-     * Converts filenames and file handles into EntityBody objects before the command is validated
-     *
-     * @param Event $event Event emitted
-     */
-    public function onCommandBeforePrepare(Event $event)
-    {
-        /** @var $command Command */
-        $command = $event['command'];
-        if (in_array($command->getName(), $this->commands)) {
-            // Get the interesting parameters
-            $source = $command->get($this->sourceParameter);
-            $body = $command->get($this->bodyParameter);
+		/**
+		 * Converts filenames and file handles into EntityBody objects before the command is validated
+		 *
+		 * @param Event $event Event emitted
+		 */
+		public function onCommandBeforePrepare(Event $event)
+		{
+				/** @var $command Command */
+				$command = $event['command'];
+				if (in_array($command->getName(), $this->commands)) {
+						// Get the interesting parameters
+						$source = $command->get($this->sourceParameter);
+						$body = $command->get($this->bodyParameter);
 
-            // If a file path is passed in then get the file handle
-            if (is_string($source) && file_exists($source)) {
-                $body = fopen($source, 'r');
-            }
+						// If a file path is passed in then get the file handle
+						if (is_string($source) && file_exists($source)) {
+								$body = fopen($source, 'r');
+						}
 
-            if (null !== $body) {
-                $body = EntityBody::factory($body);
-                // Apply a ContentType parameter to the command if one is not present
-                if (!$command->get('ContentType') && $command->getOperation()->hasParam('ContentType')) {
-                    $command->set('ContentType', $body->getContentType());
-                }
-            }
+						if (null !== $body) {
+								$body = EntityBody::factory($body);
+								// Apply a ContentType parameter to the command if one is not present
+								if (!$command->get('ContentType') && $command->getOperation()->hasParam('ContentType')) {
+										$command->set('ContentType', $body->getContentType());
+								}
+						}
 
-            // Prepare the body parameter and remove the source file parameter
-            $command->remove($this->sourceParameter);
-            $command->set($this->bodyParameter, $body);
-        }
-    }
+						// Prepare the body parameter and remove the source file parameter
+						$command->remove($this->sourceParameter);
+						$command->set($this->bodyParameter, $body);
+				}
+		}
 }

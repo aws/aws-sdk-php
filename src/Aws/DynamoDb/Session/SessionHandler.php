@@ -45,384 +45,384 @@ use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
  */
 class SessionHandler
 {
-    /**
-     * @var DynamoDbClient The DynamoDB client
-     */
-    protected $client;
+		/**
+		 * @var DynamoDbClient The DynamoDB client
+		 */
+		protected $client;
 
-    /**
-     * @var LockingStrategyInterface The locking strategy
-     */
-    protected $lockingStrategy;
+		/**
+		 * @var LockingStrategyInterface The locking strategy
+		 */
+		protected $lockingStrategy;
 
-    /**
-     * @var SessionHandlerConfig The config for the handler and locking strategy
-     */
-    protected $config;
+		/**
+		 * @var SessionHandlerConfig The config for the handler and locking strategy
+		 */
+		protected $config;
 
-    /**
-     * @var string The session save path
-     */
-    protected $savePath;
+		/**
+		 * @var string The session save path
+		 */
+		protected $savePath;
 
-    /**
-     * @var string The session name
-     */
-    protected $sessionName;
+		/**
+		 * @var string The session name
+		 */
+		protected $sessionName;
 
-    /**
-     * @var string Stores the serialized data that was read for tracking changes
-     */
-    protected $dataRead;
+		/**
+		 * @var string Stores the serialized data that was read for tracking changes
+		 */
+		protected $dataRead;
 
-    /**
-     * @var string Keeps track of the open session's ID
-     */
-    protected $openSessionId;
+		/**
+		 * @var string Keeps track of the open session's ID
+		 */
+		protected $openSessionId;
 
-    /**
-     * @var bool Keeps track of whether the session has been written
-     */
-    protected $sessionWritten;
+		/**
+		 * @var bool Keeps track of whether the session has been written
+		 */
+		protected $sessionWritten;
 
-    /**
-     * Factory method to create a new DynamoDB Session Handler
-     *
-     * The configuration array accepts the following array keys and values:
-     * - locking_strategy:         Locking strategy for session locking logic
-     * - dynamodb_client:          Client for doing DynamoDB operations
-     * - table_name:               Name of the table in which to store sessions
-     * - hash_key:                 Name of the hash key in the sessions table
-     * - session_lifetime:         Lifetime of inactive sessions
-     * - consistent_read:          Use DynamoDB consistent reads for `GetItem`
-     * - automatic_gc:             Use PHP's auto garbage collection
-     * - gc_batch_size:            Batch size for garbage collection deletes
-     * - max_lock_wait_time:       Max time to wait for lock acquisition
-     * - min_lock_retry_microtime: Min time to wait between lock attempts
-     * - max_lock_retry_microtime: Max time to wait between lock attempts
-     *
-     * @param array $config Configuration options
-     *
-     * @return SessionHandler
-     */
-    public static function factory(array $config = array())
-    {
-        // Setup session handler configuration and get the client
-        $config = new SessionHandlerConfig($config);
-        $client = $config->get('dynamodb_client');
+		/**
+		 * Factory method to create a new DynamoDB Session Handler
+		 *
+		 * The configuration array accepts the following array keys and values:
+		 * - locking_strategy:				 Locking strategy for session locking logic
+		 * - dynamodb_client:					Client for doing DynamoDB operations
+		 * - table_name:							 Name of the table in which to store sessions
+		 * - hash_key:								 Name of the hash key in the sessions table
+		 * - session_lifetime:				 Lifetime of inactive sessions
+		 * - consistent_read:					Use DynamoDB consistent reads for `GetItem`
+		 * - automatic_gc:						 Use PHP's auto garbage collection
+		 * - gc_batch_size:						Batch size for garbage collection deletes
+		 * - max_lock_wait_time:			 Max time to wait for lock acquisition
+		 * - min_lock_retry_microtime: Min time to wait between lock attempts
+		 * - max_lock_retry_microtime: Max time to wait between lock attempts
+		 *
+		 * @param array $config Configuration options
+		 *
+		 * @return SessionHandler
+		 */
+		public static function factory(array $config = array())
+		{
+				// Setup session handler configuration and get the client
+				$config = new SessionHandlerConfig($config);
+				$client = $config->get('dynamodb_client');
 
-        // Make sure locking strategy has been provided or provide a default
-        $strategy = $config->get('locking_strategy');
-        if (!($strategy instanceof LockingStrategyInterface)) {
-            $factory  = new LockingStrategyFactory();
-            $strategy = $factory->factory($strategy, $config);
-        }
+				// Make sure locking strategy has been provided or provide a default
+				$strategy = $config->get('locking_strategy');
+				if (!($strategy instanceof LockingStrategyInterface)) {
+						$factory	= new LockingStrategyFactory();
+						$strategy = $factory->factory($strategy, $config);
+				}
 
-        // Return an instance of the session handler
-        return new static($client, $strategy, $config);
-    }
+				// Return an instance of the session handler
+				return new static($client, $strategy, $config);
+		}
 
-    /**
-     * Constructs a new DynamoDB Session Handler
-     *
-     * @param DynamoDbClient           $client   Client for doing DynamoDB operations
-     * @param LockingStrategyInterface $strategy Locking strategy for performing session locking logic
-     * @param SessionHandlerConfig     $config   Configuration options for the session handler
-     */
-    public function __construct(
-        DynamoDbClient $client,
-        LockingStrategyInterface $strategy,
-        SessionHandlerConfig $config
-    ) {
-        $this->client          = $client;
-        $this->lockingStrategy = $strategy;
-        $this->config          = $config;
-    }
+		/**
+		 * Constructs a new DynamoDB Session Handler
+		 *
+		 * @param DynamoDbClient					 $client	 Client for doing DynamoDB operations
+		 * @param LockingStrategyInterface $strategy Locking strategy for performing session locking logic
+		 * @param SessionHandlerConfig		 $config	 Configuration options for the session handler
+		 */
+		public function __construct(
+				DynamoDbClient $client,
+				LockingStrategyInterface $strategy,
+				SessionHandlerConfig $config
+		) {
+				$this->client					= $client;
+				$this->lockingStrategy = $strategy;
+				$this->config					= $config;
+		}
 
-    /**
-     * Destruct the session handler and make sure the session gets written
-     *
-     * NOTE: It is usually better practice to call `session_write_close()`
-     * manually in your application as soon as session modifications are
-     * complete. This is especially true if session locking is enabled.
-     *
-     * @link http://php.net/manual/en/function.session-set-save-handler.php#refsect1-function.session-set-save-handler-notes
-     */
-    public function __destruct()
-    {
-        session_write_close();
-    }
+		/**
+		 * Destruct the session handler and make sure the session gets written
+		 *
+		 * NOTE: It is usually better practice to call `session_write_close()`
+		 * manually in your application as soon as session modifications are
+		 * complete. This is especially true if session locking is enabled.
+		 *
+		 * @link http://php.net/manual/en/function.session-set-save-handler.php#refsect1-function.session-set-save-handler-notes
+		 */
+		public function __destruct()
+		{
+				session_write_close();
+		}
 
-    /**
-     * Register the DynamoDB session handler.
-     *
-     * Uses the PHP-provided method to register this class as a session handler.
-     *
-     * @return bool Whether or not the handler was registered
-     */
-    public function register()
-    {
-        // Set garbage collection probability based on config
-        $autoGarbageCollection = $this->config->get('automatic_gc') ? '1' : '0';
-        ini_set('session.gc_probability', $autoGarbageCollection);
+		/**
+		 * Register the DynamoDB session handler.
+		 *
+		 * Uses the PHP-provided method to register this class as a session handler.
+		 *
+		 * @return bool Whether or not the handler was registered
+		 */
+		public function register()
+		{
+				// Set garbage collection probability based on config
+				$autoGarbageCollection = $this->config->get('automatic_gc') ? '1' : '0';
+				ini_set('session.gc_probability', $autoGarbageCollection);
 
-        // Register the session handler
-        return session_set_save_handler(
-            array($this, 'open'),
-            array($this, 'close'),
-            array($this, 'read'),
-            array($this, 'write'),
-            array($this, 'destroy'),
-            array($this, 'gc')
-        );
-    }
+				// Register the session handler
+				return session_set_save_handler(
+						array($this, 'open'),
+						array($this, 'close'),
+						array($this, 'read'),
+						array($this, 'write'),
+						array($this, 'destroy'),
+						array($this, 'gc')
+				);
+		}
 
-    /**
-     * Checks if the session is open and writable
-     *
-     * @return bool Whether or not the session is open for writing
-     */
-    public function isSessionOpen()
-    {
-        return (bool) $this->openSessionId;
-    }
+		/**
+		 * Checks if the session is open and writable
+		 *
+		 * @return bool Whether or not the session is open for writing
+		 */
+		public function isSessionOpen()
+		{
+				return (bool) $this->openSessionId;
+		}
 
-    /**
-     * Checks if the session has been written
-     *
-     * @return bool Whether or not the session has been written
-     */
-    public function isSessionWritten()
-    {
-        return $this->sessionWritten;
-    }
+		/**
+		 * Checks if the session has been written
+		 *
+		 * @return bool Whether or not the session has been written
+		 */
+		public function isSessionWritten()
+		{
+				return $this->sessionWritten;
+		}
 
-    /**
-     * Creates a table in DynamoDB for session storage according to provided
-     * configuration options.
-     *
-     * Note: This is a one-time operation. It may be better to do this via the
-     * AWS management console prior to using the session handler.
-     *
-     * @param int $readCapacityUnits  RCUs for table read throughput
-     * @param int $writeCapacityUnits WCUs table write throughput
-     *
-     * @return array The command result
-     */
-    public function createSessionsTable($readCapacityUnits, $writeCapacityUnits)
-    {
-        $tableName = $this->config->get('table_name');
+		/**
+		 * Creates a table in DynamoDB for session storage according to provided
+		 * configuration options.
+		 *
+		 * Note: This is a one-time operation. It may be better to do this via the
+		 * AWS management console prior to using the session handler.
+		 *
+		 * @param int $readCapacityUnits	RCUs for table read throughput
+		 * @param int $writeCapacityUnits WCUs table write throughput
+		 *
+		 * @return array The command result
+		 */
+		public function createSessionsTable($readCapacityUnits, $writeCapacityUnits)
+		{
+				$tableName = $this->config->get('table_name');
 
-        $result = $this->client->getCommand('CreateTable', array(
-            'TableName' => $tableName,
-            'KeySchema' => array(
-                'HashKeyElement' => array(
-                    'AttributeName' => $this->config->get('hash_key'),
-                    'AttributeType' => 'S',
-                )
-            ),
-            'ProvisionedThroughput' => array(
-                'ReadCapacityUnits'  => (int) $readCapacityUnits,
-                'WriteCapacityUnits' => (int) $writeCapacityUnits,
-            ),
-            Ua::OPTION => Ua::SESSION
-        ))->execute();
+				$result = $this->client->getCommand('CreateTable', array(
+						'TableName' => $tableName,
+						'KeySchema' => array(
+								'HashKeyElement' => array(
+										'AttributeName' => $this->config->get('hash_key'),
+										'AttributeType' => 'S',
+								)
+						),
+						'ProvisionedThroughput' => array(
+								'ReadCapacityUnits'	=> (int) $readCapacityUnits,
+								'WriteCapacityUnits' => (int) $writeCapacityUnits,
+						),
+						Ua::OPTION => Ua::SESSION
+				))->execute();
 
-        $this->client->waitUntil('table_exists', $tableName, array(
-            'status' => 'ACTIVE'
-        ));
+				$this->client->waitUntil('table_exists', $tableName, array(
+						'status' => 'ACTIVE'
+				));
 
-        return $result;
-    }
+				return $result;
+		}
 
-    /**
-     * Open a session for writing. Triggered by session_start()
-     *
-     * Part of the standard PHP session handler interface
-     *
-     * @param string $savePath    The session save path
-     * @param string $sessionName The session name
-     *
-     * @return bool Whether or not the operation succeeded
-     */
-    public function open($savePath, $sessionName)
-    {
-        $this->savePath      = $savePath;
-        $this->sessionName   = $sessionName;
-        $this->openSessionId = session_id();
+		/**
+		 * Open a session for writing. Triggered by session_start()
+		 *
+		 * Part of the standard PHP session handler interface
+		 *
+		 * @param string $savePath		The session save path
+		 * @param string $sessionName The session name
+		 *
+		 * @return bool Whether or not the operation succeeded
+		 */
+		public function open($savePath, $sessionName)
+		{
+				$this->savePath			= $savePath;
+				$this->sessionName	 = $sessionName;
+				$this->openSessionId = session_id();
 
-        return $this->isSessionOpen();
-    }
+				return $this->isSessionOpen();
+		}
 
-    /**
-     * Close a session from writing
-     *
-     * Part of the standard PHP session handler interface
-     *
-     * @return bool Success
-     */
-    public function close()
-    {
-        // Make sure the session is unlocked even if the write did not happen.
-        // Also, make sure to update the expiration time
-        if (!$this->isSessionWritten()) {
-            $id     = $this->formatId($this->openSessionId);
-            $result = $this->lockingStrategy->doWrite($id, '', false);
-            $this->sessionWritten = (bool) $result;
-        }
+		/**
+		 * Close a session from writing
+		 *
+		 * Part of the standard PHP session handler interface
+		 *
+		 * @return bool Success
+		 */
+		public function close()
+		{
+				// Make sure the session is unlocked even if the write did not happen.
+				// Also, make sure to update the expiration time
+				if (!$this->isSessionWritten()) {
+						$id		 = $this->formatId($this->openSessionId);
+						$result = $this->lockingStrategy->doWrite($id, '', false);
+						$this->sessionWritten = (bool) $result;
+				}
 
-        $this->openSessionId = null;
+				$this->openSessionId = null;
 
-        return $this->isSessionWritten();
-    }
+				return $this->isSessionWritten();
+		}
 
-    /**
-     * Read a session stored in DynamoDB
-     *
-     * Part of the standard PHP session handler interface
-     *
-     * @param string $id The session ID
-     *
-     * @return string The session data
-     */
-    public function read($id)
-    {
-        // PHP expects an empty string to be returned from this method if no
-        // data is retrieved
-        $this->dataRead = '';
+		/**
+		 * Read a session stored in DynamoDB
+		 *
+		 * Part of the standard PHP session handler interface
+		 *
+		 * @param string $id The session ID
+		 *
+		 * @return string The session data
+		 */
+		public function read($id)
+		{
+				// PHP expects an empty string to be returned from this method if no
+				// data is retrieved
+				$this->dataRead = '';
 
-        // Get session data using the selected locking strategy
-        $item = $this->lockingStrategy->doRead($this->formatId($id));
+				// Get session data using the selected locking strategy
+				$item = $this->lockingStrategy->doRead($this->formatId($id));
 
-        // Return the data if it is not expired. If it is expired, remove it
-        if (isset($item['expires']) && isset($item['data'])) {
-            $this->dataRead = $item['data'];
-            if ($item['expires'] <= time()) {
-                $this->dataRead = '';
-                $this->destroy($id);
-            }
-        }
+				// Return the data if it is not expired. If it is expired, remove it
+				if (isset($item['expires']) && isset($item['data'])) {
+						$this->dataRead = $item['data'];
+						if ($item['expires'] <= time()) {
+								$this->dataRead = '';
+								$this->destroy($id);
+						}
+				}
 
-        return $this->dataRead;
-    }
+				return $this->dataRead;
+		}
 
-    /**
-     * Write a session to DynamoDB
-     *
-     * Part of the standard PHP session handler interface
-     *
-     * @param string $id   The session ID
-     * @param string $data The serialized session data to write
-     *
-     * @return bool Whether or not the operation succeeded
-     */
-    public function write($id, $data)
-    {
-        // Write the session data using the selected locking strategy
-        $this->sessionWritten = $this->lockingStrategy->doWrite(
-            $this->formatId($id),
-            $data,
-            ($data !== $this->dataRead)
-        );
+		/**
+		 * Write a session to DynamoDB
+		 *
+		 * Part of the standard PHP session handler interface
+		 *
+		 * @param string $id	 The session ID
+		 * @param string $data The serialized session data to write
+		 *
+		 * @return bool Whether or not the operation succeeded
+		 */
+		public function write($id, $data)
+		{
+				// Write the session data using the selected locking strategy
+				$this->sessionWritten = $this->lockingStrategy->doWrite(
+						$this->formatId($id),
+						$data,
+						($data !== $this->dataRead)
+				);
 
-        return $this->isSessionWritten();
-    }
+				return $this->isSessionWritten();
+		}
 
-    /**
-     * Delete a session stored in DynamoDB
-     *
-     * Part of the standard PHP session handler interface
-     *
-     * @param string $id The session ID
-     *
-     * @return bool Whether or not the operation succeeded
-     */
-    public function destroy($id)
-    {
-        // Delete the session data using the selected locking strategy
-        $this->sessionWritten = $this->lockingStrategy->doDestroy($this->formatId($id));
+		/**
+		 * Delete a session stored in DynamoDB
+		 *
+		 * Part of the standard PHP session handler interface
+		 *
+		 * @param string $id The session ID
+		 *
+		 * @return bool Whether or not the operation succeeded
+		 */
+		public function destroy($id)
+		{
+				// Delete the session data using the selected locking strategy
+				$this->sessionWritten = $this->lockingStrategy->doDestroy($this->formatId($id));
 
-        return $this->isSessionWritten();
-    }
+				return $this->isSessionWritten();
+		}
 
-    /**
-     * Triggers garbage collection on expired sessions
-     *
-     * Part of the standard PHP session handler interface
-     *
-     * @param int $maxLifetime The value of `session.gc_maxlifetime`. Ignored
-     *
-     * @return bool
-     */
-    public function gc($maxLifetime)
-    {
-        try {
-            $this->garbageCollect();
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
+		/**
+		 * Triggers garbage collection on expired sessions
+		 *
+		 * Part of the standard PHP session handler interface
+		 *
+		 * @param int $maxLifetime The value of `session.gc_maxlifetime`. Ignored
+		 *
+		 * @return bool
+		 */
+		public function gc($maxLifetime)
+		{
+				try {
+						$this->garbageCollect();
+						return true;
+				} catch (\Exception $e) {
+						return false;
+				}
+		}
 
-    /**
-     * Performs garbage collection on the sessions stored in the DynamoDB table
-     *
-     * If triggering garbage collection manually, use this method. If your
-     * garbage collection is triggered automatically by php (not recommended),
-     * then use the `gc` method.
-     */
-    public function garbageCollect()
-    {
-        $deleteBatch = WriteRequestBatch::factory(
-            $this->client,
-            $this->config->get('gc_batch_size')
-        );
-        $tableName = $this->config->get('table_name');
-        $expires   = (string) time();
+		/**
+		 * Performs garbage collection on the sessions stored in the DynamoDB table
+		 *
+		 * If triggering garbage collection manually, use this method. If your
+		 * garbage collection is triggered automatically by php (not recommended),
+		 * then use the `gc` method.
+		 */
+		public function garbageCollect()
+		{
+				$deleteBatch = WriteRequestBatch::factory(
+						$this->client,
+						$this->config->get('gc_batch_size')
+				);
+				$tableName = $this->config->get('table_name');
+				$expires	 = (string) time();
 
-        // Setup a scan table command for finding expired session items
-        $tableScan = $this->client->getCommand('Scan', array(
-            'TableName' => $tableName,
-            'AttributesToGet' => array(
-                $this->config->get('hash_key')
-            ),
-            'ScanFilter' => array(
-                'expires' => array(
-                    'ComparisonOperator' => 'LT',
-                    'AttributeValueList' => array(
-                        array(
-                            'N' => $expires
-                        )
-                    ),
-                ),
-                'lock' => array(
-                    'ComparisonOperator' => 'NULL',
-                )
-            ),
-            Ua::OPTION => Ua::SESSION
-        ));
+				// Setup a scan table command for finding expired session items
+				$tableScan = $this->client->getCommand('Scan', array(
+						'TableName' => $tableName,
+						'AttributesToGet' => array(
+								$this->config->get('hash_key')
+						),
+						'ScanFilter' => array(
+								'expires' => array(
+										'ComparisonOperator' => 'LT',
+										'AttributeValueList' => array(
+												array(
+														'N' => $expires
+												)
+										),
+								),
+								'lock' => array(
+										'ComparisonOperator' => 'NULL',
+								)
+						),
+						Ua::OPTION => Ua::SESSION
+				));
 
-        // Perform scan and batch delete operations as needed
-        foreach ($this->client->getIterator($tableScan) as $item) {
-            // @codeCoverageIgnoreStart
-            $key = array('HashKeyElement' => $item[$this->config->get('hash_key')]);
-            $deleteBatch->add(new DeleteRequest($key, $tableName));
-            // @codeCoverageIgnoreEnd
-        }
+				// Perform scan and batch delete operations as needed
+				foreach ($this->client->getIterator($tableScan) as $item) {
+						// @codeCoverageIgnoreStart
+						$key = array('HashKeyElement' => $item[$this->config->get('hash_key')]);
+						$deleteBatch->add(new DeleteRequest($key, $tableName));
+						// @codeCoverageIgnoreEnd
+				}
 
-        // Delete any remaining items
-        $deleteBatch->flush();
-    }
+				// Delete any remaining items
+				$deleteBatch->flush();
+		}
 
-    /**
-     * Prepend the session ID with the session name
-     *
-     * @param string $id The session ID
-     *
-     * @return string Prepared session ID
-     */
-    protected function formatId($id)
-    {
-        return trim($this->sessionName . '_' . $id, '_');
-    }
+		/**
+		 * Prepend the session ID with the session name
+		 *
+		 * @param string $id The session ID
+		 *
+		 * @return string Prepared session ID
+		 */
+		protected function formatId($id)
+		{
+				return trim($this->sessionName . '_' . $id, '_');
+		}
 }

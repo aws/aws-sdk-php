@@ -25,48 +25,48 @@ use Guzzle\Http\Client as HttpClient;
  */
 class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 {
-    public function testHostedZoneOperations()
-    {
-        /** @var $route53 Route53Client */
-        $route53 = self::getServiceBuilder()->get('route53');
+		public function testHostedZoneOperations()
+		{
+				/** @var $route53 Route53Client */
+				$route53 = self::getServiceBuilder()->get('route53');
 
-        self::log('Create a hosted zone.');
-        $result = $route53->getCommand('CreateHostedZone', array(
-            'Name' => 'www.example.com',
-            'CallerReference' => uniqid('aws-sdk-php-'),
-        ))->getResult();
-        $zoneId = $result->getPath('HostedZone/Id');
-        $this->assertStringStartsWith('/hostedzone/', $zoneId);
+				self::log('Create a hosted zone.');
+				$result = $route53->getCommand('CreateHostedZone', array(
+						'Name' => 'www.example.com',
+						'CallerReference' => uniqid('aws-sdk-php-'),
+				))->getResult();
+				$zoneId = $result->getPath('HostedZone/Id');
+				$this->assertStringStartsWith('/hostedzone/', $zoneId);
 
-        self::log('List the hosted zones and verify the one we created is there.');
-        $zoneIds = array();
-        foreach ($route53->getIterator('ListHostedZones') as $zone) {
-            $zoneIds[] = $zone['Id'];
-        }
-        $this->assertContains($zoneId, $zoneIds);
+				self::log('List the hosted zones and verify the one we created is there.');
+				$zoneIds = array();
+				foreach ($route53->getIterator('ListHostedZones') as $zone) {
+						$zoneIds[] = $zone['Id'];
+				}
+				$this->assertContains($zoneId, $zoneIds);
 
-        self::log('Get the hosted zone we created by its ID.');
-        $result = $route53->getCommand('GetHostedZone', array(
-            'Id' => $zoneId,
-        ))->getResult();
-        $this->assertEquals($zoneId, $result->getPath('HostedZone/Id'));
-        $nameServers = $result->getPath('DelegationSet/NameServers');
-        $this->assertInternalType('array', $nameServers);
-        $this->assertSame($nameServers, array_values($nameServers));
+				self::log('Get the hosted zone we created by its ID.');
+				$result = $route53->getCommand('GetHostedZone', array(
+						'Id' => $zoneId,
+				))->getResult();
+				$this->assertEquals($zoneId, $result->getPath('HostedZone/Id'));
+				$nameServers = $result->getPath('DelegationSet/NameServers');
+				$this->assertInternalType('array', $nameServers);
+				$this->assertSame($nameServers, array_values($nameServers));
 
-        self::log('Delete the hosted zone created.');
-        $result = $route53->getCommand('DeleteHostedZone', array(
-            'Id' => $zoneId,
-        ))->getResult();
-        $changeId = $result->getPath('ChangeInfo/Id');
-        $this->assertStringStartsWith('/change/', $changeId);
-        $this->assertEquals(Status::PENDING, $result->getPath('ChangeInfo/Status'));
+				self::log('Delete the hosted zone created.');
+				$result = $route53->getCommand('DeleteHostedZone', array(
+						'Id' => $zoneId,
+				))->getResult();
+				$changeId = $result->getPath('ChangeInfo/Id');
+				$this->assertStringStartsWith('/change/', $changeId);
+				$this->assertEquals(Status::PENDING, $result->getPath('ChangeInfo/Status'));
 
-        self::log('Get the change record and verify that it is being deleted.');
-        $result = $route53->getCommand('GetChange', array(
-            'Id' => $changeId,
-        ))->getResult();
-        $this->assertEquals(Status::PENDING, $result->getPath('ChangeInfo/Status'));
-    }
+				self::log('Get the change record and verify that it is being deleted.');
+				$result = $route53->getCommand('GetChange', array(
+						'Id' => $changeId,
+				))->getResult();
+				$this->assertEquals(Status::PENDING, $result->getPath('ChangeInfo/Status'));
+		}
 
 }

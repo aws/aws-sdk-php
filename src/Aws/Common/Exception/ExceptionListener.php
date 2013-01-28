@@ -24,36 +24,36 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ExceptionListener implements EventSubscriberInterface
 {
-    /**
-     * @var ExceptionFactoryInterface Factory used to create new exceptions
-     */
-    protected $factory;
+		/**
+		 * @var ExceptionFactoryInterface Factory used to create new exceptions
+		 */
+		protected $factory;
 
-    /**
-     * @param ExceptionFactoryInterface $factory Factory used to create exceptions
-     */
-    public function __construct(ExceptionFactoryInterface $factory)
-    {
-        $this->factory = $factory;
-    }
+		/**
+		 * @param ExceptionFactoryInterface $factory Factory used to create exceptions
+		 */
+		public function __construct(ExceptionFactoryInterface $factory)
+		{
+				$this->factory = $factory;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
-    {
-        return array('request.error' => array('onRequestError', -1));
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public static function getSubscribedEvents()
+		{
+				return array('request.error' => array('onRequestError', -1));
+		}
 
-    /**
-     * Throws a more meaningful request exception if available
-     *
-     * @param Event $event Event emitted
-     */
-    public function onRequestError(Event $event)
-    {
-        $e = $this->factory->fromResponse($event['response']);
-        $event->stopPropagation();
-        throw $e;
-    }
+		/**
+		 * Throws a more meaningful request exception if available
+		 *
+		 * @param Event $event Event emitted
+		 */
+		public function onRequestError(Event $event)
+		{
+				$e = $this->factory->fromResponse($event['response']);
+				$event->stopPropagation();
+				throw $e;
+		}
 }

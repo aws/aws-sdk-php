@@ -23,74 +23,74 @@ namespace Aws\Common\Credentials;
  */
 interface CredentialsInterface extends \Serializable
 {
-    /**
-     * Returns the AWS access key ID for this credentials object.
-     *
-     * @return string
-     */
-    public function getAccessKeyId();
+		/**
+		 * Returns the AWS access key ID for this credentials object.
+		 *
+		 * @return string
+		 */
+		public function getAccessKeyId();
 
-    /**
-     * Returns the AWS secret access key for this credentials object.
-     *
-     * @return string
-     */
-    public function getSecretKey();
+		/**
+		 * Returns the AWS secret access key for this credentials object.
+		 *
+		 * @return string
+		 */
+		public function getSecretKey();
 
-    /**
-     * Get the associated security token if available
-     *
-     * @return string|null
-     */
-    public function getSecurityToken();
+		/**
+		 * Get the associated security token if available
+		 *
+		 * @return string|null
+		 */
+		public function getSecurityToken();
 
-    /**
-     * Get the UNIX timestamp in which the credentials will expire
-     *
-     * @return int|null
-     */
-    public function getExpiration();
+		/**
+		 * Get the UNIX timestamp in which the credentials will expire
+		 *
+		 * @return int|null
+		 */
+		public function getExpiration();
 
-    /**
-     * Set the AWS access key ID for this credentials object.
-     *
-     * @param string $key AWS access key ID
-     *
-     * @return self
-     */
-    public function setAccessKeyId($key);
+		/**
+		 * Set the AWS access key ID for this credentials object.
+		 *
+		 * @param string $key AWS access key ID
+		 *
+		 * @return self
+		 */
+		public function setAccessKeyId($key);
 
-    /**
-     * Set the AWS secret access key for this credentials object.
-     *
-     * @param string $secret AWS secret access key
-     *
-     * @return CredentialsInterface
-     */
-    public function setSecretKey($secret);
+		/**
+		 * Set the AWS secret access key for this credentials object.
+		 *
+		 * @param string $secret AWS secret access key
+		 *
+		 * @return CredentialsInterface
+		 */
+		public function setSecretKey($secret);
 
-    /**
-     * Set the security token to use with this credentials object
-     *
-     * @param string $token Security token
-     *
-     * @return self
-     */
-    public function setSecurityToken($token);
+		/**
+		 * Set the security token to use with this credentials object
+		 *
+		 * @param string $token Security token
+		 *
+		 * @return self
+		 */
+		public function setSecurityToken($token);
 
-    /**
-     * Set the UNIX timestamp in which the credentials will expire
-     *
-     * @param int $timestamp UNIX timestamp expiration
-     *
-     * @return self
-     */
-    public function setExpiration($timestamp);
+		/**
+		 * Set the UNIX timestamp in which the credentials will expire
+		 *
+		 * @param int $timestamp UNIX timestamp expiration
+		 *
+		 * @return self
+		 */
+		public function setExpiration($timestamp);
 
-    /**
-     * Check if the credentials are expired
-     *
-     * @return bool
-     */
-    public function isExpired();
+		/**
+		 * Check if the credentials are expired
+		 *
+		 * @return bool
+		 */
+		public function isExpired();
 }

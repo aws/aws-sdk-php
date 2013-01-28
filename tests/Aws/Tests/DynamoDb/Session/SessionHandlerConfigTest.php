@@ -24,46 +24,46 @@ use Aws\DynamoDb\Session\SessionHandlerConfig;
  */
 class SessionHandlerConfigTest extends AbstractSessionTestCase
 {
-    public function getConstructorTestCases()
-    {
-        return array(
-            array(
-                array(
-                    'dynamodb_client' => $this->getMockedClient()
-                ),
-                'Aws\DynamoDb\Session\SessionHandlerConfig'
-            ),
-            array(
-                array(),
-                'Aws\Common\Exception\InvalidArgumentException'
-            )
-        );
-    }
+		public function getConstructorTestCases()
+		{
+				return array(
+						array(
+								array(
+										'dynamodb_client' => $this->getMockedClient()
+								),
+								'Aws\DynamoDb\Session\SessionHandlerConfig'
+						),
+						array(
+								array(),
+								'Aws\Common\Exception\InvalidArgumentException'
+						)
+				);
+		}
 
-    /**
-     * @dataProvider getConstructorTestCases
-     */
-    public function testConstructorProperlyCreatesConfig(array $data, $expectedClass)
-    {
-        try {
-            $config = new SessionHandlerConfig($data);
-        } catch (\Aws\Common\Exception\InvalidArgumentException $e) {
-            $config = $e;
-        }
+		/**
+		 * @dataProvider getConstructorTestCases
+		 */
+		public function testConstructorProperlyCreatesConfig(array $data, $expectedClass)
+		{
+				try {
+						$config = new SessionHandlerConfig($data);
+				} catch (\Aws\Common\Exception\InvalidArgumentException $e) {
+						$config = $e;
+				}
 
-        $this->assertInstanceOf($expectedClass, $config);
-    }
+				$this->assertInstanceOf($expectedClass, $config);
+		}
 
-    public function testAddDefaultsPerformsMergeProperly()
-    {
-        $config = new SessionHandlerConfig(array(
-            'dynamodb_client' => $this->getMockedClient()
-        ));
+		public function testAddDefaultsPerformsMergeProperly()
+		{
+				$config = new SessionHandlerConfig(array(
+						'dynamodb_client' => $this->getMockedClient()
+				));
 
-        $this->assertNull($config->get('foo_bar'));
-        $config->addDefaults(array('foo_bar' => 'baz'));
-        $this->assertEquals('baz', $config->get('foo_bar'));
-        $config->addDefaults(array('foo_bar' => 'CHANGED'));
-        $this->assertEquals('baz', $config->get('foo_bar'));
-    }
+				$this->assertNull($config->get('foo_bar'));
+				$config->addDefaults(array('foo_bar' => 'baz'));
+				$this->assertEquals('baz', $config->get('foo_bar'));
+				$config->addDefaults(array('foo_bar' => 'CHANGED'));
+				$this->assertEquals('baz', $config->get('foo_bar'));
+		}
 }

@@ -26,90 +26,90 @@ use Aws\DynamoDb\Exception\DynamoDbException;
  */
 abstract class AbstractLockingStrategy implements LockingStrategyInterface
 {
-    /**
-     * @var DynamoDbClient The DynamoDB client
-     */
-    protected $client;
+		/**
+		 * @var DynamoDbClient The DynamoDB client
+		 */
+		protected $client;
 
-    /**
-     * @var SessionHandlerConfig The session handler config options
-     */
-    protected $config;
+		/**
+		 * @var SessionHandlerConfig The session handler config options
+		 */
+		protected $config;
 
-    /**
-     * @param DynamoDbClient       $client The DynamoDB client
-     * @param SessionHandlerConfig $config The session handler config options
-     */
-    public function __construct(DynamoDbClient $client, SessionHandlerConfig $config)
-    {
-        $this->client = $client;
-        $this->config = $config;
-    }
+		/**
+		 * @param DynamoDbClient			 $client The DynamoDB client
+		 * @param SessionHandlerConfig $config The session handler config options
+		 */
+		public function __construct(DynamoDbClient $client, SessionHandlerConfig $config)
+		{
+				$this->client = $client;
+				$this->config = $config;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doWrite($id, $data, $isDataChanged)
-    {
-        // Prepare the attributes
-        $expires = time() + $this->config->get('session_lifetime');
-        $attributes = array(
-            'expires' => array(
-                'Value' => array(
-                    'N' => (string) $expires
-                )
-            )
-        );
-        if ($isDataChanged) {
-            $attributes['data'] = array(
-                'Value' => array(
-                    'S' => $data
-                )
-            );
-        }
-        $attributes = array_merge($attributes, $this->getExtraAttributes());
+		/**
+		 * {@inheritdoc}
+		 */
+		public function doWrite($id, $data, $isDataChanged)
+		{
+				// Prepare the attributes
+				$expires = time() + $this->config->get('session_lifetime');
+				$attributes = array(
+						'expires' => array(
+								'Value' => array(
+										'N' => (string) $expires
+								)
+						)
+				);
+				if ($isDataChanged) {
+						$attributes['data'] = array(
+								'Value' => array(
+										'S' => $data
+								)
+						);
+				}
+				$attributes = array_merge($attributes, $this->getExtraAttributes());
 
-        // Perform the UpdateItem command
-        try {
-            return (bool) $this->client->getCommand('UpdateItem', array(
-                'TableName' => $this->config->get('table_name'),
-                'Key' => array(
-                    'HashKeyElement' => array(
-                        'S' => $id
-                    )
-                ),
-                'AttributeUpdates' => $attributes,
-                Ua::OPTION => Ua::SESSION
-            ))->execute();
-        } catch (DynamoDbException $e) {
-            return false;
-        }
-    }
+				// Perform the UpdateItem command
+				try {
+						return (bool) $this->client->getCommand('UpdateItem', array(
+								'TableName' => $this->config->get('table_name'),
+								'Key' => array(
+										'HashKeyElement' => array(
+												'S' => $id
+										)
+								),
+								'AttributeUpdates' => $attributes,
+								Ua::OPTION => Ua::SESSION
+						))->execute();
+				} catch (DynamoDbException $e) {
+						return false;
+				}
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doDestroy($id)
-    {
-        try {
-            return (bool) $this->client->getCommand('DeleteItem', array(
-                'TableName' => $this->config->get('table_name'),
-                'Key' => array(
-                    'HashKeyElement' => array(
-                        'S' => $id
-                    )
-                ),
-                Ua::OPTION => Ua::SESSION
-            ))->execute();
-        } catch (DynamoDbException $e) {
-            return false;
-        }
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		public function doDestroy($id)
+		{
+				try {
+						return (bool) $this->client->getCommand('DeleteItem', array(
+								'TableName' => $this->config->get('table_name'),
+								'Key' => array(
+										'HashKeyElement' => array(
+												'S' => $id
+										)
+								),
+								Ua::OPTION => Ua::SESSION
+						))->execute();
+				} catch (DynamoDbException $e) {
+						return false;
+				}
+		}
 
-    /**
-     * Allows the specific strategy to add additional attributes to update
-     *
-     * @return array
-     */
-    abstract protected function getExtraAttributes();
+		/**
+		 * Allows the specific strategy to add additional attributes to update
+		 *
+		 * @return array
+		 */
+		abstract protected function getExtraAttributes();
 }

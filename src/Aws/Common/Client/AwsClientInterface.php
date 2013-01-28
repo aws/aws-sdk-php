@@ -27,44 +27,44 @@ use Guzzle\Service\ClientInterface;
  */
 interface AwsClientInterface extends ClientInterface
 {
-    /**
-     * Returns the AWS credentials associated with the client
-     *
-     * @return CredentialsInterface
-     */
-    public function getCredentials();
+		/**
+		 * Returns the AWS credentials associated with the client
+		 *
+		 * @return CredentialsInterface
+		 */
+		public function getCredentials();
 
-    /**
-     * Returns the signature implementation used with the client
-     *
-     * @return SignatureInterface
-     */
-    public function getSignature();
+		/**
+		 * Returns the signature implementation used with the client
+		 *
+		 * @return SignatureInterface
+		 */
+		public function getSignature();
 
-    /**
-     * Get the endpoint provider used with the client
-     *
-     * @return EndpointProviderInterface
-     */
-    public function getEndpointProvider();
+		/**
+		 * Get the endpoint provider used with the client
+		 *
+		 * @return EndpointProviderInterface
+		 */
+		public function getEndpointProvider();
 
-    /**
-     * Set the waiter factory to use with the client
-     *
-     * @param WaiterFactoryInterface $waiterFactory Factory used to create waiters
-     *
-     * @return self
-     */
-    public function setWaiterFactory(WaiterFactoryInterface $waiterFactory);
+		/**
+		 * Set the waiter factory to use with the client
+		 *
+		 * @param WaiterFactoryInterface $waiterFactory Factory used to create waiters
+		 *
+		 * @return self
+		 */
+		public function setWaiterFactory(WaiterFactoryInterface $waiterFactory);
 
-    /**
-     * Wait until a resource is available or an associated waiter returns true
-     *
-     * @param string $waiter  Name of the waiter in snake_case
-     * @param mixed  $value   Value to pass to the waiter
-     * @param array  $options Options to pass to the waiter
-     *
-     * @return self
-     */
-    public function waitUntil($waiter, $value = null, array $options = array());
+		/**
+		 * Wait until a resource is available or an associated waiter returns true
+		 *
+		 * @param string $waiter	Name of the waiter in snake_case
+		 * @param mixed	$value	 Value to pass to the waiter
+		 * @param array	$options Options to pass to the waiter
+		 *
+		 * @return self
+		 */
+		public function waitUntil($waiter, $value = null, array $options = array());
 }

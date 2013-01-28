@@ -24,24 +24,24 @@ use Guzzle\Service\Resource\Model;
  */
 class ListObjectVersionsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testResultHandlingWorks()
-    {
-        // Prepare an iterator that will execute all LOC in handleResults
-        $command = $this->getMock('Guzzle\Service\Command\CommandInterface');
-        $iterator = new ListObjectVersionsIterator($command, array(
-            'return_prefixes' => true
-        ));
-        $model = new Model(array(
-            'Versions'       => array(1, 2),
-            'DeleteMarkers'  => array(3, 4),
-            'CommonPrefixes' => array(5, 6)
-        ));
+		public function testResultHandlingWorks()
+		{
+				// Prepare an iterator that will execute all LOC in handleResults
+				$command = $this->getMock('Guzzle\Service\Command\CommandInterface');
+				$iterator = new ListObjectVersionsIterator($command, array(
+						'return_prefixes' => true
+				));
+				$model = new Model(array(
+						'Versions'			 => array(1, 2),
+						'DeleteMarkers'	=> array(3, 4),
+						'CommonPrefixes' => array(5, 6)
+				));
 
-        $class = new \ReflectionObject($iterator);
-        $method = $class->getMethod('handleResults');
-        $method->setAccessible(true);
-        $items = $method->invoke($iterator, $model);
+				$class = new \ReflectionObject($iterator);
+				$method = $class->getMethod('handleResults');
+				$method->setAccessible(true);
+				$items = $method->invoke($iterator, $model);
 
-        $this->assertCount(6, $items);
-    }
+				$this->assertCount(6, $items);
+		}
 }

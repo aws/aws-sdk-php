@@ -21,14 +21,14 @@ namespace Aws\Common\Exception\Parser;
  */
 class JsonRestExceptionParser extends AbstractJsonExceptionParser
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function doParse(array $data, array $json)
-    {
-        $data = array_replace($data, $json);
-        $data['type'] = strtolower($data['type']);
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function doParse(array $data, array $json)
+		{
+				$data = array_replace($data, $json);
+				$data['type'] = strtolower($data['type']);
 
-        return $data;
-    }
+				return $data;
+		}
 }

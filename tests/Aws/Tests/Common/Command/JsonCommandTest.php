@@ -28,108 +28,108 @@ use Guzzle\Service\Description\ServiceDescription;
  */
 class JsonCommandTest extends \Guzzle\Tests\GuzzleTestCase implements ToArrayInterface
 {
-    public function testAddsToJsonBody()
-    {
-        $api = new Operation(array(
-            'name'       => 'foobar',
-            'httpMethod' => 'POST',
-            'parameters' => array(
-                'test'      => array('location' => 'json'),
-                'named'     => array('location' => 'json', 'sentAs' => 'Foo'),
-                'ignore_me' => array('location' => 'header')
-            )
-        ));
+		public function testAddsToJsonBody()
+		{
+				$api = new Operation(array(
+						'name'			 => 'foobar',
+						'httpMethod' => 'POST',
+						'parameters' => array(
+								'test'			=> array('location' => 'json'),
+								'named'		 => array('location' => 'json', 'sentAs' => 'Foo'),
+								'ignore_me' => array('location' => 'header')
+						)
+				));
 
-        $command = new JsonCommand(array('test'  => '123', 'named' => 'abc'), $api);
-        $command->setClient(new Client());
-        $request = $command->prepare();
-        $json = json_decode((string) $request->getBody(), true);
-        $this->assertEquals('123', $json['test']);
-        $this->assertEquals('abc', $json['Foo']);
-    }
+				$command = new JsonCommand(array('test'	=> '123', 'named' => 'abc'), $api);
+				$command->setClient(new Client());
+				$request = $command->prepare();
+				$json = json_decode((string) $request->getBody(), true);
+				$this->assertEquals('123', $json['test']);
+				$this->assertEquals('abc', $json['Foo']);
+		}
 
-    public function testAllowsToArrayParameters()
-    {
-        $api = new Operation(array(
-            'name'       => 'foo',
-            'httpMethod' => 'POST',
-            'parameters' => array(
-                'test' => array('location' => 'json'),
-                'foo'  => array(
-                    'location' => 'json',
-                    'type'     => 'object',
-                    'properties' => array(
-                        'baz' => array(
-                            'type' => 'string'
-                        )
-                    )
-                )
-            )
-        ));
+		public function testAllowsToArrayParameters()
+		{
+				$api = new Operation(array(
+						'name'			 => 'foo',
+						'httpMethod' => 'POST',
+						'parameters' => array(
+								'test' => array('location' => 'json'),
+								'foo'	=> array(
+										'location' => 'json',
+										'type'		 => 'object',
+										'properties' => array(
+												'baz' => array(
+														'type' => 'string'
+												)
+										)
+								)
+						)
+				));
 
-        $command = new JsonCommand(array(
-            'test' => 'hello',
-            'foo'  => $this
-        ), $api);
+				$command = new JsonCommand(array(
+						'test' => 'hello',
+						'foo'	=> $this
+				), $api);
 
-        $command->setClient(new Client());
-        $request = $command->prepare();
-        $json = json_decode((string) $request->getBody(), true);
-        $this->assertEquals('hello', $json['test']);
-        $this->assertEquals(array('baz' => 'bar'), $json['foo']);
-    }
+				$command->setClient(new Client());
+				$request = $command->prepare();
+				$json = json_decode((string) $request->getBody(), true);
+				$this->assertEquals('hello', $json['test']);
+				$this->assertEquals(array('baz' => 'bar'), $json['foo']);
+		}
 
-    public function testEnsuresThatBodyIsAlwaysSet()
-    {
-        $command = new JsonCommand();
-        $command->setClient(new Client());
-        $request = $command->prepare();
-        $this->assertEquals('{}', (string) $request->getBody());
-    }
+		public function testEnsuresThatBodyIsAlwaysSet()
+		{
+				$command = new JsonCommand();
+				$command->setClient(new Client());
+				$request = $command->prepare();
+				$this->assertEquals('{}', (string) $request->getBody());
+		}
 
-    public function toArray()
-    {
-        return array('baz' => 'bar');
-    }
+		public function toArray()
+		{
+				return array('baz' => 'bar');
+		}
 
-    public function testUsesProcessedModelsWhenEnabled()
-    {
-        $d = ServiceDescription::factory(array(
-            'operations' => array(
-                'foobar' =>array(
-                    'name'          => 'foobar',
-                    'httpMethod'    => 'PUT',
-                    'responseClass' => 'foo',
-                    'responseType'  => 'model',
-                    'class'         => 'Aws\Common\Command\JsonCommand',
-                    'parameters' => array(
-                        'test'      => array('location' => 'query')
-                    )
-                )
-            ),
-            'models' => array(
-                'foo' => array(
-                    'type'       => 'object',
-                    'properties' => array(
-                        'test' => array(
-                            'type'     => 'string',
-                            'location' => 'json',
-                            'filters'  => array('strtoupper')
-                        )
-                    )
-                )
-            )
-        ));
+		public function testUsesProcessedModelsWhenEnabled()
+		{
+				$d = ServiceDescription::factory(array(
+						'operations' => array(
+								'foobar' =>array(
+										'name'					=> 'foobar',
+										'httpMethod'		=> 'PUT',
+										'responseClass' => 'foo',
+										'responseType'	=> 'model',
+										'class'				 => 'Aws\Common\Command\JsonCommand',
+										'parameters' => array(
+												'test'			=> array('location' => 'query')
+										)
+								)
+						),
+						'models' => array(
+								'foo' => array(
+										'type'			 => 'object',
+										'properties' => array(
+												'test' => array(
+														'type'		 => 'string',
+														'location' => 'json',
+														'filters'	=> array('strtoupper')
+												)
+										)
+								)
+						)
+				));
 
-        $response = new Response(200, array('Content-Type' => 'application/json'), '{"test":"bar"}');
-        $client = new Client('http://localhost:1245');
-        $client->setDescription($d);
-        $this->setMockResponse($client, array($response));
-        $command = $client->getCommand('foobar');
-        $this->assertEquals(array('test' => 'bar'), $command->execute()->toArray());
-        $this->setMockResponse($client, array($response));
-        $command = $client->getCommand('foobar');
-        $command->set('command.model_processing', true);
-        $this->assertEquals(array('test' => 'BAR'), $command->execute()->toArray());
-    }
+				$response = new Response(200, array('Content-Type' => 'application/json'), '{"test":"bar"}');
+				$client = new Client('http://localhost:1245');
+				$client->setDescription($d);
+				$this->setMockResponse($client, array($response));
+				$command = $client->getCommand('foobar');
+				$this->assertEquals(array('test' => 'bar'), $command->execute()->toArray());
+				$this->setMockResponse($client, array($response));
+				$command = $client->getCommand('foobar');
+				$command->set('command.model_processing', true);
+				$this->assertEquals(array('test' => 'BAR'), $command->execute()->toArray());
+		}
 }

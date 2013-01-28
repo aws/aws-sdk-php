@@ -21,35 +21,35 @@ namespace Aws\Tests\CloudFront\Integration;
  */
 class IteratorsTest extends \Aws\Tests\IntegrationTestCase
 {
-    public function testListDistributionsIterator()
-    {
-        $client = $this->getServiceBuilder()->get('cloudfront');
-        $this->setMockResponse($client, array(
-            'cloudfront/ListDistributions_page_1',
-            'cloudfront/ListDistributions_page_2'
-        ));
-        $iterator = $client->getIterator('ListDistributions');
-        $this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $iterator);
-        $result = iterator_to_array($iterator);
-        $this->assertEquals(3, count($result));
-        $this->assertEquals('EXAMPLE1', $result[0]['Id']);
-        $this->assertEquals('EXAMPLE2', $result[1]['Id']);
-        $this->assertEquals('EXAMPLE3', $result[2]['Id']);
-    }
+		public function testListDistributionsIterator()
+		{
+				$client = $this->getServiceBuilder()->get('cloudfront');
+				$this->setMockResponse($client, array(
+						'cloudfront/ListDistributions_page_1',
+						'cloudfront/ListDistributions_page_2'
+				));
+				$iterator = $client->getIterator('ListDistributions');
+				$this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $iterator);
+				$result = iterator_to_array($iterator);
+				$this->assertEquals(3, count($result));
+				$this->assertEquals('EXAMPLE1', $result[0]['Id']);
+				$this->assertEquals('EXAMPLE2', $result[1]['Id']);
+				$this->assertEquals('EXAMPLE3', $result[2]['Id']);
+		}
 
-    public function testListStreamingDistributionsIterator()
-    {
-        $client = $this->getServiceBuilder()->get('cloudfront');
-        $this->setMockResponse($client, array(
-            'cloudfront/ListStreamingDistributions_page_1',
-            'cloudfront/ListStreamingDistributions_page_2'
-        ));
-        $iterator = $client->getIterator('ListStreamingDistributions');
-        $this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $iterator);
-        $result = iterator_to_array($iterator);
-        $this->assertEquals(3, count($result));
-        $this->assertEquals('EXAMPLE1', $result[0]['Id']);
-        $this->assertEquals('EXAMPLE2', $result[1]['Id']);
-        $this->assertEquals('EXAMPLE3', $result[2]['Id']);
-    }
+		public function testListStreamingDistributionsIterator()
+		{
+				$client = $this->getServiceBuilder()->get('cloudfront');
+				$this->setMockResponse($client, array(
+						'cloudfront/ListStreamingDistributions_page_1',
+						'cloudfront/ListStreamingDistributions_page_2'
+				));
+				$iterator = $client->getIterator('ListStreamingDistributions');
+				$this->assertInstanceOf('Aws\Common\Iterator\AwsResourceIterator', $iterator);
+				$result = iterator_to_array($iterator);
+				$this->assertEquals(3, count($result));
+				$this->assertEquals('EXAMPLE1', $result[0]['Id']);
+				$this->assertEquals('EXAMPLE2', $result[1]['Id']);
+				$this->assertEquals('EXAMPLE3', $result[2]['Id']);
+		}
 }

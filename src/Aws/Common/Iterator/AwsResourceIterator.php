@@ -27,124 +27,124 @@ use Guzzle\Service\Resource\ResourceIterator;
  */
 class AwsResourceIterator extends ResourceIterator
 {
-    /**
-     * @var Model Result of a command
-     */
-    protected $lastResult = null;
+		/**
+		 * @var Model Result of a command
+		 */
+		protected $lastResult = null;
 
-    /**
-     * Provides access to the most recent result obtained by the iterator.
-     *
-     * @return Model|null
-     */
-    public function getLastResult()
-    {
-        return $this->lastResult;
-    }
+		/**
+		 * Provides access to the most recent result obtained by the iterator.
+		 *
+		 * @return Model|null
+		 */
+		public function getLastResult()
+		{
+				return $this->lastResult;
+		}
 
-    /**
-     * {@inheritdoc}
-     * This AWS specific version of the resource iterator provides a default implementation of the typical AWS iterator
-     * process. It relies on configuration and extension to implement the operation-specific logic of handling results
-     * and nextTokens. This method will loop until resources are acquired or there are no more iterations available.
-     */
-    protected function sendRequest()
-    {
-        do {
-            // Prepare the request including setting the next token
-            $this->prepareRequest();
-            if ($this->nextToken) {
-                $this->applyNextToken();
-            }
+		/**
+		 * {@inheritdoc}
+		 * This AWS specific version of the resource iterator provides a default implementation of the typical AWS iterator
+		 * process. It relies on configuration and extension to implement the operation-specific logic of handling results
+		 * and nextTokens. This method will loop until resources are acquired or there are no more iterations available.
+		 */
+		protected function sendRequest()
+		{
+				do {
+						// Prepare the request including setting the next token
+						$this->prepareRequest();
+						if ($this->nextToken) {
+								$this->applyNextToken();
+						}
 
-            // Execute the request and handle the results
-            $this->command->add(Ua::OPTION, Ua::ITERATOR);
-            $this->lastResult = $this->command->getResult();
-            $resources = $this->handleResults($this->lastResult);
-            $this->determineNextToken($this->lastResult);
+						// Execute the request and handle the results
+						$this->command->add(Ua::OPTION, Ua::ITERATOR);
+						$this->lastResult = $this->command->getResult();
+						$resources = $this->handleResults($this->lastResult);
+						$this->determineNextToken($this->lastResult);
 
-            // If no resources collected, prepare to reiterate before yielding
-            if ($reiterate = empty($resources) && $this->nextToken) {
-                $this->command = clone $this->originalCommand;
-            }
-        } while ($reiterate);
+						// If no resources collected, prepare to reiterate before yielding
+						if ($reiterate = empty($resources) && $this->nextToken) {
+								$this->command = clone $this->originalCommand;
+						}
+				} while ($reiterate);
 
-        return $resources;
-    }
+				return $resources;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function prepareRequest()
-    {
-        // Get the limit parameter key to set
-        $param = $this->get('limit_param');
-        if ($param && ($limit = $this->command->get($param))) {
-            $pageSize = $this->calculatePageSize();
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function prepareRequest()
+		{
+				// Get the limit parameter key to set
+				$param = $this->get('limit_param');
+				if ($param && ($limit = $this->command->get($param))) {
+						$pageSize = $this->calculatePageSize();
 
-            // If the limit of the command is different than the pageSize of the iterator, use the smaller value
-            if ($limit && $pageSize) {
-                $this->command->set('limit', min($limit, $pageSize));
-            }
-        }
-    }
+						// If the limit of the command is different than the pageSize of the iterator, use the smaller value
+						if ($limit && $pageSize) {
+								$this->command->set('limit', min($limit, $pageSize));
+						}
+				}
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function handleResults(Model $result)
-    {
-        $results = array();
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function handleResults(Model $result)
+		{
+				$results = array();
 
-        // Get the result key that contains the results
-        if ($resultKey = $this->get('result_key')) {
-            $results = $result->getPath($resultKey) ?: array();
-        }
+				// Get the result key that contains the results
+				if ($resultKey = $this->get('result_key')) {
+						$results = $result->getPath($resultKey) ?: array();
+				}
 
-        return $results;
-    }
+				return $results;
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function applyNextToken()
-    {
-        // Get the token parameter key to set
-        if ($tokenParam = $this->get('token_param')) {
-            // Set the next token. Works with multi-value tokens
-            if (is_array($tokenParam)) {
-                if (is_array($this->nextToken) && count($tokenParam) === count($this->nextToken)) {
-                    foreach (array_combine($tokenParam, $this->nextToken) as $param => $token) {
-                        $this->command->set($param, $token);
-                    }
-                } else {
-                    throw new RuntimeException('The definition of the iterator\'s token parameter and the actual token '
-                        . 'value are not compatible.');
-                }
-            } else {
-                $this->command->set($tokenParam, $this->nextToken);
-            }
-        }
-    }
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function applyNextToken()
+		{
+				// Get the token parameter key to set
+				if ($tokenParam = $this->get('token_param')) {
+						// Set the next token. Works with multi-value tokens
+						if (is_array($tokenParam)) {
+								if (is_array($this->nextToken) && count($tokenParam) === count($this->nextToken)) {
+										foreach (array_combine($tokenParam, $this->nextToken) as $param => $token) {
+												$this->command->set($param, $token);
+										}
+								} else {
+										throw new RuntimeException('The definition of the iterator\'s token parameter and the actual token '
+												. 'value are not compatible.');
+								}
+						} else {
+								$this->command->set($tokenParam, $this->nextToken);
+						}
+				}
+		}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = null;
+		/**
+		 * {@inheritdoc}
+		 */
+		protected function determineNextToken(Model $result)
+		{
+				$this->nextToken = null;
 
-        // If the value of "more key" is true or there is no "more key" to check, then try to get the next token
-        $moreKey = $this->get('more_key');
-        if ($moreKey === null || $result->getPath($moreKey)) {
-            // Get the token key to check
-            if ($tokenKey = $this->get('token_key')) {
-                // Get the next token's value. Works with multi-value tokens
-                $getToken = function ($key) use ($result) {
-                    return $result->getPath((string) $key);
-                };
-                $this->nextToken = is_array($tokenKey) ? array_map($getToken, $tokenKey) : $getToken($tokenKey);
-            }
-        }
-    }
+				// If the value of "more key" is true or there is no "more key" to check, then try to get the next token
+				$moreKey = $this->get('more_key');
+				if ($moreKey === null || $result->getPath($moreKey)) {
+						// Get the token key to check
+						if ($tokenKey = $this->get('token_key')) {
+								// Get the next token's value. Works with multi-value tokens
+								$getToken = function ($key) use ($result) {
+										return $result->getPath((string) $key);
+								};
+								$this->nextToken = is_array($tokenKey) ? array_map($getToken, $tokenKey) : $getToken($tokenKey);
+						}
+				}
+		}
 }
