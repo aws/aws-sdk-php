@@ -1,6 +1,21 @@
 CHANGELOG
 =========
 
+2.1.0 (2013-01-X)
+-----------------
+
+* Added support for Amazon EC2
+* Added support for Amazon SimpleDB
+* Added support for Elastic Load Balancing
+* Added support for AWS Elastic Beanstalk
+* Added support for IAM
+* Clients now gain more information from service descriptions rather than client factory methods
+* Service descriptions are now versioned for clients
+* Waiters now require an associative array as input for the underlying operation performed by a waiter
+* Fixed an issue where Amazon S3 did not use "restore" as a signable resource
+* Fixed an issue with Amazon S3 where x-amz-meta-* headers were not properly added with the CopyObject operation
+* Fixed an issue where the Amazon Glacier client was not using the correct User-Agent header
+
 2.0.3 (2012-12-20)
 ------------------
 
