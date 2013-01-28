@@ -23,19 +23,19 @@ use Aws\Common\Enum;
  */
 class Type extends Enum
 {
-    const S  = 'S';
-    const N  = 'N';
-    const B  = 'B';
+    const S = 'S';
+    const N = 'N';
+    const B = 'B';
 
     const SS = 'SS';
     const NS = 'NS';
     const BS = 'BS';
 
-    const STRING     = self::S;
-    const NUMBER     = self::N;
-    const BINARY     = self::B;
+    const STRING = 'S';
+    const NUMBER = 'N';
+    const BINARY = 'B';
 
-    const STRING_SET = self::SS;
-    const NUMBER_SET = self::NS;
-    const BINARY_SET = self::BS;
+    const STRING_SET = 'SS';
+    const NUMBER_SET = 'NS';
+    const BINARY_SET = 'BS';
 }
