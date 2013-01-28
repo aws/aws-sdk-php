@@ -19,7 +19,7 @@ namespace Aws\Tests\Ec2\Integration;
 use Aws\Ec2\Ec2Client;
 use Aws\Common\Enum\Region;
 use Aws\Ec2\Enum\InstanceType;
-use Aws\Ec2\Enum\InstanceState;
+use Aws\Ec2\Enum\InstanceStateName;
 
 /**
  * @group integration
@@ -93,8 +93,8 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->getCommand('TerminateInstances', array(
             'InstanceIds' => $instanceIds,
         ))->getResult();
-        $this->assertEquals(InstanceState::SHUTTING_DOWN, $result->getPath('TerminatingInstances/0/CurrentState/Name'));
-        $this->assertEquals(InstanceState::SHUTTING_DOWN, $result->getPath('TerminatingInstances/1/CurrentState/Name'));
+        $this->assertEquals(InstanceStateName::SHUTTING_DOWN, $result->getPath('TerminatingInstances/0/CurrentState/Name'));
+        $this->assertEquals(InstanceStateName::SHUTTING_DOWN, $result->getPath('TerminatingInstances/1/CurrentState/Name'));
 
         self::log('Wait until they are terminated.');
         $this->client->waitUntilInstanceTerminated(array('InstanceIds' => $instanceIds));
@@ -104,7 +104,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'InstanceIds' => $instanceIds,
         ));
         foreach ($instances as $instance) {
-            $this->assertEquals(InstanceState::TERMINATED, $instance['State']['Name']);
+            $this->assertEquals(InstanceStateName::TERMINATED, $instance['State']['Name']);
         }
     }
 

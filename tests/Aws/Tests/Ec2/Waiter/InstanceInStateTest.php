@@ -16,7 +16,7 @@
 
 namespace Aws\Tests\Ec2\Waiter;
 
-use Aws\Ec2\Enum\InstanceState;
+use Aws\Ec2\Enum\InstanceStateName;
 
 /**
  * @covers Aws\Ec2\Waiter\InstanceInState
@@ -33,7 +33,7 @@ class InstanceInStateTest extends \Guzzle\Tests\GuzzleTestCase
         ));
         $client->waitUntil('__InstanceState', array(
             'InstanceIds'          => array('i-xxxxxxx1', 'i-xxxxxxx2'),
-            'waiter.success.value' => InstanceState::RUNNING,
+            'waiter.success.value' => InstanceStateName::RUNNING,
             'waiter.interval'      => 0
         ));
         $this->assertEquals(3, count($this->getMockedRequests()));
