@@ -19,11 +19,10 @@ namespace Aws\Iam\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable AssignmentStatus values
+ * Contains enumerable StatusType values
  */
-class AssignmentStatus extends Enum
+class StatusType extends Enum
 {
-    const ASSIGNED = 'Assigned';
-    const UNASSIGNED = 'Unassigned';
-    const ANY = 'Any';
+    const ACTIVE = 'Active';
+    const INACTIVE = 'Inactive';
 }
