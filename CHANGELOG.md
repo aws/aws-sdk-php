@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-2.1.0 (TBD)
------------------
+2.1.0 (2013-01-28)
+------------------
 
 * Waiters now require an associative array as input for the underlying operation performed by a waiter. See
   `UPGRADING.md` for details.
