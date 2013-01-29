@@ -21,8 +21,10 @@ retries (interval) can be specified in this same configuration array by prefixin
 Waiters can also be invoked using magic methods on the client. These magic methods are listed in each client's docblock
 using `@method` tags.
 
-    $s3Client->waitUntilObjectExsits(array(
-        'Bucket' => 'foo',
-        'Key' => 'bar',
-        'waiter.max_attempts' => 3
-    ));
+```php
+$s3Client->waitUntilObjectExists(array(
+    'Bucket' => 'foo',
+    'Key' => 'bar',
+    'waiter.max_attempts' => 3
+));
+```
