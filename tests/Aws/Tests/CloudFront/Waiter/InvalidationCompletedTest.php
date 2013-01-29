@@ -41,8 +41,7 @@ class InvalidationCompletedTest extends \Guzzle\Tests\GuzzleTestCase
         ));
         $client->waitUntil(
             'InvalidationCompleted',
-            array('DistributionId' => 'foo', 'Id' => 'bar'),
-            array('interval' => 0)
+            array('DistributionId' => 'foo', 'Id' => 'bar', 'waiter.interval' => 0)
         );
         $requests = $this->getMockedRequests();
         $this->assertEquals(2, count($requests));

@@ -33,7 +33,7 @@ class VaultNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('glacier', true);
         $this->setMockResponse($client, array('glacier/describe_vault', 'glacier/describe_vault', 'glacier/describe_vault_error'));
-        $client->waitUntil('VaultNotExists', array('vaultName' => 'foo', 'interval' => 0));
+        $client->waitUntil('VaultNotExists', array('vaultName' => 'foo', 'waiter.interval' => 0));
         $this->assertEquals(3, count($this->getMockedRequests()));
     }
 }

@@ -53,7 +53,7 @@ class ConfigResourceWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array('s3/head_failure', 's3/head_success'));
-        $client->waitUntil('bucket_exists', array('Bucket' => 'foo'), array('interval' => 0));
+        $client->waitUntil('bucket_exists', array('Bucket' => 'foo', 'waiter.interval' => 0));
         $this->assertEquals(2, count($this->getMockedRequests()));
     }
 
