@@ -5,7 +5,7 @@ Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. W
 get started in minutes by using Composer – by requiring the `aws/aws-sdk-php` package – or by downloading a [single
 phar file](http://pear.amazonwebservices.com/get/aws.phar).
 
-* [AWS SDK for PHP website](http://aws.amazon.com/sdkforphp2)
+* [AWS SDK for PHP website](http://aws.amazon.com/sdkforphp)
 * [API documentation](http://docs.amazonwebservices.com/aws-sdk-php-2/latest/)
 * [AWS SDK for PHP forum](https://forums.aws.amazon.com/forum.jspa?forumID=80)
 * [Issue Tracker](https://github.com/aws/aws-sdk-php/issues)
