@@ -7,6 +7,7 @@ CHANGELOG
 * Waiters now require an associative array as input for the underlying operation performed by a waiter. See
   `UPGRADING.md` for details.
 * Added support for **Amazon Elastic Compute Cloud (Amazon EC2)**
+* Added support for **Amazon Elastic Transcoder**
 * Added support for **Amazon SimpleDB**
 * Added support for **Elastic Load Balancing**
 * Added support for **AWS Elastic Beanstalk**
