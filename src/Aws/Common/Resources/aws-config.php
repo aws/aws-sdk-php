@@ -93,10 +93,16 @@ return array(
             'class'   => 'Aws\S3\S3Client'
         ),
 
+        'sqs' => array(
+            'alias'   => 'Sqs',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Sqs\SqsClient'
+        ),
+
         'sts' => array(
             'alias'   => 'Sts',
             'extends' => 'default_settings',
             'class'   => 'Aws\Sts\StsClient'
-        )
+        ),
     )
 );

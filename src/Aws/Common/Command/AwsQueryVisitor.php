@@ -34,6 +34,8 @@ class AwsQueryVisitor extends AbstractRequestVisitor
     {
         switch ($param->getType()) {
             case 'object':
+                $hasAdditionalProperties = ($param->getAdditionalProperties() instanceof Parameter);
+                $additionalPropertyCount = 0;
                 foreach ($value as $name => $v) {
                     if ($subParam = $param->getProperty($name)) {
                         $key = $prefix . '.' . $subParam->getWireName();
@@ -41,6 +43,16 @@ class AwsQueryVisitor extends AbstractRequestVisitor
                             $this->customResolver($v, $subParam, $query, $key);
                         } else {
                             $query[$key] = $v;
+                        }
+                    } elseif ($hasAdditionalProperties) {
+                        // Handle cases like &Attribute.1.Name=<name>&Attribute.1.Value=<value>
+                        $additionalPropertyCount++;
+                        $query["{$prefix}.{$additionalPropertyCount}.Name"] = $name;
+                        $newPrefix = "{$prefix}.{$additionalPropertyCount}.Value";
+                        if (is_array($v)) {
+                            $this->customResolver($v, $param->getAdditionalProperties(), $query, $newPrefix);
+                        } else {
+                            $query[$newPrefix] = $v;
                         }
                     }
                 }

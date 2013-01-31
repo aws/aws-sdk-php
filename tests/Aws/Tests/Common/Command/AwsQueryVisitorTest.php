@@ -30,9 +30,47 @@ use Guzzle\Http\Message\EntityEnclosingRequest;
  */
 class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testNormalizesQuery()
+    /**
+     * @dataProvider dataForQueryNormalization
+     */
+    public function testNormalizesQuery(Parameter $param, array $value, array $result)
     {
-        $param = new Parameter(array(
+        $command = new OperationCommand();
+        $request = new EntityEnclosingRequest('POST', 'http://foo.com');
+        $visitor = new AwsQueryVisitor();
+        $visitor->visit($command, $request, $param, $value);
+
+        $fields = $request->getPostFields()->getAll();
+        asort($fields);
+
+        $this->assertEquals($result, $fields);
+    }
+
+    public function testAppliesTopLevelScalarParams()
+    {
+        $operation = new Operation(array(
+            'parameters' => array(
+                'Foo' => array(
+                    'location' => 'aws.query',
+                    'type'     => 'string',
+                )
+            )
+        ));
+        $command = new QueryCommand(array('Foo' => 'test'), $operation);
+        $command->setClient(new Client());
+        $request = $command->prepare();
+        $fields = $request->getPostFields()->getAll();
+        $this->assertEquals(array('Foo' => 'test'), $fields);
+    }
+
+    public function dataForQueryNormalization()
+    {
+        $data = array();
+
+        // Use Case 1
+        $data[0] = array();
+        // Parameter
+        $data[0][0] = new Parameter(array(
             'name'     => 'IpPermissions',
             'location' => 'aws.query',
             'data'     => array('offset' => 1),
@@ -75,12 +113,8 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                 )
             )
         ));
-
-        $command = new OperationCommand();
-        $request = new EntityEnclosingRequest('POST', 'http://foo.com');
-        $visitor = new AwsQueryVisitor();
-
-        $value = array(
+        // Value
+        $data[0][1] = array(
             array(
                 'IpProtocol' => 'tcp',
                 'FromPort' => 20,
@@ -95,12 +129,8 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                 'Foo' => array('test', 'other')
             )
         );
-
-        $visitor->visit($command, $request, $param, $value);
-
-        $fields = $request->getPostFields()->getAll();
-        asort($fields);
-        $this->assertEquals(array(
+        // Result
+        $data[0][2] = array(
             'IpPermissions.1.FromPort' => 20,
             'IpPermissions.1.Groups.1.UserId' => '123',
             'IpPermissions.1.Groups.2.UserId' => '456',
@@ -113,23 +143,75 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
             'IpPermissions.1.IpProtocol' => 'tcp',
             'IpPermissions.1.IpRanges.1.CidrIp' => 'test',
             'IpPermissions.1.Foo.member.10' => 'test',
-        ), $fields);
-    }
+        );
 
-    public function testAppliesTopLevelScalarParams()
-    {
-        $operation = new Operation(array(
-            'parameters' => array(
-                'Foo' => array(
-                    'location' => 'aws.query',
-                    'type'     => 'string',
-                )
-            )
+        // Use Case 2
+        $data[1] = array();
+        // Parameter
+        $data[1][0] = new Parameter(array(
+            'name' => 'Attributes',
+            'type' => 'object',
+            'location' => 'aws.query',
+            'sentAs' => 'Attribute',
+            'additionalProperties' => array(
+                'type' => 'string',
+            ),
         ));
-        $command = new QueryCommand(array('Foo' => 'test'), $operation);
-        $command->setClient(new Client());
-        $request = $command->prepare();
-        $fields = $request->getPostFields()->getAll();
-        $this->assertEquals(array('Foo' => 'test'), $fields);
+        // Value
+        $data[1][1] = array(
+            'ReceiveMessageWaitTimeSeconds' => 50,
+            'DelaySeconds'                  => 25,
+        );
+        // Result
+        $data[1][2] = array(
+            'Attribute.1.Name'  => 'ReceiveMessageWaitTimeSeconds',
+            'Attribute.1.Value' => 50,
+            'Attribute.2.Name'  => 'DelaySeconds',
+            'Attribute.2.Value' => 25,
+        );
+
+        // Use Case 3
+        $data[2] = array();
+        // Parameter
+        $data[2][0] = new Parameter(array(
+            'name' => 'Attributes',
+            'type' => 'object',
+            'location' => 'aws.query',
+            'sentAs' => 'Attribute',
+            'additionalProperties' => array(
+                'type'       => 'object',
+                'properties' => array(
+                    'Foo' => array('type' => 'string'),
+                    'Bar' => array('type' => 'string'),
+                    'Baz' => array('type' => 'string'),
+                )
+            ),
+        ));
+        // Value
+        $data[2][1] = array(
+            'Param1' => array(
+                'Foo' => 'foo1',
+                'Bar' => 'bar1',
+                'Baz' => 'baz1',
+            ),
+            'Param2' => array(
+                'Foo' => 'foo2',
+                'Bar' => 'bar2',
+                'Baz' => 'baz2',
+            ),
+        );
+        // Result
+        $data[2][2] = array(
+            'Attribute.1.Name'      => 'Param1',
+            'Attribute.1.Value.Foo' => 'foo1',
+            'Attribute.1.Value.Bar' => 'bar1',
+            'Attribute.1.Value.Baz' => 'baz1',
+            'Attribute.2.Name'      => 'Param2',
+            'Attribute.2.Value.Foo' => 'foo2',
+            'Attribute.2.Value.Bar' => 'bar2',
+            'Attribute.2.Value.Baz' => 'baz2',
+        );
+
+        return $data;
     }
 }
