@@ -172,7 +172,7 @@ class CloudFrontClient extends AbstractClient
         // Sign the policy using the CloudFront private key
         $signedPolicy = $this->rsaSha1Sign($policy, $this->getConfig('private_key'));
         // Remove whitespace, base64 encode the policy, and replace special characters
-        $signedPolicy = strtr(base64_encode(str_replace(' ', '', $signedPolicy)), '+=/', '-_~');
+        $signedPolicy = strtr(base64_encode($signedPolicy), '+=/', '-_~');
 
         $url->getQuery()
             ->useUrlEncoding(false)

@@ -205,6 +205,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'url'     => 'https://' . self::$distributionUrl . '/foo.txt',
             'expires' => time() + 10000
         ));
+        self::log('URL: ' . $url);
         try {
             $c = new HttpClient();
             $this->assertEquals('hello!', $c->get($url)->send()->getBody(true));
