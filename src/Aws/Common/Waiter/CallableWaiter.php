@@ -30,6 +30,11 @@ class CallableWaiter extends AbstractWaiter
     protected $callable;
 
     /**
+     * @var array Additional context for the callable function
+     */
+    protected $context = array();
+
+    /**
      * Set the callable function to call in each wait attempt
      *
      * @param callable $callable Callable function
@@ -49,6 +54,21 @@ class CallableWaiter extends AbstractWaiter
     }
 
     /**
+     * Set additional context for the callable function. This data will be passed into the callable function as the
+     * second argument
+     *
+     * @param array $context Additional context
+     *
+     * @return self
+     */
+    public function setContext(array $context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function doWait()
@@ -57,6 +77,6 @@ class CallableWaiter extends AbstractWaiter
             throw new RuntimeException('No callable was specified for the wait method');
         }
 
-        return call_user_func($this->callable, $this->attempts);
+        return call_user_func($this->callable, $this->attempts, $this->context);
     }
 }

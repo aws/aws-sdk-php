@@ -44,13 +44,20 @@ class CallableWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     public function testUsesCallbackForWaiter()
     {
         $total = 0;
-        $f = function () use (&$total) {
+        $f = function ($attempts, $data) use (&$total) {
+            $data['object']->value = 2;
             return ++$total == 3;
         };
 
+        $o = new \StdClass();
+        $o->value = 1;
+        $c = array('object' => $o);
+
         $w = new CallableWaiter();
         $w->setCallable($f);
+        $w->setContext($c);
         $w->wait();
         $this->assertEquals(3, $total);
+        $this->assertEquals(2, $o->value);
     }
 }

@@ -68,7 +68,7 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\RuntimeException
+     * @expectedException \Aws\Common\Exception\RuntimeException
      * @expectedExceptionMessage Wait method never resolved to true after 1 attempts
      */
     public function testPerformsWaitUntilMaxAttempts()

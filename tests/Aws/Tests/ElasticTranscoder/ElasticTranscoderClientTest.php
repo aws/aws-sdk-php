@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Ets;
+namespace Aws\Tests\ElasticTranscoder;
 
 use Aws\ElasticTranscoder\ElasticTranscoderClient;
 

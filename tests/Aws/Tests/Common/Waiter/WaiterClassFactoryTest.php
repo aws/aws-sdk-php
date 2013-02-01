@@ -40,6 +40,7 @@ class WaiterClassFactoryTest extends \Guzzle\Tests\GuzzleTestCase
         $factory->registerNamespace('Foo\Bar');
 
         $expectedClass = 'Aws\Common\InstanceMetadata\Waiter\ServiceAvailable';
+        $this->assertTrue($factory->canBuild('service_available'));
         $this->assertInstanceOf($expectedClass, $factory->build('service_available'));
         $this->assertInstanceOf($expectedClass, $factory->build('ServiceAvailable'));
     }
