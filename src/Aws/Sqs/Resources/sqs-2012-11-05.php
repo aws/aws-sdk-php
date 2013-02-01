@@ -542,20 +542,6 @@ return array (
                     'items' => array(
                         'name' => 'AttributeName',
                         'type' => 'string',
-                        'enum' => array(
-                            'Policy',
-                            'VisibilityTimeout',
-                            'MaximumMessageSize',
-                            'MessageRetentionPeriod',
-                            'ApproximateNumberOfMessages',
-                            'ApproximateNumberOfMessagesNotVisible',
-                            'CreatedTimestamp',
-                            'LastModifiedTimestamp',
-                            'QueueArn',
-                            'ApproximateNumberOfMessagesDelayed',
-                            'DelaySeconds',
-                            'ReceiveMessageWaitTimeSeconds',
-                        ),
                     ),
                 ),
                 'MaxNumberOfMessages' => array(

@@ -36,9 +36,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testBasicOperations()
     {
-        $queueName = 'php-integ-sqs-queue';
+        $queueName = 'php-integ-sqs-queue-' . time();
         $attrReceiveMessageWaitTimeSeconds = 20;
         $attrDelaySeconds = 10;
+
+        // Create a queue and make sure everything went OK.
 
         self::log('Create an SQS queue.');
         $result = $this->sqs->getCommand('CreateQueue', array(
@@ -50,7 +52,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ))->getResult();
         $createdQueueUrl = $result->get('QueueUrl');
 
-        self::log('Test iterating through queues.');
+        self::log('Wait a little while to make sure the queue exists.');
+        // @todo Create a Waiter for this
+        sleep(45);
+
+        self::log('Test iterator for listing queues.');
         $listedQueueUrls = $this->sqs->getIterator('ListQueues')->toArray();
         $this->assertContains($createdQueueUrl, $listedQueueUrls);
 
@@ -69,21 +75,78 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals($attrReceiveMessageWaitTimeSeconds, $result->getPath('Attributes/ReceiveMessageWaitTimeSeconds'));
         $this->assertEquals($attrDelaySeconds, $result->getPath('Attributes/DelaySeconds'));
 
-        self::log('Delete the queue.');
-        $result = $this->sqs->getCommand('DeleteQueue', array(
-            'QueueUrl'  => $queueUrl
-        ))->getResult();
+        // Send and receive messages
 
-        self::log('Waiting 60 seconds for queue name to be freed.');
-        sleep(60);
+        self::log('Send two messages to the queue.');
+        $this->sqs->getCommand('SendMessage', array(
+            'QueueUrl'    => $queueUrl,
+            'MessageBody' => 'test message 1',
+            'DelaySeconds' => 0,
+        ))->execute();
+        $this->sqs->getCommand('SendMessage', array(
+            'QueueUrl'     => $queueUrl,
+            'MessageBody'  => 'test message 2',
+            'DelaySeconds' => 0,
+        ))->execute();
+
+        self::log('Wait a little while so both messages will be read at the same time.');
+        // @todo Create a Waiter for this... maybe. This scenario doesn't make sense in practice since the purpose of me
+        // receiving two messages in one response is to ensure that the XML is being marshaled correctly.
+        sleep(15);
+
+        self::log('Receive messages from the queue.');
+        $result = $this->sqs->getCommand('ReceiveMessage', array(
+            'QueueUrl'            => $queueUrl,
+            'MaxNumberOfMessages' => 3
+        ))->getResult();
+        $messages = $result->get('Messages');
+        $this->assertCount(2, $messages);
+        $messagesToDelete = array();
+        foreach ($messages as $message) {
+            $this->assertRegExp('/^test message \d$/', $message['Body']);
+            $messagesToDelete[] = array(
+                'Id'            => str_replace(' ', '-', $message['Body']),
+                'ReceiptHandle' => $message['ReceiptHandle'],
+            );
+        }
+
+        self::log('Delete the messages using batch delete and verify that the deletions are successful.');
+        $result = $this->sqs->getCommand('DeleteMessageBatch', array(
+            'QueueUrl' => $queueUrl,
+            'Entries'  => $messagesToDelete,
+        ))->getResult();
+        $deletions = $result['Successful'];
+        $this->assertCount(2, $deletions);
+        foreach ($deletions as $deletion) {
+            $this->assertRegExp('/^test\-message\-\d$/', $deletion['Id']);
+        }
+
+        // Test the long polling feature
+
+        self::log('Send a delayed message and make sure long polling is working.');
+        $startTime = microtime(true);
+        $this->sqs->getCommand('SendMessage', array(
+            'QueueUrl'    => $queueUrl,
+            'MessageBody' => 'foo',
+        ))->execute();
+        $this->sqs->getCommand('ReceiveMessage', array(
+            'QueueUrl' => $queueUrl,
+        ))->execute();
+        $endTime = microtime(true);
+        $this->assertGreaterThan(5, $endTime - $startTime);
+
+        // Delete the queue
+
+        self::log('Delete the queue.');
+        $this->sqs->getCommand('DeleteQueue', array(
+            'QueueUrl'  => $queueUrl
+        ))->execute();
     }
 
-   // public function
-
     /**
-     * @expectedException \Aws\Sqs\Exception\QueueDoesNotExistException
+     * @expectedException \Aws\Sqs\Exception\SqsException
      */
-    public function todoTestErrorParsing()
+    public function testErrorParsing()
     {
         $this->sqs->getQueueUrl(array('QueueName' => 'php-fake-queue'));
     }
