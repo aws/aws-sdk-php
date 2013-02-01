@@ -104,11 +104,9 @@ abstract class AbstractUploadBuilder
             if (!file_exists($source)) {
                 throw new InvalidArgumentException("File does not exist: {$source}");
             }
-            if (!$source = fopen($source, 'r')) {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException("Unable to open {$source} for reading");
-                // @codeCoverageIgnoreEnd
-            }
+            // Clear the cache so that we send accurate file sizes
+            clearstatcache(true, $source);
+            $source = fopen($source, 'r');
         }
 
         $this->source = EntityBody::factory($source);
