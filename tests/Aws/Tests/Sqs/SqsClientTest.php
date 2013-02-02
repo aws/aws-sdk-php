@@ -35,4 +35,13 @@ class SqsClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://sqs.us-east-1.amazonaws.com', $client->getBaseUrl());
     }
+
+    public function testGetQueueArn()
+    {
+        $url = 'https://sqs.us-east-1.amazonaws.com/057737625318/php-integ-sqs-queue-1359765974';
+        $arn = 'arn:aws:sqs:us-east-1:057737625318:php-integ-sqs-queue-1359765974';
+        $sqs = SqsClient::factory(array('region' => 'us-east-1'));
+
+        $this->assertEquals($arn, $sqs->getQueueArn($url));
+    }
 }

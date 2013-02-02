@@ -68,46 +68,50 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals($msgWait, $result->getPath('Attributes/' . QueueAttr::RECEIVE_MESSAGE_WAIT_TIME_SECONDS));
         $this->assertEquals($msgDelay, $result->getPath('Attributes/' . QueueAttr::DELAY_SECONDS));
 
-        // Send and receive messages
+        self::log('Make sure the custom ARN-calculating logic returns the actual ARN.');
+        $this->assertEquals($this->sqs->getQueueArn($queueUrl), $result->getPath('Attributes/' . QueueAttr::QUEUE_ARN));
 
-        self::log('Send two messages to the queue.');
+        // Send, receive, and delete messages
+
+        $messagesToDelete = array();
+
+        self::log('Send a message with no delay to the queue.');
         $this->sqs->getCommand('SendMessage', array(
-            'QueueUrl'    => $queueUrl,
-            'MessageBody' => 'test message 1',
-            'DelaySeconds' => 0,
-        ))->execute();
-        $this->sqs->getCommand('SendMessage', array(
-            'QueueUrl'     => $queueUrl,
-            'MessageBody'  => 'test message 2',
-            'DelaySeconds' => 0,
+            'QueueUrl'          => $queueUrl,
+            'MessageBody'       => 'test message 1',
+            'DelaySeconds'      => 0,
+            'VisibilityTimeout' => 300
         ))->execute();
 
-        self::log('Wait until both messages will be read at the same time.');
-        $waiter = new CallableWaiter();
-        $waiter->setInterval(2)
-            ->setMaxAttempts(15)
-            ->setCallable(array($this, 'waitUntilThereAreTwoMessagesInTheQueue'))
-            ->setContext(array(
-                'queue_url'      => $queueUrl,
-                'valid_messages' => array('test message 1', 'test message 2')
-            ))
-            ->wait();
-
-        self::log('Receive messages from the queue.');
+        self::log('Receive a message from the queue.');
         $result = $this->sqs->getCommand('ReceiveMessage', array(
-            'QueueUrl'            => $queueUrl,
-            'MaxNumberOfMessages' => 3
+            'QueueUrl' => $queueUrl
         ))->getResult();
         $messages = $result->get('Messages');
-        $this->assertCount(2, $messages);
-        $messagesToDelete = array();
-        foreach ($messages as $message) {
-            $this->assertRegExp('/^test message \d$/', $message['Body']);
-            $messagesToDelete[] = array(
-                'Id'            => str_replace(' ', '-', $message['Body']),
-                'ReceiptHandle' => $message['ReceiptHandle'],
-            );
-        }
+        $this->assertCount(1, $messages);
+        $message = $messages[0];
+        $this->assertEquals('test message 1', $message['Body']);
+        $messagesToDelete[] = array(
+            'Id'            => str_replace(' ', '-', $message['Body']),
+            'ReceiptHandle' => $message['ReceiptHandle'],
+        );
+
+        self::log('Send and receive a delayed message and make sure long polling is working. Please wait.');
+        $startTime = microtime(true);
+        $this->sqs->getCommand('SendMessage', array(
+            'QueueUrl'    => $queueUrl,
+            'MessageBody' => 'test message 2',
+        ))->execute();
+        $result = $this->sqs->getCommand('ReceiveMessage', array(
+            'QueueUrl' => $queueUrl,
+        ))->getResult();
+        $endTime = microtime(true);
+        $this->assertGreaterThan(5, $endTime - $startTime);
+        $message = $result->getPath('Messages/0');
+        $messagesToDelete[] = array(
+            'Id'            => str_replace(' ', '-', $message['Body']),
+            'ReceiptHandle' => $message['ReceiptHandle'],
+        );
 
         self::log('Delete the messages using batch delete and verify that the deletions are successful.');
         $result = $this->sqs->getCommand('DeleteMessageBatch', array(
@@ -119,20 +123,6 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         foreach ($deletions as $deletion) {
             $this->assertRegExp('/^test\-message\-\d$/', $deletion['Id']);
         }
-
-        // Test the long polling feature
-
-        self::log('Send and receive a delayed message and make sure long polling is working. Please wait.');
-        $startTime = microtime(true);
-        $this->sqs->getCommand('SendMessage', array(
-            'QueueUrl'    => $queueUrl,
-            'MessageBody' => 'foo',
-        ))->execute();
-        $this->sqs->getCommand('ReceiveMessage', array(
-            'QueueUrl' => $queueUrl,
-        ))->execute();
-        $endTime = microtime(true);
-        $this->assertGreaterThan(5, $endTime - $startTime);
 
         // Delete the queue
 
@@ -148,30 +138,5 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testErrorParsing()
     {
         $this->sqs->getQueueUrl(array('QueueName' => 'php-fake-queue'));
-    }
-
-    /**
-     * Returns true only if all of the specified valid messages can be found in the specified queue simultaneously
-     *
-     * @param int $attempts The number of the attempt of running this method
-     * @param array $context Additional context for this method (`queue_url` and `valid_messages`)
-     *
-     * @return bool
-     */
-    public function waitUntilThereAreTwoMessagesInTheQueue($attempts, array $context)
-    {
-        $result = $this->sqs->getCommand('ReceiveMessage', array(
-            'QueueUrl'            => $context['queue_url'],
-            'MaxNumberOfMessages' => count($context['valid_messages']),
-            'VisibilityTimeout'   => 1,
-        ))->getResult();
-
-        if (count(array_diff($result->getPath('Messages/*/Body'), $context['valid_messages'])) == 0) {
-            self::log('Confirmed that two messages are in the queue. Wait for them to be visible again.');
-            sleep(10 * count($context['valid_messages']));
-            return true;
-        }
-
-        return false;
     }
 }
