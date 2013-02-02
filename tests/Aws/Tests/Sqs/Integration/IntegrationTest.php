@@ -17,8 +17,8 @@
 namespace Aws\Tests\Sqs\Integration;
 
 use Aws\Sqs\SqsClient;
-use Aws\Sqs\Enum\QueueAttributeName as QueueAttr;
-use Aws\Common\Waiter\CallableWaiter;
+use Aws\Sqs\Enum\MessageAttribute;
+use Aws\Sqs\Enum\QueueAttribute;
 
 /**
  * @group integration
@@ -37,18 +37,15 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testBasicOperations()
     {
+        // Create a queue and make sure everything goes OK
+
         $queueName = 'php-integ-sqs-queue-' . time();
-        $msgWait = 20;
-        $msgDelay = 10;
-
-        // Create a queue and make sure everything went OK.
-
         self::log('Create an SQS queue.');
         $result = $this->sqs->getCommand('CreateQueue', array(
             'QueueName'  => $queueName,
             'Attributes' => array(
-                QueueAttr::RECEIVE_MESSAGE_WAIT_TIME_SECONDS => $msgWait,
-                QueueAttr::DELAY_SECONDS                     => $msgDelay,
+                QueueAttribute::RECEIVE_MESSAGE_WAIT_TIME_SECONDS => 20,
+                QueueAttribute::DELAY_SECONDS                     => 10,
             ),
         ))->getResult();
         $createdQueueUrl = $result->get('QueueUrl');
@@ -61,15 +58,18 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals($createdQueueUrl, $queueUrl);
 
         self::log('Get the queue attributes.');
-        $result = $this->sqs->getCommand('GetQueueAttributes', array(
+        $result = $this->sqs->getCommand('GetQueueAttributeibutes', array(
             'QueueUrl'       => $queueUrl,
-            'AttributeNames' => array(QueueAttr::ALL)
+            'AttributeNames' => array(QueueAttribute::ALL)
         ))->getResult();
-        $this->assertEquals($msgWait, $result->getPath('Attributes/' . QueueAttr::RECEIVE_MESSAGE_WAIT_TIME_SECONDS));
-        $this->assertEquals($msgDelay, $result->getPath('Attributes/' . QueueAttr::DELAY_SECONDS));
+        $this->assertEquals(20, $result->getPath('Attributes/' . QueueAttribute::RECEIVE_MESSAGE_WAIT_TIME_SECONDS));
+        $this->assertEquals(10, $result->getPath('Attributes/' . QueueAttribute::DELAY_SECONDS));
 
         self::log('Make sure the custom ARN-calculating logic returns the actual ARN.');
-        $this->assertEquals($this->sqs->getQueueArn($queueUrl), $result->getPath('Attributes/' . QueueAttr::QUEUE_ARN));
+        $this->assertEquals(
+            $this->sqs->getQueueArn($queueUrl),
+            $result->getPath('Attributes/' . QueueAttribute::QUEUE_ARN)
+        );
 
         // Send, receive, and delete messages
 

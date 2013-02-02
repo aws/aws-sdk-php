@@ -19,9 +19,9 @@ namespace Aws\Sqs\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable QueueAttributeName values
+ * Contains enumerable QueueAttribute values
  */
-class QueueAttributeName extends Enum
+class QueueAttribute extends Enum
 {
     const ALL = 'All';
     const POLICY = 'Policy';
