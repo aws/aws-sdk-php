@@ -17,7 +17,8 @@
 namespace Aws\Tests\Sqs\Integration;
 
 use Aws\Sqs\SqsClient;
-use Aws\Sqs\Enum\QueueAttributeName;
+use Aws\Sqs\Enum\QueueAttributeName as QueueAttr;
+use Aws\Common\Waiter\CallableWaiter;
 
 /**
  * @group integration
@@ -37,8 +38,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testBasicOperations()
     {
         $queueName = 'php-integ-sqs-queue-' . time();
-        $attrReceiveMessageWaitTimeSeconds = 20;
-        $attrDelaySeconds = 10;
+        $msgWait = 20;
+        $msgDelay = 10;
 
         // Create a queue and make sure everything went OK.
 
@@ -46,19 +47,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->sqs->getCommand('CreateQueue', array(
             'QueueName'  => $queueName,
             'Attributes' => array(
-                'ReceiveMessageWaitTimeSeconds' => $attrReceiveMessageWaitTimeSeconds,
-                'DelaySeconds'                  => $attrDelaySeconds
+                QueueAttr::RECEIVE_MESSAGE_WAIT_TIME_SECONDS => $msgWait,
+                QueueAttr::DELAY_SECONDS                     => $msgDelay,
             ),
         ))->getResult();
         $createdQueueUrl = $result->get('QueueUrl');
-
-        self::log('Wait a little while to make sure the queue exists.');
-        // @todo Create a Waiter for this
-        sleep(45);
-
-        self::log('Test iterator for listing queues.');
-        $listedQueueUrls = $this->sqs->getIterator('ListQueues')->toArray();
-        $this->assertContains($createdQueueUrl, $listedQueueUrls);
 
         self::log('Get the queue URL.');
         $result = $this->sqs->getCommand('GetQueueUrl', array(
@@ -70,10 +63,10 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Get the queue attributes.');
         $result = $this->sqs->getCommand('GetQueueAttributes', array(
             'QueueUrl'       => $queueUrl,
-            'AttributeNames' => array(QueueAttributeName::ALL)
+            'AttributeNames' => array(QueueAttr::ALL)
         ))->getResult();
-        $this->assertEquals($attrReceiveMessageWaitTimeSeconds, $result->getPath('Attributes/ReceiveMessageWaitTimeSeconds'));
-        $this->assertEquals($attrDelaySeconds, $result->getPath('Attributes/DelaySeconds'));
+        $this->assertEquals($msgWait, $result->getPath('Attributes/' . QueueAttr::RECEIVE_MESSAGE_WAIT_TIME_SECONDS));
+        $this->assertEquals($msgDelay, $result->getPath('Attributes/' . QueueAttr::DELAY_SECONDS));
 
         // Send and receive messages
 
@@ -89,10 +82,16 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'DelaySeconds' => 0,
         ))->execute();
 
-        self::log('Wait a little while so both messages will be read at the same time.');
-        // @todo Create a Waiter for this... maybe. This scenario doesn't make sense in practice since the purpose of me
-        // receiving two messages in one response is to ensure that the XML is being marshaled correctly.
-        sleep(15);
+        self::log('Wait until both messages will be read at the same time.');
+        $waiter = new CallableWaiter();
+        $waiter->setInterval(2)
+            ->setMaxAttempts(15)
+            ->setCallable(array($this, 'waitUntilThereAreTwoMessagesInTheQueue'))
+            ->setContext(array(
+                'queue_url'      => $queueUrl,
+                'valid_messages' => array('test message 1', 'test message 2')
+            ))
+            ->wait();
 
         self::log('Receive messages from the queue.');
         $result = $this->sqs->getCommand('ReceiveMessage', array(
@@ -123,7 +122,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Test the long polling feature
 
-        self::log('Send a delayed message and make sure long polling is working.');
+        self::log('Send and receive a delayed message and make sure long polling is working. Please wait.');
         $startTime = microtime(true);
         $this->sqs->getCommand('SendMessage', array(
             'QueueUrl'    => $queueUrl,
@@ -149,5 +148,30 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testErrorParsing()
     {
         $this->sqs->getQueueUrl(array('QueueName' => 'php-fake-queue'));
+    }
+
+    /**
+     * Returns true only if all of the specified valid messages can be found in the specified queue simultaneously
+     *
+     * @param int $attempts The number of the attempt of running this method
+     * @param array $context Additional context for this method (`queue_url` and `valid_messages`)
+     *
+     * @return bool
+     */
+    public function waitUntilThereAreTwoMessagesInTheQueue($attempts, array $context)
+    {
+        $result = $this->sqs->getCommand('ReceiveMessage', array(
+            'QueueUrl'            => $context['queue_url'],
+            'MaxNumberOfMessages' => count($context['valid_messages']),
+            'VisibilityTimeout'   => 1,
+        ))->getResult();
+
+        if (count(array_diff($result->getPath('Messages/*/Body'), $context['valid_messages'])) == 0) {
+            self::log('Confirmed that two messages are in the queue. Wait for them to be visible again.');
+            sleep(10 * count($context['valid_messages']));
+            return true;
+        }
+
+        return false;
     }
 }
