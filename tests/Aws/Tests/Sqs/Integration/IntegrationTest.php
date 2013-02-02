@@ -30,9 +30,19 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     protected $sqs;
 
+    public static function setUpBeforeClass()
+    {
+        self::cleanUpQueues();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        self::cleanUpQueues();
+    }
+
     public function setUp()
     {
-        $this->sqs = $this->getServiceBuilder()->get('Sqs');
+        $this->sqs = $this->getServiceBuilder()->get('sqs');
     }
 
     public function testBasicOperations()
@@ -58,7 +68,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals($createdQueueUrl, $queueUrl);
 
         self::log('Get the queue attributes.');
-        $result = $this->sqs->getCommand('GetQueueAttributeibutes', array(
+        $result = $this->sqs->getCommand('GetQueueAttributes', array(
             'QueueUrl'       => $queueUrl,
             'AttributeNames' => array(QueueAttribute::ALL)
         ))->getResult();
@@ -85,7 +95,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Receive a message from the queue.');
         $result = $this->sqs->getCommand('ReceiveMessage', array(
-            'QueueUrl' => $queueUrl
+            'QueueUrl'       => $queueUrl,
+            'AttributeNames' => array(MessageAttribute::ALL),
         ))->getResult();
         $messages = $result->get('Messages');
         $this->assertCount(1, $messages);
@@ -138,5 +149,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testErrorParsing()
     {
         $this->sqs->getQueueUrl(array('QueueName' => 'php-fake-queue'));
+    }
+
+    protected static function cleanUpQueues()
+    {
+        self::log('Cleanup any existing queues from other integ tests.');
+        $sqs = self::getServiceBuilder()->get('sqs');
+        foreach ($sqs->getIterator('ListQueues', array('QueueNamePrefix' => 'php-integ-sqs-')) as $queueUrl) {
+            $sqs->deleteQueue(array('QueueUrl'  => $queueUrl));
+        }
     }
 }
