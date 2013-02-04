@@ -99,6 +99,12 @@ return array(
             'class'   => 'Aws\Sqs\SqsClient'
         ),
 
+        'sns' => array(
+            'alias'   => 'Sns',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Sns\SnsClient'
+        ),
+
         'sts' => array(
             'alias'   => 'Sts',
             'extends' => 'default_settings',
