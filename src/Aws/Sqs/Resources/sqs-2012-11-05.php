@@ -907,6 +907,7 @@ return array (
                     'location' => 'xml',
                     'sentAs' => 'Attribute',
                     'data' => array(
+                        'xmlFlattened' => true,
                         'xmlMap' => array(
                             'Policy',
                             'VisibilityTimeout',
@@ -1015,6 +1016,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Attribute',
                                 'data' => array(
+                                    'xmlFlattened' => true,
                                     'xmlMap' => array(
                                         'Policy',
                                         'VisibilityTimeout',

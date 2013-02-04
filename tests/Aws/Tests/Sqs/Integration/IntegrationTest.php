@@ -102,6 +102,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->assertCount(1, $messages);
         $message = $messages[0];
         $this->assertEquals('test message 1', $message['Body']);
+        $this->assertCount(4, $message['Attributes']); // Make sure attributes are unmarshalled correctly
         $messagesToDelete[] = array(
             'Id'            => str_replace(' ', '-', $message['Body']),
             'ReceiptHandle' => $message['ReceiptHandle'],
