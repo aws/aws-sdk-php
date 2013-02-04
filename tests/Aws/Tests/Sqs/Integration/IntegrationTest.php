@@ -25,7 +25,7 @@ use Aws\Sqs\Enum\QueueAttribute;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
-     /**
+    /**
      * @var SqsClient
      */
     protected $sqs;

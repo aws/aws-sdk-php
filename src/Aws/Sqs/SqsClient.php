@@ -108,5 +108,4 @@ class SqsClient extends AbstractClient
             '.'              => ':',
         ));
     }
-
 }
