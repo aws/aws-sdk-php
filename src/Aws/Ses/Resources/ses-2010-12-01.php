@@ -22,6 +22,7 @@ return array (
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
+    'memberedLists' => true,
     'namespace' => 'Ses',
     'operations' => array(
         'DeleteIdentity' => array(
@@ -99,6 +100,7 @@ return array (
                     'description' => 'A list of one or more verified identities - email addresses, domains, or both.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Identities.member',
                     'items' => array(
                         'name' => 'Identity',
                         'type' => 'string',
@@ -129,6 +131,7 @@ return array (
                     'description' => 'A list of one or more identities.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Identities.member',
                     'items' => array(
                         'name' => 'Identity',
                         'type' => 'string',
@@ -159,6 +162,7 @@ return array (
                     'description' => 'A list of identities.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Identities.member',
                     'items' => array(
                         'name' => 'Identity',
                         'type' => 'string',
@@ -298,6 +302,7 @@ return array (
                         'ToAddresses' => array(
                             'description' => 'The To: field(s) of the message.',
                             'type' => 'array',
+                            'sentAs' => 'ToAddresses.member',
                             'items' => array(
                                 'name' => 'Address',
                                 'type' => 'string',
@@ -306,6 +311,7 @@ return array (
                         'CcAddresses' => array(
                             'description' => 'The CC: field(s) of the message.',
                             'type' => 'array',
+                            'sentAs' => 'CcAddresses.member',
                             'items' => array(
                                 'name' => 'Address',
                                 'type' => 'string',
@@ -314,6 +320,7 @@ return array (
                         'BccAddresses' => array(
                             'description' => 'The BCC: field(s) of the message.',
                             'type' => 'array',
+                            'sentAs' => 'BccAddresses.member',
                             'items' => array(
                                 'name' => 'Address',
                                 'type' => 'string',
@@ -386,6 +393,7 @@ return array (
                     'description' => 'The reply-to email address(es) for the message. If the recipient replies to the message, each reply-to address will receive the reply.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'ReplyToAddresses.member',
                     'items' => array(
                         'name' => 'Address',
                         'type' => 'string',
@@ -431,6 +439,7 @@ return array (
                     'description' => 'A list of destinations for the message.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Destinations.member',
                     'items' => array(
                         'name' => 'Address',
                         'type' => 'string',
@@ -725,6 +734,7 @@ return array (
                                         'items' => array(
                                             'name' => 'VerificationToken',
                                             'type' => 'string',
+                                            'sentAs' => 'member',
                                         ),
                                     ),
                                 ),
@@ -875,6 +885,7 @@ return array (
                         'name' => 'SendDataPoint',
                         'description' => 'Represents sending statistics data. Each SendDataPoint contains statistics for a 15-minute period of sending activity.',
                         'type' => 'object',
+                        'sentAs' => 'member',
                         'properties' => array(
                             'Timestamp' => array(
                                 'description' => 'Time of the data point.',
@@ -912,6 +923,7 @@ return array (
                     'items' => array(
                         'name' => 'Identity',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'NextToken' => array(
@@ -932,6 +944,7 @@ return array (
                     'items' => array(
                         'name' => 'Address',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
             ),
@@ -969,6 +982,7 @@ return array (
                     'items' => array(
                         'name' => 'VerificationToken',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
             ),
