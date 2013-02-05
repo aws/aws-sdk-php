@@ -17,7 +17,7 @@ modern patterns used in the PHP community.
 For the new release, we rewrote the SDK from the ground up to address popular customer requests. The new SDK is built on
 top of the `Guzzle HTTP client framework <http://guzzlephp.org>`_, which provides increased performance and enables
 event-driven customization.  We also introduced high-level abstractions to make programming common tasks easy. The SDK
-is compatible with PHP 5.3.2 and newer, and follows the PSR-0 standard for namespaces and autoloading.
+is compatible with PHP 5.3.3 and newer, and follows the PSR-0 standard for namespaces and autoloading.
 
 Which Services are Supported?
 -----------------------------
