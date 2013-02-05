@@ -117,7 +117,7 @@ few minimum system requirements to start using the AWS SDK for PHP 2. The extens
 with PHP 5.3 by default in most environments.
 
 - Minimum requirements
-    - PHP 5.3.2+ compiled with the cURL extension
+    - PHP 5.3.3+ compiled with the cURL extension
     - A recent version of cURL 7.16.2+ compiled with OpenSSL and zlib
 - To use Amazon CloudFront private distributions, you must have the [OpenSSL PHP extension](http://us2.php.net/openssl)
   (which is not the same as any low-level OpenSSL libraries you may have installed on your system) to sign private
