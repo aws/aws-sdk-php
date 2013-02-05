@@ -5,6 +5,7 @@ Next Release
 ------------------
 
 * Added support for **Amazon Simple Queue Service (Amazon SQS)**
+* Added support for **Amazon Simple Notification Service (Amazon SNS)**
 * Updated `AbstractWaiter` to dispatch `waiter.before_attempt` and `waiter.before_wait` events
 * Updated `CallableWaiter` to allow for an array of context data to be passed to the callable
 * Fixed issue #29 so that the stat cache is cleared before performing multipart uploads
