@@ -94,4 +94,31 @@ class AbstractWaiterTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(100, $waiter->getInterval());
         $this->assertEquals(50, $waiter->getMaxAttempts());
     }
+
+    public function testPerformsWaitWithEvents()
+    {
+        $result = '';
+
+        $waiter = $this->getMockBuilder('Aws\Common\Waiter\AbstractWaiter')
+            ->setMethods(array('doWait'))
+            ->getMockForAbstractClass();
+        $waiter->getEventDispatcher()->addListener('waiter.before_attempt', function () use (&$result) {
+            $result .= 'a';
+        });
+        $waiter->getEventDispatcher()->addListener('waiter.before_wait', function () use (&$result) {
+            $result .= 'c';
+        });
+
+        $count = 0;
+        $waiter->expects($this->exactly(3))
+            ->method('doWait')
+            ->will($this->returnCallback(function () use (&$count, &$result) {
+                $result .= 'b';
+                return ++$count == 3;
+            }));
+
+        $waiter->wait();
+
+        $this->assertEquals('abcabcab', $result);
+    }
 }

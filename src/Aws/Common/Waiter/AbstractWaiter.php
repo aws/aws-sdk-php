@@ -17,14 +17,28 @@
 namespace Aws\Common\Waiter;
 
 use Aws\Common\Exception\RuntimeException;
+use Guzzle\Common\AbstractHasDispatcher;
 
 /**
  * Abstract wait implementation
  */
-abstract class AbstractWaiter implements WaiterInterface
+abstract class AbstractWaiter extends AbstractHasDispatcher implements WaiterInterface
 {
     protected $attempts = 0;
     protected $config = array();
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getAllEvents()
+    {
+        return array(
+            // About to check if the waiter needs to wait
+            'waiter.before_attempt',
+            // About to sleep
+            'waiter.before_wait',
+        );
+    }
 
     /**
      * The max attempts allowed by the waiter
@@ -88,6 +102,11 @@ abstract class AbstractWaiter implements WaiterInterface
         $this->attempts = 0;
 
         do {
+            $this->dispatch('waiter.before_attempt', array(
+                'waiter' => $this,
+                'config' => $this->config,
+            ));
+
             if ($this->doWait()) {
                 break;
             }
@@ -95,6 +114,11 @@ abstract class AbstractWaiter implements WaiterInterface
             if (++$this->attempts >= $this->getMaxAttempts()) {
                 throw new RuntimeException('Wait method never resolved to true after ' . $this->attempts . ' attempts');
             }
+
+            $this->dispatch('waiter.before_wait', array(
+                'waiter' => $this,
+                'config' => $this->config,
+            ));
 
             if ($this->getInterval()) {
                 usleep($this->getInterval() * 1000000);
