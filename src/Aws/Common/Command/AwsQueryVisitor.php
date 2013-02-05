@@ -34,42 +34,67 @@ class AwsQueryVisitor extends AbstractRequestVisitor
     {
         switch ($param->getType()) {
             case 'object':
-                $hasAdditionalProperties = ($param->getAdditionalProperties() instanceof Parameter);
-                $additionalPropertyCount = 0;
-                foreach ($value as $name => $v) {
-                    if ($subParam = $param->getProperty($name)) {
-                        $key = $prefix . '.' . $subParam->getWireName();
-                        if (is_array($v)) {
-                            $this->customResolver($v, $subParam, $query, $key);
-                        } else {
-                            $query[$key] = $v;
-                        }
-                    } elseif ($hasAdditionalProperties) {
-                        // Handle cases like &Attribute.1.Name=<name>&Attribute.1.Value=<value>
-                        $additionalPropertyCount++;
-                        $query["{$prefix}.{$additionalPropertyCount}.Name"] = $name;
-                        $newPrefix = "{$prefix}.{$additionalPropertyCount}.Value";
-                        if (is_array($v)) {
-                            $this->customResolver($v, $param->getAdditionalProperties(), $query, $newPrefix);
-                        } else {
-                            $query[$newPrefix] = $v;
-                        }
-                    }
-                }
+                $this->resolveObject($param, $value, $prefix, $query);
                 break;
             case 'array':
-                $offset = $param->getData('offset') ?: 1;
-                foreach ($value as $index => $v) {
-                    $index += $offset;
-                    if (is_array($v) && $items = $param->getItems()) {
-                        $this->customResolver($v, $items, $query, $prefix . '.' . $index);
-                    } else {
-                        $query[$prefix . '.' . $index] = $v;
-                    }
-                }
+                $this->resolveArray($param, $value, $prefix, $query);
                 break;
             default:
                 $query[$prefix] = $param->filter($value);
+        }
+    }
+
+    /**
+     * Custom handling for objects
+     *
+     * @param Parameter $param  Parameter for the object
+     * @param array     $value  Value that is set for this parameter
+     * @param string    $prefix Prefix for the resulting key
+     * @param array     $query  Query string array passed by reference
+     */
+    protected function resolveObject(Parameter $param, array $value, $prefix, array &$query)
+    {
+        // Maps are implemented using additional properties
+        $hasAdditionalProperties = ($param->getAdditionalProperties() instanceof Parameter);
+        $additionalPropertyCount = 0;
+
+        foreach ($value as $name => $v) {
+            if ($subParam = $param->getProperty($name)) {
+                // if the parameter was found by name as a regular property
+                $key = $prefix . '.' . $subParam->getWireName();
+                $this->customResolver($v, $subParam, $query, $key);
+            } elseif ($hasAdditionalProperties) {
+                // Handle map cases like &Attribute.1.Name=<name>&Attribute.1.Value=<value>
+                $additionalPropertyCount++;
+                $query["{$prefix}.{$additionalPropertyCount}.Name"] = $name;
+                $newPrefix = "{$prefix}.{$additionalPropertyCount}.Value";
+                if (is_array($v)) {
+                    $this->customResolver($v, $param->getAdditionalProperties(), $query, $newPrefix);
+                } else {
+                    $query[$newPrefix] = $param->filter($v);
+                }
+            }
+        }
+    }
+
+    /**
+     * Custom handling for arrays
+     *
+     * @param Parameter $param  Parameter for the object
+     * @param array     $value  Value that is set for this parameter
+     * @param string    $prefix Prefix for the resulting key
+     * @param array     $query  Query string array passed by reference
+     */
+    protected function resolveArray(Parameter $param, array $value, $prefix, array &$query)
+    {
+        $offset = $param->getData('offset') ?: 1;
+        foreach ($value as $index => $v) {
+            $index += $offset;
+            if (is_array($v) && $items = $param->getItems()) {
+                $this->customResolver($v, $items, $query, $prefix . '.' . $index);
+            } else {
+                $query[$prefix . '.' . $index] = $param->filter($v);
+            }
         }
     }
 }

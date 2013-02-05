@@ -83,7 +83,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'DomainName' => $this->domainName,
             'ItemName'   => 'test',
             'Attributes' => array(
-                array('Name' => 'a', 'Value' => 1),
+                array('Name' => 'a', 'Value' => 1, 'Replace' => true),
                 array('Name' => 'b', 'Value' => 2),
             )
         ));
