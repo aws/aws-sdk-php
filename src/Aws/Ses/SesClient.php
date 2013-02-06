@@ -43,6 +43,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model verifyDomainIdentity(array $args = array()) {@command email VerifyDomainIdentity}
  * @method Model verifyEmailAddress(array $args = array()) {@command email VerifyEmailAddress}
  * @method Model verifyEmailIdentity(array $args = array()) {@command email VerifyEmailIdentity}
+ * @method waitUntilIdentityExists(array $input) Wait using the IdentityExists waiter. The input array uses the parameters of the GetIdentityVerificationAttributes operation and waiter specific settings
  */
 class SesClient extends AbstractClient
 {

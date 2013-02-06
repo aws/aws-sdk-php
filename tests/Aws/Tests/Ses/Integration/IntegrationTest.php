@@ -19,6 +19,7 @@ namespace Aws\Tests\Ses\Integration;
 use Aws\Ses\SesClient;
 use Aws\Ses\Enum\VerificationStatus;
 use Aws\Ses\Enum\MailboxSimulator;
+use Aws\Ses\Enum\IdentityType;
 
 /**
  * @group integration
@@ -77,8 +78,78 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         }
     }
 
-    public function testBasicOperations()
+    public function testBasicIdentityCrudOperations()
     {
+        $emailAddress = 'noreply@amazon.com';
 
+        self::log('Create a new identity.');
+        $this->ses->getCommand('VerifyEmailIdentity', array('EmailAddress' => $emailAddress))->execute();
+        $this->ses->waitUntilIdentityExists(array('Identities' => array($emailAddress)));
+
+        self::log('Check the status and make sure it\'s pending.');
+        $result = $this->ses->getCommand('GetIdentityVerificationAttributes', array(
+            'Identities' => array($emailAddress),
+        ))->getResult();
+        $this->assertEquals(VerificationStatus::PENDING, $result->getPath("VerificationAttributes/{$emailAddress}/VerificationStatus"));
+
+        self::log('Make sure the identity is in the identity list.');
+        $identities = $this->ses->getIterator('ListIdentities', array(
+            'IdentityType' => IdentityType::EMAIL_ADDRESS
+        ));
+        $this->assertContains($emailAddress, iterator_to_array($identities));
+
+        self::log('Delete the identity.');
+        $this->ses->getCommand('DeleteIdentity', array('Identity' => $emailAddress))->execute();
+        self::log('Sleep after deleting to allow propagation of delete.');
+        sleep(5);
+
+        self::log('Make sure the identity is no longer in the identity list.');
+        $identities = $this->ses->getIterator('ListIdentities', array(
+            'IdentityType' => IdentityType::EMAIL_ADDRESS
+        ));
+        $this->assertNotContains($emailAddress, iterator_to_array($identities));
+    }
+
+    public function testSendEmail()
+    {
+        $this->ses->getCommand('SendEmail', array(
+            'Source' => self::$verifiedEmail,
+            'Destination' => array(
+                'ToAddresses' => array(MailboxSimulator::SUCCESS)
+            ),
+            'Message' => array(
+                'Subject' => array(
+                    'Data' => 'Test Email',
+                ),
+                'Body' => array(
+                    'Text' => array(
+                        'Data' => 'This is a test email.',
+                    ),
+                ),
+            ),
+        ))->execute();
+    }
+
+    /**
+     * @expectedException \Aws\Ses\Exception\MessageRejectedException
+     */
+    public function testSendErroneousEmailToBlacklistedAddress()
+    {
+        $this->ses->getCommand('SendEmail', array(
+            'Source' => self::$verifiedEmail,
+            'Destination' => array(
+                'ToAddresses' => array(MailboxSimulator::BLACKLIST)
+            ),
+            'Message' => array(
+                'Subject' => array(
+                    'Data' => 'Test Email',
+                ),
+                'Body' => array(
+                    'Text' => array(
+                        'Data' => 'This is a test email.',
+                    ),
+                ),
+            ),
+        ))->execute();
     }
 }

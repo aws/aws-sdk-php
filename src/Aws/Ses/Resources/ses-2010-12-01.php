@@ -58,6 +58,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'summary' => 'Deletes the specified email address from the list of verified addresses.',
+            'deprecated' => true,
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -256,6 +257,7 @@ return array (
             'responseClass' => 'ListVerifiedEmailAddressesResponse',
             'responseType' => 'model',
             'summary' => 'Returns a list containing all of the email addresses that have been verified.',
+            'deprecated' => true,
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -632,6 +634,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'summary' => 'Verifies an email address. This action causes a confirmation email message to be sent to the specified address.',
+            'deprecated' => true,
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1009,6 +1012,18 @@ return array (
             'ListVerifiedEmailAddresses' => array(
                 'result_key' => 'VerifiedEmailAddresses',
             ),
+        ),
+    ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 3,
+            'max_attempts' => 20,
+        ),
+        'IdentityExists' => array(
+            'operation' => 'GetIdentityVerificationAttributes',
+            'success.type' => 'output',
+            'success.path' => 'VerificationAttributes/*/VerificationStatus',
+            'success.value' => true,
         ),
     ),
 );
