@@ -23,6 +23,8 @@ class IteratorsTest extends \Aws\Tests\IntegrationTestCase
 {
     public function testIteratesListResourceRecordSetsCommand()
     {
+        self::log('Test the complex iterator for ListResourceRecordSets.');
+
         $client = $this->getServiceBuilder()->get('route53');
         $mock = $this->setMockResponse($client, array(
             'route53/list_rrs_page_1',

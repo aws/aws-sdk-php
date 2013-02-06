@@ -17,7 +17,7 @@
 namespace Aws\Route53\Exception;
 
 /**
- * This error indicates that you&#039;ve reached the maximum number of hosted zones that can be created for the current AWS
- * account. You can request an increase to the limit on the Contact Us page.
+ * The health check you are trying to create already exists. Route 53 returns this error when a health check has alread
+ * y been created with the specified CallerReference.
  */
-class TooManyHostedZonesException extends Route53Exception {}
+class HealthCheckAlreadyExistsException extends Route53Exception {}

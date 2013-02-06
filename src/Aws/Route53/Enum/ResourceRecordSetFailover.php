@@ -14,10 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Route53\Exception;
+namespace Aws\Route53\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * This error indicates that you&#039;ve reached the maximum number of hosted zones that can be created for the current AWS
- * account. You can request an increase to the limit on the Contact Us page.
+ * Contains enumerable ResourceRecordSetFailover values
  */
-class TooManyHostedZonesException extends Route53Exception {}
+class ResourceRecordSetFailover extends Enum
+{
+    const PRIMARY = 'PRIMARY';
+    const SECONDARY = 'SECONDARY';
+}

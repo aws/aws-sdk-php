@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2012-02-29',
+    'apiVersion' => '2012-12-12',
     'endpointPrefix' => 'route53',
     'serviceFullName' => 'Amazon Route 53',
     'serviceAbbreviation' => 'Route 53',
@@ -26,16 +26,16 @@ return array (
     'operations' => array(
         'ChangeResourceRecordSets' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2012-02-29/hostedzone/{HostedZoneId}/rrset/',
+            'uri' => '/2012-12-12/hostedzone/{HostedZoneId}/rrset/',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ChangeResourceRecordSetsResponse',
             'responseType' => 'model',
-            'summary' => 'Use this action to create or change your authoritative DNS information. To use this action, send a POST request to the 2012-02-29/hostedzone/hosted Zone ID/rrset resource. The request body must include an XML document with a ChangeResourceRecordSetsRequest element.',
+            'summary' => 'Use this action to create or change your authoritative DNS information. To use this action, send a POST request to the 2012-12-12/hostedzone/hosted Zone ID/rrset resource. The request body must include an XML document with a ChangeResourceRecordSetsRequest element.',
             'data' => array(
                 'xmlRoot' => array(
                     'name' => 'ChangeResourceRecordSetsRequest',
                     'namespaces' => array(
-                        'https://route53.amazonaws.com/doc/2012-02-29/',
+                        'https://route53.amazonaws.com/doc/2012-12-12/',
                     ),
                 ),
             ),
@@ -109,7 +109,7 @@ return array (
                                                 ),
                                             ),
                                             'SetIdentifier' => array(
-                                                'description' => 'Weighted resource record sets or Regional resource record sets only: An identifier that differentiates among multiple resource record sets that have the same combination of DNS name and type.',
+                                                'description' => 'Weighted, Regional, and Failover resource record sets only: An identifier that differentiates among multiple resource record sets that have the same combination of DNS name and type.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 128,
@@ -130,8 +130,17 @@ return array (
                                                     'us-west-2',
                                                     'eu-west-1',
                                                     'ap-southeast-1',
+                                                    'ap-southeast-2',
                                                     'ap-northeast-1',
                                                     'sa-east-1',
+                                                ),
+                                            ),
+                                            'Failover' => array(
+                                                'description' => 'Failover resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that indicates whether the current resource record set is a primary or secondary resource record set. A failover set may contain at most one resource record set marked as primary and one resource record set marked as secondary. A resource record set marked as primary will be returned if any of the following are true: (1) an associated health check is passing, (2) if the resource record set is an alias with the evaluate target health and at least one target resource record set is healthy, (3) both the primary and secondary resource record set are failing health checks or (4) there is no secondary resource record set. A secondary resource record set will be returned if: (1) the primary is failing a health check and either the secondary is passing a health check or has no associated health check, or (2) there is no primary resource record set.',
+                                                'type' => 'string',
+                                                'enum' => array(
+                                                    'PRIMARY',
+                                                    'SECONDARY',
                                                 ),
                                             ),
                                             'TTL' => array(
@@ -152,7 +161,7 @@ return array (
                                                             'required' => true,
                                                             'description' => 'The value of the Value element for the current resource record set.',
                                                             'type' => 'string',
-                                                            'maxLength' => 8192,
+                                                            'maxLength' => 4000,
                                                         ),
                                                     ),
                                                 ),
@@ -173,7 +182,18 @@ return array (
                                                         'type' => 'string',
                                                         'maxLength' => 1024,
                                                     ),
+                                                    'EvaluateTargetHealth' => array(
+                                                        'required' => true,
+                                                        'description' => 'Alias resource record sets only: A boolean value that indicates whether this Resource Record Set should respect the health status of any health checks associated with the ALIAS target record which it is linked to.',
+                                                        'type' => 'boolean',
+                                                        'format' => 'boolean-string',
+                                                    ),
                                                 ),
+                                            ),
+                                            'HealthCheckId' => array(
+                                                'description' => 'Health Check resource record sets only, not required for alias resource record sets: An identifier that is used to identify health check associated with the resource record set.',
+                                                'type' => 'string',
+                                                'maxLength' => 64,
                                             ),
                                         ),
                                     ),
@@ -192,8 +212,98 @@ return array (
                     'class' => 'NoSuchHostedZoneException',
                 ),
                 array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
                     'reason' => 'This error contains a list of one or more error messages. Each error message indicates one error in the change batch. For more information, see Example InvalidChangeBatch Errors.',
                     'class' => 'InvalidChangeBatchException',
+                ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
+                    'class' => 'PriorRequestNotCompleteException',
+                ),
+            ),
+        ),
+        'CreateHealthCheck' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2012-12-12/healthcheck',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'CreateHealthCheckResponse',
+            'responseType' => 'model',
+            'summary' => 'This action creates a new health check.',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'CreateHealthCheckRequest',
+                    'namespaces' => array(
+                        'https://route53.amazonaws.com/doc/2012-12-12/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'CallerReference' => array(
+                    'required' => true,
+                    'description' => 'A unique string that identifies the request and that allows failed CreateHealthCheck requests to be retried without the risk of executing the operation twice. You must use a unique CallerReference string every time you create a health check. CallerReference can be any unique string; you might choose to use a string that identifies your project.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
+                'HealthCheckConfig' => array(
+                    'required' => true,
+                    'description' => 'A complex type that contains health check configuration.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'IPAddress' => array(
+                            'required' => true,
+                            'description' => 'IP Address of the instance being checked.',
+                            'type' => 'string',
+                            'maxLength' => 15,
+                        ),
+                        'Port' => array(
+                            'description' => 'Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.',
+                            'type' => 'numeric',
+                            'minimum' => 1,
+                            'maximum' => 65535,
+                        ),
+                        'Type' => array(
+                            'required' => true,
+                            'description' => 'The type of health check to be performed. Currently supported protocols are TCP and HTTP.',
+                            'type' => 'string',
+                            'enum' => array(
+                                'HTTP',
+                                'TCP',
+                            ),
+                        ),
+                        'ResourcePath' => array(
+                            'description' => 'Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.',
+                            'type' => 'string',
+                            'maxLength' => 255,
+                        ),
+                        'FullyQualifiedDomainName' => array(
+                            'description' => 'Fully qualified domain name of the instance to be health checked.',
+                            'type' => 'string',
+                            'maxLength' => 255,
+                        ),
+                    ),
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'TooManyHealthChecksException',
+                ),
+                array(
+                    'reason' => 'The health check you are trying to create already exists. Route 53 returns this error when a health check has already been created with the specified CallerReference.',
+                    'class' => 'HealthCheckAlreadyExistsException',
                 ),
                 array(
                     'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
@@ -203,7 +313,7 @@ return array (
         ),
         'CreateHostedZone' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2012-02-29/hostedzone',
+            'uri' => '/2012-12-12/hostedzone',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateHostedZoneResponse',
             'responseType' => 'model',
@@ -212,7 +322,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CreateHostedZoneRequest',
                     'namespaces' => array(
-                        'https://route53.amazonaws.com/doc/2012-02-29/',
+                        'https://route53.amazonaws.com/doc/2012-12-12/',
                     ),
                 ),
             ),
@@ -272,13 +382,44 @@ return array (
                 ),
             ),
         ),
+        'DeleteHealthCheck' => array(
+            'httpMethod' => 'DELETE',
+            'uri' => '/2012-12-12/healthcheck/{HealthCheckId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'DeleteHealthCheckResponse',
+            'responseType' => 'model',
+            'summary' => 'This action deletes a health check. To delete a health check, send a DELETE request to the 2012-12-12/healthcheck/health check ID resource.',
+            'parameters' => array(
+                'HealthCheckId' => array(
+                    'required' => true,
+                    'description' => 'The ID of the health check to delete.',
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'maxLength' => 64,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'reason' => 'There are resource records associated with this health check. Before you can delete the health check, you must disassociate it from the resource record sets.',
+                    'class' => 'HealthCheckInUseException',
+                ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
         'DeleteHostedZone' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2012-02-29/hostedzone/{Id}',
+            'uri' => '/2012-12-12/hostedzone/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'DeleteHostedZoneResponse',
             'responseType' => 'model',
-            'summary' => 'This action deletes a hosted zone. To delete a hosted zone, send a DELETE request to the 2012-02-29/hostedzone/hosted zone ID resource.',
+            'summary' => 'This action deletes a hosted zone. To delete a hosted zone, send a DELETE request to the 2012-12-12/hostedzone/hosted zone ID resource.',
             'parameters' => array(
                 'Id' => array(
                     'required' => true,
@@ -304,6 +445,10 @@ return array (
                     'class' => 'HostedZoneNotEmptyException',
                 ),
                 array(
+                    'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
+                    'class' => 'PriorRequestNotCompleteException',
+                ),
+                array(
                     'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
                     'class' => 'InvalidInputException',
                 ),
@@ -311,7 +456,7 @@ return array (
         ),
         'GetChange' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2012-02-29/change/{Id}',
+            'uri' => '/2012-12-12/change/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetChangeResponse',
             'responseType' => 'model',
@@ -342,13 +487,44 @@ return array (
                 ),
             ),
         ),
+        'GetHealthCheck' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2012-12-12/healthcheck/{HealthCheckId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetHealthCheckResponse',
+            'responseType' => 'model',
+            'summary' => 'To retrieve the health check, send a GET request to the 2012-12-12/healthcheck/health check ID resource.',
+            'parameters' => array(
+                'HealthCheckId' => array(
+                    'required' => true,
+                    'description' => 'The ID of the health check to retrieve.',
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'maxLength' => 64,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
         'GetHostedZone' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2012-02-29/hostedzone/{Id}',
+            'uri' => '/2012-12-12/hostedzone/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetHostedZoneResponse',
             'responseType' => 'model',
-            'summary' => 'To retrieve the delegation set for a hosted zone, send a GET request to the 2012-02-29/hostedzone/hosted zone ID resource. The delegation set is the four Route 53 name servers that were assigned to the hosted zone when you created it.',
+            'summary' => 'To retrieve the delegation set for a hosted zone, send a GET request to the 2012-12-12/hostedzone/hosted zone ID resource. The delegation set is the four Route 53 name servers that were assigned to the hosted zone when you created it.',
             'parameters' => array(
                 'Id' => array(
                     'required' => true,
@@ -375,20 +551,53 @@ return array (
                 ),
             ),
         ),
-        'ListHostedZones' => array(
+        'ListHealthChecks' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2012-02-29/hostedzone',
+            'uri' => '/2012-12-12/healthcheck',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'ListHostedZonesResponse',
+            'responseClass' => 'ListHealthChecksResponse',
             'responseType' => 'model',
-            'summary' => 'To retrieve a list of your hosted zones, send a GET request to the 2012-02-29/hostedzone resource. The response to this request includes a HostedZones element with zero, one, or multiple HostedZone child elements. By default, the list of hosted zones is displayed on a single page. You can control the length of the page that is displayed by using the MaxItems parameter. You can use the Marker parameter to control the hosted zone that the list begins with.',
+            'summary' => 'To retrieve a list of your health checks, send a GET request to the 2012-12-12/healthcheck resource. The response to this request includes a HealthChecks element with zero, one, or multiple HealthCheck child elements. By default, the list of health checks is displayed on a single page. You can control the length of the page that is displayed by using the MaxItems parameter. You can use the Marker parameter to control the health check that the list begins with.',
             'parameters' => array(
                 'Marker' => array(
                     'description' => 'If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.',
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'marker',
-                    'maxLength' => 32,
+                    'maxLength' => 64,
+                ),
+                'MaxItems' => array(
+                    'description' => 'Specify the maximum number of health checks to return per page of results.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'maxitems',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
+        'ListHostedZones' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2012-12-12/hostedzone',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'ListHostedZonesResponse',
+            'responseType' => 'model',
+            'summary' => 'To retrieve a list of your hosted zones, send a GET request to the 2012-12-12/hostedzone resource. The response to this request includes a HostedZones element with zero, one, or multiple HostedZone child elements. By default, the list of hosted zones is displayed on a single page. You can control the length of the page that is displayed by using the MaxItems parameter. You can use the Marker parameter to control the hosted zone that the list begins with.',
+            'parameters' => array(
+                'Marker' => array(
+                    'description' => 'If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'marker',
+                    'maxLength' => 64,
                 ),
                 'MaxItems' => array(
                     'description' => 'Specify the maximum number of hosted zones to return per page of results.',
@@ -410,7 +619,7 @@ return array (
         ),
         'ListResourceRecordSets' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2012-02-29/hostedzone/{HostedZoneId}/rrset',
+            'uri' => '/2012-12-12/hostedzone/{HostedZoneId}/rrset',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListResourceRecordSetsResponse',
             'responseType' => 'model',
@@ -516,6 +725,63 @@ return array (
                 ),
             ),
         ),
+        'CreateHealthCheckResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'HealthCheck' => array(
+                    'description' => 'A complex type that contains identifying information about the health check.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'description' => 'The ID of the specified health check.',
+                            'type' => 'string',
+                        ),
+                        'CallerReference' => array(
+                            'description' => 'A unique string that identifies the request to create the health check.',
+                            'type' => 'string',
+                        ),
+                        'HealthCheckConfig' => array(
+                            'description' => 'A complex type that contains the health check configuration.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'IPAddress' => array(
+                                    'description' => 'IP Address of the instance being checked.',
+                                    'type' => 'string',
+                                ),
+                                'Port' => array(
+                                    'description' => 'Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.',
+                                    'type' => 'numeric',
+                                ),
+                                'Type' => array(
+                                    'description' => 'The type of health check to be performed. Currently supported protocols are TCP and HTTP.',
+                                    'type' => 'string',
+                                ),
+                                'ResourcePath' => array(
+                                    'description' => 'Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.',
+                                    'type' => 'string',
+                                ),
+                                'FullyQualifiedDomainName' => array(
+                                    'description' => 'Fully qualified domain name of the instance to be health checked.',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Location' => array(
+                    'description' => 'The unique URL representing the new health check.',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'CreateHostedZoneResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -604,6 +870,17 @@ return array (
                 ),
             ),
         ),
+        'DeleteHealthCheckResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'DeleteHostedZoneResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -672,6 +949,58 @@ return array (
                 ),
             ),
         ),
+        'GetHealthCheckResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'HealthCheck' => array(
+                    'description' => 'A complex type that contains the information about the specified health check.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'description' => 'The ID of the specified health check.',
+                            'type' => 'string',
+                        ),
+                        'CallerReference' => array(
+                            'description' => 'A unique string that identifies the request to create the health check.',
+                            'type' => 'string',
+                        ),
+                        'HealthCheckConfig' => array(
+                            'description' => 'A complex type that contains the health check configuration.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'IPAddress' => array(
+                                    'description' => 'IP Address of the instance being checked.',
+                                    'type' => 'string',
+                                ),
+                                'Port' => array(
+                                    'description' => 'Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.',
+                                    'type' => 'numeric',
+                                ),
+                                'Type' => array(
+                                    'description' => 'The type of health check to be performed. Currently supported protocols are TCP and HTTP.',
+                                    'type' => 'string',
+                                ),
+                                'ResourcePath' => array(
+                                    'description' => 'Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.',
+                                    'type' => 'string',
+                                ),
+                                'FullyQualifiedDomainName' => array(
+                                    'description' => 'Fully qualified domain name of the instance to be health checked.',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'GetHostedZoneResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -724,6 +1053,84 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'description' => 'Request ID of the operation',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'ListHealthChecksResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'HealthChecks' => array(
+                    'description' => 'A complex type that contains information about the health checks associated with the current AWS account.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'HealthCheck',
+                        'description' => 'A complex type that contains identifying information about the health check.',
+                        'type' => 'object',
+                        'sentAs' => 'HealthCheck',
+                        'properties' => array(
+                            'Id' => array(
+                                'description' => 'The ID of the specified health check.',
+                                'type' => 'string',
+                            ),
+                            'CallerReference' => array(
+                                'description' => 'A unique string that identifies the request to create the health check.',
+                                'type' => 'string',
+                            ),
+                            'HealthCheckConfig' => array(
+                                'description' => 'A complex type that contains the health check configuration.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'IPAddress' => array(
+                                        'description' => 'IP Address of the instance being checked.',
+                                        'type' => 'string',
+                                    ),
+                                    'Port' => array(
+                                        'description' => 'Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Type' => array(
+                                        'description' => 'The type of health check to be performed. Currently supported protocols are TCP and HTTP.',
+                                        'type' => 'string',
+                                    ),
+                                    'ResourcePath' => array(
+                                        'description' => 'Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.',
+                                        'type' => 'string',
+                                    ),
+                                    'FullyQualifiedDomainName' => array(
+                                        'description' => 'Fully qualified domain name of the instance to be health checked.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'description' => 'If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'IsTruncated' => array(
+                    'description' => 'A flag indicating whether there are more health checks to be listed. If your results were truncated, you can make a follow-up request for the next page of results by using the Marker element.',
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
+                'NextMarker' => array(
+                    'description' => 'Indicates where to continue listing health checks. If ListHealthChecksResponse$IsTruncated is true, make another request to ListHealthChecks and include the value of the NextMarker element in the Marker element to get the next page of results.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'MaxItems' => array(
+                    'description' => 'The maximum number of health checks to be included in the response body. If the number of health checks associated with this AWS account exceeds MaxItems, the value of ListHealthChecksResponse$IsTruncated in the response is true. Call ListHealthChecks again and specify the value of ListHealthChecksResponse$NextMarker in the ListHostedZonesRequest$Marker element to get the next page of results.',
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
                 'RequestId' => array(
                     'description' => 'Request ID of the operation',
@@ -825,7 +1232,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'SetIdentifier' => array(
-                                'description' => 'Weighted resource record sets or Regional resource record sets only: An identifier that differentiates among multiple resource record sets that have the same combination of DNS name and type.',
+                                'description' => 'Weighted, Regional, and Failover resource record sets only: An identifier that differentiates among multiple resource record sets that have the same combination of DNS name and type.',
                                 'type' => 'string',
                             ),
                             'Weight' => array(
@@ -834,6 +1241,10 @@ return array (
                             ),
                             'Region' => array(
                                 'description' => 'Regional resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that specifies the AWS region for the current resource record set.',
+                                'type' => 'string',
+                            ),
+                            'Failover' => array(
+                                'description' => 'Failover resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that indicates whether the current resource record set is a primary or secondary resource record set. A failover set may contain at most one resource record set marked as primary and one resource record set marked as secondary. A resource record set marked as primary will be returned if any of the following are true: (1) an associated health check is passing, (2) if the resource record set is an alias with the evaluate target health and at least one target resource record set is healthy, (3) both the primary and secondary resource record set are failing health checks or (4) there is no secondary resource record set. A secondary resource record set will be returned if: (1) the primary is failing a health check and either the secondary is passing a health check or has no associated health check, or (2) there is no primary resource record set.',
                                 'type' => 'string',
                             ),
                             'TTL' => array(
@@ -868,7 +1279,15 @@ return array (
                                         'description' => 'Alias resource record sets only: The external DNS name associated with the LoadBalancer.',
                                         'type' => 'string',
                                     ),
+                                    'EvaluateTargetHealth' => array(
+                                        'description' => 'Alias resource record sets only: A boolean value that indicates whether this Resource Record Set should respect the health status of any health checks associated with the ALIAS target record which it is linked to.',
+                                        'type' => 'boolean',
+                                    ),
                                 ),
+                            ),
+                            'HealthCheckId' => array(
+                                'description' => 'Health Check resource record sets only, not required for alias resource record sets: An identifier that is used to identify health check associated with the resource record set.',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -902,6 +1321,39 @@ return array (
                     'description' => 'Request ID of the operation',
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+    ),
+    'iterators' => array(
+        'operations' => array(
+            'ListHealthChecks' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'more_key' => 'IsTruncated',
+                'limit_key' => 'MaxItems',
+                'result_key' => 'HealthChecks',
+            ),
+            'ListHostedZones' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'more_key' => 'IsTruncated',
+                'limit_key' => 'MaxItems',
+                'result_key' => 'HostedZones',
+            ),
+            'ListResourceRecordSets' => array(
+                'more_key' => 'IsTruncated',
+                'limit_key' => 'MaxItems',
+                'result_key' => 'ResourceRecordSets',
+                'token_param' => array(
+                    'StartRecordName',
+                    'StartRecordType',
+                    'StartRecordIdentifier',
+                ),
+                'token_key' => array(
+                    'NextRecordName',
+                    'NextRecordType',
+                    'NextRecordIdentifier',
                 ),
             ),
         ),

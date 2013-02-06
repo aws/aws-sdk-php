@@ -20,7 +20,6 @@ use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\DateFormat;
-use Aws\Common\Enum\Region;
 use Aws\Common\Exception\ServiceResponseException;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
@@ -29,10 +28,14 @@ use Guzzle\Service\Resource\Model;
  * Client to interact with Amazon Route 53
  *
  * @method Model changeResourceRecordSets(array $args = array()) {@command route53 ChangeResourceRecordSets}
+ * @method Model createHealthCheck(array $args = array()) {@command route53 CreateHealthCheck}
  * @method Model createHostedZone(array $args = array()) {@command route53 CreateHostedZone}
+ * @method Model deleteHealthCheck(array $args = array()) {@command route53 DeleteHealthCheck}
  * @method Model deleteHostedZone(array $args = array()) {@command route53 DeleteHostedZone}
  * @method Model getChange(array $args = array()) {@command route53 GetChange}
+ * @method Model getHealthCheck(array $args = array()) {@command route53 GetHealthCheck}
  * @method Model getHostedZone(array $args = array()) {@command route53 GetHostedZone}
+ * @method Model listHealthChecks(array $args = array()) {@command route53 ListHealthChecks}
  * @method Model listHostedZones(array $args = array()) {@command route53 ListHostedZones}
  * @method Model listResourceRecordSets(array $args = array()) {@command route53 ListResourceRecordSets}
  */
@@ -82,23 +85,7 @@ class Route53Client extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/route53-2012-02-29.php'
-            ))
-            ->setIteratorsConfig(array(
-                'limit_param' => 'MaxItems',
-                'more_key'    => 'IsTruncated',
-                'operations'  => array(
-                    'ListHostedZones' => array(
-                        'token_param' => 'Marker',
-                        'token_key'   => 'NextMarker',
-                        'result_key'  => 'HostedZones',
-                    ),
-                    'ListResourceRecordSets' => array(
-                        'token_param' => array('StartRecordName', 'StartRecordType', 'StartRecordIdentifier'),
-                        'token_key'   => array('NextRecordName', 'NextRecordType', 'NextRecordIdentifier'),
-                        'result_key'  => 'ResourceRecordSets'
-                    )
-                )
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/route53-2012-12-12.php'
             ))
             ->build();
 

@@ -17,7 +17,6 @@
 namespace Aws\Route53\Exception;
 
 /**
- * This error indicates that you&#039;ve reached the maximum number of hosted zones that can be created for the current AWS
- * account. You can request an increase to the limit on the Contact Us page.
+ * The request was rejected because Route 53 was still processing a prior request.
  */
-class TooManyHostedZonesException extends Route53Exception {}
+class PriorRequestNotCompleteException extends Route53Exception {}

@@ -17,7 +17,7 @@
 namespace Aws\Route53\Exception;
 
 /**
- * This error indicates that you&#039;ve reached the maximum number of hosted zones that can be created for the current AWS
- * account. You can request an increase to the limit on the Contact Us page.
+ * There are resource records associated with this health check. Before you can delete the health check, you must disas
+ * sociate it from the resource record sets.
  */
-class TooManyHostedZonesException extends Route53Exception {}
+class HealthCheckInUseException extends Route53Exception {}
