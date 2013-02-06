@@ -1,6 +1,8 @@
-==================================
-Amazon Simple Storage Service (S3)
-==================================
+==============
+|service_name|
+==============
+
+.. |service_name| replace:: Amazon Simple Storage Service (S3)
 
 .. include:: _snippets/service_intro.txt
 
@@ -22,8 +24,7 @@ Amazon Simple Storage Service (S3)
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('s3');
-
-.. |service_name| replace:: Amazon S3
+    // Or: $client = $aws->get('S3');
 
 Creating a bucket
 -----------------

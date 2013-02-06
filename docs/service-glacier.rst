@@ -1,6 +1,8 @@
 ==============
-Amazon Glacier
+|service_name|
 ==============
+
+.. |service_name| replace:: Amazon Glacier
 
 .. include:: _snippets/service_intro.txt
 
@@ -22,7 +24,6 @@ Amazon Glacier
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('glacier');
-
-.. |service_name| replace:: Amazon Glacier
+    // Or: $client = $aws->get('Glacier');
 
 *More documentation coming soon.*

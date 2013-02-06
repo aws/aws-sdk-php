@@ -1,6 +1,8 @@
-===============
-Amazon DynamoDB
-===============
+==============
+|service_name|
+==============
+
+.. |service_name| replace:: Amazon DynamoDB
 
 .. include:: _snippets/service_intro.txt
 
@@ -22,8 +24,7 @@ Amazon DynamoDB
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('dynamodb');
-
-.. |service_name| replace:: Amazon DynamoDB
+    // Or: $client = $aws->get('DynamoDb');
 
 Creating tables
 ---------------

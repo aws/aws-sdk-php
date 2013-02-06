@@ -1,6 +1,8 @@
-===============
-Amazon Route 53
-===============
+==============
+|service_name|
+==============
+
+.. |service_name| replace:: Amazon Route 53
 
 .. include:: _snippets/service_intro.txt
 
@@ -21,7 +23,6 @@ Amazon Route 53
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('route53');
-
-.. |service_name| replace:: Amazon Route 53
+    // Or: $client = $aws->get('Route53');
 
 *More documentation coming soon.*

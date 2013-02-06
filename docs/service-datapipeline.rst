@@ -1,6 +1,8 @@
-=================
-AWS Data Pipeline
-=================
+==============
+|service_name|
+==============
+
+.. |service_name| replace:: AWS Data Pipeline
 
 .. include:: _snippets/service_intro.txt
 
@@ -22,7 +24,6 @@ AWS Data Pipeline
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('datapipeline');
-
-.. |service_name| replace:: AWS Data Pipeline
+    // Or: $client = $aws->get('DataPipeline');
 
 *More documentation coming soon.*

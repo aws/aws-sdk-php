@@ -2,17 +2,18 @@
 |service_name|
 ==============
 
-.. |service_name| replace:: Amazon CloudFront
+.. |service_name| replace:: AWS Elastic Beanstalk
 
 .. include:: _snippets/service_intro.txt
 
 .. code-block:: php
 
-    use Aws\CloudFront\CloudFrontClient;
+    use Aws\ElasticBeanstalk\ElasticBeanstalkClient;
 
-    $client = CloudFrontClient::factory(array(
+    $client = ElasticBeanstalkClient::factory(array(
         'key'    => '<aws access key>',
-        'secret' => '<aws secret key>'
+        'secret' => '<aws secret key>',
+        'region' => 'us-west-2'
     ));
 
 .. include:: _snippets/service_intro_service_locator.txt
@@ -22,7 +23,7 @@
     use Aws\Common\Aws;
 
     $aws = Aws::factory('/path/to/my_config.json');
-    $client = $aws->get('cloudfront');
-    // Or: $client = $aws->get('CloudFront');
+    $client = $aws->get('elasticbeanstalk');
+    // Or: $client = $aws->get('ElasticBeanstalk');
 
 *More documentation coming soon.*

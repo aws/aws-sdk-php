@@ -1,6 +1,8 @@
-================================
-AWS Security Token Service (STS)
-================================
+==============
+|service_name|
+==============
+
+.. |service_name| replace:: AWS Security Token Service (STS)
 
 .. include:: _snippets/service_intro.txt
 
@@ -21,7 +23,6 @@ AWS Security Token Service (STS)
 
     $aws = Aws::factory('/path/to/my_config.json');
     $client = $aws->get('sts');
-
-.. |service_name| replace:: AWS Security Token Service
+    // Or: $client = $aws->get('Sts');
 
 *More documentation coming soon.*
