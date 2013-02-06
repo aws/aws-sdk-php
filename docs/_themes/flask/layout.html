@@ -14,9 +14,45 @@
   {% endif %}
 {% endblock %}
 {% block header %}
+  <div id="menu">
+      <div class="width-wrapper">
+          <div id="left-logo"><a href="{{ pathto(master_doc) }}">AWS SDK for PHP 2:</a></div>
+          <ul id="main-menu">
+              <li><a href="http://aws.amazon.com/sdkforphp">Homepage</a></li>
+              <li><a href="http://docs.amazonwebservices.com/aws-sdk-php-2/latest/">API Docs</a></li>
+              <li><a href="https://forums.aws.amazon.com/forum.jspa?forumID=80">Forum</a></li>
+              <li><a href="https://github.com/aws/aws-sdk-php/issues">Issues</a></li>
+              <li><a href="https://packagist.org/packages/aws/aws-sdk-php">Packagist</a></li>
+          </ul>
+          <div id="search-box">
+              <form class="search" action="search.html" method="get">
+                  <input type="text" name="q"/>
+                  <input type="hidden" name="check_keywords" value="yes"/>
+                  <input type="hidden" name="area" value="default"/>
+              </form>
+          </div>
+      </div>
+  </div>
   {{ super() }}
   {% if pagename == 'index' %}
   <div class=indexwrapper>
+  {% endif %}
+{% endblock %}
+{% block content %}
+  {{ super() }}
+  {% if pagename != 'index' %}
+    {% if prev or next %}
+    <div id="footer-links"  class="width-wrapper">
+    {% endif %}
+    {%- if next %}
+    <a href="{{ next.link|e }}" title="{{ _('next chapter')}}">Next: {{ next.title }}</a>
+    {%- endif %}
+    {%- if prev %}
+    <a href="{{ prev.link|e }}" title="{{ _('previous chapter')}}">Prev: {{ prev.title }}</a>
+    {%- endif %}
+    {% if prev or next %}
+    </div>
+    {% endif %}
   {% endif %}
 {% endblock %}
 {%- block footer %}
