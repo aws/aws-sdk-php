@@ -12,9 +12,12 @@
 
     $client = S3Client::factory(array(
         'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
-        'region' => 'us-west-2'
+        'secret' => '<aws secret key>'
     ));
+
+.. admonition:: |service_name| supports the following region values
+
+    :regions:`s3`
 
 .. include:: _snippets/service_intro_service_locator.txt
 

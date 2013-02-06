@@ -15,6 +15,10 @@
         'secret' => '<aws secret key>'
     ));
 
+.. admonition:: |service_name| supports the following region values
+
+    :regions:`sts`
+
 .. include:: _snippets/service_intro_service_locator.txt
 
 .. code-block:: php

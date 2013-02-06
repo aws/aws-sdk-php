@@ -12,8 +12,7 @@
 
     $client = DataPipelineClient::factory(array(
         'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
-        'region' => 'us-east-1'
+        'secret' => '<aws secret key>'
     ));
 
 .. include:: _snippets/service_intro_service_locator.txt

@@ -12,8 +12,7 @@
 
     $client = IamClient::factory(array(
         'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
-        'region' => 'us-west-2'
+        'secret' => '<aws secret key>'
     ));
 
 .. include:: _snippets/service_intro_service_locator.txt

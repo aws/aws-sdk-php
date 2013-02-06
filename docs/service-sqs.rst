@@ -13,8 +13,12 @@
     $client = SqsClient::factory(array(
         'key'    => '<aws access key>',
         'secret' => '<aws secret key>',
-        'region' => 'us-west-2'
+        'region' => '<region name>'
     ));
+
+.. admonition:: |service_name| supports the following region values
+
+    :regions:`sqs`
 
 .. include:: _snippets/service_intro_service_locator.txt
 
