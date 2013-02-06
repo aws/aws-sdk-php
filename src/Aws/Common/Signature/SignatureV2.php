@@ -91,6 +91,8 @@ class SignatureV2 extends AbstractSignature
             $params = $request->getQuery()->toArray();
         }
 
+        // Don't resign a previous signature value
+        unset($params['Signature']);
         uksort($params, 'strcmp');
 
         $str = '';
