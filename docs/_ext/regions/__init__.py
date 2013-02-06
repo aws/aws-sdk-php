@@ -1,7 +1,7 @@
 import os
 from sphinx.addnodes import toctree
 from docutils import nodes
-from elementtree import ElementTree as ET
+import xml.dom.minidom
 
 def setup(app):
     """
@@ -52,18 +52,16 @@ def make_regions_node(rawtext, app, service_name, options):
     :param options:      Options dictionary passed to role func.
     """
 
-    regions = []
-    found_match = False
-
     # Open the endpoints.xml file of the SDK
-    tree = ET.parse(os.path.abspath("../src/Aws/Common/Resources/endpoints.xml"))
-    for service in tree.findall("Services/*"):
-        if service.findtext("Name") == service_name:
-            for region_name in service.findall("RegionName"):
-                regions.append(str(region_name.text))
-                found_match = True
+    parsed = xml.dom.minidom.parse(os.path.abspath("../src/Aws/Common/Resources/endpoints.xml"))
+    regions = []
 
-    if not found_match:
-        raise ValueError
+    for service in parsed.getElementsByTagName('Service'):
+        if service.getElementsByTagName('Name')[0].firstChild.nodeValue == service_name:
+            for region in service.getElementsByTagName('RegionName'):
+                regions.append(region.firstChild.nodeValue)
+            break
+    else:
+        raise ValueError("Unknown service: %s" % service_name)
 
     return nodes.Text(", ".join(regions))
