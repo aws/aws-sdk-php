@@ -31,8 +31,4 @@
     $client = $aws->get('elastictranscoder');
     // Or: $client = $aws->get('ElasticTranscoder');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

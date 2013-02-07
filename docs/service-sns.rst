@@ -31,8 +31,4 @@
     $client = $aws->get('sns');
     // Or: $client = $aws->get('Sns');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

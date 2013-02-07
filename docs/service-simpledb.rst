@@ -31,8 +31,4 @@
     $client = $aws->get('sdb');
     // Or: $client = $aws->get('SimpleDb');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

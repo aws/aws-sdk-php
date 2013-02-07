@@ -31,8 +31,4 @@
     $client = $aws->get('glacier');
     // Or: $client = $aws->get('Glacier');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

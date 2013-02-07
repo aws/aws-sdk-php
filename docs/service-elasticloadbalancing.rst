@@ -31,8 +31,4 @@
     $client = $aws->get('elasticloadbalancing');
     // Or: $client = $aws->get('ElasticLoadBalancing');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

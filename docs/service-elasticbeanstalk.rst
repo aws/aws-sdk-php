@@ -31,8 +31,4 @@
     $client = $aws->get('elasticbeanstalk');
     // Or: $client = $aws->get('ElasticBeanstalk');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

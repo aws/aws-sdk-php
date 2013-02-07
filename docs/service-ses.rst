@@ -31,8 +31,4 @@
     $client = $aws->get('ses');
     // Or: $client = $aws->get('Ses');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

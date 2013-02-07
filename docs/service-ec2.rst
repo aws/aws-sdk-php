@@ -31,8 +31,4 @@
     $client = $aws->get('ec2');
     // Or: $client = $aws->get('Ec2');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

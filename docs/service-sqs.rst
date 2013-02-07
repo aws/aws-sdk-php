@@ -71,8 +71,4 @@ You can also set queue attributes later.
         ),
     ));
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

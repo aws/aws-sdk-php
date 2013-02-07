@@ -26,8 +26,4 @@
     $client = $aws->get('datapipeline');
     // Or: $client = $aws->get('DataPipeline');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

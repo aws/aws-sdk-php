@@ -26,8 +26,4 @@
     $client = $aws->get('route53');
     // Or: $client = $aws->get('Route53');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

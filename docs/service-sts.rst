@@ -30,8 +30,4 @@
     $client = $aws->get('sts');
     // Or: $client = $aws->get('Sts');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.

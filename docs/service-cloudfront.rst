@@ -26,8 +26,4 @@
     $client = $aws->get('cloudfront');
     // Or: $client = $aws->get('CloudFront');
 
------
-
-*More documentation coming soon.*
-
------
+.. note:: More documentation coming soon.
