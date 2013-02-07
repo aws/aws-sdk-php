@@ -187,6 +187,9 @@ class ServiceIntro(Directive):
         if locator_name == "email":
             locator_name = "ses"
 
+        if locator_name == "monitoring":
+            locator_name = "cloudwatch"
+
         if locator_name == "sts":
             docs = "http://aws.amazon.com/documentation/iam/"
 
