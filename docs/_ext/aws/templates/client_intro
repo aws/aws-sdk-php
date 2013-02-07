@@ -26,9 +26,7 @@ connect to.
         'key'    => '<aws access key>',
         'secret' => '<aws secret key>',
         'region' => '<{{ regions|join("|") }}>'
-    ));
-    {% else %}
-    $client = {{namespace}}Client::factory(array(
+    ));{% else %}$client = {{namespace}}Client::factory(array(
         'key'    => '<aws access key>',
         'secret' => '<aws secret key>'
     ));
@@ -54,4 +52,4 @@ clients so that you only have to specify your keys once.
     // You can also get the client by namespace
     $client = $aws->get('{{ namespace }}');
 
-.. _`documentation website`: http://aws.amazon.com/documentation/{{ namespace|lower }}/
+.. _`documentation website`: {{ doc_url }}

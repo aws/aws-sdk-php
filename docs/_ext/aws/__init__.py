@@ -5,6 +5,7 @@ from docutils import io, nodes, statemachine, utils
 from docutils.parsers.rst import Directive
 from jinja2 import Environment, PackageLoader
 
+# Holds a cache mapping a service name to a list of regions
 region_cache = {}
 
 def setup(app):
@@ -18,6 +19,7 @@ def setup(app):
     app.add_role('regions', regions_role)
     app.add_directive('service', ServiceIntro)
 
+
 def regions_role(name, rawtext, text, lineno, inliner, options={}, content={}):
     """Inserts a list of regions available to a service name
 
@@ -25,10 +27,10 @@ def regions_role(name, rawtext, text, lineno, inliner, options={}, content={}):
     document and a list of system messages.  Both are allowed to be
     empty.
 
-    :param name:    The role name used in the document.
+    :param name: The role name used in the document.
     :param rawtext: The entire markup snippet, with role.
-    :param text:    The text marked with the role.
-    :param lineno:  The line number where rawtext appears in the input.
+    :param text: The text marked with the role.
+    :param lineno: The line number where rawtext appears in the input.
     :param inliner: The inliner instance that called us.
     :param options: Directive options for customization.
     :param content: The directive content for customization.
@@ -46,15 +48,24 @@ def regions_role(name, rawtext, text, lineno, inliner, options={}, content={}):
         prb = inliner.problematic(rawtext, rawtext, msg)
         return [prb], [msg]
 
+
 def get_regions(service_name):
-    """Get the regions for a service by name"""
-    global region_cache
+    """Get the regions for a service by name
+
+    Returns a list of regions
+
+    :param service_name: Retrieve regions for this service by name
+    """
+    # If this service's regions are not in the cache, then parse them out
     if region_cache.get(service_name) == None:
         # Open the endpoints.xml file of the SDK
-        parsed = xml.dom.minidom.parse(os.path.abspath("../src/Aws/Common/Resources/endpoints.xml"))
+        path = os.path.abspath("../src/Aws/Common/Resources/endpoints.xml")
+        parsed = xml.dom.minidom.parse(path)
+        # Build a list of regions from the XML
         regions = []
         for service in parsed.getElementsByTagName('Service'):
-            if service.getElementsByTagName('Name')[0].firstChild.nodeValue == service_name:
+            name = service.getElementsByTagName('Name')[0].firstChild.nodeValue
+            if name == service_name:
                 for region in service.getElementsByTagName('RegionName'):
                     regions.append(region.firstChild.nodeValue)
                 break
@@ -63,6 +74,7 @@ def get_regions(service_name):
         region_cache[service_name] = regions
 
     return region_cache[service_name]
+
 
 def make_regions_node(rawtext, app, service_name, options):
     """Create a list of regions for a service name
@@ -79,7 +91,6 @@ def make_regions_node(rawtext, app, service_name, options):
 
 
 class ServiceDescription():
-
     """
     Loads the service description for a given source file
     """
@@ -96,32 +107,50 @@ class ServiceDescription():
 
         # Iterate over the loaded dictionary and see if a matching service exists
         for key in self.config["services"]:
-            if key == self.service_name or self.config["services"][key].get("alias", "").lower() == self.service_name:
+            alias = self.config["services"][key].get("alias", "").lower()
+            if key == self.service_name or alias == self.service_name:
                 break
         else:
-            raise ValueError("Did not find a service matching %s" % (self.service_name))
+            raise ValueError("No service matches %s" % (self.service_name))
 
         # Determine the name of the client class to load
-        client = os.path.abspath("../src/" + self.config["services"][key]["class"].replace("\\", "/") + ".php")
+        class_path = self.config["services"][key]["class"].replace("\\", "/")
+        client_path = os.path.abspath("../src/" + class_path + ".php")
+
         # Determine the name of the servce description used by the client
-        description = re.search("__DIR__ \. '/Resources/(.+)\.php'", open(client, 'r').read()).groups(0)[0]
-        # Load the service description into a dictionary
-        return "/".join(client.split("/")[0:-1]) + "/Resources/" + description + ".php"
+        contents = open(client_path, 'r').read()
+        matches = re.search("__DIR__ \. '/Resources/(.+)\.php'", contents)
+        description = matches.groups(0)[0]
+
+        # Strip the filename of the client and determine the description path
+        service_path = "/".join(client_path.split("/")[0:-1])
+        service_path += "/Resources/" + description + ".php"
+
+        return service_path
 
     def load_description(self, path):
-        """Determines the filename to load for a service"""
+        """Determines the filename to load for a service
+
+        :param path: Path to a service description to load
+        """
         return self.__load_php(path)
 
     def __load_php(self, path):
+        """Load a PHP script that returns an array using JSON
+
+        :param path: Path to the script to load
+        """
         path = os.path.abspath(path)
-        loaded = subprocess.check_output('php -r \'$c = include "' + path + '"; echo json_encode($c);\'', shell=True)
+        sh = 'php -r \'$c = include "' + path + '"; echo json_encode($c);\''
+        loaded = subprocess.check_output(sh, shell=True)
         return json.loads(loaded)
 
     def __getitem__(self, i):
+        """Allows access to the service description items via the class"""
         return self.description.get(i)
 
-class ServiceIntro(Directive):
 
+class ServiceIntro(Directive):
     """
     Creates a service introduction to inject into a document
     """
@@ -137,11 +166,11 @@ class ServiceIntro(Directive):
         tab_width = 4
         include_lines = statemachine.string2lines(
             rawtext, tab_width, convert_whitespace=1)
-        self.state_machine.insert_input(include_lines, os.path.abspath(__file__))
+        self.state_machine.insert_input(
+            include_lines, os.path.abspath(__file__))
         return []
 
     def generate_rst(self, d):
-
         rawtext = ""
         scalar = {}
         # Grab all of the simple strings from the description
@@ -153,16 +182,20 @@ class ServiceIntro(Directive):
 
         # Determine the service locator name
         locator_name = d["endpointPrefix"]
+        docs = "http://aws.amazon.com/documentation/" + d["namespace"].lower()
+
         if locator_name == "email":
             locator_name = "ses"
+
+        if locator_name == "sts":
+            docs = "http://aws.amazon.com/documentation/iam/"
 
         env = Environment(loader=PackageLoader('aws', 'templates'))
         template = env.get_template("client_intro")
         rawtext += template.render(
             scalar,
             regions=get_regions(d["endpointPrefix"]),
-            locator_name=locator_name
-        )
+            locator_name=locator_name,
+            doc_url=docs)
 
         return rawtext
-
