@@ -1,35 +1,4 @@
-==============
-|service_name|
-==============
-
-.. |service_name| replace:: Amazon DynamoDB
-.. _`documentation website`: http://aws.amazon.com/documentation/dynamodb/
-
-.. include:: _snippets/service_intro.txt
-
-.. code-block:: php
-
-    use Aws\DynamoDb\DynamoDbClient;
-
-    $client = DynamoDbClient::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
-        'region' => '<region name>'
-    ));
-
-.. admonition:: |service_name| supports the following region values
-
-    :regions:`dynamodb`
-
-.. include:: _snippets/service_intro_service_locator.txt
-
-.. code-block:: php
-
-    use Aws\Common\Aws;
-
-    $aws = Aws::factory('/path/to/my_config.json');
-    $client = $aws->get('dynamodb');
-    // Or: $client = $aws->get('DynamoDb');
+.. service:: dynamodb
 
 Creating tables
 ---------------

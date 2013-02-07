@@ -1,34 +1,4 @@
-==============
-|service_name|
-==============
-
-.. |service_name| replace:: Amazon Simple Storage Service (S3)
-.. _`documentation website`: http://aws.amazon.com/documentation/s3/
-
-.. include:: _snippets/service_intro.txt
-
-.. code-block:: php
-
-    use Aws\S3\S3Client;
-
-    $client = S3Client::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>'
-    ));
-
-.. admonition:: |service_name| supports the following region values
-
-    :regions:`s3`
-
-.. include:: _snippets/service_intro_service_locator.txt
-
-.. code-block:: php
-
-    use Aws\Common\Aws;
-
-    $aws = Aws::factory('/path/to/my_config.json');
-    $client = $aws->get('s3');
-    // Or: $client = $aws->get('S3');
+.. service:: s3
 
 Creating a bucket
 -----------------
