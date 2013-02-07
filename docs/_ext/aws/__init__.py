@@ -170,6 +170,22 @@ class ServiceIntro(Directive):
             include_lines, os.path.abspath(__file__))
         return []
 
+    def get_doc_link(self, name, namespace):
+        """Determine the documentation link for an endpoint"""
+        if name == "sts":
+            return "http://aws.amazon.com/documentation/iam/"
+        else:
+            return "http://aws.amazon.com/documentation/" + namespace.lower()
+
+    def get_locator_name(self, name):
+        """Determine the service locator name for an endpoint"""
+        if name == "email":
+            return "ses"
+        elif name == "monitoring":
+            return "cloudwatch"
+        else:
+            return name
+
     def generate_rst(self, d):
         rawtext = ""
         scalar = {}
@@ -180,18 +196,9 @@ class ServiceIntro(Directive):
                 # Add substitutions for top-level data in a service description
                 rawtext += ".. |%s| replace:: %s\n\n" % (key, scalar[key])
 
-        # Determine the service locator name
-        locator_name = d["endpointPrefix"]
-        docs = "http://aws.amazon.com/documentation/" + d["namespace"].lower()
-
-        if locator_name == "email":
-            locator_name = "ses"
-
-        if locator_name == "monitoring":
-            locator_name = "cloudwatch"
-
-        if locator_name == "sts":
-            docs = "http://aws.amazon.com/documentation/iam/"
+        # Determine the service locator name and doc URL
+        locator_name = self.get_locator_name(d["endpointPrefix"])
+        docs = self.get_doc_link(locator_name, d["namespace"])
 
         env = Environment(loader=PackageLoader('aws', 'templates'))
         template = env.get_template("client_intro")
