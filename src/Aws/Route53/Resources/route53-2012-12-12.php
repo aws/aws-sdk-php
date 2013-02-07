@@ -42,7 +42,7 @@ return array (
             'parameters' => array(
                 'HostedZoneId' => array(
                     'required' => true,
-                    'description' => 'Alias resource record sets only: The value of the hosted zone ID, CanonicalHostedZoneNameId, for the LoadBalancer.',
+                    'description' => 'Alias resource record sets only: The value of the hosted zone ID for the AWS resource.',
                     'type' => 'string',
                     'location' => 'uri',
                     'maxLength' => 32,
@@ -167,18 +167,18 @@ return array (
                                                 ),
                                             ),
                                             'AliasTarget' => array(
-                                                'description' => 'Alias resource record sets only: Information about the Elastic Load Balancing LoadBalancer to which you are redirecting traffic.',
+                                                'description' => 'Alias resource record sets only: Information about the AWS resource to which you are redirecting traffic.',
                                                 'type' => 'object',
                                                 'properties' => array(
                                                     'HostedZoneId' => array(
                                                         'required' => true,
-                                                        'description' => 'Alias resource record sets only: The value of the hosted zone ID, CanonicalHostedZoneNameId, for the LoadBalancer.',
+                                                        'description' => 'Alias resource record sets only: The value of the hosted zone ID for the AWS resource.',
                                                         'type' => 'string',
                                                         'maxLength' => 32,
                                                     ),
                                                     'DNSName' => array(
                                                         'required' => true,
-                                                        'description' => 'Alias resource record sets only: The external DNS name associated with the LoadBalancer.',
+                                                        'description' => 'Alias resource record sets only: The external DNS name associated with the AWS Resource.',
                                                         'type' => 'string',
                                                         'maxLength' => 1024,
                                                     ),
@@ -1268,15 +1268,15 @@ return array (
                                 ),
                             ),
                             'AliasTarget' => array(
-                                'description' => 'Alias resource record sets only: Information about the Elastic Load Balancing LoadBalancer to which you are redirecting traffic.',
+                                'description' => 'Alias resource record sets only: Information about the AWS resource to which you are redirecting traffic.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'HostedZoneId' => array(
-                                        'description' => 'Alias resource record sets only: The value of the hosted zone ID, CanonicalHostedZoneNameId, for the LoadBalancer.',
+                                        'description' => 'Alias resource record sets only: The value of the hosted zone ID for the AWS resource.',
                                         'type' => 'string',
                                     ),
                                     'DNSName' => array(
-                                        'description' => 'Alias resource record sets only: The external DNS name associated with the LoadBalancer.',
+                                        'description' => 'Alias resource record sets only: The external DNS name associated with the AWS Resource.',
                                         'type' => 'string',
                                     ),
                                     'EvaluateTargetHealth' => array(
