@@ -51,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'AWS SDK for PHP'
-copyright = u'2012, Amazon Web Services'
+copyright = u'2013, Amazon Web Services'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
