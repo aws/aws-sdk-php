@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: AWS Data Pipeline
+.. _`documentation website`: http://aws.amazon.com/documentation/datapipeline/
 
 .. include:: _snippets/service_intro.txt
 
@@ -25,4 +26,8 @@
     $client = $aws->get('datapipeline');
     // Or: $client = $aws->get('DataPipeline');
 
+-----
+
 *More documentation coming soon.*
+
+-----

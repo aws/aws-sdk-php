@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: AWS Elastic Beanstalk
+.. _`documentation website`: http://aws.amazon.com/documentation/elasticbeanstalk/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('elasticbeanstalk');
     // Or: $client = $aws->get('ElasticBeanstalk');
 
+-----
+
 *More documentation coming soon.*
+
+-----

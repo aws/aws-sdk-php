@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon DynamoDB
+.. _`documentation website`: http://aws.amazon.com/documentation/dynamodb/
 
 .. include:: _snippets/service_intro.txt
 

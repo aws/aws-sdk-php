@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon Route 53
+.. _`documentation website`: http://aws.amazon.com/documentation/route53/
 
 .. include:: _snippets/service_intro.txt
 
@@ -25,4 +26,8 @@
     $client = $aws->get('route53');
     // Or: $client = $aws->get('Route53');
 
+-----
+
 *More documentation coming soon.*
+
+-----

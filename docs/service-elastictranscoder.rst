@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon Elastic Transcoder
+.. _`documentation website`: http://aws.amazon.com/documentation/elastictranscoder/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('elastictranscoder');
     // Or: $client = $aws->get('ElasticTranscoder');
 
+-----
+
 *More documentation coming soon.*
+
+-----

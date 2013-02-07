@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Elastic Load Balancing
+.. _`documentation website`: http://aws.amazon.com/documentation/elasticloadbalancing/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('elasticloadbalancing');
     // Or: $client = $aws->get('ElasticLoadBalancing');
 
+-----
+
 *More documentation coming soon.*
+
+-----

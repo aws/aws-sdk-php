@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon CloudFront
+.. _`documentation website`: http://aws.amazon.com/documentation/cloudfront/
 
 .. include:: _snippets/service_intro.txt
 
@@ -25,4 +26,8 @@
     $client = $aws->get('cloudfront');
     // Or: $client = $aws->get('CloudFront');
 
+-----
+
 *More documentation coming soon.*
+
+-----

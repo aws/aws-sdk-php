@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon Simple Storage Service (S3)
+.. _`documentation website`: http://aws.amazon.com/documentation/s3/
 
 .. include:: _snippets/service_intro.txt
 

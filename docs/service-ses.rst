@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon Simple Email Service (SES)
+.. _`documentation website`: http://aws.amazon.com/documentation/ses/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('ses');
     // Or: $client = $aws->get('Ses');
 
+-----
+
 *More documentation coming soon.*
+
+-----

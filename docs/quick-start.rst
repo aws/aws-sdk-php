@@ -21,7 +21,6 @@ You can quickly get up and running by using a web service client's factory metho
     $client = S3Client::factory(array(
         'key'    => 'your-aws-access-key-id',
         'secret' => 'your-aws-secret-access-key',
-        'region' => Region::US_WEST_2
     ));
 
 **Note:** Instantiating a client without providing credentials causes the client to attempt to retrieve `IAM Instance
@@ -125,7 +124,7 @@ a list of data available in the response model of an operation.
     var_export($result->getPath('Metadata/DoesNotExist'));
     // NULL
 
-Using the Service Builder
+Using the service builder
 -------------------------
 
 When using the SDK, you have the option to use individual factory methods for each client or the ``Aws\Common\Aws``

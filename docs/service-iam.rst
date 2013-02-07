@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: AWS Identity and Access Management (IAM)
+.. _`documentation website`: http://aws.amazon.com/documentation/iam/
 
 .. include:: _snippets/service_intro.txt
 
@@ -25,4 +26,8 @@
     $client = $aws->get('iam');
     // Or: $client = $aws->get('Iam');
 
+-----
+
 *More documentation coming soon.*
+
+-----

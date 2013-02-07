@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon EC2
+.. _`documentation website`: http://aws.amazon.com/documentation/ec2/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('ec2');
     // Or: $client = $aws->get('Ec2');
 
+-----
+
 *More documentation coming soon.*
+
+-----

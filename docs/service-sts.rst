@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: AWS Security Token Service (STS)
+.. _`documentation website`: http://aws.amazon.com/documentation/iam/
 
 .. include:: _snippets/service_intro.txt
 
@@ -29,4 +30,8 @@
     $client = $aws->get('sts');
     // Or: $client = $aws->get('Sts');
 
+-----
+
 *More documentation coming soon.*
+
+-----

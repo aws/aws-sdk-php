@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon SimpleDB
+.. _`documentation website`: http://aws.amazon.com/documentation/simpledb/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('sdb');
     // Or: $client = $aws->get('SimpleDb');
 
+-----
+
 *More documentation coming soon.*
+
+-----

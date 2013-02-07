@@ -26,7 +26,8 @@ The AWS SDK for PHP 2 does not currently support all AWS services. However, we w
 other services in upcoming releases to the Version 2 SDK.
 
 Fortunately, it is straightforward to use the previous SDK side-by-side with this version. This enables using the SDK
-for the services it supports while relying on the prior SDK for those it does not. Please see the :doc:`side-by-side` for details.
+for the services it supports while relying on the prior SDK for those it does not. Please see the :doc:`side-by-side`
+for details.
 
 Follow our `AWS SDK for PHP 2 GitHub repository <https://github.com/aws/aws-sdk-php>`_ to stay up-to-date with the
 latest changes.
@@ -152,7 +153,7 @@ What's Different?
         'Body'   => 'lorem ipsum'
     ));
 
-  In the new SDK, the ``putObject()`` method doesn’t actually exist as a method on the client. It is implemented using
+  In the new SDK, the ``putObject()`` method doesn't actually exist as a method on the client. It is implemented using
   the ``__call()`` magic method of the client and acts as a shortcut to instantiate a command, execute the command,
   and retrieve the result.
 
@@ -171,17 +172,17 @@ What's Different?
         'Key'    => 'object-key.txt',
         'Body'   => 'lorem ipsum'
     ));
-    $result = $command->execute();
+    $result = $command->getResult();
 
   Or you can use the chainable ``set()`` method on the ``Command`` object:
 
   .. code-block:: php
 
-    $s3->getCommand('PutObject')
+    $result = $s3->getCommand('PutObject')
         ->set('Bucket', 'bucket-name')
         ->set('Key', 'object-key.txt')
         ->set('Body', 'lorem ipsum')
-        ->execute();
+        ->getResult();
 
 - **Responses** – The format of responses has changed. Responses are no longer instances of the ``CFResponse`` object.
   The ``Command`` object (as seen in the preceding section) of the new SDK encapsulates the request and response, and is
@@ -312,9 +313,9 @@ From Version 2 of the SDK
 
   try {
       $result = $s3->listParts(array(
-          'Bucket'    => 'my-bucket-name',
-          'Key'       => 'my-object-key',
-          'UploadId'  => 'my-upload-id',
+          'Bucket'   => 'my-bucket-name',
+          'Key'      => 'my-object-key',
+          'UploadId' => 'my-upload-id',
           'MaxParts' => 10
       ));
 

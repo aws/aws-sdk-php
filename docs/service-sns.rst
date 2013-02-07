@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon Simple Notification Service (SNS)
+.. _`documentation website`: http://aws.amazon.com/documentation/sns/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('sns');
     // Or: $client = $aws->get('Sns');
 
+-----
+
 *More documentation coming soon.*
+
+-----

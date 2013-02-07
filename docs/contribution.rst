@@ -20,10 +20,12 @@ Here are a few things to keep in mind for your contributions:
    `PHP CS Fixer <http://cs.sensiolabs.org/>`_ tool can be helpful for formatting your code.
 #. We maintain a high percentage of code coverage in our unit tests. If you make changes to the code, please add,
    update, and/or remove unit (and integration) tests as appropriate.
-#. We do not accept pull requests that change service descriptions (i.e., ``client.php`` files like
-   ``src/Aws/*/Resources/client.php``). We generate these files based on our internal knowledge of the AWS services.
+#. We do not accept pull requests that change service descriptions (e.g., files like
+   ``src/Aws/Ec2/Resources/ec2-2012-12-01.php``). We generate these files based on our internal knowledge of the AWS
+   services. If there is something incorrect with or missing from a service description, please `submit an issue
+   <https://github.com/aws/aws-sdk-php/issues>`_.
 #. If your code does not conform to the PSR standards or does not include adequate tests, we may ask you to update your
-   pull requests before we accept them. We also reserve the right to deny any pull requests that do not align with our
+   pull request before we accept it. We also reserve the right to deny any pull requests that do not align with our
    standards or goals.
 #. If you would like to implement support for an AWS service that is not yet available in the SDK, please talk to us
    beforehand to avoid any duplication of effort.

@@ -3,6 +3,7 @@
 ==============
 
 .. |service_name| replace:: Amazon Glacier
+.. _`documentation website`: http://aws.amazon.com/documentation/glacier/
 
 .. include:: _snippets/service_intro.txt
 
@@ -30,4 +31,8 @@
     $client = $aws->get('glacier');
     // Or: $client = $aws->get('Glacier');
 
+-----
+
 *More documentation coming soon.*
+
+-----
