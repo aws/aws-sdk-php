@@ -93,6 +93,12 @@ return array(
             'class'   => 'Aws\Rds\RdsClient'
         ),
 
+        'redshift' => array(
+            'alias'   => 'Redshift',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Redshift\RedshiftClient'
+        ),
+
         'route53' => array(
             'alias'   => 'Route53',
             'extends' => 'default_settings',
