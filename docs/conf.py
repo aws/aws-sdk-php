@@ -35,7 +35,10 @@ sys.path.append(os.path.abspath('_ext/'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['aws']
+extensions = ['aws', 'rst2pdf.pdfbuilder']
+
+# index, rst2pdf, title, author
+pdf_documents = [('index', u'aws-sdk-php-guide.pdf', u'AWS SDK for PHP 2', u'Amazon Web Services')]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
