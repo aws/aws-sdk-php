@@ -60,6 +60,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model revokeClusterSecurityGroupIngress(array $args = array()) {@command redshift RevokeClusterSecurityGroupIngress}
  * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
+ * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings
  */
 class RedshiftClient extends AbstractClient
 {

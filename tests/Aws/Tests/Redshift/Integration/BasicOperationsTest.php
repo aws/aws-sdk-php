@@ -35,17 +35,58 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
     public function testBasicInstanceOperations()
     {
-//        self::log('Launch a cluster.');
-//        $clusterId = 'php-integ-redshift-cluster';
-//        $this->redshift->getCommand('CreateCluster', array(
-//            'ClusterIdentifier'  => $clusterId,
-//            'ClusterType'        => 'multi-node',
-//            'MasterUsername'     => 'phpinteguser',
-//            'MasterUserPassword' => 'PHPint3gu$er',
-//            'NodeType'           => 'dw.hs1.xlarge',
-//            'NumberOfNodes'      => 2,
-//        ))->execute();
-//        $this->redshift->waitUntilClusterAvailable(array('ClusterIdentifier' => $clusterId));
+        $clusterId = 'php-integ-redshift-cluster-' . time();
+        $snapshotId = 'php-integ-redshift-snapshot-' . time();
+
+        self::log('Launch a cluster.');
+        $this->redshift->getCommand('CreateCluster', array(
+            'ClusterIdentifier'  => $clusterId,
+            'ClusterType'        => 'multi-node',
+            'MasterUsername'     => 'phpinteguser',
+            'MasterUserPassword' => 'PHPint3gu$er',
+            'NodeType'           => 'dw.hs1.xlarge',
+            'NumberOfNodes'      => 2,
+        ))->execute();
+
+        self::log('Get a list of all of the clusters and make sure there is at least one.');
+        $clusters = $this->redshift->getIterator('DescribeClusters');
+        $this->assertGreaterThanOrEqual(1, iterator_count($clusters));
+
+        self::log('Make sure the new cluster exists.');
+        $result = $this->redshift->getCommand('DescribeClusters', array(
+            'ClusterIdentifier' => $clusterId,
+        ))->getResult();
+        $this->assertCount(1, $result->get('Clusters'));
+
+        self::log('Wait until the cluster exists. This can take around 20 minutes.');
+        $this->redshift->waitUntilClusterAvailable(array(
+            'ClusterIdentifier' => $clusterId
+        ));
+
+        self::log('Create a snapshot of the cluster and wait until it is available.');
+        $this->redshift->getCommand('CreateClusterSnapshot', array(
+            'ClusterIdentifier'  => $clusterId,
+            'SnapshotIdentifier' => $snapshotId,
+        ))->execute();
+        $this->redshift->waitUntilSnapshotAvailable(array(
+            'SnapshotIdentifier' => $snapshotId
+        ));
+
+        self::log('Delete the snapshot.');
+        $this->redshift->getCommand('DeleteClusterSnapshot', array(
+            'SnapshotIdentifier' => $snapshotId,
+        ))->execute();
+
+        self::log('Delete the cluster.');
+        $this->redshift->getCommand('DeleteCluster', array(
+            'ClusterIdentifier'        => $clusterId,
+            'SkipFinalClusterSnapshot' => true,
+        ))->execute();
+
+        self::log('Wait until the cluster is deleted.');
+        $this->redshift->waitUntilClusterDeleted(array(
+            'ClusterIdentifier' => $clusterId,
+        ));
     }
 
     public function testDescribeEventsIterator()
@@ -57,6 +98,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'MaxRecords' => $maxRecords,
         ));
         $total = iterator_count($events);
-        $this->assertEquals(ceil($total / $maxRecords), $events->getRequestCount());
+        $expected = ceil($total / $maxRecords);
+        $this->assertEquals($expected ?: 1, $events->getRequestCount());
     }
 }

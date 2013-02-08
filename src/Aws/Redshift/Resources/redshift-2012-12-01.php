@@ -1063,7 +1063,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Duration' => array(
-                    'description' => 'The number of minutes prior to the time of the request for which to retrieve events. For example, if the request is sent at 18:00 and you specify a duration of 60, then only events which have occurred after 17:00 will be returned.',
+                    'description' => 'The number of minutes prior to the time of the request for which to retrieve events. For example, if the request is sent at 18:00 and you specify a druration of 60, then only events which have occurred after 17:00 will be returned.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -3311,11 +3311,11 @@ return array (
     ),
     'waiters' => array(
         '__default__' => array(
-            'interval' => 60,
-            'max_attempts' => 30,
             'acceptor.type' => 'output',
         ),
         '__ClusterState' => array(
+            'interval' => 60,
+            'max_attempts' => 30,
             'operation' => 'DescribeClusters',
             'acceptor.path' => 'Clusters/*/ClusterStatus',
         ),
@@ -3326,16 +3326,27 @@ return array (
                 'deleting',
             ),
             'ignore_errors' => array(
-                'ClusterNotFoundFaultException',
+                'ClusterNotFound',
             ),
         ),
         'ClusterDeleted' => array(
             'extends' => '__ClusterState',
             'success.type' => 'error',
-            'success.value' => 'ClusterNotFoundFaultException',
+            'success.value' => 'ClusterNotFound',
             'failure.value' => array(
                 'creating',
                 'rebooting',
+            ),
+        ),
+        'SnapshotAvailable' => array(
+            'interval' => 15,
+            'max_attempts' => 20,
+            'operation' => 'DescribeClusterSnapshots',
+            'acceptor.path' => 'Snapshots/*/Status',
+            'success.value' => 'available',
+            'failure.value' => array(
+                'failed',
+                'deleted',
             ),
         ),
     ),
