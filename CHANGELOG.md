@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------------
 
+* Added support for **Amazon Redshift**
 * Added support for **Amazon Simple Queue Service (Amazon SQS)**
 * Added support for **Amazon Simple Notification Service (Amazon SNS)**
 * Added support for **Amazon Simple Email Service (Amazon SES)**
