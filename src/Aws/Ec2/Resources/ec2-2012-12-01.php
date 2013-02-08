@@ -15493,8 +15493,7 @@ return array (
             'failure.value' => array(
                 'shutting-down',
                 'terminated',
-                'stopping',
-                'stopped',
+                'stopping'
             ),
         ),
         'InstanceStopped' => array(
@@ -15510,8 +15509,7 @@ return array (
             'success.value' => 'terminated',
             'failure.value' => array(
                 'pending',
-                'stopping',
-                'stopped',
+                'stopping'
             ),
         ),
         '__ExportTaskState' => array(

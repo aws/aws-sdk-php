@@ -160,19 +160,22 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
 
         // It did not finish waiting yet. Determine if we need to fail-fast based on the failure acceptor.
         if ($this->waiterConfig->get(WaiterConfig::FAILURE_TYPE) == 'output') {
-            $key = $this->waiterConfig->get(WaiterConfig::FAILURE_PATH);
-            if ($this->checkPath($result, $key, $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE), false)) {
-                // Determine which of the results triggered the failure
-                $triggered = array_intersect(
-                    (array) $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE),
-                    array_unique((array) $result->getPath($key))
-                );
-                // fast fail because the failure case was satisfied
-                throw new RuntimeException(
-                    'A resource entered into an invalid state of "'
-                    . implode(', ', $triggered) . '" while waiting with the "'
-                    . $this->waiterConfig->get(WaiterConfig::WAITER_NAME) . '" waiter.'
-                );
+            $failureValue = $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE);
+            if ($failureValue) {
+                $key = $this->waiterConfig->get(WaiterConfig::FAILURE_PATH);
+                if ($this->checkPath($result, $key, $failureValue, false)) {
+                    // Determine which of the results triggered the failure
+                    $triggered = array_intersect(
+                        (array) $this->waiterConfig->get(WaiterConfig::FAILURE_VALUE),
+                        array_unique((array) $result->getPath($key))
+                    );
+                    // fast fail because the failure case was satisfied
+                    throw new RuntimeException(
+                        'A resource entered into an invalid state of "'
+                        . implode(', ', $triggered) . '" while waiting with the "'
+                        . $this->waiterConfig->get(WaiterConfig::WAITER_NAME) . '" waiter.'
+                    );
+                }
             }
         }
 
