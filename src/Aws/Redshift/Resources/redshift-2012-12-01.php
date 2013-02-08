@@ -19,6 +19,8 @@ return array (
     'endpointPrefix' => 'redshift',
     'serviceFullName' => 'Amazon Redshift',
     'serviceType' => 'query',
+    'timestampFormat' => 'iso8601',
+    'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Redshift',
     'operations' => array(
@@ -820,7 +822,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -830,7 +832,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
@@ -1047,7 +1049,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -1057,11 +1059,11 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'Duration' => array(
-                    'description' => 'The number of minutes to retrieve events for.',
+                    'description' => 'The number of minutes prior to the time of the request for which to retrieve events. For example, if the request is sent at 18:00 and you specify a duration of 60, then only events which have occurred after 17:00 will be returned.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1228,7 +1230,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ResizeProgressMessage',
             'responseType' => 'model',
-            'summary' => 'Describe Resize Operation on a Cluster.',
+            'summary' => 'Returns information about a resize operation for the specified cluster. A resize operation can be requested using ModifyCluster.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1262,7 +1264,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'Cluster',
             'responseType' => 'model',
-            'summary' => 'Modifies the settings for a cluster. For example, you can add another security a parameter group, update the preferred maintenance window, or change the master user password. You can also change node type and the number of nodes to scale up or down the cluster. &clustersMoreInfo;',
+            'summary' => 'Modifies the settings for a cluster. For example, you can add another security or parameter group, update the preferred maintenance window, or change the master user password. Resetting a cluster password or modifying the security groups associated with a cluster do not need a reboot. However, modifying parameter group requires a reboot for parameters to take effect. &clustersMoreInfo;',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1281,17 +1283,17 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'ClusterType' => array(
-                    'description' => 'The new Cluster Type.',
+                    'description' => 'The new cluster type.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'NodeType' => array(
-                    'description' => 'The new node type of the cluster.',
+                    'description' => 'The new node type of the cluster. If you specify a new node type you must also specify the number of nodes parameter also.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'NumberOfNodes' => array(
-                    'description' => 'The new number of nodes of the cluster.',
+                    'description' => 'The new number of nodes of the cluster. If you specify a new number of nodes, you must also specify the node type parameter also.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1354,6 +1356,9 @@ return array (
                 ),
                 array(
                     'class' => 'ClusterNotFoundFaultException',
+                ),
+                array(
+                    'class' => 'NumberOfNodesQuotaExceededFaultException',
                 ),
                 array(
                     'class' => 'ClusterSecurityGroupNotFoundFaultException',
@@ -1705,7 +1710,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AvailabilityZone' => array(
-                    'description' => 'The EC2 Availability Zone in which the cluster is created.',
+                    'description' => 'The Amazon EC2 Availability Zone in which to restore the cluster.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1718,6 +1723,12 @@ return array (
                 'ClusterSubnetGroupName' => array(
                     'description' => 'The name of the subnet group where you want to cluster restored.',
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PubliclyAccessible' => array(
+                    'description' => 'If true, the cluster can be accessed from a public network.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
             ),
@@ -1933,6 +1944,11 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                 ),
+                'VpcId' => array(
+                    'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
             ),
         ),
         'Cluster' => array(
@@ -1950,11 +1966,12 @@ return array (
                     'location' => 'xml',
                 ),
                 'ClusterStatus' => array(
-                    'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", and "rebooting".',
+                    'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", "rebooting", and "resizing".',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
                 'ModifyStatus' => array(
+                    'description' => 'The status of a modify operation, if any, initiated for the cluster.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -2447,6 +2464,10 @@ return array (
                                 'description' => 'The name of the database that was created when the cluster was created.',
                                 'type' => 'string',
                             ),
+                            'VpcId' => array(
+                                'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC.',
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -2585,10 +2606,11 @@ return array (
                                 'type' => 'string',
                             ),
                             'ClusterStatus' => array(
-                                'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", and "rebooting".',
+                                'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", "rebooting", and "resizing".',
                                 'type' => 'string',
                             ),
                             'ModifyStatus' => array(
+                                'description' => 'The status of a modify operation, if any, initiated for the cluster.',
                                 'type' => 'string',
                             ),
                             'MasterUsername' => array(
@@ -3064,24 +3086,51 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TargetNodeType' => array(
+                    'description' => 'The node type that the cluster will have after the resize completes.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
                 'TargetNumberOfNodes' => array(
+                    'description' => 'The number of nodes that the cluster will have after the resize completes.',
                     'type' => 'numeric',
                     'location' => 'xml',
                 ),
                 'TargetClusterType' => array(
+                    'description' => 'The cluster type after the resize completed.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
                 'Status' => array(
+                    'description' => 'The status of the resize operation.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
-                'Progress' => array(
-                    'type' => 'numeric',
+                'ImportTablesCompleted' => array(
+                    'description' => 'The tables which have been imported completely.',
+                    'type' => 'array',
                     'location' => 'xml',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+                'ImportTablesInProgress' => array(
+                    'description' => 'The tables which are being imported currently.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+                'ImportTablesNotStarted' => array(
+                    'description' => 'The tables which have not been imported yet.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
                 ),
             ),
         ),
