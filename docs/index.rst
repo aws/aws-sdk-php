@@ -16,6 +16,7 @@ AWS SDK for PHP 2
     migration-guide
     side-by-side
 
+    service-autoscaling
     service-cloudfront
     service-datapipeline
     service-dynamodb
@@ -58,6 +59,7 @@ Migrating from SDK 1 to SDK 2
 Supported services
 ------------------
 
+* :doc:`service-autoscaling`
 * :doc:`service-cloudfront`
 * :doc:`service-datapipeline`
 * :doc:`service-dynamodb`

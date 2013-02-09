@@ -21,6 +21,12 @@ return array(
             'params' => array()
         ),
 
+        'autoscaling' => array(
+            'alias'   => 'AutoScaling',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\AutoScaling\AutoScalingClient'
+        ),
+
         'cloudfront' => array(
             'alias'   => 'CloudFront',
             'extends' => 'default_settings',
