@@ -18,6 +18,7 @@ AWS SDK for PHP 2
 
     service-autoscaling
     service-cloudfront
+    service-cloudwatch
     service-datapipeline
     service-dynamodb
     service-ec2
@@ -61,6 +62,7 @@ Supported services
 
 * :doc:`service-autoscaling`
 * :doc:`service-cloudfront`
+* :doc:`service-cloudwatch`
 * :doc:`service-datapipeline`
 * :doc:`service-dynamodb`
 * :doc:`service-ec2`

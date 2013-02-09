@@ -33,6 +33,12 @@ return array(
             'class'   => 'Aws\CloudFront\CloudFrontClient'
         ),
 
+        'cloudwatch' => array(
+            'alias'   => 'CloudWatch',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudWatch\CloudWatchClient'
+        ),
+
         'iam' => array(
             'alias'   => 'Iam',
             'extends' => 'default_settings',
