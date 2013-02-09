@@ -83,12 +83,16 @@ class SqsClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        return ClientBuilder::factory(__NAMESPACE__)
+        $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sqs-2012-11-05.php'
             ))
             ->build();
+
+        $client->addSubscriber(new QueueUrlListener());
+
+        return $client;
     }
 
     /**
