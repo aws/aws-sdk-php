@@ -16,7 +16,6 @@
 
 namespace Aws\Common\Enum;
 
-use Aws\Common\Client\UserAgentListener;
 use Aws\Common\Enum;
 
 /**
@@ -27,7 +26,7 @@ class UaString extends Enum
     /**
      * @var string Name of the option used to add to the UA string
      */
-    const OPTION = UserAgentListener::OPTION;
+    const OPTION = 'ua.append';
 
     /**
      * @var string Resource iterator
