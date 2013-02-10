@@ -90,6 +90,22 @@ def make_regions_node(rawtext, app, service_name, options):
     return nodes.Text(", ".join(regions))
 
 
+class Flyweight(object):
+    """
+    Allows cached instances of a class to be returned with new classes
+    """
+
+    def __init__(self, cls):
+        self._cls = cls
+        self._instances = dict()
+
+    def __call__(self, *args, **kargs):
+        return self._instances.setdefault(
+            (args, tuple(kargs.items())),
+            self._cls(*args, **kargs))
+
+
+@Flyweight
 class ServiceDescription():
     """
     Loads the service description for a given source file
