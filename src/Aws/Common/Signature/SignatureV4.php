@@ -167,9 +167,12 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
     {
         // Normalize the path as required by SigV4
         $path = $request->getUrl(true)->normalizePath()->getPath();
+        // Ensure that the path is absolute
+        if (substr($path, 0, 1) != '/') {
+            $path = '/' . $path;
+        }
 
-        $canon = $request->getMethod() . "\n{$path}\n"
-            . $this->getCanonicalizedQueryString($request) . "\n";
+        $canon = $request->getMethod() . "\n{$path}\n" . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Create the canonical headers
         $headers = array();
@@ -192,8 +195,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
             if (count($values) > 1) {
                 sort($values);
             }
-            $value = implode(',', $values);
-            $canon .= $key . ':' . $value . "\n";
+            $canon .= $key . ':' . implode(',', $values) . "\n";
         }
 
         // Create the signed headers

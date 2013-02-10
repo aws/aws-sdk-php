@@ -66,9 +66,15 @@ class SignatureV3 extends AbstractSignature
             $request->setHeader('x-amz-security-token', $credentials->getSecurityToken());
         }
 
+        // Grab the path and ensure that it is absolute
+        $path = $request->getUrl(true)->normalizePath()->getPath();
+        if (substr($path, 0, 1) != '/') {
+            $path = '/' . $path;
+        }
+
         // Begin building the string to sign
         $sign = $request->getMethod() . "\n"
-            . $request->getUrl(true)->normalizePath()->getPath() . "\n"
+            . "{$path}\n"
             . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Get all of the headers that must be signed (host and x-amz-*)

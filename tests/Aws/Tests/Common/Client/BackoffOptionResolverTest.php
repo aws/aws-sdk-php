@@ -64,7 +64,7 @@ class BackoffOptionResolverTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException PHPUnit_Framework_Error
-     * @expectedExceptionMessage GET http://www.example.com/ - 503 Service Unavailable
+     * @expectedExceptionMessage GET http://www.example.com - 503 Service Unavailable
      */
     public function testAddsDebugLoggerWhenSetToDebug()
     {

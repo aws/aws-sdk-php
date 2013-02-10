@@ -69,7 +69,7 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
             // Expected Results
             array(
                 'attributes' => array(
-                    'action' => 'https://foo.s3.amazonaws.com/',
+                    'action' => 'https://foo.s3.amazonaws.com',
                     'method' => 'POST',
                     'enctype' => 'multipart/form-data'
                 ),
@@ -100,7 +100,7 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
             // Expected Results
             array(
                 'attributes' => array(
-                    'action' => 'https://foo.s3.amazonaws.com/',
+                    'action' => 'https://foo.s3.amazonaws.com',
                     'method' => 'POST',
                     'enctype' => 'multipart/form-data'
                 ),
