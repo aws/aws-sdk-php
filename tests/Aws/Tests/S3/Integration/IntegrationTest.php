@@ -678,11 +678,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testPutAndListObjects
      */
-    public function testPreSignedUrlAllowsSpaces()
+    public function testPreSignedUrlAllowsSpecialCharacters()
     {
         self::log('Uploading an object with a space in the key');
         $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
-        $key = 'foo baz bar';
+        $key = 'foo baz bar!';
         $this->client->putObject(array(
             'Bucket' => $this->bucket,
             'Key'    => $key,
@@ -694,6 +694,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $extra = urlencode("attachment; filename=\"{$key}\"");
         $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$extra}");
         $url = $this->client->createPresignedUrl($request, '+10 minutes');
+        self::log($url);
         $this->assertEquals('hi', file_get_contents($url));
         $client = new Client();
         $this->assertEquals('hi', $client->get($url)->send()->getBody(true));

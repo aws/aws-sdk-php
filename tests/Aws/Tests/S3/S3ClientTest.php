@@ -83,6 +83,18 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($original, (string) $request);
     }
 
+    /**
+     * @covers Aws\S3\S3Client::createPresignedUrl
+     */
+    public function testCreatesPresignedUrlsWithSpecialCharacters()
+    {
+        /** @var $client S3Client */
+        $client = $this->getServiceBuilder()->get('s3');
+        $request = $client->get('/foobar test: abc/+%.a');
+        $url = $client->createPresignedUrl($request, 1342138769);
+        $this->assertContains('https://s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=', $url);
+    }
+
     public function testCreatesPresignedUrlsWithStrtotime()
     {
         /** @var $client S3Client */

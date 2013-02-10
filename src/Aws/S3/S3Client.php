@@ -288,6 +288,11 @@ class S3Client extends AbstractClient
         }
 
         $copy = clone $request;
+
+        // URL encode the path segment of the URL to match the urlencoding of encodeKey()
+        $path = $this->encodeKey(rawurldecode($copy->getPath()));
+        $copy->setPath($path);
+
         $copy->getQuery()
             ->set('AWSAccessKeyId', $this->credentials->getAccessKeyId())
             ->set('Expires', $expires)

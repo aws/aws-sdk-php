@@ -140,8 +140,10 @@ class S3Signature implements S3SignatureInterface
             $bucket = $request->getParams()->get('bucket') ?: $this->parseBucketName($request);
             // Use any specified bucket name, the parsed bucket name, or no bucket name when interacting with GetService
             $buffer = $bucket ? "/{$bucket}" : '';
+            // Remove encoding from the path and use the S3 specific encoding
+            $path = S3Client::encodeKey(rawurldecode($request->getPath()));
             // if the bucket was path style, then ensure that the bucket wasn't duplicated in the resource
-            $buffer .= preg_replace("#^/{$bucket}/{$bucket}#", "/{$bucket}", $request->getPath());
+            $buffer .= preg_replace("#^/{$bucket}/{$bucket}#", "/{$bucket}", $path);
         }
 
         // Remove double slashes
