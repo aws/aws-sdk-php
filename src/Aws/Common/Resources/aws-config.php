@@ -87,6 +87,12 @@ return array(
             'class'   => 'Aws\Glacier\GlacierClient'
         ),
 
+        'rds' => array(
+            'alias'   => 'Rds',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Rds\RdsClient'
+        ),
+
         'route53' => array(
             'alias'   => 'Route53',
             'extends' => 'default_settings',
