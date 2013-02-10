@@ -34,14 +34,14 @@ You can then invoke service operations on the client by calling the operation na
 of parameters. Service operation methods like Amazon S3's ``createBucket()`` don't actually exist on a client. These
 methods are implemented using the ``__call()`` magic method of a client. These magic methods are derived from a Guzzle
 `service description <http://guzzlephp.org/guide/service/service_descriptions.html>`_ present in the
-Resources/client.php file of each client. You can use the
-`API documentation <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/>`_ or directly view the service description
-for help on what operations are available, what parameters are used for an operation, what values are provided in a
-response model, and what exceptions are thrown by calling the operation.
+client's namespace in the ``Resources`` directory. You can use the `API documentation
+<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/>`_ or directly view the service description to see what
+operations are available, what parameters can be set for an operation, what values are provided in the response model,
+and what exceptions are thrown by calling the operation.
 
 .. code-block:: php
 
-    $bucket = 'mybucket';
+    $bucket = 'my-bucket';
 
     $result = $client->createBucket(array(
         'Bucket' => $bucket
@@ -53,26 +53,26 @@ response model, and what exceptions are thrown by calling the operation.
 Executing commands
 ~~~~~~~~~~~~~~~~~~
 
-Commands can be created in two ways: using magic methods (as shown above) or using the ``getCommand()`` method of a
-client object.
+Commands can be executed in two ways: using the shorthand syntax via the ``__call()`` magic methods (as shown in the
+preceding example) or using the expanded syntax via the ``getCommand()`` method of the client object.
 
 .. code-block:: php
 
-    // The magic method syntax via __call
+    // The shorthand syntax (via __call())
     $result = $client->createBucket(array(/* ... */));
 
-    // The "full" syntax
+    // The expanded syntax (via getCommand())
     $command = $client->getCommand('CreateBucket', array(/* ... */));
     $result = $command->getResult();
 
-Using the "full" syntax, the return value is a ``Command`` object, which encapsulates the request and response of the
-HTTP request to AWS. From the ``Command`` object, you can call the ``getResult()`` method or the ``execute()`` method to
-get the parsed result. Additionally, you can call the ``getRequest()`` and ``getResponse()`` methods to get information
-about the request and response, respectively (e.g., the status code or the raw response, headers sent in the request,
-etc.).
+When using the expanded syntax, a ``Command`` object is returned from ``getCommand()``, which encapsulates the request
+and response of the HTTP request to AWS. From the ``Command`` object, you can call the ``getResult()`` method or the
+``execute()`` method to execute the command and get the parsed result. Additionally, you can call the ``getRequest()``
+and ``getResponse()`` methods (after the command has been executed) to get information about the request and response,
+respectively (e.g., the status code or the raw response, headers sent in the request, etc.).
 
-The ``Command`` object supports a chainable syntax and can also be useful when you want to manipulate the request before
-execution.
+The ``Command`` object also supports a chainable syntax and can also be useful when you want to manipulate the request
+before execution.
 
 .. code-block:: php
 
@@ -102,27 +102,27 @@ a list of data available in the response model of an operation.
 .. code-block:: php
 
     $result = $client->getObject(array(
-        'Bucket' => 'mybucket',
+        'Bucket' => 'my-bucket',
         'Key'    => 'test.txt'
     ));
 
     echo get_class($result);
-    // Guzzle\Service\Resource\Model
+    //> Guzzle\Service\Resource\Model
 
     var_export($result->getKeys());
-    // array('Body', 'DeleteMarker', 'Expiration', 'ContentLength', etc...)
+    //> array('Body', 'DeleteMarker', 'Expiration', 'ContentLength', etc...)
 
     echo $result['ContentLength']);
-    // 6
+    //> 6
 
     echo $result['Body'];
-    // hello!
+    //> hello!
 
     echo $result->getPath('Metadata/CustomValue');
-    // Testing123
+    //> Testing123
 
     var_export($result->getPath('Metadata/DoesNotExist'));
-    // NULL
+    //> NULL
 
 Using the service builder
 -------------------------
@@ -193,7 +193,7 @@ logic in your applications. The SDK throws service specific exceptions when a se
     $s3 = $aws->get('s3');
 
     try {
-        $s3->createBucket(array('Bucket' => 'mybucket'));
+        $s3->createBucket(array('Bucket' => 'my-bucket'));
     } catch (BucketAlreadyExistsException $e) {
         echo 'That bucket already exists! ' . $e->getMessage() . "\n";
     }
@@ -224,7 +224,7 @@ Any ``@method`` tag that starts with "waitUntil" will utilize a waiter.
 
 .. code-block:: php
 
-    $client->waitUntil('BucketExists', array('Bucket' => 'mybucket'));
+    $client->waitUntil('BucketExists', array('Bucket' => 'my-bucket'));
 
 The above method invocation will instantiate a waiter and poll the bucket until it exists. If the waiter has to poll
 the bucket too many times, it will throw an ``Aws\Common\Exception\RuntimeException`` exception.
@@ -235,7 +235,7 @@ passing optional values prefixed with "waiter.":
 .. code-block:: php
 
     $client->waitUntil('BucketExists', array(
-        'Bucket ' => 'mybucket',
+        'Bucket ' => 'my-bucket',
         'waiter.interval'     => 10.5,
         'waiter.max_attempts' => 3
     ));
@@ -249,7 +249,7 @@ result. The AWS SDK for PHP includes *iterators* that handle the process of send
 
 .. code-block:: php
 
-    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'mybucket'));
+    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'my-bucket'));
 
     foreach ($iterator as $object) {
         echo $object['Key'] . "\n";
@@ -260,5 +260,5 @@ second argument is only used when passing a string and instructs the client on w
 
 .. code-block:: php
 
-    $command = $client->getCommand('ListObjects', array('Bucket' => 'mybucket'));
+    $command = $client->getCommand('ListObjects', array('Bucket' => 'my-bucket'));
     $iterator = $client->getIterator($command);
