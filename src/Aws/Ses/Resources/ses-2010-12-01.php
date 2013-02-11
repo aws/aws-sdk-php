@@ -1007,6 +1007,7 @@ return array (
             'ListIdentities' => array(
                 'token_param' => 'NextToken',
                 'token_key' => 'NextToken',
+                'limit_key' => 'MaxItems',
                 'result_key' => 'Identities',
             ),
             'ListVerifiedEmailAddresses' => array(
