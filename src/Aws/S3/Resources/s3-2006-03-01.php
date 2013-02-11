@@ -91,12 +91,6 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'UploadId' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'uploadId',
-                ),
                 'Parts' => array(
                     'type' => 'array',
                     'location' => 'xml',
@@ -107,16 +101,22 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'Part',
                         'properties' => array(
-                            'PartNumber' => array(
-                                'description' => 'Part number that identifies the part.',
-                                'type' => 'numeric',
-                            ),
                             'ETag' => array(
                                 'description' => 'Entity tag returned when the part was uploaded.',
                                 'type' => 'string',
                             ),
+                            'PartNumber' => array(
+                                'description' => 'Part number that identifies the part.',
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
+                ),
+                'UploadId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'uploadId',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -133,90 +133,6 @@ return array (
             'summary' => 'Creates a copy of an object that is already stored in Amazon S3.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html',
             'parameters' => array(
-                'Bucket' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                ),
-                'Key' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                    'filters' => array(
-                        'Aws\\S3\\S3Client::explodeKey',
-                    ),
-                ),
-                'MetadataDirective' => array(
-                    'description' => 'Specifies whether the metadata is copied from the source object or replaced with metadata provided in the request.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-metadata-directive',
-                    'enum' => array(
-                        'COPY',
-                        'REPLACE',
-                    ),
-                ),
-                'CopySource' => array(
-                    'required' => true,
-                    'description' => 'The name of the source bucket and key name of the source object, separated by a slash (/). Must be URL-encoded.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source',
-                ),
-                'CopySourceIfMatch' => array(
-                    'description' => 'Copies the object if its entity tag (ETag) matches the specified tag.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-if-match',
-                ),
-                'CopySourceIfNoneMatch' => array(
-                    'description' => 'Copies the object if its entity tag (ETag) is different than the specified ETag.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-if-none-match',
-                ),
-                'CopySourceIfUnmodifiedSince' => array(
-                    'description' => 'Copies the object if it hasn\'\'t been modified since the specified time.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-if-unmodified-since',
-                ),
-                'CopySourceIfModifiedSince' => array(
-                    'description' => 'Copies the object if it has been modified since the specified time.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-if-modified-since',
-                ),
-                'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-storage-class',
-                    'enum' => array(
-                        'STANDARD',
-                        'REDUCED_REDUNDANCY',
-                    ),
-                ),
                 'ACL' => array(
                     'description' => 'The canned ACL to apply to the object.',
                     'type' => 'string',
@@ -231,29 +147,10 @@ return array (
                         'bucket-owner-full-control',
                     ),
                 ),
-                'GrantRead' => array(
-                    'description' => 'Allows grantee to read the object data and its metadata.',
+                'Bucket' => array(
+                    'required' => true,
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read',
-                ),
-                'GrantReadACP' => array(
-                    'description' => 'Allows grantee to read the object ACL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read-acp',
-                ),
-                'GrantWriteACP' => array(
-                    'description' => 'Allows grantee to write the ACL for the applicable object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write-acp',
-                ),
-                'GrantFullControl' => array(
-                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-full-control',
+                    'location' => 'uri',
                 ),
                 'CacheControl' => array(
                     'description' => 'Specifies caching behavior along the request/reply chain.',
@@ -285,6 +182,57 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'Content-Type',
                 ),
+                'CopySource' => array(
+                    'required' => true,
+                    'description' => 'The name of the source bucket and key name of the source object, separated by a slash (/). Must be URL-encoded.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source',
+                ),
+                'CopySourceIfMatch' => array(
+                    'description' => 'Copies the object if its entity tag (ETag) matches the specified tag.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-if-match',
+                ),
+                'CopySourceIfModifiedSince' => array(
+                    'description' => 'Copies the object if it has been modified since the specified time.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-if-modified-since',
+                ),
+                'CopySourceIfNoneMatch' => array(
+                    'description' => 'Copies the object if its entity tag (ETag) is different than the specified ETag.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-if-none-match',
+                ),
+                'CopySourceIfUnmodifiedSince' => array(
+                    'description' => 'Copies the object if it hasn\'\'t been modified since the specified time.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-if-unmodified-since',
+                ),
                 'Expires' => array(
                     'description' => 'The date and time at which the object is no longer cacheable.',
                     'type' => array(
@@ -295,19 +243,36 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                 ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                'GrantFullControl' => array(
+                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
+                    'sentAs' => 'x-amz-grant-full-control',
                 ),
-                'ServerSideEncryption' => array(
-                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                'GrantRead' => array(
+                    'description' => 'Allows grantee to read the object data and its metadata.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption',
-                    'enum' => array(
-                        'AES256',
+                    'sentAs' => 'x-amz-grant-read',
+                ),
+                'GrantReadACP' => array(
+                    'description' => 'Allows grantee to read the object ACL.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read-acp',
+                ),
+                'GrantWriteACP' => array(
+                    'description' => 'Allows grantee to write the ACL for the applicable object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write-acp',
+                ),
+                'Key' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
                 'Metadata' => array(
@@ -319,6 +284,41 @@ return array (
                         'description' => 'The metadata value.',
                         'type' => 'string',
                     ),
+                ),
+                'MetadataDirective' => array(
+                    'description' => 'Specifies whether the metadata is copied from the source object or replaced with metadata provided in the request.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-metadata-directive',
+                    'enum' => array(
+                        'COPY',
+                        'REPLACE',
+                    ),
+                ),
+                'ServerSideEncryption' => array(
+                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
+                    'enum' => array(
+                        'AES256',
+                    ),
+                ),
+                'StorageClass' => array(
+                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
+                    'enum' => array(
+                        'STANDARD',
+                        'REDUCED_REDUNDANCY',
+                    ),
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'ACP' => array(
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
@@ -354,6 +354,20 @@ return array (
                 ),
             ),
             'parameters' => array(
+                'ACL' => array(
+                    'description' => 'The canned ACL to apply to the bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-acl',
+                    'enum' => array(
+                        'private',
+                        'public-read',
+                        'public-read-write',
+                        'authenticated-read',
+                        'bucket-owner-read',
+                        'bucket-owner-full-control',
+                    ),
+                ),
                 'Bucket' => array(
                     'required' => true,
                     'type' => 'string',
@@ -373,19 +387,11 @@ return array (
                         'sa-east-1',
                     ),
                 ),
-                'ACL' => array(
-                    'description' => 'The canned ACL to apply to the bucket.',
+                'GrantFullControl' => array(
+                    'description' => 'Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-acl',
-                    'enum' => array(
-                        'private',
-                        'public-read',
-                        'public-read-write',
-                        'authenticated-read',
-                        'bucket-owner-read',
-                        'bucket-owner-full-control',
-                    ),
+                    'sentAs' => 'x-amz-grant-full-control',
                 ),
                 'GrantRead' => array(
                     'description' => 'Allows grantee to list the objects in the bucket.',
@@ -393,29 +399,23 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-read',
                 ),
-                'GrantWrite' => array(
-                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write',
-                ),
                 'GrantReadACP' => array(
                     'description' => 'Allows grantee to read the bucket ACL.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-read-acp',
                 ),
+                'GrantWrite' => array(
+                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write',
+                ),
                 'GrantWriteACP' => array(
                     'description' => 'Allows grantee to write the ACL for the applicable bucket.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-write-acp',
-                ),
-                'GrantFullControl' => array(
-                    'description' => 'Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-full-control',
                 ),
                 'ACP' => array(
                     'description' => 'Pass an Aws\\S3\\Model\\Acp object as an alternative way to add access control policy headers to the operation',
@@ -439,29 +439,6 @@ return array (
             'summary' => 'Initiates a multipart upload and returns an upload ID.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html',
             'parameters' => array(
-                'Bucket' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                ),
-                'Key' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                    'filters' => array(
-                        'Aws\\S3\\S3Client::explodeKey',
-                    ),
-                ),
-                'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-storage-class',
-                    'enum' => array(
-                        'STANDARD',
-                        'REDUCED_REDUNDANCY',
-                    ),
-                ),
                 'ACL' => array(
                     'description' => 'The canned ACL to apply to the object.',
                     'type' => 'string',
@@ -476,29 +453,10 @@ return array (
                         'bucket-owner-full-control',
                     ),
                 ),
-                'GrantRead' => array(
-                    'description' => 'Allows grantee to read the object data and its metadata.',
+                'Bucket' => array(
+                    'required' => true,
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read',
-                ),
-                'GrantReadACP' => array(
-                    'description' => 'Allows grantee to read the object ACL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read-acp',
-                ),
-                'GrantWriteACP' => array(
-                    'description' => 'Allows grantee to write the ACL for the applicable object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write-acp',
-                ),
-                'GrantFullControl' => array(
-                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-full-control',
+                    'location' => 'uri',
                 ),
                 'CacheControl' => array(
                     'description' => 'Specifies caching behavior along the request/reply chain.',
@@ -540,19 +498,36 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                 ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                'GrantFullControl' => array(
+                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
+                    'sentAs' => 'x-amz-grant-full-control',
                 ),
-                'ServerSideEncryption' => array(
-                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                'GrantRead' => array(
+                    'description' => 'Allows grantee to read the object data and its metadata.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption',
-                    'enum' => array(
-                        'AES256',
+                    'sentAs' => 'x-amz-grant-read',
+                ),
+                'GrantReadACP' => array(
+                    'description' => 'Allows grantee to read the object ACL.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read-acp',
+                ),
+                'GrantWriteACP' => array(
+                    'description' => 'Allows grantee to write the ACL for the applicable object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write-acp',
+                ),
+                'Key' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
                 'Metadata' => array(
@@ -564,6 +539,31 @@ return array (
                         'description' => 'The metadata value.',
                         'type' => 'string',
                     ),
+                ),
+                'ServerSideEncryption' => array(
+                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
+                    'enum' => array(
+                        'AES256',
+                    ),
+                ),
+                'StorageClass' => array(
+                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
+                    'enum' => array(
+                        'STANDARD',
+                        'REDUCED_REDUNDANCY',
+                    ),
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -760,12 +760,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'Quiet' => array(
-                    'description' => 'Element to enable quiet mode for the request. When you add this element, you must set its value to true.',
-                    'type' => 'boolean',
-                    'format' => 'boolean-string',
-                    'location' => 'xml',
-                ),
                 'Objects' => array(
                     'required' => true,
                     'type' => 'array',
@@ -789,15 +783,17 @@ return array (
                         ),
                     ),
                 ),
+                'Quiet' => array(
+                    'description' => 'Element to enable quiet mode for the request. When you add this element, you must set its value to true.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'xml',
+                ),
                 'MFA' => array(
                     'description' => 'The concatenation of the authentication device\'\'s serial number, a space, and the value that is displayed on your authentication device.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -805,6 +801,10 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'delete',
                     'default' => '_guzzle_blank_',
+                ),
+                'ContentMD5' => array(
+                    'required' => true,
+                    'default' => true,
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -1115,6 +1115,40 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'IfMatch' => array(
+                    'description' => 'Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'If-Match',
+                ),
+                'IfModifiedSince' => array(
+                    'description' => 'Return the object only if it has been modified since the specified time, otherwise return a 304 (not modified).',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'If-Modified-Since',
+                ),
+                'IfNoneMatch' => array(
+                    'description' => 'Return the object only if its entity tag (ETag) is different from the one specified, otherwise return a 304 (not modified).',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'If-None-Match',
+                ),
+                'IfUnmodifiedSince' => array(
+                    'description' => 'Return the object only if it has not been modified since the specified time, otherwise return a 412 (precondition failed).',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'If-Unmodified-Since',
+                ),
                 'Key' => array(
                     'required' => true,
                     'type' => 'string',
@@ -1123,28 +1157,10 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'ResponseContentType' => array(
-                    'description' => 'Sets the Content-Type header of the response.',
+                'Range' => array(
+                    'description' => 'Downloads the specified range bytes of an object. For more information about the HTTP Range header, go to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35.',
                     'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'response-content-type',
-                ),
-                'ResponseContentLanguage' => array(
-                    'description' => 'Sets the Content-Language header of the response.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'response-content-language',
-                ),
-                'ResponseExpires' => array(
-                    'description' => 'Sets the Expires header of the response.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'query',
-                    'sentAs' => 'response-expires',
+                    'location' => 'header',
                 ),
                 'ResponseCacheControl' => array(
                     'description' => 'Sets the Cache-Control header of the response.',
@@ -1164,50 +1180,34 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'response-content-encoding',
                 ),
+                'ResponseContentLanguage' => array(
+                    'description' => 'Sets the Content-Language header of the response.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'response-content-language',
+                ),
+                'ResponseContentType' => array(
+                    'description' => 'Sets the Content-Type header of the response.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'response-content-type',
+                ),
+                'ResponseExpires' => array(
+                    'description' => 'Sets the Expires header of the response.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'query',
+                    'sentAs' => 'response-expires',
+                ),
                 'VersionId' => array(
                     'description' => 'VersionId used to reference a specific version of the object.',
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'versionId',
-                ),
-                'Range' => array(
-                    'description' => 'Downloads the specified range bytes of an object. For more information about the HTTP Range header, go to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35.',
-                    'type' => 'string',
-                    'location' => 'header',
-                ),
-                'IfModifiedSince' => array(
-                    'description' => 'Return the object only if it has been modified since the specified time, otherwise return a 304 (not modified).',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                    'sentAs' => 'If-Modified-Since',
-                ),
-                'IfUnmodifiedSince' => array(
-                    'description' => 'Return the object only if it has not been modified since the specified time, otherwise return a 412 (precondition failed).',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
-                    'location' => 'header',
-                    'sentAs' => 'If-Unmodified-Since',
-                ),
-                'IfMatch' => array(
-                    'description' => 'Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'If-Match',
-                ),
-                'IfNoneMatch' => array(
-                    'description' => 'Return the object only if its entity tag (ETag) is different from the one specified, otherwise return a 304 (not modified).',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'If-None-Match',
                 ),
                 'SaveAs' => array(
                     'description' => 'Specify where the contents of the object should be downloaded. Can be the path to a file, a resource returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object.',
@@ -1335,24 +1335,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'Key' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                    'filters' => array(
-                        'Aws\\S3\\S3Client::explodeKey',
-                    ),
-                ),
-                'VersionId' => array(
-                    'description' => 'VersionId used to reference a specific version of the object.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'versionId',
-                ),
-                'Range' => array(
-                    'description' => 'Downloads the specified range bytes of an object. For more information about the HTTP Range header, go to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35.',
+                'IfMatch' => array(
+                    'description' => 'Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).',
                     'type' => 'string',
                     'location' => 'header',
+                    'sentAs' => 'If-Match',
                 ),
                 'IfModifiedSince' => array(
                     'description' => 'Return the object only if it has been modified since the specified time, otherwise return a 304 (not modified).',
@@ -1365,6 +1352,12 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'If-Modified-Since',
                 ),
+                'IfNoneMatch' => array(
+                    'description' => 'Return the object only if its entity tag (ETag) is different from the one specified, otherwise return a 304 (not modified).',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'If-None-Match',
+                ),
                 'IfUnmodifiedSince' => array(
                     'description' => 'Return the object only if it has not been modified since the specified time, otherwise return a 412 (precondition failed).',
                     'type' => array(
@@ -1376,17 +1369,24 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'If-Unmodified-Since',
                 ),
-                'IfMatch' => array(
-                    'description' => 'Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a 412 (precondition failed).',
+                'Key' => array(
+                    'required' => true,
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'If-Match',
+                    'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
-                'IfNoneMatch' => array(
-                    'description' => 'Return the object only if its entity tag (ETag) is different from the one specified, otherwise return a 304 (not modified).',
+                'Range' => array(
+                    'description' => 'Downloads the specified range bytes of an object. For more information about the HTTP Range header, go to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'If-None-Match',
+                ),
+                'VersionId' => array(
+                    'description' => 'VersionId used to reference a specific version of the object.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'versionId',
                 ),
             ),
             'errorResponses' => array(
@@ -1425,17 +1425,17 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'Prefix' => array(
-                    'description' => 'Lists in-progress uploads only for those keys that begin with the specified prefix.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'prefix',
-                ),
                 'Delimiter' => array(
                     'description' => 'Character you use to group keys.',
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'delimiter',
+                ),
+                'KeyMarker' => array(
+                    'description' => 'Together with upload-id-marker, this parameter specifies the multipart upload after which listing should begin.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'key-marker',
                 ),
                 'MaxUploads' => array(
                     'description' => 'Sets the maximum number of multipart uploads, from 1 to 1,000, to return in the response body. 1,000 is the maximum number of uploads that can be returned in a response.',
@@ -1443,11 +1443,11 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'max-uploads',
                 ),
-                'KeyMarker' => array(
-                    'description' => 'Together with upload-id-marker, this parameter specifies the multipart upload after which listing should begin.',
+                'Prefix' => array(
+                    'description' => 'Lists in-progress uploads only for those keys that begin with the specified prefix.',
                     'type' => 'string',
                     'location' => 'query',
-                    'sentAs' => 'key-marker',
+                    'sentAs' => 'prefix',
                 ),
                 'UploadIdMarker' => array(
                     'description' => 'Together with key-marker, specifies the multipart upload after which listing should begin. If key-marker is not specified, the upload-id-marker parameter is ignored.',
@@ -1482,17 +1482,17 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'Delimiter' => array(
+                    'description' => 'A delimiter is a character you use to group keys.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'delimiter',
+                ),
                 'KeyMarker' => array(
                     'description' => 'Specifies the key to start with when listing objects in a bucket.',
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'key-marker',
-                ),
-                'VersionIdMarker' => array(
-                    'description' => 'Specifies the object version you want to start listing from.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'version-id-marker',
                 ),
                 'MaxKeys' => array(
                     'description' => 'Sets the maximum number of keys returned in the response. The response might contain fewer keys but will never contain more.',
@@ -1500,17 +1500,17 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'max-keys',
                 ),
-                'Delimiter' => array(
-                    'description' => 'A delimiter is a character you use to group keys.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'delimiter',
-                ),
                 'Prefix' => array(
                     'description' => 'Limits the response to keys that begin with the specified prefix.',
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'prefix',
+                ),
+                'VersionIdMarker' => array(
+                    'description' => 'Specifies the object version you want to start listing from.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'version-id-marker',
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -1539,6 +1539,12 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'Delimiter' => array(
+                    'description' => 'A delimiter is a character you use to group keys.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'delimiter',
+                ),
                 'Marker' => array(
                     'description' => 'Specifies the key to start with when listing objects in a bucket.',
                     'type' => 'string',
@@ -1550,12 +1556,6 @@ return array (
                     'type' => 'numeric',
                     'location' => 'query',
                     'sentAs' => 'max-keys',
-                ),
-                'Delimiter' => array(
-                    'description' => 'A delimiter is a character you use to group keys.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'delimiter',
                 ),
                 'Prefix' => array(
                     'description' => 'Limits the response to keys that begin with the specified prefix.',
@@ -1597,13 +1597,6 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'UploadId' => array(
-                    'required' => true,
-                    'description' => 'Upload ID identifying the multipart upload whose parts are being listed.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'uploadId',
-                ),
                 'MaxParts' => array(
                     'description' => 'Sets the maximum number of parts to return.',
                     'type' => 'numeric',
@@ -1615,6 +1608,13 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'part-number-marker',
+                ),
+                'UploadId' => array(
+                    'required' => true,
+                    'description' => 'Upload ID identifying the multipart upload whose parts are being listed.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'uploadId',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -1639,21 +1639,18 @@ return array (
                 ),
             ),
             'parameters' => array(
-                'Bucket' => array(
-                    'required' => true,
+                'ACL' => array(
+                    'description' => 'The canned ACL to apply to the bucket.',
                     'type' => 'string',
-                    'location' => 'uri',
-                ),
-                'Owner' => array(
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'properties' => array(
-                        'ID' => array(
-                            'type' => 'string',
-                        ),
-                        'DisplayName' => array(
-                            'type' => 'string',
-                        ),
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-acl',
+                    'enum' => array(
+                        'private',
+                        'public-read',
+                        'public-read-write',
+                        'authenticated-read',
+                        'bucket-owner-read',
+                        'bucket-owner-full-control',
                     ),
                 ),
                 'Grants' => array(
@@ -1668,6 +1665,18 @@ return array (
                             'Grantee' => array(
                                 'type' => 'object',
                                 'properties' => array(
+                                    'DisplayName' => array(
+                                        'description' => 'Screen name of the grantee.',
+                                        'type' => 'string',
+                                    ),
+                                    'EmailAddress' => array(
+                                        'description' => 'Email address of the grantee.',
+                                        'type' => 'string',
+                                    ),
+                                    'ID' => array(
+                                        'description' => 'The canonical user ID of the grantee.',
+                                        'type' => 'string',
+                                    ),
                                     'Type' => array(
                                         'required' => true,
                                         'description' => 'Type of grantee',
@@ -1682,18 +1691,6 @@ return array (
                                             'AmazonCustomerByEmail',
                                             'Group',
                                         ),
-                                    ),
-                                    'ID' => array(
-                                        'description' => 'The canonical user ID of the grantee.',
-                                        'type' => 'string',
-                                    ),
-                                    'DisplayName' => array(
-                                        'description' => 'Screen name of the grantee.',
-                                        'type' => 'string',
-                                    ),
-                                    'EmailAddress' => array(
-                                        'description' => 'Email address of the grantee.',
-                                        'type' => 'string',
                                     ),
                                     'URI' => array(
                                         'description' => 'URI of the grantee group.',
@@ -1715,43 +1712,25 @@ return array (
                         ),
                     ),
                 ),
-                'ACL' => array(
-                    'description' => 'The canned ACL to apply to the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-acl',
-                    'enum' => array(
-                        'private',
-                        'public-read',
-                        'public-read-write',
-                        'authenticated-read',
-                        'bucket-owner-read',
-                        'bucket-owner-full-control',
+                'Owner' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'DisplayName' => array(
+                            'type' => 'string',
+                        ),
+                        'ID' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
-                'GrantRead' => array(
-                    'description' => 'Allows grantee to list the objects in the bucket.',
+                'Bucket' => array(
+                    'required' => true,
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read',
+                    'location' => 'uri',
                 ),
-                'GrantWrite' => array(
-                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write',
-                ),
-                'GrantReadACP' => array(
-                    'description' => 'Allows grantee to read the bucket ACL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read-acp',
-                ),
-                'GrantWriteACP' => array(
-                    'description' => 'Allows grantee to write the ACL for the applicable bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write-acp',
+                'ContentMD5' => array(
+                    'default' => true,
                 ),
                 'GrantFullControl' => array(
                     'description' => 'Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.',
@@ -1759,8 +1738,29 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
+                'GrantRead' => array(
+                    'description' => 'Allows grantee to list the objects in the bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read',
+                ),
+                'GrantReadACP' => array(
+                    'description' => 'Allows grantee to read the bucket ACL.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read-acp',
+                ),
+                'GrantWrite' => array(
+                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write',
+                ),
+                'GrantWriteACP' => array(
+                    'description' => 'Allows grantee to write the ACL for the applicable bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write-acp',
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -1808,17 +1808,6 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'CORSRule',
                         'properties' => array(
-                            'AllowedOrigins' => array(
-                                'description' => 'One or more origins you want customers to be able to access the bucket from.',
-                                'type' => 'array',
-                                'data' => array(
-                                    'xmlFlattened' => true,
-                                ),
-                                'items' => array(
-                                    'type' => 'string',
-                                    'sentAs' => 'AllowedOrigin',
-                                ),
-                            ),
                             'AllowedMethods' => array(
                                 'description' => 'Identifies HTTP methods that the domain/origin specified in the rule is allowed to execute.',
                                 'type' => 'array',
@@ -1830,9 +1819,16 @@ return array (
                                     'sentAs' => 'AllowedMethod',
                                 ),
                             ),
-                            'MaxAgeSeconds' => array(
-                                'description' => 'The time in seconds that your browser is to cache the preflight response for the specified resource.',
-                                'type' => 'numeric',
+                            'AllowedOrigins' => array(
+                                'description' => 'One or more origins you want customers to be able to access the bucket from.',
+                                'type' => 'array',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'type' => 'string',
+                                    'sentAs' => 'AllowedOrigin',
+                                ),
                             ),
                             'ExposeHeaders' => array(
                                 'description' => 'One or more headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object).',
@@ -1844,6 +1840,10 @@ return array (
                                     'type' => 'string',
                                     'sentAs' => 'ExposeHeader',
                                 ),
+                            ),
+                            'MaxAgeSeconds' => array(
+                                'description' => 'The time in seconds that your browser is to cache the preflight response for the specified resource.',
+                                'type' => 'numeric',
                             ),
                         ),
                     ),
@@ -1882,6 +1882,9 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'Rules' => array(
                     'required' => true,
                     'type' => 'array',
@@ -1893,6 +1896,25 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'Rule',
                         'properties' => array(
+                            'Expiration' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Date' => array(
+                                        'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
+                                        'type' => array(
+                                            'object',
+                                            'string',
+                                            'integer',
+                                        ),
+                                        'format' => 'date-time',
+                                    ),
+                                    'Days' => array(
+                                        'required' => true,
+                                        'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
                             'ID' => array(
                                 'description' => 'Unique identifier for the rule. The value cannot be longer than 255 characters.',
                                 'type' => 'string',
@@ -1914,10 +1936,6 @@ return array (
                             'Transition' => array(
                                 'type' => 'object',
                                 'properties' => array(
-                                    'Days' => array(
-                                        'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
-                                        'type' => 'numeric',
-                                    ),
                                     'Date' => array(
                                         'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
                                         'type' => array(
@@ -1926,6 +1944,10 @@ return array (
                                             'integer',
                                         ),
                                         'format' => 'date-time',
+                                    ),
+                                    'Days' => array(
+                                        'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
+                                        'type' => 'numeric',
                                     ),
                                     'StorageClass' => array(
                                         'description' => 'The class of storage used to store the object.',
@@ -1938,30 +1960,8 @@ return array (
                                     ),
                                 ),
                             ),
-                            'Expiration' => array(
-                                'type' => 'object',
-                                'properties' => array(
-                                    'Days' => array(
-                                        'required' => true,
-                                        'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
-                                        'type' => 'numeric',
-                                    ),
-                                    'Date' => array(
-                                        'description' => 'Indicates at what date the object is to be moved or deleted. Should be in GMT ISO 8601 Format.',
-                                        'type' => array(
-                                            'object',
-                                            'string',
-                                            'integer',
-                                        ),
-                                        'format' => 'date-time',
-                                    ),
-                                ),
-                            ),
                         ),
                     ),
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2003,10 +2003,6 @@ return array (
                             'description' => 'Specifies the bucket where you want Amazon S3 to store server access logs. You can have your logs delivered to any bucket that you own, including the same bucket that is being logged. You can also configure multiple buckets to deliver their logs to the same target bucket. In this case you should choose a different TargetPrefix for each source bucket so that the delivered log files can be distinguished by key.',
                             'type' => 'string',
                         ),
-                        'TargetPrefix' => array(
-                            'description' => 'This element lets you specify a prefix for the keys that the log files will be stored under.',
-                            'type' => 'string',
-                        ),
                         'TargetGrants' => array(
                             'type' => 'array',
                             'items' => array(
@@ -2016,6 +2012,18 @@ return array (
                                     'Grantee' => array(
                                         'type' => 'object',
                                         'properties' => array(
+                                            'DisplayName' => array(
+                                                'description' => 'Screen name of the grantee.',
+                                                'type' => 'string',
+                                            ),
+                                            'EmailAddress' => array(
+                                                'description' => 'Email address of the grantee.',
+                                                'type' => 'string',
+                                            ),
+                                            'ID' => array(
+                                                'description' => 'The canonical user ID of the grantee.',
+                                                'type' => 'string',
+                                            ),
                                             'Type' => array(
                                                 'required' => true,
                                                 'description' => 'Type of grantee',
@@ -2031,18 +2039,6 @@ return array (
                                                     'Group',
                                                 ),
                                             ),
-                                            'ID' => array(
-                                                'description' => 'The canonical user ID of the grantee.',
-                                                'type' => 'string',
-                                            ),
-                                            'DisplayName' => array(
-                                                'description' => 'Screen name of the grantee.',
-                                                'type' => 'string',
-                                            ),
-                                            'EmailAddress' => array(
-                                                'description' => 'Email address of the grantee.',
-                                                'type' => 'string',
-                                            ),
                                             'URI' => array(
                                                 'description' => 'URI of the grantee group.',
                                                 'type' => 'string',
@@ -2054,6 +2050,10 @@ return array (
                                     ),
                                 ),
                             ),
+                        ),
+                        'TargetPrefix' => array(
+                            'description' => 'This element lets you specify a prefix for the keys that the log files will be stored under.',
+                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -2091,15 +2091,14 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'TopicConfiguration' => array(
                     'required' => true,
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
-                        'Topic' => array(
-                            'description' => 'Amazon SNS topic to which Amazon S3 will publish a message to report the specified events for the bucket.',
-                            'type' => 'string',
-                        ),
                         'Event' => array(
                             'description' => 'Bucket event for which to send notifications.',
                             'type' => 'string',
@@ -2107,10 +2106,11 @@ return array (
                                 's3:ReducedRedundancyLostObject',
                             ),
                         ),
+                        'Topic' => array(
+                            'description' => 'Amazon SNS topic to which Amazon S3 will publish a message to report the specified events for the bucket.',
+                            'type' => 'string',
+                        ),
                     ),
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2135,6 +2135,9 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'Policy' => array(
                     'required' => true,
                     'description' => 'The bucket policy as a JSON document.',
@@ -2143,9 +2146,6 @@ return array (
                         'object',
                     ),
                     'location' => 'body',
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2178,6 +2178,9 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'Payer' => array(
                     'required' => true,
                     'description' => 'Specifies who pays for the download and request fees.',
@@ -2187,9 +2190,6 @@ return array (
                         'Requester',
                         'BucketOwner',
                     ),
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2222,6 +2222,9 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
                 'TagSet' => array(
                     'required' => true,
                     'type' => 'array',
@@ -2243,9 +2246,6 @@ return array (
                             ),
                         ),
                     ),
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2278,14 +2278,14 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'Status' => array(
-                    'description' => 'The versioning state of the bucket.',
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
+                'MFA' => array(
+                    'description' => 'The value is the concatenation of the authentication device\'\'s serial number, a space, and the value displayed on your authentication device.',
                     'type' => 'string',
-                    'location' => 'xml',
-                    'enum' => array(
-                        'Enabled',
-                        'Disabled',
-                    ),
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-mfa',
                 ),
                 'MFADelete' => array(
                     'description' => 'Specifies whether MFA delete is enabled in the bucket versioning configuration. This element is only returned if the bucket has been configured with MFA delete. If the bucket has never been so configured, this element is not returned.',
@@ -2296,14 +2296,14 @@ return array (
                         'Disabled',
                     ),
                 ),
-                'MFA' => array(
-                    'description' => 'The value is the concatenation of the authentication device\'\'s serial number, a space, and the value displayed on your authentication device.',
+                'Status' => array(
+                    'description' => 'The versioning state of the bucket.',
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-mfa',
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
+                    'location' => 'xml',
+                    'enum' => array(
+                        'Enabled',
+                        'Disabled',
+                    ),
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2336,6 +2336,31 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
+                'ContentMD5' => array(
+                    'default' => true,
+                ),
+                'ErrorDocument' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Key' => array(
+                            'required' => true,
+                            'description' => 'The object key name to use when a 4XX class error occurs.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'IndexDocument' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Suffix' => array(
+                            'required' => true,
+                            'description' => 'A suffix that is appended to a request that is for a directory on the website endpoint (e.g. if the suffix is index.html and you make a request to samplebucket/images/ the data that is returned will be for the object with the key name images/index.html) The suffix must not be empty and must not include a slash character.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
                 'RedirectAllRequestsTo' => array(
                     'type' => 'object',
                     'location' => 'xml',
@@ -2355,28 +2380,6 @@ return array (
                         ),
                     ),
                 ),
-                'IndexDocument' => array(
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'properties' => array(
-                        'Suffix' => array(
-                            'required' => true,
-                            'description' => 'A suffix that is appended to a request that is for a directory on the website endpoint (e.g. if the suffix is index.html and you make a request to samplebucket/images/ the data that is returned will be for the object with the key name images/index.html) The suffix must not be empty and must not include a slash character.',
-                            'type' => 'string',
-                        ),
-                    ),
-                ),
-                'ErrorDocument' => array(
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'properties' => array(
-                        'Key' => array(
-                            'required' => true,
-                            'description' => 'The object key name to use when a 4XX class error occurs.',
-                            'type' => 'string',
-                        ),
-                    ),
-                ),
                 'RoutingRules' => array(
                     'type' => 'array',
                     'location' => 'xml',
@@ -2388,12 +2391,12 @@ return array (
                                 'description' => 'A container for describing a condition that must be met for the specified redirect to apply. For example, 1. If request is for pages in the /docs folder, redirect to the /documents folder. 2. If request results in HTTP error 4xx, redirect request to another host where you might process the error.',
                                 'type' => 'object',
                                 'properties' => array(
-                                    'KeyPrefixEquals' => array(
-                                        'description' => 'The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied.',
-                                        'type' => 'string',
-                                    ),
                                     'HttpErrorCodeReturnedEquals' => array(
                                         'description' => 'The HTTP error code when the redirect is applied. In the event of an error, if the error code equals this value, then the specified redirect is applied. Required when parent element Condition is specified and sibling KeyPrefixEquals is not specified. If both are specified, then both must be true for the redirect to be applied.',
+                                        'type' => 'string',
+                                    ),
+                                    'KeyPrefixEquals' => array(
+                                        'description' => 'The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied.',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -2403,6 +2406,23 @@ return array (
                                 'description' => 'Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can can specify a different error code to return.',
                                 'type' => 'object',
                                 'properties' => array(
+                                    'HostName' => array(
+                                        'required' => true,
+                                        'description' => 'Name of the host where requests will be redirected.',
+                                        'type' => 'string',
+                                    ),
+                                    'HttpRedirectCode' => array(
+                                        'description' => 'The HTTP redirect code to use on the response. Not required if one of the siblings is present.',
+                                        'type' => 'string',
+                                    ),
+                                    'Protocol' => array(
+                                        'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
+                                        'type' => 'string',
+                                        'enum' => array(
+                                            'http',
+                                            'https',
+                                        ),
+                                    ),
                                     'ReplaceKeyPrefixWith' => array(
                                         'description' => 'The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with KeyPrefixEquals set to docs/ and in the Redirect set ReplaceKeyPrefixWith to /documents. Not required if one of the siblings is present. Can be present only if ReplaceKeyWith is not provided.',
                                         'type' => 'string',
@@ -2411,30 +2431,10 @@ return array (
                                         'description' => 'The specific object key to use in the redirect request. For example, redirect request to error.html. Not required if one of the sibling is present. Can be present only if ReplaceKeyPrefixWith is not provided.',
                                         'type' => 'string',
                                     ),
-                                    'HttpRedirectCode' => array(
-                                        'description' => 'The HTTP redirect code to use on the response. Not required if one of the siblings is present.',
-                                        'type' => 'string',
-                                    ),
-                                ),
-                            ),
-                            'HostName' => array(
-                                'required' => true,
-                                'description' => 'Name of the host where requests will be redirected.',
-                                'type' => 'string',
-                            ),
-                            'Protocol' => array(
-                                'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
-                                'type' => 'string',
-                                'enum' => array(
-                                    'http',
-                                    'https',
                                 ),
                             ),
                         ),
                     ),
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2454,37 +2454,6 @@ return array (
             'summary' => 'Adds an object to a bucket.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html',
             'parameters' => array(
-                'Bucket' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                ),
-                'Key' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                    'filters' => array(
-                        'Aws\\S3\\S3Client::explodeKey',
-                    ),
-                ),
-                'Body' => array(
-                    'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
-                    'type' => array(
-                        'string',
-                        'object',
-                    ),
-                    'location' => 'body',
-                ),
-                'StorageClass' => array(
-                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-storage-class',
-                    'enum' => array(
-                        'STANDARD',
-                        'REDUCED_REDUNDANCY',
-                    ),
-                ),
                 'ACL' => array(
                     'description' => 'The canned ACL to apply to the object.',
                     'type' => 'string',
@@ -2499,29 +2468,18 @@ return array (
                         'bucket-owner-full-control',
                     ),
                 ),
-                'GrantRead' => array(
-                    'description' => 'Allows grantee to read the object data and its metadata.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read',
+                'Body' => array(
+                    'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
+                    'type' => array(
+                        'string',
+                        'object',
+                    ),
+                    'location' => 'body',
                 ),
-                'GrantReadACP' => array(
-                    'description' => 'Allows grantee to read the object ACL.',
+                'Bucket' => array(
+                    'required' => true,
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read-acp',
-                ),
-                'GrantWriteACP' => array(
-                    'description' => 'Allows grantee to write the ACL for the applicable object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write-acp',
-                ),
-                'GrantFullControl' => array(
-                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-full-control',
+                    'location' => 'uri',
                 ),
                 'CacheControl' => array(
                     'description' => 'Specifies caching behavior along the request/reply chain.',
@@ -2563,19 +2521,36 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                 ),
-                'WebsiteRedirectLocation' => array(
-                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                'GrantFullControl' => array(
+                    'description' => 'Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the object.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-website-redirect-location',
+                    'sentAs' => 'x-amz-grant-full-control',
                 ),
-                'ServerSideEncryption' => array(
-                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                'GrantRead' => array(
+                    'description' => 'Allows grantee to read the object data and its metadata.',
                     'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-server-side-encryption',
-                    'enum' => array(
-                        'AES256',
+                    'sentAs' => 'x-amz-grant-read',
+                ),
+                'GrantReadACP' => array(
+                    'description' => 'Allows grantee to read the object ACL.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read-acp',
+                ),
+                'GrantWriteACP' => array(
+                    'description' => 'Allows grantee to write the ACL for the applicable object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write-acp',
+                ),
+                'Key' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
                 'Metadata' => array(
@@ -2587,6 +2562,31 @@ return array (
                         'description' => 'The metadata value.',
                         'type' => 'string',
                     ),
+                ),
+                'ServerSideEncryption' => array(
+                    'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption',
+                    'enum' => array(
+                        'AES256',
+                    ),
+                ),
+                'StorageClass' => array(
+                    'description' => 'The type of storage to use for the object. Defaults to \'STANDARD\'.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-storage-class',
+                    'enum' => array(
+                        'STANDARD',
+                        'REDUCED_REDUNDANCY',
+                    ),
+                ),
+                'WebsiteRedirectLocation' => array(
+                    'description' => 'If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-website-redirect-location',
                 ),
                 'ContentMD5' => array(
                     'description' => 'Content-MD5 checksum of the body. Set to false to disable',
@@ -2620,29 +2620,18 @@ return array (
                 ),
             ),
             'parameters' => array(
-                'Bucket' => array(
-                    'required' => true,
+                'ACL' => array(
+                    'description' => 'The canned ACL to apply to the bucket.',
                     'type' => 'string',
-                    'location' => 'uri',
-                ),
-                'Key' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                    'filters' => array(
-                        'Aws\\S3\\S3Client::explodeKey',
-                    ),
-                ),
-                'Owner' => array(
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'properties' => array(
-                        'ID' => array(
-                            'type' => 'string',
-                        ),
-                        'DisplayName' => array(
-                            'type' => 'string',
-                        ),
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-acl',
+                    'enum' => array(
+                        'private',
+                        'public-read',
+                        'public-read-write',
+                        'authenticated-read',
+                        'bucket-owner-read',
+                        'bucket-owner-full-control',
                     ),
                 ),
                 'Grants' => array(
@@ -2657,6 +2646,18 @@ return array (
                             'Grantee' => array(
                                 'type' => 'object',
                                 'properties' => array(
+                                    'DisplayName' => array(
+                                        'description' => 'Screen name of the grantee.',
+                                        'type' => 'string',
+                                    ),
+                                    'EmailAddress' => array(
+                                        'description' => 'Email address of the grantee.',
+                                        'type' => 'string',
+                                    ),
+                                    'ID' => array(
+                                        'description' => 'The canonical user ID of the grantee.',
+                                        'type' => 'string',
+                                    ),
                                     'Type' => array(
                                         'required' => true,
                                         'description' => 'Type of grantee',
@@ -2671,18 +2672,6 @@ return array (
                                             'AmazonCustomerByEmail',
                                             'Group',
                                         ),
-                                    ),
-                                    'ID' => array(
-                                        'description' => 'The canonical user ID of the grantee.',
-                                        'type' => 'string',
-                                    ),
-                                    'DisplayName' => array(
-                                        'description' => 'Screen name of the grantee.',
-                                        'type' => 'string',
-                                    ),
-                                    'EmailAddress' => array(
-                                        'description' => 'Email address of the grantee.',
-                                        'type' => 'string',
                                     ),
                                     'URI' => array(
                                         'description' => 'URI of the grantee group.',
@@ -2704,43 +2693,25 @@ return array (
                         ),
                     ),
                 ),
-                'ACL' => array(
-                    'description' => 'The canned ACL to apply to the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-acl',
-                    'enum' => array(
-                        'private',
-                        'public-read',
-                        'public-read-write',
-                        'authenticated-read',
-                        'bucket-owner-read',
-                        'bucket-owner-full-control',
+                'Owner' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'DisplayName' => array(
+                            'type' => 'string',
+                        ),
+                        'ID' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
-                'GrantRead' => array(
-                    'description' => 'Allows grantee to list the objects in the bucket.',
+                'Bucket' => array(
+                    'required' => true,
                     'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read',
+                    'location' => 'uri',
                 ),
-                'GrantWrite' => array(
-                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write',
-                ),
-                'GrantReadACP' => array(
-                    'description' => 'Allows grantee to read the bucket ACL.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-read-acp',
-                ),
-                'GrantWriteACP' => array(
-                    'description' => 'Allows grantee to write the ACL for the applicable bucket.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-grant-write-acp',
+                'ContentMD5' => array(
+                    'default' => true,
                 ),
                 'GrantFullControl' => array(
                     'description' => 'Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.',
@@ -2748,8 +2719,37 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-full-control',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
+                'GrantRead' => array(
+                    'description' => 'Allows grantee to list the objects in the bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read',
+                ),
+                'GrantReadACP' => array(
+                    'description' => 'Allows grantee to read the bucket ACL.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-read-acp',
+                ),
+                'GrantWrite' => array(
+                    'description' => 'Allows grantee to create, overwrite, and delete any object in the bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write',
+                ),
+                'GrantWriteACP' => array(
+                    'description' => 'Allows grantee to write the ACL for the applicable bucket.',
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-grant-write-acp',
+                ),
+                'Key' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
                 ),
                 'SubResource' => array(
                     'required' => true,
@@ -2831,6 +2831,14 @@ return array (
             'summary' => 'Uploads a part in a multipart upload.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html',
             'parameters' => array(
+                'Body' => array(
+                    'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
+                    'type' => array(
+                        'string',
+                        'object',
+                    ),
+                    'location' => 'body',
+                ),
                 'Bucket' => array(
                     'required' => true,
                     'type' => 'string',
@@ -2844,13 +2852,6 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'UploadId' => array(
-                    'required' => true,
-                    'description' => 'Upload ID identifying the multipart upload whose part is being uploaded.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'uploadId',
-                ),
                 'PartNumber' => array(
                     'required' => true,
                     'description' => 'Part number of part being uploaded.',
@@ -2858,13 +2859,12 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'partNumber',
                 ),
-                'Body' => array(
-                    'description' => 'Pass a string containing the body, a handle returned by fopen, or a Guzzle\\Http\\EntityBodyInterface object',
-                    'type' => array(
-                        'string',
-                        'object',
-                    ),
-                    'location' => 'body',
+                'UploadId' => array(
+                    'required' => true,
+                    'description' => 'Upload ID identifying the multipart upload whose part is being uploaded.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'uploadId',
                 ),
                 'ContentMD5' => array(
                     'description' => 'Content-MD5 checksum of the body. Set to false to disable',
@@ -2890,34 +2890,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'Key' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'uri',
-                    'filters' => array(
-                        'Aws\\S3\\S3Client::explodeKey',
-                    ),
-                ),
-                'UploadId' => array(
-                    'required' => true,
-                    'description' => 'Upload ID identifying the multipart upload whose part is being copied.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'uploadId',
-                ),
-                'PartNumber' => array(
-                    'required' => true,
-                    'description' => 'Part number of part being copied.',
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'partNumber',
-                ),
-                'CopySourceRange' => array(
-                    'description' => 'The range of bytes to copy from the source object. The range value must use the form bytes=first-last, where the first and last are the zero-based byte offsets to copy. For example, bytes=0-9 indicates that you want to copy the first ten bytes of the source. You can copy a range only if the source object is greater than 5 GB.',
-                    'type' => 'string',
-                    'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-range',
-                ),
                 'CopySource' => array(
                     'required' => true,
                     'description' => 'The name of the source bucket and key name of the source object, separated by a slash (/). Must be URL-encoded.',
@@ -2935,6 +2907,17 @@ return array (
                     'format' => 'date-time-http',
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-match',
+                ),
+                'CopySourceIfModifiedSince' => array(
+                    'description' => 'Copies the object if it has been modified since the specified time.',
+                    'type' => array(
+                        'object',
+                        'string',
+                        'integer',
+                    ),
+                    'format' => 'date-time-http',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-if-modified-since',
                 ),
                 'CopySourceIfNoneMatch' => array(
                     'description' => 'Copies the object if its entity tag (ETag) is different than the specified ETag.',
@@ -2958,16 +2941,33 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-copy-source-if-unmodified-since',
                 ),
-                'CopySourceIfModifiedSince' => array(
-                    'description' => 'Copies the object if it has been modified since the specified time.',
-                    'type' => array(
-                        'object',
-                        'string',
-                        'integer',
-                    ),
-                    'format' => 'date-time-http',
+                'CopySourceRange' => array(
+                    'description' => 'The range of bytes to copy from the source object. The range value must use the form bytes=first-last, where the first and last are the zero-based byte offsets to copy. For example, bytes=0-9 indicates that you want to copy the first ten bytes of the source. You can copy a range only if the source object is greater than 5 GB.',
+                    'type' => 'string',
                     'location' => 'header',
-                    'sentAs' => 'x-amz-copy-source-if-modified-since',
+                    'sentAs' => 'x-amz-copy-source-range',
+                ),
+                'Key' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'filters' => array(
+                        'Aws\\S3\\S3Client::explodeKey',
+                    ),
+                ),
+                'PartNumber' => array(
+                    'required' => true,
+                    'description' => 'Part number of part being copied.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'partNumber',
+                ),
+                'UploadId' => array(
+                    'required' => true,
+                    'description' => 'Upload ID identifying the multipart upload whose part is being copied.',
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'uploadId',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -3738,15 +3738,15 @@ return array (
                                         'description' => 'The HTTP redirect code to use on the response. Not required if one of the siblings is present.',
                                         'type' => 'string',
                                     ),
+                                    'HostName' => array(
+                                        'description' => 'Name of the host where requests will be redirected.',
+                                        'type' => 'string',
+                                    ),
+                                    'Protocol' => array(
+                                        'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
+                                        'type' => 'string',
+                                    ),
                                 ),
-                            ),
-                            'HostName' => array(
-                                'description' => 'Name of the host where requests will be redirected.',
-                                'type' => 'string',
-                            ),
-                            'Protocol' => array(
-                                'description' => 'Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request.',
-                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -4238,6 +4238,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'IsTruncated' => array(
+                    'description' => 'A flag that indicates whether or not Amazon S3 returned all of the results that satisfied the search criteria. If your results were truncated, you can make a follow-up paginated request using the NextKeyMarker and NextVersionIdMarker response parameters as a starting place in another request to return the rest of the results.',
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
                 'KeyMarker' => array(
                     'description' => 'Marks the last Key returned in a truncated response.',
                     'type' => 'string',
@@ -4362,11 +4367,6 @@ return array (
                     'type' => 'numeric',
                     'location' => 'xml',
                 ),
-                'IsTruncated' => array(
-                    'description' => 'A flag that indicates whether (true) or not (false) Amazon S3 returned all of the results that satisfied the search criteria. If your results were truncated, you can make a follow-up paginated request using the NextKeyMarker and NextVersionIdMarker response parameters as a starting place in another request to return the rest of the results.',
-                    'type' => 'boolean',
-                    'location' => 'xml',
-                ),
                 'CommonPrefixes' => array(
                     'type' => 'array',
                     'location' => 'xml',
@@ -4393,6 +4393,11 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'IsTruncated' => array(
+                    'description' => 'A flag that indicates whether or not Amazon S3 returned all of the results that satisfied the search criteria.',
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'xml',
@@ -4446,11 +4451,6 @@ return array (
                 ),
                 'MaxKeys' => array(
                     'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'IsTruncated' => array(
-                    'description' => 'A flag that indicates whether (true) or not (false) Amazon S3 returned all of the results that satisfied the search criteria. If your results were truncated, you can make a follow-up paginated request using the NextKeyMarker and NextVersionIdMarker response parameters as a starting place in another request to return the rest of the results.',
-                    'type' => 'boolean',
                     'location' => 'xml',
                 ),
                 'CommonPrefixes' => array(
