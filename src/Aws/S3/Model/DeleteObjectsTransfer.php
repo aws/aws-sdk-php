@@ -75,7 +75,7 @@ class DeleteObjectsTransfer implements BatchTransferInterface
 
     /**
      * {@inheritdoc}
-     * @throws OverflowException if a batch has more than 1000 items
+     * @throws OverflowException        if a batch has more than 1000 items
      * @throws InvalidArgumentException when an invalid batch item is encountered
      */
     public function transfer(array $batch)

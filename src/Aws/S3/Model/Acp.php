@@ -128,7 +128,7 @@ class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
     /**
      * Set the grants for the ACP
      *
-     * @param  array|\Traversable $grants List of grants for the ACP
+     * @param array|\Traversable $grants List of grants for the ACP
      *
      * @return self
      *

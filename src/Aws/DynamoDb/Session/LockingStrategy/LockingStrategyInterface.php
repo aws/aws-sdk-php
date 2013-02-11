@@ -33,9 +33,9 @@ interface LockingStrategyInterface
     /**
      * Writes the session data to Dynamo DB
      *
-     * @param string  $id            The session ID
-     * @param string  $data          The serialized session data
-     * @param bool    $isDataChanged Whether or not the data has changed
+     * @param string $id            The session ID
+     * @param string $data          The serialized session data
+     * @param bool   $isDataChanged Whether or not the data has changed
      *
      * @return bool
      */

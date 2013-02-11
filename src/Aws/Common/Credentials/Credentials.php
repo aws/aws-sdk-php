@@ -77,7 +77,7 @@ class Credentials implements CredentialsInterface, FromConfigInterface
      *
      * @return CredentialsInterface
      * @throws InvalidArgumentException If the caching options are invalid
-     * @throws RuntimeException If using the default cache and APC is disabled
+     * @throws RuntimeException         If using the default cache and APC is disabled
      */
     public static function factory($config = array())
     {

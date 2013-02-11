@@ -142,6 +142,7 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
      * Check to see if the response model satisfies a success or failure state
      *
      * @param Model $result Result model
+     *
      * @return bool
      * @throws RuntimeException
      */

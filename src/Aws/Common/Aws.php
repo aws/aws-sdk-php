@@ -55,6 +55,7 @@ class Aws extends ServiceBuilderLoader
      *                                                         service as it is instantiated.
      * @param array                          $globalParameters Array of global parameters to pass to every service as it
      *                                                         is instantiated.
+     *
      * @return ServiceBuilder
      */
     public static function factory($config = null, array $globalParameters = array())

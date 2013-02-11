@@ -270,7 +270,7 @@ class S3Client extends AbstractClient
      *
      * @param RequestInterface $request Request to generate the URL for. Use the factory methods of the client to create
      *                                  this request object.
-     * @param int|string       $expires The Unix timestamp to expire at or a string that can be evaluated by strtotime
+     * @param int|string $expires The Unix timestamp to expire at or a string that can be evaluated by strtotime
      *
      * @return string
      * @throws InvalidArgumentException if the request is not associated with this client object

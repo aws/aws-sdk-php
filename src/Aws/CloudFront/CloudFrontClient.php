@@ -134,7 +134,7 @@ class CloudFrontClient extends AbstractClient
      *
      * @param array $options Array of configuration options used when signing
      *
-     * @return string The file URL with authentication parameters.
+     * @return string                   The file URL with authentication parameters.
      * @throws InvalidArgumentException if key_pair_id and private_key have not been configured on the client
      */
     public function getSignedUrl(array $options)

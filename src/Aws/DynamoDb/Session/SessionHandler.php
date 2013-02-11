@@ -356,6 +356,7 @@ class SessionHandler
     {
         try {
             $this->garbageCollect();
+
             return true;
         } catch (\Exception $e) {
             return false;

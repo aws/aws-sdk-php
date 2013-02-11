@@ -63,7 +63,7 @@ class Attribute implements ToArrayInterface
      * converted to a string or array, respectively.
      *
      * @param mixed $value The DynamoDB attribute value
-     * @param int $depth A variable used internally to keep track of recursion
+     * @param int   $depth A variable used internally to keep track of recursion
      * depth of array processing
      *
      * @return Attribute
@@ -156,9 +156,9 @@ class Attribute implements ToArrayInterface
     /**
      * Retrieve the formatted data.
      *
-     * @param  string $format The format to apply to the data.
+     * @param string $format The format to apply to the data.
      *
-     * @return string         The formatted version of the data.
+     * @return string The formatted version of the data.
      */
     public function getFormatted($format = Attribute::FORMAT_PUT)
     {
@@ -200,9 +200,9 @@ class Attribute implements ToArrayInterface
     /**
      * Set the attribute type.
      *
-     * @param  string $type The attribute type to set.
+     * @param string $type The attribute type to set.
      *
-     * @return string       The attribute type.
+     * @return string The attribute type.
      */
     public function setType($type)
     {
@@ -218,9 +218,9 @@ class Attribute implements ToArrayInterface
     /**
      * Set the attribute value.
      *
-     * @param  string $type The attribute value to set.
+     * @param string $type The attribute value to set.
      *
-     * @return string       The attribute value.
+     * @return string The attribute value.
      */
     public function setValue($value)
     {

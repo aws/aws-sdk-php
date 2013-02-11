@@ -37,7 +37,7 @@ class AcpListener implements EventSubscriberInterface
     /**
      * An event handler for constructing ACP definitions.
      *
-     * @param  Event  $event The event to respond to.
+     * @param Event $event The event to respond to.
      *
      * @throws InvalidArgumentException
      */

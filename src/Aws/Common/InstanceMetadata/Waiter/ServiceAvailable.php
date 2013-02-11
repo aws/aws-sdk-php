@@ -41,6 +41,7 @@ class ServiceAvailable extends AbstractResourceWaiter
             $request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, 10)
                 ->set(CURLOPT_TIMEOUT, 10);
             $request->send();
+
             return true;
         } catch (CurlException $e) {
             return false;

@@ -44,7 +44,7 @@ class WriteRequestBatch extends AbstractBatchDecorator
      * @param AwsClientInterface $client    Client used to transfer requests
      * @param int                $batchSize Size of each batch. The WriteRequestBatch works most efficiently with a
      *                                      batch size that is a multiple of 25
-     * @param mixed              $notify    Callback to be run after each flush
+     * @param mixed $notify Callback to be run after each flush
      *
      * @return WriteRequestBatch
      */

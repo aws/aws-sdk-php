@@ -63,6 +63,7 @@ class ThrottlingErrorChecker extends AbstractBackoffStrategy
     ) {
         if ($response && $response->isClientError()) {
             $parts = $this->parser->parse($response);
+
             return $parts['code'] == 'ProvisionedThroughputExceededException'
                 || $parts['code'] == 'ThrottlingException' ? true : null;
         }

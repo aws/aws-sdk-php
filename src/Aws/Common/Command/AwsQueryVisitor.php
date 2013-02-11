@@ -25,10 +25,10 @@ class AwsQueryVisitor extends AbstractRequestVisitor
     /**
      * Map nested parameters into the location_key based parameters
      *
-     * @param array    $value  Value to map
+     * @param array     $value  Value to map
      * @param Parameter $param  Parameter that holds information about the current key
-     * @param array    $query  Built up query string values
-     * @param string   $prefix String to prepend to sub query values
+     * @param array     $query  Built up query string values
+     * @param string    $prefix String to prepend to sub query values
      */
     protected function customResolver($value, Parameter $param, array &$query, $prefix = '')
     {

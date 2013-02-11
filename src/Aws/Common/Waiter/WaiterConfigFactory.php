@@ -36,8 +36,8 @@ class WaiterConfigFactory implements WaiterFactoryInterface
     protected $inflector;
 
     /**
-     * @param array                  $config        Array of configuration directives
-     * @param InflectorInterface $inflector  Inflector used to resolve class names
+     * @param array              $config    Array of configuration directives
+     * @param InflectorInterface $inflector Inflector used to resolve class names
      */
     public function __construct(
         array $config,

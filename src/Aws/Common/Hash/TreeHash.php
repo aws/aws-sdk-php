@@ -119,7 +119,7 @@ class TreeHash implements ChunkHashInterface
 
     /**
      * {@inheritdoc}
-     * @throws LogicException if the root tree hash is already calculated
+     * @throws LogicException           if the root tree hash is already calculated
      * @throws InvalidArgumentException if the data is larger than 1MB
      */
     public function addData($data)

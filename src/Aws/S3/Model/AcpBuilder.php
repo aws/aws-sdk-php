@@ -78,8 +78,8 @@ class AcpBuilder
     /**
      * Create and store a Grant with a AmazonCustomerByEmail Grantee for the ACL
      *
-     * @param string $permission  Permission for the Grant
-     * @param string $email       Grantee email address
+     * @param string $permission Permission for the Grant
+     * @param string $email      Grantee email address
      *
      * @return self
      */
@@ -94,8 +94,8 @@ class AcpBuilder
     /**
      * Create and store a Grant with a Group Grantee for the ACL
      *
-     * @param string $permission  Permission for the Grant
-     * @param string $group       Grantee group
+     * @param string $permission Permission for the Grant
+     * @param string $group      Grantee group
      *
      * @return self
      */

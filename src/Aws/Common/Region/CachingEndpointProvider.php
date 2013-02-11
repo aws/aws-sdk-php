@@ -74,6 +74,7 @@ class CachingEndpointProvider implements EndpointProviderInterface
         } else {
             $endpoint = $this->provider->getEndpoint($serviceName, $regionName);
             $this->cache->save($id, $endpoint, 86400);
+
             return $endpoint;
         }
     }

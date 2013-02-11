@@ -151,7 +151,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * {@inheritdoc}
      * @throws MultipartUploadException when an error is encountered. Use getLastException() to get more information.
-     * @throws RuntimeException when attempting to upload an aborted transfer
+     * @throws RuntimeException         when attempting to upload an aborted transfer
      */
     public function upload()
     {

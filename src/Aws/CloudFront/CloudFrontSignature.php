@@ -49,10 +49,10 @@ class CloudFrontSignature implements SignatureInterface
     /**
      * Sign a signature string by applying SHA-1 HMAC hashing.
      *
-     * @param  string               $string      The signature string to hash.
-     * @param  CredentialsInterface $credentials Signing credentials.
+     * @param string               $string      The signature string to hash.
+     * @param CredentialsInterface $credentials Signing credentials.
      *
-     * @return string                            The hashed signature string.
+     * @return string The hashed signature string.
      */
     public function signString($string, CredentialsInterface $credentials)
     {
