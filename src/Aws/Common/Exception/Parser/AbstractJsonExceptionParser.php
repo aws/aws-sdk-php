@@ -43,7 +43,14 @@ abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
         }
 
         // Do additional, protocol-specific parsing and return the result
-        return $this->doParse($data, $response);
+        $data = $this->doParse($data, $response);
+
+        // Remove "Fault" suffix from exception names
+        if (isset($data['code']) && strpos($data['code'], 'Fault')) {
+            $data['code'] = preg_replace('/^([a-zA-Z]+)Fault$/', '$1', $data['code']);
+        }
+
+        return $data;
     }
 
     /**

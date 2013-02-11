@@ -51,7 +51,7 @@ class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
         $response = Response::fromMessage(
             "HTTP/1.1 500 Internal Server Error\r\n" .
             "x-amzn-requestid: 123\r\n\r\n" .
-            '{ "__Type": "abc#baz", "Message": "dolor" }'
+            '{ "__Type": "abc#bazFault", "Message": "dolor" }'
         );
 
         $parser = new JsonQueryExceptionParser();
@@ -61,7 +61,7 @@ class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
             'type'       => 'server',
             'request_id' => '123',
             'parsed'     => array(
-                '__type'  => 'abc#baz',
+                '__type'  => 'abc#bazFault',
                 'message' => 'dolor'
             )
         ), $parser->parse($response));

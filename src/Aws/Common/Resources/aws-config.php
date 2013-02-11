@@ -128,5 +128,11 @@ return array(
             'extends' => 'default_settings',
             'class'   => 'Aws\Sts\StsClient'
         ),
+
+        'swf' => array(
+            'alias'   => 'Swf',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Swf\SwfClient'
+        ),
     )
 );

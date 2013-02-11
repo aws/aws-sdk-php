@@ -34,6 +34,7 @@ AWS SDK for PHP 2
     service-sns
     service-sqs
     service-sts
+    service-swf
 
 The **AWS SDK for PHP** enables PHP developers to easily interface with AWS services and build solutions with Amazon
 Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP, developers can
@@ -78,3 +79,4 @@ Supported services
 * :doc:`service-sns`
 * :doc:`service-sqs`
 * :doc:`service-sts`
+* :doc:`service-swf`
