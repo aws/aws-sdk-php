@@ -5393,8 +5393,6 @@ return array (
                 'limit_key' => 'maximumPageSize',
                 'result_key' => 'typeInfos',
             ),
-            'PollForActivityTask' => array(
-            ),
             'PollForDecisionTask' => array(
                 'token_param' => 'nextPageToken',
                 'token_key' => 'nextPageToken',
