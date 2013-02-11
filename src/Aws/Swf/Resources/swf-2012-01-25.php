@@ -1388,6 +1388,12 @@ return array (
                     'location' => 'header',
                     'default' => 'SimpleWorkflowService.PollForActivityTask',
                 ),
+                'curl.options' => array(
+                    'static' => true,
+                    'default' => array(
+                        'CURLOPT_TIMEOUT' => 70,
+                    ),
+                ),
                 'domain' => array(
                     'required' => true,
                     'description' => 'The name of the domain that contains the task lists being polled.',
@@ -1448,6 +1454,12 @@ return array (
                     'static' => true,
                     'location' => 'header',
                     'default' => 'SimpleWorkflowService.PollForDecisionTask',
+                ),
+                'curl.options' => array(
+                    'static' => true,
+                    'default' => array(
+                        'CURLOPT_TIMEOUT' => 70,
+                    ),
                 ),
                 'domain' => array(
                     'required' => true,
@@ -5380,6 +5392,8 @@ return array (
                 'token_key' => 'nextPageToken',
                 'limit_key' => 'maximumPageSize',
                 'result_key' => 'typeInfos',
+            ),
+            'PollForActivityTask' => array(
             ),
             'PollForDecisionTask' => array(
                 'token_param' => 'nextPageToken',
