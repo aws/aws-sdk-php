@@ -21,50 +21,51 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 
 /**
  * Client to interact with AWS OpsWorks
  *
- * @method Model cloneStack(array $args = array()) {@command opsworks CloneStack}
- * @method Model createApp(array $args = array()) {@command opsworks CreateApp}
- * @method Model createDeployment(array $args = array()) {@command opsworks CreateDeployment}
- * @method Model createInstance(array $args = array()) {@command opsworks CreateInstance}
- * @method Model createLayer(array $args = array()) {@command opsworks CreateLayer}
- * @method Model createStack(array $args = array()) {@command opsworks CreateStack}
- * @method Model createUser(array $args = array()) {@command opsworks CreateUser}
- * @method Model deleteApp(array $args = array()) {@command opsworks DeleteApp}
- * @method Model deleteInstance(array $args = array()) {@command opsworks DeleteInstance}
- * @method Model deleteLayer(array $args = array()) {@command opsworks DeleteLayer}
- * @method Model deleteStack(array $args = array()) {@command opsworks DeleteStack}
- * @method Model deleteUser(array $args = array()) {@command opsworks DeleteUser}
- * @method Model describeApps(array $args = array()) {@command opsworks DescribeApps}
- * @method Model describeCommands(array $args = array()) {@command opsworks DescribeCommands}
- * @method Model describeDeployments(array $args = array()) {@command opsworks DescribeDeployments}
- * @method Model describeElasticIps(array $args = array()) {@command opsworks DescribeElasticIps}
- * @method Model describeInstances(array $args = array()) {@command opsworks DescribeInstances}
- * @method Model describeLayers(array $args = array()) {@command opsworks DescribeLayers}
- * @method Model describeLoadBasedAutoScaling(array $args = array()) {@command opsworks DescribeLoadBasedAutoScaling}
- * @method Model describePermissions(array $args = array()) {@command opsworks DescribePermissions}
- * @method Model describeRaidArrays(array $args = array()) {@command opsworks DescribeRaidArrays}
- * @method Model describeSshKeys(array $args = array()) {@command opsworks DescribeSshKeys}
- * @method Model describeStacks(array $args = array()) {@command opsworks DescribeStacks}
- * @method Model describeTimeBasedAutoScaling(array $args = array()) {@command opsworks DescribeTimeBasedAutoScaling}
- * @method Model describeUsers(array $args = array()) {@command opsworks DescribeUsers}
- * @method Model describeVolumes(array $args = array()) {@command opsworks DescribeVolumes}
- * @method Model getHostnameSuggestion(array $args = array()) {@command opsworks GetHostnameSuggestion}
- * @method Model rebootInstance(array $args = array()) {@command opsworks RebootInstance}
- * @method Model setLoadBasedAutoScaling(array $args = array()) {@command opsworks SetLoadBasedAutoScaling}
- * @method Model setPermission(array $args = array()) {@command opsworks SetPermission}
- * @method Model setTimeBasedAutoScaling(array $args = array()) {@command opsworks SetTimeBasedAutoScaling}
- * @method Model startInstance(array $args = array()) {@command opsworks StartInstance}
- * @method Model startStack(array $args = array()) {@command opsworks StartStack}
- * @method Model stopInstance(array $args = array()) {@command opsworks StopInstance}
- * @method Model stopStack(array $args = array()) {@command opsworks StopStack}
- * @method Model updateApp(array $args = array()) {@command opsworks UpdateApp}
- * @method Model updateInstance(array $args = array()) {@command opsworks UpdateInstance}
- * @method Model updateLayer(array $args = array()) {@command opsworks UpdateLayer}
- * @method Model updateStack(array $args = array()) {@command opsworks UpdateStack}
- * @method Model updateUser(array $args = array()) {@command opsworks UpdateUser}
+ * @method Model cloneStack(array $args = array()) {@command OpsWorks CloneStack}
+ * @method Model createApp(array $args = array()) {@command OpsWorks CreateApp}
+ * @method Model createDeployment(array $args = array()) {@command OpsWorks CreateDeployment}
+ * @method Model createInstance(array $args = array()) {@command OpsWorks CreateInstance}
+ * @method Model createLayer(array $args = array()) {@command OpsWorks CreateLayer}
+ * @method Model createStack(array $args = array()) {@command OpsWorks CreateStack}
+ * @method Model createUserProfile(array $args = array()) {@command OpsWorks CreateUserProfile}
+ * @method Model deleteApp(array $args = array()) {@command OpsWorks DeleteApp}
+ * @method Model deleteInstance(array $args = array()) {@command OpsWorks DeleteInstance}
+ * @method Model deleteLayer(array $args = array()) {@command OpsWorks DeleteLayer}
+ * @method Model deleteStack(array $args = array()) {@command OpsWorks DeleteStack}
+ * @method Model deleteUserProfile(array $args = array()) {@command OpsWorks DeleteUserProfile}
+ * @method Model describeApps(array $args = array()) {@command OpsWorks DescribeApps}
+ * @method Model describeCommands(array $args = array()) {@command OpsWorks DescribeCommands}
+ * @method Model describeDeployments(array $args = array()) {@command OpsWorks DescribeDeployments}
+ * @method Model describeElasticIps(array $args = array()) {@command OpsWorks DescribeElasticIps}
+ * @method Model describeInstances(array $args = array()) {@command OpsWorks DescribeInstances}
+ * @method Model describeLayers(array $args = array()) {@command OpsWorks DescribeLayers}
+ * @method Model describeLoadBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeLoadBasedAutoScaling}
+ * @method Model describePermissions(array $args = array()) {@command OpsWorks DescribePermissions}
+ * @method Model describeRaidArrays(array $args = array()) {@command OpsWorks DescribeRaidArrays}
+ * @method Model describeServiceErrors(array $args = array()) {@command OpsWorks DescribeServiceErrors}
+ * @method Model describeStacks(array $args = array()) {@command OpsWorks DescribeStacks}
+ * @method Model describeTimeBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeTimeBasedAutoScaling}
+ * @method Model describeUserProfiles(array $args = array()) {@command OpsWorks DescribeUserProfiles}
+ * @method Model describeVolumes(array $args = array()) {@command OpsWorks DescribeVolumes}
+ * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
+ * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
+ * @method Model setLoadBasedAutoScaling(array $args = array()) {@command OpsWorks SetLoadBasedAutoScaling}
+ * @method Model setPermission(array $args = array()) {@command OpsWorks SetPermission}
+ * @method Model setTimeBasedAutoScaling(array $args = array()) {@command OpsWorks SetTimeBasedAutoScaling}
+ * @method Model startInstance(array $args = array()) {@command OpsWorks StartInstance}
+ * @method Model startStack(array $args = array()) {@command OpsWorks StartStack}
+ * @method Model stopInstance(array $args = array()) {@command OpsWorks StopInstance}
+ * @method Model stopStack(array $args = array()) {@command OpsWorks StopStack}
+ * @method Model updateApp(array $args = array()) {@command OpsWorks UpdateApp}
+ * @method Model updateInstance(array $args = array()) {@command OpsWorks UpdateInstance}
+ * @method Model updateLayer(array $args = array()) {@command OpsWorks UpdateLayer}
+ * @method Model updateStack(array $args = array()) {@command OpsWorks UpdateStack}
+ * @method Model updateUserProfile(array $args = array()) {@command OpsWorks UpdateUserProfile}
  */
 class OpsWorksClient extends AbstractClient
 {
@@ -111,8 +112,9 @@ class OpsWorksClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/-2013-02-18.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/opsworks-2013-02-18.php'
             ))
+            ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();
     }
 }

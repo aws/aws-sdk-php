@@ -93,6 +93,12 @@ return array(
             'class'   => 'Aws\Rds\RdsClient'
         ),
 
+        'opsworks' => array(
+            'alias'   => 'OpsWorks',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\OpsWorks\OpsWorksClient'
+        ),
+
         'redshift' => array(
             'alias'   => 'Redshift',
             'extends' => 'default_settings',

@@ -27,6 +27,7 @@ AWS SDK for PHP 2
     service-elastictranscoder
     service-glacier
     service-iam
+    service-opsworks
     service-redshift
     service-route53
     service-s3
@@ -73,6 +74,7 @@ Supported services
 * :doc:`service-elastictranscoder`
 * :doc:`service-glacier`
 * :doc:`service-iam`
+* :doc:`service-opsworks`
 * :doc:`service-redshift`
 * :doc:`service-route53`
 * :doc:`service-s3`
