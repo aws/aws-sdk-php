@@ -20,7 +20,7 @@ return array (
     'serviceFullName' => 'Elastic Load Balancing',
     'serviceType' => 'query',
     'resultWrapped' => true,
-    'signatureVersion' => 'v2',
+    'signatureVersion' => 'v4',
     'memberedLists' => true,
     'namespace' => 'ElasticLoadBalancing',
     'operations' => array(
