@@ -83,17 +83,6 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
                     )
                 ), "GET\n\n\nWed, 28 Mar 2007 01:29:59 +0000\n/"
             ),
-            // GET a file from a path hosted bucket with unicode characters
-            array(
-                array(
-                    'verb' => 'GET',
-                    'path' => '/dictionary/fran%C3%A7ais/pr%C3%A9f%C3%A8re',
-                    'headers' => array(
-                        'Host' => 's3.amazonaws.com',
-                        'Date' => 'Wed, 28 Mar 2007 01:49:49 +0000'
-                    )
-                ), "GET\n\n\nWed, 28 Mar 2007 01:49:49 +0000\n/dictionary/fran%25C3%25A7ais/pr%25c3%25a9f%25c3%25a8re"
-            ),
             // GET the ACL of a virtual hosted bucket
             array(
                 array(
