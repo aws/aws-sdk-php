@@ -289,7 +289,8 @@ class S3Client extends AbstractClient
 
         $copy = clone $request;
 
-        // URL encode the path segment of the URL to match the urlencoding of encodeKey()
+        // URL encoding already occurs in the URI template expansion. Undo that and encode using the same encoding as
+        // GET object, PUT object, etc.
         $path = $this->encodeKey(rawurldecode($copy->getPath()));
         $copy->setPath($path);
 

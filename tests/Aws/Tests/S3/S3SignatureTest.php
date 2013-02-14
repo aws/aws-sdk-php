@@ -92,7 +92,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
                         'Host' => 's3.amazonaws.com',
                         'Date' => 'Wed, 28 Mar 2007 01:49:49 +0000'
                     )
-                ), "GET\n\n\nWed, 28 Mar 2007 01:49:49 +0000\n/dictionary/fran%C3%A7ais/pr%c3%a9f%c3%a8re"
+                ), "GET\n\n\nWed, 28 Mar 2007 01:49:49 +0000\n/dictionary/fran%25C3%25A7ais/pr%25c3%25a9f%25c3%25a8re"
             ),
             // GET the ACL of a virtual hosted bucket
             array(
