@@ -678,9 +678,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testPutAndListObjects
      */
-    public function testPreSignedUrlAllowsSpecialCharacters()
+    public function testPreSignedUrlAllowsLiterals()
     {
-        self::log('Uploading an object with a space in the key');
+        self::log('Uploading an object with a space in the key and literals');
         $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
         $key = 'foo baz%20bar!';
         $this->client->putObject(array(
@@ -689,14 +689,38 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'Body'   => 'hi'
         ));
         $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
+        self::log('Creating an downloading using a pre-signed URL');
+        $extra = urlencode("attachment; filename=\"{$key}\"");
+        $encodedKey = rawurlencode($key);
+        $request = $this->client->get("{$this->bucket}/{$encodedKey}?response-content-disposition={$extra}");
+        $url = $this->client->createPresignedUrl($request, '+10 minutes');
+        self::log($url);
+        $client = new Client();
+        $this->assertEquals('hi', file_get_contents($url));
+        $this->assertEquals('hi', $client->get($url)->send()->getBody(true));
+    }
 
+    /**
+     * @depends testPutAndListObjects
+     */
+    public function testPreSignedUrlAllowsSpecialCharacters()
+    {
+        self::log('Uploading an object with a space in the key');
+        $this->client->waitUntil('bucket_exists', array('Bucket' => $this->bucket));
+        $key = 'foo baz bar!';
+        $this->client->putObject(array(
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+            'Body'   => 'hi'
+        ));
+        $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
         self::log('Creating an downloading using a pre-signed URL');
         $extra = urlencode("attachment; filename=\"{$key}\"");
         $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$extra}");
         $url = $this->client->createPresignedUrl($request, '+10 minutes');
         self::log($url);
         $client = new Client();
-        $this->assertEquals('hi', $client->get($url)->send()->getBody(true));
         $this->assertEquals('hi', file_get_contents($url));
+        $this->assertEquals('hi', $client->get($url)->send()->getBody(true));
     }
 }
