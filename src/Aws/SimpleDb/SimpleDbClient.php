@@ -25,16 +25,16 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon SimpleDB
  *
- * @method Model batchDeleteAttributes(array $args = array()) {@command sdb BatchDeleteAttributes}
- * @method Model batchPutAttributes(array $args = array()) {@command sdb BatchPutAttributes}
- * @method Model createDomain(array $args = array()) {@command sdb CreateDomain}
- * @method Model deleteAttributes(array $args = array()) {@command sdb DeleteAttributes}
- * @method Model deleteDomain(array $args = array()) {@command sdb DeleteDomain}
- * @method Model domainMetadata(array $args = array()) {@command sdb DomainMetadata}
- * @method Model getAttributes(array $args = array()) {@command sdb GetAttributes}
- * @method Model listDomains(array $args = array()) {@command sdb ListDomains}
- * @method Model putAttributes(array $args = array()) {@command sdb PutAttributes}
- * @method Model select(array $args = array()) {@command sdb Select}
+ * @method Model batchDeleteAttributes(array $args = array()) {@command simpledb BatchDeleteAttributes}
+ * @method Model batchPutAttributes(array $args = array()) {@command simpledb BatchPutAttributes}
+ * @method Model createDomain(array $args = array()) {@command simpledb CreateDomain}
+ * @method Model deleteAttributes(array $args = array()) {@command simpledb DeleteAttributes}
+ * @method Model deleteDomain(array $args = array()) {@command simpledb DeleteDomain}
+ * @method Model domainMetadata(array $args = array()) {@command simpledb DomainMetadata}
+ * @method Model getAttributes(array $args = array()) {@command simpledb GetAttributes}
+ * @method Model listDomains(array $args = array()) {@command simpledb ListDomains}
+ * @method Model putAttributes(array $args = array()) {@command simpledb PutAttributes}
+ * @method Model select(array $args = array()) {@command simpledb Select}
  */
 class SimpleDbClient extends AbstractClient
 {
@@ -81,7 +81,7 @@ class SimpleDbClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sdb-2009-04-15.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/simpledb-2009-04-15.php'
             ))
             ->setIteratorsConfig(array(
                 'token_key' => 'NextToken',

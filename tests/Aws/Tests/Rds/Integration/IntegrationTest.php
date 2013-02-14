@@ -28,14 +28,61 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     protected $client;
 
+    public static function setUpBeforeClass()
+    {
+        self::log('Cleaning up previously created security groups');
+        $client = self::getServiceBuilder()->get('rds');
+        try {
+            $result = $client->deleteDBSecurityGroup(array(
+                'DBSecurityGroupName' => 'integfoo'
+            ));
+        } catch (\Exception $e) {
+            // Ignore
+        }
+    }
+
     public function setUp()
     {
         $this->client = $this->getServiceBuilder()->get('rds');
     }
 
-    public function testDescribesEngineVersions()
+    public function testEnsuresListsAreParsedCorrectly()
     {
-        $i = $this->client->getIterator('DescribeDBEngineVersions');
-        var_export(iterator_to_array($i));
+        $results = $this->client->getIterator('DescribeDBEngineVersions');
+        foreach ($results as $result) {
+            $this->assertArrayHasKey('DBParameterGroupFamily', $result);
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Rds\Exception\DBInstanceNotFoundException
+     * @expectedExceptionMessage DBInstance foo-123-na not found
+     */
+    public function testParsesErrors()
+    {
+        $this->client->deleteDBInstance(array(
+            'DBInstanceIdentifier' => 'foo-123-na'
+        ));
+    }
+
+    public function testCreatesSecurityGroup()
+    {
+        $result = $this->client->createDBSecurityGroup(array(
+            'DBSecurityGroupName' => 'integfoo',
+            'DBSecurityGroupDescription' => 'Integ test'
+        ));
+        var_export($result->toArray());
+        $this->assertArrayHasKey('OwnerId', $result->toArray());
+    }
+
+    /**
+     * @depends testCreatesSecurityGroup
+     */
+    public function testDeletesSecurityGroups()
+    {
+        $result = $this->client->deleteDBSecurityGroup(array(
+            'DBSecurityGroupName' => 'integfoo'
+        ));
+        var_export($result->toArray());
     }
 }

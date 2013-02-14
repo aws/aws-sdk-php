@@ -22,7 +22,6 @@ return array (
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v2',
-    'memberedLists' => true,
     'namespace' => 'Rds',
     'operations' => array(
         'AuthorizeDBSecurityGroupIngress' => array(
@@ -72,16 +71,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidDBSecurityGroupStateFaultException',
+                    'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
-                    'class' => 'AuthorizationAlreadyExistsFaultException',
+                    'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'AuthorizationQuotaExceededFaultException',
+                    'class' => 'AuthorizationQuotaExceededException',
                 ),
             ),
         ),
@@ -118,16 +117,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSnapshotAlreadyExistsFaultException',
+                    'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'DBSnapshotNotFoundFaultException',
+                    'class' => 'DBSnapshotNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidDBSnapshotStateFaultException',
+                    'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
-                    'class' => 'SnapshotQuotaExceededFaultException',
+                    'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
         ),
@@ -270,34 +269,34 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBInstanceAlreadyExistsFaultException',
+                    'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'InsufficientDBInstanceCapacityFaultException',
+                    'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InstanceQuotaExceededFaultException',
+                    'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'class' => 'StorageQuotaExceededFaultException',
+                    'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidVPCNetworkStateFaultException',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
-                    'class' => 'ProvisionedIopsNotAvailableInAZFaultException',
+                    'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -359,40 +358,40 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBInstanceAlreadyExistsFaultException',
+                    'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'InsufficientDBInstanceCapacityFaultException',
+                    'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InstanceQuotaExceededFaultException',
+                    'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'class' => 'StorageQuotaExceededFaultException',
+                    'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidDBInstanceStateFaultException',
+                    'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidVPCNetworkStateFaultException',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
-                    'class' => 'ProvisionedIopsNotAvailableInAZFaultException',
+                    'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -435,10 +434,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBParameterGroupQuotaExceededFaultException',
+                    'class' => 'DBParameterGroupQuotaExceededException',
                 ),
                 array(
-                    'class' => 'DBParameterGroupAlreadyExistsFaultException',
+                    'class' => 'DBParameterGroupAlreadyExistsException',
                 ),
             ),
         ),
@@ -480,10 +479,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSecurityGroupAlreadyExistsFaultException',
+                    'class' => 'DBSecurityGroupAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'DBSecurityGroupQuotaExceededFaultException',
+                    'class' => 'DBSecurityGroupQuotaExceededException',
                 ),
             ),
         ),
@@ -520,16 +519,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSnapshotAlreadyExistsFaultException',
+                    'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'InvalidDBInstanceStateFaultException',
+                    'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'class' => 'SnapshotQuotaExceededFaultException',
+                    'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
         ),
@@ -577,13 +576,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSubnetGroupAlreadyExistsFaultException',
+                    'class' => 'DBSubnetGroupAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'DBSubnetGroupQuotaExceededFaultException',
+                    'class' => 'DBSubnetGroupQuotaExceededException',
                 ),
                 array(
-                    'class' => 'DBSubnetQuotaExceededFaultException',
+                    'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
@@ -638,10 +637,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'OptionGroupAlreadyExistsFaultException',
+                    'class' => 'OptionGroupAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'OptionGroupQuotaExceededFaultException',
+                    'class' => 'OptionGroupQuotaExceededException',
                 ),
             ),
         ),
@@ -683,16 +682,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidDBInstanceStateFaultException',
+                    'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'class' => 'DBSnapshotAlreadyExistsFaultException',
+                    'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'SnapshotQuotaExceededFaultException',
+                    'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
         ),
@@ -723,10 +722,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBParameterGroupStateFaultException',
+                    'class' => 'InvalidDBParameterGroupStateException',
                 ),
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -757,10 +756,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBSecurityGroupStateFaultException',
+                    'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
         ),
@@ -791,10 +790,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBSnapshotStateFaultException',
+                    'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
-                    'class' => 'DBSnapshotNotFoundFaultException',
+                    'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
         ),
@@ -825,13 +824,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBSubnetGroupStateFaultException',
+                    'class' => 'InvalidDBSubnetGroupStateException',
                 ),
                 array(
-                    'class' => 'InvalidDBSubnetStateFaultException',
+                    'class' => 'InvalidDBSubnetStateException',
                 ),
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
             ),
         ),
@@ -862,10 +861,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidOptionGroupStateFaultException',
+                    'class' => 'InvalidOptionGroupStateException',
                 ),
             ),
         ),
@@ -962,7 +961,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
             ),
         ),
@@ -1002,7 +1001,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -1048,7 +1047,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -1088,7 +1087,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
         ),
@@ -1138,7 +1137,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSnapshotNotFoundFaultException',
+                    'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
         ),
@@ -1178,7 +1177,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
             ),
         ),
@@ -1372,7 +1371,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -1494,7 +1493,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ReservedDBInstanceNotFoundFaultException',
+                    'class' => 'ReservedDBInstanceNotFoundException',
                 ),
             ),
         ),
@@ -1560,7 +1559,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ReservedDBInstancesOfferingNotFoundFaultException',
+                    'class' => 'ReservedDBInstancesOfferingNotFoundException',
                 ),
             ),
         ),
@@ -1670,31 +1669,31 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBInstanceStateFaultException',
+                    'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'class' => 'InvalidDBSecurityGroupStateFaultException',
+                    'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InsufficientDBInstanceCapacityFaultException',
+                    'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'class' => 'StorageQuotaExceededFaultException',
+                    'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'class' => 'InvalidVPCNetworkStateFaultException',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -1784,10 +1783,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidDBParameterGroupStateFaultException',
+                    'class' => 'InvalidDBParameterGroupStateException',
                 ),
             ),
         ),
@@ -1834,10 +1833,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'DBSubnetQuotaExceededFaultException',
+                    'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
                     'class' => 'SubnetAlreadyInUseException',
@@ -1920,10 +1919,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidOptionGroupStateFaultException',
+                    'class' => 'InvalidOptionGroupStateException',
                 ),
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -1964,13 +1963,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ReservedDBInstancesOfferingNotFoundFaultException',
+                    'class' => 'ReservedDBInstancesOfferingNotFoundException',
                 ),
                 array(
-                    'class' => 'ReservedDBInstanceAlreadyExistsFaultException',
+                    'class' => 'ReservedDBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ReservedDBInstanceQuotaExceededFaultException',
+                    'class' => 'ReservedDBInstanceQuotaExceededException',
                 ),
             ),
         ),
@@ -2007,10 +2006,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBInstanceStateFaultException',
+                    'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
             ),
         ),
@@ -2105,10 +2104,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidDBParameterGroupStateFaultException',
+                    'class' => 'InvalidDBParameterGroupStateException',
                 ),
                 array(
-                    'class' => 'DBParameterGroupNotFoundFaultException',
+                    'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -2196,34 +2195,34 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBInstanceAlreadyExistsFaultException',
+                    'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'DBSnapshotNotFoundFaultException',
+                    'class' => 'DBSnapshotNotFoundException',
                 ),
                 array(
-                    'class' => 'InstanceQuotaExceededFaultException',
+                    'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'class' => 'InsufficientDBInstanceCapacityFaultException',
+                    'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'class' => 'InvalidDBSnapshotStateFaultException',
+                    'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
-                    'class' => 'StorageQuotaExceededFaultException',
+                    'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'class' => 'InvalidVPCNetworkStateFaultException',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
-                    'class' => 'InvalidRestoreFaultException',
+                    'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -2327,37 +2326,37 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBInstanceAlreadyExistsFaultException',
+                    'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'DBInstanceNotFoundFaultException',
+                    'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'class' => 'InstanceQuotaExceededFaultException',
+                    'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'class' => 'InsufficientDBInstanceCapacityFaultException',
+                    'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'class' => 'InvalidDBInstanceStateFaultException',
+                    'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'class' => 'PointInTimeRestoreNotEnabledFaultException',
+                    'class' => 'PointInTimeRestoreNotEnabledException',
                 ),
                 array(
-                    'class' => 'StorageQuotaExceededFaultException',
+                    'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'class' => 'InvalidVPCNetworkStateFaultException',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
-                    'class' => 'InvalidRestoreFaultException',
+                    'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'class' => 'DBSubnetGroupNotFoundFaultException',
+                    'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'OptionGroupNotFoundFaultException',
+                    'class' => 'OptionGroupNotFoundException',
                 ),
             ),
         ),
@@ -2408,13 +2407,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DBSecurityGroupNotFoundFaultException',
+                    'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'AuthorizationNotFoundFaultException',
+                    'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidDBSecurityGroupStateFaultException',
+                    'class' => 'InvalidDBSecurityGroupStateException',
                 ),
             ),
         ),
@@ -2452,7 +2451,7 @@ return array (
                         'name' => 'EC2SecurityGroup',
                         'description' => 'This data type is used as a response element in the following actions:',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'EC2SecurityGroup',
                         'properties' => array(
                             'Status' => array(
                                 'description' => 'Provides the status of the EC2 security group.',
@@ -2481,7 +2480,7 @@ return array (
                         'name' => 'IPRange',
                         'description' => 'This data type is used as a response element in the DescribeDBSecurityGroups action.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'IPRange',
                         'properties' => array(
                             'Status' => array(
                                 'description' => 'Specifies the status of the IP range.',
@@ -2649,7 +2648,7 @@ return array (
                         'name' => 'DBSecurityGroup',
                         'description' => 'This data type is used as a response element in the following actions:',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBSecurityGroup',
                         'properties' => array(
                             'DBSecurityGroupName' => array(
                                 'description' => 'The name of the DB Security Group.',
@@ -2670,7 +2669,7 @@ return array (
                         'name' => 'DBParameterGroup',
                         'description' => 'The status of the DB Parameter Group.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBParameterGroup',
                         'properties' => array(
                             'DBParameterGroupName' => array(
                                 'description' => 'The name of the DP Parameter Group.',
@@ -2716,7 +2715,7 @@ return array (
                                 'name' => 'Subnet',
                                 'description' => 'This data type is used as a response element in the DescribeDBSubnetGroups action.',
                                 'type' => 'object',
-                                'sentAs' => 'member',
+                                'sentAs' => 'Subnet',
                                 'properties' => array(
                                     'SubnetIdentifier' => array(
                                         'description' => 'Specifies the identifier of the subnet.',
@@ -2812,7 +2811,7 @@ return array (
                     'items' => array(
                         'name' => 'ReadReplicaDBInstanceIdentifier',
                         'type' => 'string',
-                        'sentAs' => 'member',
+                        'sentAs' => 'ReadReplicaDBInstanceIdentifier',
                     ),
                 ),
                 'LicenseModel' => array(
@@ -2895,7 +2894,7 @@ return array (
                         'name' => 'Subnet',
                         'description' => 'This data type is used as a response element in the DescribeDBSubnetGroups action.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'Subnet',
                         'properties' => array(
                             'SubnetIdentifier' => array(
                                 'description' => 'Specifies the identifier of the subnet.',
@@ -2948,7 +2947,7 @@ return array (
                     'items' => array(
                         'name' => 'Option',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'Option',
                         'properties' => array(
                             'OptionName' => array(
                                 'description' => 'The name of the option.',
@@ -2968,7 +2967,7 @@ return array (
                                     'name' => 'DBSecurityGroup',
                                     'description' => 'This data type is used as a response element in the following actions:',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'DBSecurityGroup',
                                     'properties' => array(
                                         'DBSecurityGroupName' => array(
                                             'description' => 'The name of the DB Security Group.',
@@ -3007,7 +3006,7 @@ return array (
                         'name' => 'DBEngineVersion',
                         'description' => 'This data type is used as a response element in the action DescribeDBEngineVersions.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBEngineVersion',
                         'properties' => array(
                             'Engine' => array(
                                 'description' => 'The name of the database engine.',
@@ -3036,7 +3035,7 @@ return array (
                                     'name' => 'CharacterSet',
                                     'description' => 'This data type is used as a response element in the action DescribeDBEngineVersions.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'CharacterSet',
                                     'properties' => array(
                                         'CharacterSetName' => array(
                                             'description' => 'The name of the character set.',
@@ -3071,7 +3070,7 @@ return array (
                         'name' => 'DBInstance',
                         'description' => 'Contains the result of a successful invocation of the following actions:',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBInstance',
                         'properties' => array(
                             'DBInstanceIdentifier' => array(
                                 'description' => 'Contains a user-supplied database identifier. This is the unique key that identifies a DB Instance.',
@@ -3134,7 +3133,7 @@ return array (
                                     'name' => 'DBSecurityGroup',
                                     'description' => 'This data type is used as a response element in the following actions:',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'DBSecurityGroup',
                                     'properties' => array(
                                         'DBSecurityGroupName' => array(
                                             'description' => 'The name of the DB Security Group.',
@@ -3154,7 +3153,7 @@ return array (
                                     'name' => 'DBParameterGroup',
                                     'description' => 'The status of the DB Parameter Group.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'DBParameterGroup',
                                     'properties' => array(
                                         'DBParameterGroupName' => array(
                                             'description' => 'The name of the DP Parameter Group.',
@@ -3198,7 +3197,7 @@ return array (
                                             'name' => 'Subnet',
                                             'description' => 'This data type is used as a response element in the DescribeDBSubnetGroups action.',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
+                                            'sentAs' => 'Subnet',
                                             'properties' => array(
                                                 'SubnetIdentifier' => array(
                                                     'description' => 'Specifies the identifier of the subnet.',
@@ -3286,7 +3285,7 @@ return array (
                                 'items' => array(
                                     'name' => 'ReadReplicaDBInstanceIdentifier',
                                     'type' => 'string',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'ReadReplicaDBInstanceIdentifier',
                                 ),
                             ),
                             'LicenseModel' => array(
@@ -3333,7 +3332,7 @@ return array (
                         'name' => 'DBParameterGroup',
                         'description' => 'Contains the result of a successful invocation of the CreateDBParameterGroup action.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBParameterGroup',
                         'properties' => array(
                             'DBParameterGroupName' => array(
                                 'description' => 'Provides the name of the DB Parameter Group.',
@@ -3364,7 +3363,7 @@ return array (
                         'name' => 'Parameter',
                         'description' => 'This data type is used as a request parameter in the ModifyDBParameterGroup and ResetDBParameterGroup actions.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'Parameter',
                         'properties' => array(
                             'ParameterName' => array(
                                 'description' => 'Specifies the name of the parameter.',
@@ -3433,7 +3432,7 @@ return array (
                         'name' => 'DBSecurityGroup',
                         'description' => 'Contains the result of a successful invocation of the following actions:',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBSecurityGroup',
                         'properties' => array(
                             'OwnerId' => array(
                                 'description' => 'Provides the AWS ID of the owner of a specific DB Security Group.',
@@ -3458,7 +3457,7 @@ return array (
                                     'name' => 'EC2SecurityGroup',
                                     'description' => 'This data type is used as a response element in the following actions:',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'EC2SecurityGroup',
                                     'properties' => array(
                                         'Status' => array(
                                             'description' => 'Provides the status of the EC2 security group.',
@@ -3486,7 +3485,7 @@ return array (
                                     'name' => 'IPRange',
                                     'description' => 'This data type is used as a response element in the DescribeDBSecurityGroups action.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'IPRange',
                                     'properties' => array(
                                         'Status' => array(
                                             'description' => 'Specifies the status of the IP range.',
@@ -3521,7 +3520,7 @@ return array (
                         'name' => 'DBSnapshot',
                         'description' => 'Contains the result of a successful invocation of the following actions:',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBSnapshot',
                         'properties' => array(
                             'DBSnapshotIdentifier' => array(
                                 'description' => 'Specifies the identifier for the DB Snapshot.',
@@ -3601,7 +3600,7 @@ return array (
                         'name' => 'DBSubnetGroup',
                         'description' => 'Contains the result of a successful invocation of the following actions:',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'DBSubnetGroup',
                         'properties' => array(
                             'DBSubnetGroupName' => array(
                                 'description' => 'Specifies the name of the DB Subnet Group.',
@@ -3626,7 +3625,7 @@ return array (
                                     'name' => 'Subnet',
                                     'description' => 'This data type is used as a response element in the DescribeDBSubnetGroups action.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'Subnet',
                                     'properties' => array(
                                         'SubnetIdentifier' => array(
                                             'description' => 'Specifies the identifier of the subnet.',
@@ -3675,7 +3674,7 @@ return array (
                         'name' => 'Parameter',
                         'description' => 'This data type is used as a request parameter in the ModifyDBParameterGroup and ResetDBParameterGroup actions.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'Parameter',
                         'properties' => array(
                             'ParameterName' => array(
                                 'description' => 'Specifies the name of the parameter.',
@@ -3739,7 +3738,7 @@ return array (
                         'name' => 'Event',
                         'description' => 'This data type is used as a response element in the DescribeEvents action.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'Event',
                         'properties' => array(
                             'SourceIdentifier' => array(
                                 'description' => 'Provides the identifier for the source of the event.',
@@ -3773,7 +3772,7 @@ return array (
                         'name' => 'OptionGroupOption',
                         'description' => 'Available option.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'OptionGroupOption',
                         'properties' => array(
                             'Name' => array(
                                 'description' => 'The name of the option.',
@@ -3809,7 +3808,7 @@ return array (
                                 'items' => array(
                                     'name' => 'OptionName',
                                     'type' => 'string',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'OptionName',
                                 ),
                             ),
                         ),
@@ -3832,7 +3831,7 @@ return array (
                     'items' => array(
                         'name' => 'OptionGroup',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'OptionGroup',
                         'properties' => array(
                             'OptionGroupName' => array(
                                 'description' => 'Specifies the name of the option group.',
@@ -3854,7 +3853,7 @@ return array (
                                 'items' => array(
                                     'name' => 'Option',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'Option',
                                     'properties' => array(
                                         'OptionName' => array(
                                             'description' => 'The name of the option.',
@@ -3874,7 +3873,7 @@ return array (
                                                 'name' => 'DBSecurityGroup',
                                                 'description' => 'This data type is used as a response element in the following actions:',
                                                 'type' => 'object',
-                                                'sentAs' => 'member',
+                                                'sentAs' => 'DBSecurityGroup',
                                                 'properties' => array(
                                                     'DBSecurityGroupName' => array(
                                                         'description' => 'The name of the DB Security Group.',
@@ -3911,7 +3910,7 @@ return array (
                         'name' => 'OrderableDBInstanceOption',
                         'description' => 'Contains a list of available options for a DB Instance',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'OrderableDBInstanceOption',
                         'properties' => array(
                             'Engine' => array(
                                 'description' => 'The engine type of the orderable DB Instance.',
@@ -3936,7 +3935,7 @@ return array (
                                     'name' => 'AvailabilityZone',
                                     'description' => 'Contains Availability Zone information.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'AvailabilityZone',
                                     'properties' => array(
                                         'Name' => array(
                                             'description' => 'The name of the availability zone.',
@@ -3992,7 +3991,7 @@ return array (
                         'name' => 'ReservedDBInstance',
                         'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and PurchaseReservedDBInstancesOffering actions.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'ReservedDBInstance',
                         'properties' => array(
                             'ReservedDBInstanceId' => array(
                                 'description' => 'The unique identifier for the reservation.',
@@ -4053,7 +4052,7 @@ return array (
                                     'name' => 'RecurringCharge',
                                     'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and DescribeReservedDBInstancesOfferings actions.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'RecurringCharge',
                                     'properties' => array(
                                         'RecurringChargeAmount' => array(
                                             'description' => 'The amount of the recurring charge.',
@@ -4088,7 +4087,7 @@ return array (
                         'name' => 'ReservedDBInstancesOffering',
                         'description' => 'This data type is used as a response element in the DescribeReservedDBInstancesOfferings action.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'ReservedDBInstancesOffering',
                         'properties' => array(
                             'ReservedDBInstancesOfferingId' => array(
                                 'description' => 'The offering identifier.',
@@ -4133,7 +4132,7 @@ return array (
                                     'name' => 'RecurringCharge',
                                     'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and DescribeReservedDBInstancesOfferings actions.',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
+                                    'sentAs' => 'RecurringCharge',
                                     'properties' => array(
                                         'RecurringChargeAmount' => array(
                                             'description' => 'The amount of the recurring charge.',
@@ -4239,7 +4238,7 @@ return array (
                         'name' => 'RecurringCharge',
                         'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and DescribeReservedDBInstancesOfferings actions.',
                         'type' => 'object',
-                        'sentAs' => 'member',
+                        'sentAs' => 'RecurringCharge',
                         'properties' => array(
                             'RecurringChargeAmount' => array(
                                 'description' => 'The amount of the recurring charge.',
