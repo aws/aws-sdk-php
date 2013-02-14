@@ -67,10 +67,7 @@ class SignatureV3 extends AbstractSignature
         }
 
         // Grab the path and ensure that it is absolute
-        $path = $request->getUrl(true)->normalizePath()->getPath();
-        if (substr($path, 0, 1) != '/') {
-            $path = '/' . $path;
-        }
+        $path = '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/');
 
         // Begin building the string to sign
         $sign = $request->getMethod() . "\n"

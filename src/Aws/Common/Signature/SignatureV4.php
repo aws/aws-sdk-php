@@ -165,13 +165,8 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
      */
     private function createCanonicalRequest(RequestInterface $request)
     {
-        // Normalize the path as required by SigV4
-        $path = $request->getUrl(true)->normalizePath()->getPath();
-        // Ensure that the path is absolute
-        if (substr($path, 0, 1) != '/') {
-            $path = '/' . $path;
-        }
-
+        // Normalize the path as required by SigV4 and ensure it's absolute
+        $path = '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/');
         $canon = $request->getMethod() . "\n{$path}\n" . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Create the canonical headers
