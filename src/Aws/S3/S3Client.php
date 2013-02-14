@@ -382,7 +382,7 @@ class S3Client extends AbstractClient
      */
     public static function encodeKey($key)
     {
-        return str_replace('%2F', '/', rawurlencode(str_replace('%20', ' ', $key)));
+        return str_replace('%2F', '/', rawurlencode($key));
     }
 
     /**
