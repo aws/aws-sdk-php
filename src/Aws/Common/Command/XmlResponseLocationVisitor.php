@@ -4,6 +4,8 @@ namespace Aws\Common\Command;
 
 use Guzzle\Service\Description\Operation;
 use Guzzle\Service\Command\CommandInterface;
+use Guzzle\Http\Message\Response;
+use Guzzle\Service\Description\Parameter;
 use Guzzle\Service\Command\LocationVisitor\Response\XmlVisitor;
 
 /**
@@ -26,6 +28,22 @@ class XmlResponseLocationVisitor extends XmlVisitor
                 $result = $result[$wrappingNode] + $result;
                 unset($result[$wrappingNode]);
             }
+        }
+    }
+
+    /**
+     * Accounts for wrapper nodes
+     * {@inheritdoc}
+     */
+    public function visit(CommandInterface $command, Response $response, Parameter $param, &$value, $context =  null)
+    {
+        parent::visit($command, $response, $param, $value, $context);
+
+        // Account for wrapper nodes (e.g. RDS, ElastiCache, etc)
+        if ($param->getData('wrapper')) {
+            $wireName = $param->getWireName();
+            $value += $value[$wireName];
+            unset($value[$wireName]);
         }
     }
 

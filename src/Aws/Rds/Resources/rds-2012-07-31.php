@@ -28,7 +28,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSecurityGroup',
+            'responseClass' => 'DBSecurityGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Enables ingress to a DBSecurityGroup using one of two forms of authorization. First, EC2 or VPC Security Groups can be added to the DBSecurityGroup if the application using the database is running on EC2 or VPC instances. Second, IP ranges are available if the application accessing your database is running on the Internet. Required parameters for this API are one of CIDR range, EC2SecurityGroupId for VPC, or (EC2SecurityGroupOwnerId and either EC2SecurityGroupName or EC2SecurityGroupId for non-VPC).',
             'parameters' => array(
@@ -88,7 +88,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSnapshot',
+            'responseClass' => 'DBSnapshotWrapper',
             'responseType' => 'model',
             'summary' => 'Copies the specified DBSnapshot. The source DBSnapshot must be in the "available" state.',
             'parameters' => array(
@@ -134,7 +134,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new DB instance.',
             'parameters' => array(
@@ -304,7 +304,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a DB Instance that acts as a Read Replica of a source DB Instance.',
             'parameters' => array(
@@ -399,7 +399,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBParameterGroup',
+            'responseClass' => 'DBParameterGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new DB Parameter Group.',
             'parameters' => array(
@@ -445,7 +445,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSecurityGroup',
+            'responseClass' => 'DBSecurityGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new DB Security Group. DB Security Groups control access to a DB Instance.',
             'parameters' => array(
@@ -490,7 +490,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSnapshot',
+            'responseClass' => 'DBSnapshotWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a DBSnapshot. The source DBInstance must be in "available" state.',
             'parameters' => array(
@@ -536,7 +536,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSubnetGroup',
+            'responseClass' => 'DBSubnetGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new DB subnet group. DB subnet groups must contain at least one subnet in each AZ in the region.',
             'parameters' => array(
@@ -596,7 +596,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'OptionGroup',
+            'responseClass' => 'OptionGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new Option Group.',
             'parameters' => array(
@@ -648,7 +648,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'The DeleteDBInstance API deletes a previously provisioned RDS instance. A successful response from the web service indicates the request was received correctly. If a final DBSnapshot is requested the status of the RDS instance will be "deleting" until the DBSnapshot is created. DescribeDBInstance is used to monitor the status of this operation. This cannot be canceled or reverted once submitted.',
             'parameters' => array(
@@ -767,7 +767,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSnapshot',
+            'responseClass' => 'DBSnapshotWrapper',
             'responseType' => 'model',
             'summary' => 'Deletes a DBSnapshot.',
             'parameters' => array(
@@ -1185,7 +1185,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'EngineDefaults',
+            'responseClass' => 'EngineDefaultsWrapper',
             'responseType' => 'model',
             'summary' => 'Returns the default engine and system parameter information for the specified database engine.',
             'parameters' => array(
@@ -1567,7 +1567,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Modify settings for a DB Instance. You can change one or more database configuration parameters by specifying these parameters and the new values in the request.',
             'parameters' => array(
@@ -1794,7 +1794,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSubnetGroup',
+            'responseClass' => 'DBSubnetGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Modifies an existing DB subnet group. DB subnet groups must contain at least one subnet in each AZ in the region.',
             'parameters' => array(
@@ -1853,7 +1853,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'OptionGroup',
+            'responseClass' => 'OptionGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Modifies an existing Option Group.',
             'parameters' => array(
@@ -1930,7 +1930,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ReservedDBInstance',
+            'responseClass' => 'ReservedDBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Purchases a reserved DB Instance offering.',
             'parameters' => array(
@@ -1977,7 +1977,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Reboots a previously provisioned RDS instance. This API results in the application of modified DBParameterGroup parameters with ApplyStatus of pending-reboot to the RDS instance. This action is taken as soon as possible, and results in a momentary outage to the RDS instance during which the RDS instance status is set to rebooting. If the RDS instance is configured for MultiAZ, it is possible that the reboot will be conducted through a failover. A DBInstance event is created when the reboot is completed.',
             'parameters' => array(
@@ -2115,7 +2115,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new DB Instance from a DB snapshot. The target database is created from the source database restore point with the same configuration as the original source database, except that the new RDS instance is created with the default security group.',
             'parameters' => array(
@@ -2230,7 +2230,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBInstance',
+            'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
             'summary' => 'Restores a DB Instance to an arbitrary point-in-time. Users can restore to any point in time before the latestRestorableTime for up to backupRetentionPeriod days. The target database is created from the source database with the same configuration as the original database except that the DB instance is created with the default DB security group.',
             'parameters' => array(
@@ -2364,7 +2364,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DBSecurityGroup',
+            'responseClass' => 'DBSecurityGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Revokes ingress from a DBSecurityGroup for previously authorized IP ranges or EC2 or VPC Security Groups. Required parameters for this API are one of CIDRIP, EC2SecurityGroupId for VPC, or (EC2SecurityGroupOwnerId and either EC2SecurityGroupName or EC2SecurityGroupId).',
             'parameters' => array(
@@ -2419,278 +2419,451 @@ return array (
         ),
     ),
     'models' => array(
-        'DBSecurityGroup' => array(
+        'DBSecurityGroupWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'OwnerId' => array(
-                    'description' => 'Provides the AWS ID of the owner of a specific DB Security Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBSecurityGroupName' => array(
-                    'description' => 'Specifies the name of the DB Security Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBSecurityGroupDescription' => array(
-                    'description' => 'Provides the description of the DB Security Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'VpcId' => array(
-                    'description' => 'Provides the VpcId of the DB Security Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'EC2SecurityGroups' => array(
-                    'description' => 'Contains a list of EC2SecurityGroup elements.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'EC2SecurityGroup',
-                        'description' => 'This data type is used as a response element in the following actions:',
-                        'type' => 'object',
-                        'sentAs' => 'EC2SecurityGroup',
-                        'properties' => array(
-                            'Status' => array(
-                                'description' => 'Provides the status of the EC2 security group.',
-                                'type' => 'string',
-                            ),
-                            'EC2SecurityGroupName' => array(
-                                'description' => 'Specifies the name of the EC2 Security Group.',
-                                'type' => 'string',
-                            ),
-                            'EC2SecurityGroupId' => array(
-                                'description' => 'Specifies the id of the EC2 Security Group.',
-                                'type' => 'string',
-                            ),
-                            'EC2SecurityGroupOwnerId' => array(
-                                'description' => 'Specifies the AWS ID of the owner of the EC2 security group specified in the EC2SecurityGroupName field.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-                'IPRanges' => array(
-                    'description' => 'Contains a list of IPRange elements.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'IPRange',
-                        'description' => 'This data type is used as a response element in the DescribeDBSecurityGroups action.',
-                        'type' => 'object',
-                        'sentAs' => 'IPRange',
-                        'properties' => array(
-                            'Status' => array(
-                                'description' => 'Specifies the status of the IP range.',
-                                'type' => 'string',
-                            ),
-                            'CIDRIP' => array(
-                                'description' => 'Specifies the IP range.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'DBSnapshot' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'DBSnapshotIdentifier' => array(
-                    'description' => 'Specifies the identifier for the DB Snapshot.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBInstanceIdentifier' => array(
-                    'description' => 'Specifies the the DBInstanceIdentifier of the DB Instance this DB Snapshot was created from.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'SnapshotCreateTime' => array(
-                    'description' => 'Provides the time (UTC) when the snapshot was taken.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Engine' => array(
-                    'description' => 'Specifies the name of the database engine.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'AllocatedStorage' => array(
-                    'description' => 'Specifies the allocated storage size in gigabytes (GB).',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'Status' => array(
-                    'description' => 'Specifies the status of this DB Snapshot.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Port' => array(
-                    'description' => 'Specifies the port that the database engine was listening on at the time of the snapshot.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'AvailabilityZone' => array(
-                    'description' => 'Specifies the name of the Availability Zone the DB Instance was located in at the time of the DB Snapshot.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'VpcId' => array(
-                    'description' => 'Provides the Vpc Id associated with the DB Snapshot.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'InstanceCreateTime' => array(
-                    'description' => 'Specifies the time (UTC) when the snapshot was taken.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MasterUsername' => array(
-                    'description' => 'Provides the master username for the DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'EngineVersion' => array(
-                    'description' => 'Specifies the version of the database engine.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'LicenseModel' => array(
-                    'description' => 'License model information for the restored DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'SnapshotType' => array(
-                    'description' => 'Provides the type of the DB Snapshot.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-            ),
-        ),
-        'DBInstance' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'DBInstanceIdentifier' => array(
-                    'description' => 'Contains a user-supplied database identifier. This is the unique key that identifies a DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBInstanceClass' => array(
-                    'description' => 'Contains the name of the compute and memory capacity class of the DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Engine' => array(
-                    'description' => 'Provides the name of the database engine to be used for this DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBInstanceStatus' => array(
-                    'description' => 'Specifies the current state of this database.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MasterUsername' => array(
-                    'description' => 'Contains the master username for the DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBName' => array(
-                    'description' => 'The meaning of this parameter differs according to the database engine you use.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Endpoint' => array(
-                    'description' => 'Specifies the connection endpoint.',
+                'DBSecurityGroup' => array(
+                    'description' => 'Contains the result of a successful invocation of the following actions:',
                     'type' => 'object',
                     'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
                     'properties' => array(
-                        'Address' => array(
-                            'description' => 'Specifies the DNS address of the DB Instance.',
+                        'OwnerId' => array(
+                            'description' => 'Provides the AWS ID of the owner of a specific DB Security Group.',
+                            'type' => 'string',
+                        ),
+                        'DBSecurityGroupName' => array(
+                            'description' => 'Specifies the name of the DB Security Group.',
+                            'type' => 'string',
+                        ),
+                        'DBSecurityGroupDescription' => array(
+                            'description' => 'Provides the description of the DB Security Group.',
+                            'type' => 'string',
+                        ),
+                        'VpcId' => array(
+                            'description' => 'Provides the VpcId of the DB Security Group.',
+                            'type' => 'string',
+                        ),
+                        'EC2SecurityGroups' => array(
+                            'description' => 'Contains a list of EC2SecurityGroup elements.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'EC2SecurityGroup',
+                                'description' => 'This data type is used as a response element in the following actions:',
+                                'type' => 'object',
+                                'sentAs' => 'EC2SecurityGroup',
+                                'properties' => array(
+                                    'Status' => array(
+                                        'description' => 'Provides the status of the EC2 security group.',
+                                        'type' => 'string',
+                                    ),
+                                    'EC2SecurityGroupName' => array(
+                                        'description' => 'Specifies the name of the EC2 Security Group.',
+                                        'type' => 'string',
+                                    ),
+                                    'EC2SecurityGroupId' => array(
+                                        'description' => 'Specifies the id of the EC2 Security Group.',
+                                        'type' => 'string',
+                                    ),
+                                    'EC2SecurityGroupOwnerId' => array(
+                                        'description' => 'Specifies the AWS ID of the owner of the EC2 security group specified in the EC2SecurityGroupName field.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'IPRanges' => array(
+                            'description' => 'Contains a list of IPRange elements.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'IPRange',
+                                'description' => 'This data type is used as a response element in the DescribeDBSecurityGroups action.',
+                                'type' => 'object',
+                                'sentAs' => 'IPRange',
+                                'properties' => array(
+                                    'Status' => array(
+                                        'description' => 'Specifies the status of the IP range.',
+                                        'type' => 'string',
+                                    ),
+                                    'CIDRIP' => array(
+                                        'description' => 'Specifies the IP range.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DBSnapshotWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBSnapshot' => array(
+                    'description' => 'Contains the result of a successful invocation of the following actions:',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'DBSnapshotIdentifier' => array(
+                            'description' => 'Specifies the identifier for the DB Snapshot.',
+                            'type' => 'string',
+                        ),
+                        'DBInstanceIdentifier' => array(
+                            'description' => 'Specifies the the DBInstanceIdentifier of the DB Instance this DB Snapshot was created from.',
+                            'type' => 'string',
+                        ),
+                        'SnapshotCreateTime' => array(
+                            'description' => 'Provides the time (UTC) when the snapshot was taken.',
+                            'type' => 'string',
+                        ),
+                        'Engine' => array(
+                            'description' => 'Specifies the name of the database engine.',
+                            'type' => 'string',
+                        ),
+                        'AllocatedStorage' => array(
+                            'description' => 'Specifies the allocated storage size in gigabytes (GB).',
+                            'type' => 'numeric',
+                        ),
+                        'Status' => array(
+                            'description' => 'Specifies the status of this DB Snapshot.',
                             'type' => 'string',
                         ),
                         'Port' => array(
-                            'description' => 'Specifies the port that the database engine is listening on.',
+                            'description' => 'Specifies the port that the database engine was listening on at the time of the snapshot.',
                             'type' => 'numeric',
                         ),
-                    ),
-                ),
-                'AllocatedStorage' => array(
-                    'description' => 'Specifies the allocated storage size specified in gigabytes.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'InstanceCreateTime' => array(
-                    'description' => 'Provides the date and time the DB Instance was created.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'PreferredBackupWindow' => array(
-                    'description' => 'Specifies the daily time range during which automated backups are created if automated backups are enabled, as determined by the BackupRetentionPeriod.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'BackupRetentionPeriod' => array(
-                    'description' => 'Specifies the number of days for which automatic DB Snapshots are retained.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'DBSecurityGroups' => array(
-                    'description' => 'Provides List of DB Security Group elements containing only DBSecurityGroup.Name and DBSecurityGroup.Status subelements.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'DBSecurityGroup',
-                        'description' => 'This data type is used as a response element in the following actions:',
-                        'type' => 'object',
-                        'sentAs' => 'DBSecurityGroup',
-                        'properties' => array(
-                            'DBSecurityGroupName' => array(
-                                'description' => 'The name of the DB Security Group.',
-                                'type' => 'string',
-                            ),
-                            'Status' => array(
-                                'description' => 'The status of the DB Security Group.',
-                                'type' => 'string',
-                            ),
+                        'AvailabilityZone' => array(
+                            'description' => 'Specifies the name of the Availability Zone the DB Instance was located in at the time of the DB Snapshot.',
+                            'type' => 'string',
+                        ),
+                        'VpcId' => array(
+                            'description' => 'Provides the Vpc Id associated with the DB Snapshot.',
+                            'type' => 'string',
+                        ),
+                        'InstanceCreateTime' => array(
+                            'description' => 'Specifies the time (UTC) when the snapshot was taken.',
+                            'type' => 'string',
+                        ),
+                        'MasterUsername' => array(
+                            'description' => 'Provides the master username for the DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'EngineVersion' => array(
+                            'description' => 'Specifies the version of the database engine.',
+                            'type' => 'string',
+                        ),
+                        'LicenseModel' => array(
+                            'description' => 'License model information for the restored DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'SnapshotType' => array(
+                            'description' => 'Provides the type of the DB Snapshot.',
+                            'type' => 'string',
                         ),
                     ),
                 ),
-                'DBParameterGroups' => array(
-                    'description' => 'Provides the list of DB Parameter Groups applied to this DB Instance.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'DBParameterGroup',
-                        'description' => 'The status of the DB Parameter Group.',
-                        'type' => 'object',
-                        'sentAs' => 'DBParameterGroup',
-                        'properties' => array(
-                            'DBParameterGroupName' => array(
-                                'description' => 'The name of the DP Parameter Group.',
-                                'type' => 'string',
-                            ),
-                            'ParameterApplyStatus' => array(
-                                'description' => 'The status of parameter updates.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-                'AvailabilityZone' => array(
-                    'description' => 'Specifies the name of the Availability Zone the DB Instance is located in.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBSubnetGroup' => array(
-                    'description' => 'Provides the inforamtion of the subnet group associated with the DB instance, including the name, descrption and subnets in the subnet group.',
+            ),
+        ),
+        'DBInstanceWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBInstance' => array(
+                    'description' => 'Contains the result of a successful invocation of the following actions:',
                     'type' => 'object',
                     'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'DBInstanceIdentifier' => array(
+                            'description' => 'Contains a user-supplied database identifier. This is the unique key that identifies a DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'DBInstanceClass' => array(
+                            'description' => 'Contains the name of the compute and memory capacity class of the DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'Engine' => array(
+                            'description' => 'Provides the name of the database engine to be used for this DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'DBInstanceStatus' => array(
+                            'description' => 'Specifies the current state of this database.',
+                            'type' => 'string',
+                        ),
+                        'MasterUsername' => array(
+                            'description' => 'Contains the master username for the DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'DBName' => array(
+                            'description' => 'The meaning of this parameter differs according to the database engine you use.',
+                            'type' => 'string',
+                        ),
+                        'Endpoint' => array(
+                            'description' => 'Specifies the connection endpoint.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Address' => array(
+                                    'description' => 'Specifies the DNS address of the DB Instance.',
+                                    'type' => 'string',
+                                ),
+                                'Port' => array(
+                                    'description' => 'Specifies the port that the database engine is listening on.',
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'AllocatedStorage' => array(
+                            'description' => 'Specifies the allocated storage size specified in gigabytes.',
+                            'type' => 'numeric',
+                        ),
+                        'InstanceCreateTime' => array(
+                            'description' => 'Provides the date and time the DB Instance was created.',
+                            'type' => 'string',
+                        ),
+                        'PreferredBackupWindow' => array(
+                            'description' => 'Specifies the daily time range during which automated backups are created if automated backups are enabled, as determined by the BackupRetentionPeriod.',
+                            'type' => 'string',
+                        ),
+                        'BackupRetentionPeriod' => array(
+                            'description' => 'Specifies the number of days for which automatic DB Snapshots are retained.',
+                            'type' => 'numeric',
+                        ),
+                        'DBSecurityGroups' => array(
+                            'description' => 'Provides List of DB Security Group elements containing only DBSecurityGroup.Name and DBSecurityGroup.Status subelements.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DBSecurityGroup',
+                                'description' => 'This data type is used as a response element in the following actions:',
+                                'type' => 'object',
+                                'sentAs' => 'DBSecurityGroup',
+                                'properties' => array(
+                                    'DBSecurityGroupName' => array(
+                                        'description' => 'The name of the DB Security Group.',
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'description' => 'The status of the DB Security Group.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'DBParameterGroups' => array(
+                            'description' => 'Provides the list of DB Parameter Groups applied to this DB Instance.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DBParameterGroup',
+                                'description' => 'The status of the DB Parameter Group.',
+                                'type' => 'object',
+                                'sentAs' => 'DBParameterGroup',
+                                'properties' => array(
+                                    'DBParameterGroupName' => array(
+                                        'description' => 'The name of the DP Parameter Group.',
+                                        'type' => 'string',
+                                    ),
+                                    'ParameterApplyStatus' => array(
+                                        'description' => 'The status of parameter updates.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'AvailabilityZone' => array(
+                            'description' => 'Specifies the name of the Availability Zone the DB Instance is located in.',
+                            'type' => 'string',
+                        ),
+                        'DBSubnetGroup' => array(
+                            'description' => 'Provides the inforamtion of the subnet group associated with the DB instance, including the name, descrption and subnets in the subnet group.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'DBSubnetGroupName' => array(
+                                    'description' => 'Specifies the name of the DB Subnet Group.',
+                                    'type' => 'string',
+                                ),
+                                'DBSubnetGroupDescription' => array(
+                                    'description' => 'Provides the description of the DB Subnet Group.',
+                                    'type' => 'string',
+                                ),
+                                'VpcId' => array(
+                                    'description' => 'Provides the VpcId of the DB Subnet Group.',
+                                    'type' => 'string',
+                                ),
+                                'SubnetGroupStatus' => array(
+                                    'description' => 'Provides the status of the DB Subnet Group.',
+                                    'type' => 'string',
+                                ),
+                                'Subnets' => array(
+                                    'description' => 'Contains a list of Subnets elements.',
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Subnet',
+                                        'description' => 'This data type is used as a response element in the DescribeDBSubnetGroups action.',
+                                        'type' => 'object',
+                                        'sentAs' => 'Subnet',
+                                        'properties' => array(
+                                            'SubnetIdentifier' => array(
+                                                'description' => 'Specifies the identifier of the subnet.',
+                                                'type' => 'string',
+                                            ),
+                                            'SubnetAvailabilityZone' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Name' => array(
+                                                        'description' => 'The name of the availability zone.',
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                            'SubnetStatus' => array(
+                                                'description' => 'Specifies the status of the subnet.',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'PreferredMaintenanceWindow' => array(
+                            'description' => 'Specifies the weekly time range (in UTC) during which system maintenance can occur.',
+                            'type' => 'string',
+                        ),
+                        'PendingModifiedValues' => array(
+                            'description' => 'Specifies that changes to the DB Instance are pending. This element is only included when changes are pending. Specific changes are identified by subelements.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'DBInstanceClass' => array(
+                                    'description' => 'Contains the new DBInstanceClass for the DB Instance that will be applied or is in progress.',
+                                    'type' => 'string',
+                                ),
+                                'AllocatedStorage' => array(
+                                    'description' => 'Contains the new AllocatedStorage size for the DB Instance that will be applied or is in progress.',
+                                    'type' => 'numeric',
+                                ),
+                                'MasterUserPassword' => array(
+                                    'description' => 'Contains the pending or in-progress change of the master credentials for the DB Instance.',
+                                    'type' => 'string',
+                                ),
+                                'Port' => array(
+                                    'description' => 'Specifies the pending port for the DB Instance.',
+                                    'type' => 'numeric',
+                                ),
+                                'BackupRetentionPeriod' => array(
+                                    'description' => 'Specifies the pending number of days for which automated backups are retained.',
+                                    'type' => 'numeric',
+                                ),
+                                'MultiAZ' => array(
+                                    'description' => 'Indicates that the Single-AZ DB Instance is to change to a Multi-AZ deployment.',
+                                    'type' => 'boolean',
+                                ),
+                                'EngineVersion' => array(
+                                    'description' => 'Indicates the database engine version.',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'LatestRestorableTime' => array(
+                            'description' => 'Specifies the latest time to which a database can be restored with point-in-time restore.',
+                            'type' => 'string',
+                        ),
+                        'MultiAZ' => array(
+                            'description' => 'Specifies if the DB Instance is a Multi-AZ deployment.',
+                            'type' => 'boolean',
+                        ),
+                        'EngineVersion' => array(
+                            'description' => 'Indicates the database engine version.',
+                            'type' => 'string',
+                        ),
+                        'AutoMinorVersionUpgrade' => array(
+                            'description' => 'Indicates that minor version patches are applied automatically.',
+                            'type' => 'boolean',
+                        ),
+                        'ReadReplicaSourceDBInstanceIdentifier' => array(
+                            'description' => 'Contains the identifier of the source DB Instance if this DB Instance is a Read Replica.',
+                            'type' => 'string',
+                        ),
+                        'ReadReplicaDBInstanceIdentifiers' => array(
+                            'description' => 'Contains one or more identifiers of the Read Replicas associated with this DB Instance.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ReadReplicaDBInstanceIdentifier',
+                                'type' => 'string',
+                                'sentAs' => 'ReadReplicaDBInstanceIdentifier',
+                            ),
+                        ),
+                        'LicenseModel' => array(
+                            'description' => 'License model information for this DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'OptionGroupMembership' => array(
+                            'description' => 'Specifies the name and status of the option group that this instance belongs to.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'OptionGroupName' => array(
+                                    'description' => 'The name of the option group that the instance belongs to.',
+                                    'type' => 'string',
+                                ),
+                                'Status' => array(
+                                    'description' => 'The status of the DB Instance\'s option group membership (e.g. in-sync, pending, pending-maintenance, applying).',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'CharacterSetName' => array(
+                            'description' => 'If present, specifies the name of the character set that this instance is associated with.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DBParameterGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBParameterGroup' => array(
+                    'description' => 'Contains the result of a successful invocation of the CreateDBParameterGroup action.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'DBParameterGroupName' => array(
+                            'description' => 'Provides the name of the DB Parameter Group.',
+                            'type' => 'string',
+                        ),
+                        'DBParameterGroupFamily' => array(
+                            'description' => 'Provides the name of the DB Parameter Group Family that this DB Parameter Group is compatible with.',
+                            'type' => 'string',
+                        ),
+                        'Description' => array(
+                            'description' => 'Provides the customer-specified description for this DB Parameter Group.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DBSubnetGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DBSubnetGroup' => array(
+                    'description' => 'Contains the result of a successful invocation of the following actions:',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
                     'properties' => array(
                         'DBSubnetGroupName' => array(
                             'description' => 'Specifies the name of the DB Subnet Group.',
@@ -2739,243 +2912,70 @@ return array (
                         ),
                     ),
                 ),
-                'PreferredMaintenanceWindow' => array(
-                    'description' => 'Specifies the weekly time range (in UTC) during which system maintenance can occur.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'PendingModifiedValues' => array(
-                    'description' => 'Specifies that changes to the DB Instance are pending. This element is only included when changes are pending. Specific changes are identified by subelements.',
+            ),
+        ),
+        'OptionGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'OptionGroup' => array(
                     'type' => 'object',
                     'location' => 'xml',
-                    'properties' => array(
-                        'DBInstanceClass' => array(
-                            'description' => 'Contains the new DBInstanceClass for the DB Instance that will be applied or is in progress.',
-                            'type' => 'string',
-                        ),
-                        'AllocatedStorage' => array(
-                            'description' => 'Contains the new AllocatedStorage size for the DB Instance that will be applied or is in progress.',
-                            'type' => 'numeric',
-                        ),
-                        'MasterUserPassword' => array(
-                            'description' => 'Contains the pending or in-progress change of the master credentials for the DB Instance.',
-                            'type' => 'string',
-                        ),
-                        'Port' => array(
-                            'description' => 'Specifies the pending port for the DB Instance.',
-                            'type' => 'numeric',
-                        ),
-                        'BackupRetentionPeriod' => array(
-                            'description' => 'Specifies the pending number of days for which automated backups are retained.',
-                            'type' => 'numeric',
-                        ),
-                        'MultiAZ' => array(
-                            'description' => 'Indicates that the Single-AZ DB Instance is to change to a Multi-AZ deployment.',
-                            'type' => 'boolean',
-                        ),
-                        'EngineVersion' => array(
-                            'description' => 'Indicates the database engine version.',
-                            'type' => 'string',
-                        ),
+                    'data' => array(
+                        'wrapper' => true,
                     ),
-                ),
-                'LatestRestorableTime' => array(
-                    'description' => 'Specifies the latest time to which a database can be restored with point-in-time restore.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MultiAZ' => array(
-                    'description' => 'Specifies if the DB Instance is a Multi-AZ deployment.',
-                    'type' => 'boolean',
-                    'location' => 'xml',
-                ),
-                'EngineVersion' => array(
-                    'description' => 'Indicates the database engine version.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'AutoMinorVersionUpgrade' => array(
-                    'description' => 'Indicates that minor version patches are applied automatically.',
-                    'type' => 'boolean',
-                    'location' => 'xml',
-                ),
-                'ReadReplicaSourceDBInstanceIdentifier' => array(
-                    'description' => 'Contains the identifier of the source DB Instance if this DB Instance is a Read Replica.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ReadReplicaDBInstanceIdentifiers' => array(
-                    'description' => 'Contains one or more identifiers of the Read Replicas associated with this DB Instance.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'ReadReplicaDBInstanceIdentifier',
-                        'type' => 'string',
-                        'sentAs' => 'ReadReplicaDBInstanceIdentifier',
-                    ),
-                ),
-                'LicenseModel' => array(
-                    'description' => 'License model information for this DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'OptionGroupMembership' => array(
-                    'description' => 'Specifies the name and status of the option group that this instance belongs to.',
-                    'type' => 'object',
-                    'location' => 'xml',
                     'properties' => array(
                         'OptionGroupName' => array(
-                            'description' => 'The name of the option group that the instance belongs to.',
+                            'description' => 'Specifies the name of the option group.',
                             'type' => 'string',
                         ),
-                        'Status' => array(
-                            'description' => 'The status of the DB Instance\'s option group membership (e.g. in-sync, pending, pending-maintenance, applying).',
+                        'OptionGroupDescription' => array(
                             'type' => 'string',
                         ),
-                    ),
-                ),
-                'CharacterSetName' => array(
-                    'description' => 'If present, specifies the name of the character set that this instance is associated with.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-            ),
-        ),
-        'DBParameterGroup' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'DBParameterGroupName' => array(
-                    'description' => 'Provides the name of the DB Parameter Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBParameterGroupFamily' => array(
-                    'description' => 'Provides the name of the DB Parameter Group Family that this DB Parameter Group is compatible with.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Description' => array(
-                    'description' => 'Provides the customer-specified description for this DB Parameter Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-            ),
-        ),
-        'DBSubnetGroup' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'DBSubnetGroupName' => array(
-                    'description' => 'Specifies the name of the DB Subnet Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBSubnetGroupDescription' => array(
-                    'description' => 'Provides the description of the DB Subnet Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'VpcId' => array(
-                    'description' => 'Provides the VpcId of the DB Subnet Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'SubnetGroupStatus' => array(
-                    'description' => 'Provides the status of the DB Subnet Group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Subnets' => array(
-                    'description' => 'Contains a list of Subnets elements.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'Subnet',
-                        'description' => 'This data type is used as a response element in the DescribeDBSubnetGroups action.',
-                        'type' => 'object',
-                        'sentAs' => 'Subnet',
-                        'properties' => array(
-                            'SubnetIdentifier' => array(
-                                'description' => 'Specifies the identifier of the subnet.',
-                                'type' => 'string',
-                            ),
-                            'SubnetAvailabilityZone' => array(
+                        'EngineName' => array(
+                            'description' => 'Engine name that this option group can be applied to.',
+                            'type' => 'string',
+                        ),
+                        'MajorEngineVersion' => array(
+                            'description' => 'Indicates the major engine version associated with this option group.',
+                            'type' => 'string',
+                        ),
+                        'Options' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Option',
                                 'type' => 'object',
+                                'sentAs' => 'Option',
                                 'properties' => array(
-                                    'Name' => array(
-                                        'description' => 'The name of the availability zone.',
+                                    'OptionName' => array(
+                                        'description' => 'The name of the option.',
                                         'type' => 'string',
                                     ),
-                                ),
-                            ),
-                            'SubnetStatus' => array(
-                                'description' => 'Specifies the status of the subnet.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'OptionGroup' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'OptionGroupName' => array(
-                    'description' => 'Specifies the name of the option group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'OptionGroupDescription' => array(
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'EngineName' => array(
-                    'description' => 'Engine name that this option group can be applied to.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MajorEngineVersion' => array(
-                    'description' => 'Indicates the major engine version associated with this option group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Options' => array(
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'Option',
-                        'type' => 'object',
-                        'sentAs' => 'Option',
-                        'properties' => array(
-                            'OptionName' => array(
-                                'description' => 'The name of the option.',
-                                'type' => 'string',
-                            ),
-                            'OptionDescription' => array(
-                                'description' => 'The description of the option.',
-                                'type' => 'string',
-                            ),
-                            'Port' => array(
-                                'description' => 'If required, the port configured for this option to use.',
-                                'type' => 'numeric',
-                            ),
-                            'DBSecurityGroupMemberships' => array(
-                                'type' => 'array',
-                                'items' => array(
-                                    'name' => 'DBSecurityGroup',
-                                    'description' => 'This data type is used as a response element in the following actions:',
-                                    'type' => 'object',
-                                    'sentAs' => 'DBSecurityGroup',
-                                    'properties' => array(
-                                        'DBSecurityGroupName' => array(
-                                            'description' => 'The name of the DB Security Group.',
-                                            'type' => 'string',
-                                        ),
-                                        'Status' => array(
-                                            'description' => 'The status of the DB Security Group.',
-                                            'type' => 'string',
+                                    'OptionDescription' => array(
+                                        'description' => 'The description of the option.',
+                                        'type' => 'string',
+                                    ),
+                                    'Port' => array(
+                                        'description' => 'If required, the port configured for this option to use.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'DBSecurityGroupMemberships' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'DBSecurityGroup',
+                                            'description' => 'This data type is used as a response element in the following actions:',
+                                            'type' => 'object',
+                                            'sentAs' => 'DBSecurityGroup',
+                                            'properties' => array(
+                                                'DBSecurityGroupName' => array(
+                                                    'description' => 'The name of the DB Security Group.',
+                                                    'type' => 'string',
+                                                ),
+                                                'Status' => array(
+                                                    'description' => 'The status of the DB Security Group.',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -3652,69 +3652,76 @@ return array (
                 ),
             ),
         ),
-        'EngineDefaults' => array(
+        'EngineDefaultsWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'DBParameterGroupFamily' => array(
-                    'description' => 'Specifies the name of the DB Parameter Group Family which the engine default parameters apply to.',
-                    'type' => 'string',
+                'EngineDefaults' => array(
+                    'description' => 'Contains the result of a successful invocation of the DescribeEngineDefaultParameters action.',
+                    'type' => 'object',
                     'location' => 'xml',
-                ),
-                'Marker' => array(
-                    'description' => 'Provides an identifier to allow retrieval of paginated results.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Parameters' => array(
-                    'description' => 'Contains a list of engine default parameters.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'Parameter',
-                        'description' => 'This data type is used as a request parameter in the ModifyDBParameterGroup and ResetDBParameterGroup actions.',
-                        'type' => 'object',
-                        'sentAs' => 'Parameter',
-                        'properties' => array(
-                            'ParameterName' => array(
-                                'description' => 'Specifies the name of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'ParameterValue' => array(
-                                'description' => 'Specifies the value of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'Description' => array(
-                                'description' => 'Provides a description of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'Source' => array(
-                                'description' => 'Indicates the source of the parameter value.',
-                                'type' => 'string',
-                            ),
-                            'ApplyType' => array(
-                                'description' => 'Specifies the engine specific parameters type.',
-                                'type' => 'string',
-                            ),
-                            'DataType' => array(
-                                'description' => 'Specifies the valid data type for the parameter.',
-                                'type' => 'string',
-                            ),
-                            'AllowedValues' => array(
-                                'description' => 'Specifies the valid range of values for the parameter.',
-                                'type' => 'string',
-                            ),
-                            'IsModifiable' => array(
-                                'description' => 'Indicates whether (true) or not (false) the parameter can be modified. Some parameters have security or operational implications that prevent them from being changed.',
-                                'type' => 'boolean',
-                            ),
-                            'MinimumEngineVersion' => array(
-                                'description' => 'The earliest engine version to which the parameter can apply.',
-                                'type' => 'string',
-                            ),
-                            'ApplyMethod' => array(
-                                'description' => 'Indicates when to apply parameter updates.',
-                                'type' => 'string',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'DBParameterGroupFamily' => array(
+                            'description' => 'Specifies the name of the DB Parameter Group Family which the engine default parameters apply to.',
+                            'type' => 'string',
+                        ),
+                        'Marker' => array(
+                            'description' => 'Provides an identifier to allow retrieval of paginated results.',
+                            'type' => 'string',
+                        ),
+                        'Parameters' => array(
+                            'description' => 'Contains a list of engine default parameters.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Parameter',
+                                'description' => 'This data type is used as a request parameter in the ModifyDBParameterGroup and ResetDBParameterGroup actions.',
+                                'type' => 'object',
+                                'sentAs' => 'Parameter',
+                                'properties' => array(
+                                    'ParameterName' => array(
+                                        'description' => 'Specifies the name of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'ParameterValue' => array(
+                                        'description' => 'Specifies the value of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'Description' => array(
+                                        'description' => 'Provides a description of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'Source' => array(
+                                        'description' => 'Indicates the source of the parameter value.',
+                                        'type' => 'string',
+                                    ),
+                                    'ApplyType' => array(
+                                        'description' => 'Specifies the engine specific parameters type.',
+                                        'type' => 'string',
+                                    ),
+                                    'DataType' => array(
+                                        'description' => 'Specifies the valid data type for the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'AllowedValues' => array(
+                                        'description' => 'Specifies the valid range of values for the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'IsModifiable' => array(
+                                        'description' => 'Indicates whether (true) or not (false) the parameter can be modified. Some parameters have security or operational implications that prevent them from being changed.',
+                                        'type' => 'boolean',
+                                    ),
+                                    'MinimumEngineVersion' => array(
+                                        'description' => 'The earliest engine version to which the parameter can apply.',
+                                        'type' => 'string',
+                                    ),
+                                    'ApplyMethod' => array(
+                                        'description' => 'Indicates when to apply parameter updates.',
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -4161,92 +4168,88 @@ return array (
                 ),
             ),
         ),
-        'ReservedDBInstance' => array(
+        'ReservedDBInstanceWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ReservedDBInstanceId' => array(
-                    'description' => 'The unique identifier for the reservation.',
-                    'type' => 'string',
+                'ReservedDBInstance' => array(
+                    'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and PurchaseReservedDBInstancesOffering actions.',
+                    'type' => 'object',
                     'location' => 'xml',
-                ),
-                'ReservedDBInstancesOfferingId' => array(
-                    'description' => 'The offering identifier.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBInstanceClass' => array(
-                    'description' => 'The DB instance class for the reserved DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'StartTime' => array(
-                    'description' => 'The time the reservation started.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Duration' => array(
-                    'description' => 'The duration of the reservation in seconds.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'FixedPrice' => array(
-                    'description' => 'The fixed price charged for this reserved DB Instance.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'UsagePrice' => array(
-                    'description' => 'The hourly price charged for this reserved DB Instance.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'CurrencyCode' => array(
-                    'description' => 'The currency code for the reserved DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBInstanceCount' => array(
-                    'description' => 'The number of reserved DB Instances.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'ProductDescription' => array(
-                    'description' => 'The description of the reserved DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'OfferingType' => array(
-                    'description' => 'The offering type of this reserved DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MultiAZ' => array(
-                    'description' => 'Indicates if the reservation applies to Multi-AZ deployments.',
-                    'type' => 'boolean',
-                    'location' => 'xml',
-                ),
-                'State' => array(
-                    'description' => 'The state of the reserved DB Instance.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'RecurringCharges' => array(
-                    'description' => 'The recurring price charged to run this reserved DB Instance.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'RecurringCharge',
-                        'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and DescribeReservedDBInstancesOfferings actions.',
-                        'type' => 'object',
-                        'sentAs' => 'RecurringCharge',
-                        'properties' => array(
-                            'RecurringChargeAmount' => array(
-                                'description' => 'The amount of the recurring charge.',
-                                'type' => 'numeric',
-                            ),
-                            'RecurringChargeFrequency' => array(
-                                'description' => 'The frequency of the recurring charge.',
-                                'type' => 'string',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ReservedDBInstanceId' => array(
+                            'description' => 'The unique identifier for the reservation.',
+                            'type' => 'string',
+                        ),
+                        'ReservedDBInstancesOfferingId' => array(
+                            'description' => 'The offering identifier.',
+                            'type' => 'string',
+                        ),
+                        'DBInstanceClass' => array(
+                            'description' => 'The DB instance class for the reserved DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'StartTime' => array(
+                            'description' => 'The time the reservation started.',
+                            'type' => 'string',
+                        ),
+                        'Duration' => array(
+                            'description' => 'The duration of the reservation in seconds.',
+                            'type' => 'numeric',
+                        ),
+                        'FixedPrice' => array(
+                            'description' => 'The fixed price charged for this reserved DB Instance.',
+                            'type' => 'numeric',
+                        ),
+                        'UsagePrice' => array(
+                            'description' => 'The hourly price charged for this reserved DB Instance.',
+                            'type' => 'numeric',
+                        ),
+                        'CurrencyCode' => array(
+                            'description' => 'The currency code for the reserved DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'DBInstanceCount' => array(
+                            'description' => 'The number of reserved DB Instances.',
+                            'type' => 'numeric',
+                        ),
+                        'ProductDescription' => array(
+                            'description' => 'The description of the reserved DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'OfferingType' => array(
+                            'description' => 'The offering type of this reserved DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'MultiAZ' => array(
+                            'description' => 'Indicates if the reservation applies to Multi-AZ deployments.',
+                            'type' => 'boolean',
+                        ),
+                        'State' => array(
+                            'description' => 'The state of the reserved DB Instance.',
+                            'type' => 'string',
+                        ),
+                        'RecurringCharges' => array(
+                            'description' => 'The recurring price charged to run this reserved DB Instance.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'RecurringCharge',
+                                'description' => 'This data type is used as a response element in the DescribeReservedDBInstances and DescribeReservedDBInstancesOfferings actions.',
+                                'type' => 'object',
+                                'sentAs' => 'RecurringCharge',
+                                'properties' => array(
+                                    'RecurringChargeAmount' => array(
+                                        'description' => 'The amount of the recurring charge.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'RecurringChargeFrequency' => array(
+                                        'description' => 'The frequency of the recurring charge.',
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -4300,9 +4303,7 @@ return array (
             ),
             'DescribeEngineDefaultParameters' => array(
                 'token_param' => 'Marker',
-                'token_key' => 'Marker',
                 'limit_key' => 'MaxRecords',
-                'result_key' => 'Parameters',
             ),
             'DescribeEvents' => array(
                 'token_param' => 'Marker',

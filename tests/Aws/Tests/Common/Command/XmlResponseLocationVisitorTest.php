@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+namespace Aws\Tests\Common\Command;
+
+use Aws\Common\Command\XmlResponseLocationVisitor;
+use Guzzle\Service\Client;
+use Aws\Common\Command\QueryCommand;
+use Guzzle\Service\Description\Operation;
+use Guzzle\Service\Command\OperationCommand;
+use Guzzle\Service\Description\Parameter;
+use Guzzle\Http\Message\EntityEnclosingRequest;
+
+/**
+ * @covers Aws\Common\Command\XmlResponseLocationVisitor
+ */
+class XmlResponseLocationVisitorTest extends \Guzzle\Tests\GuzzleTestCase
+{
+    public function testHandlesWrappedResponses()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testHandlesWrappedMembers()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testHandlesXmlMaps()
+    {
+        $result = XmlResponseLocationVisitor::xmlMap(array(
+            array('key' => 'a', 'value' => 1),
+            array('key' => 'b', 'value' => 2),
+            array('key' => 'c', 'value' => 3)
+        ), 'item', 'key', 'value');
+        $this->assertEquals(array(
+            'a' => '1',
+            'b' => '2',
+            'c' => '3'
+        ), $result);
+    }
+}

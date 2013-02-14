@@ -23,6 +23,8 @@ use Aws\Rds\RdsClient;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
+    const TEST_GROUP = 'integfoo';
+
     /**
      * @var RdsClient
      */
@@ -34,7 +36,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $client = self::getServiceBuilder()->get('rds');
         try {
             $result = $client->deleteDBSecurityGroup(array(
-                'DBSecurityGroupName' => 'integfoo'
+                'DBSecurityGroupName' => self::TEST_GROUP
             ));
         } catch (\Exception $e) {
             // Ignore
@@ -67,22 +69,41 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testCreatesSecurityGroup()
     {
+        self::log('Creating a DB security group');
         $result = $this->client->createDBSecurityGroup(array(
-            'DBSecurityGroupName' => 'integfoo',
+            'DBSecurityGroupName' => self::TEST_GROUP,
             'DBSecurityGroupDescription' => 'Integ test'
         ));
-        var_export($result->toArray());
         $this->assertArrayHasKey('OwnerId', $result->toArray());
+        $this->assertArrayHasKey('EC2SecurityGroups', $result->toArray());
+        $this->assertArrayHasKey('ResponseMetadata', $result->toArray());
     }
 
     /**
      * @depends testCreatesSecurityGroup
      */
+    public function testListsSecurityGroups()
+    {
+        self::log('Listing security group');
+        $iterator = $this->client->getIterator('DescribeDBSecurityGroups');
+        $found = false;
+        foreach ($iterator as $group) {
+            if ($group['DBSecurityGroupName'] == self::TEST_GROUP) {
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $this->fail('Did not find security group ' . self::TEST_GROUP);
+        }
+    }
+
+    /**
+     * @depends testListsSecurityGroups
+     */
     public function testDeletesSecurityGroups()
     {
-        $result = $this->client->deleteDBSecurityGroup(array(
-            'DBSecurityGroupName' => 'integfoo'
-        ));
-        var_export($result->toArray());
+        self::log('Cleaning up security group');
+        $this->client->deleteDBSecurityGroup(array('DBSecurityGroupName' => self::TEST_GROUP));
     }
 }
