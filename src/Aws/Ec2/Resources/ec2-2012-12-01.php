@@ -403,7 +403,7 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'IpPermission',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
@@ -424,7 +424,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Groups',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -447,7 +447,7 @@ return array (
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'IpRange',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -496,7 +496,7 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'IpPermission',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
@@ -517,7 +517,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Groups',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -540,7 +540,7 @@ return array (
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'IpRange',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -877,7 +877,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'DhcpConfiguration',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'DhcpConfiguration',
                         'description' => 'The DhcpConfiguration data type',
                         'type' => 'object',
                         'properties' => array(
@@ -890,7 +890,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1264,7 +1264,7 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'PrivateIpAddressSpecification',
                         'type' => 'object',
                         'properties' => array(
                             'PrivateIpAddress' => array(
@@ -1351,7 +1351,7 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'PriceScheduleSpecification',
                         'type' => 'object',
                         'properties' => array(
                             'Term' => array(
@@ -1607,7 +1607,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ResourceId',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'ResourceId',
                         'type' => 'string',
                     ),
                 ),
@@ -1618,7 +1618,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'Tag',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'Tag',
                         'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
                         'type' => 'object',
                         'properties' => array(
@@ -2258,7 +2258,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ResourceId',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'ResourceId',
                         'type' => 'string',
                     ),
                 ),
@@ -2268,7 +2268,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'Tag',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'Tag',
                         'description' => 'Represents metadata to associate with Amazon EC2 resources. Each tag consists of a user-defined key and value. Use tags to categorize EC2 resources, such as by purpose, owner, or environment.',
                         'type' => 'object',
                         'properties' => array(
@@ -2491,7 +2491,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2556,7 +2556,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2612,7 +2612,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2656,7 +2656,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2668,7 +2668,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ConversionTaskId',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'ConversionTaskId',
                         'type' => 'string',
                     ),
                 ),
@@ -2721,7 +2721,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2776,7 +2776,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -2912,7 +2912,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3014,7 +3014,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3085,7 +3085,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3118,7 +3118,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'InternetGatewayId',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'InternetGatewayId',
                         'type' => 'string',
                     ),
                 ),
@@ -3141,7 +3141,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3197,7 +3197,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3230,7 +3230,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'LicenseId',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'LicenseId',
                         'type' => 'string',
                     ),
                 ),
@@ -3253,7 +3253,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3286,7 +3286,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'NetworkAclId',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'NetworkAclId',
                         'type' => 'string',
                     ),
                 ),
@@ -3309,7 +3309,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3381,7 +3381,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'NetworkInterfaceId',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'NetworkInterfaceId',
                         'type' => 'string',
                     ),
                 ),
@@ -3403,7 +3403,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3436,7 +3436,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'GroupName',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'GroupName',
                         'type' => 'string',
                     ),
                 ),
@@ -3459,7 +3459,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3515,7 +3515,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3571,7 +3571,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3627,7 +3627,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3660,7 +3660,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ReservedInstancesOfferingId',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'ReservedInstancesOfferingId',
                         'type' => 'string',
                     ),
                 ),
@@ -3716,7 +3716,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3767,7 +3767,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'RouteTableId',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'RouteTableId',
                         'type' => 'string',
                     ),
                 ),
@@ -3790,7 +3790,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3855,7 +3855,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -3944,7 +3944,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'RestorableBy',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'RestorableBy',
                         'type' => 'string',
                     ),
                 ),
@@ -3967,7 +3967,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4043,7 +4043,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4124,7 +4124,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ProductDescription',
                     'items' => array(
-                        'name' => 'String',
+                        'name' => 'ProductDescription',
                         'type' => 'string',
                     ),
                 ),
@@ -4147,7 +4147,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4218,7 +4218,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4264,7 +4264,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4350,7 +4350,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4414,7 +4414,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4470,7 +4470,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4526,7 +4526,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -4582,7 +4582,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Value',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Value',
                                     'type' => 'string',
                                 ),
                             ),
@@ -5281,7 +5281,7 @@ return array (
                         'Add' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'Item',
+                                'name' => 'LaunchPermission',
                                 'description' => 'Describes a permission to launch an Amazon Machine Image (AMI).',
                                 'type' => 'object',
                                 'properties' => array(
@@ -5299,7 +5299,7 @@ return array (
                         'Remove' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'Item',
+                                'name' => 'LaunchPermission',
                                 'description' => 'Describes a permission to launch an Amazon Machine Image (AMI).',
                                 'type' => 'object',
                                 'properties' => array(
@@ -5382,7 +5382,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'BlockDeviceMapping',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'BlockDeviceMapping',
                         'description' => 'Specifies how an instance\'s block devices should be mapped on a running instance.',
                         'type' => 'object',
                         'properties' => array(
@@ -5631,7 +5631,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'UserGroup',
                     'items' => array(
-                        'name' => 'GroupName',
+                        'name' => 'UserGroup',
                         'type' => 'string',
                     ),
                 ),
@@ -5642,7 +5642,7 @@ return array (
                         'Add' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'Item',
+                                'name' => 'CreateVolumePermission',
                                 'description' => 'Describes a permission allowing either a user or group to create a new EBS volume from a snapshot.',
                                 'type' => 'object',
                                 'properties' => array(
@@ -5660,7 +5660,7 @@ return array (
                         'Remove' => array(
                             'type' => 'array',
                             'items' => array(
-                                'name' => 'Item',
+                                'name' => 'CreateVolumePermission',
                                 'description' => 'Describes a permission allowing either a user or group to create a new EBS volume from a snapshot.',
                                 'type' => 'object',
                                 'properties' => array(
@@ -6208,7 +6208,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'ReasonCode',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'ReasonCode',
                         'type' => 'string',
                     ),
                 ),
@@ -6352,7 +6352,7 @@ return array (
                             'type' => 'array',
                             'sentAs' => 'BlockDeviceMapping',
                             'items' => array(
-                                'name' => 'Item',
+                                'name' => 'BlockDeviceMapping',
                                 'description' => 'The BlockDeviceMappingItemType data type.',
                                 'type' => 'object',
                                 'properties' => array(
@@ -6413,7 +6413,7 @@ return array (
                             'type' => 'array',
                             'sentAs' => 'NetworkInterfaceSet',
                             'items' => array(
-                                'name' => 'Item',
+                                'name' => 'NetworkInterfaceSet',
                                 'type' => 'object',
                                 'properties' => array(
                                     'NetworkInterfaceId' => array(
@@ -6447,7 +6447,7 @@ return array (
                                         'type' => 'array',
                                         'sentAs' => 'PrivateIpAddressesSet',
                                         'items' => array(
-                                            'name' => 'Item',
+                                            'name' => 'PrivateIpAddressesSet',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'PrivateIpAddress' => array(
@@ -6486,6 +6486,7 @@ return array (
                             'type' => 'array',
                             'sentAs' => 'SecurityGroupId',
                             'items' => array(
+                                'name' => 'SecurityGroupId',
                                 'type' => 'string',
                             ),
                         ),
@@ -6493,6 +6494,7 @@ return array (
                             'type' => 'array',
                             'sentAs' => 'SecurityGroup',
                             'items' => array(
+                                'name' => 'SecurityGroup',
                                 'type' => 'string',
                             ),
                         ),
@@ -6671,7 +6673,7 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'IpPermission',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
@@ -6692,7 +6694,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Groups',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -6715,7 +6717,7 @@ return array (
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'IpRange',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -6764,7 +6766,7 @@ return array (
                     'type' => 'array',
                     'location' => 'aws.query',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'IpPermission',
                         'description' => 'An IP permission describing allowed incoming IP traffic to an Amazon EC2 security group.',
                         'type' => 'object',
                         'properties' => array(
@@ -6785,7 +6787,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'Groups',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'Groups',
                                     'description' => 'An AWS user ID identifiying an AWS account, and the name of a security group within that account.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -6808,7 +6810,7 @@ return array (
                                 'description' => 'The list of CIDR IP ranges included in this permission.',
                                 'type' => 'array',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'IpRange',
                                     'description' => 'Contains a list of CIRD IP ranges.',
                                     'type' => 'object',
                                     'properties' => array(
@@ -7057,7 +7059,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'NetworkInterface',
                     'items' => array(
-                        'name' => 'Item',
+                        'name' => 'NetworkInterface',
                         'type' => 'object',
                         'properties' => array(
                             'NetworkInterfaceId' => array(
@@ -7091,7 +7093,7 @@ return array (
                                 'type' => 'array',
                                 'sentAs' => 'PrivateIpAddressesSet',
                                 'items' => array(
-                                    'name' => 'Item',
+                                    'name' => 'PrivateIpAddressesSet',
                                     'type' => 'object',
                                     'properties' => array(
                                         'PrivateIpAddress' => array(
@@ -15493,7 +15495,7 @@ return array (
             'failure.value' => array(
                 'shutting-down',
                 'terminated',
-                'stopping'
+                'stopping',
             ),
         ),
         'InstanceStopped' => array(
@@ -15509,7 +15511,7 @@ return array (
             'success.value' => 'terminated',
             'failure.value' => array(
                 'pending',
-                'stopping'
+                'stopping',
             ),
         ),
         '__ExportTaskState' => array(

@@ -21,7 +21,6 @@ return array (
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
-    'memberedLists' => true,
     'namespace' => 'ElasticLoadBalancing',
     'operations' => array(
         'ApplySecurityGroupsToLoadBalancer' => array(

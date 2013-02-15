@@ -22,7 +22,6 @@ return array (
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
-    'memberedLists' => true,
     'namespace' => 'Ses',
     'operations' => array(
         'DeleteIdentity' => array(

@@ -16,6 +16,10 @@ Next Release
 * Updated `CallableWaiter` to allow for an array of context data to be passed to the callable
 * Fixed issue #29 so that the stat cache is cleared before performing multipart uploads
 * Fixed issue #38 so that Amazon CloudFront URLs are signed properly
+* Fixed an issue with Amazon S3 website redirects
+* Fixed a URL encoding inconsistency with Amazon S3 and pre-signed URLs
+* Fixed issue #42 to eliminate cURL error 65 for JSON services
+* Setting Guzzle dependency to ~3.2.0
 * Minimum version of PHP is now 5.3.3
 
 2.1.0 (2013-01-28)

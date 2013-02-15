@@ -22,7 +22,6 @@ return array (
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v2',
-    'memberedLists' => true,
     'namespace' => 'Sns',
     'operations' => array(
         'AddPermission' => array(

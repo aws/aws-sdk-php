@@ -166,10 +166,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -273,10 +273,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -328,10 +328,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -383,10 +383,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -444,13 +444,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'TypeDeprecatedFaultException',
+                    'class' => 'TypeDeprecatedException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -488,13 +488,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'DomainDeprecatedFaultException',
+                    'class' => 'DomainDeprecatedException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -552,13 +552,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'TypeDeprecatedFaultException',
+                    'class' => 'TypeDeprecatedException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -616,10 +616,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -657,10 +657,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -718,10 +718,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -779,10 +779,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -858,10 +858,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -934,10 +934,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
             ),
         ),
@@ -1099,10 +1099,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1160,7 +1160,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1282,10 +1282,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1358,10 +1358,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
             ),
         ),
@@ -1425,10 +1425,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1510,10 +1510,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1557,10 +1557,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1657,16 +1657,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'TypeAlreadyExistsFaultException',
+                    'class' => 'TypeAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1718,13 +1718,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'DomainAlreadyExistsFaultException',
+                    'class' => 'DomainAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1819,16 +1819,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'TypeAlreadyExistsFaultException',
+                    'class' => 'TypeAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1880,10 +1880,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1927,10 +1927,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -1974,10 +1974,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -2027,10 +2027,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -2429,10 +2429,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -2498,10 +2498,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
@@ -2620,22 +2620,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'TypeDeprecatedFaultException',
+                    'class' => 'TypeDeprecatedException',
                 ),
                 array(
-                    'class' => 'WorkflowExecutionAlreadyStartedFaultException',
+                    'class' => 'WorkflowExecutionAlreadyStartedException',
                 ),
                 array(
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
                 array(
-                    'class' => 'DefaultUndefinedFaultException',
+                    'class' => 'DefaultUndefinedException',
                 ),
             ),
         ),
@@ -2709,10 +2709,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'UnknownResourceFaultException',
+                    'class' => 'UnknownResourceException',
                 ),
                 array(
-                    'class' => 'OperationNotPermittedFaultException',
+                    'class' => 'OperationNotPermittedException',
                 ),
             ),
         ),
