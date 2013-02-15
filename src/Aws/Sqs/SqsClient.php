@@ -25,21 +25,21 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Simple Queue Service
  *
- * @method Model addPermission(array $args = array()) {@command sqs AddPermission}
- * @method Model changeMessageVisibility(array $args = array()) {@command sqs ChangeMessageVisibility}
- * @method Model changeMessageVisibilityBatch(array $args = array()) {@command sqs ChangeMessageVisibilityBatch}
- * @method Model createQueue(array $args = array()) {@command sqs CreateQueue}
- * @method Model deleteMessage(array $args = array()) {@command sqs DeleteMessage}
- * @method Model deleteMessageBatch(array $args = array()) {@command sqs DeleteMessageBatch}
- * @method Model deleteQueue(array $args = array()) {@command sqs DeleteQueue}
- * @method Model getQueueAttributes(array $args = array()) {@command sqs GetQueueAttributes}
- * @method Model getQueueUrl(array $args = array()) {@command sqs GetQueueUrl}
- * @method Model listQueues(array $args = array()) {@command sqs ListQueues}
- * @method Model receiveMessage(array $args = array()) {@command sqs ReceiveMessage}
- * @method Model removePermission(array $args = array()) {@command sqs RemovePermission}
- * @method Model sendMessage(array $args = array()) {@command sqs SendMessage}
- * @method Model sendMessageBatch(array $args = array()) {@command sqs SendMessageBatch}
- * @method Model setQueueAttributes(array $args = array()) {@command sqs SetQueueAttributes}
+ * @method Model addPermission(array $args = array()) {@command Sqs AddPermission}
+ * @method Model changeMessageVisibility(array $args = array()) {@command Sqs ChangeMessageVisibility}
+ * @method Model changeMessageVisibilityBatch(array $args = array()) {@command Sqs ChangeMessageVisibilityBatch}
+ * @method Model createQueue(array $args = array()) {@command Sqs CreateQueue}
+ * @method Model deleteMessage(array $args = array()) {@command Sqs DeleteMessage}
+ * @method Model deleteMessageBatch(array $args = array()) {@command Sqs DeleteMessageBatch}
+ * @method Model deleteQueue(array $args = array()) {@command Sqs DeleteQueue}
+ * @method Model getQueueAttributes(array $args = array()) {@command Sqs GetQueueAttributes}
+ * @method Model getQueueUrl(array $args = array()) {@command Sqs GetQueueUrl}
+ * @method Model listQueues(array $args = array()) {@command Sqs ListQueues}
+ * @method Model receiveMessage(array $args = array()) {@command Sqs ReceiveMessage}
+ * @method Model removePermission(array $args = array()) {@command Sqs RemovePermission}
+ * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}
+ * @method Model sendMessageBatch(array $args = array()) {@command Sqs SendMessageBatch}
+ * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
  */
 class SqsClient extends AbstractClient
 {

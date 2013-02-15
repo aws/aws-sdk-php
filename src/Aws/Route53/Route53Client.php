@@ -27,17 +27,17 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Route 53
  *
- * @method Model changeResourceRecordSets(array $args = array()) {@command route53 ChangeResourceRecordSets}
- * @method Model createHealthCheck(array $args = array()) {@command route53 CreateHealthCheck}
- * @method Model createHostedZone(array $args = array()) {@command route53 CreateHostedZone}
- * @method Model deleteHealthCheck(array $args = array()) {@command route53 DeleteHealthCheck}
- * @method Model deleteHostedZone(array $args = array()) {@command route53 DeleteHostedZone}
- * @method Model getChange(array $args = array()) {@command route53 GetChange}
- * @method Model getHealthCheck(array $args = array()) {@command route53 GetHealthCheck}
- * @method Model getHostedZone(array $args = array()) {@command route53 GetHostedZone}
- * @method Model listHealthChecks(array $args = array()) {@command route53 ListHealthChecks}
- * @method Model listHostedZones(array $args = array()) {@command route53 ListHostedZones}
- * @method Model listResourceRecordSets(array $args = array()) {@command route53 ListResourceRecordSets}
+ * @method Model changeResourceRecordSets(array $args = array()) {@command Route53 ChangeResourceRecordSets}
+ * @method Model createHealthCheck(array $args = array()) {@command Route53 CreateHealthCheck}
+ * @method Model createHostedZone(array $args = array()) {@command Route53 CreateHostedZone}
+ * @method Model deleteHealthCheck(array $args = array()) {@command Route53 DeleteHealthCheck}
+ * @method Model deleteHostedZone(array $args = array()) {@command Route53 DeleteHostedZone}
+ * @method Model getChange(array $args = array()) {@command Route53 GetChange}
+ * @method Model getHealthCheck(array $args = array()) {@command Route53 GetHealthCheck}
+ * @method Model getHostedZone(array $args = array()) {@command Route53 GetHostedZone}
+ * @method Model listHealthChecks(array $args = array()) {@command Route53 ListHealthChecks}
+ * @method Model listHostedZones(array $args = array()) {@command Route53 ListHostedZones}
+ * @method Model listResourceRecordSets(array $args = array()) {@command Route53 ListResourceRecordSets}
  */
 class Route53Client extends AbstractClient
 {

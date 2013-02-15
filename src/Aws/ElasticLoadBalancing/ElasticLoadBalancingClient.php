@@ -26,29 +26,29 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Elastic Load Balancing
  *
- * @method Model applySecurityGroupsToLoadBalancer(array $args = array()) {@command elasticloadbalancing ApplySecurityGroupsToLoadBalancer}
- * @method Model attachLoadBalancerToSubnets(array $args = array()) {@command elasticloadbalancing AttachLoadBalancerToSubnets}
- * @method Model configureHealthCheck(array $args = array()) {@command elasticloadbalancing ConfigureHealthCheck}
- * @method Model createAppCookieStickinessPolicy(array $args = array()) {@command elasticloadbalancing CreateAppCookieStickinessPolicy}
- * @method Model createLBCookieStickinessPolicy(array $args = array()) {@command elasticloadbalancing CreateLBCookieStickinessPolicy}
- * @method Model createLoadBalancer(array $args = array()) {@command elasticloadbalancing CreateLoadBalancer}
- * @method Model createLoadBalancerListeners(array $args = array()) {@command elasticloadbalancing CreateLoadBalancerListeners}
- * @method Model createLoadBalancerPolicy(array $args = array()) {@command elasticloadbalancing CreateLoadBalancerPolicy}
- * @method Model deleteLoadBalancer(array $args = array()) {@command elasticloadbalancing DeleteLoadBalancer}
- * @method Model deleteLoadBalancerListeners(array $args = array()) {@command elasticloadbalancing DeleteLoadBalancerListeners}
- * @method Model deleteLoadBalancerPolicy(array $args = array()) {@command elasticloadbalancing DeleteLoadBalancerPolicy}
- * @method Model deregisterInstancesFromLoadBalancer(array $args = array()) {@command elasticloadbalancing DeregisterInstancesFromLoadBalancer}
- * @method Model describeInstanceHealth(array $args = array()) {@command elasticloadbalancing DescribeInstanceHealth}
- * @method Model describeLoadBalancerPolicies(array $args = array()) {@command elasticloadbalancing DescribeLoadBalancerPolicies}
- * @method Model describeLoadBalancerPolicyTypes(array $args = array()) {@command elasticloadbalancing DescribeLoadBalancerPolicyTypes}
- * @method Model describeLoadBalancers(array $args = array()) {@command elasticloadbalancing DescribeLoadBalancers}
- * @method Model detachLoadBalancerFromSubnets(array $args = array()) {@command elasticloadbalancing DetachLoadBalancerFromSubnets}
- * @method Model disableAvailabilityZonesForLoadBalancer(array $args = array()) {@command elasticloadbalancing DisableAvailabilityZonesForLoadBalancer}
- * @method Model enableAvailabilityZonesForLoadBalancer(array $args = array()) {@command elasticloadbalancing EnableAvailabilityZonesForLoadBalancer}
- * @method Model registerInstancesWithLoadBalancer(array $args = array()) {@command elasticloadbalancing RegisterInstancesWithLoadBalancer}
- * @method Model setLoadBalancerListenerSSLCertificate(array $args = array()) {@command elasticloadbalancing SetLoadBalancerListenerSSLCertificate}
- * @method Model setLoadBalancerPoliciesForBackendServer(array $args = array()) {@command elasticloadbalancing SetLoadBalancerPoliciesForBackendServer}
- * @method Model setLoadBalancerPoliciesOfListener(array $args = array()) {@command elasticloadbalancing SetLoadBalancerPoliciesOfListener}
+ * @method Model applySecurityGroupsToLoadBalancer(array $args = array()) {@command ElasticLoadBalancing ApplySecurityGroupsToLoadBalancer}
+ * @method Model attachLoadBalancerToSubnets(array $args = array()) {@command ElasticLoadBalancing AttachLoadBalancerToSubnets}
+ * @method Model configureHealthCheck(array $args = array()) {@command ElasticLoadBalancing ConfigureHealthCheck}
+ * @method Model createAppCookieStickinessPolicy(array $args = array()) {@command ElasticLoadBalancing CreateAppCookieStickinessPolicy}
+ * @method Model createLBCookieStickinessPolicy(array $args = array()) {@command ElasticLoadBalancing CreateLBCookieStickinessPolicy}
+ * @method Model createLoadBalancer(array $args = array()) {@command ElasticLoadBalancing CreateLoadBalancer}
+ * @method Model createLoadBalancerListeners(array $args = array()) {@command ElasticLoadBalancing CreateLoadBalancerListeners}
+ * @method Model createLoadBalancerPolicy(array $args = array()) {@command ElasticLoadBalancing CreateLoadBalancerPolicy}
+ * @method Model deleteLoadBalancer(array $args = array()) {@command ElasticLoadBalancing DeleteLoadBalancer}
+ * @method Model deleteLoadBalancerListeners(array $args = array()) {@command ElasticLoadBalancing DeleteLoadBalancerListeners}
+ * @method Model deleteLoadBalancerPolicy(array $args = array()) {@command ElasticLoadBalancing DeleteLoadBalancerPolicy}
+ * @method Model deregisterInstancesFromLoadBalancer(array $args = array()) {@command ElasticLoadBalancing DeregisterInstancesFromLoadBalancer}
+ * @method Model describeInstanceHealth(array $args = array()) {@command ElasticLoadBalancing DescribeInstanceHealth}
+ * @method Model describeLoadBalancerPolicies(array $args = array()) {@command ElasticLoadBalancing DescribeLoadBalancerPolicies}
+ * @method Model describeLoadBalancerPolicyTypes(array $args = array()) {@command ElasticLoadBalancing DescribeLoadBalancerPolicyTypes}
+ * @method Model describeLoadBalancers(array $args = array()) {@command ElasticLoadBalancing DescribeLoadBalancers}
+ * @method Model detachLoadBalancerFromSubnets(array $args = array()) {@command ElasticLoadBalancing DetachLoadBalancerFromSubnets}
+ * @method Model disableAvailabilityZonesForLoadBalancer(array $args = array()) {@command ElasticLoadBalancing DisableAvailabilityZonesForLoadBalancer}
+ * @method Model enableAvailabilityZonesForLoadBalancer(array $args = array()) {@command ElasticLoadBalancing EnableAvailabilityZonesForLoadBalancer}
+ * @method Model registerInstancesWithLoadBalancer(array $args = array()) {@command ElasticLoadBalancing RegisterInstancesWithLoadBalancer}
+ * @method Model setLoadBalancerListenerSSLCertificate(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerListenerSSLCertificate}
+ * @method Model setLoadBalancerPoliciesForBackendServer(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerPoliciesForBackendServer}
+ * @method Model setLoadBalancerPoliciesOfListener(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerPoliciesOfListener}
  */
 class ElasticLoadBalancingClient extends AbstractClient
 {

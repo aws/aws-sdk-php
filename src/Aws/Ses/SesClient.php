@@ -25,24 +25,24 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Simple Email Service
  *
- * @method Model deleteIdentity(array $args = array()) {@command ses DeleteIdentity}
- * @method Model deleteVerifiedEmailAddress(array $args = array()) {@command ses DeleteVerifiedEmailAddress}
- * @method Model getIdentityDkimAttributes(array $args = array()) {@command ses GetIdentityDkimAttributes}
- * @method Model getIdentityNotificationAttributes(array $args = array()) {@command ses GetIdentityNotificationAttributes}
- * @method Model getIdentityVerificationAttributes(array $args = array()) {@command ses GetIdentityVerificationAttributes}
- * @method Model getSendQuota(array $args = array()) {@command ses GetSendQuota}
- * @method Model getSendStatistics(array $args = array()) {@command ses GetSendStatistics}
- * @method Model listIdentities(array $args = array()) {@command ses ListIdentities}
- * @method Model listVerifiedEmailAddresses(array $args = array()) {@command ses ListVerifiedEmailAddresses}
- * @method Model sendEmail(array $args = array()) {@command ses SendEmail}
- * @method Model sendRawEmail(array $args = array()) {@command ses SendRawEmail}
- * @method Model setIdentityDkimEnabled(array $args = array()) {@command ses SetIdentityDkimEnabled}
- * @method Model setIdentityFeedbackForwardingEnabled(array $args = array()) {@command ses SetIdentityFeedbackForwardingEnabled}
- * @method Model setIdentityNotificationTopic(array $args = array()) {@command ses SetIdentityNotificationTopic}
- * @method Model verifyDomainDkim(array $args = array()) {@command ses VerifyDomainDkim}
- * @method Model verifyDomainIdentity(array $args = array()) {@command ses VerifyDomainIdentity}
- * @method Model verifyEmailAddress(array $args = array()) {@command ses VerifyEmailAddress}
- * @method Model verifyEmailIdentity(array $args = array()) {@command ses VerifyEmailIdentity}
+ * @method Model deleteIdentity(array $args = array()) {@command Ses DeleteIdentity}
+ * @method Model deleteVerifiedEmailAddress(array $args = array()) {@command Ses DeleteVerifiedEmailAddress}
+ * @method Model getIdentityDkimAttributes(array $args = array()) {@command Ses GetIdentityDkimAttributes}
+ * @method Model getIdentityNotificationAttributes(array $args = array()) {@command Ses GetIdentityNotificationAttributes}
+ * @method Model getIdentityVerificationAttributes(array $args = array()) {@command Ses GetIdentityVerificationAttributes}
+ * @method Model getSendQuota(array $args = array()) {@command Ses GetSendQuota}
+ * @method Model getSendStatistics(array $args = array()) {@command Ses GetSendStatistics}
+ * @method Model listIdentities(array $args = array()) {@command Ses ListIdentities}
+ * @method Model listVerifiedEmailAddresses(array $args = array()) {@command Ses ListVerifiedEmailAddresses}
+ * @method Model sendEmail(array $args = array()) {@command Ses SendEmail}
+ * @method Model sendRawEmail(array $args = array()) {@command Ses SendRawEmail}
+ * @method Model setIdentityDkimEnabled(array $args = array()) {@command Ses SetIdentityDkimEnabled}
+ * @method Model setIdentityFeedbackForwardingEnabled(array $args = array()) {@command Ses SetIdentityFeedbackForwardingEnabled}
+ * @method Model setIdentityNotificationTopic(array $args = array()) {@command Ses SetIdentityNotificationTopic}
+ * @method Model verifyDomainDkim(array $args = array()) {@command Ses VerifyDomainDkim}
+ * @method Model verifyDomainIdentity(array $args = array()) {@command Ses VerifyDomainIdentity}
+ * @method Model verifyEmailAddress(array $args = array()) {@command Ses VerifyEmailAddress}
+ * @method Model verifyEmailIdentity(array $args = array()) {@command Ses VerifyEmailIdentity}
  * @method waitUntilIdentityExists(array $input) Wait using the IdentityExists waiter. The input array uses the parameters of the GetIdentityVerificationAttributes operation and waiter specific settings
  */
 class SesClient extends AbstractClient

@@ -25,16 +25,16 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon SimpleDB
  *
- * @method Model batchDeleteAttributes(array $args = array()) {@command simpledb BatchDeleteAttributes}
- * @method Model batchPutAttributes(array $args = array()) {@command simpledb BatchPutAttributes}
- * @method Model createDomain(array $args = array()) {@command simpledb CreateDomain}
- * @method Model deleteAttributes(array $args = array()) {@command simpledb DeleteAttributes}
- * @method Model deleteDomain(array $args = array()) {@command simpledb DeleteDomain}
- * @method Model domainMetadata(array $args = array()) {@command simpledb DomainMetadata}
- * @method Model getAttributes(array $args = array()) {@command simpledb GetAttributes}
- * @method Model listDomains(array $args = array()) {@command simpledb ListDomains}
- * @method Model putAttributes(array $args = array()) {@command simpledb PutAttributes}
- * @method Model select(array $args = array()) {@command simpledb Select}
+ * @method Model batchDeleteAttributes(array $args = array()) {@command SimpleDb BatchDeleteAttributes}
+ * @method Model batchPutAttributes(array $args = array()) {@command SimpleDb BatchPutAttributes}
+ * @method Model createDomain(array $args = array()) {@command SimpleDb CreateDomain}
+ * @method Model deleteAttributes(array $args = array()) {@command SimpleDb DeleteAttributes}
+ * @method Model deleteDomain(array $args = array()) {@command SimpleDb DeleteDomain}
+ * @method Model domainMetadata(array $args = array()) {@command SimpleDb DomainMetadata}
+ * @method Model getAttributes(array $args = array()) {@command SimpleDb GetAttributes}
+ * @method Model listDomains(array $args = array()) {@command SimpleDb ListDomains}
+ * @method Model putAttributes(array $args = array()) {@command SimpleDb PutAttributes}
+ * @method Model select(array $args = array()) {@command SimpleDb Select}
  */
 class SimpleDbClient extends AbstractClient
 {

@@ -26,35 +26,35 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with AWS Elastic Beanstalk
  *
- * @method Model checkDNSAvailability(array $args = array()) {@command elasticbeanstalk CheckDNSAvailability}
- * @method Model createApplication(array $args = array()) {@command elasticbeanstalk CreateApplication}
- * @method Model createApplicationVersion(array $args = array()) {@command elasticbeanstalk CreateApplicationVersion}
- * @method Model createConfigurationTemplate(array $args = array()) {@command elasticbeanstalk CreateConfigurationTemplate}
- * @method Model createEnvironment(array $args = array()) {@command elasticbeanstalk CreateEnvironment}
- * @method Model createStorageLocation(array $args = array()) {@command elasticbeanstalk CreateStorageLocation}
- * @method Model deleteApplication(array $args = array()) {@command elasticbeanstalk DeleteApplication}
- * @method Model deleteApplicationVersion(array $args = array()) {@command elasticbeanstalk DeleteApplicationVersion}
- * @method Model deleteConfigurationTemplate(array $args = array()) {@command elasticbeanstalk DeleteConfigurationTemplate}
- * @method Model deleteEnvironmentConfiguration(array $args = array()) {@command elasticbeanstalk DeleteEnvironmentConfiguration}
- * @method Model describeApplicationVersions(array $args = array()) {@command elasticbeanstalk DescribeApplicationVersions}
- * @method Model describeApplications(array $args = array()) {@command elasticbeanstalk DescribeApplications}
- * @method Model describeConfigurationOptions(array $args = array()) {@command elasticbeanstalk DescribeConfigurationOptions}
- * @method Model describeConfigurationSettings(array $args = array()) {@command elasticbeanstalk DescribeConfigurationSettings}
- * @method Model describeEnvironmentResources(array $args = array()) {@command elasticbeanstalk DescribeEnvironmentResources}
- * @method Model describeEnvironments(array $args = array()) {@command elasticbeanstalk DescribeEnvironments}
- * @method Model describeEvents(array $args = array()) {@command elasticbeanstalk DescribeEvents}
- * @method Model listAvailableSolutionStacks(array $args = array()) {@command elasticbeanstalk ListAvailableSolutionStacks}
- * @method Model rebuildEnvironment(array $args = array()) {@command elasticbeanstalk RebuildEnvironment}
- * @method Model requestEnvironmentInfo(array $args = array()) {@command elasticbeanstalk RequestEnvironmentInfo}
- * @method Model restartAppServer(array $args = array()) {@command elasticbeanstalk RestartAppServer}
- * @method Model retrieveEnvironmentInfo(array $args = array()) {@command elasticbeanstalk RetrieveEnvironmentInfo}
- * @method Model swapEnvironmentCNAMEs(array $args = array()) {@command elasticbeanstalk SwapEnvironmentCNAMEs}
- * @method Model terminateEnvironment(array $args = array()) {@command elasticbeanstalk TerminateEnvironment}
- * @method Model updateApplication(array $args = array()) {@command elasticbeanstalk UpdateApplication}
- * @method Model updateApplicationVersion(array $args = array()) {@command elasticbeanstalk UpdateApplicationVersion}
- * @method Model updateConfigurationTemplate(array $args = array()) {@command elasticbeanstalk UpdateConfigurationTemplate}
- * @method Model updateEnvironment(array $args = array()) {@command elasticbeanstalk UpdateEnvironment}
- * @method Model validateConfigurationSettings(array $args = array()) {@command elasticbeanstalk ValidateConfigurationSettings}
+ * @method Model checkDNSAvailability(array $args = array()) {@command ElasticBeanstalk CheckDNSAvailability}
+ * @method Model createApplication(array $args = array()) {@command ElasticBeanstalk CreateApplication}
+ * @method Model createApplicationVersion(array $args = array()) {@command ElasticBeanstalk CreateApplicationVersion}
+ * @method Model createConfigurationTemplate(array $args = array()) {@command ElasticBeanstalk CreateConfigurationTemplate}
+ * @method Model createEnvironment(array $args = array()) {@command ElasticBeanstalk CreateEnvironment}
+ * @method Model createStorageLocation(array $args = array()) {@command ElasticBeanstalk CreateStorageLocation}
+ * @method Model deleteApplication(array $args = array()) {@command ElasticBeanstalk DeleteApplication}
+ * @method Model deleteApplicationVersion(array $args = array()) {@command ElasticBeanstalk DeleteApplicationVersion}
+ * @method Model deleteConfigurationTemplate(array $args = array()) {@command ElasticBeanstalk DeleteConfigurationTemplate}
+ * @method Model deleteEnvironmentConfiguration(array $args = array()) {@command ElasticBeanstalk DeleteEnvironmentConfiguration}
+ * @method Model describeApplicationVersions(array $args = array()) {@command ElasticBeanstalk DescribeApplicationVersions}
+ * @method Model describeApplications(array $args = array()) {@command ElasticBeanstalk DescribeApplications}
+ * @method Model describeConfigurationOptions(array $args = array()) {@command ElasticBeanstalk DescribeConfigurationOptions}
+ * @method Model describeConfigurationSettings(array $args = array()) {@command ElasticBeanstalk DescribeConfigurationSettings}
+ * @method Model describeEnvironmentResources(array $args = array()) {@command ElasticBeanstalk DescribeEnvironmentResources}
+ * @method Model describeEnvironments(array $args = array()) {@command ElasticBeanstalk DescribeEnvironments}
+ * @method Model describeEvents(array $args = array()) {@command ElasticBeanstalk DescribeEvents}
+ * @method Model listAvailableSolutionStacks(array $args = array()) {@command ElasticBeanstalk ListAvailableSolutionStacks}
+ * @method Model rebuildEnvironment(array $args = array()) {@command ElasticBeanstalk RebuildEnvironment}
+ * @method Model requestEnvironmentInfo(array $args = array()) {@command ElasticBeanstalk RequestEnvironmentInfo}
+ * @method Model restartAppServer(array $args = array()) {@command ElasticBeanstalk RestartAppServer}
+ * @method Model retrieveEnvironmentInfo(array $args = array()) {@command ElasticBeanstalk RetrieveEnvironmentInfo}
+ * @method Model swapEnvironmentCNAMEs(array $args = array()) {@command ElasticBeanstalk SwapEnvironmentCNAMEs}
+ * @method Model terminateEnvironment(array $args = array()) {@command ElasticBeanstalk TerminateEnvironment}
+ * @method Model updateApplication(array $args = array()) {@command ElasticBeanstalk UpdateApplication}
+ * @method Model updateApplicationVersion(array $args = array()) {@command ElasticBeanstalk UpdateApplicationVersion}
+ * @method Model updateConfigurationTemplate(array $args = array()) {@command ElasticBeanstalk UpdateConfigurationTemplate}
+ * @method Model updateEnvironment(array $args = array()) {@command ElasticBeanstalk UpdateEnvironment}
+ * @method Model validateConfigurationSettings(array $args = array()) {@command ElasticBeanstalk ValidateConfigurationSettings}
  * @method waitUntilEnvironmentReady(array $input) Wait using the EnvironmentReady waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
  * @method waitUntilEnvironmentTerminated(array $input) Wait using the EnvironmentTerminated waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
  */

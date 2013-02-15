@@ -26,37 +26,37 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Simple Workflow Service
  *
- * @method Model countClosedWorkflowExecutions(array $args = array()) {@command swf CountClosedWorkflowExecutions}
- * @method Model countOpenWorkflowExecutions(array $args = array()) {@command swf CountOpenWorkflowExecutions}
- * @method Model countPendingActivityTasks(array $args = array()) {@command swf CountPendingActivityTasks}
- * @method Model countPendingDecisionTasks(array $args = array()) {@command swf CountPendingDecisionTasks}
- * @method Model deprecateActivityType(array $args = array()) {@command swf DeprecateActivityType}
- * @method Model deprecateDomain(array $args = array()) {@command swf DeprecateDomain}
- * @method Model deprecateWorkflowType(array $args = array()) {@command swf DeprecateWorkflowType}
- * @method Model describeActivityType(array $args = array()) {@command swf DescribeActivityType}
- * @method Model describeDomain(array $args = array()) {@command swf DescribeDomain}
- * @method Model describeWorkflowExecution(array $args = array()) {@command swf DescribeWorkflowExecution}
- * @method Model describeWorkflowType(array $args = array()) {@command swf DescribeWorkflowType}
- * @method Model getWorkflowExecutionHistory(array $args = array()) {@command swf GetWorkflowExecutionHistory}
- * @method Model listActivityTypes(array $args = array()) {@command swf ListActivityTypes}
- * @method Model listClosedWorkflowExecutions(array $args = array()) {@command swf ListClosedWorkflowExecutions}
- * @method Model listDomains(array $args = array()) {@command swf ListDomains}
- * @method Model listOpenWorkflowExecutions(array $args = array()) {@command swf ListOpenWorkflowExecutions}
- * @method Model listWorkflowTypes(array $args = array()) {@command swf ListWorkflowTypes}
- * @method Model pollForActivityTask(array $args = array()) {@command swf PollForActivityTask}
- * @method Model pollForDecisionTask(array $args = array()) {@command swf PollForDecisionTask}
- * @method Model recordActivityTaskHeartbeat(array $args = array()) {@command swf RecordActivityTaskHeartbeat}
- * @method Model registerActivityType(array $args = array()) {@command swf RegisterActivityType}
- * @method Model registerDomain(array $args = array()) {@command swf RegisterDomain}
- * @method Model registerWorkflowType(array $args = array()) {@command swf RegisterWorkflowType}
- * @method Model requestCancelWorkflowExecution(array $args = array()) {@command swf RequestCancelWorkflowExecution}
- * @method Model respondActivityTaskCanceled(array $args = array()) {@command swf RespondActivityTaskCanceled}
- * @method Model respondActivityTaskCompleted(array $args = array()) {@command swf RespondActivityTaskCompleted}
- * @method Model respondActivityTaskFailed(array $args = array()) {@command swf RespondActivityTaskFailed}
- * @method Model respondDecisionTaskCompleted(array $args = array()) {@command swf RespondDecisionTaskCompleted}
- * @method Model signalWorkflowExecution(array $args = array()) {@command swf SignalWorkflowExecution}
- * @method Model startWorkflowExecution(array $args = array()) {@command swf StartWorkflowExecution}
- * @method Model terminateWorkflowExecution(array $args = array()) {@command swf TerminateWorkflowExecution}
+ * @method Model countClosedWorkflowExecutions(array $args = array()) {@command Swf CountClosedWorkflowExecutions}
+ * @method Model countOpenWorkflowExecutions(array $args = array()) {@command Swf CountOpenWorkflowExecutions}
+ * @method Model countPendingActivityTasks(array $args = array()) {@command Swf CountPendingActivityTasks}
+ * @method Model countPendingDecisionTasks(array $args = array()) {@command Swf CountPendingDecisionTasks}
+ * @method Model deprecateActivityType(array $args = array()) {@command Swf DeprecateActivityType}
+ * @method Model deprecateDomain(array $args = array()) {@command Swf DeprecateDomain}
+ * @method Model deprecateWorkflowType(array $args = array()) {@command Swf DeprecateWorkflowType}
+ * @method Model describeActivityType(array $args = array()) {@command Swf DescribeActivityType}
+ * @method Model describeDomain(array $args = array()) {@command Swf DescribeDomain}
+ * @method Model describeWorkflowExecution(array $args = array()) {@command Swf DescribeWorkflowExecution}
+ * @method Model describeWorkflowType(array $args = array()) {@command Swf DescribeWorkflowType}
+ * @method Model getWorkflowExecutionHistory(array $args = array()) {@command Swf GetWorkflowExecutionHistory}
+ * @method Model listActivityTypes(array $args = array()) {@command Swf ListActivityTypes}
+ * @method Model listClosedWorkflowExecutions(array $args = array()) {@command Swf ListClosedWorkflowExecutions}
+ * @method Model listDomains(array $args = array()) {@command Swf ListDomains}
+ * @method Model listOpenWorkflowExecutions(array $args = array()) {@command Swf ListOpenWorkflowExecutions}
+ * @method Model listWorkflowTypes(array $args = array()) {@command Swf ListWorkflowTypes}
+ * @method Model pollForActivityTask(array $args = array()) {@command Swf PollForActivityTask}
+ * @method Model pollForDecisionTask(array $args = array()) {@command Swf PollForDecisionTask}
+ * @method Model recordActivityTaskHeartbeat(array $args = array()) {@command Swf RecordActivityTaskHeartbeat}
+ * @method Model registerActivityType(array $args = array()) {@command Swf RegisterActivityType}
+ * @method Model registerDomain(array $args = array()) {@command Swf RegisterDomain}
+ * @method Model registerWorkflowType(array $args = array()) {@command Swf RegisterWorkflowType}
+ * @method Model requestCancelWorkflowExecution(array $args = array()) {@command Swf RequestCancelWorkflowExecution}
+ * @method Model respondActivityTaskCanceled(array $args = array()) {@command Swf RespondActivityTaskCanceled}
+ * @method Model respondActivityTaskCompleted(array $args = array()) {@command Swf RespondActivityTaskCompleted}
+ * @method Model respondActivityTaskFailed(array $args = array()) {@command Swf RespondActivityTaskFailed}
+ * @method Model respondDecisionTaskCompleted(array $args = array()) {@command Swf RespondDecisionTaskCompleted}
+ * @method Model signalWorkflowExecution(array $args = array()) {@command Swf SignalWorkflowExecution}
+ * @method Model startWorkflowExecution(array $args = array()) {@command Swf StartWorkflowExecution}
+ * @method Model terminateWorkflowExecution(array $args = array()) {@command Swf TerminateWorkflowExecution}
  */
 class SwfClient extends AbstractClient
 {

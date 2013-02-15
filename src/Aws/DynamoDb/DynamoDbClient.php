@@ -35,19 +35,19 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
 /**
  * Client to interact with Amazon DynamoDB
  *
- * @method Model batchGetItem(array $args = array()) {@command dynamodb BatchGetItem}
- * @method Model batchWriteItem(array $args = array()) {@command dynamodb BatchWriteItem}
- * @method Model createTable(array $args = array()) {@command dynamodb CreateTable}
- * @method Model deleteItem(array $args = array()) {@command dynamodb DeleteItem}
- * @method Model deleteTable(array $args = array()) {@command dynamodb DeleteTable}
- * @method Model describeTable(array $args = array()) {@command dynamodb DescribeTable}
- * @method Model getItem(array $args = array()) {@command dynamodb GetItem}
- * @method Model listTables(array $args = array()) {@command dynamodb ListTables}
- * @method Model putItem(array $args = array()) {@command dynamodb PutItem}
- * @method Model query(array $args = array()) {@command dynamodb Query}
- * @method Model scan(array $args = array()) {@command dynamodb Scan}
- * @method Model updateItem(array $args = array()) {@command dynamodb UpdateItem}
- * @method Model updateTable(array $args = array()) {@command dynamodb UpdateTable}
+ * @method Model batchGetItem(array $args = array()) {@command DynamoDb BatchGetItem}
+ * @method Model batchWriteItem(array $args = array()) {@command DynamoDb BatchWriteItem}
+ * @method Model createTable(array $args = array()) {@command DynamoDb CreateTable}
+ * @method Model deleteItem(array $args = array()) {@command DynamoDb DeleteItem}
+ * @method Model deleteTable(array $args = array()) {@command DynamoDb DeleteTable}
+ * @method Model describeTable(array $args = array()) {@command DynamoDb DescribeTable}
+ * @method Model getItem(array $args = array()) {@command DynamoDb GetItem}
+ * @method Model listTables(array $args = array()) {@command DynamoDb ListTables}
+ * @method Model putItem(array $args = array()) {@command DynamoDb PutItem}
+ * @method Model query(array $args = array()) {@command DynamoDb Query}
+ * @method Model scan(array $args = array()) {@command DynamoDb Scan}
+ * @method Model updateItem(array $args = array()) {@command DynamoDb UpdateItem}
+ * @method Model updateTable(array $args = array()) {@command DynamoDb UpdateTable}
  * @method waitUntilTableExists(array $input) Wait until a table exists and can be accessed The input array uses the parameters of the DescribeTable operation and waiter specific settings
  * @method waitUntilTableNotExists(array $input) Wait until a table is deleted The input array uses the parameters of the DescribeTable operation and waiter specific settings
  */

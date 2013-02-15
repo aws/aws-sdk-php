@@ -27,22 +27,22 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with AWS Data Pipeline
  *
- * @method Model activatePipeline(array $args = array()) {@command datapipeline ActivatePipeline}
- * @method Model createPipeline(array $args = array()) {@command datapipeline CreatePipeline}
- * @method Model deletePipeline(array $args = array()) {@command datapipeline DeletePipeline}
- * @method Model describeObjects(array $args = array()) {@command datapipeline DescribeObjects}
- * @method Model describePipelines(array $args = array()) {@command datapipeline DescribePipelines}
- * @method Model evaluateExpression(array $args = array()) {@command datapipeline EvaluateExpression}
- * @method Model getPipelineDefinition(array $args = array()) {@command datapipeline GetPipelineDefinition}
- * @method Model listPipelines(array $args = array()) {@command datapipeline ListPipelines}
- * @method Model pollForTask(array $args = array()) {@command datapipeline PollForTask}
- * @method Model putPipelineDefinition(array $args = array()) {@command datapipeline PutPipelineDefinition}
- * @method Model queryObjects(array $args = array()) {@command datapipeline QueryObjects}
- * @method Model reportTaskProgress(array $args = array()) {@command datapipeline ReportTaskProgress}
- * @method Model reportTaskRunnerHeartbeat(array $args = array()) {@command datapipeline ReportTaskRunnerHeartbeat}
- * @method Model setStatus(array $args = array()) {@command datapipeline SetStatus}
- * @method Model setTaskStatus(array $args = array()) {@command datapipeline SetTaskStatus}
- * @method Model validatePipelineDefinition(array $args = array()) {@command datapipeline ValidatePipelineDefinition}
+ * @method Model activatePipeline(array $args = array()) {@command DataPipeline ActivatePipeline}
+ * @method Model createPipeline(array $args = array()) {@command DataPipeline CreatePipeline}
+ * @method Model deletePipeline(array $args = array()) {@command DataPipeline DeletePipeline}
+ * @method Model describeObjects(array $args = array()) {@command DataPipeline DescribeObjects}
+ * @method Model describePipelines(array $args = array()) {@command DataPipeline DescribePipelines}
+ * @method Model evaluateExpression(array $args = array()) {@command DataPipeline EvaluateExpression}
+ * @method Model getPipelineDefinition(array $args = array()) {@command DataPipeline GetPipelineDefinition}
+ * @method Model listPipelines(array $args = array()) {@command DataPipeline ListPipelines}
+ * @method Model pollForTask(array $args = array()) {@command DataPipeline PollForTask}
+ * @method Model putPipelineDefinition(array $args = array()) {@command DataPipeline PutPipelineDefinition}
+ * @method Model queryObjects(array $args = array()) {@command DataPipeline QueryObjects}
+ * @method Model reportTaskProgress(array $args = array()) {@command DataPipeline ReportTaskProgress}
+ * @method Model reportTaskRunnerHeartbeat(array $args = array()) {@command DataPipeline ReportTaskRunnerHeartbeat}
+ * @method Model setStatus(array $args = array()) {@command DataPipeline SetStatus}
+ * @method Model setTaskStatus(array $args = array()) {@command DataPipeline SetTaskStatus}
+ * @method Model validatePipelineDefinition(array $args = array()) {@command DataPipeline ValidatePipelineDefinition}
  */
 class DataPipelineClient extends AbstractClient
 {

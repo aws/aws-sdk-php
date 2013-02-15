@@ -26,22 +26,22 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Elastic Transcoder
  *
- * @method Model cancelJob(array $args = array()) {@command elastictranscoder CancelJob}
- * @method Model createJob(array $args = array()) {@command elastictranscoder CreateJob}
- * @method Model createPipeline(array $args = array()) {@command elastictranscoder CreatePipeline}
- * @method Model createPreset(array $args = array()) {@command elastictranscoder CreatePreset}
- * @method Model deletePipeline(array $args = array()) {@command elastictranscoder DeletePipeline}
- * @method Model deletePreset(array $args = array()) {@command elastictranscoder DeletePreset}
- * @method Model listJobsByPipeline(array $args = array()) {@command elastictranscoder ListJobsByPipeline}
- * @method Model listJobsByStatus(array $args = array()) {@command elastictranscoder ListJobsByStatus}
- * @method Model listPipelines(array $args = array()) {@command elastictranscoder ListPipelines}
- * @method Model listPresets(array $args = array()) {@command elastictranscoder ListPresets}
- * @method Model readJob(array $args = array()) {@command elastictranscoder ReadJob}
- * @method Model readPipeline(array $args = array()) {@command elastictranscoder ReadPipeline}
- * @method Model readPreset(array $args = array()) {@command elastictranscoder ReadPreset}
- * @method Model testRole(array $args = array()) {@command elastictranscoder TestRole}
- * @method Model updatePipelineNotifications(array $args = array()) {@command elastictranscoder UpdatePipelineNotifications}
- * @method Model updatePipelineStatus(array $args = array()) {@command elastictranscoder UpdatePipelineStatus}
+ * @method Model cancelJob(array $args = array()) {@command ElasticTranscoder CancelJob}
+ * @method Model createJob(array $args = array()) {@command ElasticTranscoder CreateJob}
+ * @method Model createPipeline(array $args = array()) {@command ElasticTranscoder CreatePipeline}
+ * @method Model createPreset(array $args = array()) {@command ElasticTranscoder CreatePreset}
+ * @method Model deletePipeline(array $args = array()) {@command ElasticTranscoder DeletePipeline}
+ * @method Model deletePreset(array $args = array()) {@command ElasticTranscoder DeletePreset}
+ * @method Model listJobsByPipeline(array $args = array()) {@command ElasticTranscoder ListJobsByPipeline}
+ * @method Model listJobsByStatus(array $args = array()) {@command ElasticTranscoder ListJobsByStatus}
+ * @method Model listPipelines(array $args = array()) {@command ElasticTranscoder ListPipelines}
+ * @method Model listPresets(array $args = array()) {@command ElasticTranscoder ListPresets}
+ * @method Model readJob(array $args = array()) {@command ElasticTranscoder ReadJob}
+ * @method Model readPipeline(array $args = array()) {@command ElasticTranscoder ReadPipeline}
+ * @method Model readPreset(array $args = array()) {@command ElasticTranscoder ReadPreset}
+ * @method Model testRole(array $args = array()) {@command ElasticTranscoder TestRole}
+ * @method Model updatePipelineNotifications(array $args = array()) {@command ElasticTranscoder UpdatePipelineNotifications}
+ * @method Model updatePipelineStatus(array $args = array()) {@command ElasticTranscoder UpdatePipelineStatus}
  */
 class ElasticTranscoderClient extends AbstractClient
 {

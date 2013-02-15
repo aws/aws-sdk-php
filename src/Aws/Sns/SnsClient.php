@@ -25,21 +25,21 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Simple Notification Service
  *
- * @method Model addPermission(array $args = array()) {@command sns AddPermission}
- * @method Model confirmSubscription(array $args = array()) {@command sns ConfirmSubscription}
- * @method Model createTopic(array $args = array()) {@command sns CreateTopic}
- * @method Model deleteTopic(array $args = array()) {@command sns DeleteTopic}
- * @method Model getSubscriptionAttributes(array $args = array()) {@command sns GetSubscriptionAttributes}
- * @method Model getTopicAttributes(array $args = array()) {@command sns GetTopicAttributes}
- * @method Model listSubscriptions(array $args = array()) {@command sns ListSubscriptions}
- * @method Model listSubscriptionsByTopic(array $args = array()) {@command sns ListSubscriptionsByTopic}
- * @method Model listTopics(array $args = array()) {@command sns ListTopics}
- * @method Model publish(array $args = array()) {@command sns Publish}
- * @method Model removePermission(array $args = array()) {@command sns RemovePermission}
- * @method Model setSubscriptionAttributes(array $args = array()) {@command sns SetSubscriptionAttributes}
- * @method Model setTopicAttributes(array $args = array()) {@command sns SetTopicAttributes}
- * @method Model subscribe(array $args = array()) {@command sns Subscribe}
- * @method Model unsubscribe(array $args = array()) {@command sns Unsubscribe}
+ * @method Model addPermission(array $args = array()) {@command Sns AddPermission}
+ * @method Model confirmSubscription(array $args = array()) {@command Sns ConfirmSubscription}
+ * @method Model createTopic(array $args = array()) {@command Sns CreateTopic}
+ * @method Model deleteTopic(array $args = array()) {@command Sns DeleteTopic}
+ * @method Model getSubscriptionAttributes(array $args = array()) {@command Sns GetSubscriptionAttributes}
+ * @method Model getTopicAttributes(array $args = array()) {@command Sns GetTopicAttributes}
+ * @method Model listSubscriptions(array $args = array()) {@command Sns ListSubscriptions}
+ * @method Model listSubscriptionsByTopic(array $args = array()) {@command Sns ListSubscriptionsByTopic}
+ * @method Model listTopics(array $args = array()) {@command Sns ListTopics}
+ * @method Model publish(array $args = array()) {@command Sns Publish}
+ * @method Model removePermission(array $args = array()) {@command Sns RemovePermission}
+ * @method Model setSubscriptionAttributes(array $args = array()) {@command Sns SetSubscriptionAttributes}
+ * @method Model setTopicAttributes(array $args = array()) {@command Sns SetTopicAttributes}
+ * @method Model subscribe(array $args = array()) {@command Sns Subscribe}
+ * @method Model unsubscribe(array $args = array()) {@command Sns Unsubscribe}
  */
 class SnsClient extends AbstractClient
 {

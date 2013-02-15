@@ -25,39 +25,39 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Redshift
  *
- * @method Model authorizeClusterSecurityGroupIngress(array $args = array()) {@command redshift AuthorizeClusterSecurityGroupIngress}
- * @method Model copyClusterSnapshot(array $args = array()) {@command redshift CopyClusterSnapshot}
- * @method Model createCluster(array $args = array()) {@command redshift CreateCluster}
- * @method Model createClusterParameterGroup(array $args = array()) {@command redshift CreateClusterParameterGroup}
- * @method Model createClusterSecurityGroup(array $args = array()) {@command redshift CreateClusterSecurityGroup}
- * @method Model createClusterSnapshot(array $args = array()) {@command redshift CreateClusterSnapshot}
- * @method Model createClusterSubnetGroup(array $args = array()) {@command redshift CreateClusterSubnetGroup}
- * @method Model deleteCluster(array $args = array()) {@command redshift DeleteCluster}
- * @method Model deleteClusterParameterGroup(array $args = array()) {@command redshift DeleteClusterParameterGroup}
- * @method Model deleteClusterSecurityGroup(array $args = array()) {@command redshift DeleteClusterSecurityGroup}
- * @method Model deleteClusterSnapshot(array $args = array()) {@command redshift DeleteClusterSnapshot}
- * @method Model deleteClusterSubnetGroup(array $args = array()) {@command redshift DeleteClusterSubnetGroup}
- * @method Model describeClusterParameterGroups(array $args = array()) {@command redshift DescribeClusterParameterGroups}
- * @method Model describeClusterParameters(array $args = array()) {@command redshift DescribeClusterParameters}
- * @method Model describeClusterSecurityGroups(array $args = array()) {@command redshift DescribeClusterSecurityGroups}
- * @method Model describeClusterSnapshots(array $args = array()) {@command redshift DescribeClusterSnapshots}
- * @method Model describeClusterSubnetGroups(array $args = array()) {@command redshift DescribeClusterSubnetGroups}
- * @method Model describeClusterVersions(array $args = array()) {@command redshift DescribeClusterVersions}
- * @method Model describeClusters(array $args = array()) {@command redshift DescribeClusters}
- * @method Model describeDefaultClusterParameters(array $args = array()) {@command redshift DescribeDefaultClusterParameters}
- * @method Model describeEvents(array $args = array()) {@command redshift DescribeEvents}
- * @method Model describeOrderableClusterOptions(array $args = array()) {@command redshift DescribeOrderableClusterOptions}
- * @method Model describeReservedNodeOfferings(array $args = array()) {@command redshift DescribeReservedNodeOfferings}
- * @method Model describeReservedNodes(array $args = array()) {@command redshift DescribeReservedNodes}
- * @method Model describeResize(array $args = array()) {@command redshift DescribeResize}
- * @method Model modifyCluster(array $args = array()) {@command redshift ModifyCluster}
- * @method Model modifyClusterParameterGroup(array $args = array()) {@command redshift ModifyClusterParameterGroup}
- * @method Model modifyClusterSubnetGroup(array $args = array()) {@command redshift ModifyClusterSubnetGroup}
- * @method Model purchaseReservedNodeOffering(array $args = array()) {@command redshift PurchaseReservedNodeOffering}
- * @method Model rebootCluster(array $args = array()) {@command redshift RebootCluster}
- * @method Model resetClusterParameterGroup(array $args = array()) {@command redshift ResetClusterParameterGroup}
- * @method Model restoreFromClusterSnapshot(array $args = array()) {@command redshift RestoreFromClusterSnapshot}
- * @method Model revokeClusterSecurityGroupIngress(array $args = array()) {@command redshift RevokeClusterSecurityGroupIngress}
+ * @method Model authorizeClusterSecurityGroupIngress(array $args = array()) {@command Redshift AuthorizeClusterSecurityGroupIngress}
+ * @method Model copyClusterSnapshot(array $args = array()) {@command Redshift CopyClusterSnapshot}
+ * @method Model createCluster(array $args = array()) {@command Redshift CreateCluster}
+ * @method Model createClusterParameterGroup(array $args = array()) {@command Redshift CreateClusterParameterGroup}
+ * @method Model createClusterSecurityGroup(array $args = array()) {@command Redshift CreateClusterSecurityGroup}
+ * @method Model createClusterSnapshot(array $args = array()) {@command Redshift CreateClusterSnapshot}
+ * @method Model createClusterSubnetGroup(array $args = array()) {@command Redshift CreateClusterSubnetGroup}
+ * @method Model deleteCluster(array $args = array()) {@command Redshift DeleteCluster}
+ * @method Model deleteClusterParameterGroup(array $args = array()) {@command Redshift DeleteClusterParameterGroup}
+ * @method Model deleteClusterSecurityGroup(array $args = array()) {@command Redshift DeleteClusterSecurityGroup}
+ * @method Model deleteClusterSnapshot(array $args = array()) {@command Redshift DeleteClusterSnapshot}
+ * @method Model deleteClusterSubnetGroup(array $args = array()) {@command Redshift DeleteClusterSubnetGroup}
+ * @method Model describeClusterParameterGroups(array $args = array()) {@command Redshift DescribeClusterParameterGroups}
+ * @method Model describeClusterParameters(array $args = array()) {@command Redshift DescribeClusterParameters}
+ * @method Model describeClusterSecurityGroups(array $args = array()) {@command Redshift DescribeClusterSecurityGroups}
+ * @method Model describeClusterSnapshots(array $args = array()) {@command Redshift DescribeClusterSnapshots}
+ * @method Model describeClusterSubnetGroups(array $args = array()) {@command Redshift DescribeClusterSubnetGroups}
+ * @method Model describeClusterVersions(array $args = array()) {@command Redshift DescribeClusterVersions}
+ * @method Model describeClusters(array $args = array()) {@command Redshift DescribeClusters}
+ * @method Model describeDefaultClusterParameters(array $args = array()) {@command Redshift DescribeDefaultClusterParameters}
+ * @method Model describeEvents(array $args = array()) {@command Redshift DescribeEvents}
+ * @method Model describeOrderableClusterOptions(array $args = array()) {@command Redshift DescribeOrderableClusterOptions}
+ * @method Model describeReservedNodeOfferings(array $args = array()) {@command Redshift DescribeReservedNodeOfferings}
+ * @method Model describeReservedNodes(array $args = array()) {@command Redshift DescribeReservedNodes}
+ * @method Model describeResize(array $args = array()) {@command Redshift DescribeResize}
+ * @method Model modifyCluster(array $args = array()) {@command Redshift ModifyCluster}
+ * @method Model modifyClusterParameterGroup(array $args = array()) {@command Redshift ModifyClusterParameterGroup}
+ * @method Model modifyClusterSubnetGroup(array $args = array()) {@command Redshift ModifyClusterSubnetGroup}
+ * @method Model purchaseReservedNodeOffering(array $args = array()) {@command Redshift PurchaseReservedNodeOffering}
+ * @method Model rebootCluster(array $args = array()) {@command Redshift RebootCluster}
+ * @method Model resetClusterParameterGroup(array $args = array()) {@command Redshift ResetClusterParameterGroup}
+ * @method Model restoreFromClusterSnapshot(array $args = array()) {@command Redshift RestoreFromClusterSnapshot}
+ * @method Model revokeClusterSecurityGroupIngress(array $args = array()) {@command Redshift RevokeClusterSecurityGroupIngress}
  * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings

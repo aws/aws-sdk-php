@@ -30,27 +30,27 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon CloudFront
  *
- * @method Model createCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront CreateCloudFrontOriginAccessIdentity}
- * @method Model createDistribution(array $args = array()) {@command cloudfront CreateDistribution}
- * @method Model createInvalidation(array $args = array()) {@command cloudfront CreateInvalidation}
- * @method Model createStreamingDistribution(array $args = array()) {@command cloudfront CreateStreamingDistribution}
- * @method Model deleteCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront DeleteCloudFrontOriginAccessIdentity}
- * @method Model deleteDistribution(array $args = array()) {@command cloudfront DeleteDistribution}
- * @method Model deleteStreamingDistribution(array $args = array()) {@command cloudfront DeleteStreamingDistribution}
- * @method Model getCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront GetCloudFrontOriginAccessIdentity}
- * @method Model getCloudFrontOriginAccessIdentityConfig(array $args = array()) {@command cloudfront GetCloudFrontOriginAccessIdentityConfig}
- * @method Model getDistribution(array $args = array()) {@command cloudfront GetDistribution}
- * @method Model getDistributionConfig(array $args = array()) {@command cloudfront GetDistributionConfig}
- * @method Model getInvalidation(array $args = array()) {@command cloudfront GetInvalidation}
- * @method Model getStreamingDistribution(array $args = array()) {@command cloudfront GetStreamingDistribution}
- * @method Model getStreamingDistributionConfig(array $args = array()) {@command cloudfront GetStreamingDistributionConfig}
- * @method Model listCloudFrontOriginAccessIdentities(array $args = array()) {@command cloudfront ListCloudFrontOriginAccessIdentities}
- * @method Model listDistributions(array $args = array()) {@command cloudfront ListDistributions}
- * @method Model listInvalidations(array $args = array()) {@command cloudfront ListInvalidations}
- * @method Model listStreamingDistributions(array $args = array()) {@command cloudfront ListStreamingDistributions}
- * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command cloudfront UpdateCloudFrontOriginAccessIdentity}
- * @method Model updateDistribution(array $args = array()) {@command cloudfront UpdateDistribution}
- * @method Model updateStreamingDistribution(array $args = array()) {@command cloudfront UpdateStreamingDistribution}
+ * @method Model createCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront CreateCloudFrontOriginAccessIdentity}
+ * @method Model createDistribution(array $args = array()) {@command CloudFront CreateDistribution}
+ * @method Model createInvalidation(array $args = array()) {@command CloudFront CreateInvalidation}
+ * @method Model createStreamingDistribution(array $args = array()) {@command CloudFront CreateStreamingDistribution}
+ * @method Model deleteCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront DeleteCloudFrontOriginAccessIdentity}
+ * @method Model deleteDistribution(array $args = array()) {@command CloudFront DeleteDistribution}
+ * @method Model deleteStreamingDistribution(array $args = array()) {@command CloudFront DeleteStreamingDistribution}
+ * @method Model getCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront GetCloudFrontOriginAccessIdentity}
+ * @method Model getCloudFrontOriginAccessIdentityConfig(array $args = array()) {@command CloudFront GetCloudFrontOriginAccessIdentityConfig}
+ * @method Model getDistribution(array $args = array()) {@command CloudFront GetDistribution}
+ * @method Model getDistributionConfig(array $args = array()) {@command CloudFront GetDistributionConfig}
+ * @method Model getInvalidation(array $args = array()) {@command CloudFront GetInvalidation}
+ * @method Model getStreamingDistribution(array $args = array()) {@command CloudFront GetStreamingDistribution}
+ * @method Model getStreamingDistributionConfig(array $args = array()) {@command CloudFront GetStreamingDistributionConfig}
+ * @method Model listCloudFrontOriginAccessIdentities(array $args = array()) {@command CloudFront ListCloudFrontOriginAccessIdentities}
+ * @method Model listDistributions(array $args = array()) {@command CloudFront ListDistributions}
+ * @method Model listInvalidations(array $args = array()) {@command CloudFront ListInvalidations}
+ * @method Model listStreamingDistributions(array $args = array()) {@command CloudFront ListStreamingDistributions}
+ * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront UpdateCloudFrontOriginAccessIdentity}
+ * @method Model updateDistribution(array $args = array()) {@command CloudFront UpdateDistribution}
+ * @method Model updateStreamingDistribution(array $args = array()) {@command CloudFront UpdateStreamingDistribution}
  * @method waitUntilStreamingDistributionDeployed(array $input) Wait until a streaming distribution is deployed. The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
  * @method waitUntilDistributionDeployed(array $input) Wait until a distribution is deployed. The input array uses the parameters of the GetDistribution operation and waiter specific settings
  * @method waitUntilInvalidationCompleted(array $input) Wait until an invalidation has completed. The input array uses the parameters of the GetInvalidation operation and waiter specific settings
