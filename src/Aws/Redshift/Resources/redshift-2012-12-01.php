@@ -28,7 +28,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ClusterSecurityGroup',
+            'responseClass' => 'ClusterSecurityGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Adds an inbound (ingress) rule to an security group. Depending on whether the application accessing your cluster is running on the Internet or an EC2 instance, you can authorize inbound access to either a Classless Interdomain Routing (CIDR) IP address range or an EC2 security group. You can add as many as 20 ingress rules to an security group.',
             'parameters' => array(
@@ -66,16 +66,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSecurityGroupNotFoundFaultException',
+                    'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidClusterSecurityGroupStateFaultException',
+                    'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
                 array(
-                    'class' => 'AuthorizationAlreadyExistsFaultException',
+                    'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'AuthorizationQuotaExceededFaultException',
+                    'class' => 'AuthorizationQuotaExceededException',
                 ),
             ),
         ),
@@ -83,7 +83,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Snapshot',
+            'responseClass' => 'SnapshotWrapper',
             'responseType' => 'model',
             'summary' => 'Copies the specified automated cluster snapshot to a new manual cluster snapshot. The source must be an automated snapshot and it must be in the available state.',
             'parameters' => array(
@@ -112,16 +112,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSnapshotAlreadyExistsFaultException',
+                    'class' => 'ClusterSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotNotFoundFaultException',
+                    'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidClusterSnapshotStateFaultException',
+                    'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotQuotaExceededFaultException',
+                    'class' => 'ClusterSnapshotQuotaExceededException',
                 ),
             ),
         ),
@@ -129,7 +129,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Cluster',
+            'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new cluster. To create the cluster in virtual private cloud (VPC), you must provide cluster subnet group name. If you don\'t provide a cluster subnet group name or the cluster security group parameter, Amazon Redshift creates a non-VPC cluster, it associates the default cluster security group with the cluster. &clustersMoreInfo;.',
             'parameters' => array(
@@ -181,6 +181,7 @@ return array (
                     'description' => 'A list of security groups to be associated with this cluster.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'ClusterSecurityGroups.member',
                     'items' => array(
                         'name' => 'ClusterSecurityGroupName',
                         'type' => 'string',
@@ -190,6 +191,7 @@ return array (
                     'description' => 'A list of Virtual Private Cloud (VPC) security groups to associate with the cluster.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
                     'items' => array(
                         'name' => 'VpcSecurityGroupId',
                         'type' => 'string',
@@ -250,31 +252,31 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterAlreadyExistsFaultException',
+                    'class' => 'ClusterAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'InsufficientClusterCapacityFaultException',
+                    'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'ClusterSecurityGroupNotFoundFaultException',
+                    'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'ClusterQuotaExceededFaultException',
+                    'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
-                    'class' => 'NumberOfNodesQuotaExceededFaultException',
+                    'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
-                    'class' => 'NumberOfNodesPerClusterLimitExceededFaultException',
+                    'class' => 'NumberOfNodesPerClusterLimitExceededException',
                 ),
                 array(
-                    'class' => 'ClusterSubnetGroupNotFoundFaultException',
+                    'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidVPCNetworkStateFaultException',
+                    'class' => 'InvalidVPCNetworkStateException',
                 ),
             ),
         ),
@@ -282,7 +284,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ClusterParameterGroup',
+            'responseClass' => 'ClusterParameterGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates an parameter group.',
             'parameters' => array(
@@ -317,10 +319,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterParameterGroupQuotaExceededFaultException',
+                    'class' => 'ClusterParameterGroupQuotaExceededException',
                 ),
                 array(
-                    'class' => 'ClusterParameterGroupAlreadyExistsFaultException',
+                    'class' => 'ClusterParameterGroupAlreadyExistsException',
                 ),
             ),
         ),
@@ -328,7 +330,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ClusterSecurityGroup',
+            'responseClass' => 'ClusterSecurityGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new security group. You use security groups to control access to non-VPC clusters.',
             'parameters' => array(
@@ -357,10 +359,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSecurityGroupAlreadyExistsFaultException',
+                    'class' => 'ClusterSecurityGroupAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ClusterSecurityGroupQuotaExceededFaultException',
+                    'class' => 'ClusterSecurityGroupQuotaExceededException',
                 ),
             ),
         ),
@@ -368,7 +370,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Snapshot',
+            'responseClass' => 'SnapshotWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a manual snapshot of the specified cluster. The cluster must be in the "available" state.',
             'parameters' => array(
@@ -397,16 +399,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSnapshotAlreadyExistsFaultException',
+                    'class' => 'ClusterSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'InvalidClusterStateFaultException',
+                    'class' => 'InvalidClusterStateException',
                 ),
                 array(
-                    'class' => 'ClusterNotFoundFaultException',
+                    'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotQuotaExceededFaultException',
+                    'class' => 'ClusterSnapshotQuotaExceededException',
                 ),
             ),
         ),
@@ -414,7 +416,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ClusterSubnetGroup',
+            'responseClass' => 'ClusterSubnetGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new subnet group. You must provide a list of one or more subnets in your existing Amazon Virtual Private Cloud (Amazon VPC) when creating subnet group.',
             'parameters' => array(
@@ -445,6 +447,7 @@ return array (
                     'description' => 'An array of VPC subnet IDs. A maximum of 20 subnets can be modified in a single request.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'SubnetIds.member',
                     'items' => array(
                         'name' => 'SubnetIdentifier',
                         'type' => 'string',
@@ -453,13 +456,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSubnetGroupAlreadyExistsFaultException',
+                    'class' => 'ClusterSubnetGroupAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ClusterSubnetGroupQuotaExceededFaultException',
+                    'class' => 'ClusterSubnetGroupQuotaExceededException',
                 ),
                 array(
-                    'class' => 'ClusterSubnetQuotaExceededFaultException',
+                    'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
                     'class' => 'InvalidSubnetException',
@@ -470,7 +473,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Cluster',
+            'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
             'summary' => 'Deletes a previously provisioned cluster. A successful response from the web service indicates that the request was received correctly. If a final cluster snapshot is requested the status of the cluster will be "final-snapshot" while the snapshot is being taken, then it\'s "deleting" once Amazon Redshift begins deleting the cluster. Use DescribeClusters to monitor the status of the deletion. The delete operation cannot be canceled or reverted once submitted. &clustersMoreInfo;.',
             'parameters' => array(
@@ -504,16 +507,16 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterNotFoundFaultException',
+                    'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidClusterStateFaultException',
+                    'class' => 'InvalidClusterStateException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotAlreadyExistsFaultException',
+                    'class' => 'ClusterSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotQuotaExceededFaultException',
+                    'class' => 'ClusterSnapshotQuotaExceededException',
                 ),
             ),
         ),
@@ -544,10 +547,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterParameterGroupStateFaultException',
+                    'class' => 'InvalidClusterParameterGroupStateException',
                 ),
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -578,10 +581,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterSecurityGroupStateFaultException',
+                    'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
                 array(
-                    'class' => 'ClusterSecurityGroupNotFoundFaultException',
+                    'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
             ),
         ),
@@ -589,7 +592,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Snapshot',
+            'responseClass' => 'SnapshotWrapper',
             'responseType' => 'model',
             'summary' => 'Deletes the specified manual snapshot. The snapshot must be in the "available" state.',
             'parameters' => array(
@@ -612,10 +615,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterSnapshotStateFaultException',
+                    'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotNotFoundFaultException',
+                    'class' => 'ClusterSnapshotNotFoundException',
                 ),
             ),
         ),
@@ -646,13 +649,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterSubnetGroupStateFaultException',
+                    'class' => 'InvalidClusterSubnetGroupStateException',
                 ),
                 array(
-                    'class' => 'InvalidClusterSubnetStateFaultException',
+                    'class' => 'InvalidClusterSubnetStateException',
                 ),
                 array(
-                    'class' => 'ClusterSubnetGroupNotFoundFaultException',
+                    'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
             ),
         ),
@@ -692,7 +695,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -738,7 +741,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -778,7 +781,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSecurityGroupNotFoundFaultException',
+                    'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
             ),
         ),
@@ -848,7 +851,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSnapshotNotFoundFaultException',
+                    'class' => 'ClusterSnapshotNotFoundException',
                 ),
             ),
         ),
@@ -888,7 +891,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSubnetGroupNotFoundFaultException',
+                    'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
             ),
         ),
@@ -968,7 +971,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterNotFoundFaultException',
+                    'class' => 'ClusterNotFoundException',
                 ),
             ),
         ),
@@ -976,7 +979,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DefaultClusterParameters',
+            'responseClass' => 'DefaultClusterParametersWrapper',
             'responseType' => 'model',
             'summary' => 'Returns a list of parameter settings for the the specified parameter group family.',
             'parameters' => array(
@@ -1165,7 +1168,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ReservedNodeOfferingNotFoundFaultException',
+                    'class' => 'ReservedNodeOfferingNotFoundException',
                 ),
             ),
         ),
@@ -1220,7 +1223,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ReservedNodeNotFoundFaultException',
+                    'class' => 'ReservedNodeNotFoundException',
                 ),
             ),
         ),
@@ -1251,10 +1254,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterNotFoundFaultException',
+                    'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'class' => 'ResizeNotFoundFaultException',
+                    'class' => 'ResizeNotFoundException',
                 ),
             ),
         ),
@@ -1262,7 +1265,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Cluster',
+            'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
             'summary' => 'Modifies the settings for a cluster. For example, you can add another security or parameter group, update the preferred maintenance window, or change the master user password. Resetting a cluster password or modifying the security groups associated with a cluster do not need a reboot. However, modifying parameter group requires a reboot for parameters to take effect. &clustersMoreInfo;',
             'parameters' => array(
@@ -1301,6 +1304,7 @@ return array (
                     'description' => 'A list of cluster security groups to be authorized on this cluster. This change is asynchronously applied as soon as possible.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'ClusterSecurityGroups.member',
                     'items' => array(
                         'name' => 'ClusterSecurityGroupName',
                         'type' => 'string',
@@ -1310,6 +1314,7 @@ return array (
                     'description' => 'A list of Virtual Private Cloud (VPC) security groups to associate with the cluster.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
                     'items' => array(
                         'name' => 'VpcSecurityGroupId',
                         'type' => 'string',
@@ -1349,28 +1354,28 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterStateFaultException',
+                    'class' => 'InvalidClusterStateException',
                 ),
                 array(
-                    'class' => 'InvalidClusterSecurityGroupStateFaultException',
+                    'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
                 array(
-                    'class' => 'ClusterNotFoundFaultException',
+                    'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'class' => 'NumberOfNodesQuotaExceededFaultException',
+                    'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
-                    'class' => 'ClusterSecurityGroupNotFoundFaultException',
+                    'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InsufficientClusterCapacityFaultException',
+                    'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
-                    'class' => 'UnsupportedOptionFaultException',
+                    'class' => 'UnsupportedOptionException',
                 ),
             ),
         ),
@@ -1403,6 +1408,7 @@ return array (
                     'description' => 'An array of parameters to be modified. A maximum of 20 parameters can be modified in a single request.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Parameters.member',
                     'items' => array(
                         'name' => 'Parameter',
                         'description' => 'Describes a parameter in a cluster parameter group.',
@@ -1447,10 +1453,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidClusterParameterGroupStateFaultException',
+                    'class' => 'InvalidClusterParameterGroupStateException',
                 ),
             ),
         ),
@@ -1458,7 +1464,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ClusterSubnetGroup',
+            'responseClass' => 'ClusterSubnetGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Modifies a cluster subnet group to include the specified list of VPC subnets. The operation replaces the entire list of existing subnet IDs in the group.',
             'parameters' => array(
@@ -1488,6 +1494,7 @@ return array (
                     'description' => 'An array of VPC subnet IDs. A maximum of 20 subnets can be modified in a single request.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'SubnetIds.member',
                     'items' => array(
                         'name' => 'SubnetIdentifier',
                         'type' => 'string',
@@ -1496,10 +1503,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSubnetGroupNotFoundFaultException',
+                    'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'ClusterSubnetQuotaExceededFaultException',
+                    'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
                     'class' => 'SubnetAlreadyInUseException',
@@ -1513,7 +1520,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ReservedNode',
+            'responseClass' => 'ReservedNodeWrapper',
             'responseType' => 'model',
             'summary' => 'Allows you to purchase reserved nodes. Amazon Redshift offers a predefined set of reserved node offerings. You can purchase one of the offerings. You can call the DescribeReservedNodeOfferings API to obtain the available reserved node offerings. You can call this API by providing a specific reserved node offering and the number of nodes you want to reserve.',
             'parameters' => array(
@@ -1545,13 +1552,13 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ReservedNodeOfferingNotFoundFaultException',
+                    'class' => 'ReservedNodeOfferingNotFoundException',
                 ),
                 array(
-                    'class' => 'ReservedNodeAlreadyExistsFaultException',
+                    'class' => 'ReservedNodeAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ReservedNodeQuotaExceededFaultException',
+                    'class' => 'ReservedNodeQuotaExceededException',
                 ),
             ),
         ),
@@ -1559,7 +1566,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Cluster',
+            'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
             'summary' => 'Reboots a cluster. This action is taken as soon as possible. It results in a momentary outage to the cluster, during which the cluster status is set to rebooting. A cluster event is created when the reboot is completed. Any pending cluster modifications (see ModifyCluster) are applied at this reboot. &clustersMoreInfo;',
             'parameters' => array(
@@ -1582,10 +1589,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterStateFaultException',
+                    'class' => 'InvalidClusterStateException',
                 ),
                 array(
-                    'class' => 'ClusterNotFoundFaultException',
+                    'class' => 'ClusterNotFoundException',
                 ),
             ),
         ),
@@ -1623,6 +1630,7 @@ return array (
                     'description' => 'An array of names of parameters to be reset. If ResetAllParameters option is not used, then at least one parameter name must be supplied.',
                     'type' => 'array',
                     'location' => 'aws.query',
+                    'sentAs' => 'Parameters.member',
                     'items' => array(
                         'name' => 'Parameter',
                         'description' => 'Describes a parameter in a cluster parameter group.',
@@ -1667,10 +1675,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'InvalidClusterParameterGroupStateFaultException',
+                    'class' => 'InvalidClusterParameterGroupStateException',
                 ),
                 array(
-                    'class' => 'ClusterParameterGroupNotFoundFaultException',
+                    'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
         ),
@@ -1678,7 +1686,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'Cluster',
+            'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
             'summary' => 'Creates a new cluster from a snapshot. Amazon Redshift creates the resulting cluster with the same configuration as the original cluster from which the snapshot was created, except that the new cluster is created with the default cluster security and parameter group. After Amazon Redshift creates the cluster you can use the ModifyCluster API to associate a different security group and different parameter group with the restored cluster.',
             'parameters' => array(
@@ -1734,28 +1742,28 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterAlreadyExistsFaultException',
+                    'class' => 'ClusterAlreadyExistsException',
                 ),
                 array(
-                    'class' => 'ClusterSnapshotNotFoundFaultException',
+                    'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
-                    'class' => 'ClusterQuotaExceededFaultException',
+                    'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
-                    'class' => 'InsufficientClusterCapacityFaultException',
+                    'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
-                    'class' => 'InvalidClusterSnapshotStateFaultException',
+                    'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
-                    'class' => 'InvalidRestoreFaultException',
+                    'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'class' => 'NumberOfNodesQuotaExceededFaultException',
+                    'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
-                    'class' => 'NumberOfNodesPerClusterLimitExceededFaultException',
+                    'class' => 'NumberOfNodesPerClusterLimitExceededException',
                 ),
             ),
         ),
@@ -1763,7 +1771,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'ClusterSecurityGroup',
+            'responseClass' => 'ClusterSecurityGroupWrapper',
             'responseType' => 'model',
             'summary' => 'Revokes an ingress rule in an security group for a previously authorized IP range or Amazon EC2 security group. To add an ingress rule, see AuthorizeClusterSecurityGroupIngress. For information about managing security groups, go to Working with Security Groups in the Amazon Redshift Management Guide.',
             'parameters' => array(
@@ -1801,420 +1809,423 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'ClusterSecurityGroupNotFoundFaultException',
+                    'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
-                    'class' => 'AuthorizationNotFoundFaultException',
+                    'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
-                    'class' => 'InvalidClusterSecurityGroupStateFaultException',
+                    'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
             ),
         ),
     ),
     'models' => array(
-        'ClusterSecurityGroup' => array(
+        'ClusterSecurityGroupWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ClusterSecurityGroupName' => array(
-                    'description' => 'The name of the cluster security group to which the operation was applied.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Description' => array(
-                    'description' => 'A description of the security group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'EC2SecurityGroups' => array(
-                    'description' => 'A list of EC2 security groups that are permitted to access clusters associated with this cluster security group.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'EC2SecurityGroup',
-                        'description' => 'Describes an Amazon EC2 security group.',
-                        'type' => 'object',
-                        'sentAs' => 'EC2SecurityGroup',
-                        'properties' => array(
-                            'Status' => array(
-                                'description' => 'The status of the EC2 security group.',
-                                'type' => 'string',
-                            ),
-                            'EC2SecurityGroupName' => array(
-                                'description' => 'The name of the EC2 Security Group.',
-                                'type' => 'string',
-                            ),
-                            'EC2SecurityGroupOwnerId' => array(
-                                'description' => 'The AWS ID of the owner of the EC2 security group specified in the EC2SecurityGroupName field.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-                'IPRanges' => array(
-                    'description' => 'A list of IP ranges (CIDR blocks) that are permitted to access clusters associated with this cluster security group.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'IPRange',
-                        'description' => 'Describes an IP range used in a security group.',
-                        'type' => 'object',
-                        'sentAs' => 'IPRange',
-                        'properties' => array(
-                            'Status' => array(
-                                'description' => 'The status of the IP range, for example, "authorized".',
-                                'type' => 'string',
-                            ),
-                            'CIDRIP' => array(
-                                'description' => 'The IP range in Classless Inter-Domain Routing (CIDR) notation.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'Snapshot' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'SnapshotIdentifier' => array(
-                    'description' => 'The snapshot identifier that is provided in the request.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ClusterIdentifier' => array(
-                    'description' => 'The identifier of the cluster for which the snapshot was taken.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'SnapshotCreateTime' => array(
-                    'description' => 'The time (UTC) when began the snapshot. A snapshot contains a copy of the cluster data as of this exact time.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Status' => array(
-                    'description' => 'The snapshot status. The value of the status depends on the API operation used. CreateClusterSnapshot and CopyClusterSnapshot returns status as "creating". DescribeClusterSnapshots returns status as "creating", "available", or "failed". DeleteClusterSnapshot returns status as "deleted".',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Port' => array(
-                    'description' => 'The port that the cluster is listening on.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'AvailabilityZone' => array(
-                    'description' => 'The Availability Zone in which the cluster was created.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ClusterCreateTime' => array(
-                    'description' => 'The time (UTC) when the cluster was originally created.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MasterUsername' => array(
-                    'description' => 'The master user name for the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ClusterVersion' => array(
-                    'description' => 'The version ID of the engine that is running on the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'SnapshotType' => array(
-                    'description' => 'The snapshot type. Snapshots created using CreateClusterSnapshot and CopyClusterSnapshot will be of type "manual".',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'NodeType' => array(
-                    'description' => 'The node type of the nodes in the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'NumberOfNodes' => array(
-                    'description' => 'The number of nodes in the cluster.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'DBName' => array(
-                    'description' => 'The name of the database that was created when the cluster was created.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'VpcId' => array(
-                    'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-            ),
-        ),
-        'Cluster' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'ClusterIdentifier' => array(
-                    'description' => 'The unique identifier of the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'NodeType' => array(
-                    'description' => 'The node type for the nodes in the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ClusterStatus' => array(
-                    'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", "rebooting", and "resizing".',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ModifyStatus' => array(
-                    'description' => 'The status of a modify operation, if any, initiated for the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'MasterUsername' => array(
-                    'description' => 'The master user name for the cluster. This name is used to connect to the database specified in DBName.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'DBName' => array(
-                    'description' => 'The name of the initial database that was provided when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named "dev" was created by default.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Endpoint' => array(
-                    'description' => 'The connection endpoint.',
+                'ClusterSecurityGroup' => array(
+                    'description' => 'Describes a security group.',
                     'type' => 'object',
                     'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
                     'properties' => array(
-                        'Address' => array(
-                            'description' => 'The DNS address of the Cluster.',
+                        'ClusterSecurityGroupName' => array(
+                            'description' => 'The name of the cluster security group to which the operation was applied.',
                             'type' => 'string',
                         ),
-                        'Port' => array(
-                            'description' => 'The port that the database engine is listening on.',
-                            'type' => 'numeric',
-                        ),
-                    ),
-                ),
-                'ClusterCreateTime' => array(
-                    'description' => 'The date and time that the cluster was created.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'AutomatedSnapshotRetentionPeriod' => array(
-                    'description' => 'The number of days that automatic cluster snapshots are retained.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'ClusterSecurityGroups' => array(
-                    'description' => 'A list of cluster security group that are associated with the cluster. Each security group is represented by an element that contains ClusterSecurityGroup.Name and ClusterSecurityGroup.Status subelements.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'ClusterSecurityGroup',
-                        'description' => 'Describes a security group.',
-                        'type' => 'object',
-                        'sentAs' => 'ClusterSecurityGroup',
-                        'properties' => array(
-                            'ClusterSecurityGroupName' => array(
-                                'description' => 'The name of the cluster security group.',
-                                'type' => 'string',
-                            ),
-                            'Status' => array(
-                                'description' => 'The status of the cluster security group.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-                'VpcSecurityGroups' => array(
-                    'description' => 'A list of Virtual Private Cloud (VPC) security groups that are associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'VpcSecurityGroup',
-                        'description' => 'Describes the members of a VPC security group.',
-                        'type' => 'object',
-                        'sentAs' => 'VpcSecurityGroup',
-                        'properties' => array(
-                            'VpcSecurityGroupId' => array(
-                                'type' => 'string',
-                            ),
-                            'Status' => array(
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-                'ClusterParameterGroups' => array(
-                    'description' => 'The list of cluster parameter groups that are associated with this cluster.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'ClusterParameterGroup',
-                        'description' => 'Describes the status of a parameter group.',
-                        'type' => 'object',
-                        'sentAs' => 'ClusterParameterGroup',
-                        'properties' => array(
-                            'ParameterGroupName' => array(
-                                'description' => 'The name of the cluster parameter group.',
-                                'type' => 'string',
-                            ),
-                            'ParameterApplyStatus' => array(
-                                'description' => 'The status of parameter updates.',
-                                'type' => 'string',
-                            ),
-                        ),
-                    ),
-                ),
-                'ClusterSubnetGroupName' => array(
-                    'description' => 'The name of the subnet group that is associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'VpcId' => array(
-                    'description' => 'The indentifier of the VPC the cluster is in, if the cluster is in a VPC.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'AvailabilityZone' => array(
-                    'description' => 'The name of the Availability Zone in which the cluster is located.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'PreferredMaintenanceWindow' => array(
-                    'description' => 'The weekly time range (in UTC) during which system maintenance can occur.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'PendingModifiedValues' => array(
-                    'description' => 'If present, changes to the cluster are pending. Specific changes are identified by subelements.',
-                    'type' => 'object',
-                    'location' => 'xml',
-                    'properties' => array(
-                        'MasterUserPassword' => array(
-                            'description' => 'The pending or in-progress change of the master credentials for the cluster.',
+                        'Description' => array(
+                            'description' => 'A description of the security group.',
                             'type' => 'string',
                         ),
-                        'NodeType' => array(
-                            'description' => 'The pending or in-progress change of the cluster\'s node type.',
-                            'type' => 'string',
-                        ),
-                        'NumberOfNodes' => array(
-                            'description' => 'The pending or in-progress change of the number nodes in the cluster.',
-                            'type' => 'numeric',
-                        ),
-                        'ClusterType' => array(
-                            'description' => 'The pending or in-progress change of the cluster type.',
-                            'type' => 'string',
-                        ),
-                        'ClusterVersion' => array(
-                            'description' => 'The pending or in-progress change of the service version.',
-                            'type' => 'string',
-                        ),
-                        'AutomatedSnapshotRetentionPeriod' => array(
-                            'description' => 'The pending or in-progress change of the automated snapshot retention period.',
-                            'type' => 'numeric',
-                        ),
-                    ),
-                ),
-                'ClusterVersion' => array(
-                    'description' => 'The version ID of the engine that is running on the cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'AllowVersionUpgrade' => array(
-                    'description' => 'If true, version upgrades will be applied automatically to the cluster during the maintenance window.',
-                    'type' => 'boolean',
-                    'location' => 'xml',
-                ),
-                'NumberOfNodes' => array(
-                    'description' => 'The number of compute nodes in the cluster.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'PubliclyAccessible' => array(
-                    'description' => 'If true, the cluster can be accessed from a public network.',
-                    'type' => 'boolean',
-                    'location' => 'xml',
-                ),
-            ),
-        ),
-        'ClusterParameterGroup' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'ParameterGroupName' => array(
-                    'description' => 'The name of the cluster parameter group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'ParameterGroupFamily' => array(
-                    'description' => 'The name of the cluster parameter group family that this cluster parameter group is compatible with.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Description' => array(
-                    'description' => 'The description of the parameter group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-            ),
-        ),
-        'ClusterSubnetGroup' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'ClusterSubnetGroupName' => array(
-                    'description' => 'The name of the cluster subnet group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Description' => array(
-                    'description' => 'The description of the cluster subnet group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'VpcId' => array(
-                    'description' => 'The VPC ID of the cluster subnet group.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'SubnetGroupStatus' => array(
-                    'description' => 'The status of the cluster subnet group. The valid values are "Complete", "Incomplete" and "Invalid".',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Subnets' => array(
-                    'description' => 'A list of the VPC Subnet elements.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'Subnet',
-                        'description' => 'Describes a subnet.',
-                        'type' => 'object',
-                        'sentAs' => 'Subnet',
-                        'properties' => array(
-                            'SubnetIdentifier' => array(
-                                'description' => 'The identifier of the subnet.',
-                                'type' => 'string',
-                            ),
-                            'SubnetAvailabilityZone' => array(
+                        'EC2SecurityGroups' => array(
+                            'description' => 'A list of EC2 security groups that are permitted to access clusters associated with this cluster security group.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'EC2SecurityGroup',
+                                'description' => 'Describes an Amazon EC2 security group.',
                                 'type' => 'object',
+                                'sentAs' => 'EC2SecurityGroup',
                                 'properties' => array(
-                                    'Name' => array(
-                                        'description' => 'The name of the availability zone.',
+                                    'Status' => array(
+                                        'description' => 'The status of the EC2 security group.',
+                                        'type' => 'string',
+                                    ),
+                                    'EC2SecurityGroupName' => array(
+                                        'description' => 'The name of the EC2 Security Group.',
+                                        'type' => 'string',
+                                    ),
+                                    'EC2SecurityGroupOwnerId' => array(
+                                        'description' => 'The AWS ID of the owner of the EC2 security group specified in the EC2SecurityGroupName field.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
-                            'SubnetStatus' => array(
-                                'description' => 'The status of the subnet.',
-                                'type' => 'string',
+                        ),
+                        'IPRanges' => array(
+                            'description' => 'A list of IP ranges (CIDR blocks) that are permitted to access clusters associated with this cluster security group.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'IPRange',
+                                'description' => 'Describes an IP range used in a security group.',
+                                'type' => 'object',
+                                'sentAs' => 'IPRange',
+                                'properties' => array(
+                                    'Status' => array(
+                                        'description' => 'The status of the IP range, for example, "authorized".',
+                                        'type' => 'string',
+                                    ),
+                                    'CIDRIP' => array(
+                                        'description' => 'The IP range in Classless Inter-Domain Routing (CIDR) notation.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'SnapshotWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Snapshot' => array(
+                    'description' => 'Describes a snapshot.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'SnapshotIdentifier' => array(
+                            'description' => 'The snapshot identifier that is provided in the request.',
+                            'type' => 'string',
+                        ),
+                        'ClusterIdentifier' => array(
+                            'description' => 'The identifier of the cluster for which the snapshot was taken.',
+                            'type' => 'string',
+                        ),
+                        'SnapshotCreateTime' => array(
+                            'description' => 'The time (UTC) when began the snapshot. A snapshot contains a copy of the cluster data as of this exact time.',
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'description' => 'The snapshot status. The value of the status depends on the API operation used. CreateClusterSnapshot and CopyClusterSnapshot returns status as "creating". DescribeClusterSnapshots returns status as "creating", "available", or "failed". DeleteClusterSnapshot returns status as "deleted".',
+                            'type' => 'string',
+                        ),
+                        'Port' => array(
+                            'description' => 'The port that the cluster is listening on.',
+                            'type' => 'numeric',
+                        ),
+                        'AvailabilityZone' => array(
+                            'description' => 'The Availability Zone in which the cluster was created.',
+                            'type' => 'string',
+                        ),
+                        'ClusterCreateTime' => array(
+                            'description' => 'The time (UTC) when the cluster was originally created.',
+                            'type' => 'string',
+                        ),
+                        'MasterUsername' => array(
+                            'description' => 'The master user name for the cluster.',
+                            'type' => 'string',
+                        ),
+                        'ClusterVersion' => array(
+                            'description' => 'The version ID of the engine that is running on the cluster.',
+                            'type' => 'string',
+                        ),
+                        'SnapshotType' => array(
+                            'description' => 'The snapshot type. Snapshots created using CreateClusterSnapshot and CopyClusterSnapshot will be of type "manual".',
+                            'type' => 'string',
+                        ),
+                        'NodeType' => array(
+                            'description' => 'The node type of the nodes in the cluster.',
+                            'type' => 'string',
+                        ),
+                        'NumberOfNodes' => array(
+                            'description' => 'The number of nodes in the cluster.',
+                            'type' => 'numeric',
+                        ),
+                        'DBName' => array(
+                            'description' => 'The name of the database that was created when the cluster was created.',
+                            'type' => 'string',
+                        ),
+                        'VpcId' => array(
+                            'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ClusterWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Cluster' => array(
+                    'description' => 'Describes a cluster.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ClusterIdentifier' => array(
+                            'description' => 'The unique identifier of the cluster.',
+                            'type' => 'string',
+                        ),
+                        'NodeType' => array(
+                            'description' => 'The node type for the nodes in the cluster.',
+                            'type' => 'string',
+                        ),
+                        'ClusterStatus' => array(
+                            'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", "rebooting", and "resizing".',
+                            'type' => 'string',
+                        ),
+                        'ModifyStatus' => array(
+                            'description' => 'The status of a modify operation, if any, initiated for the cluster.',
+                            'type' => 'string',
+                        ),
+                        'MasterUsername' => array(
+                            'description' => 'The master user name for the cluster. This name is used to connect to the database specified in DBName.',
+                            'type' => 'string',
+                        ),
+                        'DBName' => array(
+                            'description' => 'The name of the initial database that was provided when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named "dev" was created by default.',
+                            'type' => 'string',
+                        ),
+                        'Endpoint' => array(
+                            'description' => 'The connection endpoint.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Address' => array(
+                                    'description' => 'The DNS address of the Cluster.',
+                                    'type' => 'string',
+                                ),
+                                'Port' => array(
+                                    'description' => 'The port that the database engine is listening on.',
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'ClusterCreateTime' => array(
+                            'description' => 'The date and time that the cluster was created.',
+                            'type' => 'string',
+                        ),
+                        'AutomatedSnapshotRetentionPeriod' => array(
+                            'description' => 'The number of days that automatic cluster snapshots are retained.',
+                            'type' => 'numeric',
+                        ),
+                        'ClusterSecurityGroups' => array(
+                            'description' => 'A list of cluster security group that are associated with the cluster. Each security group is represented by an element that contains ClusterSecurityGroup.Name and ClusterSecurityGroup.Status subelements.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ClusterSecurityGroup',
+                                'description' => 'Describes a security group.',
+                                'type' => 'object',
+                                'sentAs' => 'ClusterSecurityGroup',
+                                'properties' => array(
+                                    'ClusterSecurityGroupName' => array(
+                                        'description' => 'The name of the cluster security group.',
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'description' => 'The status of the cluster security group.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'VpcSecurityGroups' => array(
+                            'description' => 'A list of Virtual Private Cloud (VPC) security groups that are associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'VpcSecurityGroup',
+                                'description' => 'Describes the members of a VPC security group.',
+                                'type' => 'object',
+                                'sentAs' => 'VpcSecurityGroup',
+                                'properties' => array(
+                                    'VpcSecurityGroupId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ClusterParameterGroups' => array(
+                            'description' => 'The list of cluster parameter groups that are associated with this cluster.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ClusterParameterGroup',
+                                'description' => 'Describes the status of a parameter group.',
+                                'type' => 'object',
+                                'sentAs' => 'ClusterParameterGroup',
+                                'properties' => array(
+                                    'ParameterGroupName' => array(
+                                        'description' => 'The name of the cluster parameter group.',
+                                        'type' => 'string',
+                                    ),
+                                    'ParameterApplyStatus' => array(
+                                        'description' => 'The status of parameter updates.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ClusterSubnetGroupName' => array(
+                            'description' => 'The name of the subnet group that is associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
+                            'type' => 'string',
+                        ),
+                        'VpcId' => array(
+                            'description' => 'The indentifier of the VPC the cluster is in, if the cluster is in a VPC.',
+                            'type' => 'string',
+                        ),
+                        'AvailabilityZone' => array(
+                            'description' => 'The name of the Availability Zone in which the cluster is located.',
+                            'type' => 'string',
+                        ),
+                        'PreferredMaintenanceWindow' => array(
+                            'description' => 'The weekly time range (in UTC) during which system maintenance can occur.',
+                            'type' => 'string',
+                        ),
+                        'PendingModifiedValues' => array(
+                            'description' => 'If present, changes to the cluster are pending. Specific changes are identified by subelements.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'MasterUserPassword' => array(
+                                    'description' => 'The pending or in-progress change of the master credentials for the cluster.',
+                                    'type' => 'string',
+                                ),
+                                'NodeType' => array(
+                                    'description' => 'The pending or in-progress change of the cluster\'s node type.',
+                                    'type' => 'string',
+                                ),
+                                'NumberOfNodes' => array(
+                                    'description' => 'The pending or in-progress change of the number nodes in the cluster.',
+                                    'type' => 'numeric',
+                                ),
+                                'ClusterType' => array(
+                                    'description' => 'The pending or in-progress change of the cluster type.',
+                                    'type' => 'string',
+                                ),
+                                'ClusterVersion' => array(
+                                    'description' => 'The pending or in-progress change of the service version.',
+                                    'type' => 'string',
+                                ),
+                                'AutomatedSnapshotRetentionPeriod' => array(
+                                    'description' => 'The pending or in-progress change of the automated snapshot retention period.',
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'ClusterVersion' => array(
+                            'description' => 'The version ID of the engine that is running on the cluster.',
+                            'type' => 'string',
+                        ),
+                        'AllowVersionUpgrade' => array(
+                            'description' => 'If true, version upgrades will be applied automatically to the cluster during the maintenance window.',
+                            'type' => 'boolean',
+                        ),
+                        'NumberOfNodes' => array(
+                            'description' => 'The number of compute nodes in the cluster.',
+                            'type' => 'numeric',
+                        ),
+                        'PubliclyAccessible' => array(
+                            'description' => 'If true, the cluster can be accessed from a public network.',
+                            'type' => 'boolean',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ClusterParameterGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ClusterParameterGroup' => array(
+                    'description' => 'Describes a parameter group.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ParameterGroupName' => array(
+                            'description' => 'The name of the cluster parameter group.',
+                            'type' => 'string',
+                        ),
+                        'ParameterGroupFamily' => array(
+                            'description' => 'The name of the cluster parameter group family that this cluster parameter group is compatible with.',
+                            'type' => 'string',
+                        ),
+                        'Description' => array(
+                            'description' => 'The description of the parameter group.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ClusterSubnetGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ClusterSubnetGroup' => array(
+                    'description' => 'Describes a subnet group.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ClusterSubnetGroupName' => array(
+                            'description' => 'The name of the cluster subnet group.',
+                            'type' => 'string',
+                        ),
+                        'Description' => array(
+                            'description' => 'The description of the cluster subnet group.',
+                            'type' => 'string',
+                        ),
+                        'VpcId' => array(
+                            'description' => 'The VPC ID of the cluster subnet group.',
+                            'type' => 'string',
+                        ),
+                        'SubnetGroupStatus' => array(
+                            'description' => 'The status of the cluster subnet group. The valid values are "Complete", "Incomplete" and "Invalid".',
+                            'type' => 'string',
+                        ),
+                        'Subnets' => array(
+                            'description' => 'A list of the VPC Subnet elements.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Subnet',
+                                'description' => 'Describes a subnet.',
+                                'type' => 'object',
+                                'sentAs' => 'Subnet',
+                                'properties' => array(
+                                    'SubnetIdentifier' => array(
+                                        'description' => 'The identifier of the subnet.',
+                                        'type' => 'string',
+                                    ),
+                                    'SubnetAvailabilityZone' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Name' => array(
+                                                'description' => 'The name of the availability zone.',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                    'SubnetStatus' => array(
+                                        'description' => 'The status of the subnet.',
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -2768,61 +2779,68 @@ return array (
                 ),
             ),
         ),
-        'DefaultClusterParameters' => array(
+        'DefaultClusterParametersWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ParameterGroupFamily' => array(
-                    'description' => 'The name of the cluster parameter group family to which the engine default parameters apply.',
-                    'type' => 'string',
+                'DefaultClusterParameters' => array(
+                    'description' => 'Describes the default cluster parameters for a parameter group family.',
+                    'type' => 'object',
                     'location' => 'xml',
-                ),
-                'Marker' => array(
-                    'description' => 'An identifier to allow retrieval of paginated results.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Parameters' => array(
-                    'description' => 'The list of cluster default parameters.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'Parameter',
-                        'description' => 'Describes a parameter in a cluster parameter group.',
-                        'type' => 'object',
-                        'sentAs' => 'Parameter',
-                        'properties' => array(
-                            'ParameterName' => array(
-                                'description' => 'The name of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'ParameterValue' => array(
-                                'description' => 'The value of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'Description' => array(
-                                'description' => 'A description of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'Source' => array(
-                                'description' => 'The source of the parameter value, such as "engine-default" or "user".',
-                                'type' => 'string',
-                            ),
-                            'DataType' => array(
-                                'description' => 'The data type of the parameter.',
-                                'type' => 'string',
-                            ),
-                            'AllowedValues' => array(
-                                'description' => 'The valid range of values for the parameter.',
-                                'type' => 'string',
-                            ),
-                            'IsModifiable' => array(
-                                'description' => 'If true, the parameter can be modified. Some parameters have security or operational implications that prevent them from being changed.',
-                                'type' => 'boolean',
-                            ),
-                            'MinimumEngineVersion' => array(
-                                'description' => 'The earliest engine version to which the parameter can apply.',
-                                'type' => 'string',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ParameterGroupFamily' => array(
+                            'description' => 'The name of the cluster parameter group family to which the engine default parameters apply.',
+                            'type' => 'string',
+                        ),
+                        'Marker' => array(
+                            'description' => 'An identifier to allow retrieval of paginated results.',
+                            'type' => 'string',
+                        ),
+                        'Parameters' => array(
+                            'description' => 'The list of cluster default parameters.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Parameter',
+                                'description' => 'Describes a parameter in a cluster parameter group.',
+                                'type' => 'object',
+                                'sentAs' => 'Parameter',
+                                'properties' => array(
+                                    'ParameterName' => array(
+                                        'description' => 'The name of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'ParameterValue' => array(
+                                        'description' => 'The value of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'Description' => array(
+                                        'description' => 'A description of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'Source' => array(
+                                        'description' => 'The source of the parameter value, such as "engine-default" or "user".',
+                                        'type' => 'string',
+                                    ),
+                                    'DataType' => array(
+                                        'description' => 'The data type of the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'AllowedValues' => array(
+                                        'description' => 'The valid range of values for the parameter.',
+                                        'type' => 'string',
+                                    ),
+                                    'IsModifiable' => array(
+                                        'description' => 'If true, the parameter can be modified. Some parameters have security or operational implications that prevent them from being changed.',
+                                        'type' => 'boolean',
+                                    ),
+                                    'MinimumEngineVersion' => array(
+                                        'description' => 'The earliest engine version to which the parameter can apply.',
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -3112,6 +3130,7 @@ return array (
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'ImportTablesInProgress' => array(
@@ -3121,6 +3140,7 @@ return array (
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
                 'ImportTablesNotStarted' => array(
@@ -3130,6 +3150,7 @@ return array (
                     'items' => array(
                         'name' => 'String',
                         'type' => 'string',
+                        'sentAs' => 'member',
                     ),
                 ),
             ),
@@ -3150,82 +3171,80 @@ return array (
                 ),
             ),
         ),
-        'ReservedNode' => array(
+        'ReservedNodeWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'ReservedNodeId' => array(
-                    'description' => 'The unique identifier for the reservation.',
-                    'type' => 'string',
+                'ReservedNode' => array(
+                    'description' => 'Describes a reserved node.',
+                    'type' => 'object',
                     'location' => 'xml',
-                ),
-                'ReservedNodeOfferingId' => array(
-                    'description' => 'The identifier for the reserved node offering.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'NodeType' => array(
-                    'description' => 'The node type of the reserved node.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'StartTime' => array(
-                    'description' => 'The time the reservation started. You purchase a reserved node offering for a duration. This is the start time of that duration.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'Duration' => array(
-                    'description' => 'The duration of the node reservation in seconds.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'FixedPrice' => array(
-                    'description' => 'The fixed cost Amazon Redshift charged you for this reserved node.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'UsagePrice' => array(
-                    'description' => 'The hourly rate Amazon Redshift charge you for this reserved node.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'CurrencyCode' => array(
-                    'description' => 'The currency code for the reserved cluster.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'NodeCount' => array(
-                    'description' => 'The number of reserved compute nodes.',
-                    'type' => 'numeric',
-                    'location' => 'xml',
-                ),
-                'State' => array(
-                    'description' => 'The state of the reserved Compute Node.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'OfferingType' => array(
-                    'description' => 'The anticipated utilization of the reserved node, as defined in the reserved node offering.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
-                'RecurringCharges' => array(
-                    'description' => 'The recurring charges for the reserved node.',
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'items' => array(
-                        'name' => 'RecurringCharge',
-                        'description' => 'Describes a recurring charge.',
-                        'type' => 'object',
-                        'sentAs' => 'RecurringCharge',
-                        'properties' => array(
-                            'RecurringChargeAmount' => array(
-                                'description' => 'The amount charged per the period of time specified by the recurring charge frequency.',
-                                'type' => 'numeric',
-                            ),
-                            'RecurringChargeFrequency' => array(
-                                'description' => 'The frequency at which the recurring charge amount is applied.',
-                                'type' => 'string',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ReservedNodeId' => array(
+                            'description' => 'The unique identifier for the reservation.',
+                            'type' => 'string',
+                        ),
+                        'ReservedNodeOfferingId' => array(
+                            'description' => 'The identifier for the reserved node offering.',
+                            'type' => 'string',
+                        ),
+                        'NodeType' => array(
+                            'description' => 'The node type of the reserved node.',
+                            'type' => 'string',
+                        ),
+                        'StartTime' => array(
+                            'description' => 'The time the reservation started. You purchase a reserved node offering for a duration. This is the start time of that duration.',
+                            'type' => 'string',
+                        ),
+                        'Duration' => array(
+                            'description' => 'The duration of the node reservation in seconds.',
+                            'type' => 'numeric',
+                        ),
+                        'FixedPrice' => array(
+                            'description' => 'The fixed cost Amazon Redshift charged you for this reserved node.',
+                            'type' => 'numeric',
+                        ),
+                        'UsagePrice' => array(
+                            'description' => 'The hourly rate Amazon Redshift charge you for this reserved node.',
+                            'type' => 'numeric',
+                        ),
+                        'CurrencyCode' => array(
+                            'description' => 'The currency code for the reserved cluster.',
+                            'type' => 'string',
+                        ),
+                        'NodeCount' => array(
+                            'description' => 'The number of reserved compute nodes.',
+                            'type' => 'numeric',
+                        ),
+                        'State' => array(
+                            'description' => 'The state of the reserved Compute Node.',
+                            'type' => 'string',
+                        ),
+                        'OfferingType' => array(
+                            'description' => 'The anticipated utilization of the reserved node, as defined in the reserved node offering.',
+                            'type' => 'string',
+                        ),
+                        'RecurringCharges' => array(
+                            'description' => 'The recurring charges for the reserved node.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'RecurringCharge',
+                                'description' => 'Describes a recurring charge.',
+                                'type' => 'object',
+                                'sentAs' => 'RecurringCharge',
+                                'properties' => array(
+                                    'RecurringChargeAmount' => array(
+                                        'description' => 'The amount charged per the period of time specified by the recurring charge frequency.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'RecurringChargeFrequency' => array(
+                                        'description' => 'The frequency at which the recurring charge amount is applied.',
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -3279,9 +3298,7 @@ return array (
             ),
             'DescribeDefaultClusterParameters' => array(
                 'token_param' => 'Marker',
-                'token_key' => 'Marker',
                 'limit_key' => 'MaxRecords',
-                'result_key' => 'Parameters',
             ),
             'DescribeEvents' => array(
                 'token_param' => 'Marker',
