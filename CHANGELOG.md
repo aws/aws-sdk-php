@@ -21,7 +21,7 @@ CHANGELOG
 * Fixed an issue with Amazon S3 website redirects
 * Fixed a URL encoding inconsistency with Amazon S3 and pre-signed URLs
 * Fixed issue #42 to eliminate cURL error 65 for JSON services
-* Setting Guzzle dependency to ~3.2.0
+* Set Guzzle dependency to [~3.2.0](https://github.com/guzzle/guzzle/blob/master/CHANGELOG.md#320-2013-02-14)
 * Minimum version of PHP is now 5.3.3
 
 2.1.0 (2013-01-28)
