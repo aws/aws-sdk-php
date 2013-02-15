@@ -11,6 +11,7 @@ CHANGELOG
 * Added support for **Auto Scaling**
 * Added support for **Amazon CloudWatch**
 * Added support for **Amazon Simple Workflow Service (Amazon SWF)**
+* Added support for **Amazon Amazon Relational Database Service (RDS)**
 * Added support for health checks and failover in Amazon Route 53
 * Updated the Amazon Route 53 client to use the 2012-12-12 API version
 * Updated `AbstractWaiter` to dispatch `waiter.before_attempt` and `waiter.before_wait` events
