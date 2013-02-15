@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-Next Release
+2.1.1 (2013-02-15)
 ------------------
 
 * Added support for **Amazon Redshift**
