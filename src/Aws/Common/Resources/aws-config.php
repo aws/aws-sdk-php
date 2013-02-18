@@ -39,6 +39,12 @@ return array(
             'class'   => 'Aws\CloudFront\CloudFrontClient'
         ),
 
+        'cloudsearch' => array(
+            'alias'   => 'CloudSearch',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudSearch\CloudSearchClient'
+        ),
+
         'cloudwatch' => array(
             'alias'   => 'CloudWatch',
             'extends' => 'default_settings',
