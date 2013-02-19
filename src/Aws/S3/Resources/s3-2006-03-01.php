@@ -17,7 +17,7 @@
 return array (
     'apiVersion' => '2006-03-01',
     'endpointPrefix' => 's3',
-    'serviceFullName' => 'Amazon Simple Storage Solution',
+    'serviceFullName' => 'Amazon Simple Storage Service',
     'serviceAbbreviation' => 'Amazon S3',
     'serviceType' => 'rest-xml',
     'timestampFormat' => 'rfc822',
