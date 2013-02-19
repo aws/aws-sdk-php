@@ -140,11 +140,18 @@ class ServiceResponseException extends RuntimeException
      */
     public function __toString()
     {
-        return get_class($this) . ': '
+        $message = get_class($this) . ': '
             . 'AWS Error Code: ' . $this->getExceptionCode() . ', '
             . 'Status Code: ' . $this->getStatusCode() . ', '
             . 'AWS Request ID: ' . $this->getRequestId() . ', '
             . 'AWS Error Type: ' . $this->getExceptionType() . ', '
             . 'AWS Error Message: ' . $this->getMessage();
+
+        // Add the User-Agent if available
+        if ($this->response && $this->response->getRequest()) {
+            $message .= ', ' . 'User-Agent: ' . $this->response->getRequest()->getHeader('User-Agent');
+        }
+
+        return $message;
     }
 }

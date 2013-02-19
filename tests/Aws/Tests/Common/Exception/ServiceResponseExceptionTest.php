@@ -18,6 +18,7 @@ namespace Aws\Tests\Common\Exception;
 
 use Aws\Common\Exception\ServiceResponseException;
 use Guzzle\Http\Message\Response;
+use Guzzle\Http\Message\Request;
 
 /**
  * @covers Aws\Common\Exception\ServiceResponseException
@@ -39,5 +40,17 @@ class ServiceResponseExceptionTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($response, $e->getResponse());
 
         $this->assertEquals('Aws\Common\Exception\ServiceResponseException: AWS Error Code: foo, Status Code: 200, AWS Request ID: xyz, AWS Error Type: client, AWS Error Message: Foo!', (string) $e);
+    }
+
+    public function testAddsUserAgentIfAvailable()
+    {
+        $response = new Response(200);
+        $response->setRequest(new Request('GET', 'http://www.foo.com', array('User-Agent' => 'Foo/Bar')));
+        $e = new ServiceResponseException('Foo!');
+        $e->setExceptionCode('foo');
+        $e->setExceptionType('client');
+        $e->setRequestId('xyz');
+        $e->setResponse($response);
+        $this->assertEquals('Aws\Common\Exception\ServiceResponseException: AWS Error Code: foo, Status Code: 200, AWS Request ID: xyz, AWS Error Type: client, AWS Error Message: Foo!, User-Agent: Foo/Bar', (string) $e);
     }
 }
