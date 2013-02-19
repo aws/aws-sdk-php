@@ -117,13 +117,18 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         if ($cacheKey && $cache) {
             if ($cache === 'true' || $cache === true) {
                 // If no cache adapter was provided, then create one for the user
-                if (extension_loaded('apc') && class_exists('Doctrine\Common\Cache\ApcCache')) {
-                    $cache = new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache());
-                } else {
-                    // @codeCoverageIgnoreStart
+                // @codeCoverageIgnoreStart
+                if (!extension_loaded('apc')) {
                     throw new RuntimeException('PHP has not been compiled with APC. Unable to cache credentials.');
-                    // @codeCoverageIgnoreEnd
+                } elseif (!class_exists('Doctrine\Common\Cache\ApcCache')) {
+                    throw new RuntimeException(
+                        'Cannot set ' . Options::CREDENTIALS_CACHE . ' to true because the Doctrine cache component is '
+                        . 'not installed. Either install doctrine/cache or pass in an instantiated '
+                        . 'Guzzle\Cache\CacheAdapterInterface object'
+                    );
                 }
+                // @codeCoverageIgnoreEnd
+                $cache = new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache());
             } elseif (!($cache instanceof CacheAdapterInterface)) {
                 throw new InvalidArgumentException('Unable to utilize caching with the specified options');
             }
