@@ -45,7 +45,6 @@ class DefaultClient extends AbstractClient
      *     - scheme: URI Scheme of the base URL (e.g. 'https', 'http').
      *     - service: Specify the name of the service
      *     - base_url: Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
-     *     - endpoint_provider: Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
      * - Signature options
      *     - signature: You can optionally provide a custom signature implementation used to sign requests
      *     - signature.service: Set to explicitly override the service name used in signatures

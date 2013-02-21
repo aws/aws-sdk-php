@@ -24,6 +24,53 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Iam',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'iam.us-gov.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'AddRoleToInstanceProfile' => array(
             'httpMethod' => 'POST',

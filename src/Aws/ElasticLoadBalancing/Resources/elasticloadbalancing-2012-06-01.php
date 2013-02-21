@@ -22,6 +22,53 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'ElasticLoadBalancing',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.sa-east-1.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.us-gov-west-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'ApplySecurityGroupsToLoadBalancer' => array(
             'httpMethod' => 'POST',

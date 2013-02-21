@@ -21,6 +21,48 @@ return array (
     'serviceType' => 'rest-json',
     'signatureVersion' => 'v4',
     'namespace' => 'ElasticTranscoder',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elastictranscoder.sa-east-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'CancelJob' => array(
             'httpMethod' => 'DELETE',

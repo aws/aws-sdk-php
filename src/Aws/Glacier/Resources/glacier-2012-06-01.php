@@ -21,6 +21,33 @@ return array (
     'serviceType' => 'rest-json',
     'signatureVersion' => 'v4',
     'namespace' => 'Glacier',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.ap-northeast-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',

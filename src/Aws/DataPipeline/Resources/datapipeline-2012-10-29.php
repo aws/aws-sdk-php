@@ -23,6 +23,13 @@ return array (
     'targetPrefix' => 'DataPipeline.',
     'signatureVersion' => 'v4',
     'namespace' => 'DataPipeline',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'datapipeline.us-east-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'ActivatePipeline' => array(
             'httpMethod' => 'POST',

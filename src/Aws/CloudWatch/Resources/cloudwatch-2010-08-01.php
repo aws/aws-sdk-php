@@ -23,8 +23,54 @@ return array (
     'timestampFormat' => 'iso8601',
     'resultWrapped' => true,
     'signatureVersion' => 'v2',
-    'memberedLists' => true,
     'namespace' => 'CloudWatch',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'monitoring.sa-east-1.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'monitoring.us-gov-west-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'DeleteAlarms' => array(
             'httpMethod' => 'POST',
@@ -558,7 +604,7 @@ return array (
                 ),
                 array(
                     'reason' => 'Indicates that the request processing has failed due to some unknown error, exception, or failure.',
-                    'class' => 'InternalServiceFaultException',
+                    'class' => 'InternalServiceException',
                 ),
             ),
         ),
@@ -630,7 +676,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'Indicates that the request processing has failed due to some unknown error, exception, or failure.',
-                    'class' => 'InternalServiceFaultException',
+                    'class' => 'InternalServiceException',
                 ),
                 array(
                     'class' => 'InvalidParameterValueException',
@@ -841,7 +887,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The quota for alarms for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -1004,7 +1050,7 @@ return array (
                 ),
                 array(
                     'reason' => 'Indicates that the request processing has failed due to some unknown error, exception, or failure.',
-                    'class' => 'InternalServiceFaultException',
+                    'class' => 'InternalServiceException',
                 ),
             ),
         ),
@@ -1066,7 +1112,7 @@ return array (
                 ),
                 array(
                     'reason' => 'Data was not syntactically valid JSON.',
-                    'class' => 'InvalidFormatFaultException',
+                    'class' => 'InvalidFormatException',
                 ),
             ),
         ),

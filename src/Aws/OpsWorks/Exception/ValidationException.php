@@ -17,6 +17,6 @@
 namespace Aws\OpsWorks\Exception;
 
 /**
- * Indicates that a request was invalid.
+ * Exception that occurs when a ValidationException error is encountered
  */
 class ValidationException extends OpsWorksException {}

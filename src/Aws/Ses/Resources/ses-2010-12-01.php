@@ -23,6 +23,13 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Ses',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'email.us-east-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'DeleteIdentity' => array(
             'httpMethod' => 'POST',

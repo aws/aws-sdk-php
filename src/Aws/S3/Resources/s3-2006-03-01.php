@@ -24,6 +24,53 @@ return array (
     'globalEndpoint' => 's3.amazonaws.com',
     'signatureVersion' => 's3',
     'namespace' => 'S3',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-sa-east-1.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3-us-gov-west-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',

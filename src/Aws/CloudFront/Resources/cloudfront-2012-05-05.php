@@ -23,6 +23,48 @@ return array (
     'globalEndpoint' => 'cloudfront.amazonaws.com',
     'signatureVersion' => 'cloudfront',
     'namespace' => 'CloudFront',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'cloudfront.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',

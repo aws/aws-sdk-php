@@ -21,13 +21,12 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\Region;
 use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
-use Aws\Common\Region\EndpointProviderInterface;
-use Aws\Common\Region\XmlEndpointProvider;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
+use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * @covers Aws\Common\Client\AbstractClient
@@ -38,10 +37,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $signature = new SignatureV4();
         $credentials = new Credentials('test', '123');
-        $endpointProvider = $this->getMock('Aws\Common\Region\EndpointProviderInterface');
-        $config = new Collection(array(
-            Options::ENDPOINT_PROVIDER => $endpointProvider
-        ));
+        $config = new Collection();
 
         $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
             ->setConstructorArgs(array($credentials, $signature, $config))
@@ -49,7 +45,6 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertSame($signature, $client->getSignature());
         $this->assertSame($credentials, $client->getCredentials());
-        $this->assertSame($endpointProvider, $client->getEndpointProvider());
         $this->assertSame($config, $client->getConfig());
 
         // Ensure a signature event dispatcher was added
@@ -66,24 +61,9 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testThrowsExceptionWhenNoEndpointProvider()
-    {
-        $signature = new SignatureV4();
-        $credentials = new Credentials('test', '123');
-        $config = new Collection();
-        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
-            ->setConstructorArgs(array($credentials, $signature, $config))
-            ->getMockForAbstractClass();
-    }
-
     public function testConstructorCallsResolvers()
     {
-        $config = new Collection(array(
-            Options::ENDPOINT_PROVIDER => $this->getMock('Aws\Common\Region\EndpointProviderInterface')
-        ));
+        $config = new Collection();
         $signature = new SignatureV4();
         $credentials = new Credentials('test', '123');
         $config->set('client.resolvers', array(
@@ -175,36 +155,11 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testSetRegionUpdatesBaseUrlAndSignature()
     {
-        // Setup client
-        $endpointProvider = new XmlEndpointProvider();
-        $signature = new SignatureV4();
-        $signature->setRegionName(Region::US_EAST_1);
-        $credentials = new Credentials('test', '123');
-        $config = new Collection(array(
-            Options::SERVICE           => 's3',
-            Options::SCHEME            => 'https',
-            Options::BASE_URL          => $endpointProvider->getEndpoint('s3', Region::US_EAST_1)->getBaseUrl('https'),
-            Options::ENDPOINT_PROVIDER => $endpointProvider
-        ));
-        /** @var $client AbstractClient */
-        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
-            ->setConstructorArgs(array($credentials, $signature, $config))
-            ->getMockForAbstractClass();
-
-        // Get the original values
-        $baseUrl1 = $client->getBaseUrl();
-        $regionName1 = $this->readAttribute($signature, 'regionName');
-        $this->assertNotEmpty($baseUrl1);
-        $this->assertNotEmpty($regionName1);
-
-        // Change the region, get the new values, and compare with old
-        $client->setRegion(Region::US_WEST_1);
-        $baseUrl2 = $client->getBaseUrl();
-        $regionName2 = $this->readAttribute($signature, 'regionName');
-        $this->assertNotEmpty($baseUrl2);
-        $this->assertNotEmpty($regionName2);
-        $this->assertNotEquals($baseUrl1, $baseUrl2);
-        $this->assertNotEquals($regionName1, $regionName2);
+        $client = $this->getServiceBuilder()->get('dynamodb');
+        $client->setRegion('us-west-1');
+        $this->assertEquals('https://dynamodb.us-west-1.amazonaws.com', (string) $client->getBaseUrl());
+        $this->assertEquals('https://dynamodb.us-west-1.amazonaws.com', $client->getConfig('base_url'));
+        $this->assertEquals('us-west-1', $this->readAttribute($client->getSignature(), 'regionName'));
     }
 
     public function testAllowsMagicWaiters()
@@ -214,7 +169,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->setConstructorArgs(array(
                 new Credentials('test', '123'),
                 new SignatureV4(),
-                new Collection(array(Options::ENDPOINT_PROVIDER => new XmlEndpointProvider()))
+                new Collection()
             ))
             ->setMethods(array('waitUntil'))
             ->getMockForAbstractClass();
@@ -222,5 +177,54 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->method('waitUntil')
             ->with('Foo', array('baz' => 'bar'));
         $client->waitUntilFoo(array('baz' => 'bar'));
+    }
+
+    /**
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage No regions
+     */
+    public function testEnsuresRegionsAreSetWhenCreatingEndpoints()
+    {
+        AbstractClient::getEndpoint(ServiceDescription::factory(array()), 'foo', 'baz');
+    }
+
+    /**
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage foo is not a valid region
+     */
+    public function testEnsuresRegionIsValidWhenCreatingEndpoints()
+    {
+        AbstractClient::getEndpoint(ServiceDescription::factory(array(
+            'regions' => array(
+                'baz' => array()
+            )
+        )), 'foo', 'baz');
+    }
+
+    /**
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage http is not a valid URI scheme for
+     */
+    public function testEnsuresSchemeIsValidWhenCreatingEndpoints()
+    {
+        AbstractClient::getEndpoint(ServiceDescription::factory(array(
+            'regions' => array(
+                'baz' => array(
+                    'http' => false
+                )
+            )
+        )), 'baz', 'http');
+    }
+
+    public function testCreatesEndpoints()
+    {
+        $this->assertEquals('http://test.com', AbstractClient::getEndpoint(ServiceDescription::factory(array(
+            'regions' => array(
+                'baz' => array(
+                    'http' => true,
+                    'hostname' => 'test.com'
+                )
+            )
+        )), 'baz', 'http'));
     }
 }

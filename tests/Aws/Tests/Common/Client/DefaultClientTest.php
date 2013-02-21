@@ -34,7 +34,6 @@ class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
         $this->assertInstanceOf('Aws\Common\Signature\SignatureInterface', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\CredentialsInterface', $client->getCredentials());
-        $this->assertInstanceOf('Aws\Common\Region\EndpointProviderInterface', $client->getEndpointProvider());
         $this->assertSame($credentials, $client->getCredentials());
         $this->assertEquals('https://sts.amazonaws.com', $client->getBaseUrl());
     }

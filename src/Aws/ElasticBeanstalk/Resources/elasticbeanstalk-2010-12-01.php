@@ -23,6 +23,48 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'ElasticBeanstalk',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticbeanstalk.sa-east-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'CheckDNSAvailability' => array(
             'httpMethod' => 'POST',

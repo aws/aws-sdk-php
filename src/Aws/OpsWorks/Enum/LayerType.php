@@ -14,24 +14,22 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Common\Region;
+namespace Aws\OpsWorks\Enum;
 
-use Aws\Common\Region\Region;
+use Aws\Common\Enum;
 
 /**
- * @covers Aws\Common\Region\Region
+ * Contains enumerable LayerType values
  */
-class RegionTest extends \Guzzle\Tests\GuzzleTestCase
+class LayerType extends Enum
 {
-    public function testHasName()
-    {
-        $region = new Region('foo');
-        $this->assertEquals('foo', $region->getName());
-    }
-
-    public function testConvertsToString()
-    {
-        $region = new Region('foo');
-        $this->assertEquals('foo', (string) $region);
-    }
+    const LB = 'lb';
+    const WEB = 'web';
+    const PHP_APP = 'php-app';
+    const RAILS_APP = 'rails-app';
+    const NODEJS_APP = 'nodejs-app';
+    const MEMCACHED = 'memcached';
+    const DB_MASTER = 'db-master';
+    const MONITORING_MASTER = 'monitoring-master';
+    const CUSTOM = 'custom';
 }

@@ -86,11 +86,6 @@ class ClientOptions extends Enum
     const BASE_URL = 'base_url';
 
     /**
-     * @var string Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
-     */
-    const ENDPOINT_PROVIDER = 'endpoint_provider';
-
-    /**
      * @var string You can optionally provide a custom signature implementation used to sign requests
      */
     const SIGNATURE = 'signature';

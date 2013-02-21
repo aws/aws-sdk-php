@@ -48,12 +48,14 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  * @method Model describePermissions(array $args = array()) {@command OpsWorks DescribePermissions}
  * @method Model describeRaidArrays(array $args = array()) {@command OpsWorks DescribeRaidArrays}
  * @method Model describeServiceErrors(array $args = array()) {@command OpsWorks DescribeServiceErrors}
+ * @method Model describeSshKeys(array $args = array()) {@command OpsWorks DescribeSshKeys}
  * @method Model describeStacks(array $args = array()) {@command OpsWorks DescribeStacks}
  * @method Model describeTimeBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeTimeBasedAutoScaling}
  * @method Model describeUserProfiles(array $args = array()) {@command OpsWorks DescribeUserProfiles}
  * @method Model describeVolumes(array $args = array()) {@command OpsWorks DescribeVolumes}
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
+ * @method Model searchPackages(array $args = array()) {@command OpsWorks SearchPackages}
  * @method Model setLoadBasedAutoScaling(array $args = array()) {@command OpsWorks SetLoadBasedAutoScaling}
  * @method Model setPermission(array $args = array()) {@command OpsWorks SetPermission}
  * @method Model setTimeBasedAutoScaling(array $args = array()) {@command OpsWorks SetTimeBasedAutoScaling}
@@ -85,7 +87,6 @@ class OpsWorksClient extends AbstractClient
      *     - region: Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
      *     - scheme: URI Scheme of the base URL (e.g. 'https', 'http').
      *     - base_url: Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
-     *     - endpoint_provider: Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
      * - Generic client options
      *     - ssl.cert: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle. This
      *           option should be used when you encounter curl error code 60.

@@ -23,6 +23,53 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v2',
     'namespace' => 'Rds',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.sa-east-1.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'rds.us-gov-west-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'AddSourceIdentifierToSubscription' => array(
             'httpMethod' => 'POST',
