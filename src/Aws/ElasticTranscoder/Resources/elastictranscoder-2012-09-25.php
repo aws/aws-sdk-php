@@ -39,6 +39,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
@@ -175,16 +179,12 @@ return array (
                     'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'OutputBucket' => array(
                     'required' => true,
                     'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'Role' => array(
                     'required' => true,
@@ -394,6 +394,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
@@ -427,6 +431,10 @@ return array (
                 ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
                 array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
@@ -468,6 +476,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
@@ -508,6 +520,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
@@ -530,6 +546,10 @@ return array (
             'summary' => 'To get a list of the pipelines associated with the current AWS account, send a GET request to the /2012-09-25/pipelines resource.',
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
@@ -549,6 +569,10 @@ return array (
             'responseType' => 'model',
             'summary' => 'To get a list of all presets associated with the current AWS account, send a GET request to the /2012-09-25/presets resource.',
             'errorResponses' => array(
+                array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
                 array(
                     'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
@@ -577,6 +601,10 @@ return array (
                 ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
                 array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
@@ -608,6 +636,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
@@ -637,6 +669,10 @@ return array (
                 ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
                 array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
@@ -670,16 +706,12 @@ return array (
                     'description' => 'The Amazon S3 bucket that contains media files to be transcoded. The action attempts to read from this bucket.',
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'OutputBucket' => array(
                     'required' => true,
                     'description' => 'The Amazon S3 bucket that Elastic Transcoder will write transcoded media files to. The action attempts to read from this bucket.',
                     'type' => 'string',
                     'location' => 'json',
-                    'minLength' => 1,
-                    'maxLength' => 255,
                 ),
                 'Topics' => array(
                     'required' => true,
@@ -693,6 +725,10 @@ return array (
                 ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
                 array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
@@ -748,6 +784,10 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
+                array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
@@ -787,6 +827,10 @@ return array (
                 ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
+                    'class' => 'ValidationException',
+                ),
                 array(
                     'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
