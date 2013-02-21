@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2012-07-31',
+    'apiVersion' => '2013-01-10',
     'endpointPrefix' => 'rds',
     'serviceFullName' => 'Amazon Relational Database Service',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -24,6 +24,62 @@ return array (
     'signatureVersion' => 'v2',
     'namespace' => 'Rds',
     'operations' => array(
+        'AddTagsToResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'summary' => 'Adds metadata tags to a DB Instance. These tags can also be used with cost allocation reporting to track cost associated with a DB Instance.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AddTagsToResource',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'description' => 'The DB Instance the tags will be added to.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'required' => true,
+                    'description' => 'The tags to be assigned to the DB Instance.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'description' => 'Metadata assigned to a DB Instance consisting of a key-value pair.',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'description' => 'A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and cannot be prefixed with "aws:". The string may only contain only the set of Unicode letters, digits, white-space, \'_\', \'.\', \'/\', \'=\', \'+\', \'-\' (Java regex: "^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$").',
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'description' => 'A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and cannot be prefixed with "aws:". The string may only contain only the set of Unicode letters, digits, white-space, \'_\', \'.\', \'/\', \'=\', \'+\', \'-\' (Java regex: "^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$").',
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'DBInstanceNotFoundException',
+                ),
+                array(
+                    'class' => 'DBSnapshotNotFoundException',
+                ),
+            ),
+        ),
         'AuthorizeDBSecurityGroupIngress' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -40,7 +96,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -100,7 +156,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'SourceDBSnapshotIdentifier' => array(
                     'required' => true,
@@ -146,7 +202,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBName' => array(
                     'description' => 'The meaning of this parameter differs according to the database engine you use.',
@@ -167,7 +223,7 @@ return array (
                 ),
                 'DBInstanceClass' => array(
                     'required' => true,
-                    'description' => 'The compute and memory capacity of the DB Instance. To determine the instance classes that are available for a particular DB engine, use the DescribeOrderableDBInstanceOptions action.',
+                    'description' => 'The compute and memory capacity of the DB Instance.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -185,7 +241,7 @@ return array (
                 ),
                 'MasterUserPassword' => array(
                     'required' => true,
-                    'description' => 'The password for the master database user.',
+                    'description' => 'The password for the master database user. Can be any printable ASCII character except "/", "\\", or "@".',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -196,6 +252,16 @@ return array (
                     'sentAs' => 'DBSecurityGroups.member',
                     'items' => array(
                         'name' => 'DBSecurityGroupName',
+                        'type' => 'string',
+                    ),
+                ),
+                'VpcSecurityGroupIds' => array(
+                    'description' => 'A list of Ec2 Vpc Security Groups to associate with this DB Instance.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'VpcSecurityGroupId',
                         'type' => 'string',
                     ),
                 ),
@@ -235,7 +301,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MultiAZ' => array(
-                    'description' => 'Specifies if the DB Instance is a Multi-AZ deployment. For Microsoft SQL Server, must be set to false. You cannot set the AvailabilityZone parameter if the MultiAZ parameter is set to true.',
+                    'description' => 'Specifies if the DB Instance is a Multi-AZ deployment. You cannot set the AvailabilityZone parameter if the MultiAZ parameter is set to true.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -254,6 +320,11 @@ return array (
                 'LicenseModel' => array(
                     'description' => 'License model information for this DB Instance.',
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Iops' => array(
+                    'description' => 'The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB Instance.',
+                    'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'OptionGroupName' => array(
@@ -290,6 +361,12 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
+                ),
+                array(
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -316,7 +393,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -351,7 +428,13 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'Iops' => array(
+                    'description' => 'The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB Instance.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
                 'OptionGroupName' => array(
+                    'description' => 'The option group the DB instance will be associated with. If omitted, the default Option Group for the engine specified will be used.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -385,6 +468,12 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
+                ),
+                array(
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -411,7 +500,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -457,7 +546,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -471,11 +560,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'EC2VpcId' => array(
-                    'description' => 'The Id of VPC. Indicates which VPC this DB Security Group should belong to. Must be specified to create a DB Security Group for a VPC; may not be specified otherwise.',
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
             ),
             'errorResponses' => array(
                 array(
@@ -483,6 +567,9 @@ return array (
                 ),
                 array(
                     'class' => 'DBSecurityGroupQuotaExceededException',
+                ),
+                array(
+                    'class' => 'DBSecurityGroupNotSupportedException',
                 ),
             ),
         ),
@@ -502,7 +589,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -548,7 +635,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -608,7 +695,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -660,7 +747,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -711,7 +798,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -745,7 +832,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -779,7 +866,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -813,7 +900,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -850,7 +937,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -884,7 +971,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'Engine' => array(
                     'description' => 'The database engine to return.',
@@ -902,12 +989,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more than the MaxRecords value is available, a marker is included in the response so that the following results can be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more than the MaxRecords value is available, a pagination token called a marker is included in the response so that the following results can be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'The marker provided in the previous request. If this parameter is specified, the response includes records beyond the marker only, up to MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -941,7 +1028,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'description' => 'The user-supplied instance identifier. If this parameter is specified, information from only the specific DB Instance is returned. This parameter isn\'t case sensitive.',
@@ -949,12 +1036,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeDBInstances request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
+                    'description' => 'An optional pagination token provided by a previous DescribeDBInstances request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -981,7 +1068,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupName' => array(
                     'description' => 'The name of a specific DB Parameter Group to return details for.',
@@ -989,12 +1076,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeDBParameterGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeDBParameterGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1021,7 +1108,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1035,12 +1122,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeDBParameters request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeDBParameters request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1067,7 +1154,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSecurityGroupName' => array(
                     'description' => 'The name of the DB Security Group to return details for.',
@@ -1075,12 +1162,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeDBSecurityGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeDBSecurityGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1107,7 +1194,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'description' => 'A DB Instance Identifier to retrieve the list of DB Snapshots for. Cannot be used in conjunction with DBSnapshotIdentifier. This parameter isn\'t case sensitive.',
@@ -1125,12 +1212,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeDBSnapshots request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeDBSnapshots request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1157,7 +1244,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSubnetGroupName' => array(
                     'description' => 'The name of the DB Subnet Group to return details for.',
@@ -1165,12 +1252,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeDBSubnetGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeDBSubnetGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1197,7 +1284,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupFamily' => array(
                     'required' => true,
@@ -1206,12 +1293,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeEngineDefaultParameters request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeEngineDefaultParameters request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1233,7 +1320,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'SourceIdentifier' => array(
                     'description' => 'The identifier of the event source for which events will be returned. If not specified, then all sources are included in the response.',
@@ -1276,13 +1363,22 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
+                'EventCategories' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'EventCategories.member',
+                    'items' => array(
+                        'name' => 'EventCategory',
+                        'type' => 'string',
+                    ),
+                ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeEvents request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous DescribeEvents request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1304,7 +1400,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'EngineName' => array(
                     'required' => true,
@@ -1318,10 +1414,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1343,7 +1441,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'OptionGroupName' => array(
                     'description' => 'The name of the option group to describe. Cannot be supplied together with EngineName or MajorEngineVersion.',
@@ -1351,10 +1449,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous DescribeOptionGroups request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1391,7 +1491,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'Engine' => array(
                     'required' => true,
@@ -1414,13 +1514,19 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Vpc' => array(
+                    'description' => 'The VPC filter value. Specify this parameter to show only the available VPC or non-VPC offerings.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker provided in the previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
+                    'description' => 'An optional pagination token provided by a previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1442,7 +1548,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'ReservedDBInstanceId' => array(
                     'description' => 'The reserved DB Instance identifier filter value. Specify this parameter to show only the reservation that matches the specified reservation ID.',
@@ -1481,12 +1587,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more than the MaxRecords value is available, a marker is included in the response so that the following results can be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more than the MaxRecords value is available, a pagination token called a marker is included in the response so that the following results can be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'The marker provided in the previous request. If this parameter is specified, the response includes records beyond the marker only, up to MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1513,7 +1619,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'description' => 'The offering identifier filter value. Specify this parameter to show only the available offering that matches the specified reservation identifier.',
@@ -1547,12 +1653,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
-                    'description' => 'The maximum number of records to include in the response. If more than the MaxRecords value is available, a marker is included in the response so that the following results can be retrieved.',
+                    'description' => 'The maximum number of records to include in the response. If more than the MaxRecords value is available, a pagination token called a marker is included in the response so that the following results can be retrieved.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'The marker provided in the previous request. If this parameter is specified, the response includes records beyond the marker only, up to MaxRecords.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1560,6 +1666,40 @@ return array (
             'errorResponses' => array(
                 array(
                     'class' => 'ReservedDBInstancesOfferingNotFoundException',
+                ),
+            ),
+        ),
+        'ListTagsForResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'TagListMessage',
+            'responseType' => 'model',
+            'summary' => 'Lists all tags on a DB Instance.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ListTagsForResource',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'description' => 'The DB Instance with tags to be listed.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'DBInstanceNotFoundException',
+                ),
+                array(
+                    'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
         ),
@@ -1579,16 +1719,16 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
-                    'description' => 'The DB Instance identifier. This value is stored as a lowercase string. For a SQL Server DB Instance, this value cannot be changed.',
+                    'description' => 'The DB Instance identifier. This value is stored as a lowercase string.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'AllocatedStorage' => array(
-                    'description' => 'The new storage capacity of the RDS instance.',
+                    'description' => 'The new storage capacity of the RDS instance. Changing this parameter does not result in an outage and the change is applied during the next maintenance window unless the ApplyImmediately parameter is set to true for this request.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1598,12 +1738,22 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'DBSecurityGroups' => array(
-                    'description' => 'A list of DB Security Groups to authorize on this DB Instance. This change is asynchronously applied as soon as possible.',
+                    'description' => 'A list of DB Security Groups to authorize on this DB Instance. Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'DBSecurityGroups.member',
                     'items' => array(
                         'name' => 'DBSecurityGroupName',
+                        'type' => 'string',
+                    ),
+                ),
+                'VpcSecurityGroupIds' => array(
+                    'description' => 'A list of Ec2 Vpc Security Groups to authorize on this DB Instance. This change is asynchronously applied as soon as possible.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'VpcSecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'VpcSecurityGroupId',
                         'type' => 'string',
                     ),
                 ),
@@ -1614,12 +1764,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MasterUserPassword' => array(
-                    'description' => 'The new password for the DB Instance master user. This change is asynchronously applied as soon as possible. Between the time of the request and the completion of the request, the MasterUserPassword element exists in the PendingModifiedValues element of the operation response.',
+                    'description' => 'The new password for the DB Instance master user. Can be any printable ASCII character except "/", "\\", or "@".',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'DBParameterGroupName' => array(
-                    'description' => 'The name of the DB Parameter Group to apply to this DB Instance. This change is asynchronously applied as soon as possible for parameters when the ApplyImmediately parameter is specified as true for this request.',
+                    'description' => 'The name of the DB Parameter Group to apply to this DB Instance. Changing this parameter does not result in an outage and the change is applied during the next maintenance window unless the ApplyImmediately parameter is set to true for this request.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1629,40 +1779,50 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'PreferredBackupWindow' => array(
-                    'description' => 'The daily time range during which automated backups are created if automated backups are enabled, as determined by the BackupRetentionPeriod.',
+                    'description' => 'The daily time range during which automated backups are created if automated backups are enabled, as determined by the BackupRetentionPeriod. Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'PreferredMaintenanceWindow' => array(
-                    'description' => 'The weekly time range (in UTC) during which system maintenance can occur, which may result in an outage. This change is made immediately. If moving this window to the current time, there must be at least 120 minutes between the current time and end of the window to ensure pending changes are applied.',
+                    'description' => 'The weekly time range (in UTC) during which system maintenance can occur, which may result in an outage. Changing this parameter does not result in an outage, except in the following situation, and the change is asynchronously applied as soon as possible. If there are pending actions that cause a reboot, and the maintenance window is changed to include the current time, then changing this parameter will cause a reboot of the DB Instance. If moving this window to the current time, there must be at least 30 minutes between the current time and end of the window to ensure pending changes are applied.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'MultiAZ' => array(
-                    'description' => 'Specifies if the DB Instance is a Multi-AZ deployment.',
+                    'description' => 'Specifies if the DB Instance is a Multi-AZ deployment. Changing this parameter does not result in an outage and the change is applied during the next maintenance window unless the ApplyImmediately parameter is set to true for this request.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
                 'EngineVersion' => array(
-                    'description' => 'The version number of the database engine to upgrade to.',
+                    'description' => 'The version number of the database engine to upgrade to. Changing this parameter results in an outage and the change is applied during the next maintenance window unless the ApplyImmediately parameter is set to true for this request.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'AllowMajorVersionUpgrade' => array(
-                    'description' => 'Indicates that major version upgrades are allowed.',
+                    'description' => 'Indicates that major version upgrades are allowed. Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
                 'AutoMinorVersionUpgrade' => array(
-                    'description' => 'Indicates that minor version upgrades will be applied automatically to the DB Instance during the maintenance window.',
+                    'description' => 'Indicates that minor version upgrades will be applied automatically to the DB Instance during the maintenance window. Changing this parameter does not result in an outage except in the following case and the change is asynchronously applied as soon as possible. An outage will result if this parameter is set to true during the maintenance window, and a newer minor version is available, and RDS has enabled auto patching for that engine version.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'Iops' => array(
+                    'description' => 'The new Provisioned IOPS (I/O operations per second) value for the RDS instance. Changing this parameter does not result in an outage and the change is applied during the next maintenance window unless the ApplyImmediately parameter is set to true for this request.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
                 'OptionGroupName' => array(
-                    'description' => 'Indicates that the DB Instance should be associated with the specified option group.',
+                    'description' => 'Indicates that the DB Instance should be associated with the specified option group. Changing this parameter does not result in an outage except in the following case and the change is applied during the next maintenance window unless the ApplyImmediately parameter is set to true for this request. If the parameter change results in an option group that enables OEM, this change can cause a brief (sub-second) period during which new connections are rejected but existing connections are not interrupted.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'NewDBInstanceIdentifier' => array(
+                    'description' => 'The new DB Instance identifier for the DB Instance when renaming a DB Instance. This value is stored as a lowercase string.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1673,6 +1833,9 @@ return array (
                 ),
                 array(
                     'class' => 'InvalidDBSecurityGroupStateException',
+                ),
+                array(
+                    'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
                     'class' => 'DBInstanceNotFoundException',
@@ -1691,6 +1854,9 @@ return array (
                 ),
                 array(
                     'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
                     'class' => 'OptionGroupNotFoundException',
@@ -1713,7 +1879,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1806,7 +1972,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1865,7 +2031,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1880,20 +2046,33 @@ return array (
                     'sentAs' => 'OptionsToInclude.member',
                     'items' => array(
                         'name' => 'OptionConfiguration',
+                        'description' => 'A list of all available options',
                         'type' => 'object',
                         'properties' => array(
                             'OptionName' => array(
                                 'required' => true,
+                                'description' => 'The configuration of options to include in a group.',
                                 'type' => 'string',
                             ),
                             'Port' => array(
+                                'description' => 'The optional port for the option.',
                                 'type' => 'numeric',
                             ),
                             'DBSecurityGroupMemberships' => array(
+                                'description' => 'A list of DBSecurityGroupMemebrship name strings used for this option.',
                                 'type' => 'array',
                                 'sentAs' => 'DBSecurityGroupMemberships.member',
                                 'items' => array(
                                     'name' => 'DBSecurityGroupName',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'VpcSecurityGroupMemberships' => array(
+                                'description' => 'A list of VpcSecurityGroupMemebrship name strings used for this option.',
+                                'type' => 'array',
+                                'sentAs' => 'VpcSecurityGroupMemberships.member',
+                                'items' => array(
+                                    'name' => 'VpcSecurityGroupId',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1926,6 +2105,50 @@ return array (
                 ),
             ),
         ),
+        'PromoteReadReplica' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DBInstanceWrapper',
+            'responseType' => 'model',
+            'summary' => 'Promotes a Read Replica DB Instance to a standalone DB Instance.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'PromoteReadReplica',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'DBInstanceIdentifier' => array(
+                    'required' => true,
+                    'description' => 'The DB Instance identifier. This value is stored as a lowercase string.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'BackupRetentionPeriod' => array(
+                    'description' => 'The number of days to retain automated backups. Setting this parameter to a positive number enables backups. Setting this parameter to 0 disables automated backups.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'PreferredBackupWindow' => array(
+                    'description' => 'The daily time range during which automated backups are created if automated backups are enabled, using the BackupRetentionPeriod parameter.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'InvalidDBInstanceStateException',
+                ),
+                array(
+                    'class' => 'DBInstanceNotFoundException',
+                ),
+            ),
+        ),
         'PurchaseReservedDBInstancesOffering' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1942,7 +2165,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'required' => true,
@@ -1989,7 +2212,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2013,6 +2236,51 @@ return array (
                 ),
             ),
         ),
+        'RemoveTagsFromResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'summary' => 'Removes metadata tags from a DB Instance.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'RemoveTagsFromResource',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'ResourceName' => array(
+                    'required' => true,
+                    'description' => 'The DB Instance the tags will be removed from.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'TagKeys' => array(
+                    'required' => true,
+                    'description' => 'The tag key (name) of the tag to be removed.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'TagKeys.member',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'DBInstanceNotFoundException',
+                ),
+                array(
+                    'class' => 'DBSnapshotNotFoundException',
+                ),
+            ),
+        ),
         'ResetDBParameterGroup' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2029,7 +2297,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2127,7 +2395,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2188,6 +2456,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Iops' => array(
+                    'description' => 'The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB Instance.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
                 'OptionGroupName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -2222,6 +2495,15 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
+                ),
+                array(
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'class' => 'ProvisionedIopsNotAvailableInAZException',
+                ),
+                array(
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -2242,7 +2524,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'SourceDBInstanceIdentifier' => array(
                     'required' => true,
@@ -2319,6 +2601,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Iops' => array(
+                    'description' => 'The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB Instance.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
                 'OptionGroupName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -2356,6 +2643,15 @@ return array (
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
+                ),
+                array(
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'class' => 'ProvisionedIopsNotAvailableInAZException',
+                ),
+                array(
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -2376,7 +2672,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-07-31',
+                    'default' => '2013-01-10',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -2419,6 +2715,10 @@ return array (
         ),
     ),
     'models' => array(
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+        ),
         'DBSecurityGroupWrapper' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2457,7 +2757,7 @@ return array (
                                 'sentAs' => 'EC2SecurityGroup',
                                 'properties' => array(
                                     'Status' => array(
-                                        'description' => 'Provides the status of the EC2 security group.',
+                                        'description' => 'Provides the status of the EC2 security group. Status can be "authorizing", "authorized", "revoking", and "revoked".',
                                         'type' => 'string',
                                     ),
                                     'EC2SecurityGroupName' => array(
@@ -2485,7 +2785,7 @@ return array (
                                 'sentAs' => 'IPRange',
                                 'properties' => array(
                                     'Status' => array(
-                                        'description' => 'Specifies the status of the IP range.',
+                                        'description' => 'Specifies the status of the IP range. Status can be "authorizing", "authorized", "revoking", and "revoked".',
                                         'type' => 'string',
                                     ),
                                     'CIDRIP' => array(
@@ -2566,6 +2866,10 @@ return array (
                         'SnapshotType' => array(
                             'description' => 'Provides the type of the DB Snapshot.',
                             'type' => 'string',
+                        ),
+                        'Iops' => array(
+                            'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value of the DB Instance at the time of the snapshot.',
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
@@ -2657,6 +2961,23 @@ return array (
                                 ),
                             ),
                         ),
+                        'VpcSecurityGroups' => array(
+                            'description' => 'Provides List of VPC security group elements that the DB Instance belongs to.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'VpcSecurityGroupMembership',
+                                'type' => 'object',
+                                'sentAs' => 'VpcSecurityGroupMembership',
+                                'properties' => array(
+                                    'VpcSecurityGroupId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                         'DBParameterGroups' => array(
                             'description' => 'Provides the list of DB Parameter Groups applied to this DB Instance.',
                             'type' => 'array',
@@ -2702,7 +3023,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Subnets' => array(
-                                    'description' => 'Contains a list of Subnets elements.',
+                                    'description' => 'Contains a list of Subnet elements.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'Subnet',
@@ -2720,6 +3041,10 @@ return array (
                                                     'Name' => array(
                                                         'description' => 'The name of the availability zone.',
                                                         'type' => 'string',
+                                                    ),
+                                                    'ProvisionedIopsCapable' => array(
+                                                        'description' => 'True indicates the availability zone is capable of provisioned IOPs.',
+                                                        'type' => 'boolean',
                                                     ),
                                                 ),
                                             ),
@@ -2768,6 +3093,14 @@ return array (
                                     'description' => 'Indicates the database engine version.',
                                     'type' => 'string',
                                 ),
+                                'Iops' => array(
+                                    'description' => 'Specifies the new Provisioned IOPS value for the DB Instance that will be applied or is being applied.',
+                                    'type' => 'numeric',
+                                ),
+                                'DBInstanceIdentifier' => array(
+                                    'description' => 'Contains the new DBInstanceIdentifier for the DB Instance that will be applied or is in progress.',
+                                    'type' => 'string',
+                                ),
                             ),
                         ),
                         'LatestRestorableTime' => array(
@@ -2803,6 +3136,10 @@ return array (
                             'description' => 'License model information for this DB Instance.',
                             'type' => 'string',
                         ),
+                        'Iops' => array(
+                            'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value.',
+                            'type' => 'numeric',
+                        ),
                         'OptionGroupMembership' => array(
                             'description' => 'Specifies the name and status of the option group that this instance belongs to.',
                             'type' => 'object',
@@ -2820,6 +3157,13 @@ return array (
                         'CharacterSetName' => array(
                             'description' => 'If present, specifies the name of the character set that this instance is associated with.',
                             'type' => 'string',
+                        ),
+                        'SecondaryAvailabilityZone' => array(
+                            'description' => 'If present, specifies the name of the secondary Availability Zone for a DB instance with multi-AZ support.',
+                            'type' => 'string',
+                        ),
+                        'PubliclyAccessible' => array(
+                            'type' => 'boolean',
                         ),
                     ),
                 ),
@@ -2882,7 +3226,7 @@ return array (
                             'type' => 'string',
                         ),
                         'Subnets' => array(
-                            'description' => 'Contains a list of Subnets elements.',
+                            'description' => 'Contains a list of Subnet elements.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'Subnet',
@@ -2900,6 +3244,10 @@ return array (
                                             'Name' => array(
                                                 'description' => 'The name of the availability zone.',
                                                 'type' => 'string',
+                                            ),
+                                            'ProvisionedIopsCapable' => array(
+                                                'description' => 'True indicates the availability zone is capable of provisioned IOPs.',
+                                                'type' => 'boolean',
                                             ),
                                         ),
                                     ),
@@ -2930,6 +3278,7 @@ return array (
                             'type' => 'string',
                         ),
                         'OptionGroupDescription' => array(
+                            'description' => 'Provides the description of the option group.',
                             'type' => 'string',
                         ),
                         'EngineName' => array(
@@ -2941,9 +3290,11 @@ return array (
                             'type' => 'string',
                         ),
                         'Options' => array(
+                            'description' => 'Indicates what options are available in the option group.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'Option',
+                                'description' => 'Option details.',
                                 'type' => 'object',
                                 'sentAs' => 'Option',
                                 'properties' => array(
@@ -2960,6 +3311,7 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'DBSecurityGroupMemberships' => array(
+                                        'description' => 'If the Option requires access to a port, then this DB Security Group allows access to the port.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'DBSecurityGroup',
@@ -2978,23 +3330,44 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'VpcSecurityGroupMemberships' => array(
+                                        'description' => 'If the Option requires access to a port, then this VPC Security Group allows access to the port.',
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'VpcSecurityGroupMembership',
+                                            'type' => 'object',
+                                            'sentAs' => 'VpcSecurityGroupMembership',
+                                            'properties' => array(
+                                                'VpcSecurityGroupId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Status' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
+                        ),
+                        'AllowsVpcAndNonVpcInstanceMemberships' => array(
+                            'description' => 'Indicates whether this option group can be applied to both VPC and non-VPC instances. The value \'true\' indicates the option group can be applied to both VPC and non-VPC instances.',
+                            'type' => 'boolean',
+                        ),
+                        'VpcId' => array(
+                            'description' => 'If AllowsVpcAndNonVpcInstanceMemberships is \'false\', this field is blank. If AllowsVpcAndNonVpcInstanceMemberships is \'true\' and this field is blank, then this option group can be applied to both VPC and non-VPC instances. If this field contains a value, then this option group can only be applied to instances that are in the VPC indicated by this field.',
+                            'type' => 'string',
                         ),
                     ),
                 ),
             ),
-        ),
-        'EmptyOutput' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
         ),
         'DBEngineVersionMessage' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The identifier returned to allow retrieval of paginated results.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3028,6 +3401,20 @@ return array (
                                 'description' => 'The description of the database engine version.',
                                 'type' => 'string',
                             ),
+                            'DefaultCharacterSet' => array(
+                                'description' => 'The default character set for new instances of this engine version, if the CharacterSetName parameter of the CreateDBInstance API is not specified.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CharacterSetName' => array(
+                                        'description' => 'The name of the character set.',
+                                        'type' => 'string',
+                                    ),
+                                    'CharacterSetDescription' => array(
+                                        'description' => 'The description of the character set.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                             'SupportedCharacterSets' => array(
                                 'description' => 'A list of the character sets supported by this engine for the CharacterSetName parameter of the CreateDBInstance API.',
                                 'type' => 'array',
@@ -3058,7 +3445,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3146,6 +3533,23 @@ return array (
                                     ),
                                 ),
                             ),
+                            'VpcSecurityGroups' => array(
+                                'description' => 'Provides List of VPC security group elements that the DB Instance belongs to.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'VpcSecurityGroupMembership',
+                                    'type' => 'object',
+                                    'sentAs' => 'VpcSecurityGroupMembership',
+                                    'properties' => array(
+                                        'VpcSecurityGroupId' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                             'DBParameterGroups' => array(
                                 'description' => 'Provides the list of DB Parameter Groups applied to this DB Instance.',
                                 'type' => 'array',
@@ -3191,7 +3595,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Subnets' => array(
-                                        'description' => 'Contains a list of Subnets elements.',
+                                        'description' => 'Contains a list of Subnet elements.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Subnet',
@@ -3209,6 +3613,10 @@ return array (
                                                         'Name' => array(
                                                             'description' => 'The name of the availability zone.',
                                                             'type' => 'string',
+                                                        ),
+                                                        'ProvisionedIopsCapable' => array(
+                                                            'description' => 'True indicates the availability zone is capable of provisioned IOPs.',
+                                                            'type' => 'boolean',
                                                         ),
                                                     ),
                                                 ),
@@ -3257,6 +3665,14 @@ return array (
                                         'description' => 'Indicates the database engine version.',
                                         'type' => 'string',
                                     ),
+                                    'Iops' => array(
+                                        'description' => 'Specifies the new Provisioned IOPS value for the DB Instance that will be applied or is being applied.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'DBInstanceIdentifier' => array(
+                                        'description' => 'Contains the new DBInstanceIdentifier for the DB Instance that will be applied or is in progress.',
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                             'LatestRestorableTime' => array(
@@ -3292,6 +3708,10 @@ return array (
                                 'description' => 'License model information for this DB Instance.',
                                 'type' => 'string',
                             ),
+                            'Iops' => array(
+                                'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value.',
+                                'type' => 'numeric',
+                            ),
                             'OptionGroupMembership' => array(
                                 'description' => 'Specifies the name and status of the option group that this instance belongs to.',
                                 'type' => 'object',
@@ -3310,6 +3730,13 @@ return array (
                                 'description' => 'If present, specifies the name of the character set that this instance is associated with.',
                                 'type' => 'string',
                             ),
+                            'SecondaryAvailabilityZone' => array(
+                                'description' => 'If present, specifies the name of the secondary Availability Zone for a DB instance with multi-AZ support.',
+                                'type' => 'string',
+                            ),
+                            'PubliclyAccessible' => array(
+                                'type' => 'boolean',
+                            ),
                         ),
                     ),
                 ),
@@ -3320,7 +3747,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3409,7 +3836,7 @@ return array (
                     ),
                 ),
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3420,7 +3847,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3460,7 +3887,7 @@ return array (
                                     'sentAs' => 'EC2SecurityGroup',
                                     'properties' => array(
                                         'Status' => array(
-                                            'description' => 'Provides the status of the EC2 security group.',
+                                            'description' => 'Provides the status of the EC2 security group. Status can be "authorizing", "authorized", "revoking", and "revoked".',
                                             'type' => 'string',
                                         ),
                                         'EC2SecurityGroupName' => array(
@@ -3488,7 +3915,7 @@ return array (
                                     'sentAs' => 'IPRange',
                                     'properties' => array(
                                         'Status' => array(
-                                            'description' => 'Specifies the status of the IP range.',
+                                            'description' => 'Specifies the status of the IP range. Status can be "authorizing", "authorized", "revoking", and "revoked".',
                                             'type' => 'string',
                                         ),
                                         'CIDRIP' => array(
@@ -3508,7 +3935,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3578,6 +4005,10 @@ return array (
                                 'description' => 'Provides the type of the DB Snapshot.',
                                 'type' => 'string',
                             ),
+                            'Iops' => array(
+                                'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value of the DB Instance at the time of the snapshot.',
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -3588,7 +4019,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3619,7 +4050,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Subnets' => array(
-                                'description' => 'Contains a list of Subnets elements.',
+                                'description' => 'Contains a list of Subnet elements.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'Subnet',
@@ -3637,6 +4068,10 @@ return array (
                                                 'Name' => array(
                                                     'description' => 'The name of the availability zone.',
                                                     'type' => 'string',
+                                                ),
+                                                'ProvisionedIopsCapable' => array(
+                                                    'description' => 'True indicates the availability zone is capable of provisioned IOPs.',
+                                                    'type' => 'boolean',
                                                 ),
                                             ),
                                         ),
@@ -3669,7 +4104,7 @@ return array (
                             'type' => 'string',
                         ),
                         'Marker' => array(
-                            'description' => 'Provides an identifier to allow retrieval of paginated results.',
+                            'description' => 'An optional pagination token provided by a previous EngineDefaults request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
                             'type' => 'string',
                         ),
                         'Parameters' => array(
@@ -3733,7 +4168,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker obtained from a previous operation response.',
+                    'description' => 'An optional pagination token provided by a previous Events request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3758,6 +4193,15 @@ return array (
                             'Message' => array(
                                 'description' => 'Provides the text of this event.',
                                 'type' => 'string',
+                            ),
+                            'EventCategories' => array(
+                                'description' => 'Specifies the category for the event.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'EventCategory',
+                                    'type' => 'string',
+                                    'sentAs' => 'EventCategory',
+                                ),
                             ),
                             'Date' => array(
                                 'description' => 'Specifies the date and time of the event.',
@@ -3822,6 +4266,7 @@ return array (
                     ),
                 ),
                 'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3845,6 +4290,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'OptionGroupDescription' => array(
+                                'description' => 'Provides the description of the option group.',
                                 'type' => 'string',
                             ),
                             'EngineName' => array(
@@ -3856,9 +4302,11 @@ return array (
                                 'type' => 'string',
                             ),
                             'Options' => array(
+                                'description' => 'Indicates what options are available in the option group.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'Option',
+                                    'description' => 'Option details.',
                                     'type' => 'object',
                                     'sentAs' => 'Option',
                                     'properties' => array(
@@ -3875,6 +4323,7 @@ return array (
                                             'type' => 'numeric',
                                         ),
                                         'DBSecurityGroupMemberships' => array(
+                                            'description' => 'If the Option requires access to a port, then this DB Security Group allows access to the port.',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'DBSecurityGroup',
@@ -3893,8 +4342,33 @@ return array (
                                                 ),
                                             ),
                                         ),
+                                        'VpcSecurityGroupMemberships' => array(
+                                            'description' => 'If the Option requires access to a port, then this VPC Security Group allows access to the port.',
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'VpcSecurityGroupMembership',
+                                                'type' => 'object',
+                                                'sentAs' => 'VpcSecurityGroupMembership',
+                                                'properties' => array(
+                                                    'VpcSecurityGroupId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Status' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
+                            ),
+                            'AllowsVpcAndNonVpcInstanceMemberships' => array(
+                                'description' => 'Indicates whether this option group can be applied to both VPC and non-VPC instances. The value \'true\' indicates the option group can be applied to both VPC and non-VPC instances.',
+                                'type' => 'boolean',
+                            ),
+                            'VpcId' => array(
+                                'description' => 'If AllowsVpcAndNonVpcInstanceMemberships is \'false\', this field is blank. If AllowsVpcAndNonVpcInstanceMemberships is \'true\' and this field is blank, then this option group can be applied to both VPC and non-VPC instances. If this field contains a value, then this option group can only be applied to instances that are in the VPC indicated by this field.',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -3948,6 +4422,10 @@ return array (
                                             'description' => 'The name of the availability zone.',
                                             'type' => 'string',
                                         ),
+                                        'ProvisionedIopsCapable' => array(
+                                            'description' => 'True indicates the availability zone is capable of provisioned IOPs.',
+                                            'type' => 'boolean',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -3959,23 +4437,15 @@ return array (
                                 'description' => 'Indicates whether this orderable DB Instance can have a read replica.',
                                 'type' => 'boolean',
                             ),
-                            'VpcCapable' => array(
-                                'description' => 'Indicates whether this orderable DB Instance is VPC capable.',
-                                'type' => 'boolean',
-                            ),
-                            'VpcMultiAZCapable' => array(
-                                'description' => 'Indicates whether this orderable DB Instance is VPC multi-AZ capable.',
-                                'type' => 'boolean',
-                            ),
-                            'VpcReadReplicaCapable' => array(
-                                'description' => 'Indicates whether this orderable DB Instance can have a VPC read replica.',
+                            'Vpc' => array(
+                                'description' => 'Indicates whether this is a VPC orderable DB Instance.',
                                 'type' => 'boolean',
                             ),
                         ),
                     ),
                 ),
                 'Marker' => array(
-                    'description' => 'A marker that can be used to retrieve paginated results.',
+                    'description' => 'An optional pagination token provided by a previous OrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3986,7 +4456,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'The marker provided for paginated results.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -4082,7 +4552,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'A marker provided for paginated results.',
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -4151,6 +4621,33 @@ return array (
                                         ),
                                     ),
                                 ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'TagListMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TagList' => array(
+                    'description' => 'List of tags returned by the ListTagsForResource operation.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'description' => 'Metadata assigned to a DB Instance consisting of a key-value pair.',
+                        'type' => 'object',
+                        'sentAs' => 'Tag',
+                        'properties' => array(
+                            'Key' => array(
+                                'description' => 'A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and cannot be prefixed with "aws:". The string may only contain only the set of Unicode letters, digits, white-space, \'_\', \'.\', \'/\', \'=\', \'+\', \'-\' (Java regex: "^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$").',
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'description' => 'A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and cannot be prefixed with "aws:". The string may only contain only the set of Unicode letters, digits, white-space, \'_\', \'.\', \'/\', \'=\', \'+\', \'-\' (Java regex: "^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$").',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -4340,6 +4837,9 @@ return array (
                 'token_key' => 'Marker',
                 'limit_key' => 'MaxRecords',
                 'result_key' => 'ReservedDBInstancesOfferings',
+            ),
+            'ListTagsForResource' => array(
+                'result_key' => 'TagList',
             ),
         ),
     ),

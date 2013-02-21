@@ -25,6 +25,7 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with Amazon Relational Database Service
  *
+ * @method Model addTagsToResource(array $args = array()) {@command Rds AddTagsToResource}
  * @method Model authorizeDBSecurityGroupIngress(array $args = array()) {@command Rds AuthorizeDBSecurityGroupIngress}
  * @method Model copyDBSnapshot(array $args = array()) {@command Rds CopyDBSnapshot}
  * @method Model createDBInstance(array $args = array()) {@command Rds CreateDBInstance}
@@ -54,12 +55,15 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeOrderableDBInstanceOptions(array $args = array()) {@command Rds DescribeOrderableDBInstanceOptions}
  * @method Model describeReservedDBInstances(array $args = array()) {@command Rds DescribeReservedDBInstances}
  * @method Model describeReservedDBInstancesOfferings(array $args = array()) {@command Rds DescribeReservedDBInstancesOfferings}
+ * @method Model listTagsForResource(array $args = array()) {@command Rds ListTagsForResource}
  * @method Model modifyDBInstance(array $args = array()) {@command Rds ModifyDBInstance}
  * @method Model modifyDBParameterGroup(array $args = array()) {@command Rds ModifyDBParameterGroup}
  * @method Model modifyDBSubnetGroup(array $args = array()) {@command Rds ModifyDBSubnetGroup}
  * @method Model modifyOptionGroup(array $args = array()) {@command Rds ModifyOptionGroup}
+ * @method Model promoteReadReplica(array $args = array()) {@command Rds PromoteReadReplica}
  * @method Model purchaseReservedDBInstancesOffering(array $args = array()) {@command Rds PurchaseReservedDBInstancesOffering}
  * @method Model rebootDBInstance(array $args = array()) {@command Rds RebootDBInstance}
+ * @method Model removeTagsFromResource(array $args = array()) {@command Rds RemoveTagsFromResource}
  * @method Model resetDBParameterGroup(array $args = array()) {@command Rds ResetDBParameterGroup}
  * @method Model restoreDBInstanceFromDBSnapshot(array $args = array()) {@command Rds RestoreDBInstanceFromDBSnapshot}
  * @method Model restoreDBInstanceToPointInTime(array $args = array()) {@command Rds RestoreDBInstanceToPointInTime}
@@ -110,7 +114,7 @@ class RdsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/rds-2012-07-31.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/rds-2013-01-10.php'
             ))
             ->build();
     }
