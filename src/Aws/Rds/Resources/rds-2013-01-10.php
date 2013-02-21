@@ -24,6 +24,46 @@ return array (
     'signatureVersion' => 'v2',
     'namespace' => 'Rds',
     'operations' => array(
+        'AddSourceIdentifierToSubscription' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventSubscriptionWrapper',
+            'responseType' => 'model',
+            'summary' => 'Adds a source identifier to an existing RDS event notification subscription.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AddSourceIdentifierToSubscription',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SubscriptionName' => array(
+                    'required' => true,
+                    'description' => 'The name of the RDS event notification subscription you want to add a source identifier to.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceIdentifier' => array(
+                    'required' => true,
+                    'description' => 'The identifier of the event source to be added. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it cannot end with a hyphen or contain two consecutive hyphens.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'SubscriptionNotFoundException',
+                ),
+                array(
+                    'class' => 'SourceNotFoundException',
+                ),
+            ),
+        ),
         'AddTagsToResource' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -256,7 +296,7 @@ return array (
                     ),
                 ),
                 'VpcSecurityGroupIds' => array(
-                    'description' => 'A list of Ec2 Vpc Security Groups to associate with this DB Instance.',
+                    'description' => 'A list of EC2 VPC Security Groups to associate with this DB Instance.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'VpcSecurityGroupIds.member',
@@ -335,6 +375,11 @@ return array (
                 'CharacterSetName' => array(
                     'description' => 'For supported engines, indicates that the DB Instance should be associated with the specified CharacterSet.',
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PubliclyAccessible' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
             ),
@@ -436,6 +481,11 @@ return array (
                 'OptionGroupName' => array(
                     'description' => 'The option group the DB instance will be associated with. If omitted, the default Option Group for the engine specified will be used.',
                     'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PubliclyAccessible' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
             ),
@@ -625,7 +675,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DBSubnetGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Creates a new DB subnet group. DB subnet groups must contain at least one subnet in each AZ in the region.',
+            'summary' => 'Creates a new DB subnet group. DB subnet groups must contain at least one subnet in at least two AZs in the region.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -676,6 +726,92 @@ return array (
                 ),
                 array(
                     'class' => 'InvalidSubnetException',
+                ),
+            ),
+        ),
+        'CreateEventSubscription' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventSubscriptionWrapper',
+            'responseType' => 'model',
+            'summary' => 'Creates an RDS event notification subscription. This action requires a topic ARN (Amazon Resource Name) created by either the RDS console, the SNS console, or the SNS API. To obtain an ARN with SNS, you must create a topic in Amazon SNS and subscribe to the topic. The ARN is displayed in the SNS console.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateEventSubscription',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SubscriptionName' => array(
+                    'required' => true,
+                    'description' => 'The name of the subscription.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnsTopicArn' => array(
+                    'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the SNS topic created for event notification. The ARN is created by Amazon SNS when you create a topic and subscribe to it.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceType' => array(
+                    'description' => 'The type of source that will be generating the events. For example, if you want to be notified of events generated by a DB instance, you would set this parameter to db-instance. if this value is not specified, all events are returned.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EventCategories' => array(
+                    'description' => 'A list of event categories for a SourceType that you want to subscribe to. You can see a list of the categories for a given SourceType in the Events topic in the Amazon RDS User Guide or by using the DescribeEventCategories action.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'EventCategories.member',
+                    'items' => array(
+                        'name' => 'EventCategory',
+                        'type' => 'string',
+                    ),
+                ),
+                'SourceIds' => array(
+                    'description' => 'The list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it cannot end with a hyphen or contain two consecutive hyphens.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'SourceIds.member',
+                    'items' => array(
+                        'name' => 'SourceId',
+                        'type' => 'string',
+                    ),
+                ),
+                'Enabled' => array(
+                    'description' => 'A Boolean value; set to true to activate the subscription, set to false to create the subscription but not active it.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'EventSubscriptionQuotaExceededException',
+                ),
+                array(
+                    'class' => 'SubscriptionAlreadyExistException',
+                ),
+                array(
+                    'class' => 'SNSInvalidTopicException',
+                ),
+                array(
+                    'class' => 'SNSNoAuthorizationException',
+                ),
+                array(
+                    'class' => 'SNSTopicArnNotFoundException',
+                ),
+                array(
+                    'class' => 'SubscriptionCategoryNotFoundException',
+                ),
+                array(
+                    'class' => 'SourceNotFoundException',
                 ),
             ),
         ),
@@ -918,6 +1054,40 @@ return array (
                 ),
                 array(
                     'class' => 'DBSubnetGroupNotFoundException',
+                ),
+            ),
+        ),
+        'DeleteEventSubscription' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventSubscriptionWrapper',
+            'responseType' => 'model',
+            'summary' => 'Deletes an RDS event notification subscription.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteEventSubscription',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SubscriptionName' => array(
+                    'required' => true,
+                    'description' => 'The name of the RDS event notification subscription you want to delete.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'SubscriptionNotFoundException',
+                ),
+                array(
+                    'class' => 'InvalidEventSubscriptionStateException',
                 ),
             ),
         ),
@@ -1304,13 +1474,78 @@ return array (
                 ),
             ),
         ),
+        'DescribeEventCategories' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventCategoriesMessage',
+            'responseType' => 'model',
+            'summary' => 'Displays a list of categories for all event source types, or, if specified, for a specified source type. You can see a list of the event categories and source types in the Events topic in the Amazon RDS User Guide.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeEventCategories',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SourceType' => array(
+                    'description' => 'The type of source that will be generating the events.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'DescribeEventSubscriptions' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventSubscriptionsMessage',
+            'responseType' => 'model',
+            'summary' => 'Lists all the subscription descriptions for a customer account. The description for a subscription includes SubscriptionName, SNSTopicARN, CustomerID, SourceType, SourceID, CreationTime, and Status.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeEventSubscriptions',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SubscriptionName' => array(
+                    'description' => 'The name of the RDS event notification subscription you want to describe.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'SubscriptionNotFoundException',
+                ),
+            ),
+        ),
         'DescribeEvents' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EventsMessage',
             'responseType' => 'model',
-            'summary' => 'Returns events related to DB Instances, DB Security Groups, DB Snapshots and DB Parameter Groups for the past 14 days. Events specific to a particular DB Instance, DB Security Group, database snapshot or DB Parameter Group can be obtained by providing the name as a parameter. By default, the past hour of events are returned.',
+            'summary' => 'Returns events related to DB instances, DB security groups, DB Snapshots, and DB parameter groups for the past 14 days. Events specific to a particular DB Iinstance, DB security group, DB Snapshot, or DB parameter group can be obtained by providing the source identifier as a parameter. By default, the past hour of events are returned.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1364,6 +1599,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'EventCategories' => array(
+                    'description' => 'A list of event categories that trigger notifications for a event notification subscription.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'EventCategories.member',
@@ -1404,7 +1640,7 @@ return array (
                 ),
                 'EngineName' => array(
                     'required' => true,
-                    'description' => 'A required parameter. Options available for the given Engine name will be described.',
+                    'description' => 'Options available for the given DB engine name to be described.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1748,7 +1984,7 @@ return array (
                     ),
                 ),
                 'VpcSecurityGroupIds' => array(
-                    'description' => 'A list of Ec2 Vpc Security Groups to authorize on this DB Instance. This change is asynchronously applied as soon as possible.',
+                    'description' => 'A list of EC2 VPC Security Groups to authorize on this DB Instance. This change is asynchronously applied as soon as possible.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'VpcSecurityGroupIds.member',
@@ -1962,7 +2198,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DBSubnetGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Modifies an existing DB subnet group. DB subnet groups must contain at least one subnet in each AZ in the region.',
+            'summary' => 'Modifies an existing DB subnet group. DB subnet groups must contain at least one subnet in at least two AZs in the region.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -2012,6 +2248,78 @@ return array (
                 ),
                 array(
                     'class' => 'InvalidSubnetException',
+                ),
+            ),
+        ),
+        'ModifyEventSubscription' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventSubscriptionWrapper',
+            'responseType' => 'model',
+            'summary' => 'Modifies an existing RDS event notification subscription. Note that you cannot modify the source identifiers using this call; to change source identifiers for a subscription, use the AddSourceIdentifierToSubscription and RemoveSourceIdentifierFromSubscription calls.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyEventSubscription',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SubscriptionName' => array(
+                    'required' => true,
+                    'description' => 'The name of the RDS event notification subscription.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnsTopicArn' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the SNS topic created for event notification. The ARN is created by Amazon SNS when you create a topic and subscribe to it.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceType' => array(
+                    'description' => 'The type of source that will be generating the events. For example, if you want to be notified of events generated by a DB instance, you would set this parameter to db-instance. if this value is not specified, all events are returned.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EventCategories' => array(
+                    'description' => 'A list of event categories for a SourceType that you want to subscribe to. You can see a list of the categories for a given SourceType in the Events topic in the Amazon RDS User Guide or by using the DescribeEventCategories action.',
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'EventCategories.member',
+                    'items' => array(
+                        'name' => 'EventCategory',
+                        'type' => 'string',
+                    ),
+                ),
+                'Enabled' => array(
+                    'description' => 'A Boolean value; set to true to activate the subscription.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'EventSubscriptionQuotaExceededException',
+                ),
+                array(
+                    'class' => 'SubscriptionNotFoundException',
+                ),
+                array(
+                    'class' => 'SNSInvalidTopicException',
+                ),
+                array(
+                    'class' => 'SNSNoAuthorizationException',
+                ),
+                array(
+                    'class' => 'SNSTopicArnNotFoundException',
+                ),
+                array(
+                    'class' => 'SubscriptionCategoryNotFoundException',
                 ),
             ),
         ),
@@ -2236,6 +2544,46 @@ return array (
                 ),
             ),
         ),
+        'RemoveSourceIdentifierFromSubscription' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EventSubscriptionWrapper',
+            'responseType' => 'model',
+            'summary' => 'Removes a source identifier from an existing RDS event notification subscription.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'RemoveSourceIdentifierFromSubscription',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-01-10',
+                ),
+                'SubscriptionName' => array(
+                    'required' => true,
+                    'description' => 'The name of the RDS event notification subscription you want to remove a source identifier from.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceIdentifier' => array(
+                    'required' => true,
+                    'description' => 'The source identifier to be removed from the subscription, such as the DB instance identifier for a DB instance or the name of a security group.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'SubscriptionNotFoundException',
+                ),
+                array(
+                    'class' => 'SourceNotFoundException',
+                ),
+            ),
+        ),
         'RemoveTagsFromResource' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2435,6 +2783,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'PubliclyAccessible' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
                 'AutoMinorVersionUpgrade' => array(
                     'description' => 'Indicates that minor version upgrades will be applied automatically to the DB Instance during the maintenance window.',
                     'type' => 'boolean',
@@ -2580,6 +2933,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'PubliclyAccessible' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
                 'AutoMinorVersionUpgrade' => array(
                     'description' => 'Indicates that minor version upgrades will be applied automatically to the DB Instance during the maintenance window.',
                     'type' => 'boolean',
@@ -2715,6 +3073,72 @@ return array (
         ),
     ),
     'models' => array(
+        'EventSubscriptionWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'EventSubscription' => array(
+                    'description' => 'Contains the results of a successful invocation of the DescribeEventSubscriptions action.',
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'Id' => array(
+                            'description' => 'Not used.',
+                            'type' => 'string',
+                        ),
+                        'CustomerAwsId' => array(
+                            'description' => 'The AWS customer account associated with the RDS event notification subscription.',
+                            'type' => 'string',
+                        ),
+                        'CustSubscriptionId' => array(
+                            'description' => 'The RDS event notification subscription Id.',
+                            'type' => 'string',
+                        ),
+                        'SnsTopicArn' => array(
+                            'description' => 'The topic ARN of the RDS event notification subscription.',
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'description' => 'The status of the RDS event notification subscription.',
+                            'type' => 'string',
+                        ),
+                        'SubscriptionCreationTime' => array(
+                            'description' => 'The time the RDS event notification subscription was created.',
+                            'type' => 'string',
+                        ),
+                        'SourceType' => array(
+                            'description' => 'The source type for the RDS event notification subscription.',
+                            'type' => 'string',
+                        ),
+                        'SourceIdsList' => array(
+                            'description' => 'A list of source Ids for the RDS event notification subscription.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'SourceId',
+                                'type' => 'string',
+                                'sentAs' => 'SourceId',
+                            ),
+                        ),
+                        'EventCategoriesList' => array(
+                            'description' => 'A list of event categories for the RDS event notification subscription.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'EventCategory',
+                                'type' => 'string',
+                                'sentAs' => 'EventCategory',
+                            ),
+                        ),
+                        'Enabled' => array(
+                            'description' => 'A Boolean value indicating if the subscription is enabled. True indicates the subscription is enabled.',
+                            'type' => 'boolean',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'EmptyOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2966,13 +3390,16 @@ return array (
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'VpcSecurityGroupMembership',
+                                'description' => 'This data type is used as a response element for queries on VPC security group membership.',
                                 'type' => 'object',
                                 'sentAs' => 'VpcSecurityGroupMembership',
                                 'properties' => array(
                                     'VpcSecurityGroupId' => array(
+                                        'description' => 'The name of the VPC security group.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
+                                        'description' => 'The status of the VPC Security Group.',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -3335,13 +3762,16 @@ return array (
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'VpcSecurityGroupMembership',
+                                            'description' => 'This data type is used as a response element for queries on VPC security group membership.',
                                             'type' => 'object',
                                             'sentAs' => 'VpcSecurityGroupMembership',
                                             'properties' => array(
                                                 'VpcSecurityGroupId' => array(
+                                                    'description' => 'The name of the VPC security group.',
                                                     'type' => 'string',
                                                 ),
                                                 'Status' => array(
+                                                    'description' => 'The status of the VPC Security Group.',
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -3538,13 +3968,16 @@ return array (
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'VpcSecurityGroupMembership',
+                                    'description' => 'This data type is used as a response element for queries on VPC security group membership.',
                                     'type' => 'object',
                                     'sentAs' => 'VpcSecurityGroupMembership',
                                     'properties' => array(
                                         'VpcSecurityGroupId' => array(
+                                            'description' => 'The name of the VPC security group.',
                                             'type' => 'string',
                                         ),
                                         'Status' => array(
+                                            'description' => 'The status of the VPC Security Group.',
                                             'type' => 'string',
                                         ),
                                     ),
@@ -4163,6 +4596,112 @@ return array (
                 ),
             ),
         ),
+        'EventCategoriesMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'EventCategoriesMapList' => array(
+                    'description' => 'A list of EventCategoriesMap data types.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'EventCategoriesMap',
+                        'description' => 'Contains the results of a successful invocation of the DescribeEventCategories action.',
+                        'type' => 'object',
+                        'sentAs' => 'EventCategoriesMap',
+                        'properties' => array(
+                            'SourceType' => array(
+                                'description' => 'The source type that the returned categories belong to',
+                                'type' => 'string',
+                            ),
+                            'EventCategories' => array(
+                                'description' => 'The event categories for the specified source type',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'EventCategory',
+                                    'type' => 'string',
+                                    'sentAs' => 'EventCategory',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'EventSubscriptionsMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'EventSubscriptionsList' => array(
+                    'description' => 'A list of EventSubscriptions data types.',
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'EventSubscription',
+                        'description' => 'Contains the results of a successful invocation of the DescribeEventSubscriptions action.',
+                        'type' => 'object',
+                        'sentAs' => 'EventSubscription',
+                        'properties' => array(
+                            'Id' => array(
+                                'description' => 'Not used.',
+                                'type' => 'string',
+                            ),
+                            'CustomerAwsId' => array(
+                                'description' => 'The AWS customer account associated with the RDS event notification subscription.',
+                                'type' => 'string',
+                            ),
+                            'CustSubscriptionId' => array(
+                                'description' => 'The RDS event notification subscription Id.',
+                                'type' => 'string',
+                            ),
+                            'SnsTopicArn' => array(
+                                'description' => 'The topic ARN of the RDS event notification subscription.',
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'description' => 'The status of the RDS event notification subscription.',
+                                'type' => 'string',
+                            ),
+                            'SubscriptionCreationTime' => array(
+                                'description' => 'The time the RDS event notification subscription was created.',
+                                'type' => 'string',
+                            ),
+                            'SourceType' => array(
+                                'description' => 'The source type for the RDS event notification subscription.',
+                                'type' => 'string',
+                            ),
+                            'SourceIdsList' => array(
+                                'description' => 'A list of source Ids for the RDS event notification subscription.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'SourceId',
+                                    'type' => 'string',
+                                    'sentAs' => 'SourceId',
+                                ),
+                            ),
+                            'EventCategoriesList' => array(
+                                'description' => 'A list of event categories for the RDS event notification subscription.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'EventCategory',
+                                    'type' => 'string',
+                                    'sentAs' => 'EventCategory',
+                                ),
+                            ),
+                            'Enabled' => array(
+                                'description' => 'A Boolean value indicating if the subscription is enabled. True indicates the subscription is enabled.',
+                                'type' => 'boolean',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'EventsMessage' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4347,13 +4886,16 @@ return array (
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'VpcSecurityGroupMembership',
+                                                'description' => 'This data type is used as a response element for queries on VPC security group membership.',
                                                 'type' => 'object',
                                                 'sentAs' => 'VpcSecurityGroupMembership',
                                                 'properties' => array(
                                                     'VpcSecurityGroupId' => array(
+                                                        'description' => 'The name of the VPC security group.',
                                                         'type' => 'string',
                                                     ),
                                                     'Status' => array(
+                                                        'description' => 'The status of the VPC Security Group.',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -4801,6 +5343,12 @@ return array (
             'DescribeEngineDefaultParameters' => array(
                 'token_param' => 'Marker',
                 'limit_key' => 'MaxRecords',
+            ),
+            'DescribeEventSubscriptions' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'MaxRecords',
+                'result_key' => 'EventSubscriptionsList',
             ),
             'DescribeEvents' => array(
                 'token_param' => 'Marker',
