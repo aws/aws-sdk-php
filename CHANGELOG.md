@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for [provisioned IOPS](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.ProvisionedIOPS.html),
+  promoting [read replicas](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html), and [event
+  notification subscriptions](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html) in Amazon RDS
+* Updated the Amazon RDS client to use the 2013-01-10 API version
+
 2.1.2 (2013-02-18)
 ------------------
 
