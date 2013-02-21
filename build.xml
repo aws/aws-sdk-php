@@ -15,16 +15,25 @@
 
     <target name="integration" description="Run integration tests">
         <if>
+            <isset property="service" />
+            <then>
+                <property name="testpath" value="tests/Aws/Tests/${service}" />
+            </then>
+            <else>
+              <property name="testpath" value="" />
+            </else>
+        </if>
+        <if>
             <available file="phpunit.functional.xml" />
             <then>
                 <if>
                     <equals arg1="${mock}" arg2="true" />
                     <then>
                         <echo>php -d mock=true `which phpunit` -c phpunit.functional.xml</echo>
-                        <exec passthru="true" command="php -d mock=true `which phpunit` -c phpunit.functional.xml" />
+                        <exec passthru="true" command="php -d mock=true `which phpunit` -c phpunit.functional.xml ${testpath}" />
                     </then>
                     <else>
-                        <exec passthru="true" command="phpunit -c phpunit.functional.xml" />
+                        <exec passthru="true" command="phpunit -c phpunit.functional.xml ${testpath}" />
                     </else>
                 </if>
             </then>
@@ -97,8 +106,17 @@
     </target>
 
     <target name="coverage">
+        <if>
+            <isset property="service" />
+            <then>
+                <property name="testpath" value="tests/Aws/Tests/${service}" />
+            </then>
+            <else>
+              <property name="testpath" value="" />
+            </else>
+        </if>
         <mkdir dir="${dir.output}/logs" />
-        <exec passthru="true" command="phpunit --coverage-html=${dir.output}/coverage --coverage-clover=${dir.output}/logs/clover.xml" />
+        <exec passthru="true" command="phpunit --coverage-html=${dir.output}/coverage --coverage-clover=${dir.output}/logs/clover.xml ${testpath}" />
     </target>
 
     <target name="view-coverage">
