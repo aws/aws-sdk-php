@@ -844,7 +844,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'Specifies the maximum number of history events returned in one page. The next page in the result is identified by the NextPageToken returned. By default 100 history events are returned in a page but the caller can override this value to a page size smaller than the default. You cannot specify a page size larger than 100.',
+                    'description' => 'Specifies the maximum number of history events returned in one page. The next page in the result is identified by the NextPageToken returned. By default 100 history events are returned in a page but the caller can override this value to a page size smaller than the default. You cannot specify a page size larger than 100. Note that the number of events may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -920,7 +920,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of types may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1085,7 +1085,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of executions may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1146,7 +1146,7 @@ return array (
                     ),
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of domains may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1255,7 +1255,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of executions may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1344,7 +1344,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of types may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1430,6 +1430,9 @@ return array (
                 array(
                     'class' => 'OperationNotPermittedException',
                 ),
+                array(
+                    'class' => 'LimitExceededException',
+                ),
             ),
         ),
         'PollForDecisionTask' => array(
@@ -1496,7 +1499,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of history events returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100.',
+                    'description' => 'The maximum number of history events returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of events may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1514,6 +1517,9 @@ return array (
                 ),
                 array(
                     'class' => 'OperationNotPermittedException',
+                ),
+                array(
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -1941,7 +1947,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Used by workers to tell the service that the ActivityTask identified by the taskToken completed successfully with a result (if provided).',
+            'summary' => 'Used by workers to tell the service that the ActivityTask identified by the taskToken completed successfully with a result (if provided). The result appears in the ActivityTaskCompleted event in the workflow history.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1988,7 +1994,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Used by workers to tell the service that the ActivityTask identified by the taskToken has failed with reason (if specified).',
+            'summary' => 'Used by workers to tell the service that the ActivityTask identified by the taskToken has failed with reason (if specified). The reason and details appear in the ActivityTaskFailed event added to the workflow history.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -3503,6 +3509,20 @@ return array (
                                     ),
                                 ),
                             ),
+                            'recordMarkerFailedEventAttributes' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'markerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'cause' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'decisionTaskCompletedEventId' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
                             'timerStartedEventAttributes' => array(
                                 'type' => 'object',
                                 'properties' => array(
@@ -4787,6 +4807,20 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'decisionTaskCompletedEventId' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                            'recordMarkerFailedEventAttributes' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'markerName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'cause' => array(
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(

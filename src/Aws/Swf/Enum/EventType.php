@@ -50,6 +50,7 @@ class EventType extends Enum
     const REQUEST_CANCEL_ACTIVITY_TASK_FAILED = 'RequestCancelActivityTaskFailed';
     const WORKFLOW_EXECUTION_SIGNALED = 'WorkflowExecutionSignaled';
     const MARKER_RECORDED = 'MarkerRecorded';
+    const RECORD_MARKER_FAILED = 'RecordMarkerFailed';
     const TIMER_STARTED = 'TimerStarted';
     const START_TIMER_FAILED = 'StartTimerFailed';
     const TIMER_FIRED = 'TimerFired';
