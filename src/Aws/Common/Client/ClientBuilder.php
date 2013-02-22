@@ -409,16 +409,26 @@ class ClientBuilder
                     $signature = new SignatureV4();
                     break;
             }
+            // Set the signature object on the config
+            $config->set(Options::SIGNATURE, $signature);
         }
 
         // Allow a custom service name or region value to be provided
         if ($signature instanceof EndpointSignatureInterface) {
-            $signature->setServiceName(
-                $config->get(Options::SIGNATURE_SERVICE) ?: $description->getData('signingName')
-            );
-            $signature->setRegionName($config->get(Options::SIGNATURE_REGION));
-        }
 
-        $config->set(Options::SIGNATURE, $signature);
+            // Determine the service name to use when signing
+            if (!$service = $config->get(Options::SIGNATURE_SERVICE)) {
+                if (!$service = $description->getData('signingName')) {
+                    $service = $description->getData('endpointPrefix');
+                }
+            }
+            $signature->setServiceName($service);
+
+            // Determine the region to use when signing requests
+            if (!$region = $config->get(Options::SIGNATURE_REGION)) {
+                $region = $config->get(Options::REGION);
+            }
+            $signature->setRegionName($region);
+        }
     }
 }
