@@ -135,11 +135,6 @@ class ClientOptions extends Enum
     const SERVICE_DESCRIPTION = 'service.description';
 
     /**
-     * @var string Option holding client resolvers
-     */
-    const RESOLVERS = 'client.resolvers';
-
-    /**
      * @var string Whether or not modeled responses have transformations applied to them
      */
     const MODEL_PROCESSING = 'command.model_processing';

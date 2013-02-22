@@ -72,8 +72,9 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         // Add the event listener so that requests are signed before they are sent
         $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
 
-        // Resolve any config options on the client that require a client to be instantiated
-        $this->resolveOptions();
+        if ($backoff = $config->get(Options::BACKOFF)) {
+            $this->getEventDispatcher()->addSubscriber($backoff, -255);
+        }
     }
 
     /**
@@ -213,19 +214,5 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         }
 
         return $this->waiterFactory;
-    }
-
-    /**
-     * Execute any option resolvers
-     */
-    protected function resolveOptions()
-    {
-        $config = $this->getConfig();
-        if ($resolvers = $config->get(Options::RESOLVERS)) {
-            foreach ($resolvers as $resolver) {
-                $resolver->resolve($config, $this);
-            }
-            $config->remove(Options::RESOLVERS);
-        }
     }
 }

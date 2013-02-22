@@ -19,7 +19,6 @@ namespace Aws\DynamoDb;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\DynamoDb\Model\Attribute;
 use Aws\DynamoDb\Session\SessionHandler;
@@ -97,8 +96,8 @@ class DynamoDbClient extends AbstractClient
     public static function factory($config = array())
     {
         // Configure the custom exponential backoff plugin for DynamoDB throttling
-        $exponentialBackoffResolver = new BackoffOptionResolver(function ($config, $client) {
-            return new BackoffPlugin(
+        if (!isset($config[Options::BACKOFF])) {
+            $config[Options::BACKOFF] = new BackoffPlugin(
                 // Validate CRC32 headers
                 new Crc32ErrorChecker(
                     // Use the custom error checking strategy
@@ -110,14 +109,14 @@ class DynamoDbClient extends AbstractClient
                                 // Retry transient curl errors
                                 new CurlBackoffStrategy(null,
                                     // Use the custom retry delay method instead of default exponential backoff
-                                    new CallbackBackoffStrategy(array($client, 'calculateRetryDelay'), false)
+                                    new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
                                 )
                             )
                         )
                     )
                 )
             );
-        });
+        }
 
         // Construct the DynamoDB client with the client builder
         return ClientBuilder::factory(__NAMESPACE__)
@@ -129,7 +128,6 @@ class DynamoDbClient extends AbstractClient
                 // DynamoDB does not require response processing other than turning JSON into an array
                 self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)
             ))
-            ->addClientResolver($exponentialBackoffResolver)
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array(
                 'result_key'  => 'Items',
@@ -192,7 +190,7 @@ class DynamoDbClient extends AbstractClient
      *
      * @return float Returns the amount of time to wait in seconds
      */
-    public function calculateRetryDelay($retries)
+    public static function calculateRetryDelay($retries)
     {
         return $retries == 0 ? 0 : (50 * (int) pow(2, $retries - 1)) / 1000;
     }

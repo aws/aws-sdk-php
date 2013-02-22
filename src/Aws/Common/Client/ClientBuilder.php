@@ -17,6 +17,7 @@
 namespace Aws\Common\Client;
 
 use Aws\Common\Credentials\Credentials;
+use Aws\Common\Credentials\RefreshableInstanceProfileCredentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\ExceptionListener;
 use Aws\Common\Exception\InvalidArgumentException;
@@ -34,6 +35,9 @@ use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
+use Guzzle\Log\LogAdapterInterface;
+use Guzzle\Log\ClosureLogAdapter;
+use Guzzle\Plugin\Backoff\BackoffLogger;
 
 /**
  * Builder for creating AWS service clients
@@ -69,16 +73,6 @@ class ClientBuilder
      * @var array The config requirements
      */
     protected $configRequirements = array();
-
-    /**
-     * @var CredentialsOptionResolver The resolver for credentials
-     */
-    protected $credentialsResolver;
-
-    /**
-     * @var array An array of client resolvers
-     */
-    protected $clientResolvers = array();
 
     /**
      * @var ExceptionParserInterface The Parser interface for the client
@@ -155,36 +149,6 @@ class ClientBuilder
     }
 
     /**
-     * Sets the credential resolver
-     *
-     * @param CredentialsOptionResolver $credentialsResolver The credential resolver
-     *
-     * @return ClientBuilder
-     */
-    public function setCredentialsResolver(CredentialsOptionResolver $credentialsResolver)
-    {
-        $this->credentialsResolver = $credentialsResolver;
-
-        return $this;
-    }
-
-    /**
-     * Adds a client resolver. The most common case is adding a custom
-     * exponential backoff strategy. If an exponential backoff strategy is not
-     * provided, then a default one will be used.
-     *
-     * @param OptionResolverInterface $clientResolver A client resolver
-     *
-     * @return ClientBuilder
-     */
-    public function addClientResolver(OptionResolverInterface $clientResolver)
-    {
-        $this->clientResolvers[] = $clientResolver;
-
-        return $this;
-    }
-
-    /**
      * Sets the exception parser. If one is not provided the builder will use
      * the default XML exception parser.
      *
@@ -223,7 +187,7 @@ class ClientBuilder
      */
     public function build()
     {
-        // Resolve config
+        // Resolve configuration
         $config = Collection::fromConfig(
             $this->config,
             array_merge(self::$commonConfigDefaults, $this->configDefaults),
@@ -234,16 +198,17 @@ class ClientBuilder
         $this->updateConfigFromDescription($config);
 
         // Resolve credentials
-        if (!$this->credentialsResolver) {
-            $this->credentialsResolver = $this->getDefaultCredentialsResolver();
+        if (!$config->get('credentials')) {
+            $config->set('credentials', $this->getDefaultCredentials($config));
         }
-        $this->credentialsResolver->resolve($config);
 
-        // Add other client resolvers, like exponential backoff
-        if (!$this->hasBackoffOptionResolver()) {
-            $this->addClientResolver($this->getDefaultBackoffResolver());
+        if (!$config->get(Options::BACKOFF)) {
+            $config->set(Options::BACKOFF, BackoffPlugin::getExponentialBackoff());
         }
-        $config->set(Options::RESOLVERS, $this->clientResolvers);
+
+        if ($backoff = $config->get(Options::BACKOFF)) {
+            $this->addBackoffLogger($backoff, $config);
+        }
 
         // Determine service and class name
         $clientClass = 'Aws\Common\Client\DefaultClient';
@@ -291,43 +256,54 @@ class ClientBuilder
     }
 
     /**
-     * Returns the default credential resolver for a client
+     * Returns the default credentials for a client
      *
-     * @return CredentialsOptionResolver
-     */
-    protected function getDefaultCredentialsResolver()
-    {
-        return new CredentialsOptionResolver(function (Collection $config) {
-            return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
-        });
-    }
-
-    /**
-     * Returns the default exponential backoff plugin for a client
+     * @param Collection $config
      *
-     * @return BackoffOptionResolver
+     * @return Credentials
      */
-    protected function getDefaultBackoffResolver()
+    protected function getDefaultCredentials(Collection $config)
     {
-        return new BackoffOptionResolver(function() {
-            return BackoffPlugin::getExponentialBackoff();
-        });
-    }
-
-    /**
-     * Determines whether or not an exponential backoff plugin has been added to the builder
-     *
-     * @return bool
-     */
-    protected function hasBackoffOptionResolver()
-    {
-        foreach ($this->clientResolvers as $resolver) {
-            if ($resolver instanceof BackoffOptionResolver) {
-                return true;
-            }
+        if ($config->get(Options::KEY) && $config->get(Options::SECRET)) {
+            // Credentials were not provided, so create them using keys
+            return Credentials::factory($config->getAll());
+        } else {
+            // Attempt to get credentials from the EC2 instance profile server
+            return new RefreshableInstanceProfileCredentials(new Credentials('', '', '', 1));
         }
+    }
 
-        return false;
+    /**
+     * Add backoff logging to the backoff plugin if needed
+     *
+     * @param BackoffPlugin $plugin Backoff plugin
+     * @param Collection    $config Configuration settings
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function addBackoffLogger(BackoffPlugin $plugin, Collection $config)
+    {
+        // The log option can be set to `debug` or an instance of a LogAdapterInterface
+        if ($logger = $config->get(Options::BACKOFF_LOGGER)) {
+            $format = $config->get(Options::BACKOFF_LOGGER_TEMPLATE);
+            if ($logger === 'debug') {
+                $logger = new ClosureLogAdapter(function ($message) {
+                    trigger_error($message . "\n");
+                });
+            } elseif (!($logger instanceof LogAdapterInterface)) {
+                throw new InvalidArgumentException(
+                    Options::BACKOFF_LOGGER . ' must be set to `debug` or an instance of '
+                        . 'Guzzle\\Common\\Log\\LogAdapterInterface'
+                );
+            }
+            // Create the plugin responsible for logging exponential backoff retries
+            $logPlugin = new BackoffLogger($logger);
+            // You can specify a custom format or use the default
+            if ($format) {
+                $logPlugin->setTemplate($format);
+            }
+            $plugin->addSubscriber($logPlugin);
+        }
     }
 
     /**

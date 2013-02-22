@@ -18,8 +18,6 @@ namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Aws;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Enum\Region;
-use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
@@ -59,30 +57,6 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $expectedUserAgent = 'aws-sdk-php2/' . Aws::VERSION . ' Guzzle';
         $actualUserAgent = $this->readAttribute($client, 'userAgent');
         $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
-    }
-
-    public function testConstructorCallsResolvers()
-    {
-        $config = new Collection();
-        $signature = new SignatureV4();
-        $credentials = new Credentials('test', '123');
-        $config->set('client.resolvers', array(
-            new BackoffOptionResolver(function() {
-                return BackoffPlugin::getExponentialBackoff();
-            })
-        ));
-
-        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
-            ->setConstructorArgs(array($credentials, $signature, $config))
-            ->getMockForAbstractClass();
-
-        // Ensure that lazy resolvers were triggered
-        $this->assertInstanceOf(
-            'Guzzle\\Plugin\\Backoff\\BackoffPlugin',
-            $client->getConfig(Options::BACKOFF)
-        );
-        // Ensure that the client removed the option
-        $this->assertNull($config->get('client.resolvers'));
     }
 
     public function testUsesDefaultWaiterFactory()

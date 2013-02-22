@@ -17,10 +17,9 @@
 namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Client\BackoffOptionResolver;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\Common\Client\CredentialsOptionResolver;
 use Aws\Common\Credentials\Credentials;
+use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 
@@ -78,14 +77,10 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'scheme'  => 'https',
                 'region'  => 'us-west-1',
                 'service' => 'dynamodb',
-                'service.description' => $this->dynamoDbDescription
+                'service.description' => $this->dynamoDbDescription,
+                'credentials' => Credentials::factory(array('key' => 'foo', 'secret' => 'bar')),
+                'client.backoff' => BackoffPLugin::getExponentialBackoff()
             ))
-            ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
-                return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
-            }))
-            ->addClientResolver(new BackoffOptionResolver(function() {
-                return BackoffPlugin::getExponentialBackoff();
-            }))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);
@@ -168,5 +163,76 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 )
             ))
             ->build();
+    }
+
+    public function testAddsDefaultCredentials()
+    {
+        $creds = Credentials::factory(array('key' => 'foo', 'secret' => 'bar'));
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'credentials' => $creds,
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            )
+        );
+
+        // Ensure that default credentials are set
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertSame($creds, $client->getCredentials());
+
+        // Ensure that specific credentials can be used
+        $config['credentials'] = null;
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $client->getCredentials());
+    }
+
+    public function testAddsDefaultBackoffPluginIfNeeded()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            )
+        );
+
+        // Ensure that a default plugin is set
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $client->getConfig(Options::BACKOFF));
+        // Ensure that the plugin is set
+        $this->assertTrue($this->hasSubscriber($client, $client->getConfig(Options::BACKOFF)));
+
+        // Ensure that a specific plugin can be used
+        $plugin = BackoffPlugin::getExponentialBackoff();
+        $config[Options::BACKOFF] = $plugin;
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertSame($plugin, $client->getConfig(Options::BACKOFF));
+        // Ensure that the plugin is set
+        $this->assertTrue($this->hasSubscriber($client, $plugin));
+    }
+
+    public function testUsesBackoffLoggerWithDebug()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
+            Options::BACKOFF_LOGGER => 'debug',
+            Options::BACKOFF_LOGGER_TEMPLATE => '[{ts}] {url}'
+        );
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $subscribers = $plugin->getEventDispatcher()->getListeners('plugins.backoff.retry');
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffLogger', $subscribers[0][0]);
+        $logger = $subscribers[0][0];
+        $formatter = $this->readAttribute($logger, 'formatter');
+        $this->assertEquals('[{ts}] {url}', $this->readAttribute($formatter, 'template'));
     }
 }

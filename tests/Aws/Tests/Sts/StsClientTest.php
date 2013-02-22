@@ -36,4 +36,17 @@ class StsClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
         $this->assertTrue($client->getDescription()->hasOperation('GetSessionToken'));
     }
+
+    /**
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
+     */
+    public function testRequiresLongTermCredentials()
+    {
+        StsClient::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'token'  => 'foo',
+            'region' => 'us-west-1'
+        ));
+    }
 }

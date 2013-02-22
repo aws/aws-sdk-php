@@ -18,10 +18,9 @@ namespace Aws\Sts;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Client\CredentialsOptionResolver;
+use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Enum\Region;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -77,18 +76,17 @@ class StsClient extends AbstractClient
      */
     public static function factory($config = array())
     {
+        // Always need long term credentials
+        if (!isset($config[Options::CREDENTIALS]) && isset($config[Options::TOKEN])) {
+            throw new InvalidArgumentException('You must use long-term credentials with Amazon STS');
+        }
+
         // Construct the STS client with the client builder
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sts-2011-06-15.php'
             ))
-            ->setCredentialsResolver(new CredentialsOptionResolver(function (Collection $config) {
-                // Always need long term credentials
-                if ($config->get(Options::KEY) && $config->get(Options::SECRET) && !$config->get(Options::TOKEN)) {
-                    return Credentials::factory($config->getAll(array_keys(Credentials::getConfigDefaults())));
-                }
-            }))
             ->build();
     }
 }
