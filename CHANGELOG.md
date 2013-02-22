@@ -50,6 +50,7 @@ Next Release
 * Added support for **AWS Elastic Beanstalk**
 * Added support for **AWS Identity and Access Management (IAM)**
 * Added support for Amazon S3 website redirection rules
+* Added support for the `RetrieveByteRange` parameter of the `InitiateJob` operation in Amazon Glacier
 * Added support for Signature Version 2
 * Clients now gain more information from service descriptions rather than client factory methods
 * Service descriptions are now versioned for clients
