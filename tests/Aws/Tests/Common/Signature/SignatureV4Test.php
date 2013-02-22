@@ -79,11 +79,14 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         // Sign the request
         $signature->signRequest($request, $credentials);
 
+        // Get debug signature information
+        $context = $request->getParams()->get('aws.signature');
+
         // Test that the canonical request is correct
-        $this->assertEquals(str_replace("\r", '', file_get_contents($group['creq'])), $request->getParams()->get('aws.canonical_request'));
+        $this->assertEquals(str_replace("\r", '', file_get_contents($group['creq'])), $context['canonical_request']);
 
         // Test that the string to sign is correct
-        $this->assertEquals(str_replace("\r", '', file_get_contents($group['sts'])), $request->getParams()->get('aws.string_to_sign'));
+        $this->assertEquals(str_replace("\r", '', file_get_contents($group['sts'])), $context['string_to_sign']);
 
         // Test that the authorization header is correct
         $this->assertEquals(str_replace("\r", '', file_get_contents($group['authz'])), $request->getHeader('Authorization'));
@@ -131,7 +134,8 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $request->setHeader('x-amz-content-sha256', $contentHash);
 
         $signature->signRequest($request, $credentials);
-        $this->assertContains($contentHash, $request->getParams()->get('aws.canonical_request'));
+        $context = $request->getParams()->get('aws.signature');
+        $this->assertContains($contentHash, $context['canonical_request']);
     }
 
     /**
@@ -144,8 +148,9 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $request = RequestFactory::getInstance()->fromMessage("GET / HTTP/1.1\r\nx-amz-date: Mon, 09 Sep 2011 23:36:00 GMT\r\nHost: foo.com\r\n\r\n");
 
         $signature->signRequest($request, $credentials);
-        $this->assertContains("\nx-amz-date:20110909T233600Z", $request->getParams()->get('aws.canonical_request'));
-        $this->assertNotContains("\ndate:20110909T233600Z", $request->getParams()->get('aws.canonical_request'));
+        $context = $request->getParams()->get('aws.signature');
+        $this->assertContains("\nx-amz-date:20110909T233600Z", $context['canonical_request']);
+        $this->assertNotContains("\ndate:20110909T233600Z", $context['canonical_request']);
     }
 
     /**
@@ -173,7 +178,8 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $request = new Request('GET', 'http://www.example.com');
         $credentials = new Credentials('fizz', 'buzz');
         $signature->signRequest($request, $credentials);
-        $this->assertContains('/foo/aws4_request', $request->getParams()->get('aws.string_to_sign'));
+        $context = $request->getParams()->get('aws.signature');
+        $this->assertContains('/foo/aws4_request', $context['string_to_sign']);
     }
 
     /**
@@ -189,14 +195,14 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
 
         $credentials = new Credentials('fizz', 'buzz');
         $signature->signRequest($request, $credentials);
-        $this->assertEquals(4, count($this->readAttribute($signature, 'hashCache')));
+        $this->assertEquals(1, count($this->readAttribute($signature, 'hashCache')));
 
         $credentials = new Credentials('fizz', 'baz');
         $signature->signRequest($request, $credentials);
-        $this->assertEquals(8, count($this->readAttribute($signature, 'hashCache')));
+        $this->assertEquals(2, count($this->readAttribute($signature, 'hashCache')));
 
         $credentials = new Credentials('fizz', 'paz');
         $signature->signRequest($request, $credentials);
-        $this->assertEquals(4, count($this->readAttribute($signature, 'hashCache')));
+        $this->assertEquals(3, count($this->readAttribute($signature, 'hashCache')));
     }
 }
