@@ -147,10 +147,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
             . hash('sha256', $signingContext['canonical_request']);
 
         // Calculate the signing key using a series of derived keys
-        $dateKey = $this->getHash($shortDate, 'AWS4' . $credentials->getSecretKey());
-        $regionKey = $this->getHash($region, $dateKey);
-        $serviceKey = $this->getHash($service, $regionKey);
-        $signingKey = $this->getHash('aws4_request', $serviceKey);
+        $signingKey = $this->getSigningKey($shortDate, $region, $service, $credentials->getSecretKey());
         $signature = hash_hmac('sha256', $signingContext['string_to_sign'], $signingKey);
 
         $request->setHeader('Authorization', "AWS4-HMAC-SHA256 "
@@ -230,25 +227,28 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
      * Get a hash for a specific key and value.  If the hash was previously
      * cached, return it
      *
-     * @param string $stringToSign Value to sign
-     * @param string $signingKey   Key to sign with
+     * @param string $shortDate Short date
+     * @param string $region    Region name
+     * @param string $service   Service name
+     * @param string $secretKey Secret Access Key
      *
      * @return string
      */
-    private function getHash($stringToSign, $signingKey)
+    private function getSigningKey($shortDate, $region, $service, $secretKey)
     {
-        $cacheKey = $stringToSign . '_' . $signingKey;
+        $cacheKey = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
 
         // Retrieve the hash form the cache or create it and add it to the cache
         if (!isset($this->hashCache[$cacheKey])) {
-
             // When the cache size reaches the max, then just clear the cache
             if (++$this->cacheSize > $this->maxCacheSize) {
                 $this->hashCache = array();
                 $this->cacheSize = 0;
             }
-
-            $this->hashCache[$cacheKey] = hash_hmac('sha256', $stringToSign, $signingKey, true);
+            $dateKey = hash_hmac('sha256', $shortDate, 'AWS4' . $secretKey, true);
+            $regionKey = hash_hmac('sha256', $region, $dateKey, true);
+            $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
+            $this->hashCache[$cacheKey] = hash_hmac('sha256', 'aws4_request', $serviceKey, true);
         }
 
         return $this->hashCache[$cacheKey];

@@ -195,14 +195,14 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
 
         $credentials = new Credentials('fizz', 'buzz');
         $signature->signRequest($request, $credentials);
-        $this->assertEquals(4, count($this->readAttribute($signature, 'hashCache')));
+        $this->assertEquals(1, count($this->readAttribute($signature, 'hashCache')));
 
         $credentials = new Credentials('fizz', 'baz');
         $signature->signRequest($request, $credentials);
-        $this->assertEquals(8, count($this->readAttribute($signature, 'hashCache')));
+        $this->assertEquals(2, count($this->readAttribute($signature, 'hashCache')));
 
         $credentials = new Credentials('fizz', 'paz');
         $signature->signRequest($request, $credentials);
-        $this->assertEquals(4, count($this->readAttribute($signature, 'hashCache')));
+        $this->assertEquals(3, count($this->readAttribute($signature, 'hashCache')));
     }
 }
