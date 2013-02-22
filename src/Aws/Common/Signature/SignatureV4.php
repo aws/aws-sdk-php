@@ -128,32 +128,37 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
             $request->setHeader('x-amz-security-token', $credentials->getSecurityToken());
         }
 
-        // Parse the region and service name from the request URL
-        $url = Url::factory($request->getUrl());
-
         // Parse the service and region or use one that is explicitly set
-        $region = $this->regionName ?: HostNameUtils::parseRegionName($url);
-        $service = $this->serviceName ?: HostNameUtils::parseServiceName($url);
+        $url = null;
+        if (!$this->regionName || !$this->serviceName) {
+            $url = Url::factory($request->getUrl());
+        }
+        if (!$region = $this->regionName) {
+            $region = HostNameUtils::parseRegionName($url);
+        }
+        if (!$service = $this->serviceName) {
+            $service = HostNameUtils::parseServiceName($url);
+        }
 
         $credentialScope = "{$shortDate}/{$region}/{$service}/aws4_request";
 
-        $stringToSign = "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n"
-            . hash('sha256', $this->createCanonicalRequest($request));
-
-        // Add the string to sign for debugging
-        $request->getParams()->set('aws.string_to_sign', $stringToSign);
+        $signingContext = $this->createCanonicalRequest($request);
+        $signingContext['string_to_sign'] = "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n"
+            . hash('sha256', $signingContext['canonical_request']);
 
         // Calculate the signing key using a series of derived keys
         $dateKey = $this->getHash($shortDate, 'AWS4' . $credentials->getSecretKey());
         $regionKey = $this->getHash($region, $dateKey);
         $serviceKey = $this->getHash($service, $regionKey);
         $signingKey = $this->getHash('aws4_request', $serviceKey);
-        $signature = hash_hmac('sha256', $stringToSign, $signingKey);
+        $signature = hash_hmac('sha256', $signingContext['string_to_sign'], $signingKey);
 
         $request->setHeader('Authorization', "AWS4-HMAC-SHA256 "
             . "Credential={$credentials->getAccessKeyId()}/{$credentialScope}, "
-            . 'SignedHeaders=' . $request->getParams()->get('aws.signed_headers')
-            . ", Signature={$signature}");
+            . "SignedHeaders={$signingContext['signed_headers']}, Signature={$signature}");
+
+        // Add debug information to the request
+        $request->getParams()->set('aws.signature', $signingContext);
     }
 
     /**
@@ -161,23 +166,27 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
      *
      * @param RequestInterface $request Request to canonicalize
      *
-     * @return string
+     * @return array Returns an array of context information
      */
     private function createCanonicalRequest(RequestInterface $request)
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
-        $path = '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/');
-        $canon = $request->getMethod() . "\n{$path}\n" . $this->getCanonicalizedQueryString($request) . "\n";
+        $method = $request->getMethod();
+        $canon = $method . "\n"
+            . '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/') . "\n"
+            . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Create the canonical headers
         $headers = array();
         foreach ($request->getHeaders() as $key => $values) {
-            $key = strtolower($key);
-            if (!isset($headers[$key])) {
-                $headers[$key] = array();
-            }
-            foreach ($values as $value) {
-                $headers[$key][] = preg_replace('/\s+/', ' ', trim($value));
+            if ($key != 'User-Agent') {
+                $key = strtolower($key);
+                if (!isset($headers[$key])) {
+                    $headers[$key] = array();
+                }
+                foreach ($values as $value) {
+                    $headers[$key][] = preg_replace('/\s+/', ' ', trim($value));
+                }
             }
         }
 
@@ -196,7 +205,6 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         // Create the signed headers
         $signedHeaders = implode(';', array_keys($headers));
         $canon .= "\n{$signedHeaders}\n";
-        $request->getParams()->set('aws.signed_headers', $signedHeaders);
 
         // Create the payload if this request has an entity body
         if ($request->hasHeader('x-amz-content-sha256')) {
@@ -205,17 +213,17 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         } elseif ($request instanceof EntityEnclosingRequestInterface) {
             $canon .= hash(
                 'sha256',
-                $request->getMethod() == 'POST' && count($request->getPostFields())
+                $method == 'POST' && count($request->getPostFields())
                     ? (string) $request->getPostFields() : (string) $request->getBody()
             );
         } else {
             $canon .= self::DEFAULT_PAYLOAD;
         }
 
-        // Add debug information
-        $request->getParams()->set('aws.canonical_request', $canon);
-
-        return $canon;
+        return array(
+            'canonical_request' => $canon,
+            'signed_headers'    => $signedHeaders
+        );
     }
 
     /**
