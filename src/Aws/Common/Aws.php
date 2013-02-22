@@ -60,17 +60,15 @@ class Aws extends ServiceBuilderLoader
      */
     public static function factory($config = null, array $globalParameters = array())
     {
-        $defaultDefinition = self::getDefaultServiceDefinition();
-
         if (!$config) {
             // If nothing is passed in, then use the default configuration file
             // with Instance profile credentials
-            $config = $defaultDefinition;
+            $config = self::getDefaultServiceDefinition();
         } elseif (is_array($config)) {
             // If an array was passed, then use the default configuration file
             // with global parameter overrides in the first argument
             $globalParameters = $config;
-            $config = $defaultDefinition;
+            $config = self::getDefaultServiceDefinition();
         }
 
         $loader = new static();
@@ -93,9 +91,7 @@ class Aws extends ServiceBuilderLoader
      */
     public function __construct()
     {
-        $defaultDefinition = self::getDefaultServiceDefinition();
-        $sdk1CompatibilityDefinition = str_replace('aws-config', 'sdk1-config', $defaultDefinition);
-        $this->addAlias('_aws', $defaultDefinition);
-        $this->addAlias('_sdk1', $sdk1CompatibilityDefinition);
+        $this->addAlias('_aws', self::getDefaultServiceDefinition())
+            ->addAlias('_sdk1', __DIR__  . '/Resources/sdk1-config.php');
     }
 }
