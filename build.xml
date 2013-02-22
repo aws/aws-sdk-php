@@ -201,11 +201,4 @@
     <target name="build" depends="phplint, prepare, test-init, test, phar"/>
     <target name="report" depends="coverage, phploc, phpcs, phpmd, phpcpd, phpdepend, phpcb"/>
 
-    <target name="update-regions" description="Downloads a new copy of the AWS regions and endpoints file used by the SDK">
-        <echo message="Downloading a new copy of http://aws-sdk-configurations.amazonwebservices.com/endpoints.xml to src/Aws/Common/Resources/endpoints.xml" />
-        <delete file="src/Aws/Common/Resources/endpoints.xml" />
-        <exec command="curl -s -S -o endpoints.xml http://aws-sdk-configurations.amazonwebservices.com/endpoints.xml" dir="src/Aws/Common/Resources" passthru="true"/>
-        <exec command="dos2unix endpoints.xml" dir="src/Aws/Common/Resources" passthru="true"/>
-    </target>
-
 </project>

@@ -16,12 +16,14 @@
 
 namespace Aws\Tests\Common\Integration;
 
+use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\DefaultClient;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\Region;
 use Aws\Common\Signature\SignatureV4;
 use Aws\DynamoDb\DynamoDbClient;
+use Guzzle\Http\Url;
 
 /**
  * @group integration
@@ -56,16 +58,15 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         /** @var $s3 \Aws\S3\S3Client */
         $s3 = $this->getServiceBuilder()->get('s3', true);
         $scheme = $s3->getConfig(Options::SCHEME);
-        $endpointProvider = $s3->getEndpointProvider();
 
         // Switch to 3 different regions and validate that each switch worked
         foreach (array(Region::US_EAST_1, Region::EU_WEST_1, Region::AP_NORTHEAST_1) as $region) {
             $s3->setRegion($region);
-            $endpoint = $endpointProvider->getEndpoint('s3', $region);
-            $command  = $s3->getCommand('ListBuckets');
-            $request  = $command->prepare();
-            $this->assertEquals($endpoint->getBaseUrl($scheme), $request->getScheme() . '://' . $request->getHost());
-            $this->assertEquals($endpoint->getBaseUrl($scheme), $s3->getConfig(Options::BASE_URL));
+            $endpoint = Url::factory(AbstractClient::getEndpoint($s3->getDescription(), $region, 'https'));
+            $command = $s3->getCommand('ListBuckets');
+            $request = $command->prepare();
+            $this->assertEquals((string) $endpoint, $request->getScheme() . '://' . $request->getHost());
+            $this->assertEquals((string) $endpoint, $s3->getConfig(Options::BASE_URL));
             $this->assertEquals($region, $s3->getConfig(Options::REGION));
             $this->assertEquals(200, $command->getResponse()->getStatusCode());
         }

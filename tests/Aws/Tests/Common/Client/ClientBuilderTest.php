@@ -128,15 +128,12 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You must specify a [base_url] or a [region, service, and optional scheme]
+     * @expectedExceptionMessage No regions found in the
      */
-    public function testEnsuresBaseUrlOrServiceAndRegionAreSet()
+    public function testEnsuresDescriptionsContainRegions()
     {
         ClientBuilder::factory('Aws\\DynamoDb')
-            ->setConfig(array(
-                'region'  => 'us-west-1',
-                'service.description' => array('signatureVersion' => 'v2')
-            ))
+            ->setConfig(array('service.description' => array('signatureVersion' => 'v2')))
             ->build();
     }
 
@@ -165,7 +162,10 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         ClientBuilder::factory('Aws\\DynamoDb')
             ->setConfig(array(
                 'service' => 'dynamodb',
-                'service.description' => array('signatureVersion' => 'v2')
+                'service.description' => array(
+                    'signatureVersion' => 'v2',
+                    'regions' => array('us-east-1' => array())
+                )
             ))
             ->build();
     }

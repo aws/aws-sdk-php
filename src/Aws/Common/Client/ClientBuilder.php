@@ -24,15 +24,11 @@ use Aws\Common\Exception\NamespaceExceptionFactory;
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Aws\Common\Exception\Parser\ExceptionParserInterface;
 use Aws\Common\Iterator\AwsResourceIteratorFactory;
-use Aws\Common\Region\EndpointProviderInterface;
-use Aws\Common\Region\CachingEndpointProvider;
-use Aws\Common\Region\XmlEndpointProvider;
 use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureV2;
 use Aws\Common\Signature\SignatureV3;
 use Aws\Common\Signature\SignatureV3Https;
 use Aws\Common\Signature\SignatureV4;
-use Guzzle\Cache\DoctrineCacheAdapter;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Client;
@@ -53,11 +49,6 @@ class ClientBuilder
      * @var array Default client requirements
      */
     protected static $commonConfigRequirements = array(Options::SERVICE_DESCRIPTION);
-
-    /**
-     * @var EndpointProviderInterface Default region/service endpoint provider
-     */
-    protected static $defaultEndpointProvider;
 
     /**
      * @var string The namespace of the client
@@ -242,16 +233,6 @@ class ClientBuilder
         // Set values from the service description
         $this->updateConfigFromDescription($config);
 
-        // If no endpoint provider was explicitly set, the instantiate a default endpoint provider
-        if (!$config->get(Options::ENDPOINT_PROVIDER)) {
-            $config->set(Options::ENDPOINT_PROVIDER, $this->getDefaultEndpointProvider());
-        }
-
-        // If no base_url was explicitly set, then grab one using the default endpoint provider
-        if (!$config->get(Options::BASE_URL)) {
-            $this->addBaseUrlToConfig($config);
-        }
-
         // Resolve credentials
         if (!$this->credentialsResolver) {
             $this->credentialsResolver = $this->getDefaultCredentialsResolver();
@@ -307,28 +288,6 @@ class ClientBuilder
         ));
 
         return $client;
-    }
-
-    /**
-     * Add a base URL to the client of a region, scheme, and service were provided instead
-     *
-     * @param Collection $config Config object
-     *
-     * @throws InvalidArgumentException if required parameters are not set
-     */
-    protected function addBaseUrlToConfig(Collection $config)
-    {
-        $region = $config->get(Options::REGION);
-        $service = $config->get(Options::SERVICE);
-
-        if (!$region || !$service) {
-            throw new InvalidArgumentException(
-                'You must specify a [base_url] or a [region, service, and optional scheme]'
-            );
-        }
-
-        $endpoint = $config->get(Options::ENDPOINT_PROVIDER)->getEndpoint($service, $region);
-        $config->set(Options::BASE_URL, $endpoint->getBaseUrl($config->get(Options::SCHEME)));
     }
 
     /**
@@ -393,29 +352,6 @@ class ClientBuilder
     }
 
     /**
-     * Get the default {@see EndpointProviderInterface} object
-     *
-     * @return EndpointProviderInterface
-     */
-    protected function getDefaultEndpointProvider()
-    {
-        // @codeCoverageIgnoreStart
-        if (!self::$defaultEndpointProvider) {
-            self::$defaultEndpointProvider = new XmlEndpointProvider();
-            // If APC is installed and Doctrine is present, then use APC caching
-            if (class_exists('Doctrine\Common\Cache\ApcCache') && extension_loaded('apc')) {
-                self::$defaultEndpointProvider = new CachingEndpointProvider(
-                    self::$defaultEndpointProvider,
-                    new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache())
-                );
-            }
-        }
-        // @codeCoverageIgnoreEnd
-
-        return self::$defaultEndpointProvider;
-    }
-
-    /**
      * Update a configuration object from a service description
      *
      * @param Collection $config Config to update
@@ -440,11 +376,32 @@ class ClientBuilder
             $this->setIteratorsConfig($iterators);
         }
 
-        if (!$config->get(Options::REGION)) {
+        // Ensure that the service description has regions
+        if (!$description->getData('regions')) {
+            throw new InvalidArgumentException(
+                'No regions found in the ' . $description->getData('serviceFullName'). ' description'
+            );
+        }
+
+        $region = $config->get(Options::REGION);
+        if (!$region) {
             if (!$description->getData('globalEndpoint')) {
-                throw new InvalidArgumentException('A region is required when using ' . $config->get(Options::SERVICE));
+                throw new InvalidArgumentException(
+                    'A region is required when using ' . $description->getData('serviceFullName')
+                    . '. Set "region" to one of: ' . implode(', ', array_keys($description->getData('regions')))
+                );
             }
-            $config->set(Options::REGION, 'us-east-1');
+            $region = 'us-east-1';
+            $config->set(Options::REGION, $region);
+        }
+
+        if (!$config->get(Options::BASE_URL)) {
+            // Set the base URL using the scheme and hostname of the service's region
+            $config->set(Options::BASE_URL, AbstractClient::getEndpoint(
+                $description,
+                $region,
+                $config->get(Options::SCHEME)
+            ));
         }
     }
 

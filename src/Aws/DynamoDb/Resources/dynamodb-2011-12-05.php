@@ -24,6 +24,53 @@ return array (
     'targetPrefix' => 'DynamoDB_20111205.',
     'signatureVersion' => 'v4',
     'namespace' => 'DynamoDb',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'dynamodb.sa-east-1.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'dynamodb.us-gov-west-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'BatchGetItem' => array(
             'httpMethod' => 'POST',

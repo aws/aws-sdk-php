@@ -21,8 +21,54 @@ return array (
     'serviceType' => 'query',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
-    'memberedLists' => true,
     'namespace' => 'AutoScaling',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.ap-northeast-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.sa-east-1.amazonaws.com',
+        ),
+        'us-gov-west-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'autoscaling.us-gov-west-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'CreateAutoScalingGroup' => array(
             'httpMethod' => 'POST',
@@ -185,11 +231,11 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The named Auto Scaling group or launch configuration already exists.',
-                    'class' => 'AlreadyExistsFaultException',
+                    'class' => 'AlreadyExistsException',
                 ),
                 array(
                     'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -351,11 +397,11 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The named Auto Scaling group or launch configuration already exists.',
-                    'class' => 'AlreadyExistsFaultException',
+                    'class' => 'AlreadyExistsException',
                 ),
                 array(
                     'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -420,11 +466,11 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
                 array(
                     'reason' => 'The named Auto Scaling group or launch configuration already exists.',
-                    'class' => 'AlreadyExistsFaultException',
+                    'class' => 'AlreadyExistsException',
                 ),
             ),
         ),
@@ -464,11 +510,11 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
-                    'class' => 'ScalingActivityInProgressFaultException',
+                    'class' => 'ScalingActivityInProgressException',
                 ),
                 array(
                     'reason' => 'This is returned when you cannot delete a launch configuration or Auto Scaling group because it is being used.',
-                    'class' => 'ResourceInUseFaultException',
+                    'class' => 'ResourceInUseException',
                 ),
             ),
         ),
@@ -502,7 +548,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'This is returned when you cannot delete a launch configuration or Auto Scaling group because it is being used.',
-                    'class' => 'ResourceInUseFaultException',
+                    'class' => 'ResourceInUseException',
                 ),
             ),
         ),
@@ -1355,7 +1401,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
-                    'class' => 'ScalingActivityInProgressFaultException',
+                    'class' => 'ScalingActivityInProgressException',
                 ),
             ),
         ),
@@ -1410,7 +1456,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -1476,7 +1522,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -1570,11 +1616,11 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'The named Auto Scaling group or launch configuration already exists.',
-                    'class' => 'AlreadyExistsFaultException',
+                    'class' => 'AlreadyExistsException',
                 ),
                 array(
                     'reason' => 'The quota for capacity groups or launch configurations for this customer has already been reached.',
-                    'class' => 'LimitExceededFaultException',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -1660,7 +1706,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
-                    'class' => 'ScalingActivityInProgressFaultException',
+                    'class' => 'ScalingActivityInProgressException',
                 ),
             ),
         ),
@@ -1783,7 +1829,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
-                    'class' => 'ScalingActivityInProgressFaultException',
+                    'class' => 'ScalingActivityInProgressException',
                 ),
             ),
         ),
@@ -1895,7 +1941,7 @@ return array (
             'errorResponses' => array(
                 array(
                     'reason' => 'You cannot delete an Auto Scaling group while there are scaling activities in progress for that group.',
-                    'class' => 'ScalingActivityInProgressFaultException',
+                    'class' => 'ScalingActivityInProgressException',
                 ),
             ),
         ),

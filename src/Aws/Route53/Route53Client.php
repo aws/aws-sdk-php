@@ -60,7 +60,6 @@ class Route53Client extends AbstractClient
      * Region and Endpoint options
      *
      * - base_url: You can specify a custom base URL for the client
-     * - endpoint_provider: Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
      *
      * Generic client options
      *

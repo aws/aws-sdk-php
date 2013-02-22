@@ -20,7 +20,6 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureV4;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Enum\Type;
-use Aws\DynamoDb\Session\SessionHandler;
 use Guzzle\Common\Collection;
 
 class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
@@ -80,20 +79,6 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @covers Aws\DynamoDb\DynamoDbClient::__construct
-     */
-    public function testConstructorInitializesProperties()
-    {
-        $creds     = new Credentials('foo', 'bar');
-        $signature = new SignatureV4();
-        $config    = new Collection(array('endpoint_provider' => new \Aws\Common\Region\XmlEndpointProvider()));
-        $client    = new DynamoDbClient($creds, $signature, $config);
-
-        $this->assertSame($creds, $client->getCredentials());
-        $this->assertSame($signature, $this->readAttribute($client, 'signature'));
     }
 
     /**

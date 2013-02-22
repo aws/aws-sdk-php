@@ -23,6 +23,13 @@ return array (
     'targetPrefix' => 'OpsWorks_20130218.',
     'signatureVersion' => 'v4',
     'namespace' => 'OpsWorks',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'opsworks.us-east-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'CloneStack' => array(
             'httpMethod' => 'POST',

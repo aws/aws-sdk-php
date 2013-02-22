@@ -21,7 +21,6 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\Region\EndpointProviderInterface;
 use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
@@ -31,6 +30,7 @@ use Aws\Common\Waiter\WaiterFactoryInterface;
 use Aws\Common\Waiter\WaiterConfigFactory;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
+use Guzzle\Service\Description\ServiceDescriptionInterface;
 
 /**
  * Abstract AWS client
@@ -53,11 +53,6 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     protected $waiterFactory;
 
     /**
-     * @var EndpointProviderInterface Endpoint provider used to retrieve region/service endpoints
-     */
-    protected $endpointProvider;
-
-    /**
      * @param CredentialsInterface $credentials AWS credentials
      * @param SignatureInterface   $signature   Signature implementation
      * @param Collection           $config      Configuration options
@@ -70,12 +65,6 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         parent::__construct($config->get(Options::BASE_URL), $config);
         $this->credentials = $credentials;
         $this->signature = $signature;
-        $this->endpointProvider = $config->get(Options::ENDPOINT_PROVIDER);
-
-        // Make sure an endpoint provider was provided in the config
-        if (! ($this->endpointProvider instanceof EndpointProviderInterface)) {
-            throw new InvalidArgumentException('An endpoint provider must be provided to instantiate an AWS client');
-        }
 
         // Make sure the user agent is prefixed by the SDK version
         $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
@@ -103,6 +92,34 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
+     * Get an endpoint for a specific region from a service description
+     *
+     * @param ServiceDescriptionInterface $description Service description
+     * @param string                      $region      Region of the endpoint
+     * @param string                      $scheme      URL scheme
+     *
+     * @throws InvalidArgumentException
+     */
+    public static function getEndpoint(ServiceDescriptionInterface $description, $region, $scheme)
+    {
+        $service = $description->getData('serviceFullName');
+        // Lookup the region in the service description
+        if (!($regions = $description->getData('regions'))) {
+            throw new InvalidArgumentException("No regions found in the {$service} description");
+        }
+        // Ensure that the region exists for the service
+        if (!isset($regions[$region])) {
+            throw new InvalidArgumentException("{$region} is not a valid region for {$service}");
+        }
+        // Ensure that the scheme is valid
+        if ($regions[$region][$scheme] == false) {
+            throw new InvalidArgumentException("{$scheme} is not a valid URI scheme for {$service} in {$region}");
+        }
+
+        return $scheme . '://' . $regions[$region]['hostname'];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getCredentials()
@@ -121,9 +138,9 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     /**
      * {@inheritdoc}
      */
-    public function getEndpointProvider()
+    public function getRegions()
     {
-        return $this->endpointProvider;
+        return $this->serviceDescription->getData('regions');
     }
 
     /**
@@ -136,13 +153,9 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     public function setRegion($region)
     {
         $config = $this->getConfig();
-
-        // Set the new base URL
-        $endpoint = $this->endpointProvider->getEndpoint($config->get(Options::SERVICE), $region);
-        $baseUrl = $endpoint->getBaseUrl($config->get(Options::SCHEME));
+        $baseUrl = self::getEndpoint($this->serviceDescription, $region, $config->get(Options::SCHEME));
         $this->setBaseUrl($baseUrl);
-        $config->set(Options::BASE_URL, $baseUrl);
-        $config->set(Options::REGION, $region);
+        $config->set(Options::BASE_URL, $baseUrl)->set(Options::REGION, $region);
 
         // Update the signature if necessary
         $signature = $this->getSignature();

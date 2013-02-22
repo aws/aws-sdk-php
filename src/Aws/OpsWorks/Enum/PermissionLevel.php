@@ -14,25 +14,17 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Common\Region;
+namespace Aws\OpsWorks\Enum;
 
-use Aws\Common\Region\Service;
+use Aws\Common\Enum;
 
 /**
- * @covers Aws\Common\Region\Service
+ * Contains enumerable PermissionLevel values
  */
-class ServiceTest extends \Guzzle\Tests\GuzzleTestCase
+class PermissionLevel extends Enum
 {
-    public function testIsDataAccessObject()
-    {
-        $service = new Service('foo', 'foo baz bar');
-        $this->assertEquals('foo', $service->getName());
-        $this->assertEquals('foo baz bar', $service->getFullName());
-    }
-
-    public function testConvertsToString()
-    {
-        $service = new Service('foo', 'foo baz bar');
-        $this->assertEquals('foo', (string) $service);
-    }
+    const DENY = 'Deny';
+    const SHOW = 'Show';
+    const DEPLOY = 'Deploy';
+    const MANAGE = 'Manage';
 }

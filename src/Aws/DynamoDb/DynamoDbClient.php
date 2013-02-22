@@ -74,7 +74,6 @@ class DynamoDbClient extends AbstractClient
      * - region: Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
      * - scheme: URI Scheme of the base URL (e.g. 'https', 'http').
      * - base_url: Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
-     * - endpoint_provider: Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
      *
      * Generic client options
      *
@@ -124,6 +123,8 @@ class DynamoDbClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
+                // DynamoDB does not use redirects
+                self::DISABLE_REDIRECTS => true,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/dynamodb-2011-12-05.php',
                 // DynamoDB does not require response processing other than turning JSON into an array
                 self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)

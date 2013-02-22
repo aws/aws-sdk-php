@@ -37,7 +37,7 @@ use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Client to interact with Amazon Simple Storage Solution
+ * Client to interact with Amazon Simple Storage Service
  *
  * @method Model abortMultipartUpload(array $args = array()) {@command S3 AbortMultipartUpload}
  * @method Model completeMultipartUpload(array $args = array()) {@command S3 CompleteMultipartUpload}
@@ -153,7 +153,6 @@ class S3Client extends AbstractClient
      * - region - Region name (e.g. 'us-east-1', 'us-west-1', 'us-west-2', 'eu-west-1', etc...)
      * - scheme - URI Scheme of the base URL (e.g. 'https', 'http').
      * - base_url - Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
-     * - endpoint_provider - Optional `Aws\Common\Region\EndpointProviderInterface` used to provide region endpoints
      *
      * Generic client options
      *

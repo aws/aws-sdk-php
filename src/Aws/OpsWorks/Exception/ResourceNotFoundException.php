@@ -17,6 +17,6 @@
 namespace Aws\OpsWorks\Exception;
 
 /**
- * Indicates that a resource was not found.
+ * Exception that occurs when a ResourceNotFoundException error is encountered
  */
 class ResourceNotFoundException extends OpsWorksException {}

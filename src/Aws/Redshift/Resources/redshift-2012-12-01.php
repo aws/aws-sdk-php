@@ -23,6 +23,13 @@ return array (
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Redshift',
+    'regions' => array(
+        'us-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'redshift.us-east-1.amazonaws.com',
+        ),
+    ),
     'operations' => array(
         'AuthorizeClusterSecurityGroupIngress' => array(
             'httpMethod' => 'POST',
