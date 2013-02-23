@@ -19,22 +19,20 @@ namespace Aws\S3;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\UploadBodyListener;
-use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Enum\Region;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
-use Aws\S3\S3SignatureInterface;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Command\Factory\CompositeFactory;
 
 /**
  * Client to interact with Amazon Simple Storage Service
@@ -221,23 +219,15 @@ class S3Client extends AbstractClient
         // Allow for specifying bodies with file paths and file handles
         $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
 
-        return $client;
-    }
-
-    /**
-     * @param CredentialsInterface $credentials AWS credentials
-     * @param S3SignatureInterface $signature   Amazon S3 Signature implementation
-     * @param Collection           $config      Configuration options
-     */
-    public function __construct(CredentialsInterface $credentials, S3SignatureInterface $signature, Collection $config)
-    {
-        parent::__construct($credentials, $signature, $config);
-
         // Add aliases for some S3 operations
-        $this->getCommandFactory()->add(
-            new AliasFactory($this, self::$commandAliases),
+        $default = CompositeFactory::getDefaultChain($client);
+        $default->add(
+            new AliasFactory($client, self::$commandAliases),
             'Guzzle\Service\Command\Factory\ServiceDescriptionFactory'
         );
+        $client->setCommandFactory($default);
+
+        return $client;
     }
 
     /**
