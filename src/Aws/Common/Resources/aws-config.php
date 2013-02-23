@@ -39,12 +39,6 @@ return array(
             'class'   => 'Aws\CloudWatch\CloudWatchClient'
         ),
 
-        'iam' => array(
-            'alias'   => 'Iam',
-            'extends' => 'default_settings',
-            'class'   => 'Aws\Iam\IamClient'
-        ),
-
         'datapipeline' => array(
             'alias'   => 'DataPipeline',
             'extends' => 'default_settings',
@@ -81,22 +75,34 @@ return array(
             'class'   => 'Aws\ElasticTranscoder\ElasticTranscoderClient'
         ),
 
+        'emr' => array(
+            'alias'   => 'Emr',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Emr\EmrClient'
+        ),
+
         'glacier' => array(
             'alias'   => 'Glacier',
             'extends' => 'default_settings',
             'class'   => 'Aws\Glacier\GlacierClient'
         ),
 
-        'rds' => array(
-            'alias'   => 'Rds',
+        'iam' => array(
+            'alias'   => 'Iam',
             'extends' => 'default_settings',
-            'class'   => 'Aws\Rds\RdsClient'
+            'class'   => 'Aws\Iam\IamClient'
         ),
 
         'opsworks' => array(
             'alias'   => 'OpsWorks',
             'extends' => 'default_settings',
             'class'   => 'Aws\OpsWorks\OpsWorksClient'
+        ),
+
+        'rds' => array(
+            'alias'   => 'Rds',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Rds\RdsClient'
         ),
 
         'redshift' => array(
@@ -129,16 +135,16 @@ return array(
             'class'   => 'Aws\Ses\SesClient'
         ),
 
-        'sqs' => array(
-            'alias'   => 'Sqs',
-            'extends' => 'default_settings',
-            'class'   => 'Aws\Sqs\SqsClient'
-        ),
-
         'sns' => array(
             'alias'   => 'Sns',
             'extends' => 'default_settings',
             'class'   => 'Aws\Sns\SnsClient'
+        ),
+
+        'sqs' => array(
+            'alias'   => 'Sqs',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Sqs\SqsClient'
         ),
 
         'sts' => array(
