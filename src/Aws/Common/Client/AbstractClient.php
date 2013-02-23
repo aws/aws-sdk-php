@@ -67,13 +67,14 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         $this->signature = $signature;
 
         // Make sure the user agent is prefixed by the SDK version
-        $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
+        $this->userAgent = 'aws-sdk-php2/' . Aws::VERSION . ' ' . $this->userAgent;
 
         // Add the event listener so that requests are signed before they are sent
-        $this->getEventDispatcher()->addSubscriber(new SignatureListener($credentials, $signature));
+        $dispatcher = $this->getEventDispatcher();
+        $dispatcher->addSubscriber(new SignatureListener($credentials, $signature));
 
         if ($backoff = $config->get(Options::BACKOFF)) {
-            $this->getEventDispatcher()->addSubscriber($backoff, -255);
+            $dispatcher->addSubscriber($backoff, -255);
         }
     }
 
@@ -99,6 +100,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      * @param string                      $region      Region of the endpoint
      * @param string                      $scheme      URL scheme
      *
+     * @return string
      * @throws InvalidArgumentException
      */
     public static function getEndpoint(ServiceDescriptionInterface $description, $region, $scheme)
