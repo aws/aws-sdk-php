@@ -45,6 +45,12 @@ return array(
             'class'   => 'Aws\DataPipeline\DataPipelineClient'
         ),
 
+        'directconnect' => array(
+            'alias'   => 'DirectConnect',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\DirectConnect\DirectConnectClient'
+        ),
+
         'dynamodb' => array(
             'alias'   => 'DynamoDb',
             'extends' => 'default_settings',
