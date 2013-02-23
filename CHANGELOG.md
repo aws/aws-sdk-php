@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for **Amazon Elastic MapReduce (Amazon EMR)**
 * Added support for [provisioned IOPS](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.ProvisionedIOPS.html),
   promoting [read replicas](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html), and [event
   notification subscriptions](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html) to the Amazon RDS
