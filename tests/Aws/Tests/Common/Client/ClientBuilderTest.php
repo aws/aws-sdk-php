@@ -134,7 +134,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage does not specify a signatureVersion
+     * @expectedExceptionMessage does not specify a valid signatureVersion
      */
     public function testEnsuresSignatureIsProvided()
     {
@@ -143,7 +143,9 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 'region'  => 'us-west-1',
                 'service' => 'dynamodb',
                 'scheme'  => 'http',
-                'service.description' => array()
+                'service.description' => array(
+                    'regions' => array('us-west-1' => array('hostname' => 'foo', 'http' => true))
+                )
             ))
             ->build();
     }

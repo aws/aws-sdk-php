@@ -26,6 +26,7 @@ use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
 use Aws\Common\Exception\Parser\ExceptionParserInterface;
 use Aws\Common\Iterator\AwsResourceIteratorFactory;
 use Aws\Common\Signature\EndpointSignatureInterface;
+use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureV2;
 use Aws\Common\Signature\SignatureV3;
 use Aws\Common\Signature\SignatureV3Https;
@@ -195,11 +196,11 @@ class ClientBuilder
         );
 
         // Set values from the service description
-        $this->updateConfigFromDescription($config);
+        $signature = $this->getSignature($this->updateConfigFromDescription($config), $config);
 
         // Resolve credentials
-        if (!$config->get('credentials')) {
-            $config->set('credentials', $this->getDefaultCredentials($config));
+        if (!$credentials = $config->get('credentials')) {
+            $credentials = $this->getDefaultCredentials($config);
         }
 
         if (!$config->get(Options::BACKOFF)) {
@@ -217,14 +218,8 @@ class ClientBuilder
             $clientClass = $this->clientNamespace . '\\' . $serviceName . 'Client';
         }
 
-        // Construct the client
         /** @var $client AwsClientInterface */
-        $client = new $clientClass(
-            $config->get(Options::CREDENTIALS),
-            $config->get(Options::SIGNATURE),
-            $config
-        );
-
+        $client = new $clientClass($credentials, $signature, $config);
         $client->setDescription($config->get(Options::SERVICE_DESCRIPTION));
 
         // Add exception marshaling so that more descriptive exception are thrown
@@ -332,6 +327,7 @@ class ClientBuilder
      *
      * @param Collection $config Config to update
      *
+     * @return ServiceDescription
      * @throws InvalidArgumentException
      */
     protected function updateConfigFromDescription(Collection $config)
@@ -341,8 +337,6 @@ class ClientBuilder
             $description = ServiceDescription::factory($description);
             $config->set(Options::SERVICE_DESCRIPTION, $description);
         }
-
-        $this->addSignature($description, $config);
 
         if (!$config->get(Options::SERVICE)) {
             $config->set(Options::SERVICE, $description->getData('endpointPrefix'));
@@ -379,6 +373,8 @@ class ClientBuilder
                 $config->get(Options::SCHEME)
             ));
         }
+
+        return $description;
     }
 
     /**
@@ -387,14 +383,12 @@ class ClientBuilder
      * @param ServiceDescription $description Description that holds a signature option
      * @param Collection         $config      Configuration options
      *
+     * @return SignatureInterface
      * @throws InvalidArgumentException
      */
-    protected function addSignature(ServiceDescription $description, Collection $config)
+    protected function getSignature(ServiceDescription $description, Collection $config)
     {
-        if (!($signature = $config->get(Options::SIGNATURE))) {
-            if (!$description->getData('signatureVersion')) {
-                throw new InvalidArgumentException('The service description does not specify a signatureVersion');
-            }
+        if (!$signature = $config->get(Options::SIGNATURE)) {
             switch ($description->getData('signatureVersion')) {
                 case 'v2':
                     $signature = new SignatureV2();
@@ -408,9 +402,9 @@ class ClientBuilder
                 case 'v4':
                     $signature = new SignatureV4();
                     break;
+                default:
+                    throw new InvalidArgumentException('Service description does not specify a valid signatureVersion');
             }
-            // Set the signature object on the config
-            $config->set(Options::SIGNATURE, $signature);
         }
 
         // Allow a custom service name or region value to be provided
@@ -430,5 +424,7 @@ class ClientBuilder
             }
             $signature->setRegionName($region);
         }
+
+        return $signature;
     }
 }
