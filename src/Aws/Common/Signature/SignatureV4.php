@@ -175,7 +175,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
 
         // Create the canonical headers
         $headers = array();
-        foreach ($request->getHeaders() as $key => $values) {
+        foreach ($request->getHeaders()->getAll() as $key => $values) {
             if ($key != 'User-Agent') {
                 $key = strtolower($key);
                 if (!isset($headers[$key])) {
