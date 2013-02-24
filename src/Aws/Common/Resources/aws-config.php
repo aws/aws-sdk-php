@@ -63,16 +63,22 @@ return array(
             'class'   => 'Aws\Ec2\Ec2Client'
         ),
 
-        'elasticloadbalancing' => array(
-            'alias'   => 'ElasticLoadBalancing',
+        'elasticache' => array(
+            'alias'   => 'ElastiCache',
             'extends' => 'default_settings',
-            'class'   => 'Aws\ElasticLoadBalancing\ElasticLoadBalancingClient'
+            'class'   => 'Aws\ElastiCache\ElastiCacheClient'
         ),
 
         'elasticbeanstalk' => array(
             'alias'   => 'ElasticBeanstalk',
             'extends' => 'default_settings',
             'class'   => 'Aws\ElasticBeanstalk\ElasticBeanstalkClient'
+        ),
+
+        'elasticloadbalancing' => array(
+            'alias'   => 'ElasticLoadBalancing',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\ElasticLoadBalancing\ElasticLoadBalancingClient'
         ),
 
         'elastictranscoder' => array(

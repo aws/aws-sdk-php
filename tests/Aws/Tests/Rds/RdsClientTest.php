@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\CloudWatch;
+namespace Aws\Tests\Rds;
 
 use Aws\Rds\RdsClient;
 

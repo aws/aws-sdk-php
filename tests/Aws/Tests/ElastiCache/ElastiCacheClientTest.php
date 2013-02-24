@@ -14,18 +14,18 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Emr;
+namespace Aws\Tests\ElastiCache;
 
-use Aws\Emr\EmrClient;
+use Aws\ElastiCache\ElastiCacheClient;
 
-class EmrClientTest extends \Guzzle\Tests\GuzzleTestCase
+class ElastiCacheClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @covers Aws\Emr\EmrClient::factory
+     * @covers Aws\ElastiCache\ElastiCacheClient::factory
      */
     public function testFactoryInitializesClient()
     {
-        $client = EmrClient::factory(array(
+        $client = ElastiCacheClient::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
             'region' => 'us-west-2'
@@ -33,6 +33,6 @@ class EmrClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertInstanceOf('Aws\Common\Signature\SignatureV2', $this->readAttribute($client, 'signature'));
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
-        $this->assertEquals('https://elasticmapreduce.us-west-2.amazonaws.com', $client->getBaseUrl());
+        $this->assertEquals('https://elasticache.us-west-2.amazonaws.com', $client->getBaseUrl());
     }
 }
