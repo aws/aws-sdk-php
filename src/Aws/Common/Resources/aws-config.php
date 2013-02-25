@@ -27,6 +27,12 @@ return array(
             'class'   => 'Aws\AutoScaling\AutoScalingClient'
         ),
 
+        'cloudformation' => array(
+            'alias'   => 'CloudFormation',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudFormation\CloudFormationClient'
+        ),
+
         'cloudfront' => array(
             'alias'   => 'CloudFront',
             'extends' => 'default_settings',
