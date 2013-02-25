@@ -105,6 +105,12 @@ return array(
             'class'   => 'Aws\Iam\IamClient'
         ),
 
+        'importexport' => array(
+            'alias'   => 'ImportExport',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\ImportExport\ImportExportClient'
+        ),
+
         'opsworks' => array(
             'alias'   => 'OpsWorks',
             'extends' => 'default_settings',
