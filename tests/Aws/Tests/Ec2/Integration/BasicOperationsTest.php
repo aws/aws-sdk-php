@@ -144,7 +144,6 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->terminateAnInstance($instanceId);
     }
 
-    /** @group current */
     public function testModifyingAnInstanceAttribute()
     {
         self::log("\n[#4] Modify the attributes of an instance.");

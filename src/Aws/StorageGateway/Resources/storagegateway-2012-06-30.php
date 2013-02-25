@@ -20,6 +20,7 @@ return array (
     'serviceFullName' => 'AWS Storage Gateway',
     'serviceType' => 'json',
     'jsonVersion' => '1.1',
+    'targetPrefix' => 'StorageGateway_20120630.',
     'signatureVersion' => 'v4',
     'namespace' => 'StorageGateway',
     'regions' => array(
@@ -86,7 +87,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'ActivateGateway',
+                    'default' => 'StorageGateway_20120630.ActivateGateway',
                 ),
                 'ActivationKey' => array(
                     'required' => true,
@@ -190,7 +191,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'AddCache',
+                    'default' => 'StorageGateway_20120630.AddCache',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -243,7 +244,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'AddUploadBuffer',
+                    'default' => 'StorageGateway_20120630.AddUploadBuffer',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -295,7 +296,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'AddWorkingStorage',
+                    'default' => 'StorageGateway_20120630.AddWorkingStorage',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -346,7 +347,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'CreateCachediSCSIVolume',
+                    'default' => 'StorageGateway_20120630.CreateCachediSCSIVolume',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -420,7 +421,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'CreateSnapshot',
+                    'default' => 'StorageGateway_20120630.CreateSnapshot',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -467,7 +468,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'CreateSnapshotFromVolumeRecoveryPoint',
+                    'default' => 'StorageGateway_20120630.CreateSnapshotFromVolumeRecoveryPoint',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -516,7 +517,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'CreateStorediSCSIVolume',
+                    'default' => 'StorageGateway_20120630.CreateStorediSCSIVolume',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -585,7 +586,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DeleteBandwidthRateLimit',
+                    'default' => 'StorageGateway_20120630.DeleteBandwidthRateLimit',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -635,7 +636,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DeleteChapCredentials',
+                    'default' => 'StorageGateway_20120630.DeleteChapCredentials',
                 ),
                 'TargetARN' => array(
                     'required' => true,
@@ -682,7 +683,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DeleteGateway',
+                    'default' => 'StorageGateway_20120630.DeleteGateway',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -722,7 +723,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DeleteSnapshotSchedule',
+                    'default' => 'StorageGateway_20120630.DeleteSnapshotSchedule',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -763,7 +764,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DeleteVolume',
+                    'default' => 'StorageGateway_20120630.DeleteVolume',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -803,7 +804,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeBandwidthRateLimit',
+                    'default' => 'StorageGateway_20120630.DescribeBandwidthRateLimit',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -843,7 +844,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeCache',
+                    'default' => 'StorageGateway_20120630.DescribeCache',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -884,7 +885,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeCachediSCSIVolumes',
+                    'default' => 'StorageGateway_20120630.DescribeCachediSCSIVolumes',
                 ),
                 'VolumeARNs' => array(
                     'required' => true,
@@ -929,7 +930,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeChapCredentials',
+                    'default' => 'StorageGateway_20120630.DescribeChapCredentials',
                 ),
                 'TargetARN' => array(
                     'required' => true,
@@ -969,7 +970,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeGatewayInformation',
+                    'default' => 'StorageGateway_20120630.DescribeGatewayInformation',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1009,7 +1010,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeMaintenanceStartTime',
+                    'default' => 'StorageGateway_20120630.DescribeMaintenanceStartTime',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1049,7 +1050,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeSnapshotSchedule',
+                    'default' => 'StorageGateway_20120630.DescribeSnapshotSchedule',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -1089,7 +1090,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeStorediSCSIVolumes',
+                    'default' => 'StorageGateway_20120630.DescribeStorediSCSIVolumes',
                 ),
                 'VolumeARNs' => array(
                     'required' => true,
@@ -1133,7 +1134,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeUploadBuffer',
+                    'default' => 'StorageGateway_20120630.DescribeUploadBuffer',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1174,7 +1175,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'DescribeWorkingStorage',
+                    'default' => 'StorageGateway_20120630.DescribeWorkingStorage',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1214,7 +1215,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'ListGateways',
+                    'default' => 'StorageGateway_20120630.ListGateways',
                 ),
                 'Marker' => array(
                     'type' => 'string',
@@ -1258,7 +1259,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'ListLocalDisks',
+                    'default' => 'StorageGateway_20120630.ListLocalDisks',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1298,7 +1299,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'ListVolumeRecoveryPoints',
+                    'default' => 'StorageGateway_20120630.ListVolumeRecoveryPoints',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1339,7 +1340,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'ListVolumes',
+                    'default' => 'StorageGateway_20120630.ListVolumes',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1390,7 +1391,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'ShutdownGateway',
+                    'default' => 'StorageGateway_20120630.ShutdownGateway',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1430,7 +1431,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StartGateway',
+                    'default' => 'StorageGateway_20120630.StartGateway',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1470,7 +1471,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'UpdateBandwidthRateLimit',
+                    'default' => 'StorageGateway_20120630.UpdateBandwidthRateLimit',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1520,7 +1521,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'UpdateChapCredentials',
+                    'default' => 'StorageGateway_20120630.UpdateChapCredentials',
                 ),
                 'TargetARN' => array(
                     'required' => true,
@@ -1580,7 +1581,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'UpdateGatewayInformation',
+                    'default' => 'StorageGateway_20120630.UpdateGatewayInformation',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1663,7 +1664,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'UpdateGatewaySoftwareNow',
+                    'default' => 'StorageGateway_20120630.UpdateGatewaySoftwareNow',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1703,7 +1704,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'UpdateMaintenanceStartTime',
+                    'default' => 'StorageGateway_20120630.UpdateMaintenanceStartTime',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1761,7 +1762,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'UpdateSnapshotSchedule',
+                    'default' => 'StorageGateway_20120630.UpdateSnapshotSchedule',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
