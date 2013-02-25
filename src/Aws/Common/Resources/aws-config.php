@@ -159,6 +159,12 @@ return array(
             'class'   => 'Aws\Sqs\SqsClient'
         ),
 
+        'storagegateway' => array(
+            'alias'   => 'StorageGateway',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\StorageGateway\StorageGatewayClient'
+        ),
+
         'sts' => array(
             'alias'   => 'Sts',
             'extends' => 'default_settings',
