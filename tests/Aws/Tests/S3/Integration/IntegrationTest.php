@@ -281,7 +281,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'ACP'          => $this->acp,
             'Metadata'     => array(
                 'test'  => '123',
-                'abc'   => '@pples'
+                'abc'   => '@pples',
+                'foo'   => '',
+                'null'  => null,
+                'space' => ' ',
+                'zero'  => '0'
             )
         ));
 

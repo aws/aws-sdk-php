@@ -113,7 +113,10 @@ class S3Signature implements S3SignatureInterface
             /** @var $header \Guzzle\Http\Message\Header */
             $name = strtolower($header->getName());
             if (strpos($name, 'x-amz-') === 0) {
-                $headers[$name] = $name . ':' . (string) $header;
+                $value = trim((string) $header);
+                if ($value || $value === '0') {;
+                    $headers[$name] = $name . ':' . (string) $header;
+                }
             }
         }
 
