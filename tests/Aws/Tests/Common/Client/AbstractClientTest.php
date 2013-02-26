@@ -17,7 +17,6 @@
 namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Aws;
-use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
@@ -68,6 +67,10 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         try {
             $client->waitUntil('foo', array('baz' => 'bar'));
         } catch (\Exception $e) {}
+
+        try {
+            $client->getWaiter('foo', array('baz' => 'bar'));
+        } catch (\Exception $e) {}
     }
 
     public function testAllowsWaiterFactoryInjection()
@@ -101,7 +104,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             ->will($this->returnValue($waiter));
 
         $client->setWaiterFactory($factory);
-        $this->assertSame($factory, $this->readAttribute($client, 'waiterFactory'));
+        $this->assertSame($factory, $client->getWaiterFactory());
 
         $this->assertSame($client, $client->waitUntil('foo', array('baz' => 'bar')));
     }

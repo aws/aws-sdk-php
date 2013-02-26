@@ -175,12 +175,19 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      */
     public function waitUntil($waiter, array $input = array())
     {
-        $this->getWaiterFactory()->build($waiter)
-            ->setClient($this)
-            ->setConfig($input)
-            ->wait();
+        $this->getWaiter($waiter, $input)->wait();
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getWaiter($waiter, array $input = array())
+    {
+        return $this->getWaiterFactory()->build($waiter)
+            ->setClient($this)
+            ->setConfig($input);
     }
 
     /**
@@ -202,7 +209,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      *
      * @return WaiterFactoryInterface
      */
-    protected function getWaiterFactory()
+    public function getWaiterFactory()
     {
         if (!$this->waiterFactory) {
             $clientClass = get_class($this);

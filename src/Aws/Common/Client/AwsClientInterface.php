@@ -19,6 +19,7 @@ namespace Aws\Common\Client;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Waiter\WaiterFactoryInterface;
+use Aws\Common\Waiter\WaiterInterface;
 use Guzzle\Service\ClientInterface;
 
 /**
@@ -48,6 +49,13 @@ interface AwsClientInterface extends ClientInterface
     public function getRegions();
 
     /**
+     * Get the waiter factory being used by the client
+     *
+     * @return WaiterFactoryInterface
+     */
+    public function getWaiterFactory();
+
+    /**
      * Set the waiter factory to use with the client
      *
      * @param WaiterFactoryInterface $waiterFactory Factory used to create waiters
@@ -59,10 +67,20 @@ interface AwsClientInterface extends ClientInterface
     /**
      * Wait until a resource is available or an associated waiter returns true
      *
-     * @param string $waiter Name of the waiter in snake_case
-     * @param array  $input  Values used as input for the underlying operation and values used to control the waiter
+     * @param string $waiter Name of the waiter
+     * @param array  $input  Values used as input for the underlying operation and to control the waiter
      *
      * @return self
      */
     public function waitUntil($waiter, array $input = array());
+
+    /**
+     * Get a named waiter object
+     *
+     * @param string $waiter Name of the waiter
+     * @param array  $input  Values used as input for the underlying operation and to control the waiter
+     *
+     * @return WaiterInterface
+     */
+    public function getWaiter($waiter, array $input = array());
 }
