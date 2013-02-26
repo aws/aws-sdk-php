@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Listener used to assist with formatting the Manifest parameter of CreateJob operation into YAML
  */
-class ManifestListener implements EventSubscriberInterface
+class JobManifestListener implements EventSubscriberInterface
 {
     /**
      * {@inheritdoc}

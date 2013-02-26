@@ -8,6 +8,7 @@ Next Release
 * Added support for **AWS Direct Connect**
 * Added support for **Amazon ElastiCache**
 * Added support for **AWS Storage Gateway**
+* Added support for **AWS Import/Export**
 * Added support for [provisioned IOPS](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.ProvisionedIOPS.html),
   promoting [read replicas](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html), and [event
   notification subscriptions](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html) to the Amazon RDS

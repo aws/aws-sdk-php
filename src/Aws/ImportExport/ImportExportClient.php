@@ -83,7 +83,7 @@ class ImportExportClient extends AbstractClient
         // If the Symfony YAML component is installed, add a listener that will convert arrays to proper YAML in when
         // specifying the "Manifest" parameter of the "CreateJob" operation
         if (class_exists('Symfony\Component\Yaml\Yaml')) {
-            $client->addSubscriber(new ManifestListener());
+            $client->addSubscriber(new JobManifestListener());
         }
 
         return $client;
