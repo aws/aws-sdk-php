@@ -285,7 +285,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
                 'foo'   => '',
                 'null'  => null,
                 'space' => ' ',
-                'zero'  => '0'
+                'zero'  => '0',
+                'trim'  => ' hi '
             )
         ));
 
