@@ -114,7 +114,7 @@ class S3Signature implements S3SignatureInterface
             $name = strtolower($header->getName());
             if (strpos($name, 'x-amz-') === 0) {
                 $value = trim((string) $header);
-                if ($value || $value === '0') {;
+                if ($value || $value === '0') {
                     $headers[$name] = $name . ':' . $value;
                 }
             }
