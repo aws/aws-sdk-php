@@ -5,9 +5,6 @@ from docutils import io, nodes, statemachine, utils
 from docutils.parsers.rst import Directive
 from jinja2 import Environment, PackageLoader
 
-# Holds a cache mapping a service name to a list of regions
-region_cache = {}
-
 def setup(app):
     """
     see: http://sphinx.pocoo.org/ext/appapi.html
@@ -56,24 +53,7 @@ def get_regions(service_name):
 
     :param service_name: Retrieve regions for this service by name
     """
-    # If this service's regions are not in the cache, then parse them out
-    if region_cache.get(service_name) == None:
-        # Open the endpoints.xml file of the SDK
-        path = os.path.abspath("../src/Aws/Common/Resources/endpoints.xml")
-        parsed = xml.dom.minidom.parse(path)
-        # Build a list of regions from the XML
-        regions = []
-        for service in parsed.getElementsByTagName('Service'):
-            name = service.getElementsByTagName('Name')[0].firstChild.nodeValue
-            if name == service_name:
-                for region in service.getElementsByTagName('RegionName'):
-                    regions.append(region.firstChild.nodeValue)
-                break
-        else:
-            raise ValueError("Unknown service: %s" % service_name)
-        region_cache[service_name] = regions
-
-    return region_cache[service_name]
+    return ServiceDescription(service_name)['regions'].keys()
 
 
 def make_regions_node(rawtext, app, service_name, options):
