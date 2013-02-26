@@ -1,5 +1,4 @@
 import os, re, subprocess, json
-import xml.dom.minidom
 from sphinx.addnodes import toctree
 from docutils import io, nodes, statemachine, utils
 from docutils.parsers.rst import Directive
@@ -59,8 +58,6 @@ def get_regions(service_name):
 def make_regions_node(rawtext, app, service_name, options):
     """Create a list of regions for a service name
 
-    Parses the endpoints.xml file of the SDK to generate the list of regions.
-
     :param rawtext:      Text being replaced with the list node.
     :param app:          Sphinx application context
     :param service_name: Service name
@@ -103,7 +100,7 @@ class ServiceDescription():
 
         # Iterate over the loaded dictionary and see if a matching service exists
         for key in self.config["services"]:
-            alias = self.config["services"][key].get("alias", "").lower()
+            alias = self.config["services"][key].get("alias", "")
             if key == self.service_name or alias == self.service_name:
                 break
         else:
@@ -156,7 +153,7 @@ class ServiceIntro(Directive):
     final_argument_whitespace = True
 
     def run(self):
-        service_name = self.arguments[0]
+        service_name = self.arguments[0].strip()
         d = ServiceDescription(service_name)
         rawtext = self.generate_rst(d)
         tab_width = 4
@@ -175,12 +172,7 @@ class ServiceIntro(Directive):
 
     def get_locator_name(self, name):
         """Determine the service locator name for an endpoint"""
-        if name == "email":
-            return "ses"
-        elif name == "monitoring":
-            return "cloudwatch"
-        else:
-            return name
+        return name
 
     def generate_rst(self, d):
         rawtext = ""
@@ -193,14 +185,14 @@ class ServiceIntro(Directive):
                 rawtext += ".. |%s| replace:: %s\n\n" % (key, scalar[key])
 
         # Determine the service locator name and doc URL
-        locator_name = self.get_locator_name(d["endpointPrefix"])
+        locator_name = self.get_locator_name(d["namespace"])
         docs = self.get_doc_link(locator_name, d["namespace"])
 
         env = Environment(loader=PackageLoader('aws', 'templates'))
         template = env.get_template("client_intro")
         rawtext += template.render(
             scalar,
-            regions=get_regions(d["endpointPrefix"]),
+            regions=get_regions(d["namespace"]),
             locator_name=locator_name,
             doc_url=docs)
 
