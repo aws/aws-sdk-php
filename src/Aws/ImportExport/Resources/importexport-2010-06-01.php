@@ -573,6 +573,7 @@ return array (
             'ListJobs' => array(
                 'token_param' => 'Marker',
                 'more_key' => 'IsTruncated',
+                'limit_key' => 'MaxJobs',
                 'result_key' => 'Jobs',
             ),
         ),

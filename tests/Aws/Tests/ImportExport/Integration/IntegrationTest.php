@@ -16,6 +16,8 @@
 
 namespace Aws\Tests\ImportExport\Integration;
 
+use Aws\ImportExport\Enum\JobType;
+
 /**
  * @group integration
  */
@@ -31,8 +33,40 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
         $this->client = $this->getServiceBuilder()->get('importexport');
     }
 
-    public function testBasicOperations()
+    /**
+     * @expectedException \Aws\ImportExport\Exception\MissingManifestFieldException
+     */
+    public function testCreateJobFailsWithIncompleteManifest()
     {
-        // @TODO Add real tests
+        $this->client->createJob(array(
+            'JobType'      => JobType::IMPORT,
+            'Manifest'     => 'foo: bar',
+            'ValidateOnly' => true,
+        ));
+    }
+
+    /**
+     * @expectedException \Aws\ImportExport\Exception\MissingManifestFieldException
+     */
+    public function testCreateJobFailsWithIncompleteArrayFormattedManifest()
+    {
+        if (!class_exists('Symfony\Component\Yaml\Yaml')) {
+            $this->markTestSkipped('You must have the the Symfony YAML component installed to run this test.');
+        }
+
+        $this->client->createJob(array(
+            'JobType'      => JobType::IMPORT,
+            'Manifest'     => array('foo' => 'bar'),
+            'ValidateOnly' => true,
+        ));
+    }
+
+    public function testListJobsAndIterator()
+    {
+        $results = $this->client->listJobs()->toArray();
+        $this->assertArrayHasKey('Jobs', $results);
+
+        $iteratorResults = $this->client->getIterator('ListJobs')->toArray();
+        $this->assertEquals($results['Jobs'], $iteratorResults);
     }
 }

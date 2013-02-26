@@ -73,11 +73,19 @@ class ImportExportClient extends AbstractClient
      */
     public static function factory($config = array())
     {
-        return ClientBuilder::factory(__NAMESPACE__)
+        $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/importexport-2010-06-01.php'
             ))
             ->build();
+
+        // If the Symfony YAML component is installed, add a listener that will convert arrays to proper YAML in when
+        // specifying the "Manifest" parameter of the "CreateJob" operation
+        if (class_exists('Symfony\Component\Yaml\Yaml')) {
+            $client->addSubscriber(new ManifestListener());
+        }
+
+        return $client;
     }
 }
