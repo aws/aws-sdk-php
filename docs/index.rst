@@ -10,25 +10,30 @@ AWS SDK for PHP 2
     installation
     quick-start
     configuration
-    contribution
     faq
 
     migration-guide
     side-by-side
 
     service-autoscaling
+    service-cloudformation
     service-cloudfront
     service-cloudsearch
     service-cloudwatch
     service-datapipeline
+    service-directconnect
     service-dynamodb
     service-ec2
+    service-elasticache
     service-elasticbeanstalk
     service-elasticloadbalancing
     service-elastictranscoder
+    service-emr
     service-glacier
     service-iam
+    service-importexport
     service-opsworks
+    service-rds
     service-redshift
     service-route53
     service-s3
@@ -36,6 +41,7 @@ AWS SDK for PHP 2
     service-simpledb
     service-sns
     service-sqs
+    service-storagegateway
     service-sts
     service-swf
 
@@ -52,8 +58,8 @@ Getting started
 * :doc:`installation`
 * :doc:`quick-start`
 * :doc:`configuration`
-* :doc:`contribution`
 * :doc:`faq`
+* `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 
 Migrating from SDK 1 to SDK 2
 -----------------------------
@@ -65,18 +71,24 @@ Supported services
 ------------------
 
 * :doc:`service-autoscaling`
+* :doc:`service-cloudformation`
 * :doc:`service-cloudfront`
 * :doc:`service-cloudsearch`
 * :doc:`service-cloudwatch`
 * :doc:`service-datapipeline`
+* :doc:`service-directconnect`
 * :doc:`service-dynamodb`
 * :doc:`service-ec2`
+* :doc:`service-elasticache`
 * :doc:`service-elasticbeanstalk`
 * :doc:`service-elasticloadbalancing`
 * :doc:`service-elastictranscoder`
+* :doc:`service-emr`
 * :doc:`service-glacier`
 * :doc:`service-iam`
+* :doc:`service-importexport`
 * :doc:`service-opsworks`
+* :doc:`service-rds`
 * :doc:`service-redshift`
 * :doc:`service-route53`
 * :doc:`service-s3`
@@ -84,5 +96,6 @@ Supported services
 * :doc:`service-simpledb`
 * :doc:`service-sns`
 * :doc:`service-sqs`
+* :doc:`service-storagegateway`
 * :doc:`service-sts`
 * :doc:`service-swf`
