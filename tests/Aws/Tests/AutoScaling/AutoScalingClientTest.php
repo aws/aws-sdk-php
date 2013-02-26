@@ -31,7 +31,7 @@ class AutoScalingClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-west-2'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://autoscaling.us-west-2.amazonaws.com', $client->getBaseUrl());
     }

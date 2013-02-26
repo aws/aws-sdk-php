@@ -25,6 +25,7 @@ use Guzzle\Service\Resource\Model;
 /**
  * Client to interact with AWS CloudFormation
  *
+ * @method Model cancelUpdateStack(array $args = array()) {@command CloudFormation CancelUpdateStack}
  * @method Model createStack(array $args = array()) {@command CloudFormation CreateStack}
  * @method Model deleteStack(array $args = array()) {@command CloudFormation DeleteStack}
  * @method Model describeStackEvents(array $args = array()) {@command CloudFormation DescribeStackEvents}

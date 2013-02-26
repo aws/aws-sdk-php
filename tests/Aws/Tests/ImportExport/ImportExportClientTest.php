@@ -30,7 +30,7 @@ class ImportExportClientTest extends \Guzzle\Tests\GuzzleTestCase
             'secret' => 'bar',
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV2', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV2', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://importexport.amazonaws.com', $client->getBaseUrl());
     }

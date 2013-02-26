@@ -30,7 +30,7 @@ class Route53ClientTest extends \Guzzle\Tests\GuzzleTestCase
             'secret' => 'bar',
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV3Https', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV3Https', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://route53.amazonaws.com', $client->getBaseUrl());
     }

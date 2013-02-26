@@ -32,7 +32,7 @@ class RedshiftClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         $this->assertEquals('https://redshift.us-east-1.amazonaws.com', $client->getBaseUrl());
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
     }
 }

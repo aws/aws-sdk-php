@@ -19,7 +19,7 @@ namespace Aws\Tests\ElasticLoadBalancing\Integration;
 /**
  * @group integration
  */
-class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
+class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     /**
      * @var \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient

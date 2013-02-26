@@ -19,7 +19,7 @@ namespace Aws\Tests\Sts\Integration;
 /**
  * @group integration
  */
-class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
+class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     public function testRetrievesFederatedToken()
     {

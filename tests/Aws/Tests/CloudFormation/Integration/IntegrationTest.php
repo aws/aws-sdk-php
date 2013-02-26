@@ -16,10 +16,12 @@
 
 namespace Aws\Tests\CloudFormation\Integration;
 
+use Guzzle\Http\Url;
+
 /**
  * @group integration
  */
-class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
+class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     /**
      * @var \Aws\CloudFormation\CloudFormationClient
@@ -31,8 +33,26 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
         $this->client = $this->getServiceBuilder()->get('cloudformation');
     }
 
-    public function testBasicOperations()
+    public function testEstimatingTemplateCostMarshalsDataCorrectly()
     {
-        // @TODO Add real tests
+        self::log('Estimate a template\'s cost.');
+        $result = $this->client->estimateTemplateCost(array(
+            'TemplateBody' => file_get_contents(__DIR__ . '/template.json'),
+            'Parameters' => array(
+                array('ParameterKey' => 'KeyName', 'ParameterValue' => 'keypair-name'),
+            ),
+        ));
+        $url = Url::factory($result->get('Url'));
+        $this->assertEquals('calculator.s3.amazonaws.com', $url->getHost());
+    }
+
+    public function testListStacksCommandAndIterator()
+    {
+        self::log('Execute a ListJobs command and iterator and verify that the results are the same.');
+        $commandResults = $this->client->listStacks()->toArray();
+        $this->assertArrayHasKey('StackSummaries', $commandResults);
+
+        $iteratorResults = $this->client->getIterator('ListStacks')->toArray();
+        $this->assertEquals($commandResults['StackSummaries'], $iteratorResults);
     }
 }

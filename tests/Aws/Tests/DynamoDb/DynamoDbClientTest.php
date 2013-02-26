@@ -92,7 +92,7 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-east-1'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://dynamodb.us-east-1.amazonaws.com', $client->getBaseUrl());
     }

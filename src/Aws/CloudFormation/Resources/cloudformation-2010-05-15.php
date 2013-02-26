@@ -65,6 +65,32 @@ return array (
         ),
     ),
     'operations' => array(
+        'CancelUpdateStack' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'summary' => 'Cancels an update on the specified stack. If the call completes successfully, the stack will roll back the update and revert to the previous stack configuration.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CancelUpdateStack',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-15',
+                ),
+                'StackName' => array(
+                    'required' => true,
+                    'description' => 'The name or the unique identifier associated with the stack.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'CreateStack' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -94,9 +120,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
+                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
-                    'description' => 'Location of file containing the template body. The URL must point to a template located in an S3 bucket in the same region as the stack. For more information, go to the AWS CloudFormation User Guide.',
+                    'description' => 'Location of file containing the template body. The URL must point to a template (max size: 307,200 bytes) located in an S3 bucket in the same region as the stack. For more information, go to the AWS CloudFormation User Guide.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -302,7 +329,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DescribeStackResourcesOutput',
             'responseType' => 'model',
-            'summary' => 'Returns AWS resource descriptions for running and deleted stacks. If StackName is specified, all the associated resources that are part of the stack are returned. If PhysicalResourceId is specified, all the associated resources of the stack the resource belongs to are returned.',
+            'summary' => 'Returns AWS resource descriptions for running and deleted stacks. If StackName is specified, all the associated resources that are part of the stack are returned. If PhysicalResourceId is specified, the associated resources of the stack that the resource belongs to are returned.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -385,6 +412,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
+                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'description' => 'Location of file containing the template body. The URL must point to a template located in an S3 bucket in the same region as the stack. For more information, go to the AWS CloudFormation User Guide.',
@@ -559,6 +587,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
+                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'description' => 'Location of file containing the template body. The URL must point to a template located in an S3 bucket in the same region as the stack. For more information, go to the AWS CloudFormation User Guide.',
@@ -632,9 +661,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
+                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
-                    'description' => 'Location of file containing the template body. The URL must point to a template located in an S3 bucket in the same region as the stack. For more information, go to the AWS CloudFormation User Guide.',
+                    'description' => 'Location of file containing the template body. The URL must point to a template (max size: 307,200 bytes) located in an S3 bucket in the same region as the stack. For more information, go to the AWS CloudFormation User Guide.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -644,6 +674,10 @@ return array (
         ),
     ),
     'models' => array(
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+        ),
         'CreateStackOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -654,10 +688,6 @@ return array (
                     'location' => 'xml',
                 ),
             ),
-        ),
-        'EmptyOutput' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
         ),
         'DescribeStackEventsOutput' => array(
             'type' => 'object',

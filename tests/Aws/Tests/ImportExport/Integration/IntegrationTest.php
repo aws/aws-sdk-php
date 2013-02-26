@@ -21,7 +21,7 @@ use Aws\ImportExport\Enum\JobType;
 /**
  * @group integration
  */
-class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
+class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     /**
      * @var \Aws\ImportExport\ImportExportClient
@@ -61,12 +61,12 @@ class IntegrationTest extends \Guzzle\Tests\GuzzleTestCase
         ));
     }
 
-    public function testListJobsAndIterator()
+    public function testListJobsCommandAndIterator()
     {
-        $results = $this->client->listJobs()->toArray();
-        $this->assertArrayHasKey('Jobs', $results);
+        $commandResults = $this->client->listJobs()->toArray();
+        $this->assertArrayHasKey('Jobs', $commandResults);
 
         $iteratorResults = $this->client->getIterator('ListJobs')->toArray();
-        $this->assertEquals($results['Jobs'], $iteratorResults);
+        $this->assertEquals($commandResults['Jobs'], $iteratorResults);
     }
 }

@@ -31,7 +31,7 @@ class SesClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-east-1'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://email.us-east-1.amazonaws.com', $client->getBaseUrl());
     }
