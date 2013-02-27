@@ -30,6 +30,9 @@ use Guzzle\Cache\DoctrineCacheAdapter;
  */
 class Credentials implements CredentialsInterface, FromConfigInterface
 {
+    const ENV_KEY = 'AWS_ACCESS_KEY_ID';
+    const ENV_SECRET = 'AWS_SECRET_KEY';
+
     /**
      * @var string AWS Access key ID
      */
@@ -91,25 +94,33 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         // Start tracking the cache key
         $cacheKey = $config[Options::CREDENTIALS_CACHE_KEY];
 
-        // Ensure that the client is actually a client
-        $client = $config[Options::CREDENTIALS_CLIENT];
-        if ($client && !($client instanceof ClientInterface)) {
-            throw new InvalidArgumentException(
-                'The "credentials.client" credentials option must be an instance of Guzzle\Service\ClientInterface'
-            );
-        }
-
+        // Create the credentials object
         if (!$config[Options::KEY] || !$config[Options::SECRET]) {
-            // No keys were provided, so create a new credentials object that is
-            // automatically expired and uses instance profile credentials.
-            $credentials = new RefreshableInstanceProfileCredentials(new static('', '', '', 1), $client);
+            // No keys were provided, so attempt to retrieve some from the environment
+            $envKey = isset($_SERVER[self::ENV_KEY]) ? $_SERVER[self::ENV_KEY] : getenv(self::ENV_KEY);
+            $envSecret = isset($_SERVER[self::ENV_SECRET]) ? $_SERVER[self::ENV_SECRET] : getenv(self::ENV_SECRET);
+            if ($envKey && $envSecret) {
+                // Use credentials set in the environment variables
+                $credentials = new static($envKey, $envSecret);
+            } else {
+                // Use instance profile credentials (available on EC2 instances)
+                $credentials = new RefreshableInstanceProfileCredentials(
+                    new static('', '', '', 1),
+                    $config[Options::CREDENTIALS_CLIENT]
+                );
+            }
             // If no cache key was set, use the crc32 hostname of the server
             $cacheKey = $cacheKey ?: 'credentials_' . crc32(gethostname());
         } else {
-            // If no cache key was set, use the access key ID
-            $cacheKey = $cacheKey ?: 'credentials_' . $config['key'];
             // Instantiate using short or long term credentials
-            $credentials = new static($config['key'], $config['secret'], $config['token'], $config['token.ttd']);
+            $credentials = new static(
+                $config[Options::KEY],
+                $config[Options::SECRET],
+                $config[Options::TOKEN],
+                $config[Options::TOKEN_TTD]
+            );
+            // If no cache key was set, use the access key ID
+            $cacheKey = $cacheKey ?: 'credentials_' . $config[Options::KEY];
         }
 
         // Check if the credentials are refreshable, and if so, configure caching

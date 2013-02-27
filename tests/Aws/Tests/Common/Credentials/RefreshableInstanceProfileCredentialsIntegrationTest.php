@@ -28,17 +28,7 @@ use Doctrine\Common\Cache\ArrayCache;
 class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
     /**
-     * Ensures that a client is not required to get default credentials
-     */
-    public function testCredentialsFactoryDoesNotRequireClientObject()
-    {
-        $credentials = Credentials::factory();
-        $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $credentials);
-    }
-
-    /**
-     * Ensures that instance profile credentials are used when no credentials
-     * are provided to a client
+     * Ensures that instance profile credentials are used when no credentials are provided to a client
      */
     public function testUsesInstanceProfileCredentialsByDefault()
     {
@@ -47,6 +37,7 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
             'credentials.client' => $client
         ));
 
+        $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $credentials);
         $this->assertSame($client, $this->readAttribute($credentials, 'client'));
 
         return array($credentials, $client);

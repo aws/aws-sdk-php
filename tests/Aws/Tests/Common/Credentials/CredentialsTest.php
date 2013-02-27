@@ -126,18 +126,6 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The "credentials.client" credentials option must be an instance of Guzzle\Service\ClientInterface
-     */
-    public function testFactoryValidatesClientObject()
-    {
-        $credentials = Credentials::factory(array(
-            'credentials.client' => new \stdClass()
-        ));
-    }
-
-    /**
-     * @covers Aws\Common\Credentials\Credentials::factory
      */
     public function testFactoryCreatesInstanceProfileWhenNoKeysAreProvided()
     {
