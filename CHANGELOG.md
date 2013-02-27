@@ -16,6 +16,8 @@ Next Release
   notification subscriptions](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html) to the Amazon RDS
   client
 * Added the ability to get a Waiter object from a client using the `getWaiter()` method
+* Added the ability to load credentials from environmental variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_KEY`. This is
+  compatible with AWS Elastic Beanstalk environment configurations
 * Updated the Amazon RDS client to use the 2013-01-10 API version
 
 2.1.2 (2013-02-18)
