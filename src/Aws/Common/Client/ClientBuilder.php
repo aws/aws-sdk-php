@@ -247,6 +247,13 @@ class ClientBuilder
             new ResourceIteratorClassFactory($this->clientNamespace . '\\Iterator')
         ));
 
+        // Disable parameter validation if needed
+        if ($config->get(Options::VALIDATION) === false) {
+            $params = $config->get('command.params') ?: array();
+            $params['command.disable_validation'] = true;
+            $config->set('command.params', $params);
+        }
+
         return $client;
     }
 
