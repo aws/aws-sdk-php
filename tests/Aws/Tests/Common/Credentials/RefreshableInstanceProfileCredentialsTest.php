@@ -54,7 +54,7 @@ class RefreshableInstanceProfileCredentialsTest extends \Guzzle\Tests\GuzzleTest
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InstanceProfileCredentialsException
+     * @expectedException \Aws\Common\Exception\InstanceProfileCredentialsException
      * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata server
      */
     public function testExceptionsAreWrapped()
@@ -68,7 +68,7 @@ class RefreshableInstanceProfileCredentialsTest extends \Guzzle\Tests\GuzzleTest
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InstanceProfileCredentialsException
+     * @expectedException \Aws\Common\Exception\InstanceProfileCredentialsException
      * @expectedExceptionMessage Unexpected response code: InstanceProfileNotFound
      */
     public function testEnsuresResponseCodeIsSuccess()

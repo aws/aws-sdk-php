@@ -17,7 +17,6 @@
 namespace Aws\Common\Client;
 
 use Aws\Common\Credentials\Credentials;
-use Aws\Common\Credentials\RefreshableInstanceProfileCredentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\ExceptionListener;
 use Aws\Common\Exception\InvalidArgumentException;
@@ -200,7 +199,7 @@ class ClientBuilder
 
         // Resolve credentials
         if (!$credentials = $config->get('credentials')) {
-            $credentials = $this->getDefaultCredentials($config);
+            $credentials = Credentials::factory($config);
         }
 
         if (!$config->get(Options::BACKOFF)) {
@@ -255,24 +254,6 @@ class ClientBuilder
         }
 
         return $client;
-    }
-
-    /**
-     * Returns the default credentials for a client
-     *
-     * @param Collection $config
-     *
-     * @return Credentials
-     */
-    protected function getDefaultCredentials(Collection $config)
-    {
-        if ($config->get(Options::KEY) && $config->get(Options::SECRET)) {
-            // Credentials were not provided, so create them using keys
-            return Credentials::factory($config->getAll());
-        } else {
-            // Attempt to get credentials from the EC2 instance profile server
-            return new RefreshableInstanceProfileCredentials(new Credentials('', '', '', 1));
-        }
     }
 
     /**

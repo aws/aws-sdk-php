@@ -17,9 +17,9 @@
 namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Credentials\Credentials;
-use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 
@@ -180,14 +180,35 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             )
         );
 
-        // Ensure that default credentials are set
-        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
-        $this->assertSame($creds, $client->getCredentials());
-
         // Ensure that specific credentials can be used
-        $config['credentials'] = null;
-        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
-        $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $client->getCredentials());
+        $client1 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertSame($creds, $client1->getCredentials());
+        unset($config['credentials']);
+
+        // Ensure that the instance metadata service is called when no credentials are supplied
+        $client2 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        try {
+            $client2->getCredentials()->getAccessKeyId();
+            $this->fail('An InstanceProfileCredentialsException should have been thrown.');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('Aws\Common\Exception\InstanceProfileCredentialsException', $e);
+        }
+
+        // Ensure that environment credentials are picked up if supplied via putenv
+        $_SERVER[Credentials::ENV_KEY] = 'server-key';
+        $_SERVER[Credentials::ENV_SECRET] = 'server-secret';
+        $client3 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertEquals('server-key', $client3->getCredentials()->getAccessKeyId());
+        $this->assertEquals('server-secret', $client3->getCredentials()->getSecretKey());
+        unset($_SERVER[Credentials::ENV_KEY], $_SERVER[Credentials::ENV_SECRET]);
+
+        // Ensure that environment credentials are picked up if supplied via putenv
+        putenv(Credentials::ENV_KEY . '=env-key');
+        putenv(Credentials::ENV_SECRET . '=env-secret');
+        $client4 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertEquals('env-key', $client4->getCredentials()->getAccessKeyId());
+        $this->assertEquals('env-secret', $client4->getCredentials()->getSecretKey());
+        putenv(Credentials::ENV_KEY); putenv(Credentials::ENV_SECRET);
     }
 
     public function testAddsDefaultBackoffPluginIfNeeded()
