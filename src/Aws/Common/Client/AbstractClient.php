@@ -67,7 +67,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         $this->signature = $signature;
 
         // Make sure the user agent is prefixed by the SDK version
-        $this->userAgent = 'aws-sdk-php2/' . Aws::VERSION . ' ' . $this->userAgent;
+        $this->setUserAgent('aws-sdk-php2/' . Aws::VERSION, true);
 
         // Add the event listener so that requests are signed before they are sent
         $dispatcher = $this->getEventDispatcher();
