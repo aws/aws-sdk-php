@@ -237,4 +237,21 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $formatter = $this->readAttribute($logger, 'formatter');
         $this->assertEquals('[{ts}] {url}', $this->readAttribute($formatter, 'template'));
     }
+
+    public function testAllowsValidationToBeDisabled()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
+            'validation' => false
+        );
+
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $params = $client->getConfig('command.params');
+        $this->assertTrue($params['command.disable_validation']);
+    }
 }

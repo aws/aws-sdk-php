@@ -138,4 +138,9 @@ class ClientOptions extends Enum
      * @var string Whether or not modeled responses have transformations applied to them
      */
     const MODEL_PROCESSING = 'command.model_processing';
+
+    /**
+     * @var bool Set to false to disable validation
+     */
+    const VALIDATION = 'validation';
 }
