@@ -10,6 +10,7 @@ AWS SDK for PHP 2
     installation
     quick-start
     configuration
+    performance
     faq
 
     migration-guide
@@ -58,6 +59,7 @@ Getting started
 * :doc:`installation`
 * :doc:`quick-start`
 * :doc:`configuration`
+* :doc:`performance`
 * :doc:`faq`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 
