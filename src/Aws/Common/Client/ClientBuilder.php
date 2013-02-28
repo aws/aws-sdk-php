@@ -202,11 +202,13 @@ class ClientBuilder
             $credentials = Credentials::factory($config);
         }
 
-        if (!$config->get(Options::BACKOFF)) {
-            $config->set(Options::BACKOFF, BackoffPlugin::getExponentialBackoff());
+        $backoff = $config->get(Options::BACKOFF);
+        if ($backoff === null) {
+            $backoff = BackoffPlugin::getExponentialBackoff();
+            $config->set(Options::BACKOFF, $backoff);
         }
 
-        if ($backoff = $config->get(Options::BACKOFF)) {
+        if ($backoff) {
             $this->addBackoffLogger($backoff, $config);
         }
 
