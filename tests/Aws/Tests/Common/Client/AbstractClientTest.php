@@ -53,7 +53,7 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         // Ensure that the user agent string is correct
-        $expectedUserAgent = 'aws-sdk-php2/' . Aws::VERSION . ' Guzzle';
+        $expectedUserAgent = 'aws-sdk-php2/' . Aws::VERSION;
         $actualUserAgent = $this->readAttribute($client, 'userAgent');
         $this->assertRegExp("@^{$expectedUserAgent}@", $actualUserAgent);
     }
