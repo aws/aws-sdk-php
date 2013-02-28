@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\CloudWatch\Integration;
+namespace Aws\Tests\CloudSearch\Integration;
 
 use Aws\CloudSearch\CloudSearchClient;
 
