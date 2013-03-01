@@ -407,9 +407,15 @@ a:hover tt {
 #menu {
     padding: 12px;
     margin: 0 0 24 px;
-    background-color: #eee;
-    height: 20px;
-    border-bottom: 1px solid #c0c0c0;
+    height: 28px;
+    background: #ccecff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ccecff 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ccecff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ccecff 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ccecff 0%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ccecff 0%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ccecff 0%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccecff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
 
 .width-wrapper {
@@ -419,8 +425,9 @@ a:hover tt {
 
 #menu #left-logo {
     float: left;
-    margin-right: 105px;
+    margin-right: 85px;
     font-weight: bold;
+    margin-left: 20px;
 }
 #menu #main-menu {
     float: left;
