@@ -8,6 +8,7 @@ as a guide that will help you to achieve optimal performance with the SDK.
 .. contents::
    :depth: 1
    :local:
+   :class: inline-toc
 
 Upgrade PHP
 -----------
