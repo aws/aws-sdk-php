@@ -9,6 +9,7 @@
 {% set page_width = '960px' %}
 {% set sidebar_width = '220px' %}
 {% set font_family = 'Helvetica, arial, freesans, clean, sans-serif' %}
+{% set blue_link = 'rgb(0, 89, 160)' %}
 
 @import url("basic.css");
 
@@ -142,10 +143,14 @@ div.sphinxsidebar input {
     font-size: 1em;
 }
 
+p.feedback a {
+    color: {{ blue_link }};
+}
+
 /* -- body styles ----------------------------------------------------------- */
 
 a {
-    color: rgb(0, 89, 160);
+    color: {{ blue_link }};
     text-decoration: none;
 }
 
