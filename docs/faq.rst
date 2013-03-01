@@ -41,7 +41,7 @@ You can disable SSL by setting the ``scheme`` parameter in a client factory meth
 .. code-block:: php
 
     $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region' => 'us-east-1',
+        'region' => 'us-west-2',
         'scheme' => 'http'
     ));
 
@@ -80,7 +80,7 @@ simply attach a debug log plugin to your client.
     use Guzzle\Plugin\Log\LogPlugin;
 
     // Create an Amazon S3 client
-    $s3Client = S3Client::factory(array('region' => 'us-east-1'));
+    $s3Client = S3Client::factory();
 
     // Add a debug log plugin
     $s3Client->addSubscriber(LogPlugin::getDebugPlugin());
@@ -105,7 +105,7 @@ For more complex logging or logging to a file, you can build a LogPlugin manuall
     $logPlugin = new LogPlugin($logger);
 
     // Create an Amazon S3 client
-    $s3Client = S3Client::factory(array('region' => 'us-east-1'));
+    $s3Client = S3Client::factory();
 
     // Add the LogPlugin to the client
     $s3Client->addSubscriber($logPlugin);
@@ -120,7 +120,7 @@ shows how to add an ``X-Foo-Baz`` header to an Amazon S3 PutObject operation.
 
 .. code-block:: php
 
-    $s3Client = S3Client::factory(array('region' => 'us-east-1'));
+    $s3Client = S3Client::factory();
     $s3Client->putObject(array(
         'Key'    => 'test',
         'Bucket' => 'mybucket',
