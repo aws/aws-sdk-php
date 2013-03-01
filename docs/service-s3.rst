@@ -32,16 +32,16 @@ The above example creates a bucket in the standard US-EAST-1 region. You can cha
 
     $client->createBucket(array(
         'Bucket'             => 'mybucket',
-        'LocationConstraint' => Region::EU_WEST_1
+        'LocationConstraint' => Region::US_WEST_2
     ));
 
-You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the ``EU_WEST_1``
+You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the ``US_WEST_2``
 constant. The SDK provides various Enum classes under the ``Aws\Common\Enum`` namespace that can be useful for
 remembering available values and ensuring you do not enter a typo.
 
 .. note::
 
-    Using the enum classes is not required. You could have simply pass 'eu-west-1' in the ``LocationConstraint`` key.
+    Using the enum classes is not required. You could have simply pass 'us-west-2' in the ``LocationConstraint`` key.
 
 Waiting until the bucket exists
 -------------------------------

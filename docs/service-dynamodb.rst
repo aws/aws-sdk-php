@@ -72,7 +72,7 @@ Listing tables
 You can retrieve a list of all of the tables associated with a specific endpoint using the
 `listTables() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_listTables>`_
 method. Each Amazon DynamoDB endpoint is entirely independent. For example, if you have two tables called "MyTable," one
-in US-EAST-1 and one in US-WEST-1, they are completely independent and do not share any data. The ListTables operation
+in US-EAST-1 and one in US-WEST-2, they are completely independent and do not share any data. The ListTables operation
 returns all of the table names associated with the account making the request, for the endpoint that receives the
 request.
 

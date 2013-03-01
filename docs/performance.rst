@@ -175,7 +175,7 @@ typically be disabled in production by setting the ``validation`` option in a cl
 .. code-block:: php
 
     $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region'     => 'us-east-1',
+        'region'     => 'us-west-2',
         'validation' => false
     ));
 
@@ -193,7 +193,7 @@ utilize the `Doctrine Cache <https://github.com/doctrine/cache>`_ PHP library to
 .. code-block:: php
 
     $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region'            => 'us-east-1',
+        'region'            => 'us-west-2',
         'credentials.cache' => true
     ));
 
@@ -236,7 +236,7 @@ You can check to see if you are being throttled by enabling the exponential back
 .. code-block:: php
 
     $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region' => 'us-east-1',
+        'region'                => 'us-west-2',
         'client.backoff.logger' => 'debug'
     ));
 
@@ -284,6 +284,6 @@ set 'client.backoff' to ``false`` when creating a client.
 .. code-block:: php
 
     $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region'         => 'us-east-1',
+        'region'         => 'us-west-2',
         'client.backoff' => false
     ));
