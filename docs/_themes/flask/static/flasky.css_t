@@ -6,16 +6,17 @@
  * :license: Flask Design License, see LICENSE for details.
  */
 
-{% set page_width = '940px' %}
+{% set page_width = '960px' %}
 {% set sidebar_width = '220px' %}
+{% set font_family = 'Helvetica, arial, freesans, clean, sans-serif' %}
 
 @import url("basic.css");
 
 /* -- page layout ----------------------------------------------------------- */
 
 body {
-    font-family: 'Georgia', serif;
-    font-size: 17px;
+    font-family: {{ font_family }};
+    font-size: 15px;
     background-color: white;
     color: #000;
     margin: 0;
@@ -74,7 +75,6 @@ div.related {
 div.sphinxsidebar a {
     color: #444;
     text-decoration: none;
-    border-bottom: 1px dotted #999;
 }
 
 div.sphinxsidebar a:hover {
@@ -88,7 +88,6 @@ div.sphinxsidebar {
 
 div.sphinxsidebarwrapper {
     padding: 0 10px 18px;
-
 }
 
 div.sphinxsidebarwrapper p.logo {
@@ -99,7 +98,7 @@ div.sphinxsidebarwrapper p.logo {
 
 div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
-    font-family: 'Garamond', 'Georgia', serif;
+    font-family: {{ font_family }};
     color: #444;
     font-size: 24px;
     font-weight: normal;
@@ -139,15 +138,15 @@ div.sphinxsidebar ul {
 
 div.sphinxsidebar input {
     border: 1px solid #ccc;
-    font-family: 'Georgia', serif;
+    font-family: {{ font_family }};
     font-size: 1em;
 }
 
 /* -- body styles ----------------------------------------------------------- */
 
 a {
-    color: #004B6B;
-    text-decoration: underline;
+    color: rgb(0, 89, 160);
+    text-decoration: none;
 }
 
 a:hover {
@@ -161,7 +160,7 @@ div.body h3,
 div.body h4,
 div.body h5,
 div.body h6 {
-    font-family: 'Garamond', 'Georgia', serif;
+    font-family: {{ font_family }};
     font-weight: normal;
     margin: 30px 0px 10px 0px;
     padding: 0;
@@ -175,9 +174,9 @@ div.indexwrapper h1 {
 }
 {% endif %}
 
-div.body h1 { margin-top: 0; padding-top: 0; font-size: 240%; }
-div.body h2 { font-size: 180%; }
-div.body h3 { font-size: 150%; }
+div.body h1 { margin-top: 0; padding-top: 0; font-size: 240%; font-weight: bold; }
+div.body h2 { font-size: 180%; border-bottom: 1px solid #ccc; padding-bottom: 6px; font-weight: bold; }
+div.body h3 { font-size: 150%; font-weight: bold; }
 div.body h4 { font-size: 130%; }
 div.body h5 { font-size: 100%; }
 div.body h6 { font-size: 100%; }
@@ -194,12 +193,12 @@ a.headerlink:hover {
 }
 
 div.body p, div.body dd, div.body li {
-    line-height: 1.4em;
+    line-height: 1.5em;
 }
 
 div.admonition {
     background: #fafafa;
-    margin: 20px -30px;
+    margin: 20px 0;
     padding: 10px 30px;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
@@ -215,9 +214,9 @@ dd div.admonition {
 }
 
 div.admonition p.admonition-title {
-    font-family: 'Garamond', 'Georgia', serif;
+    font-family: {{ font_family }};
     font-weight: normal;
-    font-size: 24px;
+    font-size: 22px;
     margin: 0 0 10px 0;
     padding: 0;
     line-height: 1;
@@ -236,8 +235,9 @@ dt:target, .highlight {
 }
 
 div.note {
-    background-color: #eee;
+    background-color: #f8f8f8;
     border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 div.seealso {
@@ -246,7 +246,7 @@ div.seealso {
 }
 
 div.topic {
-    background-color: #eee;
+    background-color: #f8f8f8;
 }
 
 p.admonition-title {
@@ -348,15 +348,17 @@ ul, ol {
 }
 
 pre {
-    background: #eee;
-    padding: 7px 30px;
-    margin: 15px -30px;
-    line-height: 1.3em;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px;
 }
 
 dl pre, blockquote pre, li pre {
-    margin-left: -60px;
-    padding-left: 60px;
+
 }
 
 dl dl pre {
@@ -377,7 +379,6 @@ tt.xref, a tt {
 
 a.reference {
     text-decoration: none;
-    border-bottom: 1px dotted #004B6B;
 }
 
 a.reference:hover {
@@ -388,7 +389,6 @@ a.footnote-reference {
     text-decoration: none;
     font-size: 0.7em;
     vertical-align: top;
-    border-bottom: 1px dotted #004B6B;
 }
 
 a.footnote-reference:hover {
@@ -419,7 +419,7 @@ a:hover tt {
 
 #menu #left-logo {
     float: left;
-    margin-right: 70px;
+    margin-right: 105px;
     font-weight: bold;
 }
 #menu #main-menu {
@@ -432,6 +432,7 @@ a:hover tt {
     margin: 0 30px 0 0;
     padding: 0;
     float: left;
+    font-weight: bold;
 }
 #menu a {
     text-decoration: none;
@@ -441,6 +442,9 @@ a:hover tt {
 }
 
 #footer-links {
+    border-top: 1px solid #ccc;
+    padding-top: 12px;
+    margin-top: 30px;
     height: 30px;
 }
 
@@ -449,4 +453,14 @@ a:hover tt {
     display: block;
     padding: 0 0 0 20px;
     float: right;
+}
+
+.inline-toc {
+    background-color: #fff !important;
+    border: none !important;
+    padding: 0 0 0 14px !important;
+}
+
+div .warning {
+    background: rgb(255, 242, 242);
 }
