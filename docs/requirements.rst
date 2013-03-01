@@ -22,27 +22,5 @@ Minimum requirements
 Optimal settings
 ----------------
 
-* PHP 5.3.18+ or PHP 5.4+
-* Install an opcode cache
-* Disable Xdebug
-
-Opcode cache
-~~~~~~~~~~~~
-
-To improve the overall performance of your PHP environment, as well as to enable in-memory caching, it is highly
-recommended that you install an opcode cache such as APC, XCache, or WinCache. When using APC, it is recommended that
-you set the ``apc.shm_size`` INI setting to be 64MB *or higher* (this value may be based on the other frameworks used
-by your application).
-
-Turn off Xdebug
-~~~~~~~~~~~~~~~
-
-If performance is critical to your application, do not install the Xdebug extension in your production environment.
-Simply loading the extension will greatly slow down the SDK.
-
-PECL extensions
-~~~~~~~~~~~~~~~
-
-For even more performance, consider installing the PECL URI_Template extension::
-
-    pecl install uri_template-alpha
+Please consult the :doc:`performance` for a list of recommendations and optimal settings that can be made to
+ensure that you are using the SDK as efficiently as possible.
