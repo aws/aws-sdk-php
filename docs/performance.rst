@@ -243,25 +243,6 @@ You can check to see if you are being throttled by enabling the exponential back
 When using Amazon DynamoDB, you can monitor your tables for throttling using
 `Amazon CloudWatch <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/MonitoringDynamoDB.html#CloudwatchConsole_DynamoDB>`_.
 
-Disable SSL
------------
-
-.. warning::
-
-    Because SSL requires all data to be encrypted and requires more TCP packets to complete a connection handshake than
-    just TCP, disabling SSL may provide a small performance improvement. However, with SSL disabled, all data is sent
-    over the wire unencrypted. Before disabling SSL, you must carefully consider the security implications and the
-    potential for eavesdropping over the network.
-
-You can disable SSL by setting the ``scheme`` parameter in a client factory method to 'http'.
-
-.. code-block:: php
-
-    $client = Aws\DynamoDb\DynamoDbClient::factory(array(
-        'region' => 'us-east-1',
-        'scheme' => 'http'
-    ));
-
 Profile your code to find performance bottlenecks
 -------------------------------------------------
 

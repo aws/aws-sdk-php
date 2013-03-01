@@ -26,6 +26,25 @@ in a client's factory method or the configuration settings used with
 
 You can find out more about how cURL bundles the CA bundle here: http://curl.haxx.se/docs/caextract.html
 
+How do I disable SSL?
+---------------------
+
+.. warning::
+
+    Because SSL requires all data to be encrypted and requires more TCP packets to complete a connection handshake than
+    just TCP, disabling SSL may provide a small performance improvement. However, with SSL disabled, all data is sent
+    over the wire unencrypted. Before disabling SSL, you must carefully consider the security implications and the
+    potential for eavesdropping over the network.
+
+You can disable SSL by setting the ``scheme`` parameter in a client factory method to 'http'.
+
+.. code-block:: php
+
+    $client = Aws\DynamoDb\DynamoDbClient::factory(array(
+        'region' => 'us-east-1',
+        'scheme' => 'http'
+    ));
+
 How can I make the SDK faster?
 ------------------------------
 
