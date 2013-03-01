@@ -21,8 +21,10 @@ use Aws\Redshift\RedshiftClient;
 /**
  * @group integration
  */
-class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
+class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
+    const SECURITY_GROUP_NAME = 'phpintegtestsecuritygroup';
+
     /**
      * @var RedshiftClient
      */
@@ -33,7 +35,57 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->redshift = $this->getServiceBuilder()->get('redshift');
     }
 
-    public function testBasicInstanceOperations()
+    public function testCreatesSecurityGroup()
+    {
+        self::log('Create a cluster security group');
+        $result = $this->redshift->createClusterSecurityGroup(array(
+            'ClusterSecurityGroupName' => self::SECURITY_GROUP_NAME,
+            'Description'              => 'PHP Integ Test Cluster Security Group',
+        ));
+        $this->assertEquals(self::SECURITY_GROUP_NAME, $result->get('ClusterSecurityGroupName'));
+        $this->assertTrue($result->hasKey('EC2SecurityGroups'));
+        $this->assertTrue($result->hasKey('ResponseMetadata'));
+    }
+
+    /**
+     * @depends testCreatesSecurityGroup
+     */
+    public function testListsSecurityGroups()
+    {
+        self::log('List cluster security groups');
+        $found = false;
+        foreach ($this->redshift->getIterator('DescribeClusterSecurityGroups') as $group) {
+            if ($group['ClusterSecurityGroupName'] == self::SECURITY_GROUP_NAME) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, 'Did not find cluster security group ' . self::SECURITY_GROUP_NAME);
+    }
+
+    /**
+     * @depends testListsSecurityGroups
+     */
+    public function testDeletesSecurityGroups()
+    {
+        self::log('Delete cluster security group');
+        $this->redshift->deleteClusterSecurityGroup(array('ClusterSecurityGroupName' => self::SECURITY_GROUP_NAME));
+    }
+
+    public function testDescribeEventsIterator()
+    {
+        $maxRecords = 25;
+        $events = $this->redshift->getIterator('DescribeEvents', array(
+            'StartTime'  => strtotime('-13 days'),
+            'EndTime'    => strtotime('now'),
+            'MaxRecords' => $maxRecords,
+        ));
+        $total = iterator_count($events);
+        $expected = ceil($total / $maxRecords);
+        $this->assertEquals($expected ?: 1, $events->getRequestCount());
+    }
+
+    public function exampleTestBasicClusterOperations()
     {
         $clusterId = 'php-integ-redshift-cluster-' . time();
         $snapshotId = 'php-integ-redshift-snapshot-' . time();
@@ -87,18 +139,5 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->redshift->waitUntilClusterDeleted(array(
             'ClusterIdentifier' => $clusterId,
         ));
-    }
-
-    public function testDescribeEventsIterator()
-    {
-        $maxRecords = 25;
-        $events = $this->redshift->getIterator('DescribeEvents', array(
-            'StartTime'  => strtotime('-13 days'),
-            'EndTime'    => strtotime('now'),
-            'MaxRecords' => $maxRecords,
-        ));
-        $total = iterator_count($events);
-        $expected = ceil($total / $maxRecords);
-        $this->assertEquals($expected ?: 1, $events->getRequestCount());
     }
 }
