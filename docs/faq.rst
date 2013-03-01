@@ -26,6 +26,11 @@ in a client's factory method or the configuration settings used with
 
 You can find out more about how cURL bundles the CA bundle here: http://curl.haxx.se/docs/caextract.html
 
+How can I make the SDK faster?
+------------------------------
+
+See :doc:`performance` for more information.
+
 Why can't I upload or download files greater than 2GB?
 ------------------------------------------------------
 
@@ -40,11 +45,6 @@ The recommended solution is to use a `64-bit Linux stack <http://aws.amazon.com/
 such as the 64-bit Amazon Linux AMI with the latest version of PHP installed.
 
 For more information, please see: `PHP filesize :Return values <http://docs.php.net/manual/en/function.filesize.php#refsect1-function.filesize-returnvalues>`_.
-
-How can I make the SDK faster?
-------------------------------
-
-See: :ref:`optimal-settings`
 
 How can I see what data is sent over the wire?
 ----------------------------------------------
