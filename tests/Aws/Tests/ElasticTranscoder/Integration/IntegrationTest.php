@@ -25,8 +25,8 @@ use Aws\S3\S3Client;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
-    const IAM_POLICY_ASSUME_ROLE = '{"Statement":[{"Effect":"Allow","Principal":{"Service":["ec2.amazonaws.com"]},"Action":["sts:AssumeRole"]}]}';
-    const IAM_POLICY_ALLOW_S3 = '{"Statement":[{"Effect":"Allow","Action":"s3:*","Resource":"*"}]}';
+    const DUMMY_IAM_POLICY_ASSUME_ROLE = '{"Statement":[{"Effect":"Allow","Principal":{"Service":["ec2.amazonaws.com"]},"Action":["sts:AssumeRole"]}]}';
+    const DUMMY_IAM_POLICY_ALLOW_S3 = '{"Statement":[{"Effect":"Allow","Action":"s3:*","Resource":"*"}]}';
 
     /**
      * @var ElasticTranscoderClient
@@ -71,7 +71,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Create an IAM Role for the Elastic Transcoder pipeline.');
         $result = $this->iam->getCommand('CreateRole', array(
             'RoleName'                 => $roleName,
-            'AssumeRolePolicyDocument' => self::IAM_POLICY_ASSUME_ROLE,
+            'AssumeRolePolicyDocument' => self::DUMMY_IAM_POLICY_ASSUME_ROLE,
         ))->getResult();
         $roleArn = $result->getPath('Role/Arn');
 
@@ -79,8 +79,17 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->iam->getCommand('PutRolePolicy', array(
             'PolicyName'     => $policyName,
             'RoleName'       => $roleName,
-            'PolicyDocument' => self::IAM_POLICY_ALLOW_S3,
+            'PolicyDocument' => self::DUMMY_IAM_POLICY_ALLOW_S3,
         ))->getResult();
+
+        self::log('Use TestRole to validate our pipeline inputs. NOTE: Ours are not valid on purpose.');
+        $result = $this->transcoder->getCommand('TestRole', array(
+            'InputBucket'   => $inputBucket,
+            'OutputBucket'  => $outputBucket,
+            'Role'          => $roleArn,
+            'Topics' => array(),
+        ))->getResult();
+        $this->assertEquals('false', $result['Success']);
 
         self::log('Create an Elastic Transcoder pipeline.');
         $result = $this->transcoder->getCommand('CreatePipeline', array(
