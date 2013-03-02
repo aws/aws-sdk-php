@@ -31,11 +31,6 @@ You can supply your credentials and other configuration settings to the service 
 instantiated with those settings. To do this, pass an array of settings (including your ``key`` and ``secret``) into the
 first argument of ``Aws\Common\Aws::factory()``.
 
-.. note::
-
-    Instantiating a client without providing credentials causes the client to attempt to retrieve `IAM Instance Profile
-    credentials <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
-
 Using a Custom Configuration File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -68,7 +63,7 @@ configuration file in the first argument of the ``factory()`` method:
 
     <?php
 
-    require 'aws.phar';
+    require 'vendor/autoload.php';
 
     use Aws\Common\Aws;
 
@@ -116,3 +111,49 @@ If you prefer JSON syntax, you can define your configuration in JSON format inst
             }
         }
     }
+
+What Happens If You Do Not Provide Credentials?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The SDK needs your AWS Access Key ID and Secret Access Key in order to make requests to AWS. However, you are not
+required to provide your credentials at the time you instantiate the SDK or service client.
+
+Using Environment Credentials
+-----------------------------
+
+If you do not provide credentials, the SDK will attempt to find credentials in your environment by checking in
+``$_SERVER`` and using the ``getenv()`` function to look for the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_KEY``
+environment variables.
+
+If you are hosting your application on AWS Elastic Beanstalk, you can set the ``AWS_ACCESS_KEY_ID`` and
+``AWS_SECRET_KEY`` environment variables through the AWS Elastic Beanstalk console so that the SDK can use those
+credentials automatically.
+
+Using Instance Profile Credentials
+----------------------------------
+
+If you do not provide credentials and there are no environment credentials available, the SDK will attempt to retrieve
+`IAM Instance Profile credentials <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
+These credentials are only available on Amazon EC2 instances configured with an Instance Profile.
+
+If absolutely no credentials are provided or found, you will receive an
+``Aws\Common\Exception\InstanceProfileCredentialsException`` when you try to make a request.
+
+Manually Setting Credentials
+----------------------------
+
+You can also manually set your credentials after the service client has been instantiated by using the ``Credentials``
+object.
+
+.. code-block:: php
+
+    <?php
+
+    require 'vendor/autoload.php';
+
+    use Aws\S3\S3Client;
+
+    $s3 = S3Client::factory();
+    $credentials = $s3->getCredentials();
+    $credentials->setAccessKeyId('your-aws-access-key-id');
+    $credentials->setSecretKey('your-aws-secret-access-key');
