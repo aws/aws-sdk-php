@@ -14,11 +14,11 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sns\Validator\Exception;
+namespace Aws\Sns\MessageValidator\Exception;
 
 use Aws\Sns\Exception;
 
 /**
- * Indicates that the openssl extensin for PHP is not loaded.
+ * Indicates that the validator message class could not be created by the factory.
  */
-class OpenSSLExtensionNotFoundException extends Exception\SnsException {}
+class CannotCreateValidatorMessage extends Exception\SnsException {}
