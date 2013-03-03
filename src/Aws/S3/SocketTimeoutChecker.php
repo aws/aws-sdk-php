@@ -35,7 +35,7 @@ class SocketTimeoutChecker extends AbstractBackoffStrategy
     const ERR = 'Your socket connection to the server was not read from or written to within the timeout period';
 
     /**
-     * Create the internal parser
+     * {@inheridoc}
      */
     public function __construct(BackoffStrategyInterface $next = null)
     {
