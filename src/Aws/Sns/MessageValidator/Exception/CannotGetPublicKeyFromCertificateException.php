@@ -14,16 +14,11 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sns\Validator\Strategy;
+namespace Aws\Sns\MessageValidator\Exception;
 
-interface StrategyInterface
-{
-    /**
-     * Takes the necessary notification components and builds
-     * a newline delimited signature body according to the
-     * specs: http://docs.aws.amazon.com/sns/latest/gsg/SendMessageToHttp.verify.signature.html
-     *
-     * @return string Signature body
-     */
-    public function buildSignatureBody(\stdClass $jsonMessage);
-}
+use Aws\Sns\Exception;
+
+/**
+ * Indicates that the public key can't be extracted from the the certificate.
+ */
+class CannotGetPublicKeyFromCertificateException extends Exception\SnsException {}

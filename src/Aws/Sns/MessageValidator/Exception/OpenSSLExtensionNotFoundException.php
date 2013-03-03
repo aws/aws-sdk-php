@@ -14,11 +14,11 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sns\Validator\Exception;
+namespace Aws\Sns\MessageValidator\Exception;
 
 use Aws\Sns\Exception;
 
 /**
- * Indicates that the public key can't be extracted from the the certificate.
+ * Indicates that the openssl extensin for PHP is not loaded.
  */
-class CannotGetPublicKeyFromCertificateException extends Exception\SnsException {}
+class OpenSSLExtensionNotFoundException extends Exception\SnsException {}
