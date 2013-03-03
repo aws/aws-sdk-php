@@ -27,8 +27,13 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
 use Guzzle\Common\Collection;
-use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
+use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
+use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
+use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
+use Guzzle\Plugin\Backoff\ExponentialBackoffStrategy;
+use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
@@ -171,6 +176,21 @@ class S3Client extends AbstractClient
      */
     public static function factory($config = array())
     {
+        // Configure the custom exponential backoff plugin for retrying S3 specific errors
+        if (!isset($config[Options::BACKOFF])) {
+            $config[Options::BACKOFF] = new BackoffPlugin(
+                new TruncatedBackoffStrategy(3,
+                    new HttpBackoffStrategy(null,
+                        new SocketTimeoutChecker(
+                            new CurlBackoffStrategy(null,
+                                new ExponentialBackoffStrategy()
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
