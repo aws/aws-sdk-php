@@ -22,15 +22,10 @@ is compatible with PHP 5.3.3 and newer, and follows the PSR-0 standard for names
 Which Services are Supported?
 -----------------------------
 
-The AWS SDK for PHP 2 does not currently support all AWS services. However, we will incrementally add support for the
-other services in upcoming releases to the Version 2 SDK.
-
-Fortunately, it is straightforward to use the previous SDK side-by-side with this version. This enables using the SDK
-for the services it supports while relying on the prior SDK for those it does not. Please see the :doc:`side-by-side`
-for details.
-
-Follow our `AWS SDK for PHP 2 GitHub repository <https://github.com/aws/aws-sdk-php>`_ to stay up-to-date with the
-latest changes.
+The AWS SDK for PHP 2 supports all of the AWS services supported by Version 1 of the SDK and more, including Amazon
+Route 53, Amazon Glacier, and AWS Direct Connect. See the `AWS SDK for PHP website <http://aws.amazon.com/sdkforphp/>`_
+for the full list of services supported by the SDK. Be sure to watch or star our `AWS SDK for PHP 2 GitHub repository
+<https://github.com/aws/aws-sdk-php>`_ to stay up-to-date with the latest changes.
 
 What's New?
 -----------
@@ -84,7 +79,8 @@ What's Different?
   (e.g., ``putObject`` instead of ``put_object``).
 
 - **Required Regions** – The `region <http://docs.amazonwebservices.com/general/latest/gr/rande.html>`_ must be
-  explicitly provided to instantiate a client. The AWS region you select may affect your both performance and costs.
+  explicitly provided to instantiate a client (except in the case where the service has a single endpoint like Amazon
+  CloudFront). The AWS region you select may affect both your performance and costs.
 
 - **Client Factories** – Factory methods instantiate service clients and do the work of setting up the signature,
   exponential backoff settings, exception handler, and so forth. At a minimum you must provide your access key, secret
@@ -93,7 +89,7 @@ What's Different?
 
   .. code-block:: php
 
-    $s3 = Aws\S3\S3Client::factory(array(
+    $dynamodb = Aws\DynamoDb\DynamoDbClient::factory(array(
         'key'    => 'your-aws-access-key-id',
         'secret' => 'your-aws-secret-access-key',
         'region' => 'us-west-2',
