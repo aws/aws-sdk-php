@@ -34,7 +34,7 @@ abstract class AbstractMessage implements MessageInterface
      * @param array $data
      *
      * @return MessageInterface
-     * @throws ExceptionOfSomeSort
+     * @throws Exception\CannotCreateValidatorMessage
      */
     public static function fromArray(array $data)
     {
