@@ -12,10 +12,11 @@ guide.
 
 If you run the above code example unaltered, you'll probably trigger the following exception::
 
-    PHP Fatal error:  Uncaught Aws\S3\Exception\BucketAlreadyExistsException: AWS Error Code: BucketAlreadyExists,
-    Status Code: 409, AWS Request ID: D94E6394791E98A4, AWS Error Type: client, AWS Error Message: The requested bucket
-    name is not available. The bucket namespace is shared by all users of the system. Please select a different name
-    and try again.
+    PHP Fatal error:  Uncaught Aws\S3\Exception\BucketAlreadyExistsException: AWS Error
+    Code: BucketAlreadyExists, Status Code: 409, AWS Request ID: D94E6394791E98A4,
+    AWS Error Type: client, AWS Error Message: The requested bucket name is not
+    available. The bucket namespace is shared by all users of the system. Please select
+    a different name and try again.
 
 This is because bucket names in Amazon S3 reside in a global namespace. You'll need to change the actual name of the
 bucket used in the examples of this tutorial in order for them to work correctly.
@@ -347,5 +348,6 @@ object.
 .. code-block:: php
 
     $disposition = "attachment; filename=\"{$key}\"";
-    $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$disposition}");
-    $url = $this->client->createPresignedUrl($request, '+10 minutes');
+    $url = "{$this->bucket}/{$key}?response-content-disposition={$disposition}"
+    $request = $this->client->get($url);
+    $signed = $this->client->createPresignedUrl($request, '+10 minutes');
