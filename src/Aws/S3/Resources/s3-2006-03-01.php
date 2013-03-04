@@ -2552,6 +2552,10 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'Content-Language',
                 ),
+                'ContentMD5' => array(
+                    'description' => 'Content-MD5 checksum of the body. Set to false to disable',
+                    'default' => true,
+                ),
                 'ContentType' => array(
                     'description' => 'A standard MIME type describing the format of the object data.',
                     'type' => 'string',
@@ -2634,10 +2638,6 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-website-redirect-location',
-                ),
-                'ContentMD5' => array(
-                    'description' => 'Content-MD5 checksum of the body. Set to false to disable',
-                    'default' => true,
                 ),
                 'ValidateMD5' => array(
                     'description' => 'Whether or not the Content-MD5 header of the response is validated. Default is true.',
@@ -3821,6 +3821,11 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-delete-marker',
                 ),
+                'AcceptRanges' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'accept-ranges',
+                ),
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured (see PUT Bucket lifecycle), the response includes this header. It includes the expiry-date and rule-id key value pairs providing object expiration information. The value of the rule-id is URL encoded.',
                     'type' => 'string',
@@ -4032,6 +4037,11 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-delete-marker',
+                ),
+                'AcceptRanges' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'accept-ranges',
                 ),
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured (see PUT Bucket lifecycle), the response includes this header. It includes the expiry-date and rule-id key value pairs providing object expiration information. The value of the rule-id is URL encoded.',
