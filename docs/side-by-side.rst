@@ -6,9 +6,9 @@ This guide helps you install, configure, and run Version 1 and Version 2 of the 
 same application or project. Please see the :doc:`migration-guide` for more information on migrating code from the
 original AWS SDK for PHP to Version 2.
 
-The AWS SDK for PHP 2 introduces many desirable new features and advantages, but the initial version of Version 2 does
-not support for *all* of the AWS services supported by Version 1. We will add support for other services in upcoming
-releases to Version 2 of the SDK, but you can begin migrating code now by using the SDKs side-by-side.
+Since Version 2 of the AWS SDK for PHP now supports all of the AWS services supported by Version 1 (and more), it is
+recommended that you should begin migrating your code to use Version 2 of the SDK. Using both SDKs side-by-side may be
+helpful if your use case requires you to migrate only sections of your code at a time.
 
 Installing and Including the SDKs
 ---------------------------------
@@ -147,7 +147,6 @@ configuration data, including your credentials. The ``factory()`` will work for 
     $config = array(
         'key'    => 'your-aws-access-key-id',
         'secret' => 'your-aws-secret-access-key',
-        'region' => 'us-west-2'
     );
 
     // Instantiate Amazon S3 clients from both SDKs via their factory methods
@@ -164,7 +163,6 @@ Optionally, you could alias the classes to make it clearer which version of the 
     $config = array(
         'key'    => 'your-aws-access-key-id',
         'secret' => 'your-aws-secret-access-key',
-        'region' => 'us-west-2'
     );
 
     $s3v1 = S3ClientV1::factory($config);
