@@ -28,6 +28,26 @@ return array (
             'https' => true,
             'hostname' => 'cloudsearch.us-east-1.amazonaws.com',
         ),
+        'us-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.us-west-1.amazonaws.com',
+        ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.eu-west-1.amazonaws.com',
+        ),
+        'ap-southeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.ap-southeast-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'CreateDomain' => array(

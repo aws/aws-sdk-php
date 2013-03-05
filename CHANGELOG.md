@@ -18,6 +18,7 @@ Next Release
 * Added the ability to get a Waiter object from a client using the `getWaiter()` method
 * Added the ability to load credentials from environmental variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_KEY`. This is
   compatible with AWS Elastic Beanstalk environment configurations
+* Added support for using the us-west-1, us-west-2, eu-west-1, and ap-southeast-1 regions with Amazon CloudSearch
 * Updated the Amazon RDS client to use the 2013-01-10 API version
 * Added support for using SecurityToken with signature version 2 services
 * Added the client User-Agent header to exception messages for easier debugging
