@@ -19,6 +19,17 @@ Next Release
 * Added the ability to load credentials from environmental variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_KEY`. This is
   compatible with AWS Elastic Beanstalk environment configurations
 * Updated the Amazon RDS client to use the 2013-01-10 API version
+* Added support for using SecurityToken with signature version 2 services
+* Added the client User-Agent header to exception messages for easier debugging
+* Added an easier way to disable operation parameter validation by setting `validation` to false when creating clients
+* Added the ability to disable the exponential backoff plugin
+* Fixed issue #48 where signing Amazon S3 requests with null or empty metadata resulted in a signature error
+* Fixed issue #29 where Amazon S3 was intermittently closing a connection
+* Updated the Amazon S3 client to parse the AcceptRanges header for HeadObject and GetObject output
+* Updated the Amazon Glacier client to allow the `saveAs` parameter to be specified as an alias for `command.response_body`
+* Various performance improvements throughout the SDK
+* Removed endpoint providers and now placing service region information directly in service descriptions
+* Removed client resolvers when creating clients in a client's factory method (this should not have any impact to end users)
 
 2.1.2 (2013-02-18)
 ------------------
