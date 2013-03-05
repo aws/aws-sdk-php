@@ -39,6 +39,10 @@ class SignatureV2 extends AbstractSignature
         $this->addParameter($request, 'SignatureMethod', 'HmacSHA256');
         $this->addParameter($request, 'AWSAccessKeyId', $credentials->getAccessKeyId());
 
+        if ($token = $credentials->getSecurityToken()) {
+            $this->addParameter($request, 'SecurityToken', $token);
+        }
+
         // Get the path and ensure it's absolute
         $path = '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/');
 
