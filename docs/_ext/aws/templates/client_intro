@@ -2,9 +2,38 @@
 |serviceFullName|
 =================
 
-This guide focuses on the AWS SDK for PHP interface to {{ serviceFullName }}. This guide assumes that you have already
-downloaded and installed the AWS SDK for PHP 2. See :doc:`installation` for more information on getting started. To
-learn more about {{ serviceFullName }}, please visit the service's `documentation website`_.
+This guide focuses on the AWS SDK for PHP interface to `{{ serviceFullName }} <{{ doc_url }}>`_. This guide assumes
+that you have already downloaded and installed the AWS SDK for PHP 2. See :doc:`installation` for more information
+on getting started.
+
+Available operations
+--------------------
+
+Please see the `{{ serviceFullName }} API reference <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.{{ namespace}}.{{ namespace }}Client.html>`_
+for a full list of available methods.
+
+
+{# Here we are creating a list-table. The contents of a list-table looks like:
+    * - Foo
+      - Bar
+    * - Baz
+      - Bam
+
+    We must also ensure that the same number of columns are available for each table row.
+#}
+
+.. list-table::
+    :header-rows: 0
+    :stub-columns: 0
+    :class: api-operations
+
+    {% for key, op in description.operations.iteritems() %}
+    {% if loop.index is odd %}* {% else %}  {% endif %}- `{{ key }} <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.{{ namespace}}.{{ namespace }}Client.html#_{{ op.magicMethod }}>`_
+    {%- if op.documentationUrl %}  (`service docs <{{ op.documentationUrl}}>`_){%- endif %}
+    {%- if loop.last and loop.index is odd %}
+      -
+    {%- endif %}
+    {% endfor %}
 
 Creating a client
 -----------------
@@ -51,5 +80,3 @@ clients so that you only have to specify your keys once.
 
     // You can also get the client by namespace
     $client = $aws->get('{{ namespace }}');
-
-.. _`documentation website`: {{ doc_url }}
