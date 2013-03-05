@@ -75,8 +75,5 @@ clients so that you only have to specify your keys once.
     // Create a service builder using a configuration file
     $aws = Aws::factory('/path/to/my_config.json');
 
-    // Get the {{ serviceFullName }} client by its short name
-    $client = $aws->get('{{ locator_name }}');
-
-    // You can also get the client by namespace
+    // Get the client from the builder by namespace
     $client = $aws->get('{{ namespace }}');
