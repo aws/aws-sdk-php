@@ -18,7 +18,6 @@ namespace Aws\Sns\MessageValidator;
 
 class SubscriptionConfirmationMessage extends AbstractMessage
 {
-
     /**
      * {@inheritdoc}
      */
@@ -32,6 +31,7 @@ class SubscriptionConfirmationMessage extends AbstractMessage
         $body .= sprintf("Token\n%s\n", $this->data['Token']);
         $body .= sprintf("TopicArn\n%s\n", $this->data['TopicArn']);
         $body .= sprintf("Type\n%s\n", $this->data['Type']);
+
         return $body;
     }
 
@@ -55,7 +55,7 @@ class SubscriptionConfirmationMessage extends AbstractMessage
      */
     public function getSubscribeUrl()
     {
-        return $this->data['SubscribeUrl'];
+        return $this->data['SubscribeURL'];
     }
 
     /**
@@ -63,17 +63,6 @@ class SubscriptionConfirmationMessage extends AbstractMessage
      */
     protected static function getRequiredKeys()
     {
-        return array(
-            'Message',
-            'MessageId',
-            'SubscribeURL',
-            'Timestamp',
-            'Token',
-            'TopicArn',
-            'Type',
-            'Signature',
-            'SigningCertURL',
-        );
+        return parent::getRequiredKeys() + array('SubscribeURL', 'Token');
     }
-
 }

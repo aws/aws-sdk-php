@@ -16,39 +16,79 @@
 
 namespace Aws\Sns\MessageValidator;
 
+use Aws\Common\Exception\RequiredExtensionNotLoadedException;
+use Aws\Sns\MessageValidator\Exception\CannotGetPublicKeyFromCertificateException;
+use Aws\Sns\MessageValidator\Exception\CertificateFromUnrecognizedSourceException;
+use Aws\Sns\MessageValidator\Exception\InvalidMessageSignatureException;
+use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
 use Aws\Sns\MessageValidator\MessageInterface;
+use Guzzle\Http\Url;
 
+/**
+ * This class uses openssl to verify SNS messages to ensure that they were sent by AWS.
+ */
 class MessageValidator
 {
-
+    /**
+     * Constructs the Message Validator object and ensures that openssl is installed
+     *
+     * @throws RequiredExtensionNotLoadedException If openssl is not installed
+     */
     public function __construct()
     {
         if (!extension_loaded('openssl')) {
-            throw new Exception\OpenSSLExtensionNotFoundException();
+            throw new RequiredExtensionNotLoadedException('The openssl extension is required to use the SNS Message '
+                . 'Validator. Please install this extension in order to use this feature.');
         }
     }
 
+    /**
+     * Validates a message from SNS to ensure that it was delivered by AWS
+     *
+     * @param MessageInterface $message The message to validate
+     *
+     * @throws CannotGetPublicKeyFromCertificateException If the certificate cannot be retrieved
+     * @throws CertificateFromUnrecognizedSourceException If the certificate's source cannot be verified
+     * @throws InvalidMessageSignatureException           If the message's signature is invalid
+     */
     public function validate(MessageInterface $message)
     {
-        $this->_validateSigningCertURL($message->getSigningCertURL());
-        $certificate = file_get_contents($message->getSigningCertURL());
-
-        $publicKey = openssl_get_publickey($certificate);
-        if (!$publicKey) {
-            throw new Exception\CannotGetPublicKeyFromCertificateException();
+        // Get the cert's URL and ensure it is from AWS
+        $certUrl = Url::factory($message->getSigningCertUrl());
+        if ('.amazonaws.com' != substr($certUrl->getHost(), -14)) {
+            throw new CertificateFromUnrecognizedSourceException();
         }
 
-        $signatureBody = $message->getStringToSign();
+        // Get the cert itself and extract the public key
+        $certificate = file_get_contents((string) $certUrl);
+        $publicKey = openssl_get_publickey($certificate);
+        if (!$publicKey) {
+            throw new CannotGetPublicKeyFromCertificateException();
+        }
+
+        // Verify the signature of the message
+        $stringToSign = $message->getStringToSign();
         $incomingSignature = base64_decode($message->getSignature());
-        return openssl_verify($signatureBody, $incomingSignature, $publicKey, OPENSSL_ALGO_SHA1);
+        if (!openssl_verify($stringToSign, $incomingSignature, $publicKey, OPENSSL_ALGO_SHA1)) {
+            throw new InvalidMessageSignatureException();
+        }
     }
 
-    protected function _validateSigningCertURL($url)
+    /**
+     * Determines if a message is valid and that is was delivered by AWS. This method does not throw exceptions and
+     * returns a simple boolean value.
+     *
+     * @param MessageInterface $message The message to validate
+     *
+     * @return bool
+     */
+    public function checkIfValid(MessageInterface $message)
     {
-        $parsedUrl = parse_url($url);
-
-        if ('.amazonaws.com' != substr($parsedUrl['host'], -14)) {
-            throw new Exception('Certificate is not coming from Amazon.');
+        try {
+            $this->validate($message);
+            return true;
+        } catch (SnsMessageValidatorException $e) {
+            return false;
         }
     }
 }

@@ -16,9 +16,9 @@
 
 namespace Aws\Sns\MessageValidator\Exception;
 
-use Aws\Sns\Exception;
+use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
 
 /**
- * Indicates that the openssl extensin for PHP is not loaded.
+ * Indicates that certificate was from an unrecognized source.
  */
-class OpenSSLExtensionNotFoundException extends Exception\SnsException {}
+class CertificateFromUnrecognizedSourceException extends SnsMessageValidatorException {}
