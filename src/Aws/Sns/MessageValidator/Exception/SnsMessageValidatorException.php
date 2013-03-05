@@ -16,9 +16,9 @@
 
 namespace Aws\Sns\MessageValidator\Exception;
 
-use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
+use Aws\Common\Exception\RuntimeException;
 
 /**
- * Indicates that the public key can't be extracted from the the certificate.
+ * Generic exception thrown by the SNS Message Validator.
  */
-class CannotGetPublicKeyFromCertificateException extends SnsMessageValidatorException {}
+class SnsMessageValidatorException extends RuntimeException {}

@@ -16,9 +16,9 @@
 
 namespace Aws\Sns\MessageValidator\Exception;
 
-use Aws\Sns\Exception;
+use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
 
 /**
- * Indicates that the validator message class could not be created by the factory.
+ * Indicates that the signature for SNS message was invalid.
  */
-class CannotCreateValidatorMessage extends Exception\SnsException {}
+class InvalidMessageSignatureException extends SnsMessageValidatorException {}

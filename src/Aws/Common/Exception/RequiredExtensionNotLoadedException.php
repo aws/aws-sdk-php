@@ -14,11 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sns\MessageValidator\Exception;
-
-use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
+namespace Aws\Common\Exception;
 
 /**
- * Indicates that the public key can't be extracted from the the certificate.
+ * Thrown when a particular PHP extension is required to execute the guarded logic, but the extension is not loaded
  */
-class CannotGetPublicKeyFromCertificateException extends SnsMessageValidatorException {}
+class RequiredExtensionNotLoadedException extends RuntimeException {}

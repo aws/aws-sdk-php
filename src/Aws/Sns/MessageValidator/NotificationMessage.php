@@ -18,7 +18,6 @@ namespace Aws\Sns\MessageValidator;
 
 class NotificationMessage extends AbstractMessage
 {
-
     /**
      * {@inheritdoc}
      */
@@ -27,14 +26,13 @@ class NotificationMessage extends AbstractMessage
         $body = '';
         $body .= sprintf("Message\n%s\n", $this->data['Message']);
         $body .= sprintf("MessageId\n%s\n", $this->data['MessageId']);
-
-        if (isset($this->data['Subject']) && '' != $this->data['Subject']) {
+        if ($this->data['Subject']) {
             $body .= sprintf("Subject\n%s\n", $this->data['Subject']);
         }
-
         $body .= sprintf("Timestamp\n%s\n", $this->data['Timestamp']);
         $body .= sprintf("TopicArn\n%s\n", $this->data['TopicArn']);
         $body .= sprintf("Type\n%s\n", $this->data['Type']);
+
         return $body;
     }
 
@@ -49,21 +47,5 @@ class NotificationMessage extends AbstractMessage
     public function getSubject()
     {
         return $this->data['Subject'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static function getRequiredKeys()
-    {
-        return array(
-            'Message',
-            'MessageId',
-            'Timestamp',
-            'TopicArn',
-            'Type',
-            'Signature',
-            'SigningCertURL',
-        );
     }
 }

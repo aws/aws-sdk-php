@@ -73,7 +73,7 @@ interface MessageInterface
      *
      * @var string
      */
-    public function getSigningCertURL();
+    public function getSigningCertUrl();
 
     /**
      * The entire message data
