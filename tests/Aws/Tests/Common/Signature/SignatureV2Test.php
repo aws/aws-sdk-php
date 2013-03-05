@@ -43,6 +43,20 @@ class SignatureV2Test extends \Guzzle\Tests\GuzzleTestCase
         return $signature;
     }
 
+    public function testSignsRequestsWithSecurityToken()
+    {
+        $request = RequestFactory::getInstance()->create('POST', 'http://foo.com');
+        $request->addPostFields(array('Test' => '123'));
+        $request->removeHeader('User-Agent')->removeHeader('Content-Length');
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET, 'foo');
+        $signature = $this->getSignature();
+        $signature->signRequest($request, $credentials);
+        $this->assertEquals(
+            "POST\nfoo.com\n/\nAWSAccessKeyId=AKIDEXAMPLE&SecurityToken=foo&SignatureMethod=HmacSHA256&SignatureVersion=2&Test=123&Timestamp=2011-09-09T23%3A36%3A00%2B00%3A00",
+            $request->getParams()->get('aws.string_to_sign')
+        );
+    }
+
     /**
      * @dataProvider testSuiteProvider
      * @covers Aws\Common\Signature\SignatureV2
