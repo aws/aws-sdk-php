@@ -16,33 +16,38 @@
 
 namespace Aws\Sns\MessageValidator;
 
+use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Collection;
 
 abstract class AbstractMessage implements MessageInterface
 {
     /**
-     * @var array
+     * @var array A list of valid message types
      */
     protected static $validMessageTypes = array('Notification', 'SubscriptionConfirmation');
 
     /**
-     * @var Collection
+     * @var Collection The message data
      */
     protected $data;
 
     /**
-     * @param array $data
+     * Creates a Message object from an array of raw message data
+     *
+     * @param array $data The message data
      *
      * @return MessageInterface
-     * @throws Exception\CannotCreateValidatorMessage
+     * @throws InvalidArgumentException If a valid type is not provided in the array
      */
     public static function fromArray(array $data)
     {
         if (!isset($data['Type']) || !in_array($data['Type'], self::$validMessageTypes)) {
-            throw new Exception\CannotCreateValidatorMessage;
+            throw new InvalidArgumentException('The "Type" key must be provided with a valid value in order to '
+                . 'instantiate the Message object.');
         }
 
         // Resolve the message class name
+        /** @var $messageClass AbstractMessage */
         $messageClass = __NAMESPACE__ . "\\{$data['Type']}Message";
 
         // Create a collection from the message data and make sure required keys are present
@@ -52,7 +57,7 @@ abstract class AbstractMessage implements MessageInterface
     }
 
     /**
-     * @param Collection $data
+     * @param Collection $data A Collection of message data with all required keys
      */
     public function __construct(Collection $data)
     {
@@ -118,7 +123,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * {@inheritdoc}
      */
-    public function getSigningCertURL()
+    public function getSigningCertUrl()
     {
         return $this->data['SigningCertURL'];
     }
