@@ -1,4 +1,4 @@
-import os, re, subprocess, json
+import os, re, subprocess, json, collections
 from sphinx.addnodes import toctree
 from docutils import io, nodes, statemachine, utils
 from docutils.parsers.rst import Directive
@@ -177,12 +177,22 @@ class ServiceIntro(Directive):
     def generate_rst(self, d):
         rawtext = ""
         scalar = {}
+        # Sort the operations by key
+        operations = collections.OrderedDict(sorted(d.description['operations'].items()))
+
         # Grab all of the simple strings from the description
         for key in d.description:
             if isinstance(d[key], str) or isinstance(d[key], unicode):
                 scalar[key] = d[key]
                 # Add substitutions for top-level data in a service description
                 rawtext += ".. |%s| replace:: %s\n\n" % (key, scalar[key])
+
+        # Add magic methods to each operation
+        for key in operations:
+            operations[key]['magicMethod'] = key[0].lower() + key[1:]
+
+        # Set the ordered dict of operations on the description
+        d.description['operations'] = operations
 
         # Determine the service locator name and doc URL
         locator_name = self.get_locator_name(d["namespace"])
@@ -192,6 +202,7 @@ class ServiceIntro(Directive):
         template = env.get_template("client_intro")
         rawtext += template.render(
             scalar,
+            description=d.description,
             regions=get_regions(d["namespace"]),
             locator_name=locator_name,
             doc_url=docs)
