@@ -49,6 +49,22 @@ interface AwsClientInterface extends ClientInterface
     public function getRegions();
 
     /**
+     * Get the name of the region to which the client is configured to send requests
+     *
+     * @return string
+     */
+    public function getRegion();
+
+    /**
+     * Change the region to which the client is configured to send requests
+     *
+     * @param string $region Name of the region
+     *
+     * @return self
+     */
+    public function setRegion($region);
+
+    /**
      * Get the waiter factory being used by the client
      *
      * @return WaiterFactoryInterface
