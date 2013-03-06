@@ -18,9 +18,6 @@ namespace Aws\Tests\S3\Waiter;
 
 use Guzzle\Http\Message\Response;
 
-/**
- * @covers Aws\S3\Waiter\BucketNotExists
- */
 class BucketNotExistsTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testReturnsTrueIfBucketNotExists()

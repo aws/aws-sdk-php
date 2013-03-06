@@ -136,17 +136,13 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         /** @var $client AwsClientInterface */
         $client = $this->getServiceBuilder()->get('dynamodb', true);
 
-        $client->setRegion('us-west-1');
-        $this->assertEquals('https://dynamodb.us-west-1.amazonaws.com', (string) $client->getBaseUrl());
-        $this->assertEquals('https://dynamodb.us-west-1.amazonaws.com', $client->getConfig('base_url'));
-        $this->assertEquals('us-west-1', $client->getRegion());
-        $this->assertEquals('us-west-1', $this->readAttribute($client->getSignature(), 'regionName'));
-
-        $client->setRegion('us-west-2');
-        $this->assertEquals('https://dynamodb.us-west-2.amazonaws.com', (string) $client->getBaseUrl());
-        $this->assertEquals('https://dynamodb.us-west-2.amazonaws.com', $client->getConfig('base_url'));
-        $this->assertEquals('us-west-2', $client->getRegion());
-        $this->assertEquals('us-west-2', $this->readAttribute($client->getSignature(), 'regionName'));
+        foreach (array_keys($client->getRegions()) as $region) {
+            $client->setRegion($region);
+            $this->assertEquals("https://dynamodb.{$region}.amazonaws.com", (string) $client->getBaseUrl());
+            $this->assertEquals("https://dynamodb.{$region}.amazonaws.com", $client->getConfig('base_url'));
+            $this->assertEquals($region, $client->getRegion());
+            $this->assertEquals($region, $this->readAttribute($client->getSignature(), 'regionName'));
+        }
     }
 
     public function testAllowsMagicWaiters()

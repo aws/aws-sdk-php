@@ -16,9 +16,6 @@
 
 namespace Aws\Tests\Glacier\Waiter;
 
-/**
- * @covers Aws\Glacier\Waiter\VaultExists
- */
 class VaultExistsTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testReturnsTrueIfVaultExists()

@@ -18,9 +18,6 @@ namespace Aws\Tests\CloudFront\Waiter;
 
 use Guzzle\Http\Message\Response;
 
-/**
- * @covers Aws\CloudFront\Waiter\DistributionDeployed
- */
 class DistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testReturnsTrueIfDeployed()

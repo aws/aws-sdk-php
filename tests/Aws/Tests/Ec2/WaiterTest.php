@@ -19,9 +19,6 @@ namespace Aws\Tests\Ec2;
 use Aws\Ec2\Ec2Client;
 use Aws\Ec2\Enum\InstanceStateName;
 
-/**
- * @covers Aws\Ec2\Waiter\InstanceInState
- */
 class WaiterTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
