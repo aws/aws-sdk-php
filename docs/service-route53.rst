@@ -1,3 +1,3 @@
 .. service:: route53
 
-.. note:: More documentation coming soon.
+.. include:: _snippets/incomplete.txt

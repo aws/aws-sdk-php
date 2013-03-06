@@ -1,3 +1,3 @@
 .. service:: datapipeline
 
-.. note:: More documentation coming soon.
+.. include:: _snippets/incomplete.txt

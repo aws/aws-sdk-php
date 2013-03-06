@@ -1,3 +1,3 @@
 .. service:: elastictranscoder
 
-.. note:: More documentation coming soon.
+.. include:: _snippets/incomplete.txt
