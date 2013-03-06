@@ -38,13 +38,20 @@ for a full list of available methods.
 Creating a client
 -----------------
 
-The first thing you need to do is create a client object. There are a couple of ways to do this using the SDK.
+The first thing you need to do is create a client object using one of the following methods.
 
 Factory method
 ~~~~~~~~~~~~~~
 
-The easiest way to get up and running is to use the factory method. Simply pass in your access keys and a region to
-connect to.
+The easiest way to get up and running is to use the ``Aws\{{namespace}}\{{namespace}}Client::factory()`` method.
+
+You can pass your access keys or omit them if you are using `AWS Identity and Access Management (IAM) roles for EC2
+instances <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_ or
+credentials sourced from the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables.
+
+{% if not globalEndpoint -%}
+A ``region`` parameter is required and must be set to one of the following values: ``{{ regions|join("``, ``") }}``
+{% endif %}
 
 .. code-block:: php
 
@@ -54,7 +61,7 @@ connect to.
     $client = {{namespace}}Client::factory(array(
         'key'    => '<aws access key>',
         'secret' => '<aws secret key>',
-        'region' => '<{{ regions|join("|") }}>'
+        'region' => '<region name>'
     ));{% else %}$client = {{namespace}}Client::factory(array(
         'key'    => '<aws access key>',
         'secret' => '<aws secret key>'
@@ -66,7 +73,7 @@ Service locator
 
 A more robust way to connect to {{ serviceFullName }} is through the service locator. This allows you to specify
 credentials and other configuration settings in a configuration file. These settings can then be shared across all
-clients so that you only have to specify your keys once.
+clients so that you only have to specify your settings once.
 
 .. code-block:: php
 
