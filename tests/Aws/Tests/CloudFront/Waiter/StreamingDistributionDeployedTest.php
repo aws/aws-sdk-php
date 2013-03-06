@@ -18,9 +18,6 @@ namespace Aws\Tests\CloudFront\Waiter;
 
 use Guzzle\Http\Message\Response;
 
-/**
- * @covers Aws\CloudFront\Waiter\StreamingDistributionDeployed
- */
 class StreamingDistributionDeployedTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testReturnsTrueIfDeployed()

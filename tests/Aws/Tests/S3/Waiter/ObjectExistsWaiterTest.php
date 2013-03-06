@@ -19,9 +19,6 @@ namespace Aws\Tests\S3\Waiter;
 use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 
-/**
- * @covers Aws\S3\Waiter\ObjectExists
- */
 class ObjectExistsTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testReturnsTrueIfObjectExists()

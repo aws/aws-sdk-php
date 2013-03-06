@@ -19,9 +19,6 @@ namespace Aws\Tests\DynamoDb\Waiter;
 use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 
-/**
- * @covers Aws\DynamoDb\Waiter\TableExists
- */
 class TableExistsTest extends AbstractWaiter
 {
     public function testReturnsTrueIfTableExists()

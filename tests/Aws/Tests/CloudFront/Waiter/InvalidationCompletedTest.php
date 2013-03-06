@@ -18,9 +18,6 @@ namespace Aws\Tests\CloudFront\Waiter;
 
 use Guzzle\Http\Message\Response;
 
-/**
- * @covers Aws\CloudFront\Waiter\InvalidationCompleted
- */
 class InvalidationCompletedTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**

@@ -185,7 +185,6 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @covers Aws\Common\Signature\SignatureV4::setMaxCacheSize
      * @covers Aws\Common\Signature\SignatureV4::signRequest
-     * @covers Aws\Common\Signature\SignatureV4::getHash
      */
     public function testMaintainsCappedCache()
     {
