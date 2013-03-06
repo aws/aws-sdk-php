@@ -58,6 +58,18 @@ abstract class AbstractRefreshableCredentials extends AbstractCredentialsDecorat
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        if ($this->credentials->isExpired()) {
+            $this->refresh();
+        }
+
+        return $this->credentials->serialize();
+    }
+
+    /**
      * Attempt to get new credentials
      */
     abstract protected function refresh();
