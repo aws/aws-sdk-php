@@ -32,11 +32,13 @@ class AbstractRefreshableCredentialsTest extends \Guzzle\Tests\GuzzleTestCase
             ->setMethods(array('refresh'))
             ->getMock();
 
-        $mock->expects($this->exactly(3))
+        $mock->expects($this->exactly(4))
             ->method('refresh');
 
+        /** @var $mock \Aws\Common\Credentials\AbstractRefreshableCredentials */
         $mock->getAccessKeyId();
         $mock->getSecretKey();
         $mock->getSecurityToken();
+        $mock->serialize();
     }
 }
