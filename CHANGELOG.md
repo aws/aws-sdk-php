@@ -24,6 +24,7 @@ Next Release
 * Added the client User-Agent header to exception messages for easier debugging
 * Added an easier way to disable operation parameter validation by setting `validation` to false when creating clients
 * Added the ability to disable the exponential backoff plugin
+* Added the ability to easily fetch the region name that a client is configured to use via `$client->getRegion()`.
 * Fixed issue #48 where signing Amazon S3 requests with null or empty metadata resulted in a signature error
 * Fixed issue #29 where Amazon S3 was intermittently closing a connection
 * Updated the Amazon S3 client to parse the AcceptRanges header for HeadObject and GetObject output

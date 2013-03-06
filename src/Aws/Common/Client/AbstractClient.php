@@ -147,11 +147,15 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Change the region of the client
-     *
-     * @param string $region Name of the region to change to
-     *
-     * @return self
+     * {@inheritdoc}
+     */
+    public function getRegion()
+    {
+        return $this->getConfig(Options::REGION);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function setRegion($region)
     {
