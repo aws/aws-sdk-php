@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2012-12-01',
+    'apiVersion' => '2013-02-01',
     'endpointPrefix' => 'ec2',
     'serviceFullName' => 'Amazon Elastic Compute Cloud',
     'serviceAbbreviation' => 'Amazon EC2',
@@ -86,7 +86,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'LicenseId' => array(
                     'required' => true,
@@ -118,7 +118,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Domain' => array(
                     'description' => 'Set to vpc to allocate the address to your VPC. By default, will allocate to EC2.',
@@ -146,7 +146,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -189,7 +189,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'description' => 'The instance to associate with the IP address.',
@@ -237,7 +237,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'DhcpOptionsId' => array(
                     'required' => true,
@@ -269,7 +269,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SubnetId' => array(
                     'required' => true,
@@ -301,7 +301,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InternetGatewayId' => array(
                     'required' => true,
@@ -332,7 +332,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -367,7 +367,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -405,7 +405,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnGatewayId' => array(
                     'required' => true,
@@ -437,7 +437,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupId' => array(
                     'required' => true,
@@ -526,7 +526,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupName' => array(
                     'description' => 'Name of the standard (EC2) security group to modify. The group must belong to your account. Can be used instead of GroupID for standard (EC2) security groups.',
@@ -619,7 +619,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -678,7 +678,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'BundleId' => array(
                     'required' => true,
@@ -703,7 +703,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ConversionTaskId' => array(
                     'required' => true,
@@ -731,7 +731,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ExportTaskId' => array(
                     'required' => true,
@@ -755,7 +755,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ReservedInstancesListingId' => array(
                     'required' => true,
@@ -780,7 +780,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SpotInstanceRequestIds' => array(
                     'required' => true,
@@ -811,7 +811,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ProductCode' => array(
                     'required' => true,
@@ -822,6 +822,48 @@ return array (
                 'InstanceId' => array(
                     'required' => true,
                     'description' => 'The ID of the instance to confirm.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'CopyImage' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'CopyImageResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CopyImage',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-02-01',
+                ),
+                'SourceRegion' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceImageId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Name' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ClientToken' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -842,7 +884,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SourceRegion' => array(
                     'required' => true,
@@ -876,7 +918,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Type' => array(
                     'required' => true,
@@ -915,7 +957,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'DhcpConfigurations' => array(
                     'required' => true,
@@ -962,7 +1004,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -1057,7 +1099,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Description' => array(
                     'type' => 'string',
@@ -1120,7 +1162,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
             ),
         ),
@@ -1140,7 +1182,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'KeyName' => array(
                     'required' => true,
@@ -1166,7 +1208,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpcId' => array(
                     'required' => true,
@@ -1192,7 +1234,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkAclId' => array(
                     'required' => true,
@@ -1283,7 +1325,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SubnetId' => array(
                     'required' => true,
@@ -1347,7 +1389,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupName' => array(
                     'required' => true,
@@ -1381,7 +1423,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ReservedInstancesId' => array(
                     'required' => true,
@@ -1436,7 +1478,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableId' => array(
                     'required' => true,
@@ -1482,7 +1524,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpcId' => array(
                     'required' => true,
@@ -1508,7 +1550,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupName' => array(
                     'required' => true,
@@ -1546,7 +1588,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -1577,7 +1619,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Bucket' => array(
                     'required' => true,
@@ -1608,7 +1650,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpcId' => array(
                     'required' => true,
@@ -1645,7 +1687,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Resources' => array(
                     'required' => true,
@@ -1698,7 +1740,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Size' => array(
                     'description' => 'The size of the volume, in gigabytes. Required if you are not creating a volume from a snapshot.',
@@ -1746,7 +1788,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'CidrBlock' => array(
                     'required' => true,
@@ -1777,7 +1819,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Type' => array(
                     'required' => true,
@@ -1824,7 +1866,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnConnectionId' => array(
                     'required' => true,
@@ -1854,7 +1896,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Type' => array(
                     'required' => true,
@@ -1885,7 +1927,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'LicenseId' => array(
                     'required' => true,
@@ -1917,7 +1959,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'CustomerGatewayId' => array(
                     'required' => true,
@@ -1943,7 +1985,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'DhcpOptionsId' => array(
                     'required' => true,
@@ -1969,7 +2011,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InternetGatewayId' => array(
                     'required' => true,
@@ -1995,7 +2037,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'KeyName' => array(
                     'required' => true,
@@ -2021,7 +2063,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkAclId' => array(
                     'required' => true,
@@ -2047,7 +2089,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkAclId' => array(
                     'required' => true,
@@ -2085,7 +2127,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -2110,7 +2152,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupName' => array(
                     'required' => true,
@@ -2136,7 +2178,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableId' => array(
                     'required' => true,
@@ -2168,7 +2210,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableId' => array(
                     'required' => true,
@@ -2194,7 +2236,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupName' => array(
                     'description' => 'The name of the Amazon EC2 security group to delete.',
@@ -2224,7 +2266,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SnapshotId' => array(
                     'required' => true,
@@ -2250,7 +2292,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
             ),
         ),
@@ -2270,7 +2312,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SubnetId' => array(
                     'required' => true,
@@ -2296,7 +2338,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Resources' => array(
                     'required' => true,
@@ -2348,7 +2390,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -2374,7 +2416,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpcId' => array(
                     'required' => true,
@@ -2400,7 +2442,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnConnectionId' => array(
                     'required' => true,
@@ -2425,7 +2467,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnConnectionId' => array(
                     'required' => true,
@@ -2455,7 +2497,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnGatewayId' => array(
                     'required' => true,
@@ -2481,13 +2523,41 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageId' => array(
                     'required' => true,
                     'description' => 'The ID of the AMI to deregister.',
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'DescribeAccountAttributes' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeAccountAttributesResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeAccountAttributes',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-02-01',
+                ),
+                'AttributeNames' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'AttributeName',
+                    'items' => array(
+                        'name' => 'AttributeName',
+                        'type' => 'string',
+                    ),
                 ),
             ),
         ),
@@ -2507,7 +2577,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'PublicIps' => array(
                     'description' => 'The optional list of Elastic IP addresses to describe.',
@@ -2572,7 +2642,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ZoneNames' => array(
                     'description' => 'A list of the availability zone names to describe.',
@@ -2628,7 +2698,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'BundleIds' => array(
                     'description' => 'The list of bundle task IDs to describe.',
@@ -2683,7 +2753,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Filters' => array(
                     'type' => 'array',
@@ -2737,7 +2807,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'CustomerGatewayIds' => array(
                     'description' => 'A set of one or more customer gateway IDs.',
@@ -2793,7 +2863,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'DhcpOptionsIds' => array(
                     'type' => 'array',
@@ -2847,7 +2917,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ExportTaskIds' => array(
                     'type' => 'array',
@@ -2876,7 +2946,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageId' => array(
                     'required' => true,
@@ -2908,7 +2978,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageIds' => array(
                     'description' => 'An optional list of the AMI IDs to describe. If not specified, all AMIs will be described.',
@@ -2984,7 +3054,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -3030,7 +3100,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'description' => 'The list of instance IDs. If not specified, all instances are described.',
@@ -3101,7 +3171,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'description' => 'An optional list of the instances to describe.',
@@ -3157,7 +3227,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InternetGatewayIds' => array(
                     'description' => 'One or more Internet gateway IDs.',
@@ -3213,7 +3283,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'KeyNames' => array(
                     'description' => 'The optional list of key pair names to describe.',
@@ -3269,7 +3339,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'LicenseIds' => array(
                     'description' => 'Specifies the license registration for which details are to be returned.',
@@ -3325,7 +3395,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkAclIds' => array(
                     'description' => 'One or more network ACL IDs.',
@@ -3380,7 +3450,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -3421,7 +3491,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceIds' => array(
                     'type' => 'array',
@@ -3475,7 +3545,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupNames' => array(
                     'description' => 'The name of the PlacementGroup.',
@@ -3531,7 +3601,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RegionNames' => array(
                     'description' => 'The optional list of regions to describe.',
@@ -3587,7 +3657,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ReservedInstancesIds' => array(
                     'description' => 'The optional list of Reserved Instance IDs to describe.',
@@ -3647,7 +3717,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ReservedInstancesId' => array(
                     'type' => 'string',
@@ -3699,7 +3769,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ReservedInstancesOfferingIds' => array(
                     'description' => 'An optional list of the unique IDs of the Reserved Instance offerings to describe.',
@@ -3729,6 +3799,7 @@ return array (
                         'c1.medium',
                         'c1.xlarge',
                         'hi1.4xlarge',
+                        'hs1.8xlarge',
                         'cc1.4xlarge',
                         'cc2.8xlarge',
                         'cg1.4xlarge',
@@ -3806,7 +3877,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableIds' => array(
                     'description' => 'One or more route table IDs.',
@@ -3862,7 +3933,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupNames' => array(
                     'description' => 'The optional list of Amazon EC2 security groups to describe.',
@@ -3927,7 +3998,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SnapshotId' => array(
                     'required' => true,
@@ -3963,7 +4034,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SnapshotIds' => array(
                     'description' => 'The optional list of EBS snapshot IDs to describe.',
@@ -4039,7 +4110,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
             ),
         ),
@@ -4059,7 +4130,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SpotInstanceRequestIds' => array(
                     'description' => 'The ID of the request.',
@@ -4115,7 +4186,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'StartTime' => array(
                     'description' => 'The start date and time of the Spot Instance price history data.',
@@ -4159,6 +4230,7 @@ return array (
                             'c1.medium',
                             'c1.xlarge',
                             'hi1.4xlarge',
+                            'hs1.8xlarge',
                             'cc1.4xlarge',
                             'cc2.8xlarge',
                             'cg1.4xlarge',
@@ -4234,7 +4306,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SubnetIds' => array(
                     'description' => 'A set of one or more subnet IDs.',
@@ -4290,7 +4362,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Filters' => array(
                     'description' => 'A list of filters used to match properties for tags.',
@@ -4335,7 +4407,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -4368,7 +4440,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeIds' => array(
                     'type' => 'array',
@@ -4430,7 +4502,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeIds' => array(
                     'description' => 'The optional list of EBS volumes to describe.',
@@ -4470,6 +4542,38 @@ return array (
                 ),
             ),
         ),
+        'DescribeVpcAttribute' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeVpcAttributeResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeVpcAttribute',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-02-01',
+                ),
+                'VpcId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EnableDnsSupport' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EnableDnsHostnames' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+        ),
         'DescribeVpcs' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -4486,7 +4590,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpcIds' => array(
                     'description' => 'The ID of a VPC you want information about.',
@@ -4542,7 +4646,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnConnectionIds' => array(
                     'description' => 'A VPN connection ID. More than one may be specified per request.',
@@ -4598,7 +4702,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnGatewayIds' => array(
                     'description' => 'A list of filters used to match properties for VPN Gateways. For a complete reference to the available filter keys for this operation, see the Amazon EC2 API reference.',
@@ -4654,7 +4758,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InternetGatewayId' => array(
                     'required' => true,
@@ -4685,7 +4789,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'AttachmentId' => array(
                     'required' => true,
@@ -4715,7 +4819,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -4757,7 +4861,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VpnGatewayId' => array(
                     'required' => true,
@@ -4788,7 +4892,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableId' => array(
                     'required' => true,
@@ -4818,7 +4922,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'PublicIp' => array(
                     'description' => 'The elastic IP address that you are disassociating from the instance.',
@@ -4848,7 +4952,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'AssociationId' => array(
                     'required' => true,
@@ -4873,7 +4977,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableId' => array(
                     'required' => true,
@@ -4903,7 +5007,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -4928,7 +5032,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -4954,7 +5058,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -4979,7 +5083,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Description' => array(
                     'type' => 'string',
@@ -5022,6 +5126,7 @@ return array (
                                 'c1.medium',
                                 'c1.xlarge',
                                 'hi1.4xlarge',
+                                'hs1.8xlarge',
                                 'cc1.4xlarge',
                                 'cc2.8xlarge',
                                 'cg1.4xlarge',
@@ -5178,7 +5283,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'KeyName' => array(
                     'required' => true,
@@ -5212,7 +5317,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'AvailabilityZone' => array(
                     'type' => 'string',
@@ -5268,7 +5373,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageId' => array(
                     'required' => true,
@@ -5391,7 +5496,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -5572,7 +5677,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -5640,7 +5745,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SnapshotId' => array(
                     'required' => true,
@@ -5741,7 +5846,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'VolumeId' => array(
                     'required' => true,
@@ -5752,6 +5857,51 @@ return array (
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
+                ),
+            ),
+        ),
+        'ModifyVpcAttribute' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyVpcAttribute',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-02-01',
+                ),
+                'VpcId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'EnableDnsSupport' => array(
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'Boolean value',
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                    ),
+                ),
+                'EnableDnsHostnames' => array(
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'Boolean value',
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -5771,7 +5921,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'required' => true,
@@ -5802,7 +5952,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ReservedInstancesOfferingId' => array(
                     'required' => true,
@@ -5846,7 +5996,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'required' => true,
@@ -5877,7 +6027,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageLocation' => array(
                     'description' => 'The full path to your AMI manifest in Amazon S3 storage.',
@@ -5986,7 +6136,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'PublicIp' => array(
                     'description' => 'The elastic IP address that you are releasing from your account.',
@@ -6016,7 +6166,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'AssociationId' => array(
                     'required' => true,
@@ -6048,7 +6198,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkAclId' => array(
                     'required' => true,
@@ -6140,7 +6290,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'RouteTableId' => array(
                     'required' => true,
@@ -6186,7 +6336,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'AssociationId' => array(
                     'required' => true,
@@ -6217,7 +6367,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'Instances' => array(
                     'type' => 'array',
@@ -6281,7 +6431,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SpotPrice' => array(
                     'required' => true,
@@ -6367,6 +6517,7 @@ return array (
                                 'c1.medium',
                                 'c1.xlarge',
                                 'hi1.4xlarge',
+                                'hs1.8xlarge',
                                 'cc1.4xlarge',
                                 'cc2.8xlarge',
                                 'cg1.4xlarge',
@@ -6565,7 +6716,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageId' => array(
                     'required' => true,
@@ -6597,7 +6748,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceId' => array(
                     'required' => true,
@@ -6642,7 +6793,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -6671,7 +6822,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'SnapshotId' => array(
                     'required' => true,
@@ -6707,7 +6858,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupId' => array(
                     'required' => true,
@@ -6796,7 +6947,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'GroupName' => array(
                     'description' => 'Name of the standard (EC2) security group to modify. The group must belong to your account. Can be used instead of GroupID for standard (EC2) security groups.',
@@ -6889,7 +7040,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'ImageId' => array(
                     'required' => true,
@@ -6938,10 +7089,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'AddressingType' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
                 'InstanceType' => array(
                     'description' => 'Specifies the instance type for the launched instances.',
                     'type' => 'string',
@@ -6960,6 +7107,7 @@ return array (
                         'c1.medium',
                         'c1.xlarge',
                         'hi1.4xlarge',
+                        'hs1.8xlarge',
                         'cc1.4xlarge',
                         'cc2.8xlarge',
                         'cg1.4xlarge',
@@ -7195,7 +7343,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'required' => true,
@@ -7230,7 +7378,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'required' => true,
@@ -7267,7 +7415,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'required' => true,
@@ -7297,7 +7445,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
@@ -7332,7 +7480,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-12-01',
+                    'default' => '2013-02-01',
                 ),
                 'InstanceIds' => array(
                     'required' => true,
@@ -7812,6 +7960,17 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                     'sentAs' => 'ownerId',
+                ),
+            ),
+        ),
+        'CopyImageResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ImageId' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'imageId',
                 ),
             ),
         ),
@@ -8425,6 +8584,10 @@ return array (
                                         'type' => 'string',
                                         'sentAs' => 'privateIpAddress',
                                     ),
+                                    'PrivateDnsName' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'privateDnsName',
+                                    ),
                                     'Primary' => array(
                                         'type' => 'boolean',
                                         'sentAs' => 'primary',
@@ -8688,33 +8851,6 @@ return array (
                                 ),
                             ),
                         ),
-                        'PropagatedRoutes' => array(
-                            'type' => 'array',
-                            'sentAs' => 'propagatedRouteSet',
-                            'items' => array(
-                                'name' => 'item',
-                                'type' => 'object',
-                                'sentAs' => 'item',
-                                'properties' => array(
-                                    'DestinationCidrBlock' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'destinationCidrBlock',
-                                    ),
-                                    'GatewayId' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'gatewayId',
-                                    ),
-                                    'Status' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'status',
-                                    ),
-                                    'SourceId' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'sourceId',
-                                    ),
-                                ),
-                            ),
-                        ),
                     ),
                 ),
             ),
@@ -8900,6 +9036,14 @@ return array (
                             'description' => 'Specifies the Availability Zone the subnet is in.',
                             'type' => 'string',
                             'sentAs' => 'availabilityZone',
+                        ),
+                        'DefaultForAz' => array(
+                            'type' => 'boolean',
+                            'sentAs' => 'defaultForAz',
+                        ),
+                        'MapPublicIpOnLaunch' => array(
+                            'type' => 'boolean',
+                            'sentAs' => 'mapPublicIpOnLaunch',
                         ),
                         'Tags' => array(
                             'description' => 'A list of tags for the Subnet.',
@@ -9103,6 +9247,10 @@ return array (
                             'type' => 'string',
                             'sentAs' => 'instanceTenancy',
                         ),
+                        'IsDefault' => array(
+                            'type' => 'boolean',
+                            'sentAs' => 'isDefault',
+                        ),
                     ),
                 ),
             ),
@@ -9305,6 +9453,43 @@ return array (
                                         'description' => 'The tag\'s value.',
                                         'type' => 'string',
                                         'sentAs' => 'value',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeAccountAttributesResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'AccountAttributes' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'accountAttributeSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'AttributeName' => array(
+                                'type' => 'string',
+                                'sentAs' => 'attributeName',
+                            ),
+                            'AttributeValues' => array(
+                                'type' => 'array',
+                                'sentAs' => 'attributeValueSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'AttributeValue' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'attributeValue',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -11104,9 +11289,54 @@ return array (
                                                                 'type' => 'string',
                                                                 'sentAs' => 'publicIp',
                                                             ),
+                                                            'PublicDnsName' => array(
+                                                                'type' => 'string',
+                                                                'sentAs' => 'publicDnsName',
+                                                            ),
                                                             'IpOwnerId' => array(
                                                                 'type' => 'string',
                                                                 'sentAs' => 'ipOwnerId',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    'PrivateIpAddresses' => array(
+                                                        'type' => 'array',
+                                                        'sentAs' => 'privateIpAddressesSet',
+                                                        'items' => array(
+                                                            'name' => 'item',
+                                                            'type' => 'object',
+                                                            'sentAs' => 'item',
+                                                            'properties' => array(
+                                                                'PrivateIpAddress' => array(
+                                                                    'type' => 'string',
+                                                                    'sentAs' => 'privateIpAddress',
+                                                                ),
+                                                                'PrivateDnsName' => array(
+                                                                    'type' => 'string',
+                                                                    'sentAs' => 'privateDnsName',
+                                                                ),
+                                                                'Primary' => array(
+                                                                    'type' => 'boolean',
+                                                                    'sentAs' => 'primary',
+                                                                ),
+                                                                'Association' => array(
+                                                                    'type' => 'object',
+                                                                    'sentAs' => 'association',
+                                                                    'properties' => array(
+                                                                        'PublicIp' => array(
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'publicIp',
+                                                                        ),
+                                                                        'PublicDnsName' => array(
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'publicDnsName',
+                                                                        ),
+                                                                        'IpOwnerId' => array(
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'ipOwnerId',
+                                                                        ),
+                                                                    ),
+                                                                ),
                                                             ),
                                                         ),
                                                     ),
@@ -11725,6 +11955,10 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'privateIpAddress',
                                         ),
+                                        'PrivateDnsName' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'privateDnsName',
+                                        ),
                                         'Primary' => array(
                                             'type' => 'boolean',
                                             'sentAs' => 'primary',
@@ -12306,33 +12540,6 @@ return array (
                                         'GatewayId' => array(
                                             'type' => 'string',
                                             'sentAs' => 'gatewayId',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            'PropagatedRoutes' => array(
-                                'type' => 'array',
-                                'sentAs' => 'propagatedRouteSet',
-                                'items' => array(
-                                    'name' => 'item',
-                                    'type' => 'object',
-                                    'sentAs' => 'item',
-                                    'properties' => array(
-                                        'DestinationCidrBlock' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'destinationCidrBlock',
-                                        ),
-                                        'GatewayId' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'gatewayId',
-                                        ),
-                                        'Status' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'status',
-                                        ),
-                                        'SourceId' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'sourceId',
                                         ),
                                     ),
                                 ),
@@ -13190,6 +13397,14 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'availabilityZone',
                             ),
+                            'DefaultForAz' => array(
+                                'type' => 'boolean',
+                                'sentAs' => 'defaultForAz',
+                            ),
+                            'MapPublicIpOnLaunch' => array(
+                                'type' => 'boolean',
+                                'sentAs' => 'mapPublicIpOnLaunch',
+                            ),
                             'Tags' => array(
                                 'description' => 'A list of tags for the Subnet.',
                                 'type' => 'array',
@@ -13542,6 +13757,41 @@ return array (
                 ),
             ),
         ),
+        'DescribeVpcAttributeResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'VpcId' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'vpcId',
+                ),
+                'EnableDnsSupport' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'enableDnsSupport',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'Boolean value',
+                            'type' => 'boolean',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+                'EnableDnsHostnames' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'enableDnsHostnames',
+                    'properties' => array(
+                        'Value' => array(
+                            'description' => 'Boolean value',
+                            'type' => 'boolean',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DescribeVpcsResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -13603,6 +13853,10 @@ return array (
                                 'description' => 'The allowed tenancy of instances launched into the VPC.',
                                 'type' => 'string',
                                 'sentAs' => 'instanceTenancy',
+                            ),
+                            'IsDefault' => array(
+                                'type' => 'boolean',
+                                'sentAs' => 'isDefault',
                             ),
                         ),
                     ),
@@ -15167,9 +15421,54 @@ return array (
                                                     'type' => 'string',
                                                     'sentAs' => 'publicIp',
                                                 ),
+                                                'PublicDnsName' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'publicDnsName',
+                                                ),
                                                 'IpOwnerId' => array(
                                                     'type' => 'string',
                                                     'sentAs' => 'ipOwnerId',
+                                                ),
+                                            ),
+                                        ),
+                                        'PrivateIpAddresses' => array(
+                                            'type' => 'array',
+                                            'sentAs' => 'privateIpAddressesSet',
+                                            'items' => array(
+                                                'name' => 'item',
+                                                'type' => 'object',
+                                                'sentAs' => 'item',
+                                                'properties' => array(
+                                                    'PrivateIpAddress' => array(
+                                                        'type' => 'string',
+                                                        'sentAs' => 'privateIpAddress',
+                                                    ),
+                                                    'PrivateDnsName' => array(
+                                                        'type' => 'string',
+                                                        'sentAs' => 'privateDnsName',
+                                                    ),
+                                                    'Primary' => array(
+                                                        'type' => 'boolean',
+                                                        'sentAs' => 'primary',
+                                                    ),
+                                                    'Association' => array(
+                                                        'type' => 'object',
+                                                        'sentAs' => 'association',
+                                                        'properties' => array(
+                                                            'PublicIp' => array(
+                                                                'type' => 'string',
+                                                                'sentAs' => 'publicIp',
+                                                            ),
+                                                            'PublicDnsName' => array(
+                                                                'type' => 'string',
+                                                                'sentAs' => 'publicDnsName',
+                                                            ),
+                                                            'IpOwnerId' => array(
+                                                                'type' => 'string',
+                                                                'sentAs' => 'ipOwnerId',
+                                                            ),
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -15416,6 +15715,9 @@ return array (
     ),
     'iterators' => array(
         'operations' => array(
+            'DescribeAccountAttributes' => array(
+                'result_key' => 'AccountAttributes',
+            ),
             'DescribeAddresses' => array(
                 'result_key' => 'Addresses',
             ),

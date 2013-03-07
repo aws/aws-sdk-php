@@ -36,6 +36,7 @@ class InstanceType extends Enum
     const C1_MEDIUM = 'c1.medium';
     const C1_XLARGE = 'c1.xlarge';
     const HI1_4XLARGE = 'hi1.4xlarge';
+    const HS1_8XLARGE = 'hs1.8xlarge';
     const CC1_4XLARGE = 'cc1.4xlarge';
     const CC2_8XLARGE = 'cc2.8xlarge';
     const CG1_4XLARGE = 'cg1.4xlarge';
