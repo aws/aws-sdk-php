@@ -39,7 +39,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
     {
         self::log('Create a hosted zone.');
         $result = $this->route53->getCommand('CreateHostedZone', array(
-            'Name' => 'www.example.com',
+            'Name' => 'integroute53' . self::getResourcePrefix() . '.com',
             'CallerReference' => uniqid('aws-sdk-php-hz-'),
         ))->getResult();
         $zoneId = $result->getPath('HostedZone/Id');
@@ -60,6 +60,113 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $nameServers = $result->getPath('DelegationSet/NameServers');
         $this->assertInternalType('array', $nameServers);
         $this->assertSame($nameServers, array_values($nameServers));
+
+        self::log('Creating an S3 static website bucket');
+        $s3 = $this->getServiceBuilder()->get('s3');
+        $bucketName = 'integroute53' . self::getResourcePrefix();
+        if (!$s3->doesBucketExist($bucketName)) {
+            $s3->createBucket(array('Bucket' => $bucketName));
+            $s3->waitUntil('BucketExists', array('Bucket' => $bucketName));
+        }
+
+        self::log('Setting website config on bucket');
+        $s3->putBucketWebsite(array(
+            'Bucket' => $bucketName,
+            'IndexDocument' => array('Suffix' => 'index.html')
+        ));
+
+        self::log('Create a resource record set for the zone');
+        $this->route53->changeResourceRecordSets(array(
+            'HostedZoneId' => $zoneId,
+            'ChangeBatch' => array(
+                'Changes' => array(
+                    array(
+                        'Action' => 'CREATE',
+                        'ResourceRecordSet' => array(
+                            'Name' => 'foo.' . $bucketName . '.com',
+                            'Type' => 'CNAME',
+                            'TTL' => 300,
+                            'ResourceRecords' => array(
+                                array('Value' => '192.0.2.3')
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+
+        self::log('Get the resource record set');
+        $set = $this->route53->listResourceRecordSets(array(
+            'HostedZoneId' => $zoneId
+        ));
+
+        $record = null;
+        foreach ($set['ResourceRecordSets'] as $resource) {
+            if ($resource['Type'] == 'CNAME') {
+                $record = $resource;
+                break;
+            }
+        }
+
+        if (!$record) {
+            $this->fail('Did not find the created CNAME record');
+        }
+
+        self::log('Update the resource record set');
+        $originalRecord = $record;
+        $record['ResourceRecords'][0]['Value'] = '192.0.2.4';
+
+        $this->route53->changeResourceRecordSets(array(
+            'HostedZoneId' => $zoneId,
+            'ChangeBatch' => array(
+                'Changes' => array(
+                    array(
+                        'Action' => 'DELETE',
+                        'ResourceRecordSet' => $originalRecord
+                    ),
+                    array(
+                        'Action' => 'CREATE',
+                        'ResourceRecordSet' => $record
+                    )
+                )
+            )
+        ));
+
+        self::log('Ensuring that the record was updated');
+        $set = $this->route53->listResourceRecordSets(array(
+            'HostedZoneId' => $zoneId
+        ));
+        foreach ($set['ResourceRecordSets'] as $resource) {
+            if ($resource['Type'] == 'CNAME') {
+                if ($resource['ResourceRecords'][0]['Value'] != '192.0.2.4') {
+                    $this->fail('Did not update record');
+                }
+                break;
+            }
+        }
+
+        self::log('Delete the resource record set');
+        $this->route53->changeResourceRecordSets(array(
+            'HostedZoneId' => $zoneId,
+            'ChangeBatch' => array(
+                'Changes' => array(
+                    array(
+                        'Action' => 'DELETE',
+                        'ResourceRecordSet' => array(
+                            'Name' => 'foo.' . $bucketName . '.com',
+                            'Type' => 'CNAME',
+                            'TTL' => 300,
+                            'ResourceRecords' => array(
+                                array('Value' => '192.0.2.4')
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+
+        self::log('Delete the bucket');
+        $s3->deleteBucket(array('Bucket' => $bucketName));
 
         self::log('Delete the hosted zone created.');
         $result = $this->route53->getCommand('DeleteHostedZone', array(
