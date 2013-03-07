@@ -2376,6 +2376,7 @@ return array (
                         'http://s3.amazonaws.com/doc/2006-03-01/',
                     ),
                 ),
+                'xmlAllowEmpty' => true,
             ),
             'parameters' => array(
                 'Bucket' => array(
