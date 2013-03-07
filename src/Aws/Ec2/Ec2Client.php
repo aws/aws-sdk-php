@@ -45,6 +45,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model cancelReservedInstancesListing(array $args = array()) {@command Ec2 CancelReservedInstancesListing}
  * @method Model cancelSpotInstanceRequests(array $args = array()) {@command Ec2 CancelSpotInstanceRequests}
  * @method Model confirmProductInstance(array $args = array()) {@command Ec2 ConfirmProductInstance}
+ * @method Model copyImage(array $args = array()) {@command Ec2 CopyImage}
  * @method Model copySnapshot(array $args = array()) {@command Ec2 CopySnapshot}
  * @method Model createCustomerGateway(array $args = array()) {@command Ec2 CreateCustomerGateway}
  * @method Model createDhcpOptions(array $args = array()) {@command Ec2 CreateDhcpOptions}
@@ -91,6 +92,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteVpnConnectionRoute(array $args = array()) {@command Ec2 DeleteVpnConnectionRoute}
  * @method Model deleteVpnGateway(array $args = array()) {@command Ec2 DeleteVpnGateway}
  * @method Model deregisterImage(array $args = array()) {@command Ec2 DeregisterImage}
+ * @method Model describeAccountAttributes(array $args = array()) {@command Ec2 DescribeAccountAttributes}
  * @method Model describeAddresses(array $args = array()) {@command Ec2 DescribeAddresses}
  * @method Model describeAvailabilityZones(array $args = array()) {@command Ec2 DescribeAvailabilityZones}
  * @method Model describeBundleTasks(array $args = array()) {@command Ec2 DescribeBundleTasks}
@@ -126,6 +128,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeVolumeAttribute(array $args = array()) {@command Ec2 DescribeVolumeAttribute}
  * @method Model describeVolumeStatus(array $args = array()) {@command Ec2 DescribeVolumeStatus}
  * @method Model describeVolumes(array $args = array()) {@command Ec2 DescribeVolumes}
+ * @method Model describeVpcAttribute(array $args = array()) {@command Ec2 DescribeVpcAttribute}
  * @method Model describeVpcs(array $args = array()) {@command Ec2 DescribeVpcs}
  * @method Model describeVpnConnections(array $args = array()) {@command Ec2 DescribeVpnConnections}
  * @method Model describeVpnGateways(array $args = array()) {@command Ec2 DescribeVpnGateways}
@@ -148,6 +151,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model modifyNetworkInterfaceAttribute(array $args = array()) {@command Ec2 ModifyNetworkInterfaceAttribute}
  * @method Model modifySnapshotAttribute(array $args = array()) {@command Ec2 ModifySnapshotAttribute}
  * @method Model modifyVolumeAttribute(array $args = array()) {@command Ec2 ModifyVolumeAttribute}
+ * @method Model modifyVpcAttribute(array $args = array()) {@command Ec2 ModifyVpcAttribute}
  * @method Model monitorInstances(array $args = array()) {@command Ec2 MonitorInstances}
  * @method Model purchaseReservedInstancesOffering(array $args = array()) {@command Ec2 PurchaseReservedInstancesOffering}
  * @method Model rebootInstances(array $args = array()) {@command Ec2 RebootInstances}
@@ -235,7 +239,7 @@ class Ec2Client extends AbstractClient
     {
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-2012-12-01.php'))
+            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-2013-02-01.php'))
             ->build();
     }
 }
