@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.2.0 (2013-03-11)
+------------------
 
 * Added support for **Amazon Elastic MapReduce (Amazon EMR)**
 * Added support for **AWS Direct Connect**
