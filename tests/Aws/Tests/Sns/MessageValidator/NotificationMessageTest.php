@@ -90,4 +90,74 @@ STRINGTOSIGN;
 
         return $testCases;
     }
+
+    public function testExtendsAbstractMessage()
+    {
+        $message = new NotificationMessage(new Collection());
+        $this->assertTrue(is_subclass_of($message, 'Aws\Sns\MessageValidator\AbstractMessage'), 'Notification Message should extend Aws\Sns\MessageValidator\AbstractMessage');
+    }
+
+    public function getMessageDataTest()
+    {
+        $messageData = array(
+            'Message'        => 'a',
+            'MessageId'      => 'b',
+            'Timestamp'      => 'c',
+            'TopicArn'       => 'd',
+            'Type'           => 'Notification',
+            'Subject'        => 'f',
+            'Signature'      => 'g',
+            'SigningCertURL' => 'h',
+        );
+
+        $testCases = array(
+            array($messageData, 'Message'       , $messageData['Message']),
+            array($messageData, 'MessageId'     , $messageData['MessageId']),
+            array($messageData, 'Subject'       , $messageData['Subject']),
+            array($messageData, 'Timestamp'     , $messageData['Timestamp']),
+            array($messageData, 'TopicArn'      , $messageData['TopicArn']),
+            array($messageData, 'Type'          , $messageData['Type']),
+            array($messageData, 'Subject'       , $messageData['Subject']),
+            array($messageData, 'Signature'     , $messageData['Signature']),
+            array($messageData, 'SigningCertURL', $messageData['SigningCertURL']),
+        );
+
+        return $testCases;
+    }
+
+    /**
+     * @dataProvider getMessageDataTest
+     */
+    public function testGettersWhileConstructingFromCollection($messageData, $property, $value)
+    {
+        $message = new NotificationMessage(new Collection($messageData));
+        $getterMethod = 'get' . $property;
+
+        $this->assertEquals($value, $message->$getterMethod());
+    }
+
+    /**
+     * @dataProvider getMessageDataTest
+     */
+    public function testGettersWhileConstructingFromArray($messageData, $property, $value)
+    {
+        $message = NotificationMessage::fromArray($messageData);
+        $getterMethod = 'get' . $property;
+
+        $this->assertEquals($value, $message->$getterMethod());
+    }
+
+    public function testConstructorInvalidArgumentException()
+    {
+        $this->setExpectedException('\Aws\Common\Exception\InvalidArgumentException');
+        $message = NotificationMessage::fromArray(array(
+            'Type' => 'foo'
+        ));
+    }
+
+    public function testGetDataReturnType()
+    {
+        $message = new NotificationMessage(new Collection());
+        $this->assertInstanceOf('Guzzle\Common\Collection', $message->getData());
+    }
 }
