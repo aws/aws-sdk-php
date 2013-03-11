@@ -25,7 +25,8 @@ $classLoader->registerNamespaces(array(
     'Aws'      => 'phar://aws.phar/src',
     'Guzzle'   => 'phar://aws.phar/vendor/guzzle/guzzle/src',
     'Symfony\\Component\\EventDispatcher' => 'phar://aws.phar/vendor/symfony/event-dispatcher',
-    'Doctrine' => 'phar://aws.phar/vendor/doctrine/common/lib',
+    'Doctrine\\Common' => 'phar://aws.phar/vendor/doctrine/common/lib',
+    'Psr\\Log' => 'phar://aws.phar/vendor/psr/log',
     'Monolog'  => 'phar://aws.phar/vendor/monolog/monolog/src'
 ));
 $classLoader->register();
