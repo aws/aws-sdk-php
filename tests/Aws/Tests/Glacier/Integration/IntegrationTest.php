@@ -86,19 +86,20 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testUploadAndDeleteArchives()
     {
+        self::log('Create a 6MB+ string of test data to upload.');
         $length   = 6 * Size::MB + 425;
         $content  = EntityBody::factory(str_repeat('x', $length));
-        $partSize = 2 * Size::MB;
+        $partSize = 4 * Size::MB;
 
-        // Single upload
-        $archiveId = $this->client->getCommand('UploadArchive', array(
+        self::log('Perform a single upload.');
+        $archiveId = $this->client->uploadArchive(array(
             'vaultName'          => self::TEST_VAULT,
             'archiveDescription' => 'Foo   bar',
             'body'               => $content
-        ))->getResult()->get('archiveId');
+        ))->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
-        // Delete the archive
+        self::log('Delete the archive that was just uploaded.');
         $this->client->deleteArchive(array(
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
@@ -106,34 +107,36 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         sleep(3);
 
-        // Multipart upload
+        self::log('Initiate a multipart upload with a part size of ' . $partSize . ' bytes.');
         $generator = UploadPartGenerator::factory($content, $partSize);
         $this->assertEquals($length, $generator->getArchiveSize());
-        $uploadId = $this->client->getCommand('InitiateMultipartUpload', array(
+        $uploadId = $this->client->initiateMultipartUpload(array(
             'vaultName' => self::TEST_VAULT,
-            'partSize' => (string) $partSize
-        ))->getResult()->get('uploadId');
+            'partSize'  => $partSize
+        ))->get('uploadId');
         /** @var $part UploadPart */
         foreach ($generator as $part) {
+            self::log('Upload bytes ' . join('-', $part->getRange()) . '.');
             $this->client->uploadMultipartPart(array(
-                'vaultName'       => self::TEST_VAULT,
-                'uploadId'        => $uploadId,
-                'range'           => $part->getFormattedRange(),
-                'checksum'        => $part->getChecksum(),
-                'ContentSHA256'   => $part->getContentHash(),
-                'body'            => new ReadLimitEntityBody($content, $part->getSize(), $part->getOffset()),
+                'vaultName'     => self::TEST_VAULT,
+                'uploadId'      => $uploadId,
+                'range'         => $part->getFormattedRange(),
+                'checksum'      => $part->getChecksum(),
+                'ContentSHA256' => $part->getContentHash(),
+                'body'          => new ReadLimitEntityBody($content, $part->getSize(), $part->getOffset()),
             ));
             sleep(3);
         }
-        $archiveId = $this->client->getCommand('CompleteMultipartUpload', array(
+        self::log('Complete the multipart upload.');
+        $archiveId = $this->client->completeMultipartUpload(array(
             'vaultName'   => self::TEST_VAULT,
             'uploadId'    => $uploadId,
             'archiveSize' => $generator->getArchiveSize(),
             'checksum'    => $generator->getRootChecksum()
-        ))->getResult()->get('archiveId');
+        ))->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
-        // Delete the archive
+        self::log('Delete the archive that was just uploaded in parts.');
         $this->client->deleteArchive(array(
             'vaultName' => self::TEST_VAULT,
             'archiveId' => $archiveId
