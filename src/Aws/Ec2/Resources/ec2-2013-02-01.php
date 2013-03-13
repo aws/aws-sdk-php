@@ -4564,13 +4564,13 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'EnableDnsSupport' => array(
+                'Attribute' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                ),
-                'EnableDnsHostnames' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
+                    'enum' => array(
+                        'enableDnsSupport',
+                        'enableDnsHostnames',
+                    ),
                 ),
             ),
         ),
@@ -5878,6 +5878,7 @@ return array (
                     'default' => '2013-02-01',
                 ),
                 'VpcId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),

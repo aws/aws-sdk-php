@@ -2949,7 +2949,7 @@ return array (
             ),
             'DescribeEngineDefaultParameters' => array(
                 'token_param' => 'Marker',
-                'token_param' => 'Marker',
+                'token_key' => 'Marker',
                 'limit_key' => 'MaxRecords',
                 'result_key' => 'Parameters',
             ),
