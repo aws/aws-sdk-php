@@ -21,7 +21,6 @@ use Aws\Sns\MessageValidator\Exception\CannotGetPublicKeyFromCertificateExceptio
 use Aws\Sns\MessageValidator\Exception\CertificateFromUnrecognizedSourceException;
 use Aws\Sns\MessageValidator\Exception\InvalidMessageSignatureException;
 use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
-use Aws\Sns\MessageValidator\MessageInterface;
 use Guzzle\Http\Url;
 use Guzzle\Http\Client;
 
@@ -55,16 +54,16 @@ class MessageValidator
     /**
      * Validates a message from SNS to ensure that it was delivered by AWS
      *
-     * @param MessageInterface $message The message to validate
+     * @param Message $message The message to validate
      *
      * @throws CannotGetPublicKeyFromCertificateException If the certificate cannot be retrieved
      * @throws CertificateFromUnrecognizedSourceException If the certificate's source cannot be verified
      * @throws InvalidMessageSignatureException           If the message's signature is invalid
      */
-    public function validate(MessageInterface $message)
+    public function validate(Message $message)
     {
         // Get the cert's URL and ensure it is from AWS
-        $certUrl = Url::factory($message->getSigningCertUrl());
+        $certUrl = Url::factory($message->get('SigningCertURL'));
         if ('.amazonaws.com' != substr($certUrl->getHost(), -14)) {
             throw new CertificateFromUnrecognizedSourceException();
         }
@@ -78,7 +77,7 @@ class MessageValidator
 
         // Verify the signature of the message
         $stringToSign = $message->getStringToSign();
-        $incomingSignature = base64_decode($message->getSignature());
+        $incomingSignature = base64_decode($message->get('Signature'));
         if (!openssl_verify($stringToSign, $incomingSignature, $publicKey, OPENSSL_ALGO_SHA1)) {
             throw new InvalidMessageSignatureException();
         }
@@ -88,11 +87,11 @@ class MessageValidator
      * Determines if a message is valid and that is was delivered by AWS. This method does not throw exceptions and
      * returns a simple boolean value.
      *
-     * @param MessageInterface $message The message to validate
+     * @param Message $message The message to validate
      *
      * @return bool
      */
-    public function isValid(MessageInterface $message)
+    public function isValid(Message $message)
     {
         try {
             $this->validate($message);

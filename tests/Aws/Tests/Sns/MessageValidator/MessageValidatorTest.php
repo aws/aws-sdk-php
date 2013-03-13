@@ -16,7 +16,7 @@
 
 namespace Aws\Tests\Sns\MessageValidator;
 
-use Aws\Sns\MessageValidator\AbstractMessage;
+use Aws\Sns\MessageValidator\Message;
 use Aws\Sns\MessageValidator\MessageValidator;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Mock\MockPlugin;
@@ -38,7 +38,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
     public function testIsValidReturnsFalseOnFailedValidation()
     {
         $validator = new MessageValidator();
-        $message = $this->getMockMessage();
+        $message = new Message(new Collection());
         $this->assertFalse($validator->isValid($message));
     }
 
@@ -47,9 +47,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         $this->setExpectedException('Aws\Sns\MessageValidator\Exception\CertificateFromUnrecognizedSourceException');
 
         $validator = new MessageValidator();
-
-        /** @var $message AbstractMessage */
-        $message = $this->getMockMessage();
+        $message = new Message(new Collection());
         $validator->validate($message);
     }
 
@@ -61,8 +59,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getMockClient();
         $validator = new MessageValidator($client);
 
-        /** @/var $message AbstractMessage */
-        $message = $this->getMockMessage(array('SigningCertURL' => 'https://foo.amazonaws.com/bar'));
+        $message = new Message(new Collection(array('SigningCertURL' => 'https://foo.amazonaws.com/bar')));
         $validator->validate($message);
     }
 
@@ -77,18 +74,17 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getMockClient(new Response(200, null, $certificate));
         $validator = new MessageValidator($client);
 
-        /** @/var $message AbstractMessage */
-        $message = $this->getMockMessage(array(
+        $message = new Message(new Collection(array(
             'SigningCertURL' => 'https://foo.amazonaws.com/bar',
             'Signature'      => $signature,
-        ));
+        )));
         $validator->validate($message);
     }
 
     public function testValidateSucceedsWhenMessageIsValid()
     {
         // Create a real message
-        $message = AbstractMessage::fromArray(array(
+        $message = Message::fromArray(array(
             'Message'        => 'foo',
             'MessageId'      => 'bar',
             'Timestamp'      => time(),
@@ -108,11 +104,6 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
 
         // The message should validate
         $this->assertTrue($validator->isValid($message));
-    }
-
-    protected function getMockMessage(array $data = array())
-    {
-        return $this->getMockForAbstractClass('Aws\Sns\MessageValidator\AbstractMessage', array(new Collection($data)));
     }
 
     protected function getMockClient(Response $response = null)
