@@ -2,6 +2,20 @@
 Frequently Asked Questions (FAQ)
 ================================
 
+What methods are available on a client?
+---------------------------------------
+
+The AWS SDK for PHP 2 utilizes service descriptions and dynamic
+`magic __call() methods <http://www.php.net/manual/en/language.oop5.overloading.php#object.call>`_ to execute API
+operations. Every magic method supported by a client is documented in the docblock of a client class using ``@method``
+annotations. Several PHP IDEs, including `PHPStorm <http://www.jetbrains.com/phpstorm/>`_ and
+`Zend Studio <http://www.zend.com/en/products/studio/>`_, are able to autocomplete based on ``@method`` annotations.
+You can find a full list of methods available for a web service client in the
+`API documentation <http://docs.aws.amazon.com/aws-sdk-php-2/latest/index.html>`_ of the client or in the
+`user guide <http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/index.html>`_ for that client.
+
+For example, the Amazon S3 client supports the following operations: :ref:`S3_operations`
+
 What do I do about a cURL SSL certificate error?
 ------------------------------------------------
 
