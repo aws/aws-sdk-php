@@ -23,6 +23,9 @@ use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client;
 
+/**
+ * @covers \Aws\Sns\MessageValidator\MessageValidator
+ */
 class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     protected function setUp()
@@ -32,11 +35,11 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         }
     }
 
-    public function testCheckReturnsFalseOnFailedValidation()
+    public function testIsValidReturnsFalseOnFailedValidation()
     {
         $validator = new MessageValidator();
         $message = $this->getMockMessage();
-        $this->assertFalse($validator->checkIfValid($message));
+        $this->assertFalse($validator->isValid($message));
     }
 
     public function testValidateFailsWhenCertUrlDoesNotMatchAws()
@@ -104,7 +107,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         $validator = new MessageValidator($client);
 
         // The message should validate
-        $this->assertTrue($validator->checkIfValid($message));
+        $this->assertTrue($validator->isValid($message));
     }
 
     protected function getMockMessage(array $data = array())
@@ -125,7 +128,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         return $client;
     }
 
-    protected function getSignature($data)
+    protected function getSignature($stringToSign)
     {
         // Generate a new Certificate Signing Request and public/private keypair
         $csr = openssl_csr_new(array(), $keypair);
@@ -136,7 +139,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Create the signature
         $privateKey = openssl_get_privatekey($keypair);
-        openssl_sign($data, $signature, $privateKey);
+        openssl_sign($stringToSign, $signature, $privateKey);
 
         // Free the openssl resources used
         openssl_pkey_free($keypair);

@@ -92,7 +92,7 @@ class MessageValidator
      *
      * @return bool
      */
-    public function checkIfValid(MessageInterface $message)
+    public function isValid(MessageInterface $message)
     {
         try {
             $this->validate($message);
