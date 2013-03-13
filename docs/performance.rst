@@ -126,7 +126,7 @@ Please consult the :doc:`installation` guide for more information on how to inst
 Do not use the phar in production
 ---------------------------------
 
-The phar file bundled with the SDK is meant to help get customer's up and running with the SDK as quickly as possible.
+The phar file bundled with the SDK is meant to help get customers up and running with the SDK as quickly as possible.
 You are encouraged to utilize the phar for exploratory or development purposes, but when running in production, using
 the phar will come at a performance cost. According to the creator of PHP's phar extension,
 `APC does not cache the contents of phar files <http://www.reddit.com/r/PHP/comments/13uwgk/phar_performance/c77kmjb>`_.
