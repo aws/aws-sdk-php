@@ -63,6 +63,6 @@ class SubscriptionConfirmationMessage extends AbstractMessage
      */
     protected static function getRequiredKeys()
     {
-        return parent::getRequiredKeys() + array('SubscribeURL', 'Token');
+        return array_merge(parent::getRequiredKeys(), array('SubscribeURL', 'Token'));
     }
 }

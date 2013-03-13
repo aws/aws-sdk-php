@@ -23,6 +23,7 @@ use Aws\Sns\MessageValidator\Exception\InvalidMessageSignatureException;
 use Aws\Sns\MessageValidator\Exception\SnsMessageValidatorException;
 use Aws\Sns\MessageValidator\MessageInterface;
 use Guzzle\Http\Url;
+use Guzzle\Http\Client;
 
 /**
  * This class uses openssl to verify SNS messages to ensure that they were sent by AWS.
@@ -30,16 +31,25 @@ use Guzzle\Http\Url;
 class MessageValidator
 {
     /**
+     * @var Client The HTTP client used to fetch the certificate
+     */
+    protected $client;
+
+    /**
      * Constructs the Message Validator object and ensures that openssl is installed
      *
      * @throws RequiredExtensionNotLoadedException If openssl is not installed
      */
-    public function __construct()
+    public function __construct(Client $client = null)
     {
         if (!extension_loaded('openssl')) {
+            //@codeCoverageIgnoreStart
             throw new RequiredExtensionNotLoadedException('The openssl extension is required to use the SNS Message '
                 . 'Validator. Please install this extension in order to use this feature.');
+            //@codeCoverageIgnoreEnd
         }
+
+        $this->client = $client ?: new Client();
     }
 
     /**
@@ -60,7 +70,7 @@ class MessageValidator
         }
 
         // Get the cert itself and extract the public key
-        $certificate = file_get_contents((string) $certUrl);
+        $certificate = $this->client->get((string) $certUrl)->send()->getBody();
         $publicKey = openssl_get_publickey($certificate);
         if (!$publicKey) {
             throw new CannotGetPublicKeyFromCertificateException();
