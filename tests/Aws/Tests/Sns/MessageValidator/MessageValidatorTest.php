@@ -32,6 +32,13 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         }
     }
 
+    public function testCheckReturnsFalseOnFailedValidation()
+    {
+        $validator = new MessageValidator();
+        $message = $this->getMockMessage();
+        $this->assertFalse($validator->checkIfValid($message));
+    }
+
     public function testValidateFailsWhenCertUrlDoesNotMatchAws()
     {
         $this->setExpectedException('Aws\Sns\MessageValidator\Exception\CertificateFromUnrecognizedSourceException');
@@ -48,10 +55,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
         $this->setExpectedException('Aws\Sns\MessageValidator\Exception\CannotGetPublicKeyFromCertificateException');
 
         // Create the validator with a mock HTTP client
-        $plugin = new MockPlugin();
-        $plugin->addResponse(new Response(200));
-        $client = new Client();
-        $client->addSubscriber($plugin);
+        $client = $this->getMockClient();
         $validator = new MessageValidator($client);
 
         /** @/var $message AbstractMessage */
@@ -61,28 +65,83 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testValidateFailsWhenMessageIsInvalid()
     {
-        $this->markTestIncomplete('Not yet implemented.');
+        $this->setExpectedException('Aws\Sns\MessageValidator\Exception\InvalidMessageSignatureException');
+
+        // Get the signature for some dummy data
+        list($signature, $certificate) = $this->getSignature('foo');
+
+        // Create the validator with a mock HTTP client that will respond with the certificate
+        $client = $this->getMockClient(new Response(200, null, $certificate));
+        $validator = new MessageValidator($client);
+
+        /** @/var $message AbstractMessage */
+        $message = $this->getMockMessage(array(
+            'SigningCertURL' => 'https://foo.amazonaws.com/bar',
+            'Signature'      => $signature,
+        ));
+        $validator->validate($message);
     }
 
     public function testValidateSucceedsWhenMessageIsValid()
     {
-        $this->markTestIncomplete('Not yet implemented.');
-    }
+        // Create a real message
+        $message = AbstractMessage::fromArray(array(
+            'Message'        => 'foo',
+            'MessageId'      => 'bar',
+            'Timestamp'      => time(),
+            'TopicArn'       => 'baz',
+            'Type'           => 'Notification',
+            'SigningCertURL' => 'https://foo.amazonaws.com/bar',
+            'Signature'      => null,
+        ));
 
-    public function testCheckReturnsFalseOnFailedValidation()
-    {
-        $validator = new MessageValidator();
-        $message = $this->getMockMessage();
-        $this->assertFalse($validator->checkIfValid($message));
-    }
+        // Get the signature for a real message
+        list($signature, $certificate) = $this->getSignature($message->getStringToSign());
+        $message->getData()->set('Signature', $signature);
 
-    public function testCheckReturnsTrueOnSuccessfulValidation()
-    {
-        $this->markTestIncomplete('Not yet implemented.');
+        // Create the validator with a mock HTTP client that will respond with the certificate
+        $client = $this->getMockClient(new Response(200, null, $certificate));
+        $validator = new MessageValidator($client);
+
+        // The message should validate
+        $this->assertTrue($validator->checkIfValid($message));
     }
 
     protected function getMockMessage(array $data = array())
     {
         return $this->getMockForAbstractClass('Aws\Sns\MessageValidator\AbstractMessage', array(new Collection($data)));
+    }
+
+    protected function getMockClient(Response $response = null)
+    {
+        $response = $response ?: new Response(200);
+
+        $plugin = new MockPlugin();
+        $plugin->addResponse($response);
+
+        $client = new Client();
+        $client->addSubscriber($plugin);
+
+        return $client;
+    }
+
+    protected function getSignature($data)
+    {
+        // Generate a new Certificate Signing Request and public/private keypair
+        $csr = openssl_csr_new(array(), $keypair);
+
+        // Create the self-signed certificate
+        $x509 = openssl_csr_sign($csr, null, $keypair, 1);
+        openssl_x509_export($x509, $certificate);
+
+        // Create the signature
+        $privateKey = openssl_get_privatekey($keypair);
+        openssl_sign($data, $signature, $privateKey);
+
+        // Free the openssl resources used
+        openssl_pkey_free($keypair);
+        openssl_x509_free($x509);
+
+        return array(base64_encode($signature), $certificate);
     }
 }
