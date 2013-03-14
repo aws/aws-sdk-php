@@ -75,7 +75,7 @@ return array (
         'AbortMultipartUpload' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'AbortMultipartUploadOutput',
             'responseType' => 'model',
             'summary' => 'Aborts a multipart upload.',
@@ -111,7 +111,7 @@ return array (
         'CompleteMultipartUpload' => array(
             'httpMethod' => 'POST',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'CompleteMultipartUploadOutput',
             'responseType' => 'model',
             'summary' => 'Completes a multipart upload by assembling previously uploaded parts.',
@@ -174,7 +174,7 @@ return array (
         'CopyObject' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'CopyObjectOutput',
             'responseType' => 'model',
             'summary' => 'Creates a copy of an object that is already stored in Amazon S3.',
@@ -387,7 +387,7 @@ return array (
         'CreateBucket' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'CreateBucketOutput',
             'responseType' => 'model',
             'summary' => 'Creates a new bucket.',
@@ -480,7 +480,7 @@ return array (
         'CreateMultipartUpload' => array(
             'httpMethod' => 'POST',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'CreateMultipartUploadOutput',
             'responseType' => 'model',
             'summary' => 'Initiates a multipart upload and returns an upload ID.',
@@ -633,7 +633,7 @@ return array (
         'DeleteBucket' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketOutput',
             'responseType' => 'model',
             'summary' => 'Deletes the bucket. All objects (including all object versions and Delete Markers) in the bucket must be deleted before the bucket itself can be deleted.',
@@ -649,7 +649,7 @@ return array (
         'DeleteBucketCors' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketCorsOutput',
             'responseType' => 'model',
             'summary' => 'Deletes the cors configuration information set for the bucket.',
@@ -672,7 +672,7 @@ return array (
         'DeleteBucketLifecycle' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketLifecycleOutput',
             'responseType' => 'model',
             'summary' => 'Deletes the lifecycle configuration from the bucket.',
@@ -695,7 +695,7 @@ return array (
         'DeleteBucketPolicy' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketPolicyOutput',
             'responseType' => 'model',
             'summary' => 'Deletes the policy from the bucket.',
@@ -718,7 +718,7 @@ return array (
         'DeleteBucketTagging' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketTaggingOutput',
             'responseType' => 'model',
             'summary' => 'Deletes the tags from the bucket.',
@@ -741,7 +741,7 @@ return array (
         'DeleteBucketWebsite' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketWebsiteOutput',
             'responseType' => 'model',
             'summary' => 'This operation removes the website configuration from the bucket.',
@@ -764,7 +764,7 @@ return array (
         'DeleteObject' => array(
             'httpMethod' => 'DELETE',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteObjectOutput',
             'responseType' => 'model',
             'summary' => 'Removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn\'\'t a null version, Amazon S3 does not remove any objects.',
@@ -788,7 +788,7 @@ return array (
         'DeleteObjects' => array(
             'httpMethod' => 'POST',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteObjectsOutput',
             'responseType' => 'model',
             'summary' => 'This operation enables you to delete multiple objects from a bucket using a single HTTP request. You may specify up to 1000 keys.',
@@ -862,7 +862,7 @@ return array (
         'GetBucketAcl' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketAclOutput',
             'responseType' => 'model',
             'summary' => 'Gets the access control policy for the bucket.',
@@ -889,7 +889,7 @@ return array (
         'GetBucketCors' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketCorsOutput',
             'responseType' => 'model',
             'summary' => 'Returns the cors configuration for the bucket.',
@@ -916,7 +916,7 @@ return array (
         'GetBucketLifecycle' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketLifecycleOutput',
             'responseType' => 'model',
             'summary' => 'Returns the lifecycle configuration information set on the bucket.',
@@ -943,7 +943,7 @@ return array (
         'GetBucketLocation' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketLocationOutput',
             'responseType' => 'model',
             'summary' => 'Returns the region the bucket resides in.',
@@ -966,7 +966,7 @@ return array (
         'GetBucketLogging' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketLoggingOutput',
             'responseType' => 'model',
             'summary' => 'Returns the logging status of a bucket and the permissions users have to view and modify that status. To use GET, you must be the bucket owner.',
@@ -993,7 +993,7 @@ return array (
         'GetBucketNotification' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketNotificationOutput',
             'responseType' => 'model',
             'summary' => 'Return the notification configuration of a bucket.',
@@ -1020,7 +1020,7 @@ return array (
         'GetBucketPolicy' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketPolicyOutput',
             'responseType' => 'model',
             'summary' => 'Returns the policy of a specified bucket.',
@@ -1043,7 +1043,7 @@ return array (
         'GetBucketRequestPayment' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketRequestPaymentOutput',
             'responseType' => 'model',
             'summary' => 'Returns the request payment configuration of a bucket.',
@@ -1070,7 +1070,7 @@ return array (
         'GetBucketTagging' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketTaggingOutput',
             'responseType' => 'model',
             'summary' => 'Returns the tag set associated with the bucket.',
@@ -1097,7 +1097,7 @@ return array (
         'GetBucketVersioning' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketVersioningOutput',
             'responseType' => 'model',
             'summary' => 'Returns the versioning state of a bucket.',
@@ -1124,7 +1124,7 @@ return array (
         'GetBucketWebsite' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketWebsiteOutput',
             'responseType' => 'model',
             'summary' => 'Returns the website configuration for a bucket.',
@@ -1151,7 +1151,7 @@ return array (
         'GetObject' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetObjectOutput',
             'responseType' => 'model',
             'summary' => 'Retrieves objects from Amazon S3.',
@@ -1271,7 +1271,7 @@ return array (
         'GetObjectAcl' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetObjectAclOutput',
             'responseType' => 'model',
             'summary' => 'Returns the access control list (ACL) of an object.',
@@ -1318,7 +1318,7 @@ return array (
         'GetObjectTorrent' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetObjectTorrentOutput',
             'responseType' => 'model',
             'summary' => 'Return torrent files from a bucket.',
@@ -1349,7 +1349,7 @@ return array (
         'HeadBucket' => array(
             'httpMethod' => 'HEAD',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'HeadBucketOutput',
             'responseType' => 'model',
             'summary' => 'This operation is useful to determine if a bucket exists and you have permission to access it.',
@@ -1371,7 +1371,7 @@ return array (
         'HeadObject' => array(
             'httpMethod' => 'HEAD',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'HeadObjectOutput',
             'responseType' => 'model',
             'summary' => 'The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you\'\'re only interested in an object\'\'s metadata. To use HEAD, you must have READ access to the object.',
@@ -1446,7 +1446,7 @@ return array (
         'ListBuckets' => array(
             'httpMethod' => 'GET',
             'uri' => '/',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListBucketsOutput',
             'responseType' => 'model',
             'summary' => 'Returns a list of all buckets owned by the authenticated sender of the request.',
@@ -1461,7 +1461,7 @@ return array (
         'ListMultipartUploads' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListMultipartUploadsOutput',
             'responseType' => 'model',
             'summary' => 'This operation lists in-progress multipart uploads.',
@@ -1518,7 +1518,7 @@ return array (
         'ListObjectVersions' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListObjectVersionsOutput',
             'responseType' => 'model',
             'summary' => 'Returns metadata about all of the versions of objects in a bucket.',
@@ -1575,7 +1575,7 @@ return array (
         'ListObjects' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListObjectsOutput',
             'responseType' => 'model',
             'summary' => 'Returns some or all (up to 1000) of the objects in a bucket. You can use the request parameters as selection criteria to return a subset of the objects in a bucket.',
@@ -1625,7 +1625,7 @@ return array (
         'ListParts' => array(
             'httpMethod' => 'GET',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListPartsOutput',
             'responseType' => 'model',
             'summary' => 'Lists the parts that have been uploaded for a specific multipart upload.',
@@ -1672,7 +1672,7 @@ return array (
         'PutBucketAcl' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketAclOutput',
             'responseType' => 'model',
             'summary' => 'Sets the permissions on a bucket using access control lists (ACL).',
@@ -1826,7 +1826,7 @@ return array (
         'PutBucketCors' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketCorsOutput',
             'responseType' => 'model',
             'summary' => 'Sets the cors configuration for a bucket.',
@@ -1910,7 +1910,7 @@ return array (
         'PutBucketLifecycle' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketLifecycleOutput',
             'responseType' => 'model',
             'summary' => 'Sets lifecycle configuration for your bucket. If a lifecycle configuration exists, it replaces it.',
@@ -2022,7 +2022,7 @@ return array (
         'PutBucketLogging' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketLoggingOutput',
             'responseType' => 'model',
             'summary' => 'Set the logging parameters for a bucket and to specify permissions for who can view and modify the logging parameters. To set the logging status of a bucket, you must be the bucket owner.',
@@ -2119,7 +2119,7 @@ return array (
         'PutBucketNotification' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketNotificationOutput',
             'responseType' => 'model',
             'summary' => 'Enables notifications of specified events for a bucket.',
@@ -2171,7 +2171,7 @@ return array (
         'PutBucketPolicy' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketPolicyOutput',
             'responseType' => 'model',
             'summary' => 'Replaces a policy on a bucket. If the bucket already has a policy, the one in this request completely replaces it.',
@@ -2206,7 +2206,7 @@ return array (
         'PutBucketRequestPayment' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketRequestPaymentOutput',
             'responseType' => 'model',
             'summary' => 'Sets the request payment configuration for a bucket. By default, the bucket owner pays for downloads from the bucket. This configuration parameter enables the bucket owner (only) to specify that the person requesting the download will be charged for the download.',
@@ -2250,7 +2250,7 @@ return array (
         'PutBucketTagging' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketTaggingOutput',
             'responseType' => 'model',
             'summary' => 'Sets the tags for a bucket.',
@@ -2306,7 +2306,7 @@ return array (
         'PutBucketVersioning' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketVersioningOutput',
             'responseType' => 'model',
             'summary' => 'Sets the versioning state of an existing bucket. To set the versioning state, you must be the bucket owner.',
@@ -2364,7 +2364,7 @@ return array (
         'PutBucketWebsite' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketWebsiteOutput',
             'responseType' => 'model',
             'summary' => 'Set the website configuration for a bucket.',
@@ -2496,7 +2496,7 @@ return array (
         'PutObject' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutObjectOutput',
             'responseType' => 'model',
             'summary' => 'Adds an object to a bucket.',
@@ -2654,7 +2654,7 @@ return array (
         'PutObjectAcl' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutObjectAclOutput',
             'responseType' => 'model',
             'summary' => 'uses the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket',
@@ -2822,7 +2822,7 @@ return array (
         'RestoreObject' => array(
             'httpMethod' => 'POST',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'RestoreObjectOutput',
             'responseType' => 'model',
             'summary' => 'Restores an archived copy of an object back into Amazon S3',
@@ -2873,7 +2873,7 @@ return array (
         'UploadPart' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'UploadPartOutput',
             'responseType' => 'model',
             'summary' => 'Uploads a part in a multipart upload.',
@@ -2927,7 +2927,7 @@ return array (
         'UploadPartCopy' => array(
             'httpMethod' => 'PUT',
             'uri' => '/{Bucket}{/Key*}',
-            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'UploadPartCopyOutput',
             'responseType' => 'model',
             'summary' => 'Uploads a part by copying data from an existing object as data source.',
@@ -4782,6 +4782,9 @@ return array (
                     'description' => 'Request ID of the operation',
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
+                ),
+                'ObjectURL' => array(
+                    'description' => 'URL of the uploaded object',
                 ),
             ),
         ),

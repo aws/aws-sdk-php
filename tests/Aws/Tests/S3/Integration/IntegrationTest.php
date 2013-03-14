@@ -417,11 +417,12 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $key = 'åbc';
 
         try {
-            $this->client->putObject(array(
+            $result = $this->client->putObject(array(
                 'Bucket' => $this->bucket,
                 'Key'    => $key,
                 'Body'   => 'hi'
             ));
+            $this->assertContains($this->bucket, $result['ObjectURL']);
         } catch (\Aws\S3\Exception\SignatureDoesNotMatchException $e) {
             echo $e->getResponse()->getRequest()->getParams()->get('aws.string_to_sign') . "\n";
             echo $e->getResponse() . "\n";
@@ -719,6 +720,16 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'Body'   => 'hi'
         ));
         $this->client->waitUntil('object_exists', array('Bucket' => $this->bucket, 'Key' => $key));
+
+        self::log('Creating an downloading using a pre-signed URL with command');
+        $command = $this->client->getCommand('GetObject', array(
+            'Bucket' => $this->bucket,
+            'Key'    => $key
+        ));
+        $url = $command->createPresignedUrl('+100 minutes');
+        self::log($url);
+        $this->assertEquals('hi', file_get_contents($url));
+
         self::log('Creating an downloading using a pre-signed URL');
         $extra = urlencode("attachment; filename=\"{$key}\"");
         $request = $this->client->get("{$this->bucket}/{$key}?response-content-disposition={$extra}");
