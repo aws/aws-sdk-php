@@ -18,6 +18,7 @@ namespace Aws\Common\Credentials;
 
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Exception\RequiredExtensionNotLoadedException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Common\FromConfigInterface;
@@ -130,7 +131,8 @@ class Credentials implements CredentialsInterface, FromConfigInterface
                 // If no cache adapter was provided, then create one for the user
                 // @codeCoverageIgnoreStart
                 if (!extension_loaded('apc')) {
-                    throw new RuntimeException('PHP has not been compiled with APC. Unable to cache credentials.');
+                    throw new RequiredExtensionNotLoadedException('PHP has not been compiled with APC. Unable to cache '
+                        . 'the credentials.');
                 } elseif (!class_exists('Doctrine\Common\Cache\ApcCache')) {
                     throw new RuntimeException(
                         'Cannot set ' . Options::CREDENTIALS_CACHE . ' to true because the Doctrine cache component is '
