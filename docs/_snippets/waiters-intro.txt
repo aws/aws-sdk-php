@@ -1,0 +1,10 @@
+One of the high-level abstractions provided by the SDK is the concept of **waiters**. Waiters help make it easier to
+work with *eventually consistent* systems by providing an easy way to wait until a resource enters into a particular
+state by polling the resource. You can find a list of the waiters supported by a client by viewing the docblock of a
+client. Any ``@method`` tag that starts with "``waitUntil``" will utilize a waiter.
+
+.. code-block:: php
+
+    $client->waitUntilBucketExists(array('Bucket' => 'my-bucket'));
+
+The preceding method invocation will instantiate a waiter object and poll the bucket until it exists.
