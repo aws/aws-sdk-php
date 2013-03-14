@@ -75,6 +75,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model restoreDBInstanceFromDBSnapshot(array $args = array()) {@command Rds RestoreDBInstanceFromDBSnapshot}
  * @method Model restoreDBInstanceToPointInTime(array $args = array()) {@command Rds RestoreDBInstanceToPointInTime}
  * @method Model revokeDBSecurityGroupIngress(array $args = array()) {@command Rds RevokeDBSecurityGroupIngress}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-rds.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Rds.RdsClient.html API docs
  */
 class RdsClient extends AbstractClient
 {

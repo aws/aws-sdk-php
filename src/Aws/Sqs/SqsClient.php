@@ -40,6 +40,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}
  * @method Model sendMessageBatch(array $args = array()) {@command Sqs SendMessageBatch}
  * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sqs.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sqs.SqsClient.html API docs
  */
 class SqsClient extends AbstractClient
 {

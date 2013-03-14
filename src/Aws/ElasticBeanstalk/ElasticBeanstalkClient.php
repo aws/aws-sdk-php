@@ -57,6 +57,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model validateConfigurationSettings(array $args = array()) {@command ElasticBeanstalk ValidateConfigurationSettings}
  * @method waitUntilEnvironmentReady(array $input) Wait using the EnvironmentReady waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
  * @method waitUntilEnvironmentTerminated(array $input) Wait using the EnvironmentTerminated waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticbeanstalk.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticBeanstalk.ElasticBeanstalkClient.html API docs
  */
 class ElasticBeanstalkClient extends AbstractClient
 {

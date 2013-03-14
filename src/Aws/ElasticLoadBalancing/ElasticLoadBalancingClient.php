@@ -49,6 +49,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model setLoadBalancerListenerSSLCertificate(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerListenerSSLCertificate}
  * @method Model setLoadBalancerPoliciesForBackendServer(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerPoliciesForBackendServer}
  * @method Model setLoadBalancerPoliciesOfListener(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerPoliciesOfListener}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticloadbalancing.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticLoadBalancing.ElasticLoadBalancingClient.html API docs
  */
 class ElasticLoadBalancingClient extends AbstractClient
 {

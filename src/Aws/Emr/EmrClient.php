@@ -33,6 +33,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model setTerminationProtection(array $args = array()) {@command Emr SetTerminationProtection}
  * @method Model setVisibleToAllUsers(array $args = array()) {@command Emr SetVisibleToAllUsers}
  * @method Model terminateJobFlows(array $args = array()) {@command Emr TerminateJobFlows}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-emr.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Emr.EmrClient.html API docs
  */
 class EmrClient extends AbstractClient
 {

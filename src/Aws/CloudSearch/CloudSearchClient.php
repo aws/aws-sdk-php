@@ -45,6 +45,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateStemmingOptions(array $args = array()) {@command CloudSearch UpdateStemmingOptions}
  * @method Model updateStopwordOptions(array $args = array()) {@command CloudSearch UpdateStopwordOptions}
  * @method Model updateSynonymOptions(array $args = array()) {@command CloudSearch UpdateSynonymOptions}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudsearch.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudSearch.CloudSearchClient.html API docs
  */
 class CloudSearchClient extends AbstractClient
 {

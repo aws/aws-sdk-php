@@ -37,6 +37,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeOfferings(array $args = array()) {@command DirectConnect DescribeOfferings}
  * @method Model describeVirtualGateways(array $args = array()) {@command DirectConnect DescribeVirtualGateways}
  * @method Model describeVirtualInterfaces(array $args = array()) {@command DirectConnect DescribeVirtualInterfaces}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-directconnect.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DirectConnect.DirectConnectClient.html API docs
  */
 class DirectConnectClient extends AbstractClient
 {

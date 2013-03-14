@@ -40,6 +40,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model setTopicAttributes(array $args = array()) {@command Sns SetTopicAttributes}
  * @method Model subscribe(array $args = array()) {@command Sns Subscribe}
  * @method Model unsubscribe(array $args = array()) {@command Sns Unsubscribe}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sns.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sns.SnsClient.html API docs
  */
 class SnsClient extends AbstractClient
 {

@@ -94,6 +94,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateUser(array $args = array()) {@command Iam UpdateUser}
  * @method Model uploadServerCertificate(array $args = array()) {@command Iam UploadServerCertificate}
  * @method Model uploadSigningCertificate(array $args = array()) {@command Iam UploadSigningCertificate}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-iam.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Iam.IamClient.html API docs
  */
 class IamClient extends AbstractClient
 {

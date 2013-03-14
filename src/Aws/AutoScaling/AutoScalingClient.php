@@ -59,6 +59,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model suspendProcesses(array $args = array()) {@command AutoScaling SuspendProcesses}
  * @method Model terminateInstanceInAutoScalingGroup(array $args = array()) {@command AutoScaling TerminateInstanceInAutoScalingGroup}
  * @method Model updateAutoScalingGroup(array $args = array()) {@command AutoScaling UpdateAutoScalingGroup}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-autoscaling.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.AutoScaling.AutoScalingClient.html API docs
  */
 class AutoScalingClient extends AbstractClient
 {

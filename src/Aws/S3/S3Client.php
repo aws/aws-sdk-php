@@ -94,6 +94,9 @@ use Guzzle\Service\Command\Factory\CompositeFactory;
  * @method waitUntilBucketExists(array $input) Wait until a bucket exists. The input array uses the parameters of the HeadBucket operation and waiter specific settings
  * @method waitUntilBucketNotExists(array $input) Wait until a bucket does not exist. The input array uses the parameters of the HeadBucket operation and waiter specific settings
  * @method waitUntilObjectExists(array $input) Wait until an object exists. The input array uses the parameters of the HeadObject operation and waiter specific settings
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-s3.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html API docs
  */
 class S3Client extends AbstractClient
 {

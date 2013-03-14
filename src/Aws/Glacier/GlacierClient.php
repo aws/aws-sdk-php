@@ -48,6 +48,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model uploadMultipartPart(array $args = array()) {@command Glacier UploadMultipartPart}
  * @method waitUntilVaultExists(array $input) Wait until a vault can be accessed. The input array uses the parameters of the DescribeVault operation and waiter specific settings
  * @method waitUntilVaultNotExists(array $input) Wait until a vault is deleted. The input array uses the parameters of the DescribeVault operation and waiter specific settings
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-glacier.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Glacier.GlacierClient.html API docs
  */
 class GlacierClient extends AbstractClient
 {

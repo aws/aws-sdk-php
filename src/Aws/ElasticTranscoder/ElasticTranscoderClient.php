@@ -42,6 +42,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model testRole(array $args = array()) {@command ElasticTranscoder TestRole}
  * @method Model updatePipelineNotifications(array $args = array()) {@command ElasticTranscoder UpdatePipelineNotifications}
  * @method Model updatePipelineStatus(array $args = array()) {@command ElasticTranscoder UpdatePipelineStatus}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elastictranscoder.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticTranscoder.ElasticTranscoderClient.html API docs
  */
 class ElasticTranscoderClient extends AbstractClient
 {

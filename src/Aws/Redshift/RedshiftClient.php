@@ -61,6 +61,9 @@ use Guzzle\Service\Resource\Model;
  * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-redshift.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Redshift.RedshiftClient.html API docs
  */
 class RedshiftClient extends AbstractClient
 {

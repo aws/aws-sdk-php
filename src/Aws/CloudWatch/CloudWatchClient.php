@@ -36,6 +36,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model putMetricAlarm(array $args = array()) {@command CloudWatch PutMetricAlarm}
  * @method Model putMetricData(array $args = array()) {@command CloudWatch PutMetricData}
  * @method Model setAlarmState(array $args = array()) {@command CloudWatch SetAlarmState}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudwatch.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudWatch.CloudWatchClient.html API docs
  */
 class CloudWatchClient extends AbstractClient
 {

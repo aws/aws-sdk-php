@@ -38,6 +38,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model listHealthChecks(array $args = array()) {@command Route53 ListHealthChecks}
  * @method Model listHostedZones(array $args = array()) {@command Route53 ListHostedZones}
  * @method Model listResourceRecordSets(array $args = array()) {@command Route53 ListResourceRecordSets}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-route53.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Route53.Route53Client.html API docs
  */
 class Route53Client extends AbstractClient
 {

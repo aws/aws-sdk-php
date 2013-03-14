@@ -30,6 +30,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model getStatus(array $args = array()) {@command ImportExport GetStatus}
  * @method Model listJobs(array $args = array()) {@command ImportExport ListJobs}
  * @method Model updateJob(array $args = array()) {@command ImportExport UpdateJob}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-importexport.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ImportExport.ImportExportClient.html API docs
  */
 class ImportExportClient extends AbstractClient
 {

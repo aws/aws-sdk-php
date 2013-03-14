@@ -49,6 +49,9 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
  * @method Model updateTable(array $args = array()) {@command DynamoDb UpdateTable}
  * @method waitUntilTableExists(array $input) Wait until a table exists and can be accessed The input array uses the parameters of the DescribeTable operation and waiter specific settings
  * @method waitUntilTableNotExists(array $input) Wait until a table is deleted The input array uses the parameters of the DescribeTable operation and waiter specific settings
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-dynamodb.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html API docs
  */
 class DynamoDbClient extends AbstractClient
 {

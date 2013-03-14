@@ -51,6 +51,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model rebootCacheCluster(array $args = array()) {@command ElastiCache RebootCacheCluster}
  * @method Model resetCacheParameterGroup(array $args = array()) {@command ElastiCache ResetCacheParameterGroup}
  * @method Model revokeCacheSecurityGroupIngress(array $args = array()) {@command ElastiCache RevokeCacheSecurityGroupIngress}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticache.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElastiCache.ElastiCacheClient.html API docs
  */
 class ElastiCacheClient extends AbstractClient
 {

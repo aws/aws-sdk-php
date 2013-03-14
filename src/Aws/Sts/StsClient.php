@@ -30,6 +30,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model assumeRole(array $args = array()) {@command Sts AssumeRole}
  * @method Model getFederationToken(array $args = array()) {@command Sts GetFederationToken}
  * @method Model getSessionToken(array $args = array()) {@command Sts GetSessionToken}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sts.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sts.StsClient.html API docs
  */
 class StsClient extends AbstractClient
 {
@@ -73,6 +76,7 @@ class StsClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
+     * @throws InvalidArgumentException
      */
     public static function factory($config = array())
     {

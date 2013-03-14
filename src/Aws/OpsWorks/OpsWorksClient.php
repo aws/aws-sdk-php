@@ -68,6 +68,9 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  * @method Model updateLayer(array $args = array()) {@command OpsWorks UpdateLayer}
  * @method Model updateStack(array $args = array()) {@command OpsWorks UpdateStack}
  * @method Model updateUserProfile(array $args = array()) {@command OpsWorks UpdateUserProfile}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-opsworks.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.OpsWorks.OpsWorksClient.html API docs
  */
 class OpsWorksClient extends AbstractClient
 {

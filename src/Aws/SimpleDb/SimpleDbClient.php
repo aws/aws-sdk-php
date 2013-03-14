@@ -35,6 +35,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model listDomains(array $args = array()) {@command SimpleDb ListDomains}
  * @method Model putAttributes(array $args = array()) {@command SimpleDb PutAttributes}
  * @method Model select(array $args = array()) {@command SimpleDb Select}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-simpledb.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.SimpleDb.SimpleDbClient.html API docs
  */
 class SimpleDbClient extends AbstractClient
 {

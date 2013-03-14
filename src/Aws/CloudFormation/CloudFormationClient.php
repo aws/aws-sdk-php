@@ -38,6 +38,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model listStacks(array $args = array()) {@command CloudFormation ListStacks}
  * @method Model updateStack(array $args = array()) {@command CloudFormation UpdateStack}
  * @method Model validateTemplate(array $args = array()) {@command CloudFormation ValidateTemplate}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudformation.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudFormation.CloudFormationClient.html API docs
  */
 class CloudFormationClient extends AbstractClient
 {

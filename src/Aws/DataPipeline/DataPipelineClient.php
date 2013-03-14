@@ -43,6 +43,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model setStatus(array $args = array()) {@command DataPipeline SetStatus}
  * @method Model setTaskStatus(array $args = array()) {@command DataPipeline SetTaskStatus}
  * @method Model validatePipelineDefinition(array $args = array()) {@command DataPipeline ValidatePipelineDefinition}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-datapipeline.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DataPipeline.DataPipelineClient.html API docs
  */
 class DataPipelineClient extends AbstractClient
 {

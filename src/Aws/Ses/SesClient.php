@@ -44,6 +44,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model verifyEmailAddress(array $args = array()) {@command Ses VerifyEmailAddress}
  * @method Model verifyEmailIdentity(array $args = array()) {@command Ses VerifyEmailIdentity}
  * @method waitUntilIdentityExists(array $input) Wait using the IdentityExists waiter. The input array uses the parameters of the GetIdentityVerificationAttributes operation and waiter specific settings
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-ses.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Ses.SesClient.html API docs
  */
 class SesClient extends AbstractClient
 {

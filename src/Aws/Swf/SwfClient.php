@@ -57,6 +57,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model signalWorkflowExecution(array $args = array()) {@command Swf SignalWorkflowExecution}
  * @method Model startWorkflowExecution(array $args = array()) {@command Swf StartWorkflowExecution}
  * @method Model terminateWorkflowExecution(array $args = array()) {@command Swf TerminateWorkflowExecution}
+ *
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-swf.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Swf.SwfClient.html API docs
  */
 class SwfClient extends AbstractClient
 {
