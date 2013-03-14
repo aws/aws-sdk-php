@@ -46,6 +46,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model deleteOptionGroup(array $args = array()) {@command Rds DeleteOptionGroup}
  * @method Model describeDBEngineVersions(array $args = array()) {@command Rds DescribeDBEngineVersions}
  * @method Model describeDBInstances(array $args = array()) {@command Rds DescribeDBInstances}
+ * @method Model describeDBLogFiles(array $args = array()) {@command Rds DescribeDBLogFiles}
  * @method Model describeDBParameterGroups(array $args = array()) {@command Rds DescribeDBParameterGroups}
  * @method Model describeDBParameters(array $args = array()) {@command Rds DescribeDBParameters}
  * @method Model describeDBSecurityGroups(array $args = array()) {@command Rds DescribeDBSecurityGroups}
@@ -60,6 +61,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeOrderableDBInstanceOptions(array $args = array()) {@command Rds DescribeOrderableDBInstanceOptions}
  * @method Model describeReservedDBInstances(array $args = array()) {@command Rds DescribeReservedDBInstances}
  * @method Model describeReservedDBInstancesOfferings(array $args = array()) {@command Rds DescribeReservedDBInstancesOfferings}
+ * @method Model downloadDBLogFilePortion(array $args = array()) {@command Rds DownloadDBLogFilePortion}
  * @method Model listTagsForResource(array $args = array()) {@command Rds ListTagsForResource}
  * @method Model modifyDBInstance(array $args = array()) {@command Rds ModifyDBInstance}
  * @method Model modifyDBParameterGroup(array $args = array()) {@command Rds ModifyDBParameterGroup}
@@ -123,7 +125,7 @@ class RdsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/rds-2013-01-10.php'
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/rds-2013-02-12.php'
             ))
             ->build();
     }

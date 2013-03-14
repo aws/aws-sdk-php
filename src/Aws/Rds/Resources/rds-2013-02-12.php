@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-01-10',
+    'apiVersion' => '2013-02-12',
     'endpointPrefix' => 'rds',
     'serviceFullName' => 'Amazon Relational Database Service',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -87,7 +87,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -127,7 +127,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -183,7 +183,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -243,7 +243,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SourceDBSnapshotIdentifier' => array(
                     'required' => true,
@@ -289,7 +289,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBName' => array(
                     'description' => 'The meaning of this parameter differs according to the database engine you use.',
@@ -485,7 +485,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -597,7 +597,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -643,7 +643,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -686,7 +686,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -732,7 +732,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -792,7 +792,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -878,7 +878,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -930,7 +930,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -981,7 +981,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1015,7 +1015,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -1049,7 +1049,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -1083,7 +1083,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1120,7 +1120,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1154,7 +1154,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1188,7 +1188,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'Engine' => array(
                     'description' => 'The database engine to return.',
@@ -1245,7 +1245,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'description' => 'The user-supplied instance identifier. If this parameter is specified, information from only the specific DB Instance is returned. This parameter isn\'t case sensitive.',
@@ -1259,6 +1259,61 @@ return array (
                 ),
                 'Marker' => array(
                     'description' => 'An optional pagination token provided by a previous DescribeDBInstances request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords .',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'DBInstanceNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeDBLogFiles' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeDBLogFilesResponse',
+            'responseType' => 'model',
+            'summary' => 'Returns a list of DB log files for the DB instance.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeDBLogFiles',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-02-12',
+                ),
+                'DBInstanceIdentifier' => array(
+                    'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'FilenameContains' => array(
+                    'description' => 'Filters the available log files for log file names that contain the specified string.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'FileLastWritten' => array(
+                    'description' => 'Filters the available log files for files written since the specified date.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'FileSize' => array(
+                    'description' => 'Filters the available log files for files larger than the specified size.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'description' => 'The pagination token provided in the previous request. If this parameter is specified the response includes only records beyond the marker, up to MaxRecords.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1285,7 +1340,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupName' => array(
                     'description' => 'The name of a specific DB Parameter Group to return details for.',
@@ -1325,7 +1380,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1371,7 +1426,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSecurityGroupName' => array(
                     'description' => 'The name of the DB Security Group to return details for.',
@@ -1411,7 +1466,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'description' => 'A DB Instance Identifier to retrieve the list of DB Snapshots for. Cannot be used in conjunction with DBSnapshotIdentifier. This parameter isn\'t case sensitive.',
@@ -1461,7 +1516,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSubnetGroupName' => array(
                     'description' => 'The name of the DB Subnet Group to return details for.',
@@ -1501,7 +1556,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupFamily' => array(
                     'required' => true,
@@ -1537,7 +1592,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SourceType' => array(
                     'description' => 'The type of source that will be generating the events.',
@@ -1562,7 +1617,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SubscriptionName' => array(
                     'description' => 'The name of the RDS event notification subscription you want to describe.',
@@ -1602,7 +1657,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SourceIdentifier' => array(
                     'description' => 'The identifier of the event source for which events will be returned. If not specified, then all sources are included in the response.',
@@ -1683,11 +1738,11 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'EngineName' => array(
                     'required' => true,
-                    'description' => 'Options available for the given DB engine name to be described.',
+                    'description' => 'A required parameter. Options available for the given Engine name will be described.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1724,7 +1779,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'OptionGroupName' => array(
                     'description' => 'The name of the option group to describe. Cannot be supplied together with EngineName or MajorEngineVersion.',
@@ -1774,7 +1829,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'Engine' => array(
                     'required' => true,
@@ -1831,7 +1886,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'ReservedDBInstanceId' => array(
                     'description' => 'The reserved DB Instance identifier filter value. Specify this parameter to show only the reservation that matches the specified reservation ID.',
@@ -1902,7 +1957,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'description' => 'The offering identifier filter value. Specify this parameter to show only the available offering that matches the specified reservation identifier.',
@@ -1952,6 +2007,53 @@ return array (
                 ),
             ),
         ),
+        'DownloadDBLogFilePortion' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DownloadDBLogFilePortionDetails',
+            'responseType' => 'model',
+            'summary' => 'Downloads the last line of the specified log file.',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DownloadDBLogFilePortion',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-02-12',
+                ),
+                'DBInstanceIdentifier' => array(
+                    'required' => true,
+                    'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'LogFileName' => array(
+                    'required' => true,
+                    'description' => 'The name of the log file to be downloaded.',
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Marker' => array(
+                    'description' => 'The pagination token provided in the previous request. If this parameter is specified the response includes only records beyond the marker, up to MaxRecords.',
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'NumberOfLines' => array(
+                    'description' => 'The number of lines remaining to be downloaded.',
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'DBInstanceNotFoundException',
+                ),
+            ),
+        ),
         'ListTagsForResource' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1968,7 +2070,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -2002,7 +2104,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2162,7 +2264,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2255,7 +2357,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -2314,7 +2416,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -2386,7 +2488,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -2429,6 +2531,56 @@ return array (
                                 'items' => array(
                                     'name' => 'VpcSecurityGroupId',
                                     'type' => 'string',
+                                ),
+                            ),
+                            'OptionSettings' => array(
+                                'description' => 'A list of option settings applied for this option.',
+                                'type' => 'array',
+                                'sentAs' => 'OptionSettings.member',
+                                'items' => array(
+                                    'name' => 'OptionSetting',
+                                    'description' => 'Option setting details.',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Name' => array(
+                                            'description' => 'The name of the setting.',
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'description' => 'The value of this setting.',
+                                            'type' => 'string',
+                                        ),
+                                        'DefaultValue' => array(
+                                            'description' => 'Default value for this setting.',
+                                            'type' => 'string',
+                                        ),
+                                        'Description' => array(
+                                            'description' => 'The description of the setting.',
+                                            'type' => 'string',
+                                        ),
+                                        'ApplyType' => array(
+                                            'description' => 'Specifies the apply type for this setting.',
+                                            'type' => 'string',
+                                        ),
+                                        'DataType' => array(
+                                            'description' => 'Specifies the valid data type of this setting',
+                                            'type' => 'string',
+                                        ),
+                                        'AllowedValues' => array(
+                                            'description' => 'Specifies a valid list/range of values allowed for this setting.',
+                                            'type' => 'string',
+                                        ),
+                                        'IsModifiable' => array(
+                                            'description' => 'Indicates if the setting is modifiable or not.',
+                                            'type' => 'boolean',
+                                            'format' => 'boolean-string',
+                                        ),
+                                        'IsCollection' => array(
+                                            'description' => 'Indicates if the value for the setting can be a list of values or a single value.',
+                                            'type' => 'boolean',
+                                            'format' => 'boolean-string',
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -2476,7 +2628,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2520,7 +2672,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'required' => true,
@@ -2567,7 +2719,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2607,7 +2759,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -2647,7 +2799,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -2692,7 +2844,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2790,7 +2942,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2924,7 +3076,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'SourceDBInstanceIdentifier' => array(
                     'required' => true,
@@ -3077,7 +3229,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-01-10',
+                    'default' => '2013-02-12',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -3323,7 +3475,7 @@ return array (
                             'type' => 'string',
                         ),
                         'MasterUsername' => array(
-                            'description' => 'Provides the master username for the DB Instance.',
+                            'description' => 'Provides the master username for the DB Snapshot.',
                             'type' => 'string',
                         ),
                         'EngineVersion' => array(
@@ -3341,6 +3493,10 @@ return array (
                         'Iops' => array(
                             'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value of the DB Instance at the time of the snapshot.',
                             'type' => 'numeric',
+                        ),
+                        'OptionGroupName' => array(
+                            'description' => 'Provides the option group name for the DB Snapshot.',
+                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -3614,17 +3770,22 @@ return array (
                             'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value.',
                             'type' => 'numeric',
                         ),
-                        'OptionGroupMembership' => array(
-                            'description' => 'Specifies the name and status of the option group that this instance belongs to.',
-                            'type' => 'object',
-                            'properties' => array(
-                                'OptionGroupName' => array(
-                                    'description' => 'The name of the option group that the instance belongs to.',
-                                    'type' => 'string',
-                                ),
-                                'Status' => array(
-                                    'description' => 'The status of the DB Instance\'s option group membership (e.g. in-sync, pending, pending-maintenance, applying).',
-                                    'type' => 'string',
+                        'OptionGroupMemberships' => array(
+                            'description' => 'Provides the list of option group memberships for this DB Instance.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'OptionGroupMembership',
+                                'type' => 'object',
+                                'sentAs' => 'OptionGroupMembership',
+                                'properties' => array(
+                                    'OptionGroupName' => array(
+                                        'description' => 'The name of the option group that the instance belongs to.',
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'description' => 'The status of the DB Instance\'s option group membership (e.g. in-sync, pending, pending-maintenance, applying).',
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),
@@ -3780,9 +3941,61 @@ return array (
                                         'description' => 'The description of the option.',
                                         'type' => 'string',
                                     ),
+                                    'Persistent' => array(
+                                        'description' => 'Indicate if this option is persistent.',
+                                        'type' => 'boolean',
+                                    ),
                                     'Port' => array(
                                         'description' => 'If required, the port configured for this option to use.',
                                         'type' => 'numeric',
+                                    ),
+                                    'OptionSettings' => array(
+                                        'description' => 'The settings belonging to this option.',
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'OptionSetting',
+                                            'description' => 'Option setting details.',
+                                            'type' => 'object',
+                                            'sentAs' => 'OptionSetting',
+                                            'properties' => array(
+                                                'Name' => array(
+                                                    'description' => 'The name of the setting.',
+                                                    'type' => 'string',
+                                                ),
+                                                'Value' => array(
+                                                    'description' => 'The value of this setting.',
+                                                    'type' => 'string',
+                                                ),
+                                                'DefaultValue' => array(
+                                                    'description' => 'Default value for this setting.',
+                                                    'type' => 'string',
+                                                ),
+                                                'Description' => array(
+                                                    'description' => 'The description of the setting.',
+                                                    'type' => 'string',
+                                                ),
+                                                'ApplyType' => array(
+                                                    'description' => 'Specifies the apply type for this setting.',
+                                                    'type' => 'string',
+                                                ),
+                                                'DataType' => array(
+                                                    'description' => 'Specifies the valid data type of this setting',
+                                                    'type' => 'string',
+                                                ),
+                                                'AllowedValues' => array(
+                                                    'description' => 'Specifies a valid list/range of values allowed for this setting.',
+                                                    'type' => 'string',
+                                                ),
+                                                'IsModifiable' => array(
+                                                    'description' => 'Indicates if the setting is modifiable or not.',
+                                                    'type' => 'boolean',
+                                                ),
+                                                'IsCollection' => array(
+                                                    'description' => 'Indicates if the value for the setting can be a list of values or a single value.',
+                                                    'type' => 'boolean',
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                     'DBSecurityGroupMemberships' => array(
                                         'description' => 'If the Option requires access to a port, then this DB Security Group allows access to the port.',
@@ -4192,17 +4405,22 @@ return array (
                                 'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value.',
                                 'type' => 'numeric',
                             ),
-                            'OptionGroupMembership' => array(
-                                'description' => 'Specifies the name and status of the option group that this instance belongs to.',
-                                'type' => 'object',
-                                'properties' => array(
-                                    'OptionGroupName' => array(
-                                        'description' => 'The name of the option group that the instance belongs to.',
-                                        'type' => 'string',
-                                    ),
-                                    'Status' => array(
-                                        'description' => 'The status of the DB Instance\'s option group membership (e.g. in-sync, pending, pending-maintenance, applying).',
-                                        'type' => 'string',
+                            'OptionGroupMemberships' => array(
+                                'description' => 'Provides the list of option group memberships for this DB Instance.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'OptionGroupMembership',
+                                    'type' => 'object',
+                                    'sentAs' => 'OptionGroupMembership',
+                                    'properties' => array(
+                                        'OptionGroupName' => array(
+                                            'description' => 'The name of the option group that the instance belongs to.',
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'description' => 'The status of the DB Instance\'s option group membership (e.g. in-sync, pending, pending-maintenance, applying).',
+                                            'type' => 'string',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -4219,6 +4437,40 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'DescribeDBLogFilesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DescribeDBLogFiles' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'DescribeDBLogFilesDetails',
+                        'description' => 'This data type is used as a response element to DescribeDBLogFiles.',
+                        'type' => 'object',
+                        'sentAs' => 'DescribeDBLogFilesDetails',
+                        'properties' => array(
+                            'LogFileName' => array(
+                                'description' => 'The name of the log file for the specified DB instance.',
+                                'type' => 'string',
+                            ),
+                            'LastWritten' => array(
+                                'description' => 'The date and time that the last log entry was written.',
+                                'type' => 'numeric',
+                            ),
+                            'Size' => array(
+                                'description' => 'The size, in bytes, of the log file for the specified DB instance.',
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
             ),
         ),
@@ -4470,7 +4722,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'MasterUsername' => array(
-                                'description' => 'Provides the master username for the DB Instance.',
+                                'description' => 'Provides the master username for the DB Snapshot.',
                                 'type' => 'string',
                             ),
                             'EngineVersion' => array(
@@ -4488,6 +4740,10 @@ return array (
                             'Iops' => array(
                                 'description' => 'Specifies the Provisioned IOPS (I/O operations per second) value of the DB Instance at the time of the snapshot.',
                                 'type' => 'numeric',
+                            ),
+                            'OptionGroupName' => array(
+                                'description' => 'Provides the option group name for the DB Snapshot.',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -4848,6 +5104,38 @@ return array (
                                     'sentAs' => 'OptionName',
                                 ),
                             ),
+                            'Persistent' => array(
+                                'description' => 'Specifies whether the option is persistent in an option group.',
+                                'type' => 'boolean',
+                            ),
+                            'OptionGroupOptionSettings' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'OptionGroupOptionSetting',
+                                    'type' => 'object',
+                                    'sentAs' => 'OptionGroupOptionSetting',
+                                    'properties' => array(
+                                        'SettingName' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'SettingDescription' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'DefaultValue' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'ApplyType' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'AllowedValues' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'IsModifiable' => array(
+                                            'type' => 'boolean',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4904,9 +5192,61 @@ return array (
                                             'description' => 'The description of the option.',
                                             'type' => 'string',
                                         ),
+                                        'Persistent' => array(
+                                            'description' => 'Indicate if this option is persistent.',
+                                            'type' => 'boolean',
+                                        ),
                                         'Port' => array(
                                             'description' => 'If required, the port configured for this option to use.',
                                             'type' => 'numeric',
+                                        ),
+                                        'OptionSettings' => array(
+                                            'description' => 'The settings belonging to this option.',
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'OptionSetting',
+                                                'description' => 'Option setting details.',
+                                                'type' => 'object',
+                                                'sentAs' => 'OptionSetting',
+                                                'properties' => array(
+                                                    'Name' => array(
+                                                        'description' => 'The name of the setting.',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Value' => array(
+                                                        'description' => 'The value of this setting.',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'DefaultValue' => array(
+                                                        'description' => 'Default value for this setting.',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Description' => array(
+                                                        'description' => 'The description of the setting.',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'ApplyType' => array(
+                                                        'description' => 'Specifies the apply type for this setting.',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'DataType' => array(
+                                                        'description' => 'Specifies the valid data type of this setting',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'AllowedValues' => array(
+                                                        'description' => 'Specifies a valid list/range of values allowed for this setting.',
+                                                        'type' => 'string',
+                                                    ),
+                                                    'IsModifiable' => array(
+                                                        'description' => 'Indicates if the setting is modifiable or not.',
+                                                        'type' => 'boolean',
+                                                    ),
+                                                    'IsCollection' => array(
+                                                        'description' => 'Indicates if the value for the setting can be a list of values or a single value.',
+                                                        'type' => 'boolean',
+                                                    ),
+                                                ),
+                                            ),
                                         ),
                                         'DBSecurityGroupMemberships' => array(
                                             'description' => 'If the Option requires access to a port, then this DB Security Group allows access to the port.',
@@ -5216,6 +5556,27 @@ return array (
                 ),
             ),
         ),
+        'DownloadDBLogFilePortionDetails' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'LogFileData' => array(
+                    'description' => 'Entries from the specified log file.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous DownloadDBLogFilePortion request.',
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'AdditionalDataPending' => array(
+                    'description' => 'Boolean value that if true, indicates there is more data to be downloaded.',
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'TagListMessage' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -5357,6 +5718,12 @@ return array (
                 'limit_key' => 'MaxRecords',
                 'result_key' => 'DBInstances',
             ),
+            'DescribeDBLogFiles' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'MaxRecords',
+                'result_key' => 'DescribeDBLogFiles',
+            ),
             'DescribeDBParameterGroups' => array(
                 'token_param' => 'Marker',
                 'token_key' => 'Marker',
@@ -5432,6 +5799,10 @@ return array (
                 'token_key' => 'Marker',
                 'limit_key' => 'MaxRecords',
                 'result_key' => 'ReservedDBInstancesOfferings',
+            ),
+            'DownloadDBLogFilePortion' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
             ),
             'ListTagsForResource' => array(
                 'result_key' => 'TagList',

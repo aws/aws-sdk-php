@@ -4,9 +4,11 @@ CHANGELOG
 Next Release:
 -------------
 
+* Added support for viewing and downloading DB log files to the Amazon RDS client
 * Added the ability to easily change the credentials that a client is configured to use via `$client->setCredentials()`
 * Added the `client.region_changed` and `client.credentials_changed` events on the client that are triggered when the
   `setRegion()` and `setCredentials()` methods are called, respectively.
+* Updated the Amazon RDS client to use the 2013-02-12 API version
 * Fixed an issue in the Amazon EC2 service description that was affecting the use of the new `ModifyVpcAttribute` and
   `DescribeVpcAttribute` operations
 
