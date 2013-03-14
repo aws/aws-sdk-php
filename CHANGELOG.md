@@ -5,6 +5,7 @@ Next Release:
 -------------
 
 * Added support for viewing and downloading DB log files to the Amazon RDS client
+* Added the ability to validate incoming Amazon SNS messages. See the `Aws\Sns\MessageValidator` namespace
 * Added the ability to easily change the credentials that a client is configured to use via `$client->setCredentials()`
 * Added the `client.region_changed` and `client.credentials_changed` events on the client that are triggered when the
   `setRegion()` and `setCredentials()` methods are called, respectively.
