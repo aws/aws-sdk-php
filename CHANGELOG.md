@@ -8,7 +8,8 @@ Next Release:
 * Added the ability to validate incoming Amazon SNS messages. See the `Aws\Sns\MessageValidator` namespace
 * Added the ability to easily change the credentials that a client is configured to use via `$client->setCredentials()`
 * Added the `client.region_changed` and `client.credentials_changed` events on the client that are triggered when the
-  `setRegion()` and `setCredentials()` methods are called, respectively.
+  `setRegion()` and `setCredentials()` methods are called, respectively
+* Added support for using the ap-southeast-2 region with the Amazon ElastiCache client
 * Updated the Amazon RDS client to use the 2013-02-12 API version
 * Fixed an issue in the Amazon EC2 service description that was affecting the use of the new `ModifyVpcAttribute` and
   `DescribeVpcAttribute` operations
