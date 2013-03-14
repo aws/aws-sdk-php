@@ -142,8 +142,8 @@ If absolutely no credentials are provided or found, you will receive an
 Manually Setting Credentials
 ----------------------------
 
-You can also manually set your credentials after the service client has been instantiated by using the ``Credentials``
-object.
+You can also manually set your credentials after the service client has been instantiated. To do this, use the
+``setCredentials()`` method to set an entirely new ``Credentials`` object for the client.
 
 .. code-block:: php
 
@@ -152,8 +152,9 @@ object.
     require 'vendor/autoload.php';
 
     use Aws\S3\S3Client;
+    use Aws\Common\Credentials\Credentials;
 
     $s3 = S3Client::factory();
-    $credentials = $s3->getCredentials();
-    $credentials->setAccessKeyId('your-aws-access-key-id');
-    $credentials->setSecretKey('your-aws-secret-access-key');
+
+    $newCredentials = new Credentials('your-aws-access-key-id', 'your-aws-secret-access-key');
+    $s3->setCredentials($newCredentials);

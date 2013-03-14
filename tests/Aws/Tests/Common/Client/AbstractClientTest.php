@@ -210,4 +210,31 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
             )
         )), 'baz', 'http'));
     }
+
+    public function testChangeRegionAndCredentialsEvents()
+    {
+        /** @var $client \Aws\Common\Client\AbstractClient */
+        $client = $this->getServiceBuilder()->get('dynamodb', true);
+
+        $this->assertContains('client.region_changed', $client::getAllEvents());
+        $this->assertContains('client.credentials_changed', $client::getAllEvents());
+
+        $regionChanged = false;
+        $client->getEventDispatcher()->addListener('client.region_changed', function () use (&$regionChanged) {
+            $regionChanged = true;
+        });
+
+        $credentialsChanged = false;
+        $client->getEventDispatcher()->addListener('client.credentials_changed', function () use (&$credentialsChanged) {
+            $credentialsChanged = true;
+        });
+
+        $this->assertFalse($regionChanged);
+        $client->setRegion('us-west-1');
+        $this->assertTrue($regionChanged);
+
+        $this->assertFalse($credentialsChanged);
+        $client->setCredentials(new Credentials('foo', 'bar'));
+        $this->assertTrue($credentialsChanged);
+    }
 }

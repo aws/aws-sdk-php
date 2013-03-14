@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+
+* Added the ability to easily change the credentials that a client is configured to use via `$client->setCredentials()`
+* Added the `client.region_changed` and `client.credentials_changed` events on the client that are triggered when the
+  `setRegion()` and `setCredentials()` methods are called, respectively.
+* Fixed an issue in the Amazon EC2 service description that was affecting the use of the new `ModifyVpcAttribute` and
+  `DescribeVpcAttribute` operations
+
 2.2.0 (2013-03-11)
 ------------------
 
@@ -21,8 +30,8 @@ CHANGELOG
 * Added support for enumerating account attributes to the Amazon EC2 client
 * Added support for copying AMIs across regions to the Amazon EC2 client
 * Added the ability to get a Waiter object from a client using the `getWaiter()` method
-* [SDK] Added the ability to load credentials from environmental variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_KEY`. This is
-  compatible with AWS Elastic Beanstalk environment configurations
+* [SDK] Added the ability to load credentials from environmental variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_KEY`.
+  This is compatible with AWS Elastic Beanstalk environment configurations
 * Added support for using the us-west-1, us-west-2, eu-west-1, and ap-southeast-1 regions with Amazon CloudSearch
 * Updated the Amazon RDS client to use the 2013-01-10 API version
 * Updated the Amazon EC2 client to use the 2013-02-01 API version
@@ -30,7 +39,7 @@ CHANGELOG
 * Added the client User-Agent header to exception messages for easier debugging
 * Added an easier way to disable operation parameter validation by setting `validation` to false when creating clients
 * Added the ability to disable the exponential backoff plugin
-* Added the ability to easily fetch the region name that a client is configured to use via `$client->getRegion()`.
+* Added the ability to easily fetch the region name that a client is configured to use via `$client->getRegion()`
 * Added end-user guides available at http://aws-docs.integ.amazon.com/aws-sdk-php-2/guide/latest/
 * Fixed issue #48 where signing Amazon S3 requests with null or empty metadata resulted in a signature error
 * Fixed issue #29 where Amazon S3 was intermittently closing a connection

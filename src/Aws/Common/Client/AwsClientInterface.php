@@ -35,6 +35,15 @@ interface AwsClientInterface extends ClientInterface
     public function getCredentials();
 
     /**
+     * Sets the credentials object associated with the client
+     *
+     * @param CredentialsInterface $credentials Credentials object to use
+     *
+     * @return self
+     */
+    public function setCredentials(CredentialsInterface $credentials);
+
+    /**
      * Returns the signature implementation used with the client
      *
      * @return SignatureInterface

@@ -53,6 +53,17 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     protected $waiterFactory;
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getAllEvents()
+    {
+        return array_merge(Client::getAllEvents(), array(
+            'client.region_changed',
+            'client.credentials_changed',
+        ));
+    }
+
+    /**
      * @param CredentialsInterface $credentials AWS credentials
      * @param SignatureInterface   $signature   Signature implementation
      * @param Collection           $config      Configuration options
@@ -133,6 +144,23 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     /**
      * {@inheritdoc}
      */
+    public function setCredentials(CredentialsInterface $credentials)
+    {
+        $formerCredentials = $this->credentials;
+        $this->credentials = $credentials;
+
+        // Dispatch an event that the credentials have been changed
+        $this->dispatch('client.credentials_changed', array(
+            'credentials'        => $credentials,
+            'former_credentials' => $formerCredentials,
+        ));
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSignature()
     {
         return $this->signature;
@@ -160,6 +188,8 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     public function setRegion($region)
     {
         $config = $this->getConfig();
+        $formerRegion = $config->get(Options::REGION);
+
         $baseUrl = self::getEndpoint($this->serviceDescription, $region, $config->get(Options::SCHEME));
         $this->setBaseUrl($baseUrl);
         $config->set(Options::BASE_URL, $baseUrl)->set(Options::REGION, $region);
@@ -170,6 +200,12 @@ abstract class AbstractClient extends Client implements AwsClientInterface
             /** @var $signature EndpointSignatureInterface */
             $signature->setRegionName($region);
         }
+
+        // Dispatch an event that the region has been changed
+        $this->dispatch('client.region_changed', array(
+            'region'        => $region,
+            'former_region' => $formerRegion,
+        ));
 
         return $this;
     }
