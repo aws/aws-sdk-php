@@ -82,7 +82,7 @@ try {
 
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
-[sdk-forum]: https://forums.aws.amazon.com/forum.jspa?forumID=8
+[sdk-forum]: https://forums.aws.amazon.com/forum.jspa?forumID=80
 [sdk-issues]: https://github.com/aws/aws-sdk-php/issues
 [sdk-license]: http://aws.amazon.com/apache2.0/
 
