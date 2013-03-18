@@ -13,6 +13,10 @@ Next Release:
 * Updated the Amazon RDS client to use the 2013-02-12 API version
 * Fixed an issue in the Amazon EC2 service description that was affecting the use of the new `ModifyVpcAttribute` and
   `DescribeVpcAttribute` operations
+* Added ObjectURL to the output of an Amazon S3 PutObject operation so that you can more easily retrieve the URL of an
+  object after uploading
+* Added a `createPresignedUrl()` method to any command object created by the Amazon S3 client to more easily create
+  presigned URLs
 
 2.2.0 (2013-03-11)
 ------------------
