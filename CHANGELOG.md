@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.2.1 (2013-03-18):
+-------------------
 
 * Added the `us-gov-west-1` region to the Amazon Simple Workflow Service client
 * Added support for viewing and downloading DB log files to the Amazon RDS client
