@@ -217,28 +217,9 @@ exception classes::
 Waiters
 -------
 
-One of the high-level abstractions provided by the SDK is the concept of "waiters". Waiters help make it easier to work
-with eventually consistent systems by providing an easy way to wait on a resource to enter into a particular state by
-polling the resource. You can find a list of the iterators supported by a client by viewing the docblock of a client.
-Any ``@method`` tag that starts with "waitUntil" will utilize a waiter.
+.. include:: _snippets/waiters-intro.txt
 
-.. code-block:: php
-
-    $client->waitUntil('BucketExists', array('Bucket' => 'my-bucket'));
-
-The above method invocation will instantiate a waiter and poll the bucket until it exists. If the waiter has to poll
-the bucket too many times, it will throw an ``Aws\Common\Exception\RuntimeException`` exception.
-
-You can tune the number of polling attempts issued by a waiter or the number of seconds to delay between each poll by
-passing optional values prefixed with "waiter.":
-
-.. code-block:: php
-
-    $client->waitUntil('BucketExists', array(
-        'Bucket ' => 'my-bucket',
-        'waiter.interval'     => 10.5,
-        'waiter.max_attempts' => 3
-    ));
+To learn more about how to use and configure waiters, please read the detailed guide to :doc:`feature-waiters`.
 
 Iterators
 ---------
