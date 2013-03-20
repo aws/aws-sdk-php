@@ -4,6 +4,13 @@ from docutils import io, nodes, statemachine, utils
 from docutils.parsers.rst import Directive
 from jinja2 import Environment, PackageLoader
 
+# Maintain a cache of previously loaded examples
+example_cache = {}
+
+# Maintain a cache of previously loaded service descriptions
+description_cache = {}
+
+
 def setup(app):
     """
     see: http://sphinx.pocoo.org/ext/appapi.html
@@ -14,6 +21,7 @@ def setup(app):
 
     app.add_role('regions', regions_role)
     app.add_directive('service', ServiceIntro)
+    app.add_directive('example', ExampleDirective)
 
 
 def regions_role(name, rawtext, text, lineno, inliner, options={}, content={}):
@@ -52,7 +60,7 @@ def get_regions(service_name):
 
     :param service_name: Retrieve regions for this service by name
     """
-    return ServiceDescription(service_name)['regions'].keys()
+    return load_service_description(service_name)['regions'].keys()
 
 
 def make_regions_node(rawtext, app, service_name, options):
@@ -67,22 +75,6 @@ def make_regions_node(rawtext, app, service_name, options):
     return nodes.Text(", ".join(regions))
 
 
-class Flyweight(object):
-    """
-    Allows cached instances of a class to be returned with new classes
-    """
-
-    def __init__(self, cls):
-        self._cls = cls
-        self._instances = dict()
-
-    def __call__(self, *args, **kargs):
-        return self._instances.setdefault(
-            (args, tuple(kargs.items())),
-            self._cls(*args, **kargs))
-
-
-@Flyweight
 class ServiceDescription():
     """
     Loads the service description for a given source file
@@ -143,6 +135,12 @@ class ServiceDescription():
         return self.description.get(i)
 
 
+def load_service_description(name):
+    if name not in description_cache:
+        description_cache[name] = ServiceDescription(name)
+    return description_cache[name]
+
+
 class ServiceIntro(Directive):
     """
     Creates a service introduction to inject into a document
@@ -154,7 +152,7 @@ class ServiceIntro(Directive):
 
     def run(self):
         service_name = self.arguments[0].strip()
-        d = ServiceDescription(service_name)
+        d = load_service_description(service_name)
         rawtext = self.generate_rst(d)
         tab_width = 4
         include_lines = statemachine.string2lines(
@@ -207,4 +205,80 @@ class ServiceIntro(Directive):
             locator_name=locator_name,
             doc_url=docs)
 
+        return rawtext
+
+
+class ExampleDirective(Directive):
+    """
+    Inserts a formatted PHPUnit example into the source
+    """
+
+    # Directive configuration
+    required_arguments = 2
+    optional_arguments = 0
+    final_argument_whitespace = True
+
+    def run(self):
+        self.end_function = "    }\n"
+        self.begin_tag = "        // @begin\n"
+        self.end_tag = "        // @end\n"
+
+        example_file = self.arguments[0].strip()
+        example_name = self.arguments[1].strip()
+
+        if not example_name:
+            raise ValueError("Must specify both an example file and example name")
+
+        contents = self.load_example(example_file, example_name)
+        rawtext = self.generate_rst(contents)
+        tab_width = 4
+        include_lines = statemachine.string2lines(
+            rawtext, tab_width, convert_whitespace=1)
+        self.state_machine.insert_input(
+            include_lines, os.path.abspath(__file__))
+        return []
+
+    def load_example(self, example_file, example_name):
+        """Loads the contents of an example and strips out non-example parts"""
+        key = example_file + '.' + example_name
+
+        # Check if this example is cached already
+        if key in example_cache:
+            return example_cache[key]
+
+        # Not cached, so index the example file functions
+        path = os.path.abspath(__file__ + "/../../../../tests/Aws/Tests/Examples/" + example_file)
+
+        f = open(path, 'r')
+        in_example = False
+        capturing = False
+        buffer = ""
+
+        # Scan each line of the file and create example hashes
+        for line in f:
+            if in_example:
+                if line == self.end_function:
+                    if in_example:
+                        example_cache[in_example] = buffer
+                    buffer = ""
+                    in_example = False
+                elif line == self.begin_tag:
+                    # Look for the opening // @begin tag to begin capturing
+                    buffer = ""
+                    capturing = True
+                elif line == self.end_tag:
+                    # Look for the optional closing tag to stop capturing
+                    capturing = False
+                elif capturing:
+                    buffer += line
+            elif "public function test" in line:
+                # Grab the function name from the line and keep track of the
+                # name of the current example being captured
+                current_name = re.search('function (.+)\s*\(', line).group(1)
+                in_example = example_file + "." + current_name
+        f.close()
+        return example_cache[key]
+
+    def generate_rst(self, contents):
+        rawtext = ".. code-block:: php\n\n" + contents
         return rawtext

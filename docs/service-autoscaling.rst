@@ -1,3 +1,3 @@
-.. service:: autoscaling
+.. service:: AutoScaling
 
 .. include:: _snippets/incomplete.txt

@@ -1,4 +1,4 @@
-.. service:: s3
+.. service:: S3
 
 Creating a bucket
 -----------------
@@ -6,9 +6,7 @@ Creating a bucket
 Now that we've created a client object, let's create a bucket. This bucket will be used throughout the remainder of this
 guide.
 
-.. code-block:: php
-
-    $client->createBucket(array('Bucket' => 'mybucket'));
+.. example:: S3Test.php testBucketAlreadyExists
 
 If you run the above code example unaltered, you'll probably trigger the following exception::
 
@@ -27,14 +25,7 @@ Creating a bucket in another region
 The above example creates a bucket in the standard US-EAST-1 region. You can change the bucket location by passing a
 ``LocationConstraint`` value.
 
-.. code-block:: php
-
-    use Aws\Common\Enum\Region;
-
-    $client->createBucket(array(
-        'Bucket'             => 'mybucket',
-        'LocationConstraint' => Region::US_WEST_2
-    ));
+.. example:: S3Test.php testCreateBucketInRegion
 
 You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the ``US_WEST_2``
 constant. The SDK provides various Enum classes under the ``Aws\Common\Enum`` namespace that can be useful for
@@ -42,7 +33,7 @@ remembering available values and ensuring you do not enter a typo.
 
 .. note::
 
-    Using the enum classes is not required. You could have simply pass 'us-west-2' in the ``LocationConstraint`` key.
+    Using the enum classes is not required. You could just pass 'us-west-2' in the ``LocationConstraint`` key.
 
 Waiting until the bucket exists
 -------------------------------
@@ -51,9 +42,7 @@ Now that we've created a bucket, let's force our application to wait until the b
 using a *waiter*. The following snippet of code will poll the bucket until it exists or the maximum number of
 polling attempts are completed.
 
-.. code-block:: php
-
-    $client->waitUntilBucketExists(array('Bucket' => 'mybucket'));
+.. example:: S3Test.php testWaitUntilBucketExists
 
 Uploading objects
 -----------------
@@ -61,13 +50,7 @@ Uploading objects
 Now that you've created a bucket, let's put some data in it. The following example creates an object in your bucket
 called data.txt that contains 'Hello!'.
 
-.. code-block:: php
-
-    $client->putObject(array(
-        'Bucket' => 'mybucket',
-        'Key'    => 'data.txt',
-        'Body'   => 'Hello!'
-    ));
+.. example:: S3Test.php testPutObject
 
 The AWS SDK for PHP will attempt to automatically determine the most appropriate Content-Type header used to store the
 object. If you are using a less common file extension and your Content-Type header is not added automatically, you can
@@ -79,65 +62,32 @@ Uploading a file
 The above example uploaded text data to your object. You can alternatively upload the contents of a file by passing
 the ``SourceFile`` option. Let's also put some metadata on the object.
 
-.. code-block:: php
-
-    $client->putObject(array(
-        'Bucket'     => 'mybucket',
-        'Key'        => 'data.txt',
-        'SourceFile' => '/path/to/data.txt',
-        'Metadata'   => array(
-            'Foo' => 'abc',
-            'Baz' => '123'
-        )
-    ));
+.. example:: S3Test.php testPutObjectFromFile
 
 Uploading from a stream
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Alternatively, you can pass a resource returned from an ``fopen`` call to the ``Body`` parameter.
 
-.. code-block:: php
-
-    $client->putObject(array(
-        'Bucket' => 'mybucket',
-        'Key'    => 'data.txt',
-        'Body'   => fopen('/path/to/data.txt', 'r+')
-    ));
+.. example:: S3Test.php testPutObjectFromStream
 
 Because the AWS SDK for PHP is built around Guzzle, you can also pass an EntityBody object.
 
-.. code-block:: php
-
-    use Guzzle\Http\EntityBody;
-
-    $client->putObject(array(
-        'Bucket' => 'mybucket',
-        'Key'    => 'data.txt',
-        'Body'   => EntityBody::factory(fopen('/path/to/data.txt', 'r+'))
-    ));
+.. example:: S3Test.php testPutObjectFromEntityBody
 
 Listing your buckets
 --------------------
 
 You can list all of the buckets owned by your account using the ``listBuckets`` method.
 
-.. code-block:: php
-
-    $result = $client->listBuckets()->get('Buckets');
-
-    foreach ($result['Buckets'] as $bucket) {
-        echo "{$bucket['Name']} - {$bucket['CreationDate']}\n";
-    }
+.. example:: S3Test.php testListBuckets
 
 All service operation calls using the AWS SDK for PHP return a ``Guzzle\Service\Resource\Model`` object. This object
 contains all of the data returned from the service in a normalized array like object. The object also contains a
 ``get()`` method used to retrieve values from the model by name, and a ``getPath()`` method that can be used to
 retrieve nested values.
 
-.. code-block:: php
-
-    $result = $client->listBuckets();
-    $id = $result->getPath('Owner/ID');
+.. example:: S3Test.php testListBucketsWithGetPath
 
 Listing objects in your buckets
 -------------------------------
@@ -145,13 +95,7 @@ Listing objects in your buckets
 Listing objects is a lot easier in the new SDK thanks to *iterators*. You can list all of the objects in a bucket using
 the ``ListObjectsIterator``.
 
-.. code-block:: php
-
-    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'mybucket'));
-
-    foreach ($iterator as $object) {
-        echo $object['Key'] . "\n";
-    }
+.. example:: S3Test.php testListObjectsWithIterator
 
 Iterators will handle sending any required subsequent requests when a response is truncated. The ListObjects iterator
 works with other parameters too.
@@ -159,7 +103,7 @@ works with other parameters too.
 .. code-block:: php
 
     $iterator = $client->getIterator('ListObjects', array(
-        'Bucket' => 'mybucket',
+        'Bucket' => $bucket,
         'Prefix' => 'foo'
     ));
 
@@ -178,17 +122,7 @@ Downloading objects
 
 You can use the ``GetObject`` operation to download an object.
 
-.. code-block:: php
-
-    $result = $client->getObject(array(
-        'Bucket' => 'mybucket',
-        'Key'    => 'data.txt'
-    ));
-
-    echo get_class($result['Body']);
-    // >>> Guzzle\Http\EntityBody
-    echo $result['Body'];
-    // >>> Hello!
+.. example:: S3Test.php testGetObject
 
 The contents of the object are stored in the ``Body`` parameter of the model object. Other parameters are stored in
 model including ``ContentType``, ``ContentLength``, ``VersionId``, ``ETag``, etc...
@@ -199,42 +133,14 @@ attempting to download extremely large files into memory.
 
 The EntityBody object has other nice features that allow you to read data using streams.
 
-.. code-block:: php
-
-    // Read the body off of the underlying stream
-    $result['Body']->rewind();
-    while ($data = $result['Body']->read(1024)) {
-        echo $data;
-    }
-
-    // Cast the body to a primitive string (loads the entire contents into memory!)
-    $bodyAsString = (string) $result['Body'];
+.. example:: S3Test.php testGetObjectUsingEntityBody
 
 Saving objects to a file
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can save the contents of an object to a file by setting the SaveAs parameter.
 
-.. code-block:: php
-
-    $result = $client->getObject(array(
-        'Bucket' => 'mybucket',
-        'Key'    => 'data.txt',
-        'SaveAs' => '/tmp/data.txt'
-    ));
-
-The ``SaveAs`` parameter will only work with versions of Guzzle >= 3.0.7. If you are using an older version of
-Guzzle, you can set the ``command.response_body`` parameter to a valid ``Guzzle\Http\EntityBodyInterface`` object.
-
-.. code-block:: php
-
-    use Guzzle\Http\EntityBody;
-
-    $result = $client->getObject(array(
-        'Bucket'                => 'mybucket',
-        'Key'                   => 'data.txt',
-        'command.response_body' => EntityBody::factory(fopen('/tmp/data.txt', 'r+'))
-    ));
+.. example:: S3Test.php testGetObjectWithSaveAs
 
 Uploading large files using multipart uploads
 ---------------------------------------------
@@ -341,13 +247,21 @@ Amazon S3 data, without proxying the request. The idea is to construct a "pre-si
 that an end-user's browser can retrieve. Additionally, you can limit a pre-signed request by specifying an expiration
 time.
 
-Creating a pre-signed URL requires that you build a ``Guzzle\Http\Message\RequestInterface`` object. You can use the
-``get()``, ``post()``, ``head()``, ``put()``, and ``delete()`` methods of a client object to easily create a request
-object.
+You can create a presigned URL for any Amazon S3 operation using the ``getCommand`` method for creating a Guzzle
+command object and then calling the ``createPresignedUrl()`` method on the command.
 
-.. code-block:: php
+.. example:: S3Test.php testCreatePresignedUrlFromCommand
 
-    $disposition = "attachment; filename=\"{$key}\"";
-    $url = "{$this->bucket}/{$key}?response-content-disposition={$disposition}"
-    $request = $this->client->get($url);
-    $signed = $this->client->createPresignedUrl($request, '+10 minutes');
+If you need more flexibility in creating your pre-signed URL, then you can create a pre-signed URL for a completely
+custom ``Guzzle\Http\Message\RequestInterface`` object. You can use the ``get()``, ``post()``, ``head()``, ``put()``,
+and ``delete()`` methods of a client object to easily create a Guzzle request object.
+
+.. example:: S3Test.php testCreatePresignedUrl
+
+Cleaning up
+-----------
+
+Now that we've taken a tour of how you can use the Amazon S3 client, let's clean up any resources we may have created.
+
+.. example:: S3Test.php testCleanUpBucket
+

@@ -1,3 +1,3 @@
-.. service:: sts
+.. service:: Sts
 
 .. include:: _snippets/incomplete.txt
