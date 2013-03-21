@@ -126,9 +126,9 @@ should make sure to understand what the defaults are.
                              null, 'null', 'pessemistic', or an instance of ``NullLockingStrategy`` or
                              ``PessimisticLockingStrategy``.
 ---------------------------- -------------------------------------------------------------------------------------------
-``automatic_gc``             Whether or not to use PHP's session auto garbage collection. This defaults to
-                             ``ini_get('session.gc_probability')`` (see the :ref:`best-practices` section for more
-                             information).
+``automatic_gc``             Whether or not to use PHP's session auto garbage collection. This defaults to the value of
+                             ``(bool) ini_get('session.gc_probability')``, but the recommended value is ``false``. (see
+                             the :ref:`garbage-collection` section for more information).
 ---------------------------- -------------------------------------------------------------------------------------------
 ``gc_batch_size``            The batch size used for removing expired sessions during garbage collection. This defaults
                              to ``25``, which is the maximum size of a single ``BatchWriteItem`` operation. This value
@@ -227,6 +227,7 @@ locking, you should use the ``PessimisticLockingStrategy``, which can be specifi
         'locking_strategy' => 'pessimistic',
     ));
 
+.. _garbage-collection:
 
 Garbage Collection
 ------------------
@@ -235,10 +236,10 @@ The DynamoDB Session Handler supports session garbage collection by using a seri
 operations. Due to the nature of how the ``Scan`` operation works and in order to find all of the expired sessions and
 delete them, the garbage collection process can require a lot of provisioned throughput.
 
-For this reason we discourage the practice of relying on PHP's normal session garbage collection triggers (i.e., the
-``session.gc_probability`` and ``session.gc_divisor`` ini settings). A better practice is to schedule the garbage
-collection to occur during an off-peak time where a burst of consumed throughput will not disrupt the rest of the
-application.
+For this reason it is discouraged to rely on the PHP's normal session garbage collection triggers (i.e., the
+``session.gc_probability`` and ``session.gc_divisor`` ini settings). A better practice is to set
+``session.gc_probability`` to ``0`` and schedule the garbage collection to occur during an off-peak time where a
+burst of consumed throughput will not disrupt the rest of the application.
 
 For example, you could have a nightly cron job trigger a script to run the garbage collection. This script might look
 something like the following:
@@ -262,8 +263,6 @@ something like the following:
     ));
 
     $sessionHandler->garbageCollect();
-
-.. _best-practices:
 
 Best Practices
 --------------
