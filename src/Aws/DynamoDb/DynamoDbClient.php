@@ -105,10 +105,10 @@ class DynamoDbClient extends AbstractClient
             $config[Options::BACKOFF] = new BackoffPlugin(
                 // Validate CRC32 headers
                 new Crc32ErrorChecker(
-                    // Use the custom error checking strategy
-                    new ThrottlingErrorChecker($exceptionParser,
-                        // Truncate the number of backoffs to 11
-                        new TruncatedBackoffStrategy(11,
+                    // Truncate the number of backoffs to 11
+                    new TruncatedBackoffStrategy(11,
+                        // Use the custom error checking strategy
+                        new ThrottlingErrorChecker($exceptionParser,
                             // Retry HTTP 500 and 503 responses
                             new HttpBackoffStrategy(null,
                                 // Retry transient curl errors

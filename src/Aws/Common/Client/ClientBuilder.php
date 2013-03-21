@@ -215,8 +215,8 @@ class ClientBuilder
         $backoff = $config->get(Options::BACKOFF);
         if ($backoff === null) {
             $backoff = new BackoffPlugin(
-                new ThrottlingErrorChecker($this->exceptionParser,
-                    new TruncatedBackoffStrategy(3,
+                new TruncatedBackoffStrategy(3,
+                    new ThrottlingErrorChecker($this->exceptionParser,
                         new HttpBackoffStrategy(null,
                             new CurlBackoffStrategy(null,
                                 new ExponentialBackoffStrategy()

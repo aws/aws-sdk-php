@@ -28,13 +28,13 @@ use Guzzle\Plugin\Backoff\AbstractBackoffStrategy;
  */
 class ThrottlingErrorChecker extends AbstractBackoffStrategy
 {
-    /** @var array Whitelist of exception codes that indicate throttling */
+    /** @var array Whitelist of exception codes (as indexes) that indicate throttling */
     protected static $throttlingExceptions = array(
-        'RequestLimitExceeded',
-        'Throttling',
-        'ThrottlingException',
-        'ProvisionedThroughputExceededException',
-        'RequestThrottled',
+        'RequestLimitExceeded'                   => true,
+        'Throttling'                             => true,
+        'ThrottlingException'                    => true,
+        'ProvisionedThroughputExceededException' => true,
+        'RequestThrottled'                       => true,
     );
 
     /**
@@ -70,7 +70,7 @@ class ThrottlingErrorChecker extends AbstractBackoffStrategy
         if ($response && $response->isClientError()) {
             $parts = $this->exceptionParser->parse($response);
 
-            return in_array($parts['code'], self::$throttlingExceptions) ? true : null;
+            return isset(self::$throttlingExceptions[$parts['code']]) ? true : null;
         }
     }
 }
