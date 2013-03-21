@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb;
+namespace Aws\Common\Client;
 
-use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
+use Aws\Common\Exception\Parser\ExceptionParserInterface;
 use Guzzle\Http\Exception\HttpException;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
@@ -24,28 +24,34 @@ use Guzzle\Plugin\Backoff\BackoffStrategyInterface;
 use Guzzle\Plugin\Backoff\AbstractBackoffStrategy;
 
 /**
- * Custom DynamoDB exponential backoff error checking logic
+ * Backoff logic that handles throttling exceptions from services
  */
 class ThrottlingErrorChecker extends AbstractBackoffStrategy
 {
-    /**
-     * @var JsonQueryExceptionParser Parser used to parse exception responses
-     */
-    protected $parser;
+    /** @var array Whitelist of exception codes that indicate throttling */
+    protected static $throttlingExceptions = array(
+        'RequestLimitExceeded',
+        'Throttling',
+        'ThrottlingException',
+        'ProvisionedThroughputExceededException',
+        'RequestThrottled',
+    );
 
     /**
-     * Create the internal parser
+     * @var ExceptionParserInterface Exception parser used to parse exception responses
      */
-    public function __construct(BackoffStrategyInterface $next = null)
+    protected $exceptionParser;
+
+    public function __construct(ExceptionParserInterface $exceptionParser, BackoffStrategyInterface $next = null)
     {
-        $this->parser = new JsonQueryExceptionParser();
+        $this->exceptionParser = $exceptionParser;
         if ($next) {
             $this->setNext($next);
         }
     }
 
     /**
-     * {@inheridoc}
+     * {@inheritdoc}
      */
     public function makesDecision()
     {
@@ -62,10 +68,9 @@ class ThrottlingErrorChecker extends AbstractBackoffStrategy
         HttpException $e = null
     ) {
         if ($response && $response->isClientError()) {
-            $parts = $this->parser->parse($response);
+            $parts = $this->exceptionParser->parse($response);
 
-            return $parts['code'] == 'ProvisionedThroughputExceededException'
-                || $parts['code'] == 'ThrottlingException' ? true : null;
+            return in_array($parts['code'], self::$throttlingExceptions) ? true : null;
         }
     }
 }

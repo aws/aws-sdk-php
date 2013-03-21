@@ -18,6 +18,7 @@ namespace Aws\DynamoDb;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\ThrottlingErrorChecker;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\DynamoDb\Model\Attribute;
@@ -99,20 +100,21 @@ class DynamoDbClient extends AbstractClient
     public static function factory($config = array())
     {
         // Configure the custom exponential backoff plugin for DynamoDB throttling
+        $exceptionParser = new JsonQueryExceptionParser();
         if (!isset($config[Options::BACKOFF])) {
             $config[Options::BACKOFF] = new BackoffPlugin(
                 // Validate CRC32 headers
                 new Crc32ErrorChecker(
                     // Use the custom error checking strategy
-                    new ThrottlingErrorChecker(
-                        // Retry HTTP 500 and 503 responses
-                        new HttpBackoffStrategy(null,
-                            // Truncate the number of backoffs to 11
-                            new TruncatedBackoffStrategy(11,
+                    new ThrottlingErrorChecker($exceptionParser,
+                        // Truncate the number of backoffs to 11
+                        new TruncatedBackoffStrategy(11,
+                            // Retry HTTP 500 and 503 responses
+                            new HttpBackoffStrategy(null,
                                 // Retry transient curl errors
                                 new CurlBackoffStrategy(null,
-                                    // Use the custom retry delay method instead of default exponential backoff
-                                    new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
+                                     // Use the custom retry delay method instead of default exponential backoff
+                                     new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
                                 )
                             )
                         )
@@ -131,7 +133,7 @@ class DynamoDbClient extends AbstractClient
                 // DynamoDB does not require response processing other than turning JSON into an array
                 self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)
             ))
-            ->setExceptionParser(new JsonQueryExceptionParser())
+            ->setExceptionParser($exceptionParser)
             ->setIteratorsConfig(array(
                 'result_key'  => 'Items',
                 'token_param' => 'ExclusiveStartKey',
