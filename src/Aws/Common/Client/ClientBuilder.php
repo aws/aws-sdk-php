@@ -32,6 +32,10 @@ use Aws\Common\Signature\SignatureV3Https;
 use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
+use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
+use Guzzle\Plugin\Backoff\ExponentialBackoffStrategy;
+use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
+use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Resource\ResourceIteratorClassFactory;
@@ -202,9 +206,25 @@ class ClientBuilder
             $credentials = Credentials::factory($config);
         }
 
+        // Resolve exception parser
+        if (!$this->exceptionParser) {
+            $this->exceptionParser = new DefaultXmlExceptionParser();
+        }
+
+        // Resolve backoff strategy
         $backoff = $config->get(Options::BACKOFF);
         if ($backoff === null) {
-            $backoff = BackoffPlugin::getExponentialBackoff();
+            $backoff = new BackoffPlugin(
+                new TruncatedBackoffStrategy(3,
+                    new ThrottlingErrorChecker($this->exceptionParser,
+                        new HttpBackoffStrategy(null,
+                            new CurlBackoffStrategy(null,
+                                new ExponentialBackoffStrategy()
+                            )
+                        )
+                    )
+                )
+            );
             $config->set(Options::BACKOFF, $backoff);
         }
 
@@ -226,7 +246,7 @@ class ClientBuilder
         // Add exception marshaling so that more descriptive exception are thrown
         if ($this->clientNamespace) {
             $exceptionFactory = new NamespaceExceptionFactory(
-                $this->exceptionParser ?: new DefaultXmlExceptionParser(),
+                $this->exceptionParser,
                 "{$this->clientNamespace}\\Exception",
                 "{$this->clientNamespace}\\Exception\\{$serviceName}Exception"
             );
