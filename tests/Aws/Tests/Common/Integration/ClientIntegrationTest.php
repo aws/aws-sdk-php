@@ -21,6 +21,7 @@ use Aws\Common\Client\DefaultClient;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Enum\Region;
+use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureV4;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Http\Url;
@@ -30,6 +31,10 @@ use Guzzle\Http\Url;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
+    const REGION_MISSING   = 0;
+    const REGION_ERROR     = 1;
+    const REGION_NOT_SIGV4 = 2;
+
     public function testGenericClientCanAccessDynamoDb()
     {
         /** @var $dynamodb DynamoDbClient */
@@ -85,5 +90,70 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         } catch (\InvalidArgumentException $e) {
             $this->fail('All of the above clients should have been instantiated without errors: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * @dataProvider dataForClientRegionSituationsTest
+     */
+    public function testClientRegionSituations($service, $region, $expectedGetRegion, $expectedGetSignatureRegion)
+    {
+        try {
+            $config = array('key' => 'test-key', 'secret' => 'test-secret');
+            if ($region) {
+                $config['region'] = $region;
+            }
+
+            $clientFqcn = "Aws\\{$service}\\{$service}Client";
+            $client = $clientFqcn::factory($config);
+
+            // Get results
+            $actualGetRegion = $client->getRegion();
+            if ($client->getSignature() instanceof EndpointSignatureInterface) {
+                $actualGetSignatureRegion = $this->readAttribute($client->getSignature(), 'regionName');
+            } else {
+                $actualGetSignatureRegion = self::REGION_NOT_SIGV4;
+            }
+        } catch (\InvalidArgumentException $e) {
+            // Get results
+            $actualGetRegion = self::REGION_ERROR;
+            $actualGetSignatureRegion = self::REGION_ERROR;
+        }
+
+        $this->assertEquals($expectedGetRegion, $actualGetRegion);
+        $this->assertEquals($expectedGetSignatureRegion, $actualGetSignatureRegion);
+    }
+
+    public function dataForClientRegionSituationsTest()
+    {
+        return array(
+            // Services with multiple regional endpoints (e.g., DynamoDB, EC2, CloudFormation)
+            array('DynamoDB', self::REGION_MISSING, self::REGION_ERROR, self::REGION_ERROR),
+            array('DynamoDB', Region::US_EAST_1,    Region::US_EAST_1,  Region::US_EAST_1),
+            array('DynamoDB', Region::US_WEST_2,    Region::US_WEST_2,  Region::US_WEST_2),
+            array('Ec2',      self::REGION_MISSING, self::REGION_ERROR, self::REGION_ERROR),
+            array('Ec2',      Region::US_EAST_1,    Region::US_EAST_1,  self::REGION_NOT_SIGV4),
+            array('Ec2',      Region::US_WEST_2,    Region::US_WEST_2,  self::REGION_NOT_SIGV4),
+
+            // Services with a single/few regional endpoint (e.g., Data Pipeline, SES, Redshift)
+            array('DataPipeline', self::REGION_MISSING, self::REGION_ERROR, self::REGION_ERROR),
+            array('DataPipeline', Region::US_EAST_1,    Region::US_EAST_1,  Region::US_EAST_1),
+            array('DataPipeline', Region::US_WEST_2,    self::REGION_ERROR, self::REGION_ERROR),
+            array('Redshift',     self::REGION_MISSING, self::REGION_ERROR, self::REGION_ERROR),
+            array('Redshift',     Region::US_EAST_1,    Region::US_EAST_1,  Region::US_EAST_1),
+            array('Redshift',     Region::US_WEST_2,    self::REGION_ERROR, self::REGION_ERROR),
+
+            // Services with a global endpoint (e.g., Sts, Iam, Route53)
+            array('Sts',     self::REGION_MISSING, Region::US_EAST_1, Region::US_EAST_1),
+            array('Sts',     Region::US_EAST_1,    Region::US_EAST_1, Region::US_EAST_1),
+            array('Sts',     Region::US_WEST_2,    Region::US_EAST_1, Region::US_EAST_1),
+            array('Route53', self::REGION_MISSING, Region::US_EAST_1, self::REGION_NOT_SIGV4),
+            array('Route53', Region::US_EAST_1,    Region::US_EAST_1, self::REGION_NOT_SIGV4),
+            array('Route53', Region::US_WEST_2,    Region::US_EAST_1, self::REGION_NOT_SIGV4),
+
+            // Services with a global endpoint AND multiple regional endpoints (e.g., S3 only)
+            array('S3', self::REGION_MISSING, Region::US_EAST_1, self::REGION_NOT_SIGV4),
+            array('S3', Region::US_EAST_1,    Region::US_EAST_1, self::REGION_NOT_SIGV4),
+            array('S3', Region::US_WEST_2,    Region::US_WEST_2, self::REGION_NOT_SIGV4),
+        );
     }
 }

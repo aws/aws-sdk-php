@@ -18,6 +18,7 @@ namespace Aws\Common\Client;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Enum\Region;
 use Aws\Common\Exception\ExceptionListener;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\NamespaceExceptionFactory;
@@ -198,7 +199,7 @@ class ClientBuilder
             (self::$commonConfigRequirements + $this->configRequirements)
         );
 
-        // Set values from the service description
+        // Resolve endpoint and signature from the config and service description
         $signature = $this->getSignature($this->updateConfigFromDescription($config), $config);
 
         // Resolve credentials
@@ -367,15 +368,16 @@ class ClientBuilder
             );
         }
 
+        // Make sure a valid region is set
         $region = $config->get(Options::REGION);
-        if (!$region) {
-            if (!$description->getData('globalEndpoint')) {
-                throw new InvalidArgumentException(
-                    'A region is required when using ' . $description->getData('serviceFullName')
-                    . '. Set "region" to one of: ' . implode(', ', array_keys($description->getData('regions')))
-                );
-            }
-            $region = 'us-east-1';
+        $global = $description->getData('globalEndpoint');
+        if (!$global && !$region) {
+            throw new InvalidArgumentException(
+                'A region is required when using ' . $description->getData('serviceFullName')
+                . '. Set "region" to one of: ' . implode(', ', array_keys($description->getData('regions')))
+            );
+        } elseif ($global && (!$region || $description->getData('namespace') !== 'S3')) {
+            $region = Region::US_EAST_1;
             $config->set(Options::REGION, $region);
         }
 
