@@ -103,15 +103,15 @@ class DynamoDbClient extends AbstractClient
         $exceptionParser = new JsonQueryExceptionParser();
         if (!isset($config[Options::BACKOFF])) {
             $config[Options::BACKOFF] = new BackoffPlugin(
-                // Validate CRC32 headers
+                // Retry requests (even if successful) if the CRC32 header is does not match the CRC32 of the response
                 new Crc32ErrorChecker(
-                    // Truncate the number of backoffs to 11
+                    // Retry failed requests up to 11 times instead of the normal 3
                     new TruncatedBackoffStrategy(11,
-                        // Use the custom error checking strategy
+                        // Retry failed requests with 400-level responses due to throttling
                         new ThrottlingErrorChecker($exceptionParser,
-                            // Retry HTTP 500 and 503 responses
+                            // Retry failed requests with 500-level responses
                             new HttpBackoffStrategy(null,
-                                // Retry transient curl errors
+                                // Retry failed requests due to transient network or cURL problems
                                 new CurlBackoffStrategy(null,
                                      // Use the custom retry delay method instead of default exponential backoff
                                      new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)

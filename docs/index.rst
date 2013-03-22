@@ -107,4 +107,5 @@ Supported services
 SDK features in detail
 ----------------------
 
+* :doc:`feature-dynamodb-session-handler`
 * :doc:`feature-waiters`
