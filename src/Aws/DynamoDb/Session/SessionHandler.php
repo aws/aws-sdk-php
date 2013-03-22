@@ -24,24 +24,20 @@ use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
 
 /**
- * Provides an interface for using Amazon DynamoDB as a session store by hooking
- * into PHP's session handler hooks. Once registered, You may use the native
- * `$_SESSION` superglobal and session functions, and the sessions will be
- * stored automatically in DynamoDB. DynamoDB is a great session storage
- * solution due to its speed, scalability, and fault tolerance.
+ * Provides an interface for using Amazon DynamoDB as a session store by hooking into PHP's session handler hooks. Once
+ * registered, You may use the native `$_SESSION` superglobal and session functions, and the sessions will be stored
+ * automatically in DynamoDB. DynamoDB is a great session storage solution due to its speed, scalability, and fault
+ * tolerance.
  *
- * For maximum performance, we recommend that you keep the size of your sessions
- * small. Items greater than 1KB require more throughput in DynamoDB. Also, in
- * this version of the session handler, session locking is turned off by default
- * since it can drive up latencies and costs under high traffic and poor session
- * management, especially when using ajax. Only turn it on if you need it.
+ * For maximum performance, we recommend that you keep the size of your sessions small. Items greater than 1KB require
+ * more throughput in DynamoDB. Also, in this version of the session handler, session locking is turned off by default
+ * since it can drive up latencies and costs under high traffic and poor session management, especially when using ajax.
+ * Only turn it on if you need it.
  *
- * By far, the most expensive operation is garbage collection. Therefore, we
- * encourage you to carefully consider your session garbage collection strategy.
- * We recommend that you change the `session.gc_probability` ini setting to 0 so
- * that garbage collection is not triggered randomly. You should consider using
- * a cron job or similar scheduling technique for triggering garbage collection
- * at appropriate times.
+ * By far, the most expensive operation is garbage collection. Therefore, we encourage you to carefully consider your
+ * session garbage collection strategy. We recommend that you change the `session.gc_probability` ini setting to 0 so
+ * that garbage collection is not triggered randomly. You should consider using a cron job or similar scheduling
+ * technique for triggering garbage collection at appropriate times.
  */
 class SessionHandler
 {
@@ -89,17 +85,18 @@ class SessionHandler
      * Factory method to create a new DynamoDB Session Handler
      *
      * The configuration array accepts the following array keys and values:
-     * - locking_strategy:         Locking strategy for session locking logic
-     * - dynamodb_client:          Client for doing DynamoDB operations
-     * - table_name:               Name of the table in which to store sessions
-     * - hash_key:                 Name of the hash key in the sessions table
-     * - session_lifetime:         Lifetime of inactive sessions
-     * - consistent_read:          Use DynamoDB consistent reads for `GetItem`
-     * - automatic_gc:             Use PHP's auto garbage collection
-     * - gc_batch_size:            Batch size for garbage collection deletes
-     * - max_lock_wait_time:       Max time to wait for lock acquisition
-     * - min_lock_retry_microtime: Min time to wait between lock attempts
-     * - max_lock_retry_microtime: Max time to wait between lock attempts
+     * - locking_strategy:         Locking strategy fused for doing session locking. Default: null
+     * - dynamodb_client:          DynamoDbClient object used for performing DynamoDB operations
+     * - table_name:               Name of the DynamoDB table in which to store the sessions. Default: "sessions"
+     * - hash_key:                 Name of the hash key in the DynamoDB sessions table. Default: "id"
+     * - session_lifetime:         Lifetime of an inactive session before it should be garbage collected.
+     * - consistent_read:          Whether or not to use DynamoDB consistent reads for `GetItem`. Default: true
+     * - automatic_gc:             Whether or not to use PHP's session auto garbage collection triggers.
+     * - gc_batch_size:            Batch size used for removing expired sessions during garbage collection. Default: 25
+     * - gc_operation_delay:       Delay between service operations during garbage collection
+     * - max_lock_wait_time:       Maximum time (in seconds) to wait to acquire a lock before giving up
+     * - min_lock_retry_microtime: Minimum time (in microseconds) to wait between attempts to acquire a lock
+     * - max_lock_retry_microtime: Maximum time (in microseconds) to wait between attempts to acquire a lock
      *
      * @param array $config Configuration options
      *
@@ -142,9 +139,8 @@ class SessionHandler
     /**
      * Destruct the session handler and make sure the session gets written
      *
-     * NOTE: It is usually better practice to call `session_write_close()`
-     * manually in your application as soon as session modifications are
-     * complete. This is especially true if session locking is enabled.
+     * NOTE: It is usually better practice to call `session_write_close()` manually in your application as soon as
+     * session modifications are complete. This is especially true if session locking is enabled.
      *
      * @link http://php.net/manual/en/function.session-set-save-handler.php#refsect1-function.session-set-save-handler-notes
      */
@@ -198,11 +194,9 @@ class SessionHandler
     }
 
     /**
-     * Creates a table in DynamoDB for session storage according to provided
-     * configuration options.
+     * Creates a table in DynamoDB for session storage according to provided configuration options.
      *
-     * Note: This is a one-time operation. It may be better to do this via the
-     * AWS management console prior to using the session handler.
+     * Note: This is a one-time operation. It may be better to do this via the AWS management console ahead of time.
      *
      * @param int $readCapacityUnits  RCUs for table read throughput
      * @param int $writeCapacityUnits WCUs table write throughput
@@ -261,8 +255,7 @@ class SessionHandler
      */
     public function close()
     {
-        // Make sure the session is unlocked even if the write did not happen.
-        // Also, make sure to update the expiration time
+        // Make sure the session is unlocked and the expiration time is updated, even if the write did not occur
         if (!$this->isSessionWritten()) {
             $id     = $this->formatId($this->openSessionId);
             $result = $this->lockingStrategy->doWrite($id, '', false);
@@ -366,21 +359,30 @@ class SessionHandler
     /**
      * Performs garbage collection on the sessions stored in the DynamoDB table
      *
-     * If triggering garbage collection manually, use this method. If your
-     * garbage collection is triggered automatically by php (not recommended),
-     * then use the `gc` method.
+     * If triggering garbage collection manually, use this method. If your garbage collection is triggered automatically
+     * by php (not recommended), then use the `gc` method.
      */
     public function garbageCollect()
     {
-        $deleteBatch = WriteRequestBatch::factory(
-            $this->client,
-            $this->config->get('gc_batch_size')
-        );
+        // Get relevant configuration data
+        $delay     = (int) $this->config->get('gc_operation_delay');
+        $batchSize = (int) $this->config->get('gc_batch_size');
         $tableName = $this->config->get('table_name');
+        $hashKey   = $this->config->get('hash_key');
         $expires   = (string) time();
 
-        // Setup a scan table command for finding expired session items
-        $tableScan = $this->client->getCommand('Scan', array(
+        // Instantiate and configure the WriteRequestBatch object that will be deleting the expired sessions
+        if ($delay) {
+            $delayFunction = function () use ($delay) {
+                sleep($delay);
+            };
+            $deleteBatch = WriteRequestBatch::factory($this->client, $batchSize, $delayFunction);
+        } else {
+            $deleteBatch = WriteRequestBatch::factory($this->client, $batchSize);
+        }
+
+        // Setup a scan table iterator for finding expired session items
+        $tableScanner = $this->client->getIterator('Scan', array(
             'TableName' => $tableName,
             'AttributesToGet' => array(
                 $this->config->get('hash_key')
@@ -401,11 +403,15 @@ class SessionHandler
             Ua::OPTION => Ua::SESSION
         ));
 
+        // If a delay has been set, then attach the delay function to execute after each scan operation
+        if (isset($delayFunction)) {
+            $tableScanner->getEventDispatcher()->addListener('resource_iterator.after_send', $delayFunction);
+        }
+
         // Perform scan and batch delete operations as needed
-        foreach ($this->client->getIterator($tableScan) as $item) {
+        foreach ($tableScanner as $item) {
             // @codeCoverageIgnoreStart
-            $key = array('HashKeyElement' => $item[$this->config->get('hash_key')]);
-            $deleteBatch->add(new DeleteRequest($key, $tableName));
+            $deleteBatch->add(new DeleteRequest(array('HashKeyElement' => $item[$hashKey]), $tableName));
             // @codeCoverageIgnoreEnd
         }
 

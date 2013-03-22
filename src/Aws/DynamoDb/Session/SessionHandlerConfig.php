@@ -48,12 +48,13 @@ class SessionHandlerConfig
 
         // Merge provided data with defaults
         $this->addDefaults(array(
-            'table_name'       => 'sessions',
-            'hash_key'         => 'id',
-            'session_lifetime' => (int) ini_get('session.gc_maxlifetime'),
-            'consistent_read'  => true,
-            'automatic_gc'     => (bool) ini_get('session.gc_probability'),
-            'gc_batch_size'    => 25
+            'table_name'         => 'sessions',
+            'hash_key'           => 'id',
+            'session_lifetime'   => (int) ini_get('session.gc_maxlifetime'),
+            'consistent_read'    => true,
+            'automatic_gc'       => (bool) ini_get('session.gc_probability'),
+            'gc_batch_size'      => 25,
+            'gc_operation_delay' => 0,
         ));
     }
 

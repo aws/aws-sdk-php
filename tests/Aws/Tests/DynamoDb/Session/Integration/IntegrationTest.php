@@ -225,13 +225,17 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Create a session handler to use with a lower batch size');
         $sh = SessionHandler::factory(array(
-            'dynamodb_client' => $this->client,
-            'table_name'      => $this->table,
-            'gc_batch_size'   => 3 // Smaller batches to test batching works
+            'dynamodb_client'    => $this->client,
+            'table_name'         => $this->table,
+            'gc_batch_size'      => 3, // Smaller batches to test batching works
+            'gc_operation_delay' => 3, // Sleep 3 seconds in between operations
         ));
 
         self::log('Run the garbage collection');
+        $gcTime = microtime(true);
         $sh->garbageCollect();
+        $gcTime = microtime(true) - $gcTime;
+        $this->assertGreaterThan(12, $gcTime, 'The entire garbage collection process should take ~15+ seconds.');
 
         self::log('Assert that all 10 items were deleted from the sessions table');
         $result = $this->client->getCommand('Scan', array(
