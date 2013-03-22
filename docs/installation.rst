@@ -4,7 +4,7 @@ Installation
 Installing via Composer
 -----------------------
 
-Using `Composer <http://getcomposer.org>`_ is the recommended way to install the AWS SDK for PHP 2. Composer is
+Using `Composer <http://getcomposer.org>`_ is the recommended way to install the AWS SDK for PHP 2. Composer is a 
 dependency management tool for PHP that allows you to declare the dependencies your project needs and installs them into
 your project. In order to use the AWS SDK for PHP 2 through Composer, you must do the following:
 
@@ -18,7 +18,7 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
            }
        }
 
-   Consider tightening your dependencies to a known version (e.g., ``2.0.*``).
+   Consider tightening your dependencies to a known version (e.g., ``2.2.*``).
 
 #. Download and install Composer.
 
@@ -34,7 +34,7 @@ your project. In order to use the AWS SDK for PHP 2 through Composer, you must d
 
 #. Require Composer's autoloader.
 
-   Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries that
+   Composer prepares an autoload file that's capable of autoloading all of the classes in any of the libraries that
    it downloads. To use it, just add the following line to your code's bootstrap process.
 
    .. code-block:: php
@@ -45,7 +45,7 @@ You can find out more on how to install Composer, configure autoloading, and oth
 dependencies at `getcomposer.org <http://getcomposer.org>`_.
 
 During your development, you can keep up with the latest changes on the master branch by setting the version
-requirment for the SDK to ``dev-master``.
+requirement for the SDK to ``dev-master``.
 
 .. code-block:: js
 
