@@ -135,6 +135,10 @@ should make sure to understand what the defaults are.
                              should also take your provisioned throughput into account as well as the timing of your
                              garbage collection.
 ---------------------------- -------------------------------------------------------------------------------------------
+``gc_operation_delay``       The delay (in seconds) between service operations performed during garbage collection. This
+                             defaults to ``0``. Increasing this value allows you to throttle your own requests in an
+                             attempt to stay within your provisioned throughput capacity during garbage collection.
+---------------------------- -------------------------------------------------------------------------------------------
 ``max_lock_wait_time``       Maximum time (in seconds) that the session handler should wait to acquire a lock before
                              giving up. This defaults to ``10`` and is only used with the ``PessimisticLockingStrategy``.
 ---------------------------- -------------------------------------------------------------------------------------------
@@ -264,6 +268,12 @@ something like the following:
 
     $sessionHandler->garbageCollect();
 
+You can also use the ``gc_operation_delay`` configuration option on the session handler to introduce delays in between
+the ``Scan`` and ``BatchWriteItem`` operations that are performed by the garbage collection process. This will increase
+the amount of time it takes the garbage collection to complete, but it can help you spread out the requests made by the
+session handler in order to help you stay close to or within your provisioned throughput capacity during garbage
+collection.
+
 Best Practices
 --------------
 
@@ -276,6 +286,7 @@ Best Practices
 #. Keep the size of your sessions small. Sessions that are less than 1KB will perform better and require less
    provisioned throughput capacity.
 #. Do not use session locking unless your application requires it.
-#. Instead of using PHP's built in session garbage collection triggers, schedule your garbage collection via a cron job,
-   or another scheduling mechanism, to run during off-peak hours.
+#. Instead of using PHP's built-in session garbage collection triggers, schedule your garbage collection via a cron job,
+   or another scheduling mechanism, to run during off-peak hours. Use the ``gc_operation_delay`` option to add delays
+   in between the requests performed for the garbage collection process.
 
