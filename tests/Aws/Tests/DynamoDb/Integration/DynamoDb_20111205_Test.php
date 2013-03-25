@@ -45,6 +45,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a table with an optional RangeKeyElement
+     *
      * @example Aws\DynamoDb\DynamoDbClient::createTable
      */
     public function testCreateTable()
@@ -87,6 +89,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Describe a table and grab data from the output
+     *
      * @depends testCreateTable
      * @example Aws\DynamoDb\DynamoDbClient::describeTable
      */
@@ -110,6 +114,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * List the first page of results of tables owned by your account
+     *
      * @depends testDescribeTable
      * @example Aws\DynamoDb\DynamoDbClient::listTable
      */
@@ -130,6 +136,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * List all of the tables owned by your account using a ListTables iterator
+     *
      * @depends testListTables
      * @example Aws\DynamoDb\DynamoDbClient::listTable
      */
@@ -149,6 +157,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Put an item in a table using the formatAttributes() client helper method
+     *
      * @depends testListTablesWithIterator
      * @example Aws\DynamoDb\DynamoDbClient::putItem
      * @example Aws\DynamoDb\DynamoDbClient::formatAttributes
@@ -179,6 +189,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Put an item in a table
+     *
      * @depends testAddItem
      * @example Aws\DynamoDb\DynamoDbClient::putItem
      */
@@ -202,6 +214,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Get an item from a table and interact with the response
+     *
      * @depends testAddItemWithoutHelperMethod
      * @example Aws\DynamoDb\DynamoDbClient::getItem
      */
@@ -232,6 +246,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Get all results of a Query operation using a Query iterator
+     *
      * @depends testGetItem
      * @example Aws\DynamoDb\DynamoDbClient::query
      */
@@ -264,6 +280,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Get all of the results of a Scan operation using a Scan iterator
+     *
      * @depends testQuery
      * @example Aws\DynamoDb\DynamoDbClient::scan
      */
@@ -301,6 +319,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Delete a table
+     *
      * @depends testScan
      * @example Aws\DynamoDb\DynamoDbClient::deleteTable
      */

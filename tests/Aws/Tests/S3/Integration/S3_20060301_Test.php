@@ -62,6 +62,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create an Amazon S3 bucket
+     *
      * @expectedException \Aws\S3\Exception\BucketAlreadyExistsException
      * @example Aws\S3\S3Client::createBucket
      */
@@ -75,6 +77,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a bucket in a specific region
+     *
      * @depends testBucketAlreadyExists
      * @example Aws\S3\S3Client::createBucket
      */
@@ -108,6 +112,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Poll a bucket until it exists
+     *
      * @depends testCreateBucketInRegion
      * @example Aws\S3\S3Client::waitUntilBucketExists
      */
@@ -122,6 +128,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Upload an object to a bucket using a string for the object body
+     *
      * @depends testWaitUntilBucketExists
      * @example Aws\S3\S3Client::putObject
      */
@@ -157,6 +165,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Upload an object by streaming the contents of a file
+     *
      * @depends testPutObject
      * @example Aws\S3\S3Client::putObject
      */
@@ -200,7 +210,7 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
 
     /**
      * @depends testPutObjectFromFile
-     * @example Aws\S3\S3Client::putObject
+     * @example Aws\S3\S3Client::putObject Upload an object by streaming the contents of a PHP stream
      */
     public function testPutObjectFromStream()
     {
@@ -234,6 +244,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Upload an object by streaming the contents of a Guzzle\Http\EntityBodyInterface object
+     *
      * @depends testPutObjectFromStream
      * @example Aws\S3\S3Client::putObject
      */
@@ -272,6 +284,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Send a ListBuckets request
+     *
      * @depends testPutObjectFromEntityBody
      * @example Aws\S3\S3Client::listBuckets
      */
@@ -293,6 +307,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Send a ListBuckets request and use the getPath() method to grab nested data from the response model
+     *
      * @depends testListBuckets
      * @example Aws\S3\S3Client::listBuckets
      */
@@ -311,6 +327,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * List all objects in a bucket using a ListObjects iterator
+     *
      * @depends testListBucketsWithGetPath
      * @example Aws\S3\S3Client::listObjects
      */
@@ -338,6 +356,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Get an object from a bucket
+     *
      * @depends testListObjectsWithIterator
      * @example Aws\S3\S3Client::getObject
      */
@@ -367,6 +387,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Get an object from a bucket and interact with the body of the object
+     *
      * @depends testGetObject
      * @example Aws\S3\S3Client::getObject
      */
@@ -402,6 +424,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Get an object from a bucket and save the object directly to a file
+     *
      * @depends testGetObjectUsingEntityBody
      * @example Aws\S3\S3Client::getObject
      */
@@ -427,6 +451,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a presigned URL with a command object
+     *
      * @depends testGetObjectWithSaveAs
      * @example Aws\S3\S3Client::createPresignedUrl
      * @example Aws\S3\Command\S3Command::createPresignedUrl
@@ -458,9 +484,10 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a presigned URL from a custom request object
+     *
      * @depends testCreatePresignedUrlFromCommand
      * @example Aws\S3\S3Client::createPresignedUrl
-     * @example Aws\S3\Command\S3Command::createPresignedUrl
      */
     public function testCreatePresignedUrl()
     {
@@ -487,6 +514,8 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Clear the contents and delete a bucket
+     *
      * @depends testCreatePresignedUrl
      * @example Aws\S3\S3Client::clearBucket
      * @example Aws\S3\S3Client::deleteBucket
