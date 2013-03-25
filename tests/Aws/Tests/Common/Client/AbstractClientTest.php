@@ -19,6 +19,7 @@ namespace Aws\Tests\Common\Client;
 use Aws\Common\Aws;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Enum\Region;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
@@ -135,13 +136,22 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         /** @var $client AwsClientInterface */
         $client = $this->getServiceBuilder()->get('dynamodb', true);
-
         foreach (array_keys($client->getRegions()) as $region) {
             $client->setRegion($region);
             $this->assertEquals("https://dynamodb.{$region}.amazonaws.com", (string) $client->getBaseUrl());
             $this->assertEquals("https://dynamodb.{$region}.amazonaws.com", $client->getConfig('base_url'));
             $this->assertEquals($region, $client->getRegion());
             $this->assertEquals($region, $this->readAttribute($client->getSignature(), 'regionName'));
+        }
+
+        /** @var $client AwsClientInterface */
+        $client = $this->getServiceBuilder()->get('sts', true);
+        foreach (array_keys($client->getRegions()) as $region) {
+            $client->setRegion($region);
+            $this->assertEquals("https://sts.amazonaws.com", (string) $client->getBaseUrl());
+            $this->assertEquals("https://sts.amazonaws.com", $client->getConfig('base_url'));
+            $this->assertEquals(Region::US_EAST_1, $client->getRegion());
+            $this->assertEquals(Region::US_EAST_1, $this->readAttribute($client->getSignature(), 'regionName'));
         }
     }
 
