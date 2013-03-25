@@ -247,7 +247,7 @@ class ExampleDirective(Directive):
             return example_cache[key]
 
         # Not cached, so index the example file functions
-        path = os.path.abspath(__file__ + "/../../../../tests/Aws/Tests/Examples/" + example_file)
+        path = os.path.abspath(__file__ + "/../../../../tests/Aws/Tests/" + example_file)
 
         f = open(path, 'r')
         in_example = False

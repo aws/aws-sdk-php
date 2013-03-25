@@ -11,12 +11,12 @@ will also need to specify the amount of
 `provisioned throughput <http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_
 that should be made availabe to the table.
 
-.. example:: DynamoDbTest.php testCreateTable
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testCreateTable
 
 The table will now have a status of ``CREATING`` while the table is being provisioned. You can use a waiter to poll the
 table until it becomes ``ACTIVE``.
 
-.. example:: DynamoDbTest.php testWaitUntilTableExists
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testWaitUntilTableExists
 
 A full list of the parameters available to the ``createTable()`` operation can be found in the
 `API documentation <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_createTable>`_.
@@ -28,7 +28,7 @@ Now that the table is created, you can use the
 `describeTable() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_describeTable>`_
 method to get information about the table.
 
-.. example:: DynamoDbTest.php testDescribeTable
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testDescribeTable
 
 The return value of the ``describeTable()`` method is a ``Guzzle\Service\Resource\Model`` object that can be used like
 an array. For example, you could retrieve the number of items in a table or the amount of provisioned read throughput.
@@ -43,7 +43,7 @@ in US-EAST-1 and one in US-WEST-2, they are completely independent and do not sh
 returns all of the table names associated with the account making the request, for the endpoint that receives the
 request.
 
-.. example:: DynamoDbTest.php testListTables
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testListTables
 
 Iterating over all tables
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,7 +52,7 @@ The result of a ``listTables()`` operation might be truncated. Because of this, 
 to retrieve a complete list of all of the tables owned by your account in a specific region. The iterator will
 automatically handle sending any necessary subsequent requests.
 
-.. example:: DynamoDbTest.php testListTablesWithIterator
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testListTablesWithIterator
 
 .. tip::
 
@@ -65,12 +65,12 @@ Let's add an item to our *errors* table using the
 `putItem() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_putItem>`_
 method of the client.
 
-.. example:: DynamoDbTest.php testAddItem
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testAddItem
 
 As you can see, we used the ``formatAttributes()`` method of the client to more easily format the attributes of the
 item. Alternatively, you can provide the item attributes without using the helper method:
 
-.. example:: DynamoDbTest.php testAddItemWithoutHelperMethod
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testAddItemWithoutHelperMethod
 
 Retrieving items
 ----------------
@@ -82,7 +82,7 @@ are performing a
 `consistent read <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/APISummary.html#DataReadConsistency>`_
 operation.
 
-.. example:: DynamoDbTest.php testGetItem
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testGetItem
 
 Query and scan
 --------------
@@ -101,7 +101,7 @@ Let's say we want a list of all "1201" errors that occurred in the last 15 minut
 that will search by the primary key of the table and retrieve up to 1MB of the items. However, a better approach is to
 use the query iterator to retrieve the entire list of all items matching the query.
 
-.. example:: DynamoDbTest.php testQuery
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testQuery
 
 Scan
 ~~~~
@@ -113,7 +113,7 @@ the results are filtered).
 A scan can be useful for more complex searches. For example, we can retrieve all of the errors in the last 15
 minutes that contain the word "overflow":
 
-.. example:: DynamoDbTest.php testScan
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testScan
 
 Using the WriteRequestBatch
 ---------------------------
@@ -161,4 +161,4 @@ Deleting a table
 Now that you've taken a quick tour of the PHP client for Amazon DynamoDB, you will want to clean up by deleting the
 resources you created.
 
-.. example:: DynamoDbTest.php testDeleteTable
+.. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testDeleteTable

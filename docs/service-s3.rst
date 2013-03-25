@@ -6,7 +6,7 @@ Creating a bucket
 Now that we've created a client object, let's create a bucket. This bucket will be used throughout the remainder of this
 guide.
 
-.. example:: S3Test.php testBucketAlreadyExists
+.. example:: S3/Integration/S3_20060301_Test.php testBucketAlreadyExists
 
 If you run the above code example unaltered, you'll probably trigger the following exception::
 
@@ -25,7 +25,7 @@ Creating a bucket in another region
 The above example creates a bucket in the standard US-EAST-1 region. You can change the bucket location by passing a
 ``LocationConstraint`` value.
 
-.. example:: S3Test.php testCreateBucketInRegion
+.. example:: S3/Integration/S3_20060301_Test.php testCreateBucketInRegion
 
 You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the ``US_WEST_2``
 constant. The SDK provides various Enum classes under the ``Aws\Common\Enum`` namespace that can be useful for
@@ -42,7 +42,7 @@ Now that we've created a bucket, let's force our application to wait until the b
 using a *waiter*. The following snippet of code will poll the bucket until it exists or the maximum number of
 polling attempts are completed.
 
-.. example:: S3Test.php testWaitUntilBucketExists
+.. example:: S3/Integration/S3_20060301_Test.php testWaitUntilBucketExists
 
 Uploading objects
 -----------------
@@ -50,7 +50,7 @@ Uploading objects
 Now that you've created a bucket, let's put some data in it. The following example creates an object in your bucket
 called data.txt that contains 'Hello!'.
 
-.. example:: S3Test.php testPutObject
+.. example:: S3/Integration/S3_20060301_Test.php testPutObject
 
 The AWS SDK for PHP will attempt to automatically determine the most appropriate Content-Type header used to store the
 object. If you are using a less common file extension and your Content-Type header is not added automatically, you can
@@ -62,32 +62,32 @@ Uploading a file
 The above example uploaded text data to your object. You can alternatively upload the contents of a file by passing
 the ``SourceFile`` option. Let's also put some metadata on the object.
 
-.. example:: S3Test.php testPutObjectFromFile
+.. example:: S3/Integration/S3_20060301_Test.php testPutObjectFromFile
 
 Uploading from a stream
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Alternatively, you can pass a resource returned from an ``fopen`` call to the ``Body`` parameter.
 
-.. example:: S3Test.php testPutObjectFromStream
+.. example:: S3/Integration/S3_20060301_Test.php testPutObjectFromStream
 
 Because the AWS SDK for PHP is built around Guzzle, you can also pass an EntityBody object.
 
-.. example:: S3Test.php testPutObjectFromEntityBody
+.. example:: S3/Integration/S3_20060301_Test.php testPutObjectFromEntityBody
 
 Listing your buckets
 --------------------
 
 You can list all of the buckets owned by your account using the ``listBuckets`` method.
 
-.. example:: S3Test.php testListBuckets
+.. example:: S3/Integration/S3_20060301_Test.php testListBuckets
 
 All service operation calls using the AWS SDK for PHP return a ``Guzzle\Service\Resource\Model`` object. This object
 contains all of the data returned from the service in a normalized array like object. The object also contains a
 ``get()`` method used to retrieve values from the model by name, and a ``getPath()`` method that can be used to
 retrieve nested values.
 
-.. example:: S3Test.php testListBucketsWithGetPath
+.. example:: S3/Integration/S3_20060301_Test.php testListBucketsWithGetPath
 
 Listing objects in your buckets
 -------------------------------
@@ -95,7 +95,7 @@ Listing objects in your buckets
 Listing objects is a lot easier in the new SDK thanks to *iterators*. You can list all of the objects in a bucket using
 the ``ListObjectsIterator``.
 
-.. example:: S3Test.php testListObjectsWithIterator
+.. example:: S3/Integration/S3_20060301_Test.php testListObjectsWithIterator
 
 Iterators will handle sending any required subsequent requests when a response is truncated. The ListObjects iterator
 works with other parameters too.
@@ -122,7 +122,7 @@ Downloading objects
 
 You can use the ``GetObject`` operation to download an object.
 
-.. example:: S3Test.php testGetObject
+.. example:: S3/Integration/S3_20060301_Test.php testGetObject
 
 The contents of the object are stored in the ``Body`` parameter of the model object. Other parameters are stored in
 model including ``ContentType``, ``ContentLength``, ``VersionId``, ``ETag``, etc...
@@ -133,14 +133,14 @@ attempting to download extremely large files into memory.
 
 The EntityBody object has other nice features that allow you to read data using streams.
 
-.. example:: S3Test.php testGetObjectUsingEntityBody
+.. example:: S3/Integration/S3_20060301_Test.php testGetObjectUsingEntityBody
 
 Saving objects to a file
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can save the contents of an object to a file by setting the SaveAs parameter.
 
-.. example:: S3Test.php testGetObjectWithSaveAs
+.. example:: S3/Integration/S3_20060301_Test.php testGetObjectWithSaveAs
 
 Uploading large files using multipart uploads
 ---------------------------------------------
@@ -250,18 +250,17 @@ time.
 You can create a presigned URL for any Amazon S3 operation using the ``getCommand`` method for creating a Guzzle
 command object and then calling the ``createPresignedUrl()`` method on the command.
 
-.. example:: S3Test.php testCreatePresignedUrlFromCommand
+.. example:: S3/Integration/S3_20060301_Test.php testCreatePresignedUrlFromCommand
 
 If you need more flexibility in creating your pre-signed URL, then you can create a pre-signed URL for a completely
 custom ``Guzzle\Http\Message\RequestInterface`` object. You can use the ``get()``, ``post()``, ``head()``, ``put()``,
 and ``delete()`` methods of a client object to easily create a Guzzle request object.
 
-.. example:: S3Test.php testCreatePresignedUrl
+.. example:: S3/Integration/S3_20060301_Test.php testCreatePresignedUrl
 
 Cleaning up
 -----------
 
 Now that we've taken a tour of how you can use the Amazon S3 client, let's clean up any resources we may have created.
 
-.. example:: S3Test.php testCleanUpBucket
-
+.. example:: S3/Integration/S3_20060301_Test.php testCleanUpBucket

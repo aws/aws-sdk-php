@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Examples;
+namespace Aws\S3\Integration;
 
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\S3\Model\ClearBucket;
@@ -22,9 +22,10 @@ use Guzzle\Http\EntityBody;
 
 /**
  * @group example
+ * @group integration
  * @outputBuffering enabled
  */
-class S3Test extends \Aws\Tests\IntegrationTestCase
+class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
 {
     protected $client;
     protected $bucket;

@@ -14,15 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Examples;
+namespace Aws\DynamoDb\Integration;
 
 use Aws\DynamoDb\DynamoDbClient;
 
 /**
  * @group example
+ * @group integration
  * @outputBuffering enabled
  */
-class DynamoDbTest extends \Aws\Tests\IntegrationTestCase
+class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
 {
     protected $client;
 
