@@ -1,4 +1,4 @@
-.. service:: sdb
+.. service:: SimpleDb
 
 Creating domains
 ----------------

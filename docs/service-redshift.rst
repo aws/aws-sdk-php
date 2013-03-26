@@ -1,4 +1,4 @@
-.. service:: redshift
+.. service:: Redshift
 
 Creating a cluster
 ------------------

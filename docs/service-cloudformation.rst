@@ -1,3 +1,3 @@
-.. service:: cloudformation
+.. service:: CloudFormation
 
 .. include:: _snippets/incomplete.txt

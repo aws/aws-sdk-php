@@ -1,3 +1,3 @@
-.. service:: ec2
+.. service:: Ec2
 
 .. include:: _snippets/incomplete.txt
