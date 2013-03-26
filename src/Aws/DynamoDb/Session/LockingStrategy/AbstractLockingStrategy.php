@@ -107,7 +107,7 @@ abstract class AbstractLockingStrategy implements LockingStrategyInterface
      */
     protected function formatKey($keyValue)
     {
-        $keyName = version_compare($this->client->getDescription()->getApiVersion(), '2012-08-10', '<')
+        $keyName = ($this->client->getDescription()->getApiVersion() < '2012-08-10')
             ? 'HashKeyElement'
             : $this->config->get('hash_key');
 
