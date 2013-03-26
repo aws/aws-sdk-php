@@ -209,8 +209,10 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Upload an object by streaming the contents of a PHP stream
+     *
      * @depends testPutObjectFromFile
-     * @example Aws\S3\S3Client::putObject Upload an object by streaming the contents of a PHP stream
+     * @example Aws\S3\S3Client::putObject
      */
     public function testPutObjectFromStream()
     {
