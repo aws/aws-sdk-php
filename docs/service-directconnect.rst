@@ -1,3 +1,3 @@
-.. service:: directconnect
+.. service:: DirectConnect
 
 .. include:: _snippets/incomplete.txt

@@ -1,4 +1,4 @@
-.. service:: sqs
+.. service:: Sqs
 
 Creating a queue
 ----------------
