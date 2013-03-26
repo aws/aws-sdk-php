@@ -50,7 +50,10 @@ class UserAgentListener implements EventSubscriberInterface
             $request = $command->getRequest();
             $userAgent = (string) $request->getHeader('User-Agent');
             foreach ((array) $userAgentAppends as $append) {
-                $userAgent .= " {$append}";
+                $append = ' ' . $append;
+                if (strpos($userAgent, $append) === false) {
+                    $userAgent .= $append;
+                }
             }
             $request->setHeader('User-Agent', $userAgent);
         }
