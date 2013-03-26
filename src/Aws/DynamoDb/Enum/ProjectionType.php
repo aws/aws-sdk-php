@@ -14,9 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Exception that occurs when a ConditionalCheckFailedException error is encountered
+ * Contains enumerable ProjectionType values
  */
-class ConditionalCheckFailedException extends DynamoDbException {}
+class ProjectionType extends Enum
+{
+    const ALL = 'ALL';
+    const KEYS_ONLY = 'KEYS_ONLY';
+    const INCLUDED = 'INCLUDE';
+}

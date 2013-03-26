@@ -35,11 +35,7 @@ class NullLockingStrategy extends AbstractLockingStrategy
             // Execute a GetItem command to retrieve the item
             $result = $this->client->getCommand('GetItem', array(
                 'TableName' => $this->config->get('table_name'),
-                'Key' => array(
-                    'HashKeyElement' => array(
-                        'S' => $id
-                    )
-                ),
+                'Key' => $this->formatKey($id),
                 'ConsistentRead' => (bool) $this->config->get('consistent_read'),
                 Ua::OPTION       => Ua::SESSION
             ))->execute();

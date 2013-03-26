@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * This exception is thrown when the level of provisioned throughput defined for the table is exceeded.
+ * Exception that occurs when a ProvisionedThroughputExceededException error is encountered
  */
 class ProvisionedThroughputExceededException extends DynamoDbException {}

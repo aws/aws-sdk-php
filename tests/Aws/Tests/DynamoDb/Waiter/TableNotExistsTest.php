@@ -19,7 +19,7 @@ namespace Aws\Tests\DynamoDb\Waiter;
 use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 
-class TableNotExistsTest extends AbstractWaiter
+class TableNotExistsTest extends AbstractWaiterTestCase
 {
     public function testReturnsFalseUntilTableDoesNotExist()
     {

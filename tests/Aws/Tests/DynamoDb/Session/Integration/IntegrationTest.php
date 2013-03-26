@@ -21,7 +21,6 @@ use Aws\DynamoDb\Exception\ResourceNotFoundException;
 use Aws\DynamoDb\Model\BatchRequest\PutRequest;
 use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
 use Aws\DynamoDb\Model\Item;
-use Aws\DynamoDb\Model\Key;
 use Aws\DynamoDb\Session\SessionHandler;
 use Aws\Common\Enum\Time;
 
@@ -34,6 +33,11 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      * @var string DynamoDB table name
      */
     public $table;
+
+    /**
+     * @var string Hash key name
+     */
+    public $hashKey;
 
     /**
      * @var DynamoDbClient
@@ -57,8 +61,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function setUp()
     {
-        $this->table  = self::getResourcePrefix() . 'php-sessions-test';
-        $this->client = self::getServiceBuilder()->get('dynamodb');
+        $this->table   = self::getResourcePrefix() . '-php-sessions-test';
+        $this->hashKey = 'id';
+        $this->client  = self::getServiceBuilder()->get('dynamodb');
     }
 
     /**
@@ -88,6 +93,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $sh = SessionHandler::factory(array(
             'dynamodb_client' => $this->client,
             'table_name'      => $this->table,
+            'hash_key'        => $this->hashKey,
         ));
 
         self::log('Start with an empty session, add data, and commit');
@@ -102,7 +108,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $result = $this->client->getCommand('GetItem', array(
             'TableName' => $this->table,
             'Key' => array(
-                'HashKeyElement' => array(
+                $this->hashKey => array(
                     'S' => 'test_example'
                 )
             )
@@ -121,7 +127,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             $result = $this->client->getCommand('GetItem', array(
                 'TableName' => $this->table,
                 'Key' => array(
-                    'HashKeyElement' => array(
+                    $this->hashKey => array(
                         'S' => 'test_example'
                     )
                 )
@@ -183,7 +189,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->simulateSessionStart($shNull2);
         $this->simulateSessionCommit($shNull1);
         $shNullTime = microtime(true) - $shNullTime;
-        $this->assertLessThan(2, $shNullTime, 'Null locking strategy took longer than expected.');
+        $this->assertLessThan(3, $shNullTime, 'Null locking strategy took longer than expected.');
 
         self::log('Locking, simultaneous reads should block and timeout');
         $shPessimisticTime = microtime(true);
@@ -266,7 +272,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     protected static function deleteSessionsTable()
     {
-        $table  = self::getResourcePrefix() . 'php-sessions-test';
+        $table  = self::getResourcePrefix() . '-php-sessions-test';
         $client = self::getServiceBuilder()->get('dynamodb');
 
         self::log("# Attempting to delete {$table}");

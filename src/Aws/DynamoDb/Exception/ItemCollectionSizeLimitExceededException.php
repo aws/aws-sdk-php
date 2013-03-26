@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * Exception that occurs when a ConditionalCheckFailedException error is encountered
+ * Exception that occurs when a ItemCollectionSizeLimitExceededException error is encountered
  */
-class ConditionalCheckFailedException extends DynamoDbException {}
+class ItemCollectionSizeLimitExceededException extends DynamoDbException {}

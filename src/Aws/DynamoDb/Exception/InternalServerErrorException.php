@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * This exception is thrown when the service has a problem when trying to process the request.
+ * Exception that occurs when a InternalServerErrorException error is encountered
  */
 class InternalServerErrorException extends DynamoDbException {}

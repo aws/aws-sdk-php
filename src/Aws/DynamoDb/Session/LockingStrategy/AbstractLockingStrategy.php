@@ -73,11 +73,7 @@ abstract class AbstractLockingStrategy implements LockingStrategyInterface
         try {
             return (bool) $this->client->getCommand('UpdateItem', array(
                 'TableName' => $this->config->get('table_name'),
-                'Key' => array(
-                    'HashKeyElement' => array(
-                        'S' => $id
-                    )
-                ),
+                'Key' => $this->formatKey($id),
                 'AttributeUpdates' => $attributes,
                 Ua::OPTION => Ua::SESSION
             ))->execute();
@@ -94,16 +90,28 @@ abstract class AbstractLockingStrategy implements LockingStrategyInterface
         try {
             return (bool) $this->client->getCommand('DeleteItem', array(
                 'TableName' => $this->config->get('table_name'),
-                'Key' => array(
-                    'HashKeyElement' => array(
-                        'S' => $id
-                    )
-                ),
+                'Key' => $this->formatKey($id),
                 Ua::OPTION => Ua::SESSION
             ))->execute();
         } catch (DynamoDbException $e) {
             return false;
         }
+    }
+
+    /**
+     * Generates the correct key structure based on the key value and DynamoDB API version
+     *
+     * @param string $keyValue The value of the key (i.e., the session ID)
+     *
+     * @return array formatted key structure
+     */
+    protected function formatKey($keyValue)
+    {
+        $keyName = version_compare($this->client->getDescription()->getApiVersion(), '2012-08-10', '<')
+            ? 'HashKeyElement'
+            : $this->config->get('hash_key');
+
+        return array($keyName => array('S' => $keyValue));
     }
 
     /**

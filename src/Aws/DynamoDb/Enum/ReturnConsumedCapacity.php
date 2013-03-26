@@ -14,9 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Exception that occurs when a ConditionalCheckFailedException error is encountered
+ * Contains enumerable ReturnConsumedCapacity values
  */
-class ConditionalCheckFailedException extends DynamoDbException {}
+class ReturnConsumedCapacity extends Enum
+{
+    const TOTAL = 'TOTAL';
+    const NONE = 'NONE';
+}

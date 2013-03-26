@@ -14,17 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\DynamoDb\Waiter;
+namespace Aws\DynamoDb\Enum;
 
-class AbstractWaiter extends \Guzzle\Tests\GuzzleTestCase
+use Aws\Common\Enum;
+
+/**
+ * Contains enumerable KeyType values
+ */
+class KeyType extends Enum
 {
-    protected function getClient()
-    {
-        $client = $this->getServiceBuilder()->get('dynamodb', true);
-        $client->getCredentials()
-            ->setSecurityToken('foo')
-            ->setExpiration(time() + 1000);
-
-        return $client;
-    }
+    const HASH = 'HASH';
+    const RANGE = 'RANGE';
 }

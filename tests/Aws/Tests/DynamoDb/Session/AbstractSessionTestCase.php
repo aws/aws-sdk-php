@@ -18,7 +18,7 @@ namespace Aws\Tests\DynamoDb\Session;
 
 use Aws\DynamoDb\DynamoDbClient;
 
-class AbstractSessionTestCase extends \Guzzle\Tests\GuzzleTestCase
+abstract class AbstractSessionTestCase extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
      * @return \Aws\DynamoDb\DynamoDbClient
@@ -28,6 +28,18 @@ class AbstractSessionTestCase extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $description = $this->getMockBuilder('Guzzle\Service\Description\ServiceDescription')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $description->expects($this->any())
+            ->method('getApiVersion')
+            ->will($this->returnValue('2012-08-10'));
+
+        $client->expects($this->any())
+            ->method('getDescription')
+            ->will($this->returnValue($description));
 
         return $client;
     }

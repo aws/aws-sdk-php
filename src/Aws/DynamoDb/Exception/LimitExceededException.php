@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.
+ * Exception that occurs when a LimitExceededException error is encountered
  */
 class LimitExceededException extends DynamoDbException {}
