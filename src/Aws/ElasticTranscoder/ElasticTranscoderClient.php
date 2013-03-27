@@ -48,6 +48,8 @@ use Guzzle\Service\Resource\Model;
  */
 class ElasticTranscoderClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-09-25';
+
     /**
      * Factory method to create a new Amazon Elastic Transcoder client using an array of configuration options.
      *
@@ -90,7 +92,8 @@ class ElasticTranscoderClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elastictranscoder-2012-09-25.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elastictranscoder-%s.php'
             ))
             ->setExceptionParser(new JsonRestExceptionParser())
             ->build();

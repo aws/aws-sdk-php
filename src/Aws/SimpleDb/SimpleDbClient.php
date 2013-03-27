@@ -41,6 +41,8 @@ use Guzzle\Service\Resource\Model;
  */
 class SimpleDbClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2009-04-15';
+
     /**
      * Factory method to create a new Amazon SimpleDB client using an array of configuration options.
      *
@@ -83,7 +85,8 @@ class SimpleDbClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/simpledb-2009-04-15.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/simpledb-%s.php'
             ))
             ->setIteratorsConfig(array(
                 'token_key' => 'NextToken',

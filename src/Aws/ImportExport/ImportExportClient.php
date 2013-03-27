@@ -36,6 +36,8 @@ use Guzzle\Service\Resource\Model;
  */
 class ImportExportClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2010-06-01';
+
     /**
      * Factory method to create a new AWS Import/Export client using an array of configuration options.
      *
@@ -79,7 +81,8 @@ class ImportExportClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/importexport-2010-06-01.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/importexport-%s.php'
             ))
             ->build();
 

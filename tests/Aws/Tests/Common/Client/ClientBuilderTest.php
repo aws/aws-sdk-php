@@ -20,6 +20,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Credentials\Credentials;
+use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 
@@ -290,5 +291,18 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertFalse($client->getConfig('client.backoff'));
+    }
+
+    public function testInjectsVersionIntoServiceDescriptionFileName()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'version' => DynamoDbClient::LATEST_API_VERSION,
+            'service.description' => __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-%s.php'
+        );
+
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertNotNull($client->getDescription());
     }
 }

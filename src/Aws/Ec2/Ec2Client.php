@@ -199,6 +199,8 @@ use Guzzle\Service\Resource\Model;
  */
 class Ec2Client extends AbstractClient
 {
+    const LATEST_API_VERSION = '2013-02-01';
+
     /**
      * Factory method to create a new AWS Elastic Beanstalk client using an array of configuration options:
      *
@@ -242,7 +244,10 @@ class Ec2Client extends AbstractClient
     {
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-2013-02-01.php'))
+            ->setConfigDefaults(array(
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-%s.php'
+            ))
             ->build();
     }
 }

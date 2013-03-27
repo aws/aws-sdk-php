@@ -108,4 +108,11 @@ interface AwsClientInterface extends ClientInterface
      * @return WaiterInterface
      */
     public function getWaiter($waiter, array $input = array());
+
+    /**
+     * Get the API version of the client (e.g. 2006-03-01)
+     *
+     * @return string
+     */
+    public function getApiVersion();
 }

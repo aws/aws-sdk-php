@@ -74,6 +74,8 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  */
 class OpsWorksClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2013-02-18';
+
     /**
      * Factory method to create a new AWS OpsWorks client using an array of configuration options.
      *
@@ -116,7 +118,8 @@ class OpsWorksClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/opsworks-2013-02-18.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/opsworks-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();

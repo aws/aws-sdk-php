@@ -67,6 +67,8 @@ use Guzzle\Service\Resource\Model;
  */
 class StorageGatewayClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-06-30';
+
     /**
      * Factory method to create a new AWS Storage Gateway client using an array of configuration options.
      *
@@ -110,7 +112,8 @@ class StorageGatewayClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/storagegateway-2012-06-30.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/storagegateway-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();

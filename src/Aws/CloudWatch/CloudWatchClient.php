@@ -42,6 +42,8 @@ use Guzzle\Service\Resource\Model;
  */
 class CloudWatchClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2010-08-01';
+
     /**
      * Factory method to create a new Amazon CloudWatch client using an array of configuration options.
      *
@@ -84,7 +86,8 @@ class CloudWatchClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudwatch-2010-08-01.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudwatch-%s.php'
             ))
             ->build();
     }

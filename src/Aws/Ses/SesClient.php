@@ -50,6 +50,8 @@ use Guzzle\Service\Resource\Model;
  */
 class SesClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2010-12-01';
+
     /**
      * Factory method to create a new Amazon Simple Email Service client using an array of configuration options.
      *
@@ -92,7 +94,8 @@ class SesClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ses-2010-12-01.php',
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ses-%s.php',
                 Options::SIGNATURE_SERVICE   => 'ses',
             ))
             ->build();
