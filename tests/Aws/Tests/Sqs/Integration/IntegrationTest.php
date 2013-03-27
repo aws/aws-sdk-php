@@ -16,9 +16,10 @@
 
 namespace Aws\Tests\Sqs\Integration;
 
-use Aws\Sqs\SqsClient;
 use Aws\Sqs\Enum\MessageAttribute;
 use Aws\Sqs\Enum\QueueAttribute;
+use Aws\Sqs\Exception\SqsException;
+use Aws\Sqs\SqsClient;
 
 /**
  * @group integration
@@ -61,10 +62,17 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $createdQueueUrl = $result->get('QueueUrl');
 
         self::log('Get the queue URL.');
-        $result = $this->sqs->getCommand('GetQueueUrl', array(
-            'QueueName'  => $queueName
-        ))->getResult();
-        $queueUrl = $result->get('QueueUrl');
+        do {
+            try {
+                $result = $this->sqs->getCommand('GetQueueUrl', array(
+                    'QueueName'  => $queueName
+                ))->getResult();
+                $queueUrl = $result->get('QueueUrl');
+            } catch (SqsException $e) {
+                $queueUrl = null;
+                sleep(2);
+            }
+        } while (!$queueUrl);
         $this->assertEquals($createdQueueUrl, $queueUrl);
 
         self::log('Get the queue attributes.');
@@ -119,6 +127,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         ))->getResult();
         $endTime = microtime(true);
         $this->assertGreaterThan(5, $endTime - $startTime);
+        $this->assertGreaterThanOrEqual(1, count($result->get('Messages')));
         $message = $result->getPath('Messages/0');
         $messagesToDelete[] = array(
             'Id'            => str_replace(' ', '-', $message['Body']),
@@ -158,6 +167,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $sqs = self::getServiceBuilder()->get('sqs');
         foreach ($sqs->getIterator('ListQueues', array('QueueNamePrefix' => 'php-integ-sqs-')) as $queueUrl) {
             $sqs->deleteQueue(array('QueueUrl'  => $queueUrl));
+            sleep(3);
         }
     }
 }
