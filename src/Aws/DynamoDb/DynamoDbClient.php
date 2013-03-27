@@ -56,6 +56,8 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
  */
 class DynamoDbClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2011-12-05';
+
     /**
      * Factory method to create a new Amazon DynamoDB client using an array of configuration options:
      *
@@ -129,7 +131,8 @@ class DynamoDbClient extends AbstractClient
             ->setConfigDefaults(array(
                 // DynamoDB does not use redirects
                 self::DISABLE_REDIRECTS => true,
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/dynamodb-2011-12-05.php',
+                Options::VERSION => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/dynamodb-%s.php',
                 // DynamoDB does not require response processing other than turning JSON into an array
                 self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)
             ))

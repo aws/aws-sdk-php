@@ -57,6 +57,8 @@ use Guzzle\Service\Resource\Model;
  */
 class ElastiCacheClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-11-15';
+
     /**
      * Factory method to create a new Amazon ElastiCache client using an array of configuration options.
      *
@@ -100,7 +102,8 @@ class ElastiCacheClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticache-2012-11-15.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticache-%s.php'
             ))
             ->build();
     }

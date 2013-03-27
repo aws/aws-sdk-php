@@ -36,6 +36,8 @@ use Guzzle\Service\Resource\Model;
  */
 class StsClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2011-06-15';
+
     /**
      * Factory method to create a new Amazon STS client using an array of configuration options:
      *
@@ -89,7 +91,8 @@ class StsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sts-2011-06-15.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sts-%s.php'
             ))
             ->build();
     }

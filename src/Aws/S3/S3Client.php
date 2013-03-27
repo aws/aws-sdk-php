@@ -100,6 +100,8 @@ use Guzzle\Service\Command\Factory\CompositeFactory;
  */
 class S3Client extends AbstractClient
 {
+    const LATEST_API_VERSION = '2006-03-01';
+
     /**
      * @var array Aliases for S3 operations
      */
@@ -198,7 +200,8 @@ class S3Client extends AbstractClient
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::SIGNATURE => new S3Signature(),
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-2006-03-01.php'
+                Options::VERSION => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-%s.php'
             ))
             ->setExceptionParser(new S3ExceptionParser())
             ->setIteratorsConfig(array(

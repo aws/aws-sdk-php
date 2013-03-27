@@ -44,6 +44,8 @@ use Guzzle\Service\Resource\Model;
  */
 class Route53Client extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-12-12';
+
     /**
      * Factory method to create a new Amazon Glacier client using an array of configuration options:
      *
@@ -84,14 +86,13 @@ class Route53Client extends AbstractClient
     public static function factory($config = array())
     {
         // Setup Route53 client
-        $client = ClientBuilder::factory(__NAMESPACE__)
+        return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/route53-2012-12-12.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/route53-%s.php'
             ))
             ->build();
-
-        return $client;
     }
 
     /**

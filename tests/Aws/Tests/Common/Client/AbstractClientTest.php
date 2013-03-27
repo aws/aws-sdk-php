@@ -249,4 +249,10 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client->setCredentials(new Credentials('foo', 'bar'));
         $this->assertTrue($credentialsChanged);
     }
+
+    public function testHasApiVersion()
+    {
+        $client = $this->getServiceBuilder()->get('dynamodb', true);
+        $this->assertNotNull($client->getApiVersion());
+    }
 }

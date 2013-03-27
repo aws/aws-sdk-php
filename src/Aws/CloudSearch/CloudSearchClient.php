@@ -51,6 +51,8 @@ use Guzzle\Service\Resource\Model;
  */
 class CloudSearchClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2011-02-01';
+
     /**
      * Factory method to create a new Amazon CloudSearch client using an array of configuration options.
      *
@@ -93,7 +95,8 @@ class CloudSearchClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudsearch-2011-02-01.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudsearch-%s.php'
             ))
             ->build();
     }

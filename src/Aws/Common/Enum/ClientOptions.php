@@ -143,4 +143,9 @@ class ClientOptions extends Enum
      * @var bool Set to false to disable validation
      */
     const VALIDATION = 'validation';
+
+    /**
+     * @var string API version used by the client
+     */
+    const VERSION = 'version';
 }

@@ -235,11 +235,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Set the waiter factory to use with the client
-     *
-     * @param WaiterFactoryInterface $waiterFactory Factory used to create waiters
-     *
-     * @return self
+     * {@inheritdoc}
      */
     public function setWaiterFactory(WaiterFactoryInterface $waiterFactory)
     {
@@ -249,9 +245,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     }
 
     /**
-     * Get the waiter factory used with the class
-     *
-     * @return WaiterFactoryInterface
+     * {@inheritdoc}
      */
     public function getWaiterFactory()
     {
@@ -267,5 +261,13 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         }
 
         return $this->waiterFactory;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getApiVersion()
+    {
+        return $this->serviceDescription->getApiVersion();
     }
 }

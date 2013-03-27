@@ -44,6 +44,8 @@ use Guzzle\Service\Resource\Model;
  */
 class CloudFormationClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2010-05-15';
+
     /**
      * Factory method to create a new AWS CloudFormation client using an array of configuration options.
      *
@@ -87,7 +89,8 @@ class CloudFormationClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudformation-2010-05-15.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudformation-%s.php'
             ))
             ->build();
     }

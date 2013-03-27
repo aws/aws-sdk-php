@@ -43,6 +43,8 @@ use Guzzle\Service\Resource\Model;
  */
 class DirectConnectClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-10-25';
+
     /**
      * Factory method to create a new AWS Direct Connect client using an array of configuration options.
      *
@@ -86,7 +88,8 @@ class DirectConnectClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/directconnect-2012-10-25.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/directconnect-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array(
