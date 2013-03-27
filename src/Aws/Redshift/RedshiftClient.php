@@ -67,6 +67,8 @@ use Guzzle\Service\Resource\Model;
  */
 class RedshiftClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-12-01';
+
     /**
      * Factory method to create a new Amazon Redshift client using an array of configuration options.
      *
@@ -109,7 +111,8 @@ class RedshiftClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/redshift-2012-12-01.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/redshift-%s.php'
             ))
             ->build();
     }

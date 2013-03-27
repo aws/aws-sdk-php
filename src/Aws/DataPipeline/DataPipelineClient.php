@@ -49,6 +49,8 @@ use Guzzle\Service\Resource\Model;
  */
 class DataPipelineClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-10-29';
+
     /**
      * Factory method to create a new Amazon Data Pipeline client using an array of configuration options:
      *
@@ -96,7 +98,8 @@ class DataPipelineClient extends AbstractClient
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/datapipeline-2012-10-29.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/datapipeline-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->setIteratorsConfig(array(

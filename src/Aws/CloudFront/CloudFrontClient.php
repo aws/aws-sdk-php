@@ -60,6 +60,8 @@ use Guzzle\Service\Resource\Model;
  */
 class CloudFrontClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-05-05';
+
     /**
      * Factory method to create a new Amazon CloudFront client using an array of configuration options:
      *
@@ -99,10 +101,11 @@ class CloudFrontClient extends AbstractClient
     public static function factory($config = array())
     {
         // Instantiate the CloudFront client
-        $client = ClientBuilder::factory(__NAMESPACE__)
+        return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudfront-2012-05-05.php',
+                Options::VERSION => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudfront-%s.php',
                 Options::SIGNATURE => new CloudFrontSignature()
             ))
             ->setExceptionParser(new DefaultXmlExceptionParser())
@@ -119,8 +122,6 @@ class CloudFrontClient extends AbstractClient
                 )
             ))
             ->build();
-
-        return $client;
     }
 
     /**

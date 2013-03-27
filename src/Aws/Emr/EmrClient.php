@@ -39,6 +39,8 @@ use Guzzle\Service\Resource\Model;
  */
 class EmrClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2009-03-31';
+
     /**
      * Factory method to create a new Amazon Elastic MapReduce client using an array of configuration options.
      *
@@ -82,7 +84,8 @@ class EmrClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/emr-2009-03-31.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/emr-%s.php'
             ))
             ->build();
     }

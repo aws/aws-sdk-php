@@ -200,7 +200,8 @@ class ClientBuilder
         );
 
         // Resolve endpoint and signature from the config and service description
-        $signature = $this->getSignature($this->updateConfigFromDescription($config), $config);
+        $description = $this->updateConfigFromDescription($config);
+        $signature = $this->getSignature($description, $config);
 
         // Resolve credentials
         if (!$credentials = $config->get('credentials')) {
@@ -246,7 +247,7 @@ class ClientBuilder
 
         /** @var $client AwsClientInterface */
         $client = new $clientClass($credentials, $signature, $config);
-        $client->setDescription($config->get(Options::SERVICE_DESCRIPTION));
+        $client->setDescription($description);
 
         // Add exception marshaling so that more descriptive exception are thrown
         if ($this->clientNamespace) {
@@ -349,6 +350,10 @@ class ClientBuilder
     {
         $description = $config->get(Options::SERVICE_DESCRIPTION);
         if (!($description instanceof ServiceDescription)) {
+            // Inject the version into the sprintf template if it is a string
+            if (is_string($description)) {
+                $description = sprintf($description, $config->get(Options::VERSION));
+            }
             $description = ServiceDescription::factory($description);
             $config->set(Options::SERVICE_DESCRIPTION, $description);
         }

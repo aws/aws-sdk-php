@@ -63,6 +63,8 @@ use Guzzle\Service\Resource\Model;
  */
 class SwfClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-01-25';
+
     /**
      * Factory method to create a new Amazon Simple Workflow Service client using an array of configuration options.
      *
@@ -105,7 +107,8 @@ class SwfClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/swf-2012-01-25.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/swf-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();

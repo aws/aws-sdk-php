@@ -55,6 +55,8 @@ use Guzzle\Service\Resource\Model;
  */
 class ElasticLoadBalancingClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2012-06-01';
+
     /**
      * Factory method to create a new Elastic Load Balancing client using an array of configuration options:
      *
@@ -96,7 +98,10 @@ class ElasticLoadBalancingClient extends AbstractClient
     {
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
-            ->setConfigDefaults(array(Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticloadbalancing-2012-06-01.php'))
+            ->setConfigDefaults(array(
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/elasticloadbalancing-%s.php'
+            ))
             ->build();
     }
 }

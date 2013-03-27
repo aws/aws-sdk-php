@@ -46,6 +46,8 @@ use Guzzle\Service\Resource\Model;
  */
 class SnsClient extends AbstractClient
 {
+    const LATEST_API_VERSION = '2010-03-31';
+
     /**
      * Factory method to create a new Amazon Simple Notification Service client using an array of configuration options.
      *
@@ -88,7 +90,8 @@ class SnsClient extends AbstractClient
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sns-2010-03-31.php'
+                Options::VERSION             => self::LATEST_API_VERSION,
+                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sns-%s.php'
             ))
             ->build();
     }
