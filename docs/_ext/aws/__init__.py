@@ -101,11 +101,14 @@ class ServiceDescription():
         # Determine the name of the client class to load
         class_path = self.config["services"][key]["class"].replace("\\", "/")
         client_path = os.path.abspath("../src/" + class_path + ".php")
-
-        # Determine the name of the servce description used by the client
         contents = open(client_path, 'r').read()
+
+        # Determine the current version of the client (look at the LATEST_API_VERSION constant value)
+        version = re.search("LATEST_API_VERSION = '(.+)'", contents).groups(0)[0]
+
+        # Determine the name of the service description used by the client
         matches = re.search("__DIR__ \. '/Resources/(.+)\.php'", contents)
-        description = matches.groups(0)[0]
+        description = matches.groups(0)[0] % (version)
 
         # Strip the filename of the client and determine the description path
         service_path = "/".join(client_path.split("/")[0:-1])
