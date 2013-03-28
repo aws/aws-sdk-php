@@ -1436,7 +1436,6 @@ return array (
                     'default' => 'SimpleWorkflowService.PollForActivityTask',
                 ),
                 'curl.options' => array(
-                    'static' => true,
                     'default' => array(
                         'CURLOPT_TIMEOUT' => 70,
                     ),
@@ -1506,7 +1505,6 @@ return array (
                     'default' => 'SimpleWorkflowService.PollForDecisionTask',
                 ),
                 'curl.options' => array(
-                    'static' => true,
                     'default' => array(
                         'CURLOPT_TIMEOUT' => 70,
                     ),

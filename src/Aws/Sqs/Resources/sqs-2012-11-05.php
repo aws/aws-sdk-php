@@ -570,7 +570,6 @@ return array (
                     'default' => '2012-11-05',
                 ),
                 'curl.options' => array(
-                    'static' => true,
                     'default' => array(
                         'CURLOPT_TIMEOUT' => 30,
                     ),

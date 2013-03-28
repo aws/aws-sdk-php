@@ -507,7 +507,6 @@ return array (
                     'default' => 'DataPipeline.PollForTask',
                 ),
                 'curl.options' => array(
-                    'static' => true,
                     'default' => array(
                         'CURLOPT_TIMEOUT' => 90,
                     ),
