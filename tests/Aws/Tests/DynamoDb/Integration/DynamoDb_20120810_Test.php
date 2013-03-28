@@ -31,7 +31,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     public static function setUpBeforeClass()
     {
         /** @var $client DynamoDbClient */
-        $client = self::getServiceBuilder()->get('dynamodb', true);
+        $client = self::getServiceBuilder()->get('dynamodb', array('version' => '2012-08-10'));
         // Delete the table if it exists
         try {
             $client->deleteTable(array('TableName' => 'errors'));

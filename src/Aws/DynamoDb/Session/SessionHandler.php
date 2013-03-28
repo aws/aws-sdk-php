@@ -217,7 +217,7 @@ class SessionHandler
             Ua::OPTION => Ua::SESSION
         );
 
-        if ($this->client->getDescription()->getApiVersion() < '2012-08-10') {
+        if ($this->client->getApiVersion() < '2012-08-10') {
             $params['KeySchema'] = array(
                 'HashKeyElement' => array(
                     'AttributeName' => $hashKey,
@@ -389,7 +389,7 @@ class SessionHandler
         $tableName = $this->config->get('table_name');
         $hashKey   = $this->config->get('hash_key');
         $expires   = (string) time();
-        $isOldApi  = ($this->client->getDescription()->getApiVersion() < '2012-08-10');
+        $isOldApi  = ($this->client->getApiVersion() < '2012-08-10');
 
         // Instantiate and configure the WriteRequestBatch object that will be deleting the expired sessions
         if ($delay) {
