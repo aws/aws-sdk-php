@@ -25,29 +25,32 @@ use Aws\DynamoDb\DynamoDbClient;
  */
 class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
 {
+    /**
+     * @var DynamoDbClient
+     */
     protected $client;
 
     public static function setUpBeforeClass()
     {
+        /** @var $client DynamoDbClient */
         $client = self::getServiceBuilder()->get('dynamodb', array('version' => '2011-12-05'));
+
         // Delete the table if it exists
         try {
             $client->deleteTable(array('TableName' => 'errors'));
+            $client->waitUntilTableNotExists(array('TableName' => 'errors'));
         } catch (\Exception $e) {}
-
-        // Wait until the table is deleted before beginning the examples
-        $client->waitUntilTableNotExists(array('TableName' => 'errors'));
     }
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('dynamodb', true);
+        $this->client = $this->getServiceBuilder()->get('dynamodb', array('version' => '2011-12-05'));
     }
 
     /**
      * Create a table with an optional RangeKeyElement
      *
-     * @example Aws\DynamoDb\DynamoDbClient::createTable
+     * @example Aws\DynamoDb\DynamoDbClient::createTable 2011-12-05
      */
     public function testCreateTable()
     {
@@ -89,15 +92,39 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * @depends testWaitUntilTableExists
+     * @example Aws\DynamoDb\DynamoDbClient::updateTable 2011-12-05
+     */
+    public function testUpdateTable()
+    {
+        $client = $this->client;
+        // @begin
+
+        // Update the provisioned throughput capacity of the table
+        $client->updateTable(array(
+            'TableName' => 'errors',
+            'ProvisionedThroughput' => array(
+                'ReadCapacityUnits'  => 15,
+                'WriteCapacityUnits' => 25
+            )
+        ));
+
+        // Wait until the table is active again after updating
+        $client->waitUntilTableExists(array(
+            'TableName' => 'errors'
+        ));
+    }
+
+    /**
      * Describe a table and grab data from the output
      *
-     * @depends testCreateTable
-     * @example Aws\DynamoDb\DynamoDbClient::describeTable
+     * @depends testUpdateTable
+     * @example Aws\DynamoDb\DynamoDbClient::describeTable 2011-12-05
      */
     public function testDescribeTable()
     {
         $client = $this->client;
-        $this->expectOutputString("0\n10\n");
+        $this->expectOutputString("0\n15\n");
         // @begin
 
         $result = $client->describeTable(array(
@@ -110,14 +137,14 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
 
         // Use the getPath() method to retrieve deeply nested array key values
         echo $result->getPath('Table/ProvisionedThroughput/ReadCapacityUnits') . "\n";
-        //> 10
+        //> 15
     }
 
     /**
      * List the first page of results of tables owned by your account
      *
      * @depends testDescribeTable
-     * @example Aws\DynamoDb\DynamoDbClient::listTable
+     * @example Aws\DynamoDb\DynamoDbClient::listTable 2011-12-05
      */
     public function testListTables()
     {
@@ -139,7 +166,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * List all of the tables owned by your account using a ListTables iterator
      *
      * @depends testListTables
-     * @example Aws\DynamoDb\DynamoDbClient::listTable
+     * @example Aws\DynamoDb\DynamoDbClient::listTable 2011-12-05
      */
     public function testListTablesWithIterator()
     {
@@ -160,8 +187,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Put an item in a table using the formatAttributes() client helper method
      *
      * @depends testListTablesWithIterator
-     * @example Aws\DynamoDb\DynamoDbClient::putItem
-     * @example Aws\DynamoDb\DynamoDbClient::formatAttributes
+     * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::formatAttributes 2011-12-05
      */
     public function testAddItem()
     {
@@ -192,7 +219,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Put an item in a table
      *
      * @depends testAddItem
-     * @example Aws\DynamoDb\DynamoDbClient::putItem
+     * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
      */
     public function testAddItemWithoutHelperMethod($time)
     {
@@ -217,7 +244,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Get an item from a table and interact with the response
      *
      * @depends testAddItemWithoutHelperMethod
-     * @example Aws\DynamoDb\DynamoDbClient::getItem
+     * @example Aws\DynamoDb\DynamoDbClient::getItem 2011-12-05
      */
     public function testGetItem($time)
     {
@@ -228,7 +255,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         $result = $client->getItem(array(
             'ConsistentRead' => true,
             'TableName' => 'errors',
-            'Key'       => array(
+            'Key' => array(
                 'HashKeyElement'  => array('N' => '1201'),
                 'RangeKeyElement' => array('N' => $time)
             )
@@ -249,7 +276,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Get all results of a Query operation using a Query iterator
      *
      * @depends testGetItem
-     * @example Aws\DynamoDb\DynamoDbClient::query
+     * @example Aws\DynamoDb\DynamoDbClient::query 2011-12-05
      */
     public function testQuery()
     {
@@ -283,7 +310,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Get all of the results of a Scan operation using a Scan iterator
      *
      * @depends testQuery
-     * @example Aws\DynamoDb\DynamoDbClient::scan
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2011-12-05
      */
     public function testScan()
     {
@@ -319,9 +346,113 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * @depends testScan
+     * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::getItem 2011-12-05
+     */
+    public function testBinaryType()
+    {
+        $client = $this->client;
+        // @begin
+
+        $data = '¡™£¢∞§¶•ªº';
+        $time = time();
+
+        $client->putItem(array(
+            'TableName' => 'errors',
+            'Item'      => array(
+                'id'    => array('N' => '3000'),
+                'time'  => array('N' => $time),
+                'error' => array('S' => 'Out of bounds'),
+                'data'  => array('B' => $data)
+            )
+        ));
+
+        $result = $client->getItem(array(
+            'ConsistentRead' => true,
+            'TableName' => 'errors',
+            'Key' => array(
+                'HashKeyElement'  => array('N' => '3000'),
+                'RangeKeyElement' => array('N' => $time)
+            )
+        ));
+
+        var_dump($result['Item']['data']['B'] == base64_decode($data));
+        //> bool(true)
+    }
+
+    /**
+     * Get batches of items
+     *
+     * @depends testBinaryType
+     * @example Aws\DynamoDb\DynamoDbClient::batchGetItem 2011-12-05
+     */
+    public function testBatchGetItem()
+    {
+        $client = $this->client;
+
+        $keyValues = array();
+        $scan = $client->getIterator('Scan', array('TableName' => 'errors'));
+        foreach ($scan as $item) {
+            $keyValues[] = array($item['id']['N'], $item['time']['N']);
+        }
+        // @begin
+
+        $tableName = 'errors';
+        $keys = array();
+
+        // Given that $keyValues contains a list of your hash and range keys: array(array(<hash>, <range>), ...)
+        foreach ($keyValues as $values) {
+            list($hashKeyValue, $rangeKeyValue) = $values;
+            $keys[] = array(
+                'HashKeyElement'  => array('N' => $hashKeyValue),
+                'RangeKeyElement' => array('N' => $rangeKeyValue)
+            );
+        }
+
+        // Get multiple items by key in a BatchGetItem request
+        $result = $client->batchGetItem(array(
+            'RequestItems' => array(
+                $tableName => array(
+                    'Keys'           => $keys,
+                    'ConsistentRead' => true
+                )
+            )
+        ));
+        $items = $result->getPath("Responses/{$tableName}");
+        // @end
+
+        $this->assertEquals(count($keys), count($items));
+    }
+
+    /**
+     * Delete an item
+     *
+     * @depends testBatchGetItem
+     * @example Aws\DynamoDb\DynamoDbClient::deleteItem 2011-12-05
+     */
+    public function testDeleteItem()
+    {
+        $client = $this->client;
+        // @begin
+
+        // Delete every key in the table
+        $scan = $client->getIterator('Scan', array('TableName' => 'errors'));
+        foreach ($scan as $item) {
+            $client->deleteItem(array(
+                'TableName' => 'errors',
+                'Key' => array(
+                    'HashKeyElement'  => array('N' => $item['id']['N']),
+                    'RangeKeyElement' => array('N' => $item['time']['N'])
+                )
+            ));
+        }
+    }
+
+    /**
      * Delete a table
      *
-     * @depends testScan
+     * @depends testDeleteItem
      * @example Aws\DynamoDb\DynamoDbClient::deleteTable
      */
     public function testDeleteTable()
