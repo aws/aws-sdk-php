@@ -101,6 +101,10 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'TableName',
+                            'key_pattern' => '/[a-zA-Z0-9_.-]+/',
+                        ),
                         'properties' => array(
                             'Keys' => array(
                                 'required' => true,
@@ -275,6 +279,10 @@ return array (
                         'type' => 'array',
                         'minItems' => 1,
                         'maxItems' => 25,
+                        'data' => array(
+                            'shape_name' => 'TableName',
+                            'key_pattern' => '/[a-zA-Z0-9_.-]+/',
+                        ),
                         'items' => array(
                             'name' => 'WriteRequest',
                             'description' => 'This structure is a Union of PutRequest and DeleteRequest. It can contain exactly one of PutRequest or DeleteRequest. Never Both. This is enforced in the code.',
@@ -290,6 +298,9 @@ return array (
                                             'additionalProperties' => array(
                                                 'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                                                 'type' => 'object',
+                                                'data' => array(
+                                                    'shape_name' => 'AttributeName',
+                                                ),
                                                 'properties' => array(
                                                     'S' => array(
                                                         'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
@@ -728,6 +739,9 @@ return array (
                     'additionalProperties' => array(
                         'description' => 'Allows you to provide an attribute name, and whether or not Amazon DynamoDB should check to see if the attribute value already exists; or if the attribute value exists and has a particular value before changing it.',
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'description' => 'Specify whether or not a value already exists and has a specific content for the attribute name-value pair.',
@@ -1157,6 +1171,9 @@ return array (
                     'additionalProperties' => array(
                         'description' => 'AttributeValue can be String, Number, Binary, StringSet, NumberSet, BinarySet.',
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'description' => 'Strings are Unicode with UTF-8 binary encoding. The maximum size is limited by the size of the primary key (1024 bytes as a range part of a key or 2048 bytes as a single part hash key) or the item size (64k).',
@@ -1209,6 +1226,9 @@ return array (
                     'additionalProperties' => array(
                         'description' => 'Allows you to provide an attribute name, and whether or not Amazon DynamoDB should check to see if the attribute value already exists; or if the attribute value exists and has a particular value before changing it.',
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'description' => 'Specify whether or not a value already exists and has a specific content for the attribute name-value pair.',
@@ -1666,6 +1686,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'String',
+                        ),
                         'properties' => array(
                             'AttributeValueList' => array(
                                 'type' => 'array',
@@ -2003,6 +2026,9 @@ return array (
                     'additionalProperties' => array(
                         'description' => 'Specifies the attribute to update and how to perform the update. Possible values: PUT (default), ADD or DELETE.',
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'type' => 'object',
@@ -2068,6 +2094,9 @@ return array (
                     'additionalProperties' => array(
                         'description' => 'Allows you to provide an attribute name, and whether or not Amazon DynamoDB should check to see if the attribute value already exists; or if the attribute value exists and has a particular value before changing it.',
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'description' => 'Specify whether or not a value already exists and has a specific content for the attribute name-value pair.',
