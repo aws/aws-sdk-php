@@ -419,7 +419,9 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         $tableName = 'errors';
         $keys = array();
 
-        // Given that $keyValues contains a list of your hash and range keys: array(array(<hash>, <range>), ...)
+        // Given that $keyValues contains a list of your hash and range keys:
+        //     array(array(<hash>, <range>), ...)
+        // Build the array for the "Keys" parameter
         foreach ($keyValues as $values) {
             list($hashKeyValue, $rangeKeyValue) = $values;
             $keys[] = array(

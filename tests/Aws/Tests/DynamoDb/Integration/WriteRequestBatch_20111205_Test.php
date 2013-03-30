@@ -126,7 +126,7 @@ class WriteRequestBatch_20111205_Test extends \Aws\Tests\IntegrationTestCase
             $deleteBatch->add(new DeleteRequest($key, $tableName));
         }
         $deleteBatch->flush();
-        //@end
+        // @end
 
         self::log("Assert that all the items have been deleted from the table");
         $scanner = $client->getIterator('Scan', array('TableName' => $tableName));
