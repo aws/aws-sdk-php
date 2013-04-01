@@ -83,8 +83,6 @@ class PostObject extends Collection
      * @param S3Client $client
      * @param $bucket
      * @param array $options
-     *
-     * @throws InvalidArgumentException if the bucket name is invalid
      */
     public function __construct(S3Client $client, $bucket, array $options = array())
     {
@@ -208,16 +206,10 @@ class PostObject extends Collection
      * @param string $bucket
      *
      * @return PostObject
-     *
-     * @throws InvalidArgumentException
      */
     public function setBucket($bucket)
     {
-        if ($this->client->isValidBucketName($bucket)) {
-            $this->bucket = $bucket;
-        } else {
-            throw new InvalidArgumentException('The bucket name provided was invalid.');
-        }
+        $this->bucket = $bucket;
 
         return $this;
     }

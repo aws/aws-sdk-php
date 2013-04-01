@@ -146,12 +146,4 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($client2, $postObject->getClient());
         $this->assertSame('bar', $postObject->getBucket());
     }
-
-    /**
-     * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     */
-    public function testSetInvalidBucketFails()
-    {
-        $postObject = new PostObject($this->client, '.');
-    }
 }

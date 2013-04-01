@@ -273,7 +273,7 @@ class S3Client extends AbstractClient
             // Cannot look like an IP address
             || preg_match('/^\d+\.\d+\.\d+\.\d+$/', $bucket)
             // Cannot include special characters, must start and end with lower alnum
-            || !preg_match('/^[a-z0-9]([a-z0-9\\-.]*[a-z0-9])?$/', $bucket)) {
+            || !preg_match('/^[a-z0-9][a-z0-9\-.]*[a-z0-9]?$/', $bucket)) {
             return false;
         }
 
