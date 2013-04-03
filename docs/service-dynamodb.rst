@@ -3,13 +3,12 @@
 Creating tables
 ---------------
 
-We first need to create a table that can be used to store items. While Amazon DynamoDB's tables do not use a fixed
-schema, you do need to create a schema for the table’s hash key element, and the optional range key element. This is
-explained in greater detail in Amazon DynamoDB's
+You must first create a table that can be used to store items. Even though Amazon DynamoDB tables do not use a fixed
+schema, you do need to create a schema for the table's keys. This is explained in greater detail in Amazon DynamoDB's
 `Data Model documentation <http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/DataModel.html>`_. You
-will also need to specify the amount of
-`provisioned throughput <http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_
-that should be made available to the table.
+will also need to specify the amount of `provisioned throughput
+<http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_ that should
+be made available to the table.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testCreateTable
 
@@ -18,8 +17,9 @@ table until it becomes ``ACTIVE``.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testWaitUntilTableExists
 
-A full list of the parameters available to the ``createTable()`` operation can be found in the
-`API documentation <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_createTable>`_.
+A full list of the parameters available to the ``createTable()`` operation can be found in the `API documentation
+<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_createTable>`_. For more
+information about using Local Secondary Indexes, please see the :ref:`dynamodb-lsi` section of this guide.
 
 Updating a table
 ----------------
@@ -80,6 +80,14 @@ item. Alternatively, you can provide the item attributes without using the helpe
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testAddItemWithoutHelperMethod
 
+You can also add items in batches of up to 25 items using the `BatchWriteItem()
+<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchWriteItem>`_
+method. Please see the example as shown in the :ref:`dynamodb-lsi` section of this guide.
+
+There is also a higher-level abstraction in the SDK over the ``BatchWriteItem`` operation called the
+``WriteRequestBatch`` that handles queuing of write requests and retrying of unprocessed items. Please see the
+:ref:`dynamodb-wrb` section of this guide for more information.
+
 Retrieving items
 ----------------
 
@@ -95,18 +103,6 @@ You can also retrieve items in batches of up to 100 using the `BatchGetItem()
 <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchGetItem>`_ method.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testBatchGetItem
-
-Retrieving items
-----------------
-
-Let’s check if the item was added correctly using the
-`getItem() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_getItem>`_
-method of the client. Because Amazon DynamoDB works under an 'eventual consistency' model, we need to specify that we
-are performing a
-`consistent read <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/APISummary.html#DataReadConsistency>`_
-operation.
-
-.. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testGetItem
 
 Query and scan
 --------------
@@ -139,6 +135,18 @@ minutes that contain the word "overflow":
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testScan
 
+Deleting items
+--------------
+
+To delete an item you must use the `DeleteItem()
+<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchGetItem>`_ method.
+The following example scans through a table and deletes every item one by one.
+
+.. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testDeleteItem
+
+You can also delete items in batches of up to 25 items using the `BatchWriteItem()
+<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchWriteItem>`_ method.
+
 Deleting a table
 ----------------
 
@@ -150,6 +158,37 @@ Now that you've taken a quick tour of the PHP client for Amazon DynamoDB, you wi
 resources you created.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testDeleteTable
+
+.. _dynamodb-lsi:
+
+Local secondary indexes
+-----------------------
+
+Local secondary indexes (LSI) pair your table's leading hash key with an alternate range key, in order to enable
+specific queries to run more quickly than they would using a standard composite primary key. The following code samples
+will show how to create an *Orders* table with a hash key of *CustomerId* and a range key of *OrderId*, but also include
+a local secondary index on the *OrderDate* attribute so that searching the table based by *OrderDate* can be done with a
+``Query`` operation instead of a ``Scan`` operation.
+
+First you must create the table with the local secondary index. Note that the attributes referenced in the key schema
+for the table *and* the index must all be declared in the ``AttributeDefinitions`` parameter. When you create a local
+secondary index, you can specify which attributes get "projected" into the index using the ``Projection`` parameter.
+
+.. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testCreateTableWithLocalSecondaryIndexes
+
+Next you must add some items to the table that you will be querying. There's nothing in the ``BatchWriteItem`` operation
+that is specific to the LSI features, but since there is not an example of this operation elsewhere in the guide, this
+seems like a good place to show how to use this operation.
+
+.. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testBatchWriteItem
+
+When you query the table with an LSI, you must specify the name of the index using the ``IndexName`` parameter. The
+attributes that are returned will depend on the value of the ``Select`` parameter and on what the table is projecting
+to the index. In this case ``'Select' => 'COUNT'`` has been specified, so only the count of the items will be returned.
+
+.. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testQueryWithLocalSecondaryIndexes
+
+.. _dynamodb-wrb:
 
 Using the WriteRequestBatch
 ---------------------------

@@ -3,13 +3,12 @@
 Creating tables
 ---------------
 
-We first need to create a table that can be used to store items. While Amazon DynamoDB's tables do not use a fixed
-schema, you do need to create a schema for the table’s hash key element, and the optional range key element. This is
-explained in greater detail in Amazon DynamoDB's
+You must first create a table that can be used to store items. Even though Amazon DynamoDB tables do not use a fixed
+schema, you do need to create a schema for the table's keys. This is explained in greater detail in Amazon DynamoDB's
 `Data Model documentation <http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/DataModel.html>`_. You
-will also need to specify the amount of
-`provisioned throughput <http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_
-that should be made available to the table.
+will also need to specify the amount of `provisioned throughput
+<http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_ that should
+be made available to the table.
 
 .. example:: DynamoDb/Integration/DynamoDb_20111205_Test.php testCreateTable
 

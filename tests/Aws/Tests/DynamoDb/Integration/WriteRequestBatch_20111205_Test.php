@@ -80,7 +80,7 @@ class WriteRequestBatch_20111205_Test extends \Aws\Tests\IntegrationTestCase
 
         self::log("Test writing items in batches using WriteRequestBatch.");
         // @begin
-        $tableName = 'batch-write-test';
+        $tableName = 'batch-write-test'; // This table has a HashKey named "id"
         $itemIds = array();
 
         // Put 55 items into the table
@@ -88,8 +88,8 @@ class WriteRequestBatch_20111205_Test extends \Aws\Tests\IntegrationTestCase
         for ($i = 0; $i < 55; $i++) {
             $itemIds[] = $itemId = uniqid();
             $item = Item::fromArray(array(
-                'id'   => $itemId,
-                'time' => time(),
+                'id'        => $itemId,
+                'timestamp' => time(),
             ));
             $putBatch->add(new PutRequest($item, $tableName));
         }
@@ -119,7 +119,7 @@ class WriteRequestBatch_20111205_Test extends \Aws\Tests\IntegrationTestCase
         self::log("Test deleting items in batches using WriteRequestBatch.");
         // @begin
 
-        // Remove 55 items from the table
+        // Remove items from the table
         $deleteBatch = WriteRequestBatch::factory($client);
         foreach ($itemIds as $itemId) {
             $key = array('HashKeyElement' => array('S' => $itemId));

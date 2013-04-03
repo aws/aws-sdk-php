@@ -33,10 +33,16 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         /** @var $client DynamoDbClient */
         $client = self::getServiceBuilder()->get('dynamodb', array('version' => '2012-08-10'));
 
-        // Delete the table if it exists
+        // Delete the errors table if it exists
         try {
             $client->deleteTable(array('TableName' => 'errors'));
             $client->waitUntilTableNotExists(array('TableName' => 'errors'));
+        } catch (\Exception $e) {}
+
+        // Delete the Orders table if it exists
+        try {
+            $client->deleteTable(array('TableName' => 'Orders'));
+            $client->waitUntilTableNotExists(array('TableName' => 'Orders'));
         } catch (\Exception $e) {}
     }
 
@@ -395,8 +401,15 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
             )
         ));
 
-        var_dump($result['Item']['data']['B'] == base64_decode($data));
-        //> bool(true)
+        if (base64_decode($result['Item']['data']['B']) == $data) {
+            echo 'Data was stored and retrieved correctly.';
+        } else {
+            echo 'Uh oh...';
+        }
+        //> Data was stored and retrieved correctly.
+
+        // @end
+        $this->assertEquals('Data was stored and retrieved correctly.', $this->getActualOutput());
     }
 
     /**
@@ -461,7 +474,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
             $client->deleteItem(array(
                 'TableName' => 'errors',
                 'Key' => array(
-                    'id'  => array('N' => $item['id']['N']),
+                    'id'   => array('N' => $item['id']['N']),
                     'time' => array('N' => $item['time']['N'])
                 )
             ));
@@ -469,7 +482,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * Delete an item
+     * Delete a table
      *
      * @depends testBatchGetItem
      * @example Aws\DynamoDb\DynamoDbClient::deleteTable 2012-08-10
@@ -481,6 +494,156 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
 
         $client->deleteTable(array(
             'TableName' => 'errors'
+        ));
+    }
+
+    /**
+     * Create a table with a local secondary index
+     *
+     * @example Aws\DynamoDb\DynamoDbClient::createTable 2012-08-10
+     */
+    public function testCreateTableWithLocalSecondaryIndexes()
+    {
+        $client = $this->client;
+        // @begin
+
+        // Create a "Orders" table
+        $client->createTable(array(
+            'TableName' => 'Orders',
+            'AttributeDefinitions' => array(
+                array('AttributeName' => 'CustomerId', 'AttributeType' => 'N'),
+                array('AttributeName' => 'OrderId',    'AttributeType' => 'N'),
+                array('AttributeName' => 'OrderDate',  'AttributeType' => 'N'),
+            ),
+            'KeySchema' => array(
+                array('AttributeName' => 'CustomerId', 'KeyType' => 'HASH'),
+                array('AttributeName' => 'OrderId',    'KeyType' => 'RANGE'),
+            ),
+            'LocalSecondaryIndexes' => array(
+                array(
+                    'IndexName' => 'OrderDateIndex',
+                    'KeySchema' => array(
+                        array('AttributeName' => 'CustomerId', 'KeyType' => 'HASH'),
+                        array('AttributeName' => 'OrderDate',  'KeyType' => 'RANGE'),
+                    ),
+                    'Projection' => array(
+                        'ProjectionType' => 'KEYS_ONLY',
+                    ),
+                ),
+            ),
+            'ProvisionedThroughput' => array(
+                'ReadCapacityUnits'  => 10,
+                'WriteCapacityUnits' => 20
+            )
+        ));
+
+        $client->waitUntilTableExists(array('TableName' => 'Orders'));
+    }
+
+    /**
+     * Use BatchWriteItem to put multiple items at once
+     *
+     * @depends testCreateTableWithLocalSecondaryIndexes
+     * @example Aws\DynamoDb\DynamoDbClient::batchWriteItem 2012-08-10
+     */
+    public function testBatchWriteItem()
+    {
+        $client = $this->client;
+        // @begin
+
+        $result = $client->batchWriteItem(array(
+            'RequestItems' => array(
+                'Orders' => array(
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 1041),
+                                'OrderId'    => array('N' => 6),
+                                'OrderDate'  => array('N' => strtotime('-5 days')),
+                                'ItemId'     => array('N' => 25336)
+                            )
+                        )
+                    ),
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 941),
+                                'OrderId'    => array('N' => 8),
+                                'OrderDate'  => array('N' => strtotime('-3 days')),
+                                'ItemId'     => array('N' => 15596)
+                            )
+                        )
+                    ),
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 941),
+                                'OrderId'    => array('N' => 2),
+                                'OrderDate'  => array('N' => strtotime('-12 days')),
+                                'ItemId'     => array('N' => 38449)
+                            )
+                        )
+                    ),
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 941),
+                                'OrderId'    => array('N' => 3),
+                                'OrderDate'  => array('N' => strtotime('-1 days')),
+                                'ItemId'     => array('N' => 25336)
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+    }
+
+    /**
+     * Get results of a Query operation with a local secondary index on the table
+     *
+     * @depends testBatchWriteItem
+     * @example Aws\DynamoDb\DynamoDbClient::query 2012-08-10
+     */
+    public function testQueryWithLocalSecondaryIndexes()
+    {
+        $client = $this->client;
+        // @begin
+
+        // Find the number of orders made by customer 941 in the last 10 days
+        $result = $client->query(array(
+            'TableName'     => 'Orders',
+            'IndexName'     => 'OrderDateIndex',
+            'Select'        => 'COUNT',
+            'KeyConditions' => array(
+                'CustomerId' => array(
+                    'AttributeValueList' => array(
+                        array('N' => '941')
+                    ),
+                    'ComparisonOperator' => 'EQ'
+                ),
+                'OrderDate' => array(
+                    'AttributeValueList' => array(
+                        array('N' => strtotime("-10 days"))
+                    ),
+                    'ComparisonOperator' => 'GE'
+                )
+            )
+        ));
+
+        $numOrders = $result['Count'];
+
+        // @end
+        $this->assertEquals(2, $numOrders);
+    }
+
+    /**
+     * @depends testQueryWithLocalSecondaryIndexes
+     */
+    public function testDeleteIndexedTable()
+    {
+       $this->client->deleteTable(array(
+            'TableName' => 'Orders'
         ));
     }
 }

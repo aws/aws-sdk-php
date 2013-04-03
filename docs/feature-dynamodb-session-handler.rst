@@ -122,13 +122,13 @@ should make sure to understand what the defaults are.
 ---------------------------- -------------------------------------------------------------------------------------------
 ``locking_strategy``         The strategy used for doing session locking. By default the handler uses the
                              ``NullLockingStrategy``, which means that session locking is **not** enabled (see the
-                             :ref:`session-locking` section for more information). Valid values for this option include
-                             null, 'null', 'pessemistic', or an instance of ``NullLockingStrategy`` or
+                             :ref:`ddbsh-session-locking` section for more information). Valid values for this option
+                             include null, 'null', 'pessemistic', or an instance of ``NullLockingStrategy`` or
                              ``PessimisticLockingStrategy``.
 ---------------------------- -------------------------------------------------------------------------------------------
 ``automatic_gc``             Whether or not to use PHP's session auto garbage collection. This defaults to the value of
                              ``(bool) ini_get('session.gc_probability')``, but the recommended value is ``false``. (see
-                             the :ref:`garbage-collection` section for more information).
+                             the :ref:`ddbsh-garbage-collection` section for more information).
 ---------------------------- -------------------------------------------------------------------------------------------
 ``gc_batch_size``            The batch size used for removing expired sessions during garbage collection. This defaults
                              to ``25``, which is the maximum size of a single ``BatchWriteItem`` operation. This value
@@ -211,7 +211,7 @@ your DynamoDB table for each of the session functions.
 |                                        | * 1 write operation **per expired item** to delete it.                      |
 +----------------------------------------+-----------------------------------------------------------------------------+
 
-.. _session-locking:
+.. _ddbsh-session-locking:
 
 Session Locking
 ---------------
@@ -231,7 +231,7 @@ locking, you should use the ``PessimisticLockingStrategy``, which can be specifi
         'locking_strategy' => 'pessimistic',
     ));
 
-.. _garbage-collection:
+.. _ddbsh-garbage-collection:
 
 Garbage Collection
 ------------------
