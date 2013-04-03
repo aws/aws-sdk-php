@@ -100,6 +100,10 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'TableName',
+                            'key_pattern' => '/[a-zA-Z0-9_.-]+/',
+                        ),
                         'properties' => array(
                             'Keys' => array(
                                 'required' => true,
@@ -111,6 +115,9 @@ return array (
                                     'type' => 'object',
                                     'additionalProperties' => array(
                                         'type' => 'object',
+                                        'data' => array(
+                                            'shape_name' => 'AttributeName',
+                                        ),
                                         'properties' => array(
                                             'S' => array(
                                                 'type' => 'string',
@@ -218,6 +225,10 @@ return array (
                         'type' => 'array',
                         'minItems' => 1,
                         'maxItems' => 25,
+                        'data' => array(
+                            'shape_name' => 'TableName',
+                            'key_pattern' => '/[a-zA-Z0-9_.-]+/',
+                        ),
                         'items' => array(
                             'name' => 'WriteRequest',
                             'type' => 'object',
@@ -230,6 +241,9 @@ return array (
                                             'type' => 'object',
                                             'additionalProperties' => array(
                                                 'type' => 'object',
+                                                'data' => array(
+                                                    'shape_name' => 'AttributeName',
+                                                ),
                                                 'properties' => array(
                                                     'S' => array(
                                                         'type' => 'string',
@@ -280,6 +294,9 @@ return array (
                                             'type' => 'object',
                                             'additionalProperties' => array(
                                                 'type' => 'object',
+                                                'data' => array(
+                                                    'shape_name' => 'AttributeName',
+                                                ),
                                                 'properties' => array(
                                                     'S' => array(
                                                         'type' => 'string',
@@ -572,6 +589,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'type' => 'string',
@@ -617,6 +637,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'type' => 'object',
@@ -831,6 +854,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'type' => 'string',
@@ -982,6 +1008,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'type' => 'string',
@@ -1027,6 +1056,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'type' => 'object',
@@ -1191,6 +1223,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'AttributeValueList' => array(
                                 'type' => 'array',
@@ -1269,6 +1304,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'type' => 'string',
@@ -1388,6 +1426,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'AttributeValueList' => array(
                                 'type' => 'array',
@@ -1461,6 +1502,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'type' => 'string',
@@ -1557,6 +1601,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'S' => array(
                                 'type' => 'string',
@@ -1598,11 +1645,13 @@ return array (
                     ),
                 ),
                 'AttributeUpdates' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'type' => 'object',
@@ -1661,6 +1710,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
                         'properties' => array(
                             'Value' => array(
                                 'type' => 'object',
