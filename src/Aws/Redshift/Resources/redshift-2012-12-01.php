@@ -29,6 +29,11 @@ return array (
             'https' => true,
             'hostname' => 'redshift.us-east-1.amazonaws.com',
         ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'redshift.us-west-2.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'AuthorizeClusterSecurityGroupIngress' => array(
@@ -37,7 +42,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSecurityGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Adds an inbound (ingress) rule to an security group. Depending on whether the application accessing your cluster is running on the Internet or an EC2 instance, you can authorize inbound access to either a Classless Interdomain Routing (CIDR) IP address range or an EC2 security group. You can add as many as 20 ingress rules to an security group.',
+            'summary' => 'Adds an inbound (ingress) rule to an Amazon Redshift security group. Depending on whether the application accessing your cluster is running on the Internet or an EC2 instance, you can authorize inbound access to either a Classless Interdomain Routing (CIDR) IP address range or an EC2 security group. You can add as many as 20 ingress rules to an Amazon Redshift security group.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -56,12 +61,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'CIDRIP' => array(
-                    'description' => 'The IP range to be added the security group.',
+                    'description' => 'The IP range to be added the Amazon Redshift security group.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'EC2SecurityGroupName' => array(
-                    'description' => 'The EC2 security group to be added the security group.',
+                    'description' => 'The EC2 security group to be added the Amazon Redshift security group.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -138,7 +143,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
-            'summary' => 'Creates a new cluster. To create the cluster in virtual private cloud (VPC), you must provide cluster subnet group name. If you don\'t provide a cluster subnet group name or the cluster security group parameter, Amazon Redshift creates a non-VPC cluster, it associates the default cluster security group with the cluster. &clustersMoreInfo;.',
+            'summary' => 'Creates a new cluster. To create the cluster in virtual private cloud (VPC), you must provide cluster subnet group name. If you don\'t provide a cluster subnet group name or the cluster security group parameter, Amazon Redshift creates a non-VPC cluster, it associates the default cluster security group with the cluster. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide .',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -157,7 +162,7 @@ return array (
                 ),
                 'ClusterIdentifier' => array(
                     'required' => true,
-                    'description' => 'A unique identifier for the cluster. You use this identifier to refer to the cluster for any subsequent cluster operations such as deleting or modifying. The identifier also appears in the console.',
+                    'description' => 'A unique identifier for the cluster. You use this identifier to refer to the cluster for any subsequent cluster operations such as deleting or modifying. The identifier also appears in the Amazon Redshift console.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -195,7 +200,7 @@ return array (
                     ),
                 ),
                 'VpcSecurityGroupIds' => array(
-                    'description' => 'A list of Virtual Private Cloud (VPC) security groups to associate with the cluster.',
+                    'description' => 'A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'VpcSecurityGroupIds.member',
@@ -205,12 +210,12 @@ return array (
                     ),
                 ),
                 'ClusterSubnetGroupName' => array(
-                    'description' => 'A cluster subnet group to be associated with this cluster.',
+                    'description' => 'The name of a cluster subnet group to be associated with this cluster.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'AvailabilityZone' => array(
-                    'description' => 'The EC2 Availability Zone (AZ) in which you want to provision the cluster. For example, if you have several EC2 instances running in a specific Availability Zone, then you might want the cluster to be provisioned in the same zone in order to decrease network latency.',
+                    'description' => 'The EC2 Availability Zone (AZ) in which you want Amazon Redshift to provision the cluster. For example, if you have several EC2 instances running in a specific Availability Zone, then you might want the cluster to be provisioned in the same zone in order to decrease network latency.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -235,12 +240,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'ClusterVersion' => array(
-                    'description' => 'The version of the engine software that you want to deploy on the cluster.',
+                    'description' => 'The version of the Amazon Redshift engine software that you want to deploy on the cluster.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'AllowVersionUpgrade' => array(
-                    'description' => 'If true, upgrades can be applied during the maintenance window to the engine that is running on the cluster.',
+                    'description' => 'If true, upgrades can be applied during the maintenance window to the Amazon Redshift engine that is running on the cluster.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -252,6 +257,12 @@ return array (
                 ),
                 'PubliclyAccessible' => array(
                     'description' => 'If true, the cluster can be accessed from a public network.',
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'Encrypted' => array(
+                    'description' => 'If true, the data in cluster is encrypted at rest.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -293,7 +304,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterParameterGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Creates an parameter group.',
+            'summary' => 'Creates an Amazon Redshift parameter group.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -313,7 +324,7 @@ return array (
                 ),
                 'ParameterGroupFamily' => array(
                     'required' => true,
-                    'description' => 'The engine version to which the cluster parameter group applies. The cluster engine version determines the set of parameters.',
+                    'description' => 'The Amazon Redshift engine version to which the cluster parameter group applies. The cluster engine version determines the set of parameters.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -339,7 +350,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSecurityGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Creates a new security group. You use security groups to control access to non-VPC clusters.',
+            'summary' => 'Creates a new Amazon Redshift security group. You use security groups to control access to non-VPC clusters.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -353,7 +364,7 @@ return array (
                 ),
                 'ClusterSecurityGroupName' => array(
                     'required' => true,
-                    'description' => 'The name for the security group. stores the value as a lowercase string.',
+                    'description' => 'The name for the security group. Amazon Redshift stores the value as a lowercase string.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -425,7 +436,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSubnetGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Creates a new subnet group. You must provide a list of one or more subnets in your existing Amazon Virtual Private Cloud (Amazon VPC) when creating subnet group.',
+            'summary' => 'Creates a new Amazon Redshift subnet group. You must provide a list of one or more subnets in your existing Amazon Virtual Private Cloud (Amazon VPC) when creating Amazon Redshift subnet group.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -439,7 +450,7 @@ return array (
                 ),
                 'ClusterSubnetGroupName' => array(
                     'required' => true,
-                    'description' => 'The name for the subnet group. stores the value as a lowercase string.',
+                    'description' => 'The name for the subnet group. Amazon Redshift stores the value as a lowercase string.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -482,7 +493,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
-            'summary' => 'Deletes a previously provisioned cluster. A successful response from the web service indicates that the request was received correctly. If a final cluster snapshot is requested the status of the cluster will be "final-snapshot" while the snapshot is being taken, then it\'s "deleting" once Amazon Redshift begins deleting the cluster. Use DescribeClusters to monitor the status of the deletion. The delete operation cannot be canceled or reverted once submitted. &clustersMoreInfo;.',
+            'summary' => 'Deletes a previously provisioned cluster. A successful response from the web service indicates that the request was received correctly. If a final cluster snapshot is requested the status of the cluster will be "final-snapshot" while the snapshot is being taken, then it\'s "deleting" once Amazon Redshift begins deleting the cluster. Use DescribeClusters to monitor the status of the deletion. The delete operation cannot be canceled or reverted once submitted. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide .',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -501,7 +512,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'SkipFinalClusterSnapshot' => array(
-                    'description' => 'Determines whether a final snapshot of the cluster is created before deletes the cluster. If true, a final cluster snapshot is not created. If false, a final cluster snapshot is created before the cluster is deleted.',
+                    'description' => 'Determines whether a final snapshot of the cluster is created before Amazon Redshift deletes the cluster. If true, a final cluster snapshot is not created. If false, a final cluster snapshot is created before the cluster is deleted.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -533,7 +544,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'Deletes a specified parameter group. You cannot delete a parameter group if it is associated with a cluster.',
+            'summary' => 'Deletes a specified Amazon Redshift parameter group. You cannot delete a parameter group if it is associated with a cluster.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -567,7 +578,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'Deletes an security group.',
+            'summary' => 'Deletes an Amazon Redshift security group.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -672,7 +683,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterParameterGroupsMessage',
             'responseType' => 'model',
-            'summary' => 'Returns a list of parameter groups, including parameter groups you created and the default parameter group. For each parameter group, the response includes the parameter group name, description, and parameter group family name. You can optionally specify a name to retrieve the description of a specific parameter group.',
+            'summary' => 'Returns a list of Amazon Redshift parameter groups, including parameter groups you created and the default parameter group. For each parameter group, the response includes the parameter group name, description, and parameter group family name. You can optionally specify a name to retrieve the description of a specific parameter group.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -712,7 +723,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterParameterGroupDetails',
             'responseType' => 'model',
-            'summary' => 'Returns a detailed list of parameters contained within the specified parameter group. For each parameter the response includes information such as parameter name, description, data type, value, whether the parameter value is modifiable, and so on.',
+            'summary' => 'Returns a detailed list of parameters contained within the specified Amazon Redshift parameter group. For each parameter the response includes information such as parameter name, description, data type, value, whether the parameter value is modifiable, and so on.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -758,7 +769,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSecurityGroupMessage',
             'responseType' => 'model',
-            'summary' => 'Returns information about security groups. If the name of a security group is specified, the response will contain only information about only that security group.',
+            'summary' => 'Returns information about Amazon Redshift security groups. If the name of a security group is specified, the response will contain only information about only that security group.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -868,7 +879,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSubnetGroupMessage',
             'responseType' => 'model',
-            'summary' => 'Returns one or ore cluster subnet group objects, which contain metadata about your cluster subnet groups. By default, this operation returns information about all cluster subnet groups that are defined in you AWS account.',
+            'summary' => 'Returns one or more cluster subnet group objects, which contain metadata about your cluster subnet groups. By default, this operation returns information about all cluster subnet groups that are defined in you AWS account.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -891,7 +902,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
-                    'description' => 'An optional marker returned by a previous DescribeClusterSubnetGroups request to indicate the first cluster subnet group that the request will return.',
+                    'description' => 'An optional marker returned by a previous DescribeClusterSubnetGroups request to indicate the first cluster subnet group that the current request will return.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -908,7 +919,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterVersionsMessage',
             'responseType' => 'model',
-            'summary' => 'Returns descriptions of the available cluster versions. You can call this operation even before creating any clusters to learn more about the versions. &clustersMoreInfo;',
+            'summary' => 'Returns descriptions of the available Amazon Redshift cluster versions. You can call this operation even before creating any clusters to learn more about the Amazon Redshift versions. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -948,7 +959,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClustersMessage',
             'responseType' => 'model',
-            'summary' => 'Returns properties of provisioned clusters including general cluster properties, cluster database properties, maintenance and backup properties, and security and access properties. This operation supports pagination. &clustersMoreInfo;.',
+            'summary' => 'Returns properties of provisioned clusters including general cluster properties, cluster database properties, maintenance and backup properties, and security and access properties. This operation supports pagination. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide .',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -988,7 +999,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DefaultClusterParametersWrapper',
             'responseType' => 'model',
-            'summary' => 'Returns a list of parameter settings for the the specified parameter group family.',
+            'summary' => 'Returns a list of parameter settings for the specified parameter group family.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1073,7 +1084,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Duration' => array(
-                    'description' => 'The number of minutes prior to the time of the request for which to retrieve events. For example, if the request is sent at 18:00 and you specify a druration of 60, then only events which have occurred after 17:00 will be returned.',
+                    'description' => 'The number of minutes prior to the time of the request for which to retrieve events. For example, if the request is sent at 18:00 and you specify a duration of 60, then only events which have occurred after 17:00 will be returned.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1095,7 +1106,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'OrderableClusterOptionsMessage',
             'responseType' => 'model',
-            'summary' => 'Returns a list of orderable cluster options. Before you create a new cluster you can use this operation to find what options are available, such as the EC2 Availability Zones (AZ) in the specific AWS region that you can specify, and the node types you can request. The node types differ by available storage, memory, CPU and price. With the cost involved you might want to obtain a list of cluster options in the specific region and specify values when creating a cluster. &clustersMoreInfo;',
+            'summary' => 'Returns a list of orderable cluster options. Before you create a new cluster you can use this operation to find what options are available, such as the EC2 Availability Zones (AZ) in the specific AWS region that you can specify, and the node types you can request. The node types differ by available storage, memory, CPU and price. With the cost involved you might want to obtain a list of cluster options in the specific region and specify values when creating a cluster. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1152,16 +1163,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'NodeType' => array(
-                    'description' => 'The node type you can purchase. &nodeTypeInfo;',
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'Duration' => array(
-                    'description' => 'The duration, in seconds, for which the offering will reserve the node.',
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
                 'MaxRecords' => array(
                     'description' => 'The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results may be retrieved.',
                     'type' => 'numeric',
@@ -1198,22 +1199,7 @@ return array (
                     'default' => '2012-12-01',
                 ),
                 'ReservedNodeId' => array(
-                    'description' => 'Customer specified identifier for the node reservation.',
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'ReservedNodeOfferingId' => array(
-                    'description' => 'The reserved node offering identifier.',
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'NodeType' => array(
-                    'description' => 'The node type reserved.',
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'Duration' => array(
-                    'description' => 'Duration, in seconds, for which the node is reserved.',
+                    'description' => 'Identifier for the node reservation.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1240,7 +1226,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ResizeProgressMessage',
             'responseType' => 'model',
-            'summary' => 'Returns information about a resize operation for the specified cluster. A resize operation can be requested using ModifyCluster.',
+            'summary' => 'Returns information about the last resize operation for the specified cluster. If no resize operation has ever been initiated for the specified cluster, a HTTP 404 error is returned. If a resize operation was initiated and completed, the status of the resize remains as SUCCEEDED until the next resize.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1254,7 +1240,7 @@ return array (
                 ),
                 'ClusterIdentifier' => array(
                     'required' => true,
-                    'description' => 'The unique identifier of a cluster whose resize progress you are requesting. This parameter isn\'t case sensitive.',
+                    'description' => 'The unique identifier of a cluster whose resize progress you are requesting. This parameter isn\'t case-sensitive.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1274,7 +1260,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
-            'summary' => 'Modifies the settings for a cluster. For example, you can add another security or parameter group, update the preferred maintenance window, or change the master user password. Resetting a cluster password or modifying the security groups associated with a cluster do not need a reboot. However, modifying parameter group requires a reboot for parameters to take effect. &clustersMoreInfo;',
+            'summary' => 'Modifies the settings for a cluster. For example, you can add another security or parameter group, update the preferred maintenance window, or change the master user password. Resetting a cluster password or modifying the security groups associated with a cluster do not need a reboot. However, modifying parameter group requires a reboot for parameters to take effect. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1298,7 +1284,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'NodeType' => array(
-                    'description' => 'The new node type of the cluster. If you specify a new node type you must also specify the number of nodes parameter also.',
+                    'description' => 'The new node type of the cluster. If you specify a new node type, you must also specify the number of nodes parameter also.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1318,7 +1304,7 @@ return array (
                     ),
                 ),
                 'VpcSecurityGroupIds' => array(
-                    'description' => 'A list of Virtual Private Cloud (VPC) security groups to associate with the cluster.',
+                    'description' => 'A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'VpcSecurityGroupIds.member',
@@ -1473,7 +1459,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSubnetGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Modifies a cluster subnet group to include the specified list of VPC subnets. The operation replaces the entire list of existing subnet IDs in the group.',
+            'summary' => 'Modifies a cluster subnet group to include the specified list of VPC subnets. The operation replaces the existing list of subnets with the new list of subnets.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1487,12 +1473,12 @@ return array (
                 ),
                 'ClusterSubnetGroupName' => array(
                     'required' => true,
-                    'description' => 'The name of the parameter group to be modified.',
+                    'description' => 'The name of the subnet group to be modified.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'Description' => array(
-                    'description' => 'The name of the parameter group to be modified.',
+                    'description' => 'A text description of the subnet group to be modified.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1547,10 +1533,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'ReservedNodeId' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
                 'NodeCount' => array(
                     'description' => 'The number of reserved nodes you want to purchase.',
                     'type' => 'numeric',
@@ -1575,7 +1557,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterWrapper',
             'responseType' => 'model',
-            'summary' => 'Reboots a cluster. This action is taken as soon as possible. It results in a momentary outage to the cluster, during which the cluster status is set to rebooting. A cluster event is created when the reboot is completed. Any pending cluster modifications (see ModifyCluster) are applied at this reboot. &clustersMoreInfo;',
+            'summary' => 'Reboots a cluster. This action is taken as soon as possible. It results in a momentary outage to the cluster, during which the cluster status is set to rebooting. A cluster event is created when the reboot is completed. Any pending cluster modifications (see ModifyCluster) are applied at this reboot. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Management Guide',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1730,7 +1712,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AllowVersionUpgrade' => array(
-                    'description' => 'If true, upgrades can be applied during the maintenance window to the engine that is running on the cluster.',
+                    'description' => 'If true, upgrades can be applied during the maintenance window to the Amazon Redshift engine that is running on the cluster.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -1780,7 +1762,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'ClusterSecurityGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Revokes an ingress rule in an security group for a previously authorized IP range or Amazon EC2 security group. To add an ingress rule, see AuthorizeClusterSecurityGroupIngress. For information about managing security groups, go to Working with Security Groups in the Amazon Redshift Management Guide.',
+            'summary' => 'Revokes an ingress rule in an Amazon Redshift security group for a previously authorized IP range or Amazon EC2 security group. To add an ingress rule, see AuthorizeClusterSecurityGroupIngress. For information about managing security groups, go to Amazon Redshift Cluster Security Groups in the Amazon Redshift Management Guide.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1917,7 +1899,7 @@ return array (
                             'type' => 'string',
                         ),
                         'SnapshotCreateTime' => array(
-                            'description' => 'The time (UTC) when began the snapshot. A snapshot contains a copy of the cluster data as of this exact time.',
+                            'description' => 'The time (UTC) when Amazon Redshift began the snapshot. A snapshot contains a copy of the cluster data as of this exact time.',
                             'type' => 'string',
                         ),
                         'Status' => array(
@@ -1941,7 +1923,7 @@ return array (
                             'type' => 'string',
                         ),
                         'ClusterVersion' => array(
-                            'description' => 'The version ID of the engine that is running on the cluster.',
+                            'description' => 'The version ID of the Amazon Redshift engine that is running on the cluster.',
                             'type' => 'string',
                         ),
                         'SnapshotType' => array(
@@ -1961,8 +1943,12 @@ return array (
                             'type' => 'string',
                         ),
                         'VpcId' => array(
-                            'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC.',
+                            'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC. Otherwise, this field is not in the output.',
                             'type' => 'string',
+                        ),
+                        'Encrypted' => array(
+                            'description' => 'If true, the data in the snapshot is encrypted at rest.',
+                            'type' => 'boolean',
                         ),
                     ),
                 ),
@@ -1989,7 +1975,7 @@ return array (
                             'type' => 'string',
                         ),
                         'ClusterStatus' => array(
-                            'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", "rebooting", and "resizing".',
+                            'description' => 'The current state of this cluster. Possible values include available, creating, deleting, rebooting, and resizing.',
                             'type' => 'string',
                         ),
                         'ModifyStatus' => array(
@@ -1997,11 +1983,11 @@ return array (
                             'type' => 'string',
                         ),
                         'MasterUsername' => array(
-                            'description' => 'The master user name for the cluster. This name is used to connect to the database specified in DBName.',
+                            'description' => 'The master user name for the cluster. This name is used to connect to the database that is specified in DBName.',
                             'type' => 'string',
                         ),
                         'DBName' => array(
-                            'description' => 'The name of the initial database that was provided when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named "dev" was created by default.',
+                            'description' => 'The name of the initial database that was created when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named "dev" was created by default.',
                             'type' => 'string',
                         ),
                         'Endpoint' => array(
@@ -2047,7 +2033,7 @@ return array (
                             ),
                         ),
                         'VpcSecurityGroups' => array(
-                            'description' => 'A list of Virtual Private Cloud (VPC) security groups that are associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
+                            'description' => 'A list of Virtual Private Cloud (VPC) security groups that are associated with the cluster. This parameter is returned only if the cluster is in a VPC.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'VpcSecurityGroup',
@@ -2085,11 +2071,11 @@ return array (
                             ),
                         ),
                         'ClusterSubnetGroupName' => array(
-                            'description' => 'The name of the subnet group that is associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
+                            'description' => 'The name of the subnet group that is associated with the cluster. This parameter is valid only when the cluster is in a VPC.',
                             'type' => 'string',
                         ),
                         'VpcId' => array(
-                            'description' => 'The indentifier of the VPC the cluster is in, if the cluster is in a VPC.',
+                            'description' => 'The identifier of the VPC the cluster is in, if the cluster is in a VPC.',
                             'type' => 'string',
                         ),
                         'AvailabilityZone' => array(
@@ -2101,7 +2087,7 @@ return array (
                             'type' => 'string',
                         ),
                         'PendingModifiedValues' => array(
-                            'description' => 'If present, changes to the cluster are pending. Specific changes are identified by subelements.',
+                            'description' => 'If present, changes to the cluster are pending. Specific pending changes are identified by subelements.',
                             'type' => 'object',
                             'properties' => array(
                                 'MasterUserPassword' => array(
@@ -2131,7 +2117,7 @@ return array (
                             ),
                         ),
                         'ClusterVersion' => array(
-                            'description' => 'The version ID of the engine that is running on the cluster.',
+                            'description' => 'The version ID of the Amazon Redshift engine that is running on the cluster.',
                             'type' => 'string',
                         ),
                         'AllowVersionUpgrade' => array(
@@ -2144,6 +2130,10 @@ return array (
                         ),
                         'PubliclyAccessible' => array(
                             'description' => 'If true, the cluster can be accessed from a public network.',
+                            'type' => 'boolean',
+                        ),
+                        'Encrypted' => array(
+                            'description' => 'If true, data in cluster is encrypted at rest.',
                             'type' => 'boolean',
                         ),
                     ),
@@ -2203,7 +2193,7 @@ return array (
                             'type' => 'string',
                         ),
                         'SubnetGroupStatus' => array(
-                            'description' => 'The status of the cluster subnet group. The valid values are "Complete", "Incomplete" and "Invalid".',
+                            'description' => 'The status of the cluster subnet group. Possible values are Complete, Incomplete and Invalid.',
                             'type' => 'string',
                         ),
                         'Subnets' => array(
@@ -2439,7 +2429,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'SnapshotCreateTime' => array(
-                                'description' => 'The time (UTC) when began the snapshot. A snapshot contains a copy of the cluster data as of this exact time.',
+                                'description' => 'The time (UTC) when Amazon Redshift began the snapshot. A snapshot contains a copy of the cluster data as of this exact time.',
                                 'type' => 'string',
                             ),
                             'Status' => array(
@@ -2463,7 +2453,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'ClusterVersion' => array(
-                                'description' => 'The version ID of the engine that is running on the cluster.',
+                                'description' => 'The version ID of the Amazon Redshift engine that is running on the cluster.',
                                 'type' => 'string',
                             ),
                             'SnapshotType' => array(
@@ -2483,8 +2473,12 @@ return array (
                                 'type' => 'string',
                             ),
                             'VpcId' => array(
-                                'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC.',
+                                'description' => 'The VPC identifier of the cluster if the snapshot is from a cluster in a VPC. Otherwise, this field is not in the output.',
                                 'type' => 'string',
+                            ),
+                            'Encrypted' => array(
+                                'description' => 'If true, the data in the snapshot is encrypted at rest.',
+                                'type' => 'boolean',
                             ),
                         ),
                     ),
@@ -2496,7 +2490,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Marker' => array(
-                    'description' => 'A marker at which to continue listing cluster subnet groups in a new request. The response returns a marker if there are more subnet groups to list than returned in the response.',
+                    'description' => 'A marker at which to continue listing cluster subnet groups in a new request. A marker is returned if there are more cluster subnet groups to list than were returned in the response.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -2523,7 +2517,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'SubnetGroupStatus' => array(
-                                'description' => 'The status of the cluster subnet group. The valid values are "Complete", "Incomplete" and "Invalid".',
+                                'description' => 'The status of the cluster subnet group. Possible values are Complete, Incomplete and Invalid.',
                                 'type' => 'string',
                             ),
                             'Subnets' => array(
@@ -2580,7 +2574,7 @@ return array (
                         'sentAs' => 'ClusterVersion',
                         'properties' => array(
                             'ClusterVersion' => array(
-                                'description' => 'The version number used by the the cluster.',
+                                'description' => 'The version number used by the cluster.',
                                 'type' => 'string',
                             ),
                             'ClusterParameterGroupFamily' => array(
@@ -2624,7 +2618,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'ClusterStatus' => array(
-                                'description' => 'The current state of this cluster. Possible values include "available", "creating", "deleting", "rebooting", and "resizing".',
+                                'description' => 'The current state of this cluster. Possible values include available, creating, deleting, rebooting, and resizing.',
                                 'type' => 'string',
                             ),
                             'ModifyStatus' => array(
@@ -2632,11 +2626,11 @@ return array (
                                 'type' => 'string',
                             ),
                             'MasterUsername' => array(
-                                'description' => 'The master user name for the cluster. This name is used to connect to the database specified in DBName.',
+                                'description' => 'The master user name for the cluster. This name is used to connect to the database that is specified in DBName.',
                                 'type' => 'string',
                             ),
                             'DBName' => array(
-                                'description' => 'The name of the initial database that was provided when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named "dev" was created by default.',
+                                'description' => 'The name of the initial database that was created when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named "dev" was created by default.',
                                 'type' => 'string',
                             ),
                             'Endpoint' => array(
@@ -2682,7 +2676,7 @@ return array (
                                 ),
                             ),
                             'VpcSecurityGroups' => array(
-                                'description' => 'A list of Virtual Private Cloud (VPC) security groups that are associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
+                                'description' => 'A list of Virtual Private Cloud (VPC) security groups that are associated with the cluster. This parameter is returned only if the cluster is in a VPC.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'VpcSecurityGroup',
@@ -2720,11 +2714,11 @@ return array (
                                 ),
                             ),
                             'ClusterSubnetGroupName' => array(
-                                'description' => 'The name of the subnet group that is associated with the cluster. This parameter is only valid when the cluster is in a VPC.',
+                                'description' => 'The name of the subnet group that is associated with the cluster. This parameter is valid only when the cluster is in a VPC.',
                                 'type' => 'string',
                             ),
                             'VpcId' => array(
-                                'description' => 'The indentifier of the VPC the cluster is in, if the cluster is in a VPC.',
+                                'description' => 'The identifier of the VPC the cluster is in, if the cluster is in a VPC.',
                                 'type' => 'string',
                             ),
                             'AvailabilityZone' => array(
@@ -2736,7 +2730,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'PendingModifiedValues' => array(
-                                'description' => 'If present, changes to the cluster are pending. Specific changes are identified by subelements.',
+                                'description' => 'If present, changes to the cluster are pending. Specific pending changes are identified by subelements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'MasterUserPassword' => array(
@@ -2766,7 +2760,7 @@ return array (
                                 ),
                             ),
                             'ClusterVersion' => array(
-                                'description' => 'The version ID of the engine that is running on the cluster.',
+                                'description' => 'The version ID of the Amazon Redshift engine that is running on the cluster.',
                                 'type' => 'string',
                             ),
                             'AllowVersionUpgrade' => array(
@@ -2779,6 +2773,10 @@ return array (
                             ),
                             'PubliclyAccessible' => array(
                                 'description' => 'If true, the cluster can be accessed from a public network.',
+                                'type' => 'boolean',
+                            ),
+                            'Encrypted' => array(
+                                'description' => 'If true, data in cluster is encrypted at rest.',
                                 'type' => 'boolean',
                             ),
                         ),
@@ -3111,17 +3109,17 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TargetNodeType' => array(
-                    'description' => 'The node type that the cluster will have after the resize completes.',
+                    'description' => 'The node type that the cluster will have after the resize is complete.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
                 'TargetNumberOfNodes' => array(
-                    'description' => 'The number of nodes that the cluster will have after the resize completes.',
+                    'description' => 'The number of nodes that the cluster will have after the resize is complete.',
                     'type' => 'numeric',
                     'location' => 'xml',
                 ),
                 'TargetClusterType' => array(
-                    'description' => 'The cluster type after the resize completed.',
+                    'description' => 'The cluster type after the resize is complete.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -3131,7 +3129,7 @@ return array (
                     'location' => 'xml',
                 ),
                 'ImportTablesCompleted' => array(
-                    'description' => 'The tables which have been imported completely.',
+                    'description' => 'The names of tables that have been completely imported .',
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
@@ -3141,7 +3139,7 @@ return array (
                     ),
                 ),
                 'ImportTablesInProgress' => array(
-                    'description' => 'The tables which are being imported currently.',
+                    'description' => 'The names of tables that are being currently imported.',
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
@@ -3151,7 +3149,7 @@ return array (
                     ),
                 ),
                 'ImportTablesNotStarted' => array(
-                    'description' => 'The tables which have not been imported yet.',
+                    'description' => 'The names of tables that have not been yet imported.',
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
