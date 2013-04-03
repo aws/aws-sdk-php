@@ -92,6 +92,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Update a table to change the provisioned throughput
+     *
      * @depends testWaitUntilTableExists
      * @example Aws\DynamoDb\DynamoDbClient::updateTable 2011-12-05
      */
@@ -144,7 +146,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * List the first page of results of tables owned by your account
      *
      * @depends testDescribeTable
-     * @example Aws\DynamoDb\DynamoDbClient::listTable 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::listTables 2011-12-05
      */
     public function testListTables()
     {
@@ -346,6 +348,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Put and get an item with a binary attribute
+     *
      * @depends testScan
      * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
      * @example Aws\DynamoDb\DynamoDbClient::getItem 2011-12-05
@@ -432,6 +436,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      *
      * @depends testBatchGetItem
      * @example Aws\DynamoDb\DynamoDbClient::deleteItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2011-12-05
      */
     public function testDeleteItem()
     {
@@ -455,7 +460,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Delete a table
      *
      * @depends testDeleteItem
-     * @example Aws\DynamoDb\DynamoDbClient::deleteTable
+     * @example Aws\DynamoDb\DynamoDbClient::deleteTable 2011-12-05
      */
     public function testDeleteTable()
     {

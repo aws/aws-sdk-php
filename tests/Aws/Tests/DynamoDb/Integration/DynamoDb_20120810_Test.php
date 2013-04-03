@@ -52,7 +52,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * Create a table with an optional RangeKeyElement
+     * Create a table with a hash key and range key
      *
      * @example Aws\DynamoDb\DynamoDbClient::createTable 2012-08-10
      */
@@ -93,6 +93,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
 
     /**
      * @depends testCreateTable
+     * @example Aws\DynamoDb\DynamoDbClient::waitUntilTableExists 2012-08-10
      */
     public function testWaitUntilTableExists()
     {
@@ -106,8 +107,11 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Update a table to change the provisioned throughput
+     *
      * @depends testWaitUntilTableExists
      * @example Aws\DynamoDb\DynamoDbClient::updateTable 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::waitUntilTableExists 2012-08-10
      */
     public function testUpdateTable()
     {
@@ -158,7 +162,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
      * List the first page of results of tables owned by your account
      *
      * @depends testDescribeTable
-     * @example Aws\DynamoDb\DynamoDbClient::listTable 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::listTables 2012-08-10
      */
     public function testListTables()
     {
@@ -370,6 +374,8 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Put and get an item with a binary attribute
+     *
      * @depends testScan
      * @example Aws\DynamoDb\DynamoDbClient::putItem 2012-08-10
      * @example Aws\DynamoDb\DynamoDbClient::getItem 2012-08-10
@@ -461,8 +467,9 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     /**
      * Delete an item
      *
-     * @depends testBinaryType
+     * @depends testBatchGetItem
      * @example Aws\DynamoDb\DynamoDbClient::deleteItem 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
      */
     public function testDeleteItem()
     {
@@ -484,7 +491,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     /**
      * Delete a table
      *
-     * @depends testBatchGetItem
+     * @depends testDeleteItem
      * @example Aws\DynamoDb\DynamoDbClient::deleteTable 2012-08-10
      */
     public function testDeleteTable()
