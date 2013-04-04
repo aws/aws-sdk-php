@@ -196,6 +196,12 @@ return array(
             'class'   => 'Aws\Sts\StsClient'
         ),
 
+        'support' => array(
+            'alias'   => 'Support',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Support\SupportClient'
+        ),
+
         'swf' => array(
             'alias'   => 'Swf',
             'extends' => 'default_settings',
