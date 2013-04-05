@@ -61,17 +61,7 @@ use Guzzle\Service\Command\CommandInterface;
 class StreamWrapper
 {
     /**
-     * Directory with 0777 access - see "man 2 stat".
-     */
-    const MODE_DIRECTORY = 0040777;
-
-    /**
-     * Regular file with 0777 access - see "man 2 stat".
-     */
-    const MODE_FILE = 0100777;
-
-    /**
-     * @var resource|null Stream context
+     * @var resource|null Stream context (this is set by PHP when a context is used)
      */
     public $context;
 
@@ -96,48 +86,29 @@ class StreamWrapper
     protected $params;
 
     /**
-     * @var QueryString Stream URI options
+     * @var QueryString Stream URI options following a ";" character parsed as a query string
      */
     protected $uriOptions;
 
     /**
-     * @var ListObjectsIterator Iterator used with opendir()
+     * @var ListObjectsIterator Iterator used with opendir() and subsequent readdir() calls
      */
     protected $objectIterator;
 
     /**
-     * @var string Opened bucket for opendir()
+     * @var string The bucket that was opened when opendir() was called
      */
     protected $openedBucket;
 
     /**
-     * @var string Opened bucket prefix
+     * @var string The prefix of the bucket that was opened with opendir()
      */
     protected $openedBucketPrefix;
 
     /**
-     * @var array The next key to retrieve when using a directory iterator
+     * @var array The next key to retrieve when using a directory iterator. Helps for fast directory traversal.
      */
     protected static $nextStat = array();
-
-    /**
-     * @var array Default result for stat calls
-     */
-    protected static $stat = array(
-        0  => 0,  'dev'     => 0,
-        1  => 0,  'ino'     => 0,
-        2  => 0,  'mode'    => 0,
-        3  => 0,  'nlink'   => 0,
-        4  => 0,  'uid'     => 0,
-        5  => 0,  'gid'     => 0,
-        6  => -1, 'rdev'    => -1,
-        7  => 0,  'size'    => 0,
-        8  => 0,  'atime'   => 0,
-        9  => 0,  'mtime'   => 0,
-        10 => 0,  'ctime'   => 0,
-        11 => -1, 'blksize' => -1,
-        12 => -1, 'blocks'  => -1,
-    );
 
     /**
      * Register the 's3://' stream wrapper
@@ -294,7 +265,7 @@ class StreamWrapper
     public function unlink($path)
     {
         try {
-            $this->clearNextStatInfo();
+            $this->clearStatInfo($path);
             self::$client->deleteObject($this->getParams($path));
             return true;
         } catch (\Exception $e) {
@@ -374,7 +345,7 @@ class StreamWrapper
     public function mkdir($path, $mode, $options)
     {
         $params = $this->getParams($path);
-        $this->clearNextStatInfo();
+        $this->clearStatInfo($path);
 
         if (!$params['Bucket']) {
             return false;
@@ -411,7 +382,7 @@ class StreamWrapper
     {
         $params = $this->getParams($path);
         if (!$params['Bucket']) {
-            return $this->triggerError('One does not simply delete Amazon S3. Please specify a bucket.');
+            return $this->triggerError('You cannot delete s3://. Please specify a bucket.');
         }
 
         try {
@@ -420,7 +391,7 @@ class StreamWrapper
                 self::$client->clearBucket($params['Bucket']);
             }
             self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
-            $this->clearNextStatInfo();
+            $this->clearStatInfo($path);
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
         }
@@ -438,7 +409,7 @@ class StreamWrapper
     public function dir_opendir($path, $options)
     {
         // Reset the cache
-        $this->clearNextStatInfo();
+        $this->clearStatInfo();
         $params = $this->getParams($path);
         $delim = $this->getOptions('delimiter') ?: '/';
         if ($params['Key']) {
@@ -478,7 +449,7 @@ class StreamWrapper
      */
     public function dir_rewinddir()
     {
-        $this->clearNextStatInfo();
+        $this->clearStatInfo();
         if ($this->objectIterator) {
             $this->objectIterator->rewind();
         }
@@ -532,7 +503,8 @@ class StreamWrapper
     {
         $partsFrom = $this->getParams($path_from);
         $partsTo = $this->getParams($path_to);
-        $this->clearNextStatInfo();
+        $this->clearStatInfo($path_from);
+        $this->clearStatInfo($path_to);
 
         if (!$partsFrom['Key'] || !$partsTo['Key']) {
             return $this->triggerError('The Amazon S3 stream wrapper only supports copying objects');
@@ -724,17 +696,34 @@ class StreamWrapper
      */
     protected function formatUrlStat($result = null)
     {
-        $stat = self::$stat;
+        static $statTemplate = array(
+            0  => 0,  'dev'     => 0,
+            1  => 0,  'ino'     => 0,
+            2  => 0,  'mode'    => 0,
+            3  => 0,  'nlink'   => 0,
+            4  => 0,  'uid'     => 0,
+            5  => 0,  'gid'     => 0,
+            6  => -1, 'rdev'    => -1,
+            7  => 0,  'size'    => 0,
+            8  => 0,  'atime'   => 0,
+            9  => 0,  'mtime'   => 0,
+            10 => 0,  'ctime'   => 0,
+            11 => -1, 'blksize' => -1,
+            12 => -1, 'blocks'  => -1,
+        );
+
+        $stat = $statTemplate;
 
         // Determine what type of data is being cached
         if (!$result || is_string($result)) {
-            // Directory
-            $stat['mode'] = $stat[2] = self::MODE_DIRECTORY;
+            // Directory with 0777 access - see "man 2 stat".
+            $stat['mode'] = $stat[2] = 0040777;
         } elseif (is_array($result) && isset($result['LastModified'])) {
             // ListObjects or HeadObject result
             $stat['mtime'] = $stat[9] = $stat['ctime'] = $stat[10] = strtotime($result['LastModified']);
             $stat['size'] = $stat[7] = (isset($result['ContentLength']) ? $result['ContentLength'] : $result['Size']);
-            $stat['mode'] = $stat[2] = self::MODE_FILE;
+            // Regular file with 0777 access - see "man 2 stat".
+            $stat['mode'] = $stat[2] = 0100777;
         }
 
         return $stat;
@@ -742,9 +731,14 @@ class StreamWrapper
 
     /**
      * Clear the next stat result from the cache
+     *
+     * @param string $path If a path is specific, clearstatcache() will be called
      */
-    protected function clearNextStatInfo()
+    protected function clearStatInfo($path = null)
     {
         self::$nextStat = array();
+        if ($path) {
+            clearstatcache(true, $path);
+        }
     }
 }
