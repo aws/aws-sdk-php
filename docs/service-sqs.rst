@@ -52,7 +52,7 @@ Sending a message to a queue is straight forward with the ``SendMessage`` comman
     $client->sendMessage(array(
         'QueueUrl'    => $queueUrl,
         'MessageBody' => 'An awesome message!',
-    )):
+    ));
 
 You can overwrite the queue's default delay for a message when you send it.
 
@@ -62,7 +62,7 @@ You can overwrite the queue's default delay for a message when you send it.
         'QueueUrl'     => $queueUrl,
         'MessageBody'  => 'An awesome message!',
         'DelaySeconds' => 30,
-    )):
+    ));
 
 Receiving messages
 ------------------
