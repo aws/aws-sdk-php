@@ -116,14 +116,14 @@ class StreamWrapper
     protected $openedBucketPrefix;
 
     /**
-     * @var array Cache of previously loaded items
+     * @var array The next key to retrieve when using a directory iterator
      */
-    protected static $cache = array();
+    protected static $nextStat = array();
 
     /**
      * @var array Default result for stat calls
      */
-    private static $stat = array(
+    protected static $stat = array(
         0  => 0,  'dev'     => 0,
         1  => 0,  'ino'     => 0,
         2  => 0,  'mode'    => 0,
@@ -140,15 +140,14 @@ class StreamWrapper
     );
 
     /**
-     * Register the stream wrapper
+     * Register the 's3://' stream wrapper
      *
-     * @param S3Client $client   Client to use with the stream wrapper
-     * @param string   $protocol Protocol to use with the wrapper (defaults to 's3')
+     * @param S3Client $client Client to use with the stream wrapper
      */
-    public static function register(S3Client $client, $protocol = 's3')
+    public static function register(S3Client $client)
     {
-        if (!in_array($protocol, stream_get_wrappers())) {
-            stream_wrapper_register($protocol, __CLASS__, STREAM_IS_URL);
+        if (!in_array('s3', stream_get_wrappers())) {
+            stream_wrapper_register('s3', __CLASS__, STREAM_IS_URL);
         }
 
         self::$client = $client;
@@ -159,7 +158,6 @@ class StreamWrapper
      */
     public function stream_close()
     {
-        self::$cache = array();
         if ($this->body) {
             $this->body->close();
             $this->body = null;
@@ -296,7 +294,7 @@ class StreamWrapper
     public function unlink($path)
     {
         try {
-            unset(self::$cache[$path]);
+            $this->clearNextStatInfo();
             self::$client->deleteObject($this->getParams($path));
             return true;
         } catch (\Exception $e) {
@@ -324,15 +322,15 @@ class StreamWrapper
     public function url_stat($path, $flags)
     {
         // Check if this path is in the url_stat cache
-        if (isset(self::$cache[$path])) {
-            return self::$cache[$path];
+        if (isset(self::$nextStat[$path])) {
+            return self::$nextStat[$path];
         }
 
         $parts = $this->getParams($path);
 
         // Stat a bucket or just s3://
         if (!$parts['Key'] && (!$parts['Bucket'] || self::$client->doesBucketExist($parts['Bucket']))) {
-            return $this->storeUrlStat($path, $path);
+            return $this->formatUrlStat($path);
         }
 
         // You must pass either a bucket or a bucket + key
@@ -343,7 +341,7 @@ class StreamWrapper
         try {
             try {
                 // Attemtp to stat and cache regular object
-                return $this->storeUrlStat($path, self::$client->headObject($parts));
+                return $this->formatUrlStat(self::$client->headObject($parts));
             } catch (NoSuchKeyException $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix listing of objects to determine.
                 $result = self::$client->listObjects(array(
@@ -355,7 +353,7 @@ class StreamWrapper
                     return $this->triggerError("File or directory not found: {$path}", $flags);
                 }
                 // This is a directory prefix
-                return $this->storeUrlStat($path);
+                return $this->formatUrlStat($path);
             }
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage(), $flags);
@@ -376,7 +374,7 @@ class StreamWrapper
     public function mkdir($path, $mode, $options)
     {
         $params = $this->getParams($path);
-        unset(self::$cache[$path]);
+        $this->clearNextStatInfo();
 
         if (!$params['Bucket']) {
             return false;
@@ -422,12 +420,7 @@ class StreamWrapper
                 self::$client->clearBucket($params['Bucket']);
             }
             self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
-            // Clean up the cache for any deleted keys
-            foreach (array_keys(self::$cache) as $key) {
-                if (strpos($key, $path) === 0) {
-                    unset(self::$cache[$key]);
-                }
-            }
+            $this->clearNextStatInfo();
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
         }
@@ -445,7 +438,7 @@ class StreamWrapper
     public function dir_opendir($path, $options)
     {
         // Reset the cache
-        self::$cache = array();
+        $this->clearNextStatInfo();
         $params = $this->getParams($path);
         $delim = $this->getOptions('delimiter') ?: '/';
         if ($params['Key']) {
@@ -473,7 +466,6 @@ class StreamWrapper
      */
     public function dir_closedir()
     {
-        self::$cache = array();
         $this->objectIterator = null;
 
         return true;
@@ -486,7 +478,7 @@ class StreamWrapper
      */
     public function dir_rewinddir()
     {
-        self::$cache = array();
+        $this->clearNextStatInfo();
         if ($this->objectIterator) {
             $this->objectIterator->rewind();
         }
@@ -509,14 +501,18 @@ class StreamWrapper
             if (isset($current['Prefix'])) {
                 // Include "directories"
                 $result = str_replace($this->openedBucketPrefix, '', $current['Prefix']);
-                // Cache the object data for quick url_stat lookups used with RecursiveDirectoryIterator
-                $this->storeUrlStat("s3://{$this->openedBucket}/{$current['Prefix']}", $current['Prefix']);
+                $key = "s3://{$this->openedBucket}/{$current['Prefix']}";
+                $stat = $this->formatUrlStat($current['Prefix']);
             } else {
                 // Remove the prefix from the result to emulate other stream wrappers
                 $result = str_replace($this->openedBucketPrefix, '', $current['Key']);
-                // Cache the object data for quick url_stat lookups used with RecursiveDirectoryIterator
-                $this->storeUrlStat("s3://{$this->openedBucket}/{$current['Key']}", $current);
+                $key = "s3://{$this->openedBucket}/{$current['Key']}";
+                $stat = $this->formatUrlStat($current);
             }
+
+            // Cache the object data for quick url_stat lookups used with RecursiveDirectoryIterator
+            self::$nextStat = array($key => $stat);
+
             $this->objectIterator->next();
         }
 
@@ -536,14 +532,11 @@ class StreamWrapper
     {
         $partsFrom = $this->getParams($path_from);
         $partsTo = $this->getParams($path_to);
+        $this->clearNextStatInfo();
 
         if (!$partsFrom['Key'] || !$partsTo['Key']) {
             return $this->triggerError('The Amazon S3 stream wrapper only supports copying objects');
         }
-
-        // Clear out the cache of these paths
-        unset(self::$cache[$path_from]);
-        unset(self::$cache[$path_to]);
 
         try {
             // Copy the object and allow overriding default parameters if desired, but by default copy metadata
@@ -723,20 +716,14 @@ class StreamWrapper
     }
 
     /**
-     * Add and prepare an entry for the url_stat cache
+     * Prepare a url_stat result array
      *
-     * @param string       $path   Path of the data to cache
      * @param string|array $result Data to add
      *
      * @return array Returns the modified url_stat result
      */
-    protected function storeUrlStat($path, $result = null)
+    protected function formatUrlStat($result = null)
     {
-        // Cap the cache at 1500
-        if (count(self::$cache) > 1200) {
-            self::$cache = array();
-        }
-
         $stat = self::$stat;
 
         // Determine what type of data is being cached
@@ -750,6 +737,14 @@ class StreamWrapper
             $stat['mode'] = $stat[2] = self::MODE_FILE;
         }
 
-        return self::$cache[$path] = $stat;
+        return $stat;
+    }
+
+    /**
+     * Clear the next stat result from the cache
+     */
+    protected function clearNextStatInfo()
+    {
+        self::$nextStat = array();
     }
 }

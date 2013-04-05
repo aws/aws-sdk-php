@@ -415,7 +415,7 @@ class S3Client extends AbstractClient
     }
 
     /**
-     * Register the Amazon S3 stream wrapper and associate it with this client object
+     * Register the Amazon S3 stream wrapper and associates it with this client object
      */
     public function registerStreamWrapper()
     {
