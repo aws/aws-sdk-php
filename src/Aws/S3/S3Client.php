@@ -415,6 +415,14 @@ class S3Client extends AbstractClient
     }
 
     /**
+     * Register the Amazon S3 stream wrapper and associate it with this client object
+     */
+    public function registerStreamWrapper()
+    {
+        StreamWrapper::register($this);
+    }
+
+    /**
      * Determines whether or not a resource exists using a command
      *
      * @param CommandInterface $command   Command used to poll for the resource
