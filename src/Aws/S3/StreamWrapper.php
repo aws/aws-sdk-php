@@ -2,6 +2,8 @@
 
 namespace Aws\S3;
 
+use Aws\Common\Exception\RuntimeException;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\Iterator\ListObjectsIterator;
 use Guzzle\Http\QueryString;
@@ -129,10 +131,7 @@ class StreamWrapper
      */
     public function stream_close()
     {
-        if ($this->body) {
-            $this->body->close();
-            $this->body = null;
-        }
+        $this->body = null;
     }
 
     /**
@@ -197,8 +196,8 @@ class StreamWrapper
             return fflush($this->body->getStream());
         }
 
-        $params = $this->params;
         $this->body->rewind();
+        $params = $this->params;
         $params['Body'] = $this->body;
 
         try {
@@ -608,17 +607,10 @@ class StreamWrapper
      */
     protected function openReadStream(array $params, array &$errors)
     {
-        // Ensure that the object exists
-        if (!self::$client->doesObjectExist($params['Bucket'], $params['Key'], $this->getOptions())) {
-            $errors[] = "{$params['Bucket']}/{$params['Key']} with the following options was not found: " .
-                var_export($this->getOptions(), true);
-            return false;
-        }
-
         // Create the command and serialize the request
         $request = $this->getSignedRequest(self::$client->getCommand('GetObject', $params));
         // Create a stream that uses the EntityBody object
-        $factory = new PhpStreamRequestFactory();
+        $factory = $this->getOption('stream_factory') ?: new PhpStreamRequestFactory();
         $this->body = $factory->fromRequest($request, array(), array('stream_class' => 'Guzzle\Http\EntityBody'));
 
         // Wrap the body in a caching entity body if seeking is allowed
@@ -639,7 +631,7 @@ class StreamWrapper
      */
     protected function openWriteStream(array $params, array &$errors)
     {
-        $this->body = new EntityBody(fopen('php://temp', 'w+'));
+        $this->body = new EntityBody(fopen('php://temp', 'r+'));
     }
 
     /**
@@ -652,15 +644,14 @@ class StreamWrapper
      */
     protected function openAppendStream(array $params, array &$errors)
     {
-        if (!self::$client->doesObjectExist($params['Bucket'], $params['Key'], $this->getOptions())) {
-            // The object doesn't exist, so this is a simple write stream
-            return $this->openWriteStream($params['Bucket'], $params['Key'], $errors);
+        try {
+            // Get the body of the object
+            $this->body = self::$client->getObject($params)->get('Body');
+            $this->body->seek(0, SEEK_END);
+        } catch (S3Exception $e) {
+            // The object does not exist, so use a simple write stream
+            $this->openWriteStream($params, $errors);
         }
-
-        // Get the body of the object
-        $this->body = self::$client->getObject($params)->get('Body');
-        // Seek to the end of the stream to allow append
-        $this->body->seek(0, SEEK_END);
 
         return true;
     }
