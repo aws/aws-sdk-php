@@ -369,26 +369,23 @@ class StreamWrapper
     }
 
     /**
-     * Remove a bucket from Amazon S3 or all keys under a specific prefix
+     * Remove a bucket from Amazon S3
      *
-     * @param string $path    the directory path
-     * @param int    $options A bitwise mask of values, such as STREAM_MKDIR_RECURSIVE.
+     * @param string $path the directory path
      *
      * @return bool true if directory was successfully removed
      * @link http://www.php.net/manual/en/streamwrapper.rmdir.php
      */
-    public function rmdir($path, $options)
+    public function rmdir($path)
     {
         $params = $this->getParams($path);
         if (!$params['Bucket']) {
             return $this->triggerError('You cannot delete s3://. Please specify a bucket.');
+        } elseif ($params['Key']) {
+            return $this->triggerError('rmdir() only supports bucket deletion');
         }
 
         try {
-            // Clear the contents of the bucket if the recursive flag is set
-            if ($options & STREAM_MKDIR_RECURSIVE) {
-                self::$client->clearBucket($params['Bucket']);
-            }
             self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
             $this->clearStatInfo($path);
         } catch (\Exception $e) {
