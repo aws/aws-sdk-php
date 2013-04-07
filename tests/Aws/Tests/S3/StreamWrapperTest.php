@@ -156,8 +156,8 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
             ->method('createStream')
             ->will($this->returnValue($mock));
 
-        $s = fopen('s3://bucket/ket;seekable', 'r', false, stream_context_create(array(
-            's3' => array('stream_factory' => $f)
+        $s = fopen('s3://bucket/ket', 'r', false, stream_context_create(array(
+            's3' => array('stream_factory' => $f, 'seekable' => true)
         )));
 
         $this->assertEquals(0, ftell($s));

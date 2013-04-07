@@ -27,9 +27,9 @@ use Guzzle\Service\Command\CommandInterface;
  *
  * Read only streams are truly streaming by default and will not allow you to seek. This is because data
  * read from the stream is not kept in memory or on the local filesystem. You can force a "r" stream to be seekable
- * by suffixing the path with ";seekable" -- e.g. 's3://my_bucket/my_key.txt;seekable'. This will allow true streaming
- * of data from Amazon S3, but will maintain a buffer of previously read bytes in a 'php://temp' stream to allow
- * seeking to previously read bytes from the stream.
+ * by setting the "seekable" stream context option true. This will allow true streaming of data from Amazon S3, but
+ * will maintain a buffer of previously read bytes in a 'php://temp' stream to allow seeking to previously read bytes
+ * from the stream.
  *
  * You may pass any GetObject parameters as 's3' stream context options. These options will affect how the data is
  * downloaded from Amazon S3.
@@ -57,6 +57,7 @@ use Guzzle\Service\Command\CommandInterface;
  *
  * Stream context options:
  *
+ * - "seekable": Set to true to create a seekable "r" (read only) stream by using a php://temp stream buffer
  * - "throw_exceptions": Set to true to throw exceptions instead of trigger_errors
  * - For "unlink" only: Any option that can be passed to the DeleteObject operation
  */
@@ -86,11 +87,6 @@ class StreamWrapper
      * @var array Current parameters to use with the flush operation
      */
     protected $params;
-
-    /**
-     * @var QueryString Stream URI options following a ";" character parsed as a query string
-     */
-    protected $uriOptions;
 
     /**
      * @var ListObjectsIterator Iterator used with opendir() and subsequent readdir() calls
@@ -556,7 +552,7 @@ class StreamWrapper
     }
 
     /**
-     * Get the bucket and key from the passed path (e.g. s3://bucket/key), and include any custom operation options
+     * Get the bucket and key from the passed path (e.g. s3://bucket/key)
      *
      * @param string $path Path passed to the stream wrapper
      *
@@ -564,19 +560,16 @@ class StreamWrapper
      */
     protected function getParams($path)
     {
-        if ($separatorPos = strpos($path, ';')) {
-            $this->uriOptions = QueryString::fromString(substr($path, $separatorPos + 1));
-            $path = substr($path, 0, $separatorPos);
-        } else {
-            $this->uriOptions = new QueryString();
-        }
-
         $parts = explode('/', substr($path, 5), 2);
+
+        $params = $this->getOptions();
+        unset($params['seekable']);
+        unset($params['throw_exceptions']);
 
         return array(
             'Bucket' => $parts[0],
             'Key'    => isset($parts[1]) ? $parts[1] : null
-        ) + $this->getOptions();
+        ) + $params;
     }
 
     /**
@@ -611,7 +604,7 @@ class StreamWrapper
         $this->body = $factory->fromRequest($request, array(), array('stream_class' => 'Guzzle\Http\EntityBody'));
 
         // Wrap the body in a caching entity body if seeking is allowed
-        if ($this->uriOptions->hasKey('seekable')) {
+        if ($this->getOption('seekable')) {
             $this->body = new CachingEntityBody($this->body);
         }
 
