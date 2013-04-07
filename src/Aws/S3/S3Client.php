@@ -416,10 +416,14 @@ class S3Client extends AbstractClient
 
     /**
      * Register the Amazon S3 stream wrapper and associates it with this client object
+     *
+     * @return self
      */
     public function registerStreamWrapper()
     {
         StreamWrapper::register($this);
+
+        return $this;
     }
 
     /**
