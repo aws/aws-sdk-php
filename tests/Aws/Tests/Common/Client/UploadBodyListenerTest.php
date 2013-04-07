@@ -49,8 +49,8 @@ class UploadBodyListenerTest extends \Guzzle\Tests\GuzzleTestCase
             'Body'   => fopen(__FILE__, 'r')
         ));
 
-        $command->prepare();
+        $request = $command->prepare();
         $this->assertInstanceOf('Guzzle\Http\EntityBody', $command->get('Body'));
-        $this->assertEquals('text/x-php', $command->get('ContentType'));
+        $this->assertEquals('text/x-php', (string) $request->getHeader('Content-Type'));
     }
 }
