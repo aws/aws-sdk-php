@@ -8,6 +8,7 @@ Next Release
 * Added a new config option (`gc_operation_delay`) to the DynamoDB Session Handler to specify a delay between requests
   to the service during garbage collection in order to help regulate the consumption of throughput
 * Added support for using the `us-west-2` region to the Amazon Redshift client
+* Updated the Amazon RDS client to sign requests with Signature V4
 * [Docs] Added a page about Waiters to the user guide
 * [Docs] Added a page about the DynamoDB Session Handler to the user guide
 
