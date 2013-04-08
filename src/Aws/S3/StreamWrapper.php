@@ -342,7 +342,7 @@ class StreamWrapper
         $params = $this->getParams($path);
         $this->clearStatInfo($path);
 
-        if (!$params['Bucket']) {
+        if (!$params['Bucket'] || $params['Key']) {
             return false;
         }
 
@@ -384,6 +384,7 @@ class StreamWrapper
         try {
             self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
             $this->clearStatInfo($path);
+            return true;
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
         }

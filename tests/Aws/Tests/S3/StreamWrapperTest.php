@@ -186,6 +186,18 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(4, (string) $requests[0]->getHeader('Content-Length'));
     }
 
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage 403 Forbidden
+     */
+    public function testTriggersErrorInsteadOfExceptionWhenWriteFlushFails()
+    {
+        $this->setMockResponse($this->client, array(new Response(403)));
+        $s = fopen('s3://bucket/key', 'w');
+        fwrite($s, 'test');
+        fclose($s);
+    }
+
     public function testCanOpenAppendStreamsWithOriginalFile()
     {
         // Queue the 200 response that will load the original, and queue the 204 flush response
@@ -208,5 +220,113 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('/key', $requests[1]->getResource());
         $this->assertEquals('testing', (string) $requests[1]->getBody());
         $this->assertEquals(7, (string) $requests[1]->getHeader('Content-Length'));
+    }
+
+    public function testCanOpenAppendStreamsWithMissingFile()
+    {
+        $this->setMockResponse($this->client, array(
+            new Response(404),
+            new Response(204)
+        ));
+
+        $s = fopen('s3://bucket/key', 'a');
+        $this->assertEquals(0, ftell($s));
+        $this->assertTrue(fclose($s));
+    }
+
+    public function testCanUnlinkFiles()
+    {
+        $this->setMockResponse($this->client, array(new Response(204)));
+        $this->assertTrue(unlink('s3://bucket/key'));
+        $requests = $this->getMockedRequests();
+        $this->assertEquals(1, count($requests));
+        $this->assertEquals('DELETE', $requests[0]->getMethod());
+        $this->assertEquals('/key', $requests[0]->getResource());
+        $this->assertEquals('bucket.s3.amazonaws.com', $requests[0]->getHost());
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage 403 Forbidden
+     */
+    public function testThrowsErrorsWhenUnlinkFails()
+    {
+        $this->setMockResponse($this->client, array(new Response(403)));
+        $this->assertFalse(unlink('s3://bucket/key'));
+    }
+
+    public function testCreatingBucketWithNoBucketReturnsFalse()
+    {
+        $this->assertFalse(mkdir('s3://'));
+    }
+
+    public function testCreatingBucketWithKeyReturnsFalse()
+    {
+        $this->assertFalse(mkdir('s3://foo/bar'));
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage 403 Forbidden
+     */
+    public function testCreatingBucketWithExceptionRaisesError()
+    {
+        $this->setMockResponse($this->client, array(new Response(403)));
+        $this->assertFalse(mkdir('s3://bucket'));
+    }
+
+    public function testCreatingBucketsSetsAclBasedOnPermissions()
+    {
+        $this->setMockResponse($this->client, array(new Response(204), new Response(204), new Response(204)));
+        $this->assertTrue(mkdir('s3://bucket', 0777));
+        $this->assertTrue(mkdir('s3://bucket', 0601));
+        $this->assertTrue(mkdir('s3://bucket', 0500));
+        $requests = $this->getMockedRequests();
+        $this->assertEquals(3, count($requests));
+        $this->assertEquals('PUT', $requests[0]->getMethod());
+        $this->assertEquals('/', $requests[0]->getResource());
+        $this->assertEquals('bucket.s3.amazonaws.com', $requests[0]->getHost());
+        $this->assertContains('public-read', (string) $requests[0]);
+        $this->assertContains('authenticated-read', (string) $requests[1]);
+        $this->assertContains('private', (string) $requests[2]);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage Please specify a bucket
+     */
+    public function testCannotDeleteS3()
+    {
+        rmdir('s3://');
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage rmdir() only supports bucket deletion
+     */
+    public function testCannotDeleteKeyPrefix()
+    {
+        rmdir('s3://bucket/key');
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage 403 Forbidden
+     */
+    public function testRmDirWithExceptionTriggersError()
+    {
+        $this->setMockResponse($this->client, array(new Response(403)));
+        rmdir('s3://bucket');
+    }
+
+    public function testCanDeleteBucketWithRmDir()
+    {
+        $this->setMockResponse($this->client, array(new Response(204)));
+        $this->assertTrue(rmdir('s3://bucket'));
+        $requests = $this->getMockedRequests();
+        $this->assertEquals(1, count($requests));
+        $this->assertEquals('DELETE', $requests[0]->getMethod());
+        $this->assertEquals('/', $requests[0]->getResource());
+        $this->assertEquals('bucket.s3.amazonaws.com', $requests[0]->getHost());
     }
 }
