@@ -47,6 +47,7 @@ AWS SDK for PHP 2
     service-swf
 
     feature-waiters
+    feature-models
 
 The **AWS SDK for PHP** enables PHP developers to easily interface with AWS services and build solutions with Amazon
 Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP, developers can
@@ -109,3 +110,4 @@ SDK features in detail
 
 * :doc:`feature-dynamodb-session-handler`
 * :doc:`feature-waiters`
+* :doc:`feature-models`

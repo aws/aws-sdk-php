@@ -50,6 +50,8 @@ and what exceptions are thrown by calling the operation.
     // Wait until the bucket is created
     $client->waitUntil('BucketExists', array('Bucket' => $bucket));
 
+.. _qs-executing-commands:
+
 Executing commands
 ~~~~~~~~~~~~~~~~~~
 
@@ -76,6 +78,8 @@ before execution.
 
 .. code-block:: php
 
+    $glacier =
+
     $result = $client->getCommand('ListObjects')
         ->set('MaxKeys', 50)
         ->set('Prefix', 'foo/baz/')
@@ -93,36 +97,9 @@ It also allows for executing multiple commands in parallel.
 Response models
 ~~~~~~~~~~~~~~~
 
-The result of executing a command will always return a ``Guzzle\Service\Resource\Model`` response model object. This
-model can be used like an array and contains information about the JSON-schema structure of the model. Response models
-are populated by parsing an HTTP response and pulling values out of a response based on rules found in the service
-description of a client. You can use the API documentation of the SDK or directly reference the service description for
-a list of data available in the response model of an operation.
+.. include:: _snippets/models-intro.txt
 
-.. code-block:: php
-
-    $result = $client->getObject(array(
-        'Bucket' => 'my-bucket',
-        'Key'    => 'test.txt'
-    ));
-
-    echo get_class($result);
-    //> Guzzle\Service\Resource\Model
-
-    var_export($result->getKeys());
-    //> array('Body', 'DeleteMarker', 'Expiration', 'ContentLength', etc...)
-
-    echo $result['ContentLength']);
-    //> 6
-
-    echo $result['Body'];
-    //> hello!
-
-    echo $result->getPath('Metadata/CustomValue');
-    //> Testing123
-
-    var_export($result->getPath('Metadata/DoesNotExist'));
-    //> NULL
+To learn more about how to work with models, please read the detailed guide to :doc:`feature-models`.
 
 Using the service builder
 -------------------------

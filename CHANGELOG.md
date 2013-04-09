@@ -11,6 +11,7 @@ Next Release
 * Updated the Amazon RDS client to sign requests with Signature V4
 * [Docs] Added a page about Waiters to the user guide
 * [Docs] Added a page about the DynamoDB Session Handler to the user guide
+* [Docs] Added a page about response Models to the user guide
 
 2.2.1 (2013-03-18)
 ------------------
