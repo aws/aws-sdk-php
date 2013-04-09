@@ -306,8 +306,8 @@ class StreamWrapper
 
         try {
             try {
-                // Attemtp to stat and cache regular object
-                return $this->formatUrlStat(self::$client->headObject($parts));
+                // Attempt to stat and cache regular object
+                return $this->formatUrlStat(self::$client->headObject($parts)->toArray());
             } catch (NoSuchKeyException $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix listing of objects to determine.
                 $result = self::$client->listObjects(array(
@@ -420,6 +420,8 @@ class StreamWrapper
             'sort_results'    => true
         ));
 
+        $this->objectIterator->next();
+
         return true;
     }
 
@@ -443,9 +445,7 @@ class StreamWrapper
     public function dir_rewinddir()
     {
         $this->clearStatInfo();
-        if ($this->objectIterator) {
-            $this->objectIterator->rewind();
-        }
+        $this->objectIterator->rewind();
 
         return true;
     }
@@ -460,7 +460,7 @@ class StreamWrapper
     public function dir_readdir()
     {
         $result = false;
-        if ($this->objectIterator && $this->objectIterator->valid()) {
+        if ($this->objectIterator->valid()) {
             $current = $this->objectIterator->current();
             if (isset($current['Prefix'])) {
                 // Include "directories"
@@ -476,7 +476,6 @@ class StreamWrapper
 
             // Cache the object data for quick url_stat lookups used with RecursiveDirectoryIterator
             self::$nextStat = array($key => $stat);
-
             $this->objectIterator->next();
         }
 
@@ -508,7 +507,7 @@ class StreamWrapper
             self::$client->copyObject($this->getOptions() + array(
                 'Bucket' => $partsTo['Bucket'],
                 'Key' => $partsTo['Key'],
-                'CopySource' => $partsFrom['Bucket'] . '/' . rawurlencode($partsFrom['Key']),
+                'CopySource' => '/' . $partsFrom['Bucket'] . '/' . rawurlencode($partsFrom['Key']),
                 'MetadataDirective' => 'COPY'
             ));
             // Delete the original object
@@ -530,10 +529,8 @@ class StreamWrapper
      */
     protected function getOptions()
     {
-        if (null === $this->context) {
-            $this->context = stream_context_get_default();
-        }
-        $options = stream_context_get_options($this->context);
+        $context = $this->context ?: stream_context_get_default();
+        $options = stream_context_get_options($context);
 
         return isset($options['s3']) ? $options['s3'] : array();
     }
@@ -705,6 +702,8 @@ class StreamWrapper
             $stat['mtime'] = $stat[9] = $stat['ctime'] = $stat[10] = strtotime($result['LastModified']);
             $stat['size'] = $stat[7] = (isset($result['ContentLength']) ? $result['ContentLength'] : $result['Size']);
             // Regular file with 0777 access - see "man 2 stat".
+            $stat['mode'] = $stat[2] = 0100777;
+        } else {
             $stat['mode'] = $stat[2] = 0100777;
         }
 

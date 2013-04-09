@@ -329,4 +329,174 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('/', $requests[0]->getResource());
         $this->assertEquals('bucket.s3.amazonaws.com', $requests[0]->getHost());
     }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage The Amazon S3 stream wrapper only supports copying objects
+     */
+    public function testRenameEnsuresKeyIsSet()
+    {
+        rename('s3://foo/bar', 's3://baz');
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage Forbidden
+     */
+    public function testRenameWithExceptionThrowsError()
+    {
+        $this->setMockResponse($this->client, array(new Response(403)));
+        rename('s3://foo/bar', 's3://baz/bar');
+    }
+
+    public function testCanRenameObjects()
+    {
+        $this->setMockResponse($this->client, array(new Response(204), new Response(204)));
+        $this->assertTrue(rename('s3://bucket/key', 's3://other/new_key'));
+        $requests = $this->getMockedRequests();
+        $this->assertEquals(2, count($requests));
+        $this->assertEquals('PUT', $requests[0]->getMethod());
+        $this->assertEquals('/new_key', $requests[0]->getResource());
+        $this->assertEquals('other.s3.amazonaws.com', $requests[0]->getHost());
+        $this->assertEquals('/bucket/key', (string) $requests[0]->getHeader('x-amz-copy-source'));
+        $this->assertEquals('COPY', (string) $requests[0]->getHeader('x-amz-metadata-directive'));
+        $this->assertEquals('DELETE', $requests[1]->getMethod());
+        $this->assertEquals('/key', $requests[1]->getResource());
+        $this->assertEquals('bucket.s3.amazonaws.com', $requests[1]->getHost());
+    }
+
+    public function testCanRenameObjectsWithCustomSettings()
+    {
+        $this->setMockResponse($this->client, array(new Response(204), new Response(204)));
+        $this->assertTrue(rename('s3://bucket/key', 's3://other/new_key', stream_context_create(array(
+            's3' => array('MetadataDirective' => 'REPLACE')
+        ))));
+        $requests = $this->getMockedRequests();
+        $this->assertEquals(2, count($requests));
+        $this->assertEquals('PUT', $requests[0]->getMethod());
+        $this->assertEquals('/new_key', $requests[0]->getResource());
+        $this->assertEquals('other.s3.amazonaws.com', $requests[0]->getHost());
+        $this->assertEquals('/bucket/key', (string) $requests[0]->getHeader('x-amz-copy-source'));
+        $this->assertEquals('REPLACE', (string) $requests[0]->getHeader('x-amz-metadata-directive'));
+    }
+
+    public function testProvidesDirectoriesForS3()
+    {
+        $this->setMockResponse($this->client, array(
+            's3/list_objects_page_1',
+            's3/list_objects_page_2',
+            's3/list_objects_page_3',
+            's3/list_objects_page_4',
+            's3/list_objects_page_5',
+            's3/list_objects_page_1',
+            's3/list_objects_page_2',
+            's3/list_objects_page_3',
+            's3/list_objects_page_4',
+            's3/list_objects_page_5'
+        ));
+
+        $c = null;
+        $this->client->getEventDispatcher()->addListener('client.command.create', function ($e) use (&$c) {
+            $c = $e['command'];
+        });
+
+        $dir = 's3://bucket/key/';
+        $r = opendir($dir);
+        $this->assertInternalType('resource', $r);
+
+        // Ensure that the command was created correctly
+        $this->assertEquals('bucket', $c['Bucket']);
+        $this->assertEquals('/', $c['Delimiter']);
+        $this->assertEquals('key/', $c['Prefix']);
+
+        $files = array();
+        while (($file = readdir($r)) !== false) {
+            $files[] = $file;
+        }
+
+        // This is the order that the mock responses should provide
+        $expected = array('a/', 'b/', 'c', 'd/','e', 'f', 'g/');
+
+        $this->assertEquals($expected, $files);
+        $this->assertEquals(5, count($this->getMockedRequests()));
+
+        rewinddir($r);
+        $files = array();
+        while (($file = readdir($r)) !== false) {
+            $files[] = $file;
+        }
+        $this->assertEquals($expected, $files);
+        $this->assertEquals(10, count($this->getMockedRequests()));
+
+        closedir($r);
+    }
+
+    public function testStatS3andBuckets()
+    {
+        clearstatcache('s3://');
+        $stat = stat('s3://');
+        $this->assertEquals(0040777, $stat['mode']);
+
+        $this->setMockResponse($this->client, array(new Response(200)));
+        clearstatcache('s3://bucket');
+        $stat = stat('s3://bucket');
+        $this->assertEquals(0040777, $stat['mode']);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage Forbidden
+     */
+    public function testFailingStatTriggersError()
+    {
+        $this->setMockResponse($this->client, array(new Response(403)));
+        clearstatcache('s3://bucket/key');
+        stat('s3://bucket/key');
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage File or directory not found: s3://bucket
+     */
+    public function testBucketNotFoundTriggersError()
+    {
+        $this->setMockResponse($this->client, array(new Response(404)));
+        $this->setMockResponse($this->client, array(new Response(404)));
+        clearstatcache('s3://bucket');
+        stat('s3://bucket');
+    }
+
+    public function testStatsRegularObjects()
+    {
+        $ts = strtotime('Tuesday, April 9 2013');
+        $this->setMockResponse($this->client, array(new Response(200, array(
+            'Content-Length' => 5,
+            'Last-Modified'  => gmdate('r', $ts)
+        ))));
+        clearstatcache('s3://bucket/key');
+        $stat = stat('s3://bucket/key');
+        $this->assertEquals(0100777, $stat['mode']);
+        $this->assertEquals(5, $stat['size']);
+        $this->assertEquals($ts, $stat['mtime']);
+        $this->assertEquals($ts, $stat['ctime']);
+    }
+
+    public function testCanStatPrefix()
+    {
+        $this->setMockResponse($this->client, array('s3/head_failure', 's3/list_objects_page_5'));
+        clearstatcache('s3://bucket/prefix');
+        $stat = stat('s3://bucket/prefix');
+        $this->assertEquals(0040777, $stat['mode']);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage File or directory not found: s3://bucket/prefix
+     */
+    public function testCannotStatPrefixWithNoResults()
+    {
+        $this->setMockResponse($this->client, array('s3/head_failure', 's3/head_success'));
+        clearstatcache('s3://bucket/prefix');
+        stat('s3://bucket/prefix');
+    }
 }
