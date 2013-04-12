@@ -258,16 +258,17 @@ and ``delete()`` methods of a client object to easily create a Guzzle request ob
 
 .. example:: S3/Integration/S3_20060301_Test.php testCreatePresignedUrl
 
-Using the stream wrapper
+Amazon S3 stream wrapper
 ------------------------
 
 The Amazon S3 stream wrapper allows you to store and retrieve data from Amazon S3 using built-in PHP functions like
-``file_get_contents``, ``fopen``, ``copy``, ``rename``, ``unlink``, ``mkdir``, etc.
+``file_get_contents``, ``fopen``, ``copy``, ``rename``, ``unlink``, ``mkdir``, ``rmdir``, etc.
 
 You need to register the Amazon S3 stream wrapper in order to use it:
 
 .. code-block:: php
 
+    // Register the stream wrapper from an S3Client object
     $client->registerStreamWrapper();
 
 This allows you to access buckets and objects stored in Amazon S3 using the ``s3://`` protocol. The "s3" stream wrapper
@@ -305,8 +306,8 @@ Opening Seekable streams
 
 Streams opened in "r" mode only allow data to be read from the stream, and are not seekable by default. This is so that
 data can be downloaded from Amazon S3 in a truly streaming manner where previously read bytes do not need to be
-buffered into memory. If you need the stream to be seekable, you can pass ``seekable`` into the `stream context
-settings <http://www.php.net/manual/en/function.stream-context-create.php>`_.
+buffered into memory. If you need a stream to be seekable, you can pass ``seekable`` into the `stream context
+options <http://www.php.net/manual/en/function.stream-context-create.php>`_ of a function.
 
 .. code-block:: php
 
@@ -343,8 +344,8 @@ Data can be uploaded to Amazon S3 using ``file_put_contents()``.
     file_put_contents('s3://bucket/key', 'Hello!');
 
 You can upload larger files by streaming data using ``fopen()`` and a "w", "x", or "a" stream access mode. The Amazon
-S3 stream wrapper does not support simultaneous read and write streams (e.g. "r+", "w+", etc). This is because the HTTP
-protocol does not allow simultaneous reading and writing.
+S3 stream wrapper does **not** support simultaneous read and write streams (e.g. "r+", "w+", etc). This is because the
+HTTP protocol does not allow simultaneous reading and writing.
 
 .. code-block:: php
 
@@ -355,7 +356,8 @@ protocol does not allow simultaneous reading and writing.
 .. note::
 
     Because Amazon S3 requires a Content-Length header to be specified before the payload of a request is sent, the
-    data to be uploaded in a PutObject operation must be buffered using a PHP temp stream.
+    data to be uploaded in a PutObject operation is internally buffered using a PHP temp stream until the stream is
+    flushed or closed.
 
 fopen modes
 ~~~~~~~~~~~
@@ -379,13 +381,22 @@ Stream wrappers allow many different built-in PHP functions to work with a custo
 of the functions that the Amazon S3 stream wrapper allows you to perform with objects stored in Amazon S3.
 
 =============== ========================================================================================================
-unlink()        Delete an object from a bucket. You can pass in any options available to the ``DeleteObject`` operation
-                to modify how the object is deleted (e.g. specifying a specific object version).
+unlink()        Delete an object from a bucket.
 
                 .. code-block:: php
 
                     // Delete an object from a bucket
                     unlink('s3://bucket/key');
+
+                You can pass in any options available to the ``DeleteObject`` operation to modify how the object is
+                deleted (e.g. specifying a specific object version).
+
+                .. code-block:: php
+
+                    // Delete a specific version of an object from a bucket
+                    unlink('s3://bucket/key', stream_context_create(array(
+                        's3' => array('VersionId' => '123')
+                    ));
 
 filesize()      Get the size of an object.
 
@@ -410,12 +421,10 @@ file_exists()   Checks if an object exists.
                         echo 'It exists!';
                     }
 
-filetype()      Checks if a URL maps to a file or bucket. You can pass in any options available to the
-                ``HeadObject`` operation to modify how the data is retrieved.
+filetype()      Checks if a URL maps to a file or bucket (dir).
 file()          Load the contents of an object in an array of lines. You can pass in any options available to the
                 ``GetObject`` operation to modify how the file is downloaded.
-filemtime()     Get the last modified date of an object. You can pass in any options available to the ``HeadObject``
-                operation as stream context parameters.
+filemtime()     Get the last modified date of an object.
 rename()        Rename an object by copying the object then deleting the original. You can pass in options available to
                 the ``CopyObject`` and ``DeleteObject`` operations to the stream context parameters to modify how the
                 object is copied and deleted.
@@ -463,7 +472,7 @@ You can delete buckets using the ``rmdir()`` function.
 
 .. note::
 
-    A bucket can only be deleted if it is empty
+    A bucket can only be deleted if it is empty.
 
 Listing the contents of a bucket
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
