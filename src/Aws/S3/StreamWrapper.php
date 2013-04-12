@@ -42,8 +42,7 @@ use Guzzle\Service\Command\CommandInterface;
  * You may pass any PutObject parameters as 's3' stream context options. These options will affect how the data is
  * uploaded to Amazon S3.
  *
- * When opening an "x" stream, the file must exist on Amazon S3 for the stream to open successfully. You can also
- * specify
+ * When opening an "x" stream, the file must exist on Amazon S3 for the stream to open successfully.
  *
  * # Opening "a" (write only append) streams:
  *
