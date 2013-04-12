@@ -61,7 +61,8 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testSignsRequestsProperly($group)
     {
-        ParserRegistry::get('url')->setUtf8Support(true);
+        $parser = ParserRegistry::getInstance()->getParser('url');
+        $parser->setUtf8Support(true);
 
         // Create a request based on the '.req' file
         $requestString = file_get_contents($group['req']);
@@ -91,7 +92,7 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         // Test that the authorization header is correct
         $this->assertEquals(str_replace("\r", '', file_get_contents($group['authz'])), $request->getHeader('Authorization'));
 
-        ParserRegistry::get('url')->setUtf8Support(false);
+        $parser->setUtf8Support(false);
     }
 
     /**
@@ -185,11 +186,12 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @covers Aws\Common\Signature\SignatureV4::setMaxCacheSize
      * @covers Aws\Common\Signature\SignatureV4::signRequest
+     * @covers Aws\Common\Signature\SignatureV4::getSigningKey
      */
     public function testMaintainsCappedCache()
     {
         $signature = $this->getSignature();
-        $signature->setMaxCacheSize(8);
+        $signature->setMaxCacheSize(3);
         $request = new Request('GET', 'http://www.example.com');
 
         $credentials = new Credentials('fizz', 'buzz');
@@ -203,5 +205,9 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $credentials = new Credentials('fizz', 'paz');
         $signature->signRequest($request, $credentials);
         $this->assertEquals(3, count($this->readAttribute($signature, 'hashCache')));
+
+        $credentials = new Credentials('fizz', 'foobar');
+        $signature->signRequest($request, $credentials);
+        $this->assertEquals(1, count($this->readAttribute($signature, 'hashCache')));
     }
 }
