@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * Exception that occurs when a ResourceInUseException error is encountered
+ * The operation conflicts with the resource&#039;s availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the CREATING state.
  */
 class ResourceInUseException extends DynamoDbException {}

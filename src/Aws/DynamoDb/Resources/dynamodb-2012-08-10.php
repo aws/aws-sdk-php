@@ -79,6 +79,7 @@ return array (
             'responseClass' => 'BatchGetItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'The BatchGetItem operation returns the attributes for multiple items from multiple tables using their primary keys. The maximum number of items that can be retrieved for a single operation is 100. Also, the number of items retrieved is constrained by a 1 MB size limit. If the response size limit is exceeded or a partial result is returned because the table’s provisioned throughput is exceeded, or because of an internal processing failure, Amazon DynamoDB returns an UnprocessedKeys value so you can retry the operation starting with the next item to get. Amazon DynamoDB automatically adjusts the number of items returned per page to enforce this limit. For example, even if you ask to retrieve 100 items, but each individual item is 50 KB in size, the system returns 20 items and an appropriate UnprocessedKeys value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one set.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -96,9 +97,11 @@ return array (
                 ),
                 'RequestItems' => array(
                     'required' => true,
+                    'description' => 'A map of one or more table names and, for each table, the corresponding primary keys for the items to retrieve. While requesting items, each table name can be invoked only once per operation.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents a set of primary keys and, for each key, the attributes to retrieve from the table.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'TableName',
@@ -107,6 +110,7 @@ return array (
                         'properties' => array(
                             'Keys' => array(
                                 'required' => true,
+                                'description' => 'Represents the primary key attribute values that define the items and the attributes associated with the items.',
                                 'type' => 'array',
                                 'minItems' => 1,
                                 'maxItems' => 100,
@@ -114,24 +118,29 @@ return array (
                                     'name' => 'Key',
                                     'type' => 'object',
                                     'additionalProperties' => array(
+                                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                         'type' => 'object',
                                         'data' => array(
                                             'shape_name' => 'AttributeName',
                                         ),
                                         'properties' => array(
                                             'S' => array(
+                                                'description' => 'Represents a String data type',
                                                 'type' => 'string',
                                             ),
                                             'N' => array(
+                                                'description' => 'Represents a Number data type',
                                                 'type' => 'string',
                                             ),
                                             'B' => array(
+                                                'description' => 'Represents a Binary data type',
                                                 'type' => 'string',
                                                 'filters' => array(
                                                     'base64_encode',
                                                 ),
                                             ),
                                             'SS' => array(
+                                                'description' => 'Represents a String set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'StringAttributeValue',
@@ -139,6 +148,7 @@ return array (
                                                 ),
                                             ),
                                             'NS' => array(
+                                                'description' => 'Represents a Number set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NumberAttributeValue',
@@ -146,6 +156,7 @@ return array (
                                                 ),
                                             ),
                                             'BS' => array(
+                                                'description' => 'Represents a Binary set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'BinaryAttributeValue',
@@ -160,6 +171,7 @@ return array (
                                 ),
                             ),
                             'AttributesToGet' => array(
+                                'description' => 'Represents one or more attributes to retrieve from the table or index. If no attribute names are specified then all attributes will be returned. If any of the specified attributes are not found, they will not appear in the result.',
                                 'type' => 'array',
                                 'minItems' => 1,
                                 'items' => array(
@@ -168,6 +180,7 @@ return array (
                                 ),
                             ),
                             'ConsistentRead' => array(
+                                'description' => 'Represents the consistency of a read operation. If set to true, then a strongly consistent read is used; otherwise, an eventually consistent read is used.',
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
@@ -185,12 +198,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -202,6 +218,7 @@ return array (
             'responseClass' => 'BatchWriteItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This operation enables you to put or delete several items across multiple tables in a single API call.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -219,6 +236,7 @@ return array (
                 ),
                 'RequestItems' => array(
                     'required' => true,
+                    'description' => 'A map of one or more table names and, for each table, a list of operations to perform (DeleteRequest or PutRequest).',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -231,33 +249,41 @@ return array (
                         ),
                         'items' => array(
                             'name' => 'WriteRequest',
+                            'description' => 'Represents an operation to perform - either DeleteItem or PutItem. You can only specify one of these operations, not both, in a single WriteRequest. If you do need to perform both of these operations, you will need to specify two separate WriteRequest objects.',
                             'type' => 'object',
                             'properties' => array(
                                 'PutRequest' => array(
+                                    'description' => 'Represents a request to perform a DeleteItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Item' => array(
                                             'required' => true,
+                                            'description' => 'A map of attribute name to attribute values, representing the primary key of an item to be processed by PutItem. All of the table\'s primary key attributes must be specified, and their data types must match those of the table\'s key schema. If any attributes are present in the item which are part of an index key schema for the table, their types must match the index key schema.',
                                             'type' => 'object',
                                             'additionalProperties' => array(
+                                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                                 'type' => 'object',
                                                 'data' => array(
                                                     'shape_name' => 'AttributeName',
                                                 ),
                                                 'properties' => array(
                                                     'S' => array(
+                                                        'description' => 'Represents a String data type',
                                                         'type' => 'string',
                                                     ),
                                                     'N' => array(
+                                                        'description' => 'Represents a Number data type',
                                                         'type' => 'string',
                                                     ),
                                                     'B' => array(
+                                                        'description' => 'Represents a Binary data type',
                                                         'type' => 'string',
                                                         'filters' => array(
                                                             'base64_encode',
                                                         ),
                                                     ),
                                                     'SS' => array(
+                                                        'description' => 'Represents a String set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'StringAttributeValue',
@@ -265,6 +291,7 @@ return array (
                                                         ),
                                                     ),
                                                     'NS' => array(
+                                                        'description' => 'Represents a Number set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'NumberAttributeValue',
@@ -272,6 +299,7 @@ return array (
                                                         ),
                                                     ),
                                                     'BS' => array(
+                                                        'description' => 'Represents a Binary set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
@@ -287,30 +315,37 @@ return array (
                                     ),
                                 ),
                                 'DeleteRequest' => array(
+                                    'description' => 'Represents a request to perform a PutItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Key' => array(
                                             'required' => true,
+                                            'description' => 'A map of attribute name to attribute values, representing the primary key of the item to delete. All of the table\'s primary key attributes must be specified, and their data types must match those of the table\'s key schema.',
                                             'type' => 'object',
                                             'additionalProperties' => array(
+                                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                                 'type' => 'object',
                                                 'data' => array(
                                                     'shape_name' => 'AttributeName',
                                                 ),
                                                 'properties' => array(
                                                     'S' => array(
+                                                        'description' => 'Represents a String data type',
                                                         'type' => 'string',
                                                     ),
                                                     'N' => array(
+                                                        'description' => 'Represents a Number data type',
                                                         'type' => 'string',
                                                     ),
                                                     'B' => array(
+                                                        'description' => 'Represents a Binary data type',
                                                         'type' => 'string',
                                                         'filters' => array(
                                                             'base64_encode',
                                                         ),
                                                     ),
                                                     'SS' => array(
+                                                        'description' => 'Represents a String set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'StringAttributeValue',
@@ -318,6 +353,7 @@ return array (
                                                         ),
                                                     ),
                                                     'NS' => array(
+                                                        'description' => 'Represents a Number set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'NumberAttributeValue',
@@ -325,6 +361,7 @@ return array (
                                                         ),
                                                     ),
                                                     'BS' => array(
+                                                        'description' => 'Represents a Binary set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
@@ -352,6 +389,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
+                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -362,15 +400,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.',
                     'class' => 'ItemCollectionSizeLimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -382,6 +424,7 @@ return array (
             'responseClass' => 'CreateTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'The CreateTable operation adds a new table to your account. In an AWS account, table names must be unique within each region. That is, you can have two tables with same name if you create the tables in different regions.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -399,20 +442,24 @@ return array (
                 ),
                 'AttributeDefinitions' => array(
                     'required' => true,
+                    'description' => 'An array of attributes that describe the key schema for the table and indexes.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'AttributeDefinition',
+                        'description' => 'Specifies an attribute for describing the key schema for the table and indexes.',
                         'type' => 'object',
                         'properties' => array(
                             'AttributeName' => array(
                                 'required' => true,
+                                'description' => 'A name for the attribute.',
                                 'type' => 'string',
                                 'minLength' => 1,
                                 'maxLength' => 255,
                             ),
                             'AttributeType' => array(
                                 'required' => true,
+                                'description' => 'The data type for the attribute.',
                                 'type' => 'string',
                                 'enum' => array(
                                     'S',
@@ -425,6 +472,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table to create.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -432,22 +480,26 @@ return array (
                 ),
                 'KeySchema' => array(
                     'required' => true,
+                    'description' => 'Specifies the attributes that make up the primary key for the table. The attributes in KeySchema must also be defined in the AttributeDefinitions array. For more information, see Data Model of the Amazon DynamoDB Developer Guide.',
                     'type' => 'array',
                     'location' => 'json',
                     'minItems' => 1,
                     'maxItems' => 2,
                     'items' => array(
                         'name' => 'KeySchemaElement',
+                        'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                         'type' => 'object',
                         'properties' => array(
                             'AttributeName' => array(
                                 'required' => true,
+                                'description' => 'Represents the name of a key attribute.',
                                 'type' => 'string',
                                 'minLength' => 1,
                                 'maxLength' => 255,
                             ),
                             'KeyType' => array(
                                 'required' => true,
+                                'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                 'type' => 'string',
                                 'enum' => array(
                                     'HASH',
@@ -458,35 +510,42 @@ return array (
                     ),
                 ),
                 'LocalSecondaryIndexes' => array(
+                    'description' => 'One or more secondary indexes to be created on the table. Each index is scoped to a given hash key value. There is a 10 gigabyte size limit per hash key; otherwise, the size of a local secondary index is unconstrained.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'LocalSecondaryIndex',
+                        'description' => 'Represents a local secondary index.',
                         'type' => 'object',
                         'properties' => array(
                             'IndexName' => array(
                                 'required' => true,
+                                'description' => 'Represents the name of the secondary index. The name must be unique among all other indexes on this table.',
                                 'type' => 'string',
                                 'minLength' => 3,
                                 'maxLength' => 255,
                             ),
                             'KeySchema' => array(
                                 'required' => true,
+                                'description' => 'Represents the complete index key schema, which consists of one or more pairs of attribute names and key types (HASH or RANGE).',
                                 'type' => 'array',
                                 'minItems' => 1,
                                 'maxItems' => 2,
                                 'items' => array(
                                     'name' => 'KeySchemaElement',
+                                    'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'AttributeName' => array(
                                             'required' => true,
+                                            'description' => 'Represents the name of a key attribute.',
                                             'type' => 'string',
                                             'minLength' => 1,
                                             'maxLength' => 255,
                                         ),
                                         'KeyType' => array(
                                             'required' => true,
+                                            'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                             'type' => 'string',
                                             'enum' => array(
                                                 'HASH',
@@ -501,6 +560,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'ProjectionType' => array(
+                                        'description' => 'Represents the set of attributes that are projected into the index:',
                                         'type' => 'string',
                                         'enum' => array(
                                             'ALL',
@@ -509,6 +569,7 @@ return array (
                                         ),
                                     ),
                                     'NonKeyAttributes' => array(
+                                        'description' => 'Represents the non-key attribute names which will be projected into the index.',
                                         'type' => 'array',
                                         'minItems' => 1,
                                         'maxItems' => 20,
@@ -531,11 +592,13 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
+                            'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
                         'WriteCapacityUnits' => array(
                             'required' => true,
+                            'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -544,12 +607,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The operation conflicts with the resource\'s availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the CREATING state.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -561,6 +627,7 @@ return array (
             'responseClass' => 'DeleteItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Deletes a single item in a table by primary key. You can perform a conditional delete operation that deletes the item if it exists, or if it has an expected attribute value.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -578,6 +645,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table from which to delete the item.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -585,27 +653,33 @@ return array (
                 ),
                 'Key' => array(
                     'required' => true,
+                    'description' => 'A map of attribute names to AttributeValue objects, representing the primary key of the item to delete.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
                                 ),
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -613,6 +687,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -620,6 +695,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -633,9 +709,11 @@ return array (
                     ),
                 ),
                 'Expected' => array(
+                    'description' => 'A map of attribute/condition pairs. This is the conditional block for the DeleteItemoperation. All the conditions must be met for the operation to succeed.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'An attribute value used with conditional DeleteItem, PutItem or UpdateItem operations. Amazon DynamoDB will check to see if the attribute value already exists; or if the attribute exists and has a particular value before updating it.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
@@ -645,18 +723,22 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
                                         ),
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -664,6 +746,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -671,6 +754,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -683,6 +767,7 @@ return array (
                                 ),
                             ),
                             'Exists' => array(
+                                'description' => 'Causes Amazon DynamoDB to evaluate the value before attempting a conditional operation:',
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
@@ -690,6 +775,7 @@ return array (
                     ),
                 ),
                 'ReturnValues' => array(
+                    'description' => 'Use ReturnValues if you want to get the item attributes as they appeared before they were deleted. For DeleteItem, the valid values are:',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -709,6 +795,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
+                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -719,18 +806,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A condition specified in the operation could not be evaluated.',
                     'class' => 'ConditionalCheckFailedException',
                 ),
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.',
                     'class' => 'ItemCollectionSizeLimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -742,6 +834,7 @@ return array (
             'responseClass' => 'DeleteTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'The DeleteTable operation deletes a table and all of its items. After a DeleteTable request, the specified table is in the DELETING state until Amazon DynamoDB completes the deletion. If the table is in the ACTIVE state, you can delete it. If a table is in CREATING or UPDATING states, then Amazon DynamoDB returns a ResourceInUseException. If the specified table does not exist, Amazon DynamoDB returns a ResourceNotFoundException. If table is already in the DELETING state, no error is returned.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -759,6 +852,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table to delete.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -767,15 +861,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The operation conflicts with the resource\'s availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the CREATING state.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -787,6 +885,7 @@ return array (
             'responseClass' => 'DescribeTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Returns information about the table, including the current status of the table, when it was created, the primary key schema,and any indexes on the table.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -804,6 +903,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table to describe.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -812,9 +912,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -826,6 +928,7 @@ return array (
             'responseClass' => 'GetItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'The GetItem operation returns a set of attributes for the item with the given primary key. If there is no matching item, GetItem does not return any data.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -843,6 +946,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table containing the requested item.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -850,27 +954,33 @@ return array (
                 ),
                 'Key' => array(
                     'required' => true,
+                    'description' => 'A map of attribute names to AttributeValue objects, representing the primary key of the item to retrieve.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
                                 ),
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -878,6 +988,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -885,6 +996,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -898,6 +1010,7 @@ return array (
                     ),
                 ),
                 'AttributesToGet' => array(
+                    'description' => 'The names of one or more attributes to retrieve. If no attribute names are specified, then all attributes will be returned. If any of the requested attributes are not found, they will not appear in the result.',
                     'type' => 'array',
                     'location' => 'json',
                     'minItems' => 1,
@@ -907,6 +1020,7 @@ return array (
                     ),
                 ),
                 'ConsistentRead' => array(
+                    'description' => 'If set to true, then the operation uses strongly consistent reads; otherwise, eventually consistent reads are used.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -922,12 +1036,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -939,6 +1056,7 @@ return array (
             'responseClass' => 'ListTablesOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Returns an array of all the tables associated with the current account and endpoint.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -955,12 +1073,14 @@ return array (
                     'default' => 'DynamoDB_20120810.ListTables',
                 ),
                 'ExclusiveStartTableName' => array(
+                    'description' => 'The name of the table that starts the list. If you already ran a ListTables operation and received a LastEvaluatedTableName value in the response, use that value here to continue the list.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
                     'maxLength' => 255,
                 ),
                 'Limit' => array(
+                    'description' => 'A maximum number of table names to return.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
@@ -969,6 +1089,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -980,6 +1101,7 @@ return array (
             'responseClass' => 'PutItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Creates a new item, or replaces an old item with a new item. If an item already exists in the specified table with the same primary key, the new item completely replaces the existing item. You can perform a conditional put (insert a new item if one with the specified primary key doesn\'t exist), or replace an existing item if it has certain attribute values.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -997,6 +1119,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table to contain the item.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -1004,27 +1127,33 @@ return array (
                 ),
                 'Item' => array(
                     'required' => true,
+                    'description' => 'A map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
                                 ),
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -1032,6 +1161,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -1039,6 +1169,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -1052,9 +1183,11 @@ return array (
                     ),
                 ),
                 'Expected' => array(
+                    'description' => 'A map of attribute/condition pairs. This is the conditional block for the PutItem operation. All the conditions must be met for the operation to succeed.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'An attribute value used with conditional DeleteItem, PutItem or UpdateItem operations. Amazon DynamoDB will check to see if the attribute value already exists; or if the attribute exists and has a particular value before updating it.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
@@ -1064,18 +1197,22 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
                                         ),
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -1083,6 +1220,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -1090,6 +1228,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -1102,6 +1241,7 @@ return array (
                                 ),
                             ),
                             'Exists' => array(
+                                'description' => 'Causes Amazon DynamoDB to evaluate the value before attempting a conditional operation:',
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
@@ -1109,6 +1249,7 @@ return array (
                     ),
                 ),
                 'ReturnValues' => array(
+                    'description' => 'Use ReturnValues if you want to get the item attributes as they appeared before they were updated with the PutItem request. For PutItem, the valid values are:',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1128,6 +1269,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
+                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1138,18 +1280,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A condition specified in the operation could not be evaluated.',
                     'class' => 'ConditionalCheckFailedException',
                 ),
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.',
                     'class' => 'ItemCollectionSizeLimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1161,6 +1308,7 @@ return array (
             'responseClass' => 'QueryOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'A Query operation directly accesses items from a table using the table primary key, or from an index using the index key. You must provide a specific hash key value. You can narrow the scope of the query by using comparison operators on the range key value, or on the index key. You can use the ScanIndexForward parameter to get results in forward or reverse order, by range key or by index key.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1178,18 +1326,21 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table containing the requested items.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
                     'maxLength' => 255,
                 ),
                 'IndexName' => array(
+                    'description' => 'The name of an index on the table to query.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
                     'maxLength' => 255,
                 ),
                 'Select' => array(
+                    'description' => 'The attributes to be returned in the result. You can retrieve all item attributes, specific item attributes, the count of matching items, or in the case of an index, some or all of the attributes projected into the index.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1200,6 +1351,7 @@ return array (
                     ),
                 ),
                 'AttributesToGet' => array(
+                    'description' => 'The names of one or more attributes to retrieve. If no attribute names are specified, then all attributes will be returned. If any of the requested attributes are not found, they will not appear in the result.',
                     'type' => 'array',
                     'location' => 'json',
                     'minItems' => 1,
@@ -1209,43 +1361,53 @@ return array (
                     ),
                 ),
                 'Limit' => array(
+                    'description' => 'The maximum number of items to evaluate (not necessarily the number of matching items). If Amazon DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, and a LastEvaluatedKey to apply in a subsequent operation, so that you can pick up where you left off. Also, if the processed data set size exceeds 1 MB before Amazon DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the operation. For more information see Query and Scan of the Amazon DynamoDB Developer Guide.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
                 ),
                 'ConsistentRead' => array(
+                    'description' => 'If set to true, then the operation uses strongly consistent reads; otherwise, eventually consistent reads are used.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
                 'KeyConditions' => array(
+                    'description' => 'The selection criteria for the query.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents a selection criteria for a Query or Scan operation.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'AttributeValueList' => array(
+                                'description' => 'Represents one or more values to evaluate against the supplied attribute. This list contains exactly one value, except for a BETWEEN or IN comparison, in which case the list contains two values.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'AttributeValue',
+                                    'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'S' => array(
+                                            'description' => 'Represents a String data type',
                                             'type' => 'string',
                                         ),
                                         'N' => array(
+                                            'description' => 'Represents a Number data type',
                                             'type' => 'string',
                                         ),
                                         'B' => array(
+                                            'description' => 'Represents a Binary data type',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
                                             ),
                                         ),
                                         'SS' => array(
+                                            'description' => 'Represents a String set data type',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'StringAttributeValue',
@@ -1253,6 +1415,7 @@ return array (
                                             ),
                                         ),
                                         'NS' => array(
+                                            'description' => 'Represents a Number set data type',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'NumberAttributeValue',
@@ -1260,6 +1423,7 @@ return array (
                                             ),
                                         ),
                                         'BS' => array(
+                                            'description' => 'Represents a Binary set data type',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'BinaryAttributeValue',
@@ -1274,6 +1438,7 @@ return array (
                             ),
                             'ComparisonOperator' => array(
                                 'required' => true,
+                                'description' => 'Represents a comparator for evaluating attributes. For example, equals, greater than, less than, etc.',
                                 'type' => 'string',
                                 'enum' => array(
                                     'EQ',
@@ -1295,32 +1460,39 @@ return array (
                     ),
                 ),
                 'ScanIndexForward' => array(
+                    'description' => 'Specifies ascending (true) or descending (false) traversal of the index. Amazon DynamoDB returns results reflecting the requested order determined by the range key: If the data type is Number, the results are returned in numeric order; otherwise, the results are returned in order of ASCII character code values.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
                 'ExclusiveStartKey' => array(
+                    'description' => 'The primary key of the item from which to continue an earlier operation. An earlier operation might provide this value as the LastEvaluatedKey if that operation was interrupted before completion; either because of the result set size or because of the setting for Limit. The LastEvaluatedKey can be passed back in a new request to continue the operation from that point.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
                                 ),
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -1328,6 +1500,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -1335,6 +1508,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -1358,12 +1532,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1375,6 +1552,7 @@ return array (
             'responseClass' => 'ScanOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'The Scan operation returns one or more items and item attributes by accessing every item in the table. To have Amazon DynamoDB return fewer items, you can provide a ScanFilter.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1392,12 +1570,14 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table containing the requested items.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
                     'maxLength' => 255,
                 ),
                 'AttributesToGet' => array(
+                    'description' => 'The names of one or more attributes to retrieve. If no attribute names are specified, then all attributes will be returned. If any of the requested attributes are not found, they will not appear in the result.',
                     'type' => 'array',
                     'location' => 'json',
                     'minItems' => 1,
@@ -1407,11 +1587,13 @@ return array (
                     ),
                 ),
                 'Limit' => array(
+                    'description' => 'The maximum number of items to evaluate (not necessarily the number of matching items). If Amazon DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, and a LastEvaluatedKey to apply in a subsequent operation, so that you can pick up where you left off. Also, if the processed data set size exceeds 1 MB before Amazon DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the operation. For more information see Query and Scan of the Amazon DynamoDB Developer Guide.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
                 ),
                 'Select' => array(
+                    'description' => 'The attributes to be returned in the result. You can retrieve all item attributes, specific item attributes, the count of matching items, or in the case of an index, some or all of the attributes projected into the index.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1422,33 +1604,41 @@ return array (
                     ),
                 ),
                 'ScanFilter' => array(
+                    'description' => 'Evaluates the scan results and returns only the desired values. Multiple conditions are treated as "AND" operations: all conditions must be met to be included in the results.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents a selection criteria for a Query or Scan operation.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'AttributeValueList' => array(
+                                'description' => 'Represents one or more values to evaluate against the supplied attribute. This list contains exactly one value, except for a BETWEEN or IN comparison, in which case the list contains two values.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'AttributeValue',
+                                    'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'S' => array(
+                                            'description' => 'Represents a String data type',
                                             'type' => 'string',
                                         ),
                                         'N' => array(
+                                            'description' => 'Represents a Number data type',
                                             'type' => 'string',
                                         ),
                                         'B' => array(
+                                            'description' => 'Represents a Binary data type',
                                             'type' => 'string',
                                             'filters' => array(
                                                 'base64_encode',
                                             ),
                                         ),
                                         'SS' => array(
+                                            'description' => 'Represents a String set data type',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'StringAttributeValue',
@@ -1456,6 +1646,7 @@ return array (
                                             ),
                                         ),
                                         'NS' => array(
+                                            'description' => 'Represents a Number set data type',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'NumberAttributeValue',
@@ -1463,6 +1654,7 @@ return array (
                                             ),
                                         ),
                                         'BS' => array(
+                                            'description' => 'Represents a Binary set data type',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'BinaryAttributeValue',
@@ -1477,6 +1669,7 @@ return array (
                             ),
                             'ComparisonOperator' => array(
                                 'required' => true,
+                                'description' => 'Represents a comparator for evaluating attributes. For example, equals, greater than, less than, etc.',
                                 'type' => 'string',
                                 'enum' => array(
                                     'EQ',
@@ -1498,27 +1691,33 @@ return array (
                     ),
                 ),
                 'ExclusiveStartKey' => array(
+                    'description' => 'The primary key of the item from which to continue an earlier operation. An earlier operation might provide this value as the LastEvaluatedKey if that operation was interrupted before completion; either because of the result set size or because of the setting for Limit. The LastEvaluatedKey can be passed back in a new request to continue the operation from that point.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
                                 ),
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -1526,6 +1725,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -1533,6 +1733,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -1556,12 +1757,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1573,6 +1777,7 @@ return array (
             'responseClass' => 'UpdateItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Edits an existing item\'s attributes, or inserts a new item if it does not already exist. You can put, delete, or add attribute values. You can also perform a conditional update (insert a new attribute name-value pair if it doesn\'t exist, or replace an existing name-value pair if it has certain expected attribute values).',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1590,6 +1795,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table containing the item to update.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -1597,27 +1803,33 @@ return array (
                 ),
                 'Key' => array(
                     'required' => true,
+                    'description' => 'The primary key that defines the item. Each element consists of an attribute name and a value for that attribute.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
                         ),
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                                 'filters' => array(
                                     'base64_encode',
                                 ),
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -1625,6 +1837,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -1632,6 +1845,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -1645,9 +1859,11 @@ return array (
                     ),
                 ),
                 'AttributeUpdates' => array(
+                    'description' => 'The names of attributes to be modified, the action to perform on each, and the new value for each. If you are updating an attribute that is an index key attribute for any indexes on that table, the attribute type must match the index key type defined in the AttributesDefinition of the table description. You can use UpdateItem to update any non-key attributes.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'For the UpdateItem operation, represents the attributes to be modified,the action to perform on each, and the new value for each.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
@@ -1657,18 +1873,22 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
                                         ),
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -1676,6 +1896,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -1683,6 +1904,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -1695,6 +1917,7 @@ return array (
                                 ),
                             ),
                             'Action' => array(
+                                'description' => 'Specifies how to perform the update. Valid values are PUT, DELETE, and ADD. The behavior depends on whether the specified primary key already exists in the table.',
                                 'type' => 'string',
                                 'enum' => array(
                                     'ADD',
@@ -1706,9 +1929,11 @@ return array (
                     ),
                 ),
                 'Expected' => array(
+                    'description' => 'A map of attribute/condition pairs. This is the conditional block for the UpdateItem operation. All the conditions must be met for the operation to succeed.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'An attribute value used with conditional DeleteItem, PutItem or UpdateItem operations. Amazon DynamoDB will check to see if the attribute value already exists; or if the attribute exists and has a particular value before updating it.',
                         'type' => 'object',
                         'data' => array(
                             'shape_name' => 'AttributeName',
@@ -1718,18 +1943,22 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                         'filters' => array(
                                             'base64_encode',
                                         ),
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -1737,6 +1966,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -1744,6 +1974,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -1756,6 +1987,7 @@ return array (
                                 ),
                             ),
                             'Exists' => array(
+                                'description' => 'Causes Amazon DynamoDB to evaluate the value before attempting a conditional operation:',
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
@@ -1763,6 +1995,7 @@ return array (
                     ),
                 ),
                 'ReturnValues' => array(
+                    'description' => 'Use ReturnValues if you want to get the item attributes as they appeared either before or after they were updated. For UpdateItem, the valid values are:',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1782,6 +2015,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
+                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1792,18 +2026,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A condition specified in the operation could not be evaluated.',
                     'class' => 'ConditionalCheckFailedException',
                 ),
                 array(
+                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.',
                     'class' => 'ItemCollectionSizeLimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1815,6 +2054,7 @@ return array (
             'responseClass' => 'UpdateTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Updates the provisioned throughput for the given table. Setting the throughput for a table helps you manage performance and is part of the provisioned throughput feature of Amazon DynamoDB.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1832,6 +2072,7 @@ return array (
                 ),
                 'TableName' => array(
                     'required' => true,
+                    'description' => 'The name of the table to be updated.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 3,
@@ -1844,11 +2085,13 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
+                            'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
                         'WriteCapacityUnits' => array(
                             'required' => true,
+                            'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -1857,15 +2100,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The operation conflicts with the resource\'s availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the CREATING state.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'An error occurred on the server side.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1877,6 +2124,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Responses' => array(
+                    'description' => 'A map of table name to a list of items. Each object in Responsesconsists of a table name, along with a map of attribute data consisting of the data type and attribute value.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -1885,18 +2133,23 @@ return array (
                             'name' => 'AttributeMap',
                             'type' => 'object',
                             'additionalProperties' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -1904,6 +2157,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -1911,6 +2165,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -1923,29 +2178,37 @@ return array (
                     ),
                 ),
                 'UnprocessedKeys' => array(
+                    'description' => 'A map of tables and their respective keys that were not processed with the current response, possibly due to reaching a limit on the response size. The UnprocessedKeys value is in the same form as RequestItems, so the value can be provided directly to a subsequent BatchGetItem operation. For more information, see RequestItems in the Request Parameters section.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents a set of primary keys and, for each key, the attributes to retrieve from the table.',
                         'type' => 'object',
                         'properties' => array(
                             'Keys' => array(
+                                'description' => 'Represents the primary key attribute values that define the items and the attributes associated with the items.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'Key',
                                     'type' => 'object',
                                     'additionalProperties' => array(
+                                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'S' => array(
+                                                'description' => 'Represents a String data type',
                                                 'type' => 'string',
                                             ),
                                             'N' => array(
+                                                'description' => 'Represents a Number data type',
                                                 'type' => 'string',
                                             ),
                                             'B' => array(
+                                                'description' => 'Represents a Binary data type',
                                                 'type' => 'string',
                                             ),
                                             'SS' => array(
+                                                'description' => 'Represents a String set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'StringAttributeValue',
@@ -1953,6 +2216,7 @@ return array (
                                                 ),
                                             ),
                                             'NS' => array(
+                                                'description' => 'Represents a Number set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NumberAttributeValue',
@@ -1960,6 +2224,7 @@ return array (
                                                 ),
                                             ),
                                             'BS' => array(
+                                                'description' => 'Represents a Binary set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'BinaryAttributeValue',
@@ -1971,6 +2236,7 @@ return array (
                                 ),
                             ),
                             'AttributesToGet' => array(
+                                'description' => 'Represents one or more attributes to retrieve from the table or index. If no attribute names are specified then all attributes will be returned. If any of the specified attributes are not found, they will not appear in the result.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'AttributeName',
@@ -1978,22 +2244,27 @@ return array (
                                 ),
                             ),
                             'ConsistentRead' => array(
+                                'description' => 'Represents the consistency of a read operation. If set to true, then a strongly consistent read is used; otherwise, an eventually consistent read is used.',
                                 'type' => 'boolean',
                             ),
                         ),
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The capacity units consumed by the operation.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ConsumedCapacity',
+                        'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput of the Amazon DynamoDB Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'TableName' => array(
+                                'description' => 'The table that consumed the provisioned throughput.',
                                 'type' => 'string',
                             ),
                             'CapacityUnits' => array(
+                                'description' => 'The total number of capacity units consumed.',
                                 'type' => 'numeric',
                             ),
                         ),
@@ -2006,32 +2277,41 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'UnprocessedItems' => array(
+                    'description' => 'A map of tables, and requests against those tables, that were not processed with the current response. This might be due to a response exceeding the 1 MB HTTP payload limit, or an item in the batch exceeding the 64 KB item size limit. The UnprocessedKeys value is in the same form as RequestItems, so you can provide this value directly to a subsequent BatchGetItem operation. For more information, see RequestItems in the Request Parameters section.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'array',
                         'items' => array(
                             'name' => 'WriteRequest',
+                            'description' => 'Represents an operation to perform - either DeleteItem or PutItem. You can only specify one of these operations, not both, in a single WriteRequest. If you do need to perform both of these operations, you will need to specify two separate WriteRequest objects.',
                             'type' => 'object',
                             'properties' => array(
                                 'PutRequest' => array(
+                                    'description' => 'Represents a request to perform a DeleteItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Item' => array(
+                                            'description' => 'A map of attribute name to attribute values, representing the primary key of an item to be processed by PutItem. All of the table\'s primary key attributes must be specified, and their data types must match those of the table\'s key schema. If any attributes are present in the item which are part of an index key schema for the table, their types must match the index key schema.',
                                             'type' => 'object',
                                             'additionalProperties' => array(
+                                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                                 'type' => 'object',
                                                 'properties' => array(
                                                     'S' => array(
+                                                        'description' => 'Represents a String data type',
                                                         'type' => 'string',
                                                     ),
                                                     'N' => array(
+                                                        'description' => 'Represents a Number data type',
                                                         'type' => 'string',
                                                     ),
                                                     'B' => array(
+                                                        'description' => 'Represents a Binary data type',
                                                         'type' => 'string',
                                                     ),
                                                     'SS' => array(
+                                                        'description' => 'Represents a String set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'StringAttributeValue',
@@ -2039,6 +2319,7 @@ return array (
                                                         ),
                                                     ),
                                                     'NS' => array(
+                                                        'description' => 'Represents a Number set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'NumberAttributeValue',
@@ -2046,6 +2327,7 @@ return array (
                                                         ),
                                                     ),
                                                     'BS' => array(
+                                                        'description' => 'Represents a Binary set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
@@ -2058,23 +2340,30 @@ return array (
                                     ),
                                 ),
                                 'DeleteRequest' => array(
+                                    'description' => 'Represents a request to perform a PutItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Key' => array(
+                                            'description' => 'A map of attribute name to attribute values, representing the primary key of the item to delete. All of the table\'s primary key attributes must be specified, and their data types must match those of the table\'s key schema.',
                                             'type' => 'object',
                                             'additionalProperties' => array(
+                                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                                 'type' => 'object',
                                                 'properties' => array(
                                                     'S' => array(
+                                                        'description' => 'Represents a String data type',
                                                         'type' => 'string',
                                                     ),
                                                     'N' => array(
+                                                        'description' => 'Represents a Number data type',
                                                         'type' => 'string',
                                                     ),
                                                     'B' => array(
+                                                        'description' => 'Represents a Binary data type',
                                                         'type' => 'string',
                                                     ),
                                                     'SS' => array(
+                                                        'description' => 'Represents a String set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'StringAttributeValue',
@@ -2082,6 +2371,7 @@ return array (
                                                         ),
                                                     ),
                                                     'NS' => array(
+                                                        'description' => 'Represents a Number set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'NumberAttributeValue',
@@ -2089,6 +2379,7 @@ return array (
                                                         ),
                                                     ),
                                                     'BS' => array(
+                                                        'description' => 'Represents a Binary set data type',
                                                         'type' => 'array',
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
@@ -2105,29 +2396,37 @@ return array (
                     ),
                 ),
                 'ItemCollectionMetrics' => array(
+                    'description' => 'A list of tables that were processed by BatchWriteItem and, for each table, information about any item collections that were affected by individual DeleteItem or PutItem operations.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'array',
                         'items' => array(
                             'name' => 'ItemCollectionMetrics',
+                            'description' => 'Information about item collections, if any, that were affected by the operation. ItemCollectionMetrics is only returned if it was asked for in the request. If the table does not have any secondary indexes, this information is not returned in the response.',
                             'type' => 'object',
                             'properties' => array(
                                 'ItemCollectionKey' => array(
+                                    'description' => 'The hash key value of the item collection. This is the same as the hash key of the item.',
                                     'type' => 'object',
                                     'additionalProperties' => array(
+                                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'S' => array(
+                                                'description' => 'Represents a String data type',
                                                 'type' => 'string',
                                             ),
                                             'N' => array(
+                                                'description' => 'Represents a Number data type',
                                                 'type' => 'string',
                                             ),
                                             'B' => array(
+                                                'description' => 'Represents a Binary data type',
                                                 'type' => 'string',
                                             ),
                                             'SS' => array(
+                                                'description' => 'Represents a String set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'StringAttributeValue',
@@ -2135,6 +2434,7 @@ return array (
                                                 ),
                                             ),
                                             'NS' => array(
+                                                'description' => 'Represents a Number set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NumberAttributeValue',
@@ -2142,6 +2442,7 @@ return array (
                                                 ),
                                             ),
                                             'BS' => array(
+                                                'description' => 'Represents a Binary set data type',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'BinaryAttributeValue',
@@ -2152,6 +2453,7 @@ return array (
                                     ),
                                 ),
                                 'SizeEstimateRangeGB' => array(
+                                    'description' => 'An estimate of item collection size, measured in gigabytes. This is a two-element array containing a lower bound and an upper bound for the estimate. The estimate includes the size of all the items in the table, plus the size of all attributes projected into all of the secondary indexes on that table. Use this estimate to measure whether a secondary index is approaching its size limit.',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'ItemCollectionSizeEstimateBound',
@@ -2163,16 +2465,20 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The capacity units consumed by the operation.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ConsumedCapacity',
+                        'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput of the Amazon DynamoDB Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'TableName' => array(
+                                'description' => 'The table that consumed the provisioned throughput.',
                                 'type' => 'string',
                             ),
                             'CapacityUnits' => array(
+                                'description' => 'The total number of capacity units consumed.',
                                 'type' => 'numeric',
                             ),
                         ),
@@ -2189,89 +2495,115 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'AttributeDefinitions' => array(
+                            'description' => 'An array of AttributeDefinition objects. Each of these objects describes one attribute in the table and index key schema.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'AttributeDefinition',
+                                'description' => 'Specifies an attribute for describing the key schema for the table and indexes.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'A name for the attribute.',
                                         'type' => 'string',
                                     ),
                                     'AttributeType' => array(
+                                        'description' => 'The data type for the attribute.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableName' => array(
+                            'description' => 'The name of the table.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
+                            'description' => 'The primary key structure for the table. Each KeySchemaElement consists of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'KeySchemaElement',
+                                'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'Represents the name of a key attribute.',
                                         'type' => 'string',
                                     ),
                                     'KeyType' => array(
+                                        'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableStatus' => array(
+                            'description' => 'Represents the current state of the table:',
                             'type' => 'string',
                         ),
                         'CreationDateTime' => array(
+                            'description' => 'Represents the date and time when the table was created, in UNIX epoch time format.',
                             'type' => 'string',
                         ),
                         'ProvisionedThroughput' => array(
+                            'description' => 'Represents the provisioned throughput settings for the table, consisting of read and write capacity units, along with data about increases and decreases.',
                             'type' => 'object',
                             'properties' => array(
                                 'LastIncreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput increase for this table.',
                                     'type' => 'string',
                                 ),
                                 'LastDecreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput decrease for this table.',
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
+                                    'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. Eventually consistent reads require less effort than strongly consistent reads, so a setting of 50 ReadCapacityUnits per second provides 100 eventually consistent ReadCapacityUnits per second.',
                                     'type' => 'numeric',
                                 ),
                                 'WriteCapacityUnits' => array(
+                                    'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException.',
                                     'type' => 'numeric',
                                 ),
                             ),
                         ),
                         'TableSizeBytes' => array(
+                            'description' => 'Represents the total size of the specified table, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'ItemCount' => array(
+                            'description' => 'Represents the number of items in the specified table. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'LocalSecondaryIndexes' => array(
+                            'description' => 'Represents one or more secondary indexes on the table. Each index is scoped to a given hash key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'LocalSecondaryIndexDescription',
+                                'description' => 'Represents the properties of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'IndexName' => array(
+                                        'description' => 'Represents the name of the secondary index.',
                                         'type' => 'string',
                                     ),
                                     'KeySchema' => array(
+                                        'description' => 'Represents the complete index key schema, which consists of one or more pairs of attribute names and key types (HASH or RANGE).',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'KeySchemaElement',
+                                            'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'AttributeName' => array(
+                                                    'description' => 'Represents the name of a key attribute.',
                                                     'type' => 'string',
                                                 ),
                                                 'KeyType' => array(
+                                                    'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -2281,9 +2613,11 @@ return array (
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
+                                                'description' => 'Represents the set of attributes that are projected into the index:',
                                                 'type' => 'string',
                                             ),
                                             'NonKeyAttributes' => array(
+                                                'description' => 'Represents the non-key attribute names which will be projected into the index.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NonKeyAttributeName',
@@ -2293,9 +2627,11 @@ return array (
                                         ),
                                     ),
                                     'IndexSizeBytes' => array(
+                                        'description' => 'Represents the total size of the index, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                     'ItemCount' => array(
+                                        'description' => 'Represents the number of items in the index. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                 ),
@@ -2310,21 +2646,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
+                    'description' => 'A map of attribute names to AttributeValue objects, representing the item as it appeared before the DeleteItem operation. This map appears in the response only if ReturnValues was specified as ALL_OLD in the request.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2332,6 +2674,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2339,6 +2682,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2353,32 +2697,41 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The table that consumed the provisioned throughput.',
                             'type' => 'string',
                         ),
                         'CapacityUnits' => array(
+                            'description' => 'The total number of capacity units consumed.',
                             'type' => 'numeric',
                         ),
                     ),
                 ),
                 'ItemCollectionMetrics' => array(
+                    'description' => 'Information about item collections, if any, that were affected by the operation. ItemCollectionMetrics is only returned if it was asked for in the request. If the table does not have any secondary indexes, this information is not returned in the response.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'ItemCollectionKey' => array(
+                            'description' => 'The hash key value of the item collection. This is the same as the hash key of the item.',
                             'type' => 'object',
                             'additionalProperties' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -2386,6 +2739,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -2393,6 +2747,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -2403,6 +2758,7 @@ return array (
                             ),
                         ),
                         'SizeEstimateRangeGB' => array(
+                            'description' => 'An estimate of item collection size, measured in gigabytes. This is a two-element array containing a lower bound and an upper bound for the estimate. The estimate includes the size of all the items in the table, plus the size of all attributes projected into all of the secondary indexes on that table. Use this estimate to measure whether a secondary index is approaching its size limit.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'ItemCollectionSizeEstimateBound',
@@ -2422,89 +2778,115 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'AttributeDefinitions' => array(
+                            'description' => 'An array of AttributeDefinition objects. Each of these objects describes one attribute in the table and index key schema.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'AttributeDefinition',
+                                'description' => 'Specifies an attribute for describing the key schema for the table and indexes.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'A name for the attribute.',
                                         'type' => 'string',
                                     ),
                                     'AttributeType' => array(
+                                        'description' => 'The data type for the attribute.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableName' => array(
+                            'description' => 'The name of the table.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
+                            'description' => 'The primary key structure for the table. Each KeySchemaElement consists of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'KeySchemaElement',
+                                'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'Represents the name of a key attribute.',
                                         'type' => 'string',
                                     ),
                                     'KeyType' => array(
+                                        'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableStatus' => array(
+                            'description' => 'Represents the current state of the table:',
                             'type' => 'string',
                         ),
                         'CreationDateTime' => array(
+                            'description' => 'Represents the date and time when the table was created, in UNIX epoch time format.',
                             'type' => 'string',
                         ),
                         'ProvisionedThroughput' => array(
+                            'description' => 'Represents the provisioned throughput settings for the table, consisting of read and write capacity units, along with data about increases and decreases.',
                             'type' => 'object',
                             'properties' => array(
                                 'LastIncreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput increase for this table.',
                                     'type' => 'string',
                                 ),
                                 'LastDecreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput decrease for this table.',
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
+                                    'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. Eventually consistent reads require less effort than strongly consistent reads, so a setting of 50 ReadCapacityUnits per second provides 100 eventually consistent ReadCapacityUnits per second.',
                                     'type' => 'numeric',
                                 ),
                                 'WriteCapacityUnits' => array(
+                                    'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException.',
                                     'type' => 'numeric',
                                 ),
                             ),
                         ),
                         'TableSizeBytes' => array(
+                            'description' => 'Represents the total size of the specified table, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'ItemCount' => array(
+                            'description' => 'Represents the number of items in the specified table. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'LocalSecondaryIndexes' => array(
+                            'description' => 'Represents one or more secondary indexes on the table. Each index is scoped to a given hash key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'LocalSecondaryIndexDescription',
+                                'description' => 'Represents the properties of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'IndexName' => array(
+                                        'description' => 'Represents the name of the secondary index.',
                                         'type' => 'string',
                                     ),
                                     'KeySchema' => array(
+                                        'description' => 'Represents the complete index key schema, which consists of one or more pairs of attribute names and key types (HASH or RANGE).',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'KeySchemaElement',
+                                            'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'AttributeName' => array(
+                                                    'description' => 'Represents the name of a key attribute.',
                                                     'type' => 'string',
                                                 ),
                                                 'KeyType' => array(
+                                                    'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -2514,9 +2896,11 @@ return array (
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
+                                                'description' => 'Represents the set of attributes that are projected into the index:',
                                                 'type' => 'string',
                                             ),
                                             'NonKeyAttributes' => array(
+                                                'description' => 'Represents the non-key attribute names which will be projected into the index.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NonKeyAttributeName',
@@ -2526,9 +2910,11 @@ return array (
                                         ),
                                     ),
                                     'IndexSizeBytes' => array(
+                                        'description' => 'Represents the total size of the index, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                     'ItemCount' => array(
+                                        'description' => 'Represents the number of items in the index. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                 ),
@@ -2547,89 +2933,115 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'AttributeDefinitions' => array(
+                            'description' => 'An array of AttributeDefinition objects. Each of these objects describes one attribute in the table and index key schema.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'AttributeDefinition',
+                                'description' => 'Specifies an attribute for describing the key schema for the table and indexes.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'A name for the attribute.',
                                         'type' => 'string',
                                     ),
                                     'AttributeType' => array(
+                                        'description' => 'The data type for the attribute.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableName' => array(
+                            'description' => 'The name of the table.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
+                            'description' => 'The primary key structure for the table. Each KeySchemaElement consists of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'KeySchemaElement',
+                                'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'Represents the name of a key attribute.',
                                         'type' => 'string',
                                     ),
                                     'KeyType' => array(
+                                        'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableStatus' => array(
+                            'description' => 'Represents the current state of the table:',
                             'type' => 'string',
                         ),
                         'CreationDateTime' => array(
+                            'description' => 'Represents the date and time when the table was created, in UNIX epoch time format.',
                             'type' => 'string',
                         ),
                         'ProvisionedThroughput' => array(
+                            'description' => 'Represents the provisioned throughput settings for the table, consisting of read and write capacity units, along with data about increases and decreases.',
                             'type' => 'object',
                             'properties' => array(
                                 'LastIncreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput increase for this table.',
                                     'type' => 'string',
                                 ),
                                 'LastDecreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput decrease for this table.',
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
+                                    'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. Eventually consistent reads require less effort than strongly consistent reads, so a setting of 50 ReadCapacityUnits per second provides 100 eventually consistent ReadCapacityUnits per second.',
                                     'type' => 'numeric',
                                 ),
                                 'WriteCapacityUnits' => array(
+                                    'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException.',
                                     'type' => 'numeric',
                                 ),
                             ),
                         ),
                         'TableSizeBytes' => array(
+                            'description' => 'Represents the total size of the specified table, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'ItemCount' => array(
+                            'description' => 'Represents the number of items in the specified table. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'LocalSecondaryIndexes' => array(
+                            'description' => 'Represents one or more secondary indexes on the table. Each index is scoped to a given hash key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'LocalSecondaryIndexDescription',
+                                'description' => 'Represents the properties of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'IndexName' => array(
+                                        'description' => 'Represents the name of the secondary index.',
                                         'type' => 'string',
                                     ),
                                     'KeySchema' => array(
+                                        'description' => 'Represents the complete index key schema, which consists of one or more pairs of attribute names and key types (HASH or RANGE).',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'KeySchemaElement',
+                                            'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'AttributeName' => array(
+                                                    'description' => 'Represents the name of a key attribute.',
                                                     'type' => 'string',
                                                 ),
                                                 'KeyType' => array(
+                                                    'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -2639,9 +3051,11 @@ return array (
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
+                                                'description' => 'Represents the set of attributes that are projected into the index:',
                                                 'type' => 'string',
                                             ),
                                             'NonKeyAttributes' => array(
+                                                'description' => 'Represents the non-key attribute names which will be projected into the index.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NonKeyAttributeName',
@@ -2651,9 +3065,11 @@ return array (
                                         ),
                                     ),
                                     'IndexSizeBytes' => array(
+                                        'description' => 'Represents the total size of the index, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                     'ItemCount' => array(
+                                        'description' => 'Represents the number of items in the index. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                 ),
@@ -2668,21 +3084,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Item' => array(
+                    'description' => 'A map of attribute names to AttributeValue objects, as specified by AttributesToGet.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2690,6 +3112,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2697,6 +3120,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2711,9 +3135,11 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The table that consumed the provisioned throughput.',
                             'type' => 'string',
                         ),
                         'CapacityUnits' => array(
+                            'description' => 'The total number of capacity units consumed.',
                             'type' => 'numeric',
                         ),
                     ),
@@ -2725,6 +3151,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TableNames' => array(
+                    'description' => 'The names of the tables associated with the current account at the current endpoint.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -2733,6 +3160,7 @@ return array (
                     ),
                 ),
                 'LastEvaluatedTableName' => array(
+                    'description' => 'The name of the last table in the current list, only if some tables for the account and endpoint have not been returned. This value does not exist in a response if all table names are already returned. Use this value as the ExclusiveStartTableName in a new request to continue the list until all the table names are returned.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2743,21 +3171,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
+                    'description' => 'The attribute values as they appeared before the PutItem operation, but only if ReturnValues is specified as ALL_OLD in the request. Each element consists of an attribute name and an attribute value.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2765,6 +3199,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2772,6 +3207,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2786,32 +3222,41 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The table that consumed the provisioned throughput.',
                             'type' => 'string',
                         ),
                         'CapacityUnits' => array(
+                            'description' => 'The total number of capacity units consumed.',
                             'type' => 'numeric',
                         ),
                     ),
                 ),
                 'ItemCollectionMetrics' => array(
+                    'description' => 'Information about item collections, if any, that were affected by the operation. ItemCollectionMetrics is only returned if it was asked for in the request. If the table does not have any secondary indexes, this information is not returned in the response.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'ItemCollectionKey' => array(
+                            'description' => 'The hash key value of the item collection. This is the same as the hash key of the item.',
                             'type' => 'object',
                             'additionalProperties' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -2819,6 +3264,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -2826,6 +3272,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -2836,6 +3283,7 @@ return array (
                             ),
                         ),
                         'SizeEstimateRangeGB' => array(
+                            'description' => 'An estimate of item collection size, measured in gigabytes. This is a two-element array containing a lower bound and an upper bound for the estimate. The estimate includes the size of all the items in the table, plus the size of all attributes projected into all of the secondary indexes on that table. Use this estimate to measure whether a secondary index is approaching its size limit.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'ItemCollectionSizeEstimateBound',
@@ -2851,24 +3299,30 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Items' => array(
+                    'description' => 'An array of item attributes that match the query criteria. Each element in this array consists of an attribute name and the value for that attribute.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'AttributeMap',
                         'type' => 'object',
                         'additionalProperties' => array(
+                            'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Represents a String data type',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Represents a Number data type',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Represents a Binary data type',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'Represents a String set data type',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -2876,6 +3330,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'Represents a Number set data type',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -2883,6 +3338,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'Represents a Binary set data type',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -2894,25 +3350,32 @@ return array (
                     ),
                 ),
                 'Count' => array(
+                    'description' => 'The number of items in the response.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'LastEvaluatedKey' => array(
+                    'description' => 'The primary key of the item where the operation stopped, inclusive of the previous result set. Use this value to start a new operation, excluding this value in the new request.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -2920,6 +3383,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -2927,6 +3391,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -2941,9 +3406,11 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The table that consumed the provisioned throughput.',
                             'type' => 'string',
                         ),
                         'CapacityUnits' => array(
+                            'description' => 'The total number of capacity units consumed.',
                             'type' => 'numeric',
                         ),
                     ),
@@ -2955,24 +3422,30 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Items' => array(
+                    'description' => 'An array of item attributes that match the scan criteria. Each element in this array consists of an attribute name and the value for that attribute.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'AttributeMap',
                         'type' => 'object',
                         'additionalProperties' => array(
+                            'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                             'type' => 'object',
                             'properties' => array(
                                 'S' => array(
+                                    'description' => 'Represents a String data type',
                                     'type' => 'string',
                                 ),
                                 'N' => array(
+                                    'description' => 'Represents a Number data type',
                                     'type' => 'string',
                                 ),
                                 'B' => array(
+                                    'description' => 'Represents a Binary data type',
                                     'type' => 'string',
                                 ),
                                 'SS' => array(
+                                    'description' => 'Represents a String set data type',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'StringAttributeValue',
@@ -2980,6 +3453,7 @@ return array (
                                     ),
                                 ),
                                 'NS' => array(
+                                    'description' => 'Represents a Number set data type',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'NumberAttributeValue',
@@ -2987,6 +3461,7 @@ return array (
                                     ),
                                 ),
                                 'BS' => array(
+                                    'description' => 'Represents a Binary set data type',
                                     'type' => 'array',
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
@@ -2998,29 +3473,37 @@ return array (
                     ),
                 ),
                 'Count' => array(
+                    'description' => 'The number of items in the response.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'ScannedCount' => array(
+                    'description' => 'The number of items in the complete scan, before any filters are applied. A high ScannedCount value with few, or no, Count results indicates an inefficient Scan operation. For more information, see Count and ScannedCount of the Amazon DynamoDB Developer Guide.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'LastEvaluatedKey' => array(
+                    'description' => 'The primary key of the item where the operation stopped, inclusive of the previous result set. Use this value to start a new operation, excluding this value in the new request.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -3028,6 +3511,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -3035,6 +3519,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -3049,9 +3534,11 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The table that consumed the provisioned throughput.',
                             'type' => 'string',
                         ),
                         'CapacityUnits' => array(
+                            'description' => 'The total number of capacity units consumed.',
                             'type' => 'numeric',
                         ),
                     ),
@@ -3063,21 +3550,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
+                    'description' => 'A map of attribute values as they appeard before the UpdateItem operation, but only if ReturnValues was specified as something other than NONE in the request. Each element represents one attribute.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
+                        'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                         'type' => 'object',
                         'properties' => array(
                             'S' => array(
+                                'description' => 'Represents a String data type',
                                 'type' => 'string',
                             ),
                             'N' => array(
+                                'description' => 'Represents a Number data type',
                                 'type' => 'string',
                             ),
                             'B' => array(
+                                'description' => 'Represents a Binary data type',
                                 'type' => 'string',
                             ),
                             'SS' => array(
+                                'description' => 'Represents a String set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'StringAttributeValue',
@@ -3085,6 +3578,7 @@ return array (
                                 ),
                             ),
                             'NS' => array(
+                                'description' => 'Represents a Number set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'NumberAttributeValue',
@@ -3092,6 +3586,7 @@ return array (
                                 ),
                             ),
                             'BS' => array(
+                                'description' => 'Represents a Binary set data type',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
@@ -3106,9 +3601,11 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'TableName' => array(
+                            'description' => 'The table that consumed the provisioned throughput.',
                             'type' => 'string',
                         ),
                         'CapacityUnits' => array(
+                            'description' => 'The total number of capacity units consumed.',
                             'type' => 'numeric',
                         ),
                     ),
@@ -3118,20 +3615,26 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'ItemCollectionKey' => array(
+                            'description' => 'The hash key value of the item collection. This is the same as the hash key of the item.',
                             'type' => 'object',
                             'additionalProperties' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
+                                        'description' => 'Represents a String data type',
                                         'type' => 'string',
                                     ),
                                     'N' => array(
+                                        'description' => 'Represents a Number data type',
                                         'type' => 'string',
                                     ),
                                     'B' => array(
+                                        'description' => 'Represents a Binary data type',
                                         'type' => 'string',
                                     ),
                                     'SS' => array(
+                                        'description' => 'Represents a String set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'StringAttributeValue',
@@ -3139,6 +3642,7 @@ return array (
                                         ),
                                     ),
                                     'NS' => array(
+                                        'description' => 'Represents a Number set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'NumberAttributeValue',
@@ -3146,6 +3650,7 @@ return array (
                                         ),
                                     ),
                                     'BS' => array(
+                                        'description' => 'Represents a Binary set data type',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
@@ -3156,6 +3661,7 @@ return array (
                             ),
                         ),
                         'SizeEstimateRangeGB' => array(
+                            'description' => 'An estimate of item collection size, measured in gigabytes. This is a two-element array containing a lower bound and an upper bound for the estimate. The estimate includes the size of all the items in the table, plus the size of all attributes projected into all of the secondary indexes on that table. Use this estimate to measure whether a secondary index is approaching its size limit.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'ItemCollectionSizeEstimateBound',
@@ -3175,89 +3681,115 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'AttributeDefinitions' => array(
+                            'description' => 'An array of AttributeDefinition objects. Each of these objects describes one attribute in the table and index key schema.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'AttributeDefinition',
+                                'description' => 'Specifies an attribute for describing the key schema for the table and indexes.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'A name for the attribute.',
                                         'type' => 'string',
                                     ),
                                     'AttributeType' => array(
+                                        'description' => 'The data type for the attribute.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableName' => array(
+                            'description' => 'The name of the table.',
                             'type' => 'string',
                         ),
                         'KeySchema' => array(
+                            'description' => 'The primary key structure for the table. Each KeySchemaElement consists of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'KeySchemaElement',
+                                'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'AttributeName' => array(
+                                        'description' => 'Represents the name of a key attribute.',
                                         'type' => 'string',
                                     ),
                                     'KeyType' => array(
+                                        'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                         ),
                         'TableStatus' => array(
+                            'description' => 'Represents the current state of the table:',
                             'type' => 'string',
                         ),
                         'CreationDateTime' => array(
+                            'description' => 'Represents the date and time when the table was created, in UNIX epoch time format.',
                             'type' => 'string',
                         ),
                         'ProvisionedThroughput' => array(
+                            'description' => 'Represents the provisioned throughput settings for the table, consisting of read and write capacity units, along with data about increases and decreases.',
                             'type' => 'object',
                             'properties' => array(
                                 'LastIncreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput increase for this table.',
                                     'type' => 'string',
                                 ),
                                 'LastDecreaseDateTime' => array(
+                                    'description' => 'The date and time of the last provisioned throughput decrease for this table.',
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
+                                    'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. Eventually consistent reads require less effort than strongly consistent reads, so a setting of 50 ReadCapacityUnits per second provides 100 eventually consistent ReadCapacityUnits per second.',
                                     'type' => 'numeric',
                                 ),
                                 'WriteCapacityUnits' => array(
+                                    'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException.',
                                     'type' => 'numeric',
                                 ),
                             ),
                         ),
                         'TableSizeBytes' => array(
+                            'description' => 'Represents the total size of the specified table, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'ItemCount' => array(
+                            'description' => 'Represents the number of items in the specified table. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                             'type' => 'numeric',
                         ),
                         'LocalSecondaryIndexes' => array(
+                            'description' => 'Represents one or more secondary indexes on the table. Each index is scoped to a given hash key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'LocalSecondaryIndexDescription',
+                                'description' => 'Represents the properties of a secondary index.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'IndexName' => array(
+                                        'description' => 'Represents the name of the secondary index.',
                                         'type' => 'string',
                                     ),
                                     'KeySchema' => array(
+                                        'description' => 'Represents the complete index key schema, which consists of one or more pairs of attribute names and key types (HASH or RANGE).',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'KeySchemaElement',
+                                            'description' => 'Represents a key schema. Specifies the attributes that make up the primary key of a table, or the key attributes of a secondary index.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'AttributeName' => array(
+                                                    'description' => 'Represents the name of a key attribute.',
                                                     'type' => 'string',
                                                 ),
                                                 'KeyType' => array(
+                                                    'description' => 'Represents the attribute data, consisting of the data type and the attribute value itself.',
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -3267,9 +3799,11 @@ return array (
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
+                                                'description' => 'Represents the set of attributes that are projected into the index:',
                                                 'type' => 'string',
                                             ),
                                             'NonKeyAttributes' => array(
+                                                'description' => 'Represents the non-key attribute names which will be projected into the index.',
                                                 'type' => 'array',
                                                 'items' => array(
                                                     'name' => 'NonKeyAttributeName',
@@ -3279,9 +3813,11 @@ return array (
                                         ),
                                     ),
                                     'IndexSizeBytes' => array(
+                                        'description' => 'Represents the total size of the index, in bytes. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                     'ItemCount' => array(
+                                        'description' => 'Represents the number of items in the index. Amazon DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.',
                                         'type' => 'numeric',
                                     ),
                                 ),

@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * Exception that occurs when a ItemCollectionSizeLimitExceededException error is encountered
+ * An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.
  */
 class ItemCollectionSizeLimitExceededException extends DynamoDbException {}

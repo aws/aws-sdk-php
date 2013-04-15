@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * Exception that occurs when a ConditionalCheckFailedException error is encountered
+ * A condition specified in the operation could not be evaluated.
  */
 class ConditionalCheckFailedException extends DynamoDbException {}
