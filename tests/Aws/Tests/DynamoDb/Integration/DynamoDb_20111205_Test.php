@@ -470,5 +470,9 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         $client->deleteTable(array(
             'TableName' => 'errors'
         ));
+
+        $client->waitUntilTableNotExists(array(
+            'TableName' => 'errors'
+        ));
     }
 }

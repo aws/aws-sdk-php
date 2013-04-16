@@ -502,6 +502,10 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         $client->deleteTable(array(
             'TableName' => 'errors'
         ));
+
+        $client->waitUntilTableNotExists(array(
+            'TableName' => 'errors'
+        ));
     }
 
     /**
@@ -649,7 +653,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
      */
     public function testDeleteIndexedTable()
     {
-       $this->client->deleteTable(array(
+        $this->client->deleteTable(array(
             'TableName' => 'Orders'
         ));
     }
