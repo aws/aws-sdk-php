@@ -282,6 +282,9 @@ return array (
                     'sentAs' => 'Attribute',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'QueueAttributeName',
+                        ),
                     ),
                 ),
             ),
@@ -569,11 +572,6 @@ return array (
                     'location' => 'aws.query',
                     'default' => '2012-11-05',
                 ),
-                'curl.options' => array(
-                    'default' => array(
-                        'CURLOPT_TIMEOUT' => 30,
-                    ),
-                ),
                 'QueueUrl' => array(
                     'required' => true,
                     'description' => 'The URL of the SQS queue to take action on.',
@@ -796,6 +794,9 @@ return array (
                     'sentAs' => 'Attribute',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'QueueAttributeName',
+                        ),
                     ),
                 ),
             ),
@@ -980,7 +981,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'Attribute',
                         'type' => 'object',
@@ -995,6 +995,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),
@@ -1089,7 +1090,6 @@ return array (
                                         ),
                                     ),
                                 ),
-                                'additionalProperties' => false,
                                 'items' => array(
                                     'name' => 'Attribute',
                                     'type' => 'object',
@@ -1104,6 +1104,7 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'additionalProperties' => false,
                             ),
                         ),
                     ),

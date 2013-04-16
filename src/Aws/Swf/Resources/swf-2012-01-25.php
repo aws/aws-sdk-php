@@ -891,7 +891,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'Specifies the maximum number of history events returned in one page. The next page in the result is identified by the NextPageToken returned. By default 100 history events are returned in a page but the caller can override this value to a page size smaller than the default. You cannot specify a page size larger than 100. Note that the number of events may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'Specifies the maximum number of history events returned in one page. The next page in the result is identified by the NextPageToken returned. By default 100 history events are returned in a page but the caller can override this value to a page size smaller than the default. You cannot specify a page size larger than 100. Note that the number of events may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -967,7 +967,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of types may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of types may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1132,7 +1132,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of executions may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of executions may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1193,7 +1193,7 @@ return array (
                     ),
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of domains may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of domains may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1302,7 +1302,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of executions may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of executions may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1391,7 +1391,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of types may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'The maximum number of results returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of types may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,
@@ -1434,11 +1434,6 @@ return array (
                     'static' => true,
                     'location' => 'header',
                     'default' => 'SimpleWorkflowService.PollForActivityTask',
-                ),
-                'curl.options' => array(
-                    'default' => array(
-                        'CURLOPT_TIMEOUT' => 70,
-                    ),
                 ),
                 'domain' => array(
                     'required' => true,
@@ -1504,11 +1499,6 @@ return array (
                     'location' => 'header',
                     'default' => 'SimpleWorkflowService.PollForDecisionTask',
                 ),
-                'curl.options' => array(
-                    'default' => array(
-                        'CURLOPT_TIMEOUT' => 70,
-                    ),
-                ),
                 'domain' => array(
                     'required' => true,
                     'description' => 'The name of the domain containing the task lists to poll.',
@@ -1544,7 +1534,7 @@ return array (
                     'maxLength' => 2048,
                 ),
                 'maximumPageSize' => array(
-                    'description' => 'The maximum number of history events returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of events may be less than the maximum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
+                    'description' => 'The maximum number of history events returned in each page. The default is 100, but the caller can override this value to a page size smaller than the default. You cannot specify a page size greater than 100. Note that the number of events may be less than the maxiumum page size, in which case, the returned page will have fewer results than the maximumPageSize specified.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 1000,

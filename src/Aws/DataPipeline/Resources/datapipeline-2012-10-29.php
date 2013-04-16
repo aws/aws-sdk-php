@@ -506,11 +506,6 @@ return array (
                     'location' => 'header',
                     'default' => 'DataPipeline.PollForTask',
                 ),
-                'curl.options' => array(
-                    'default' => array(
-                        'CURLOPT_TIMEOUT' => 90,
-                    ),
-                ),
                 'workerGroup' => array(
                     'required' => true,
                     'description' => 'Indicates the type of task the task runner is configured to accept and process. The worker group is set as a field on objects in the pipeline when they are created. You can only specify a single value for workerGroup in the call to PollForTask. There are no wildcard values permitted in workerGroup, the string must be an exact, case-sensitive, match.',
