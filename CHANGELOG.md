@@ -4,6 +4,8 @@ CHANGELOG
 Next Release
 ------------
 
+* Added an Amazon S3 stream wrapper
+* Content-Type is now automatically added to Amazon S3 PutObject and other upload operations
 * Added support for automatically retrying throttled requests with exponential backoff to all service clients
 * Added a new config option (`gc_operation_delay`) to the DynamoDB Session Handler to specify a delay between requests
   to the service during garbage collection in order to help regulate the consumption of throughput
@@ -12,6 +14,7 @@ Next Release
 * [Docs] Added a page about Waiters to the user guide
 * [Docs] Added a page about the DynamoDB Session Handler to the user guide
 * [Docs] Added a page about response Models to the user guide
+* Bumped the required version of Guzzle to ~3.4.1
 
 2.2.1 (2013-03-18)
 ------------------

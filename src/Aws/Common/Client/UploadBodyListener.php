@@ -83,10 +83,6 @@ class UploadBodyListener implements EventSubscriberInterface
 
             if (null !== $body) {
                 $body = EntityBody::factory($body);
-                // Apply a ContentType parameter to the command if one is not present
-                if (!$command->get('ContentType') && $command->getOperation()->hasParam('ContentType')) {
-                    $command->set('ContentType', $body->getContentType());
-                }
             }
 
             // Prepare the body parameter and remove the source file parameter
