@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * This exception is thrown when the subscriber exceeded the limits on the number of objects or operations.
+ * The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.
  */
 class LimitExceededException extends DynamoDbException {}

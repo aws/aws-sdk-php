@@ -4,8 +4,13 @@ CHANGELOG
 2.3.0 (2013-04-18)
 ------------------
 
-* Added an Amazon S3 stream wrapper
-* Added support for automatically retrying throttled requests with exponential backoff to all service clients
+* Added support for Local Secondary Indexes to the Amazon DynamoDB client
+* [BC] Updated the Amazon DynamoDB client to use the new 2012-08-10 API version which includes changes in how you
+  specify keys. If you are not ready to upgrade to the new API, you can configure the SDK to use the previous version of
+  the API by setting the `version` option to `2011-12-05` when you instantiate the client (See
+  [`UPGRADING.md`](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)).
+* Added an Amazon S3 stream wrapper that PHP native file functions to be used to interact with S3 buckets and objects
+* Added support for automatically retrying *throttled* requests with exponential backoff to all service clients
 * Added a new config option (`version`) to client objects to specify the API version to use if multiple are supported
 * Added a new config option (`gc_operation_delay`) to the DynamoDB Session Handler to specify a delay between requests
   to the service during garbage collection in order to help regulate the consumption of throughput
@@ -26,13 +31,13 @@ CHANGELOG
 2.2.1 (2013-03-18)
 ------------------
 
-* Added the `us-gov-west-1` region to the Amazon Simple Workflow Service client
 * Added support for viewing and downloading DB log files to the Amazon RDS client
 * Added the ability to validate incoming Amazon SNS messages. See the `Aws\Sns\MessageValidator` namespace
 * Added the ability to easily change the credentials that a client is configured to use via `$client->setCredentials()`
 * Added the `client.region_changed` and `client.credentials_changed` events on the client that are triggered when the
   `setRegion()` and `setCredentials()` methods are called, respectively
-* Added support for using the ap-southeast-2 region with the Amazon ElastiCache client
+* Added support for using the `ap-southeast-2` region with the Amazon ElastiCache client
+* Added support for using the `us-gov-west-1` region with the Amazon SWF client
 * Updated the Amazon RDS client to use the 2013-02-12 API version
 * Fixed an issue in the Amazon EC2 service description that was affecting the use of the new `ModifyVpcAttribute` and
   `DescribeVpcAttribute` operations

@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * This exception is thrown when an expected value does not match what was found in the system.
+ * A condition specified in the operation could not be evaluated.
  */
 class ConditionalCheckFailedException extends DynamoDbException {}

@@ -56,7 +56,7 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
  */
 class DynamoDbClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2011-12-05';
+    const LATEST_API_VERSION = '2012-08-10';
 
     /**
      * Factory method to create a new Amazon DynamoDB client using an array of configuration options:

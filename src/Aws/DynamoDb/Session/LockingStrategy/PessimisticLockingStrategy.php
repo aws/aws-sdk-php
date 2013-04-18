@@ -61,10 +61,7 @@ class PessimisticLockingStrategy extends AbstractLockingStrategy
         // returned (via ReturnValues) in a single, atomic operation
         $updateItem = $this->client->getCommand('UpdateItem', array(
             'TableName' => $this->config->get('table_name'),
-            'Key' => array(
-                'HashKeyElement' => array(
-                    'S' => $id)
-                ),
+            'Key' => $this->formatKey($id),
             'Expected' => array(
                 'lock' => array(
                     'Exists' => false

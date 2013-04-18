@@ -35,24 +35,24 @@ class IteratorsTest extends \Aws\Tests\IntegrationTestCase
                 'Table1' => array(
                     'Keys' => array(
                         array(
-                            'HashKeyElement'  => array('S' => 'KeyValue1'),
-                            'RangeKeyElement' => array('N' => '2')
+                            'AttributeName1'  => array('S' => 'KeyValue1'),
+                            'AttributeName2' => array('N' => '2')
                         ),
                         array(
-                            'HashKeyElement'  => array('S' => 'KeyValue3'),
-                            'RangeKeyElement' => array('N' => '4')
+                            'AttributeName1'  => array('S' => 'KeyValue3'),
+                            'AttributeName2' => array('N' => '4')
                         ),
                         array(
-                            'HashKeyElement'  => array('S' => 'KeyValue5'),
-                            'RangeKeyElement' => array('N' => '6')
+                            'AttributeName1'  => array('S' => 'KeyValue5'),
+                            'AttributeName2' => array('N' => '6')
                         )
                     ),
                     'AttributesToGet' => array('AttributeName1', 'AttributeName2', 'AttributeName3')
                 ),
                 'Table2' => array(
                     'Keys' => array(
-                        array('HashKeyElement' => array('S' => 'KeyValue4')),
-                        array('HashKeyElement' => array('S' => 'KeyValue5'))
+                        array('AttributeName1' => array('S' => 'KeyValue4')),
+                        array('AttributeName2' => array('S' => 'KeyValue5'))
                     ),
                     'AttributesToGet' => array('AttributeName4', 'AttributeName5', 'AttributeName6')
                 )
@@ -95,7 +95,7 @@ class IteratorsTest extends \Aws\Tests\IntegrationTestCase
 
         $iterator = $client->getIterator('Query', array(
             'TableName' => 'foo',
-            'HashKeyValue' => array(
+            'AttributeName1' => array(
                 'S' => 'AttributeValue1'
             )
         ));

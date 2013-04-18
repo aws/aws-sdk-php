@@ -150,13 +150,17 @@ class ServiceIntro(Directive):
     """
 
     required_arguments = 1
-    optional_arguments = 0
+    optional_arguments = 1
     final_argument_whitespace = True
 
     def run(self):
+        if len(self.arguments) == 2:
+            api_version = self.arguments[1].strip()
+        else:
+            api_version = ""
         service_name = self.arguments[0].strip()
         d = load_service_description(service_name)
-        rawtext = self.generate_rst(d)
+        rawtext = self.generate_rst(d, api_version)
         tab_width = 4
         include_lines = statemachine.string2lines(
             rawtext, tab_width, convert_whitespace=1)
@@ -175,7 +179,7 @@ class ServiceIntro(Directive):
         """Determine the service locator name for an endpoint"""
         return name
 
-    def generate_rst(self, d):
+    def generate_rst(self, d, api_version):
         rawtext = ""
         scalar = {}
         # Sort the operations by key
@@ -199,6 +203,12 @@ class ServiceIntro(Directive):
         locator_name = self.get_locator_name(d["namespace"])
         docs = self.get_doc_link(locator_name, d["namespace"])
 
+        # Determine the "namespace" used for linking to API docs
+        if api_version:
+            apiVersionSuffix = "_" + api_version.replace("-", "_")
+        else:
+            apiVersionSuffix = ""
+
         env = Environment(loader=PackageLoader('aws', 'templates'))
         template = env.get_template("client_intro")
         rawtext += template.render(
@@ -206,7 +216,9 @@ class ServiceIntro(Directive):
             description=d.description,
             regions=get_regions(d["namespace"]),
             locator_name=locator_name,
-            doc_url=docs)
+            doc_url=docs,
+            specifiedApiVersion=api_version,
+            apiVersionSuffix=apiVersionSuffix)
 
         return rawtext
 

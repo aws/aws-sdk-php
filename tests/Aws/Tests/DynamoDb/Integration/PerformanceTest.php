@@ -44,15 +44,13 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
             self::log('Table does not exist. Creating now.');
             $client->createTable(array(
                 'TableName' => self::getTableName(),
+                'AttributeDefinitions' => array(
+                    array('AttributeName' => 'foo', 'AttributeType' => 'S'),
+                    array('AttributeName' => 'bar', 'AttributeType' => 'N'),
+                ),
                 'KeySchema' => array(
-                    'HashKeyElement' => array(
-                        'AttributeName' => 'foo',
-                        'AttributeType' => 'S'
-                    ),
-                    'RangeKeyElement' => array(
-                        'AttributeName' => 'bar',
-                        'AttributeType' => 'N'
-                    )
+                    array('AttributeName' => 'foo', 'KeyType' => 'HASH'),
+                    array('AttributeName' => 'bar', 'KeyType' => 'RANGE'),
                 ),
                 'ProvisionedThroughput' => array(
                     'ReadCapacityUnits'  => self::READ_CAPACITY,
@@ -111,12 +109,8 @@ class PerformanceTest extends \Aws\Tests\IntegrationTestCase
                 $client->getCommand('GetItem', array(
                     'TableName' => self::getTableName(),
                     'Key' => array(
-                        'HashKeyElement' => array(
-                            'S' => 'abcdefghijklm' . implode('-', range('a', 'z')),
-                        ),
-                        'RangeKeyElement' => array(
-                            'N' => '1'
-                        )
+                        'foo' => array('S' => 'abcdefghijklm' . implode('-', range('a', 'z'))),
+                        'bar' => array('N' => '1')
                     )
                 ))
             )

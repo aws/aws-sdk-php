@@ -24,6 +24,7 @@ AWS SDK for PHP 2
     service-datapipeline
     service-directconnect
     service-dynamodb
+    service-dynamodb-20111205
     service-ec2
     service-elasticache
     service-elasticbeanstalk
@@ -46,6 +47,7 @@ AWS SDK for PHP 2
     service-sts
     service-swf
 
+    feature-dynamodb-session-handler
     feature-waiters
     feature-models
 
@@ -83,6 +85,7 @@ Supported services
 * :doc:`service-datapipeline`
 * :doc:`service-directconnect`
 * :doc:`service-dynamodb`
+* :doc:`service-dynamodb-20111205`
 * :doc:`service-ec2`
 * :doc:`service-elasticache`
 * :doc:`service-elasticbeanstalk`

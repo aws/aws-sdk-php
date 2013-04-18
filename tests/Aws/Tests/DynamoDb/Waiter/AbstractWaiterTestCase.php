@@ -14,9 +14,21 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\Tests\DynamoDb\Waiter;
 
-/**
- * An error occurred on the server side.
- */
-class InternalServerErrorException extends DynamoDbException {}
+abstract class AbstractWaiterTestCase extends \Guzzle\Tests\GuzzleTestCase
+{
+    /**
+     * @return \Aws\DynamoDb\DynamoDbClient
+     */
+    protected function getClient()
+    {
+        /** @var $client \Aws\DynamoDb\DynamoDbClient */
+        $client = $this->getServiceBuilder()->get('dynamodb', true);
+        $client->getCredentials()
+            ->setSecurityToken('foo')
+            ->setExpiration(time() + 1000);
+
+        return $client;
+    }
+}

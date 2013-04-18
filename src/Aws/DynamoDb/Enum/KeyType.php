@@ -14,9 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * An error occurred on the server side.
+ * Contains enumerable KeyType values
  */
-class InternalServerErrorException extends DynamoDbException {}
+class KeyType extends Enum
+{
+    const HASH = 'HASH';
+    const RANGE = 'RANGE';
+}

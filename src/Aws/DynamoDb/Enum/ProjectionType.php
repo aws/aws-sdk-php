@@ -14,9 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * An error occurred on the server side.
+ * Contains enumerable ProjectionType values
  */
-class InternalServerErrorException extends DynamoDbException {}
+class ProjectionType extends Enum
+{
+    const ALL = 'ALL';
+    const KEYS_ONLY = 'KEYS_ONLY';
+    const INCLUDED = 'INCLUDE';
+}

@@ -206,21 +206,40 @@ class SessionHandler
     public function createSessionsTable($readCapacityUnits, $writeCapacityUnits)
     {
         $tableName = $this->config->get('table_name');
+        $hashKey = $this->config->get('hash_key');
 
-        $result = $this->client->getCommand('CreateTable', array(
+        $params = array(
             'TableName' => $tableName,
-            'KeySchema' => array(
-                'HashKeyElement' => array(
-                    'AttributeName' => $this->config->get('hash_key'),
-                    'AttributeType' => 'S',
-                )
-            ),
             'ProvisionedThroughput' => array(
                 'ReadCapacityUnits'  => (int) $readCapacityUnits,
                 'WriteCapacityUnits' => (int) $writeCapacityUnits,
             ),
             Ua::OPTION => Ua::SESSION
-        ))->execute();
+        );
+
+        if ($this->client->getApiVersion() < '2012-08-10') {
+            $params['KeySchema'] = array(
+                'HashKeyElement' => array(
+                    'AttributeName' => $hashKey,
+                    'AttributeType' => 'S',
+                )
+            );
+        } else {
+            $params['AttributeDefinitions'] = array(
+                array(
+                    'AttributeName' => $hashKey,
+                    'AttributeType' => 'S'
+                )
+            );
+            $params['KeySchema'] = array(
+                array(
+                    'AttributeName' => $hashKey,
+                    'KeyType' => 'HASH'
+                )
+            );
+        }
+
+        $result = $this->client->getCommand('CreateTable', $params)->execute();
 
         $this->client->waitUntil('table_exists', array('TableName' => $tableName));
 
@@ -370,6 +389,7 @@ class SessionHandler
         $tableName = $this->config->get('table_name');
         $hashKey   = $this->config->get('hash_key');
         $expires   = (string) time();
+        $isOldApi  = ($this->client->getApiVersion() < '2012-08-10');
 
         // Instantiate and configure the WriteRequestBatch object that will be deleting the expired sessions
         if ($delay) {
@@ -382,7 +402,7 @@ class SessionHandler
         }
 
         // Setup a scan table iterator for finding expired session items
-        $tableScanner = $this->client->getIterator('Scan', array(
+        $scanParams = array(
             'TableName' => $tableName,
             'AttributesToGet' => array(
                 $this->config->get('hash_key')
@@ -401,7 +421,13 @@ class SessionHandler
                 )
             ),
             Ua::OPTION => Ua::SESSION
-        ));
+        );
+        if (!$isOldApi) {
+            $scanParams['Select'] = 'SPECIFIC_ATTRIBUTES';
+        }
+
+        // Create a scan table iterator for finding expired session items
+        $tableScanner = $this->client->getIterator('Scan', $scanParams);
 
         // If a delay has been set, then attach the delay function to execute after each scan operation
         if (isset($delayFunction)) {
@@ -409,9 +435,10 @@ class SessionHandler
         }
 
         // Perform scan and batch delete operations as needed
+        $keyName = $isOldApi ? 'HashKeyElement' : $hashKey;
         foreach ($tableScanner as $item) {
             // @codeCoverageIgnoreStart
-            $deleteBatch->add(new DeleteRequest(array('HashKeyElement' => $item[$hashKey]), $tableName));
+            $deleteBatch->add(new DeleteRequest(array($keyName => $item[$hashKey]), $tableName));
             // @codeCoverageIgnoreEnd
         }
 

@@ -14,17 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\DynamoDb\Waiter;
+namespace Aws\DynamoDb\Exception;
 
-class AbstractWaiter extends \Guzzle\Tests\GuzzleTestCase
-{
-    protected function getClient()
-    {
-        $client = $this->getServiceBuilder()->get('dynamodb', true);
-        $client->getCredentials()
-            ->setSecurityToken('foo')
-            ->setExpiration(time() + 1000);
-
-        return $client;
-    }
-}
+/**
+ * An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.
+ */
+class ItemCollectionSizeLimitExceededException extends DynamoDbException {}

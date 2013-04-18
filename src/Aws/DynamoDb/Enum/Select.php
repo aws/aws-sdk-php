@@ -14,9 +14,17 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * An error occurred on the server side.
+ * Contains enumerable Select values
  */
-class InternalServerErrorException extends DynamoDbException {}
+class Select extends Enum
+{
+    const ALL_ATTRIBUTES = 'ALL_ATTRIBUTES';
+    const ALL_PROJECTED_ATTRIBUTES = 'ALL_PROJECTED_ATTRIBUTES';
+    const SPECIFIC_ATTRIBUTES = 'SPECIFIC_ATTRIBUTES';
+    const COUNT = 'COUNT';
+}

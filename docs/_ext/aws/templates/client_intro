@@ -1,19 +1,23 @@
-=================
-|serviceFullName|
-=================
+====================================================================================
+{{serviceFullName}}{% if specifiedApiVersion %} ({{specifiedApiVersion}}){% endif %}
+====================================================================================
 
-This guide focuses on the AWS SDK for PHP interface to `{{ serviceFullName }} <{{ doc_url }}>`_. This guide assumes
-that you have already downloaded and installed the AWS SDK for PHP 2. See :doc:`installation` for more information
-on getting started.
+This guide focuses on the AWS SDK for PHP client for `{{ serviceFullName }} <{{ doc_url }}>`_. This guide assumes that
+you have already downloaded and installed the AWS SDK for PHP 2. See :doc:`installation` for more information on
+getting started.
 
-.. _{{ namespace }}_operations:
+{% if specifiedApiVersion %}
+**Note:** This guide is for the **{{ specifiedApiVersion }}** API version of {{ serviceFullName }}. You may also be
+interested in the :doc:`guide for the latest API version of {{ serviceFullName }} <service-{{ namespace|lower }}>`.
+{% endif %}
+
+.. _{{ namespace }}{{ apiVersionSuffix }}_operations:
 
 Available operations
 --------------------
 
-Please see the `{{ serviceFullName }} API reference <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.{{ namespace}}.{{ namespace }}Client.html>`_
-for a full list of available methods.
-
+Please see the `{{ serviceFullName }} Client API reference <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.{{ namespace }}{{ apiVersionSuffix }}.{{ namespace }}Client{{ apiVersionSuffix }}.html>`_
+for a details about all of the available methods, including descriptions of the inputs and outputs.
 
 {# Here we are creating a list-table. The contents of a list-table looks like:
     * - Foo
@@ -30,7 +34,7 @@ for a full list of available methods.
     :class: api-operations
 
     {% for key, op in description.operations.iteritems() %}
-    {% if loop.index is odd %}* {% else %}  {% endif %}- `{{ key }} <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.{{ namespace}}.{{ namespace }}Client.html#_{{ op.magicMethod }}>`_
+    {% if loop.index is odd %}* {% else %}  {% endif %}- `{{ key }} <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.{{ namespace}}{{ apiVersionSuffix }}.{{ namespace }}Client{{ apiVersionSuffix }}.html#_{{ op.magicMethod }}>`_
     {%- if op.documentationUrl %}  (`service docs <{{ op.documentationUrl}}>`_){%- endif %}
     {%- if loop.last and loop.index is odd %}
       -
@@ -40,7 +44,7 @@ for a full list of available methods.
 Creating a client
 -----------------
 
-The first thing you need to do is create a client object using one of the following methods.
+First you need to create a client object using one of the following techniques.
 
 Factory method
 ~~~~~~~~~~~~~~
@@ -59,16 +63,13 @@ A ``region`` parameter is required and must be set to one of the following value
 
     use Aws\{{namespace}}\{{namespace}}Client;
 
-    {% if not globalEndpoint -%}
     $client = {{namespace}}Client::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>',
-        'region' => '<region name>'
-    ));{% else %}$client = {{namespace}}Client::factory(array(
-        'key'    => '<aws access key>',
-        'secret' => '<aws secret key>'
+        'key'    {% if specifiedApiVersion %} {% endif %}=> '<aws access key>',
+        'secret' {% if specifiedApiVersion %} {% endif %}=> '<aws secret key>'{% if not globalEndpoint -%},
+        'region' {% if specifiedApiVersion %} {% endif %}=> '<region name>'{% endif %}{% if specifiedApiVersion -%},
+        'version' => '{{specifiedApiVersion}}'{% endif %}
     ));
-    {% endif %}
+
 
 Service locator
 ~~~~~~~~~~~~~~~

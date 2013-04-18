@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * This exception is thrown when the level of provisioned throughput defined for the table is exceeded.
+ * Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.
  */
 class ProvisionedThroughputExceededException extends DynamoDbException {}

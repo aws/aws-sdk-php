@@ -23,34 +23,38 @@ use Aws\DynamoDb\DynamoDbClient;
  * @group integration
  * @outputBuffering enabled
  */
-class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
+class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
 {
-    /**
-     * @var DynamoDbClient
-     */
+    /** @var DynamoDbClient */
     protected $client;
 
     public static function setUpBeforeClass()
     {
         /** @var $client DynamoDbClient */
-        $client = self::getServiceBuilder()->get('dynamodb', array('version' => '2011-12-05'));
+        $client = self::getServiceBuilder()->get('dynamodb', array('version' => '2012-08-10'));
 
-        // Delete the table if it exists
+        // Delete the errors table if it exists
         try {
             $client->deleteTable(array('TableName' => 'errors'));
             $client->waitUntilTableNotExists(array('TableName' => 'errors'));
+        } catch (\Exception $e) {}
+
+        // Delete the Orders table if it exists
+        try {
+            $client->deleteTable(array('TableName' => 'Orders'));
+            $client->waitUntilTableNotExists(array('TableName' => 'Orders'));
         } catch (\Exception $e) {}
     }
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('dynamodb', array('version' => '2011-12-05'));
+        $this->client = $this->getServiceBuilder()->get('dynamodb', array('version' => '2012-08-10'));
     }
 
     /**
-     * Create a table with an optional RangeKeyElement
+     * Create a table with a hash key and range key
      *
-     * @example Aws\DynamoDb\DynamoDbClient::createTable 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::createTable 2012-08-10
      */
     public function testCreateTable()
     {
@@ -60,14 +64,24 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         // Create an "errors" table
         $client->createTable(array(
             'TableName' => 'errors',
-            'KeySchema' => array(
-                'HashKeyElement' => array(
+            'AttributeDefinitions' => array(
+                array(
                     'AttributeName' => 'id',
                     'AttributeType' => 'N'
                 ),
-                'RangeKeyElement' => array(
+                array(
                     'AttributeName' => 'time',
                     'AttributeType' => 'N'
+                )
+            ),
+            'KeySchema' => array(
+                array(
+                    'AttributeName' => 'id',
+                    'KeyType'       => 'HASH'
+                ),
+                array(
+                    'AttributeName' => 'time',
+                    'KeyType'       => 'RANGE'
                 )
             ),
             'ProvisionedThroughput' => array(
@@ -79,6 +93,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
 
     /**
      * @depends testCreateTable
+     * @example Aws\DynamoDb\DynamoDbClient::waitUntilTableExists 2012-08-10
      */
     public function testWaitUntilTableExists()
     {
@@ -95,7 +110,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Update a table to change the provisioned throughput
      *
      * @depends testWaitUntilTableExists
-     * @example Aws\DynamoDb\DynamoDbClient::updateTable 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::updateTable 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::waitUntilTableExists 2012-08-10
      */
     public function testUpdateTable()
     {
@@ -121,7 +137,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Describe a table and grab data from the output
      *
      * @depends testUpdateTable
-     * @example Aws\DynamoDb\DynamoDbClient::describeTable 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::describeTable 2012-08-10
      */
     public function testDescribeTable()
     {
@@ -146,7 +162,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * List the first page of results of tables owned by your account
      *
      * @depends testDescribeTable
-     * @example Aws\DynamoDb\DynamoDbClient::listTables 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::listTables 2012-08-10
      */
     public function testListTables()
     {
@@ -168,7 +184,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * List all of the tables owned by your account using a ListTables iterator
      *
      * @depends testListTables
-     * @example Aws\DynamoDb\DynamoDbClient::listTable 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::listTable 2012-08-10
      */
     public function testListTablesWithIterator()
     {
@@ -189,8 +205,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Put an item in a table using the formatAttributes() client helper method
      *
      * @depends testListTablesWithIterator
-     * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
-     * @example Aws\DynamoDb\DynamoDbClient::formatAttributes 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::putItem 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::formatAttributes 2012-08-10
      */
     public function testAddItem()
     {
@@ -206,11 +222,12 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
                 'time'    => $time,
                 'error'   => 'Executive overflow',
                 'message' => 'no vacant areas'
-            ))
+            )),
+            'ReturnConsumedCapacity' => 'TOTAL'
         ));
 
         // The result will always contain ConsumedCapacityUnits
-        echo $result['ConsumedCapacityUnits'] . "\n";
+        echo $result->getPath('ConsumedCapacity/CapacityUnits') . "\n";
 
         // @end
         $this->assertNotEmpty($this->getActualOutput());
@@ -221,7 +238,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Put an item in a table
      *
      * @depends testAddItem
-     * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::putItem 2012-08-10
      */
     public function testAddItemWithoutHelperMethod($time)
     {
@@ -246,7 +263,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Get an item from a table and interact with the response
      *
      * @depends testAddItemWithoutHelperMethod
-     * @example Aws\DynamoDb\DynamoDbClient::getItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::getItem 2012-08-10
      */
     public function testGetItem($time)
     {
@@ -257,9 +274,9 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         $result = $client->getItem(array(
             'ConsistentRead' => true,
             'TableName' => 'errors',
-            'Key' => array(
-                'HashKeyElement'  => array('N' => '1201'),
-                'RangeKeyElement' => array('N' => $time)
+            'Key'       => array(
+                'id'   => array('N' => '1201'),
+                'time' => array('N' => $time)
             )
         ));
 
@@ -278,7 +295,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Get all results of a Query operation using a Query iterator
      *
      * @depends testGetItem
-     * @example Aws\DynamoDb\DynamoDbClient::query 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::query 2012-08-10
      */
     public function testQuery()
     {
@@ -286,13 +303,20 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         // @begin
 
         $iterator = $client->getIterator('Query', array(
-            'TableName'         => 'errors',
-            'HashKeyValue'      => array('N' => '1201'),
-            'RangeKeyCondition' => array(
-                'AttributeValueList' => array(
-                    array('N' => strtotime("-15 minutes"))
+            'TableName'     => 'errors',
+            'KeyConditions' => array(
+                'id' => array(
+                    'AttributeValueList' => array(
+                        array('N' => '1201')
+                    ),
+                    'ComparisonOperator' => 'EQ'
                 ),
-                'ComparisonOperator' => 'GT'
+                'time' => array(
+                    'AttributeValueList' => array(
+                        array('N' => strtotime("-15 minutes"))
+                    ),
+                    'ComparisonOperator' => 'GT'
+                )
             )
         ));
 
@@ -312,7 +336,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Get all of the results of a Scan operation using a Scan iterator
      *
      * @depends testQuery
-     * @example Aws\DynamoDb\DynamoDbClient::scan 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
      */
     public function testScan()
     {
@@ -323,7 +347,9 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
             'TableName' => 'errors',
             'ScanFilter' => array(
                 'error' => array(
-                    'AttributeValueList' => array(array('S' => 'overflow')),
+                    'AttributeValueList' => array(
+                        array('S' => 'overflow')
+                    ),
                     'ComparisonOperator' => 'CONTAINS'
                 ),
                 'time' => array(
@@ -351,8 +377,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Put and get an item with a binary attribute
      *
      * @depends testScan
-     * @example Aws\DynamoDb\DynamoDbClient::putItem 2011-12-05
-     * @example Aws\DynamoDb\DynamoDbClient::getItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::putItem 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::getItem 2012-08-10
      */
     public function testBinaryType()
     {
@@ -376,20 +402,27 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
             'ConsistentRead' => true,
             'TableName' => 'errors',
             'Key' => array(
-                'HashKeyElement'  => array('N' => '3000'),
-                'RangeKeyElement' => array('N' => $time)
+                'id'  => array('N' => '3000'),
+                'time' => array('N' => $time)
             )
         ));
 
-        var_dump($result['Item']['data']['B'] == base64_decode($data));
-        //> bool(true)
+        if (base64_decode($result['Item']['data']['B']) == $data) {
+            echo 'Data was stored and retrieved correctly.';
+        } else {
+            echo 'Uh oh...';
+        }
+        //> Data was stored and retrieved correctly.
+
+        // @end
+        $this->assertEquals('Data was stored and retrieved correctly.', $this->getActualOutput());
     }
 
     /**
      * Get batches of items
      *
      * @depends testBinaryType
-     * @example Aws\DynamoDb\DynamoDbClient::batchGetItem 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::batchGetItem 2012-08-10
      */
     public function testBatchGetItem()
     {
@@ -411,8 +444,8 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         foreach ($keyValues as $values) {
             list($hashKeyValue, $rangeKeyValue) = $values;
             $keys[] = array(
-                'HashKeyElement'  => array('N' => $hashKeyValue),
-                'RangeKeyElement' => array('N' => $rangeKeyValue)
+                'id'   => array('N' => $hashKeyValue),
+                'time' => array('N' => $rangeKeyValue)
             );
         }
 
@@ -435,22 +468,21 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Delete an item
      *
      * @depends testBatchGetItem
-     * @example Aws\DynamoDb\DynamoDbClient::deleteItem 2011-12-05
-     * @example Aws\DynamoDb\DynamoDbClient::scan 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::deleteItem 2012-08-10
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
      */
     public function testDeleteItem()
     {
         $client = $this->client;
         // @begin
 
-        // Delete every key in the table
         $scan = $client->getIterator('Scan', array('TableName' => 'errors'));
         foreach ($scan as $item) {
             $client->deleteItem(array(
                 'TableName' => 'errors',
                 'Key' => array(
-                    'HashKeyElement'  => array('N' => $item['id']['N']),
-                    'RangeKeyElement' => array('N' => $item['time']['N'])
+                    'id'   => array('N' => $item['id']['N']),
+                    'time' => array('N' => $item['time']['N'])
                 )
             ));
         }
@@ -460,7 +492,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
      * Delete a table
      *
      * @depends testDeleteItem
-     * @example Aws\DynamoDb\DynamoDbClient::deleteTable 2011-12-05
+     * @example Aws\DynamoDb\DynamoDbClient::deleteTable 2012-08-10
      */
     public function testDeleteTable()
     {
@@ -473,6 +505,156 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
 
         $client->waitUntilTableNotExists(array(
             'TableName' => 'errors'
+        ));
+    }
+
+    /**
+     * Create a table with a local secondary index
+     *
+     * @example Aws\DynamoDb\DynamoDbClient::createTable 2012-08-10
+     */
+    public function testCreateTableWithLocalSecondaryIndexes()
+    {
+        $client = $this->client;
+        // @begin
+
+        // Create a "Orders" table
+        $client->createTable(array(
+            'TableName' => 'Orders',
+            'AttributeDefinitions' => array(
+                array('AttributeName' => 'CustomerId', 'AttributeType' => 'N'),
+                array('AttributeName' => 'OrderId',    'AttributeType' => 'N'),
+                array('AttributeName' => 'OrderDate',  'AttributeType' => 'N'),
+            ),
+            'KeySchema' => array(
+                array('AttributeName' => 'CustomerId', 'KeyType' => 'HASH'),
+                array('AttributeName' => 'OrderId',    'KeyType' => 'RANGE'),
+            ),
+            'LocalSecondaryIndexes' => array(
+                array(
+                    'IndexName' => 'OrderDateIndex',
+                    'KeySchema' => array(
+                        array('AttributeName' => 'CustomerId', 'KeyType' => 'HASH'),
+                        array('AttributeName' => 'OrderDate',  'KeyType' => 'RANGE'),
+                    ),
+                    'Projection' => array(
+                        'ProjectionType' => 'KEYS_ONLY',
+                    ),
+                ),
+            ),
+            'ProvisionedThroughput' => array(
+                'ReadCapacityUnits'  => 10,
+                'WriteCapacityUnits' => 20
+            )
+        ));
+
+        $client->waitUntilTableExists(array('TableName' => 'Orders'));
+    }
+
+    /**
+     * Use BatchWriteItem to put multiple items at once
+     *
+     * @depends testCreateTableWithLocalSecondaryIndexes
+     * @example Aws\DynamoDb\DynamoDbClient::batchWriteItem 2012-08-10
+     */
+    public function testBatchWriteItem()
+    {
+        $client = $this->client;
+        // @begin
+
+        $result = $client->batchWriteItem(array(
+            'RequestItems' => array(
+                'Orders' => array(
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 1041),
+                                'OrderId'    => array('N' => 6),
+                                'OrderDate'  => array('N' => strtotime('-5 days')),
+                                'ItemId'     => array('N' => 25336)
+                            )
+                        )
+                    ),
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 941),
+                                'OrderId'    => array('N' => 8),
+                                'OrderDate'  => array('N' => strtotime('-3 days')),
+                                'ItemId'     => array('N' => 15596)
+                            )
+                        )
+                    ),
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 941),
+                                'OrderId'    => array('N' => 2),
+                                'OrderDate'  => array('N' => strtotime('-12 days')),
+                                'ItemId'     => array('N' => 38449)
+                            )
+                        )
+                    ),
+                    array(
+                        'PutRequest' => array(
+                            'Item' => array(
+                                'CustomerId' => array('N' => 941),
+                                'OrderId'    => array('N' => 3),
+                                'OrderDate'  => array('N' => strtotime('-1 days')),
+                                'ItemId'     => array('N' => 25336)
+                            )
+                        )
+                    )
+                )
+            )
+        ));
+    }
+
+    /**
+     * Get results of a Query operation with a local secondary index on the table
+     *
+     * @depends testBatchWriteItem
+     * @example Aws\DynamoDb\DynamoDbClient::query 2012-08-10
+     */
+    public function testQueryWithLocalSecondaryIndexes()
+    {
+        $client = $this->client;
+        // @begin
+
+        // Find the number of orders made by customer 941 in the last 10 days
+        $result = $client->query(array(
+            'TableName'     => 'Orders',
+            'IndexName'     => 'OrderDateIndex',
+            'Select'        => 'COUNT',
+            'KeyConditions' => array(
+                'CustomerId' => array(
+                    'AttributeValueList' => array(
+                        array('N' => '941')
+                    ),
+                    'ComparisonOperator' => 'EQ'
+                ),
+                'OrderDate' => array(
+                    'AttributeValueList' => array(
+                        array('N' => strtotime("-10 days"))
+                    ),
+                    'ComparisonOperator' => 'GE'
+                )
+            )
+        ));
+
+        $numOrders = $result['Count'];
+
+        // @end
+        $this->assertEquals(2, $numOrders);
+    }
+
+    /**
+     * @depends testQueryWithLocalSecondaryIndexes
+     */
+    public function testDeleteIndexedTable()
+    {
+        $this->client->deleteTable(array(
+            'TableName' => 'Orders'
         ));
     }
 }
