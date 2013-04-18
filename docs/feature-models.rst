@@ -47,7 +47,7 @@ values.
     // If needed, you can search for a key in a case-insensitive manner
     echo $result->keySearch('body');
     //> Body
-    $echo $result->keySearch('Body');
+    echo $result->keySearch('Body');
     //> Body
 
     // You can also list all of the keys in the result

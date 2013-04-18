@@ -9,7 +9,8 @@ CHANGELOG
   specify keys. If you are not ready to upgrade to the new API, you can configure the SDK to use the previous version of
   the API by setting the `version` option to `2011-12-05` when you instantiate the client (See
   [`UPGRADING.md`](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)).
-* Added an Amazon S3 stream wrapper that PHP native file functions to be used to interact with S3 buckets and objects
+* Added an Amazon S3 stream wrapper that allows PHP native file functions to be used to interact with S3 buckets and
+  objects
 * Added support for automatically retrying *throttled* requests with exponential backoff to all service clients
 * Added a new config option (`version`) to client objects to specify the API version to use if multiple are supported
 * Added a new config option (`gc_operation_delay`) to the DynamoDB Session Handler to specify a delay between requests
@@ -21,7 +22,8 @@ CHANGELOG
 * Fixed an issue where service clients with a global endpoint could have their region for signing set incorrectly if a
   region other than `us-east-1` was specified.
 * Fixed an issue where reused command objects appended duplicate content to the user agent string
-* [SDK] Fixed an issue in a few operations (including `SQS::receiveMessage`) where the `curl.options` could not be modified
+* [SDK] Fixed an issue in a few operations (including `SQS::receiveMessage`) where the `curl.options` could not be
+  modified
 * [Docs] Added key information to the DynamoDB service description to provide more accurate API docs for some operations
 * [Docs] Added a page about Waiters to the user guide
 * [Docs] Added a page about the DynamoDB Session Handler to the user guide

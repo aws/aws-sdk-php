@@ -24,7 +24,7 @@ SDK through Composer][docs-installation] or by downloading a [single phar file][
 * Convenience features including [Iterators][docs-iterators], [Waiters][docs-waiters], Enums, [modelled
   responses][docs-models], and [service-specific exceptions][docs-exceptions].
 * Multipart uploader for Amazon S3 and Amazon Glacier that can be paused and resumed.
-* DynamoDB Session Handler for easily scaling sessions.
+* [DynamoDB Session Handler][docs-ddbsh] for easily scaling sessions.
 * Automatically uses [IAM Instance Profile Credentials][aws-iam-credentials] on configured Amazon EC2 instances.
 * And more!
 
@@ -100,11 +100,12 @@ try {
 [docs-installation]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/installation.html
 [docs-quickstart]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/quick-start.html
 [docs-iterators]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/quick-start.html#iterators
-[docs-waiters]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/quick-start.html#waiters
-[docs-models]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/quick-start.html#response-models
+[docs-waiters]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/feature-waiters.html
+[docs-models]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/feature-models.html
 [docs-exceptions]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/quick-start.html#error-handling
 [docs-wire-logging]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/faq.html#how-can-i-see-what-data-is-sent-over-the-wire
 [docs-services]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/index.html#supported-services
+[docs-ddbsh]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/feature-dynamodb-session-handler.html
 
 [aws]: http://aws.amazon.com/
 [aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances
