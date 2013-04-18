@@ -5,7 +5,6 @@ CHANGELOG
 ------------------
 
 * Added an Amazon S3 stream wrapper
-* Content-Type is now automatically added to Amazon S3 PutObject and other upload operations
 * Added support for automatically retrying throttled requests with exponential backoff to all service clients
 * Added a new config option (`version`) to client objects to specify the API version to use if multiple are supported
 * Added a new config option (`gc_operation_delay`) to the DynamoDB Session Handler to specify a delay between requests
@@ -13,6 +12,7 @@ CHANGELOG
 * Added support for using the `us-west-2` region to the Amazon Redshift client
 * [Docs] Added a way to use marked integration test code as example code in the user guide and API docs
 * Updated the Amazon RDS client to sign requests with Signature V4
+* Updated the Amazon S3 client to automatically add the `Content-Type` to `PutObject` and other upload operations
 * Fixed an issue where service clients with a global endpoint could have their region for signing set incorrectly if a
   region other than `us-east-1` was specified.
 * Fixed an issue where reused command objects appended duplicate content to the user agent string
