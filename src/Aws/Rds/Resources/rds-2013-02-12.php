@@ -5809,4 +5809,38 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 30,
+            'max_attempts' => 60,
+        ),
+        '__DBInstanceState' => array(
+            'operation' => 'DescribeDBInstances',
+            'acceptor.key' => 'DBInstances/*/DBInstanceStatus',
+        ),
+        'DBInstanceAvailable' => array(
+            'extends' => '__DBInstanceState',
+            'success.value' => 'available',
+            'description' => 'Wait until a DB instance is available.',
+            'failure.value' => array(
+                'deleted',
+                'deleting',
+                'failed',
+                'incompatible-restore',
+                'incompatible-parameters',
+                'incompatible-parameters',
+                'incompatible-restore',
+            ),
+        ),
+        'DBInstanceDeleted' => array(
+            'extends' => '__DBInstanceState',
+            'success.value' => 'deleted',
+            'failure.value' => array(
+                'creating',
+                'modifying',
+                'rebooting',
+                'resetting-master-credentials',
+            ),
+        ),
+    ),
 );
