@@ -34,6 +34,11 @@ return array (
             'https' => true,
             'hostname' => 'redshift.us-west-2.amazonaws.com',
         ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'https://redshift.eu-west-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'AuthorizeClusterSecurityGroupIngress' => array(
