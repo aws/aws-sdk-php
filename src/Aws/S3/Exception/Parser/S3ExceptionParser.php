@@ -27,6 +27,23 @@ class S3ExceptionParser extends DefaultXmlExceptionParser
     /**
      * {@inheritdoc}
      */
+    public function parse(Response $response)
+    {
+        $data = parent::parse($response);
+
+        if ($response->getStatusCode() === 301) {
+            $data['type'] = 'client';
+            if (isset($data['message'], $data['parsed'])) {
+                $data['message'] = rtrim($data['message'], '.') . ': "' . $data['parsed']->Endpoint . '".';
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function parseHeaders(Response $response, array &$data)
     {
         parent::parseHeaders($response, $data);

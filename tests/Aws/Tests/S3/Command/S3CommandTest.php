@@ -52,4 +52,19 @@ class S3CommandTest extends \Guzzle\Tests\GuzzleTestCase
         $result = $command->execute();
         $this->assertEquals('https://foobazbar.s3.amazonaws.com/test', $result['ObjectURL']);
     }
+
+    /**
+     * @expectedException \Aws\S3\Exception\PermanentRedirectException
+     */
+    public function testExceptionThrownOn301Redirect()
+    {
+        $client = $this->getServiceBuilder()->get('s3');
+        $command = $client->getCommand('GetObject', array(
+            'Bucket' => 'foobazbar',
+            'Key'    => 'test',
+        ));
+        $response = new Response(301, null, '<?xml version="1.0" encoding="UTF-8"?><Error><Code>PermanentRedirect</Code><Message>The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint.</Message><RequestId>DUMMY_REQUEST_ID</RequestId><Bucket>DUMMY_BUCKET_NAME</Bucket><HostId>DUMMY_HOST_ID</HostId><Endpoint>s3.amazonaws.com</Endpoint></Error>');
+        $this->setMockResponse($client, array($response));
+        $command->execute();
+    }
 }

@@ -16,8 +16,10 @@
 
 namespace Aws\S3\Command;
 
+use Aws\S3\Exception\RedirectException;
 use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Common\Event;
 
 /**
  * Adds functionality to Amazon S3 commands:
@@ -43,11 +45,22 @@ class S3Command extends OperationCommand
      */
     protected function process()
     {
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+
+        // Dispatch an error if a 301 redirect occurred
+        if ($response->getStatusCode() == 301) {
+            $this->getClient()->getEventDispatcher()->dispatch('request.error', new Event(array(
+                'request'  => $this->getRequest(),
+                'response' => $response
+            )));
+        }
+
         parent::process();
 
         // Set the GetObject URL if using the PutObject operation
         if ($this->result instanceof Model && $this->getName() == 'PutObject') {
-            $this->result->set('ObjectURL', $this->getRequest()->getUrl());
+            $this->result->set('ObjectURL', $request->getUrl());
         }
     }
 }
