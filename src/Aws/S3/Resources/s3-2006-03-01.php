@@ -2553,6 +2553,12 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'Content-Language',
                 ),
+                'ContentLength' => array(
+                    'description' => 'Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically.',
+                    'type' => 'numeric',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Length'
+                ),
                 'ContentMD5' => array(
                     'description' => 'Content-MD5 checksum of the body. Set to false to disable',
                     'default' => true,
@@ -2891,6 +2897,12 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
+                ),
+                'ContentLength' => array(
+                    'description' => 'Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically.',
+                    'type' => 'numeric',
+                    'location' => 'header',
+                    'sentAs' => 'Content-Length'
                 ),
                 'Key' => array(
                     'required' => true,
