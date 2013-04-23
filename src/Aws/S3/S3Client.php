@@ -117,7 +117,7 @@ class S3Client extends AbstractClient
         'SetBucketAcl'                  => 'PutBucketAcl',
         'CreateObject'                  => 'PutObject',
         'DeleteObjects'                 => 'DeleteMultipleObjects',
-        'CopyObject'                    => 'PutObjectCopy',
+        'PutObjectCopy'                 => 'CopyObject',
         'SetObjectAcl'                  => 'PutObjectAcl',
         'GetLogs'                       => 'GetBucketLogging',
         'GetVersioningStatus'           => 'GetBucketVersioning',
