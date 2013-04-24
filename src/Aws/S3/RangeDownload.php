@@ -67,6 +67,8 @@ class RangeDownload extends AbstractHasDispatcher
 
         $target = EntityBody::factory($target);
         $this->meta = $client->headObject($this->params);
+        // Use a ReadLimitEntityBody so that rewinding the stream after an error does not cause the file pointer
+        // to enter an inconsistent state with the data being downloaded
         $this->target = new ReadLimitEntityBody($target, $this->meta['ContentLength'], $target->ftell());
         $this->params['SaveAs'] = $this->target;
     }
