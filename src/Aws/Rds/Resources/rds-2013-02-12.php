@@ -425,6 +425,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'PubliclyAccessible' => array(
+                    'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -531,6 +532,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'PubliclyAccessible' => array(
+                    'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -868,7 +870,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'OptionGroupWrapper',
             'responseType' => 'model',
-            'summary' => 'Creates a new Option Group.',
+            'summary' => 'Creates a new Option Group. You can create up to 20 option groups.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -920,7 +922,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
-            'summary' => 'The DeleteDBInstance API deletes a previously provisioned RDS instance. A successful response from the web service indicates the request was received correctly. If a final DBSnapshot is requested the status of the RDS instance will be "deleting" until the DBSnapshot is created. DescribeDBInstance is used to monitor the status of this operation. This cannot be canceled or reverted once submitted.',
+            'summary' => 'The DeleteDBInstance action deletes a previously provisioned DB instance. A successful response from the web service indicates the request was received correctly. When you delete a DB instance, all automated backups for that instance are deleted and cannot be recovered. Manual DB Snapshots of the DB instance to be deleted are not deleted.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -1647,7 +1649,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EventsMessage',
             'responseType' => 'model',
-            'summary' => 'Returns events related to DB instances, DB security groups, DB Snapshots, and DB parameter groups for the past 14 days. Events specific to a particular DB Iinstance, DB security group, DB Snapshot, or DB parameter group can be obtained by providing the source identifier as a parameter. By default, the past hour of events are returned.',
+            'summary' => 'Returns events related to DB Instances, DB Security Groups, DB Snapshots and DB Parameter Groups for the past 14 days. Events specific to a particular DB Instance, DB Security Group, database snapshot or DB Parameter Group can be obtained by providing the name as a parameter. By default, the past hour of events are returned.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -2026,16 +2028,14 @@ return array (
                     'default' => '2013-02-12',
                 ),
                 'DBInstanceIdentifier' => array(
-                    'required' => true,
                     'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
                     'type' => 'string',
-                    'location' => 'uri',
+                    'location' => 'aws.query',
                 ),
                 'LogFileName' => array(
-                    'required' => true,
                     'description' => 'The name of the log file to be downloaded.',
                     'type' => 'string',
-                    'location' => 'uri',
+                    'location' => 'aws.query',
                 ),
                 'Marker' => array(
                     'description' => 'The pagination token provided in the previous request. If this parameter is specified the response includes only records beyond the marker, up to MaxRecords.',
@@ -2534,49 +2534,49 @@ return array (
                                 ),
                             ),
                             'OptionSettings' => array(
-                                'description' => 'A list of option settings applied for this option.',
+                                'description' => 'The option settings to include in an option group.',
                                 'type' => 'array',
                                 'sentAs' => 'OptionSettings.member',
                                 'items' => array(
                                     'name' => 'OptionSetting',
-                                    'description' => 'Option setting details.',
+                                    'description' => 'Option settings are the actual settings being applied or configured for that option. It is used when you modify an option group or describe option groups. For example, the NATIVE_NETWORK_ENCRYPTION option has a setting called SQLNET.ENCRYPTION_SERVER that can have several different values.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Name' => array(
-                                            'description' => 'The name of the setting.',
+                                            'description' => 'The name of the option that has settings that you can set.',
                                             'type' => 'string',
                                         ),
                                         'Value' => array(
-                                            'description' => 'The value of this setting.',
+                                            'description' => 'The current value of the option setting.',
                                             'type' => 'string',
                                         ),
                                         'DefaultValue' => array(
-                                            'description' => 'Default value for this setting.',
+                                            'description' => 'The default value of the option setting.',
                                             'type' => 'string',
                                         ),
                                         'Description' => array(
-                                            'description' => 'The description of the setting.',
+                                            'description' => 'The description of the option setting.',
                                             'type' => 'string',
                                         ),
                                         'ApplyType' => array(
-                                            'description' => 'Specifies the apply type for this setting.',
+                                            'description' => 'The DB engine specific parameter type.',
                                             'type' => 'string',
                                         ),
                                         'DataType' => array(
-                                            'description' => 'Specifies the valid data type of this setting',
+                                            'description' => 'The data type of the option setting.',
                                             'type' => 'string',
                                         ),
                                         'AllowedValues' => array(
-                                            'description' => 'Specifies a valid list/range of values allowed for this setting.',
+                                            'description' => 'The allowed values of the option setting.',
                                             'type' => 'string',
                                         ),
                                         'IsModifiable' => array(
-                                            'description' => 'Indicates if the setting is modifiable or not.',
+                                            'description' => 'A Boolean value that, when true, indicates the option setting can be modified from the default.',
                                             'type' => 'boolean',
                                             'format' => 'boolean-string',
                                         ),
                                         'IsCollection' => array(
-                                            'description' => 'Indicates if the value for the setting can be a list of values or a single value.',
+                                            'description' => 'Indicates if the option setting is part of a collection.',
                                             'type' => 'boolean',
                                             'format' => 'boolean-string',
                                         ),
@@ -2983,6 +2983,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'PubliclyAccessible' => array(
+                    'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -3009,11 +3010,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Iops' => array(
-                    'description' => 'The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB Instance.',
+                    'description' => 'Specifies the amount of provisioned IOPS for the DB Instance, expressed in I/O operations per second. If this parameter is not specified, the IOPS value will be taken from the backup. If this parameter is set to 0, the new instance will be converted to a non-PIOPS instance, which will take additional time, though your DB instance will be available for connections before the conversion starts.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'OptionGroupName' => array(
+                    'description' => 'The name of the option group to be used for the restored DB instance.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -3133,6 +3135,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'PubliclyAccessible' => array(
+                    'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -3164,6 +3167,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'OptionGroupName' => array(
+                    'description' => 'The name of the option group to be used for the restored DB instance.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -3284,10 +3288,6 @@ return array (
                         'wrapper' => true,
                     ),
                     'properties' => array(
-                        'Id' => array(
-                            'description' => 'Not used.',
-                            'type' => 'string',
-                        ),
                         'CustomerAwsId' => array(
                             'description' => 'The AWS customer account associated with the RDS event notification subscription.',
                             'type' => 'string',
@@ -3775,6 +3775,7 @@ return array (
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'OptionGroupMembership',
+                                'description' => 'Provides information on the option groups the DB instance is a member of.',
                                 'type' => 'object',
                                 'sentAs' => 'OptionGroupMembership',
                                 'properties' => array(
@@ -3798,6 +3799,7 @@ return array (
                             'type' => 'string',
                         ),
                         'PubliclyAccessible' => array(
+                            'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                             'type' => 'boolean',
                         ),
                     ),
@@ -3950,55 +3952,55 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                     'OptionSettings' => array(
-                                        'description' => 'The settings belonging to this option.',
+                                        'description' => 'The option settings for this option.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'OptionSetting',
-                                            'description' => 'Option setting details.',
+                                            'description' => 'Option settings are the actual settings being applied or configured for that option. It is used when you modify an option group or describe option groups. For example, the NATIVE_NETWORK_ENCRYPTION option has a setting called SQLNET.ENCRYPTION_SERVER that can have several different values.',
                                             'type' => 'object',
                                             'sentAs' => 'OptionSetting',
                                             'properties' => array(
                                                 'Name' => array(
-                                                    'description' => 'The name of the setting.',
+                                                    'description' => 'The name of the option that has settings that you can set.',
                                                     'type' => 'string',
                                                 ),
                                                 'Value' => array(
-                                                    'description' => 'The value of this setting.',
+                                                    'description' => 'The current value of the option setting.',
                                                     'type' => 'string',
                                                 ),
                                                 'DefaultValue' => array(
-                                                    'description' => 'Default value for this setting.',
+                                                    'description' => 'The default value of the option setting.',
                                                     'type' => 'string',
                                                 ),
                                                 'Description' => array(
-                                                    'description' => 'The description of the setting.',
+                                                    'description' => 'The description of the option setting.',
                                                     'type' => 'string',
                                                 ),
                                                 'ApplyType' => array(
-                                                    'description' => 'Specifies the apply type for this setting.',
+                                                    'description' => 'The DB engine specific parameter type.',
                                                     'type' => 'string',
                                                 ),
                                                 'DataType' => array(
-                                                    'description' => 'Specifies the valid data type of this setting',
+                                                    'description' => 'The data type of the option setting.',
                                                     'type' => 'string',
                                                 ),
                                                 'AllowedValues' => array(
-                                                    'description' => 'Specifies a valid list/range of values allowed for this setting.',
+                                                    'description' => 'The allowed values of the option setting.',
                                                     'type' => 'string',
                                                 ),
                                                 'IsModifiable' => array(
-                                                    'description' => 'Indicates if the setting is modifiable or not.',
+                                                    'description' => 'A Boolean value that, when true, indicates the option setting can be modified from the default.',
                                                     'type' => 'boolean',
                                                 ),
                                                 'IsCollection' => array(
-                                                    'description' => 'Indicates if the value for the setting can be a list of values or a single value.',
+                                                    'description' => 'Indicates if the option setting is part of a collection.',
                                                     'type' => 'boolean',
                                                 ),
                                             ),
                                         ),
                                     ),
                                     'DBSecurityGroupMemberships' => array(
-                                        'description' => 'If the Option requires access to a port, then this DB Security Group allows access to the port.',
+                                        'description' => 'If the option requires access to a port, then this DB Security Group allows access to the port.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'DBSecurityGroup',
@@ -4018,7 +4020,7 @@ return array (
                                         ),
                                     ),
                                     'VpcSecurityGroupMemberships' => array(
-                                        'description' => 'If the Option requires access to a port, then this VPC Security Group allows access to the port.',
+                                        'description' => 'If the option requires access to a port, then this VPC Security Group allows access to the port.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'VpcSecurityGroupMembership',
@@ -4410,6 +4412,7 @@ return array (
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'OptionGroupMembership',
+                                    'description' => 'Provides information on the option groups the DB instance is a member of.',
                                     'type' => 'object',
                                     'sentAs' => 'OptionGroupMembership',
                                     'properties' => array(
@@ -4433,6 +4436,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'PubliclyAccessible' => array(
+                                'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                                 'type' => 'boolean',
                             ),
                         ),
@@ -4445,6 +4449,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'DescribeDBLogFiles' => array(
+                    'description' => 'The DB log files returned.',
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
@@ -4469,6 +4474,7 @@ return array (
                     ),
                 ),
                 'Marker' => array(
+                    'description' => 'An optional paging token.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -4950,10 +4956,6 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'EventSubscription',
                         'properties' => array(
-                            'Id' => array(
-                                'description' => 'Not used.',
-                                'type' => 'string',
-                            ),
                             'CustomerAwsId' => array(
                                 'description' => 'The AWS customer account associated with the RDS event notification subscription.',
                                 'type' => 'string',
@@ -5109,28 +5111,36 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'OptionGroupOptionSettings' => array(
+                                'description' => 'Specifies the option settings that are available (and the default value) for each option in an option group.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'OptionGroupOptionSetting',
+                                    'description' => 'Option Group option settings are used to display settings available for each option with their default values and other information. These values are used with the DescribeOptionGroupOptions action.',
                                     'type' => 'object',
                                     'sentAs' => 'OptionGroupOptionSetting',
                                     'properties' => array(
                                         'SettingName' => array(
+                                            'description' => 'The name of the option group option.',
                                             'type' => 'string',
                                         ),
                                         'SettingDescription' => array(
+                                            'description' => 'The description of the option group option.',
                                             'type' => 'string',
                                         ),
                                         'DefaultValue' => array(
+                                            'description' => 'The default value for the option group option.',
                                             'type' => 'string',
                                         ),
                                         'ApplyType' => array(
+                                            'description' => 'The DB engine specific parameter type for the option group option.',
                                             'type' => 'string',
                                         ),
                                         'AllowedValues' => array(
+                                            'description' => 'Indicates the acceptable values for the option group option.',
                                             'type' => 'string',
                                         ),
                                         'IsModifiable' => array(
+                                            'description' => 'Boolean value where true indicates that this option group option can be changed from the default value.',
                                             'type' => 'boolean',
                                         ),
                                     ),
@@ -5201,55 +5211,55 @@ return array (
                                             'type' => 'numeric',
                                         ),
                                         'OptionSettings' => array(
-                                            'description' => 'The settings belonging to this option.',
+                                            'description' => 'The option settings for this option.',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'OptionSetting',
-                                                'description' => 'Option setting details.',
+                                                'description' => 'Option settings are the actual settings being applied or configured for that option. It is used when you modify an option group or describe option groups. For example, the NATIVE_NETWORK_ENCRYPTION option has a setting called SQLNET.ENCRYPTION_SERVER that can have several different values.',
                                                 'type' => 'object',
                                                 'sentAs' => 'OptionSetting',
                                                 'properties' => array(
                                                     'Name' => array(
-                                                        'description' => 'The name of the setting.',
+                                                        'description' => 'The name of the option that has settings that you can set.',
                                                         'type' => 'string',
                                                     ),
                                                     'Value' => array(
-                                                        'description' => 'The value of this setting.',
+                                                        'description' => 'The current value of the option setting.',
                                                         'type' => 'string',
                                                     ),
                                                     'DefaultValue' => array(
-                                                        'description' => 'Default value for this setting.',
+                                                        'description' => 'The default value of the option setting.',
                                                         'type' => 'string',
                                                     ),
                                                     'Description' => array(
-                                                        'description' => 'The description of the setting.',
+                                                        'description' => 'The description of the option setting.',
                                                         'type' => 'string',
                                                     ),
                                                     'ApplyType' => array(
-                                                        'description' => 'Specifies the apply type for this setting.',
+                                                        'description' => 'The DB engine specific parameter type.',
                                                         'type' => 'string',
                                                     ),
                                                     'DataType' => array(
-                                                        'description' => 'Specifies the valid data type of this setting',
+                                                        'description' => 'The data type of the option setting.',
                                                         'type' => 'string',
                                                     ),
                                                     'AllowedValues' => array(
-                                                        'description' => 'Specifies a valid list/range of values allowed for this setting.',
+                                                        'description' => 'The allowed values of the option setting.',
                                                         'type' => 'string',
                                                     ),
                                                     'IsModifiable' => array(
-                                                        'description' => 'Indicates if the setting is modifiable or not.',
+                                                        'description' => 'A Boolean value that, when true, indicates the option setting can be modified from the default.',
                                                         'type' => 'boolean',
                                                     ),
                                                     'IsCollection' => array(
-                                                        'description' => 'Indicates if the value for the setting can be a list of values or a single value.',
+                                                        'description' => 'Indicates if the option setting is part of a collection.',
                                                         'type' => 'boolean',
                                                     ),
                                                 ),
                                             ),
                                         ),
                                         'DBSecurityGroupMemberships' => array(
-                                            'description' => 'If the Option requires access to a port, then this DB Security Group allows access to the port.',
+                                            'description' => 'If the option requires access to a port, then this DB Security Group allows access to the port.',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'DBSecurityGroup',
@@ -5269,7 +5279,7 @@ return array (
                                             ),
                                         ),
                                         'VpcSecurityGroupMemberships' => array(
-                                            'description' => 'If the Option requires access to a port, then this VPC Security Group allows access to the port.',
+                                            'description' => 'If the option requires access to a port, then this VPC Security Group allows access to the port.',
                                             'type' => 'array',
                                             'items' => array(
                                                 'name' => 'VpcSecurityGroupMembership',
@@ -5303,6 +5313,7 @@ return array (
                     ),
                 ),
                 'Marker' => array(
+                    'description' => 'An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
