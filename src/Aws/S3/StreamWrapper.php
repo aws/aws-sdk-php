@@ -202,7 +202,7 @@ class StreamWrapper
     public function stream_flush()
     {
         if ($this->mode == 'r') {
-            return fflush($this->body->getStream());
+            return false;
         }
 
         $this->body->rewind();
