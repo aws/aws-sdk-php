@@ -38,6 +38,7 @@ return array (
             'responseClass' => 'AddCommunicationToCaseResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action adds additional customer communication to an AWS Support case. You use the CaseId value to identify the case to which you want to add communication. You can list a set of email addresses to copy on the communication using the CcEmailAddresses value. The CommunicationBody value contains the text of the communication.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -89,6 +90,7 @@ return array (
             'responseClass' => 'CreateCaseResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Creates a new case in the AWS Support Center. This action is modeled on the behavior of the AWS Support Center Open a new case page. Its parameters require you to specify the following information:',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -163,6 +165,7 @@ return array (
             'responseClass' => 'DescribeCasesResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action returns a list of cases that you specify by passing one or more CaseIds. In addition, you can filter the cases by date by setting values for the AfterTime and BeforeTime request parameters.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -234,6 +237,7 @@ return array (
             'responseClass' => 'DescribeCommunicationsResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action returns communications regarding the support case. You can use the AfterTime and BeforeTime parameters to filter by date. The CaseId parameter enables you to identify a specific case by its CaseId number.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -289,6 +293,7 @@ return array (
             'responseClass' => 'DescribeServicesResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Returns the current list of AWS services and a list of service categories that applies to each one. You then use service names and categories in your CreateCase requests. Each AWS service has its own set of categories.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -330,6 +335,7 @@ return array (
             'responseClass' => 'DescribeSeverityLevelsResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action returns the list of severity levels that you can assign to an AWS Support case. The severity level for a case is also a field in the CaseDetails data type included in any CreateCase request.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -345,7 +351,7 @@ return array (
                     'location' => 'header',
                     'default' => 'AWSSupportAPIService.DescribeSeverityLevels',
                 ),
-                'placeholder' => array(
+                'language' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -363,6 +369,7 @@ return array (
             'responseClass' => 'ResolveCaseResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Takes a CaseId and returns the initial state of the case along with the state of the case after the call to ResolveCase completed.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -392,6 +399,45 @@ return array (
                 ),
             ),
         ),
+        'DescribeTrustedAdvisorCheckRefreshStatuses' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeTrustedAdvisorCheckRefreshStatusesResponse',
+            'responseType' => 'model',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Returns the status of all refresh requests Trusted Advisor checks called using RefreshTrustedAdvisorCheck.',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AWSSupportAPIService.DescribeTrustedAdvisorCheckRefreshStatuses',
+                ),
+                'checkIds' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
         'DescribeTrustedAdvisorCheckResult' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -399,6 +445,7 @@ return array (
             'responseClass' => 'DescribeTrustedAdvisorCheckResultResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action responds with the results of a Trusted Advisor check. Once you have obtained the list of available Trusted Advisor checks by calling DescribeTrustedAdvisorChecks, you specify the CheckId for the check you want to retrieve from AWS Support.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -419,6 +466,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'language' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -433,6 +484,7 @@ return array (
             'responseClass' => 'DescribeTrustedAdvisorCheckSummariesResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action enables you to get the latest summaries for Trusted Advisor checks that you specify in your request. You submit the list of Trusted Advisor checks for which you want summaries. You obtain these CheckIds by submitting a DescribeTrustedAdvisorChecks request.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -471,6 +523,7 @@ return array (
             'responseClass' => 'DescribeTrustedAdvisorChecksResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action enables you to get a list of the available Trusted Advisor checks. You must specify a language code. English ("en") and Japanese ("jp") are currently supported. The response contains a list of TrustedAdvisorCheckDescription objects.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -505,6 +558,7 @@ return array (
             'responseClass' => 'RefreshTrustedAdvisorCheckResponse',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'This action enables you to query the service to request a refresh for a specific Trusted Advisor check. Your request body contains a CheckId for which you are querying. The response body contains a RefreshTrustedAdvisorCheckResult object containing Status and TimeUntilNextRefresh fields.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -621,6 +675,13 @@ return array (
                                     ),
                                 ),
                             ),
+                            'ccEmailAddresses' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'CcEmailAddress',
+                                    'type' => 'string',
+                                ),
+                            ),
                             'language' => array(
                                 'type' => 'string',
                             ),
@@ -706,7 +767,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'severityLevelsList' => array(
+                'severityLevels' => array(
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -735,6 +796,31 @@ return array (
                 'finalCaseStatus' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+            ),
+        ),
+        'DescribeTrustedAdvisorCheckRefreshStatusesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'statuses' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TrustedAdvisorCheckRefreshStatus',
+                        'type' => 'object',
+                        'properties' => array(
+                            'checkId' => array(
+                                'type' => 'string',
+                            ),
+                            'status' => array(
+                                'type' => 'string',
+                            ),
+                            'millisUntilNextRefreshable' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -840,6 +926,9 @@ return array (
                             'status' => array(
                                 'type' => 'string',
                             ),
+                            'hasFlaggedResources' => array(
+                                'type' => 'boolean',
+                            ),
                             'resourcesSummary' => array(
                                 'type' => 'object',
                                 'properties' => array(
@@ -918,12 +1007,19 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'status' => array(
-                    'type' => 'string',
+                    'type' => 'object',
                     'location' => 'json',
-                ),
-                'timeUntilNextRefresh' => array(
-                    'type' => 'numeric',
-                    'location' => 'json',
+                    'properties' => array(
+                        'checkId' => array(
+                            'type' => 'string',
+                        ),
+                        'status' => array(
+                            'type' => 'string',
+                        ),
+                        'millisUntilNextRefreshable' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -945,11 +1041,14 @@ return array (
             'DescribeServices' => array(
                 'result_key' => 'services',
             ),
+            'DescribeTrustedAdvisorCheckRefreshStatuses' => array(
+                'result_key' => 'statuses',
+            ),
             'DescribeTrustedAdvisorCheckSummaries' => array(
                 'result_key' => 'summaries',
             ),
             'DescribeSeverityLevels' => array(
-                'result_key' => 'severityLevelsList',
+                'result_key' => 'severityLevels',
             ),
             'DescribeTrustedAdvisorChecks' => array(
                 'result_key' => 'checks',

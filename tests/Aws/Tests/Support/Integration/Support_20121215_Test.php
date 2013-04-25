@@ -65,7 +65,7 @@ class Support_20121215_Test extends \Aws\Tests\IntegrationTestCase
         // @begin
 
         $result = $client->describeSeverityLevels();
-        $level = $result['severityLevelsList'][0];
+        $level = $result['severityLevels'][0];
 
         // @end
         $this->assertArrayHasKey('name', $level);

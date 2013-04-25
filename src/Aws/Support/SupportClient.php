@@ -33,6 +33,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeServices(array $args = array()) {@command Support DescribeServices}
  * @method Model describeSeverityLevels(array $args = array()) {@command Support DescribeSeverityLevels}
  * @method Model resolveCase(array $args = array()) {@command Support ResolveCase}
+ * @method Model describeTrustedAdvisorCheckRefreshStatuses(array $args = array()) {@command Support DescribeTrustedAdvisorCheckRefreshStatuses}
  * @method Model describeTrustedAdvisorCheckResult(array $args = array()) {@command Support DescribeTrustedAdvisorCheckResult}
  * @method Model describeTrustedAdvisorCheckSummaries(array $args = array()) {@command Support DescribeTrustedAdvisorCheckSummaries}
  * @method Model describeTrustedAdvisorChecks(array $args = array()) {@command Support DescribeTrustedAdvisorChecks}
