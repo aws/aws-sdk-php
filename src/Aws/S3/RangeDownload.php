@@ -29,7 +29,6 @@ class RangeDownload extends AbstractHasDispatcher
 {
     const BEFORE_SEND = 's3.range_download.before_send';
     const AFTER_SEND = 's3.range_download.after_send';
-
     protected $client;
     protected $meta;
     protected $params;
@@ -65,12 +64,24 @@ class RangeDownload extends AbstractHasDispatcher
             fseek($target, 0, SEEK_END);
         }
 
-        $target = EntityBody::factory($target);
+        $this->target = EntityBody::factory($target);
         $this->meta = $client->headObject($this->params);
+
         // Use a ReadLimitEntityBody so that rewinding the stream after an error does not cause the file pointer
         // to enter an inconsistent state with the data being downloaded
-        $this->target = new ReadLimitEntityBody($target, $this->meta['ContentLength'], $target->ftell());
-        $this->params['SaveAs'] = $this->target;
+        $this->params['SaveAs'] = new ReadLimitEntityBody(
+            $this->target,
+            $this->meta['ContentLength'],
+            $this->target->ftell()
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getAllEvents()
+    {
+        return array(self::BEFORE_SEND, self::AFTER_SEND);
     }
 
     /**
@@ -80,7 +91,7 @@ class RangeDownload extends AbstractHasDispatcher
      */
     public function hasMore()
     {
-        return $this->target->getDecoratedBody()->ftell() < $this->meta['ContentLength'];
+        return $this->target->ftell() < $this->meta['ContentLength'];
     }
 
     /**
@@ -94,10 +105,10 @@ class RangeDownload extends AbstractHasDispatcher
             return false;
         }
 
-        $current = $this->target->getDecoratedBody()->ftell();
+        $current = $this->target->ftell();
         $targetByte = min($this->meta['ContentLength'], $current + $this->chunkSize);
         $this->params['Range'] = "bytes={$current}-{$targetByte}";
-        $this->target->setOffset($current);
+        $this->params['SaveAs']->setOffset($current);
         $command = $this->client->getCommand('GetObject', $this->params);
         $event = array(
             'target'  => $this->target,
@@ -133,7 +144,7 @@ class RangeDownload extends AbstractHasDispatcher
     public function checkIntegrity()
     {
         if ($this->target->isReadable() && $expected = $this->meta['ContentMD5']) {
-            $actual = $this->target->getDecoratedBody()->getContentMd5();
+            $actual = $this->target->getContentMd5();
             if ($actual != $expected) {
                 throw new RuntimeException("Message integrity check failed. Expected {$expected} but got {$actual}.");
             }
