@@ -111,11 +111,13 @@ class RangeDownload extends AbstractHasDispatcher
         $this->params['SaveAs']->setOffset($current);
         $command = $this->client->getCommand('GetObject', $this->params);
         $event = array(
-            'target'  => $this->target,
-            'total'   => $this->meta['ContentLength'],
-            'start'   => $current,
-            'end'     => $targetByte,
-            'command' => $command
+            'target'     => $this->target,
+            'total'      => $this->meta['ContentLength'],
+            'start'      => $current,
+            'end'        => $targetByte,
+            'command'    => $command,
+            'chunk_size' => $this->chunkSize,
+            'metadata'   => $this->meta
         );
 
         $this->dispatch(self::BEFORE_SEND, $event);
