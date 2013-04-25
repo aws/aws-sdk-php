@@ -22,8 +22,8 @@ use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 
 /**
- * Downloads a large file from Amazon S3 in chunks using ranged downloads. This is useful for resuming partial
- * downloads or downloading files over 2GB on 32-bit systems.
+ * Downloads a large file from Amazon S3 in chunks using ranged downloads and allows the resumption of downloading a
+ * partially downloaded file.
  */
 class RangeDownload extends AbstractHasDispatcher
 {
