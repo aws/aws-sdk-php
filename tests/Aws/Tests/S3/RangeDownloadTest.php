@@ -78,4 +78,23 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('bytes=5-9', (string) $mocked[2]->getHeader('Range'));
         $this->assertEquals('bytes=10-14', (string) $mocked[3]->getHeader('Range'));
     }
+
+    /**
+     * @expectedException \Aws\Common\Exception\RuntimeException
+     * @expectedExceptionMessage Message integrity check failed. Expected 5032561e973f16047f3109e6a3f7f173 but got 4ba36d23a78c7393b4900ef38019d8ff
+     */
+    public function testEnsuresMd5Match()
+    {
+        $client = $this->getServiceBuilder()->get('s3');
+        $mock = new MockPlugin();
+        $client->addSubscriber($mock);
+        $mock->addResponse(new Response(200, array(
+            'Content-Length' => 15,
+            'Content-MD5' => '5032561e973f16047f3109e6a3f7f173'
+        )));
+        $target = EntityBody::factory('111111111111111');
+        $target->seek(0, SEEK_END);
+        $range = new RangeDownload($client, 'test', 'key', $target);
+        $range->download();
+    }
 }
