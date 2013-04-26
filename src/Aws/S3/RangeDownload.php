@@ -22,8 +22,8 @@ use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 
 /**
- * Downloads a large file from Amazon S3 in chunks using ranged downloads and allows the resumption of downloading a
- * partially downloaded file.
+ * Downloads a large file from Amazon S3 in chunks using ranged downloads, allowing you to resume the download of
+ * partially downloaded objects.
  */
 class RangeDownload extends AbstractHasDispatcher
 {
@@ -43,7 +43,7 @@ class RangeDownload extends AbstractHasDispatcher
      *                                                     save the object to a file.
      * @param array                               $options Associative array of options:
      *                                                     - chunk_size: The size of each chunk to download. Defaults
-     *                                                                   to PHP's max integer size
+     *                                                                   to 100 MB
      *                                                     - params:     Any additional GetObject parameters to use with
      *                                                                   each range GET request (e.g. Version to
      *                                                                   download a specific version of an object)
@@ -51,7 +51,7 @@ class RangeDownload extends AbstractHasDispatcher
      */
     public function __construct(S3Client $client, $bucket, $key, $target, array $options = array())
     {
-        $this->chunkSize = isset($options['chunk_size']) ? $options['chunk_size'] : PHP_INT_MAX;
+        $this->chunkSize = isset($options['chunk_size']) ? $options['chunk_size'] : 104857600;
         $this->params = isset($options['params']) ? $options['params'] : array();
         $this->client = $client;
         $this->params['Bucket'] = $bucket;
