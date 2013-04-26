@@ -65,7 +65,7 @@ class RangeDownload extends AbstractHasDispatcher
         }
 
         $this->target = EntityBody::factory($target);
-        $this->meta = $client->headObject($this->params);
+        $this->meta = $this->client->headObject($this->params);
 
         // Use a ReadLimitEntityBody so that rewinding the stream after an error does not cause the file pointer
         // to enter an inconsistent state with the data being downloaded
@@ -106,7 +106,7 @@ class RangeDownload extends AbstractHasDispatcher
         }
 
         $current = $this->target->ftell();
-        $targetByte = min($this->meta['ContentLength'], $current + $this->chunkSize);
+        $targetByte = min($this->meta['ContentLength'], $current + $this->chunkSize) - 1;
         $this->params['Range'] = "bytes={$current}-{$targetByte}";
         $this->params['SaveAs']->setOffset($current);
         $command = $this->client->getCommand('GetObject', $this->params);
