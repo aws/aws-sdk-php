@@ -98,11 +98,22 @@ class RangeDownload extends AbstractHasDispatcher
     }
 
     /**
+     * Download the remainder of the object from Amazon S3
+     *
+     * Performs a message integrity check if possible
+     */
+    public function download()
+    {
+        while ($this->downloadNext());
+        $this->checkIntegrity();
+    }
+
+    /**
      * Downloads the next chunk of the object
      *
      * @return bool Returns false if the download has completed or true if a download completed
      */
-    public function downloadNext()
+    protected function downloadNext()
     {
         if (!$this->hasMore()) {
             return false;
@@ -131,22 +142,11 @@ class RangeDownload extends AbstractHasDispatcher
     }
 
     /**
-     * Download the remainder of the object from Amazon S3
-     *
-     * Performs a message integrity check if possible
-     */
-    public function download()
-    {
-        while ($this->downloadNext());
-        $this->checkIntegrity();
-    }
-
-    /**
      * Performs an MD5 message integrity check if possible
      *
-     * @throws \Aws\Common\Exception\RuntimeException
+     * returns true if
      */
-    public function checkIntegrity()
+    protected function checkIntegrity()
     {
         if ($this->target->isReadable() && $expected = $this->meta['ContentMD5']) {
             $actual = $this->target->getContentMd5();
