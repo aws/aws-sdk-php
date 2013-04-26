@@ -64,8 +64,11 @@ class RangeDownload extends AbstractHasDispatcher
             fseek($target, 0, SEEK_END);
         }
 
+        // Get the metadata and Content-MD5 of the object
         $this->target = EntityBody::factory($target);
-        $this->meta = $this->client->headObject($this->params);
+        $command = $this->client->getCommand('HeadObject', $this->params);
+        $this->meta = $command->execute();
+        $this->meta['ContentMD5'] = (string) $command->getResponse()->getHeader('Content-MD5');
 
         // Use a ReadLimitEntityBody so that rewinding the stream after an error does not cause the file pointer
         // to enter an inconsistent state with the data being downloaded
