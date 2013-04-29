@@ -29,6 +29,7 @@ class RangeDownload extends AbstractHasDispatcher
 {
     const BEFORE_SEND = 's3.range_download.before_send';
     const AFTER_SEND = 's3.range_download.after_send';
+
     protected $client;
     protected $meta;
     protected $params;
@@ -43,7 +44,7 @@ class RangeDownload extends AbstractHasDispatcher
      *                                                     save the object to a file.
      * @param array                               $options Associative array of options:
      *                                                     - chunk_size: The size of each chunk to download. Defaults
-     *                                                                   to 100 MB
+     *                                                                   to PHP's max integer size
      *                                                     - params:     Any additional GetObject parameters to use with
      *                                                                   each range GET request (e.g. Version to
      *                                                                   download a specific version of an object)
@@ -51,7 +52,7 @@ class RangeDownload extends AbstractHasDispatcher
      */
     public function __construct(S3Client $client, $bucket, $key, $target, array $options = array())
     {
-        $this->chunkSize = isset($options['chunk_size']) ? $options['chunk_size'] : 104857600;
+        $this->chunkSize = isset($options['chunk_size']) ? $options['chunk_size'] : PHP_INT_MAX;
         $this->params = isset($options['params']) ? $options['params'] : array();
         $this->client = $client;
         $this->params['Bucket'] = $bucket;
@@ -122,6 +123,12 @@ class RangeDownload extends AbstractHasDispatcher
         $current = $this->target->ftell();
         $targetByte = min($this->meta['ContentLength'], $current + $this->chunkSize) - 1;
         $this->params['Range'] = "bytes={$current}-{$targetByte}";
+
+        // Don't do a Range request if the range is the full request
+        if ($current == 0 && $targetByte == ($this->meta['ContentLength'] - 1)) {
+            unset($this->params['Range']);
+        }
+
         $this->params['SaveAs']->setOffset($current);
         $command = $this->client->getCommand('GetObject', $this->params);
         $event = array(
