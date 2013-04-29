@@ -80,7 +80,7 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException \Aws\Common\Exception\RuntimeException
+     * @expectedException \Aws\Common\Exception\UnexpectedValueException
      * @expectedExceptionMessage Message integrity check failed. Expected 5032561e973f16047f3109e6a3f7f173 but got 4ba36d23a78c7393b4900ef38019d8ff
      */
     public function testEnsuresMd5Match()

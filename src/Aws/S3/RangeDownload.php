@@ -17,6 +17,7 @@
 namespace Aws\S3;
 
 use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Exception\UnexpectedValueException;
 use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
@@ -151,14 +152,14 @@ class RangeDownload extends AbstractHasDispatcher
     /**
      * Performs an MD5 message integrity check if possible
      *
-     * returns true if
+     * @throws UnexpectedValueException if the message does not validate
      */
     protected function checkIntegrity()
     {
         if ($this->target->isReadable() && $expected = $this->meta['ContentMD5']) {
             $actual = $this->target->getContentMd5();
             if ($actual != $expected) {
-                throw new RuntimeException("Message integrity check failed. Expected {$expected} but got {$actual}.");
+                throw new UnexpectedValueException("Message integrity check failed. Expected {$expected} but got {$actual}.");
             }
         }
     }
