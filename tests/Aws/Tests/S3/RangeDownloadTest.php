@@ -97,4 +97,23 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
         $range = new RangeDownload($client, 'test', 'key', $target);
         $range->download();
     }
+
+    public function testDoesNotSendRangeHeaderWhenFullRequest()
+    {
+        $client = $this->getServiceBuilder()->get('s3');
+        $mock = new MockPlugin();
+        $client->addSubscriber($mock);
+        $mock->addResponse(new Response(200, array('Content-Length' => 15)));
+        $target = EntityBody::factory();
+        $range = new RangeDownload($client, 'test', 'key', $target);
+        $mocked = $mock->getReceivedRequests();
+        $this->assertCount(1, $mocked);
+        $this->assertEquals('HEAD', $mocked[0]->getMethod());
+        $mock->addResponse(new Response(200, array('Content-Length' => 15), '123456789101112'));
+        $range->download();
+        $this->assertEquals('123456789101112', (string) $target);
+        $mocked = $mock->getReceivedRequests();
+        $this->assertEquals(2, count($mocked));
+        $this->assertNull($mocked[1]->getHeader('Range'));
+    }
 }
