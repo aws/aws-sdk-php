@@ -1,6 +1,20 @@
 CHANGELOG
 =========
 
+2.3.1 (2013-04-30)
+------------------
+
+* Added support for **AWS Support**
+* Added support for using the `eu-west-1` region to the Amazon Redshift client
+* Fixed an issue with the Amazon RDS client where the `DownloadDBLogFilePortion` operation was not being serialized
+  properly
+* Fixed an issue with the Amazon S3 client where the `PutObjectCopy` alias was interfering with the `CopyObject`
+  operation
+* Added the ability to manually set a Content-Length header when using the `PutObject` and `UploadPart` operations of
+  the Amazon S3 client
+* Fixed an issue where the Amazon S3 class was not throwing an exception for a non-followable 301 redirect response
+* Fixed an issue where `fflush()` was called during the shutdown process of the stream handler for read-only streams
+
 2.3.0 (2013-04-18)
 ------------------
 

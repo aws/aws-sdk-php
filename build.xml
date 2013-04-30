@@ -55,8 +55,8 @@
                 <include name="vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php" />
                 <!-- Install Guzzle and its dependencies -->
                 <include name="vendor/guzzle/guzzle/src/**/*.php" />
-                <include name="vendor/guzzle/guzzle/**/*.pem" />
-                <include name="vendor/guzzle/guzzle/**/*.md5" />
+                <include name="vendor/guzzle/guzzle/src/**/*.pem" />
+                <include name="vendor/guzzle/guzzle/src/**/.md5" />
                 <include name="vendor/symfony/event-dispatcher/**/*.php" />
                 <include name="vendor/doctrine/common/lib/Doctrine/Common/Cache/*.php" />
                 <include name="vendor/psr/log/**/*.php" />
@@ -69,21 +69,7 @@
         <exec command="php -d aws_phar=aws.phar `which phpunit`" passthru="true" />
     </target>
 
-    <target name="composer-init" description="Downloads a local copy of composer.phar if necessary">
-        <if>
-            <available file="composer.phar" />
-            <then>
-                <echo>Composer is installed</echo>
-            </then>
-            <else>
-                <echo message="Installing composer" />
-                <exec command="curl -s http://getcomposer.org/installer | php" passthru="true" />
-                <exec command="php composer.phar install --dev" passthru="true" />
-            </else>
-        </if>
-    </target>
-
-    <target name="test-init" description="Initialize test dependencies" depends="composer-init">
+    <target name="test-init" description="Initialize test dependencies">
         <copy file="phpunit.xml.dist" tofile="phpunit.xml" overwrite="false" />
         <copy file="phpunit.functional.xml.dist" tofile="phpunit.functional.xml" overwrite="false" />
         <copy file="test_services.json.dist" tofile="test_services.json" overwrite="false" />
@@ -103,7 +89,7 @@
         <delete file="composer.lock" />
     </target>
 
-    <target name="update-dependencies" depends="composer-init" description="Updates Composer dependencies">
+    <target name="update-dependencies" description="Updates Composer dependencies">
         <exec command="php composer.phar update --dev" passthru="true" />
     </target>
 
