@@ -45,6 +45,7 @@ AWS SDK for PHP 2
     service-sqs
     service-storagegateway
     service-sts
+    service-support
     service-swf
 
     feature-dynamodb-session-handler
@@ -106,6 +107,7 @@ Supported services
 * :doc:`service-sqs`
 * :doc:`service-storagegateway`
 * :doc:`service-sts`
+* :doc:`service-support`
 * :doc:`service-swf`
 
 SDK features in detail
