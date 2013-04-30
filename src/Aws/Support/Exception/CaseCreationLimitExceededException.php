@@ -17,6 +17,6 @@
 namespace Aws\Support\Exception;
 
 /**
- * Exception that occurs when a CaseCreationLimitExceededException error is encountered
+ * Returned when you have exceeded the case creation limit for an account.
  */
 class CaseCreationLimitExceededException extends SupportException {}
