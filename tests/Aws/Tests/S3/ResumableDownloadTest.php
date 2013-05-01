@@ -16,19 +16,19 @@
 
 namespace Aws\Tests\S3;
 
-use Aws\S3\RangeDownload;
+use Aws\S3\ResumableDownload;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\EntityBody;
 use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
- * @covers Aws\S3\RangeDownload
+ * @covers Aws\S3\ResumableDownload
  */
-class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
+class ResumableDownloadTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testHasEvents()
     {
-        $this->assertNotEmpty(RangeDownload::getAllEvents());
+        $this->assertNotEmpty(ResumableDownload::getAllEvents());
     }
 
     /**
@@ -37,7 +37,7 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresFilesCanBeOpened()
     {
         $client = $this->getServiceBuilder()->get('s3');
-        new RangeDownload($client, 'test', 'key', '/does/not/exist/foo');
+        new ResumableDownload($client, 'test', 'key', '/does/not/exist/foo');
     }
 
     public function testHasMoreDeterminesBasedOnTargetLengthVsTotalLength()
@@ -48,21 +48,32 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
             new Response(200, array('Content-Length' => 10))
         ));
         $target = EntityBody::factory();
-        $range = new RangeDownload($client, 'test', 'key', $target);
-        $this->assertTrue($range->hasMore());
+        $resumable = new ResumableDownload($client, 'test', 'key', $target);
+        $this->assertTrue($resumable->hasMore());
         $target->write('testtestte');
-        $this->assertFalse($range->hasMore());
+        $this->assertFalse($resumable->hasMore());
     }
 
     public function testDownloadsUsingRangeRequests()
     {
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $mock = new MockPlugin();
         $client->addSubscriber($mock);
         $mock->addResponse(new Response(200, array('Content-Length' => 15)));
+        $eventCount = count($client->getEventDispatcher()->getListeners());
 
         $target = EntityBody::factory();
-        $range = new RangeDownload($client, 'test', 'key', $target, array('chunk_size' => 5));
+        $resumable = new ResumableDownload($client, 'test', 'key', $target, array('chunk_size' => 5));
+
+        $events = array();
+        $resumable->getEventDispatcher()->addListener(ResumableDownload::BEFORE_SEND, function ($e) use (&$events) {
+            $events[] = $e;
+        });
+
+        $resumable->getEventDispatcher()->addListener(ResumableDownload::AFTER_SEND, function ($e) use (&$events) {
+            $events[] = $e;
+        });
+
         $mocked = $mock->getReceivedRequests();
         $this->assertCount(1, $mocked);
         $this->assertEquals('HEAD', $mocked[0]->getMethod());
@@ -70,13 +81,18 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
         $mock->addResponse(new Response(200, array('Content-Length' => 5), '12345'));
         $mock->addResponse(new Response(200, array('Content-Length' => 5), '67891'));
         $mock->addResponse(new Response(200, array('Content-Length' => 5), '01112'));
-        $range->download();
+        $resumable->download();
         $this->assertEquals('123456789101112', (string) $target);
         $mocked = $mock->getReceivedRequests();
         $this->assertEquals(4, count($mocked));
         $this->assertEquals('bytes=0-4', (string) $mocked[1]->getHeader('Range'));
         $this->assertEquals('bytes=5-9', (string) $mocked[2]->getHeader('Range'));
         $this->assertEquals('bytes=10-14', (string) $mocked[3]->getHeader('Range'));
+
+        // Events are emitted 6 times (3 downloads with 2 events per download)
+        $this->assertEquals(6, count($events));
+        // Ensure that the event listeners were removed from the client
+        $this->assertCount(0, $client->getEventDispatcher()->getListeners('command.after_send'));
     }
 
     /**
@@ -94,8 +110,8 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
         )));
         $target = EntityBody::factory('111111111111111');
         $target->seek(0, SEEK_END);
-        $range = new RangeDownload($client, 'test', 'key', $target);
-        $range->download();
+        $resumable = new ResumableDownload($client, 'test', 'key', $target);
+        $resumable->download();
     }
 
     public function testDoesNotSendRangeHeaderWhenFullRequest()
@@ -105,12 +121,12 @@ class RangeDownloadTest extends \Guzzle\Tests\GuzzleTestCase
         $client->addSubscriber($mock);
         $mock->addResponse(new Response(200, array('Content-Length' => 15)));
         $target = EntityBody::factory();
-        $range = new RangeDownload($client, 'test', 'key', $target);
+        $resumable = new ResumableDownload($client, 'test', 'key', $target);
         $mocked = $mock->getReceivedRequests();
         $this->assertCount(1, $mocked);
         $this->assertEquals('HEAD', $mocked[0]->getMethod());
         $mock->addResponse(new Response(200, array('Content-Length' => 15), '123456789101112'));
-        $range->download();
+        $resumable->download();
         $this->assertEquals('123456789101112', (string) $target);
         $mocked = $mock->getReceivedRequests();
         $this->assertEquals(2, count($mocked));
