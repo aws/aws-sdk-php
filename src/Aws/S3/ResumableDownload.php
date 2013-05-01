@@ -18,23 +18,45 @@ namespace Aws\S3;
 
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\UnexpectedValueException;
+use Aws\S3\Command\S3Command;
 use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\ReadLimitEntityBody;
 
 /**
- * Downloads a large file from Amazon S3 in chunks using ranged downloads, allowing you to resume the download of
- * partially downloaded objects.
+ * Allows you to resume the download of a partially downloaded object.
+ *
+ * Downloads objects from Amazon S3 in using "Range" downloads. This allows a partially downloaded object to be resumed
+ * so that only the remaining portion of the object is downloaded.
  */
-class RangeDownload extends AbstractHasDispatcher
+class ResumableDownload extends AbstractHasDispatcher
 {
-    const BEFORE_SEND = 's3.range_download.before_send';
-    const AFTER_SEND = 's3.range_download.after_send';
+    const BEFORE_SEND = 's3.resumable_download.before_send';
+    const AFTER_SEND = 's3.resumable_download.after_send';
 
+    /**
+     * @var S3Client The S3 client to use to download objects and issue HEAD requests
+     */
     protected $client;
+
+    /**
+     * @var \Guzzle\Service\Model The Model object returned when the initial HeadObject operation was called
+     */
     protected $meta;
+
+    /**
+     * @var array Array of parameters to pass to a GetObject operation
+     */
     protected $params;
+
+    /**
+     * @var int Size of each Range download chunk
+     */
     protected $chunkSize;
+
+    /**
+     * @var \Guzzle\Http\EntityBody Where the object will be downloaded
+     */
     protected $target;
 
     /**
@@ -42,13 +64,17 @@ class RangeDownload extends AbstractHasDispatcher
      * @param string                              $bucket  Bucket that holds the object
      * @param string                              $key     Key of the object
      * @param string|resource|EntityBodyInterface $target  Where the object should be downloaded to. Pass a string to
-     *                                                     save the object to a file.
+     *                                                     save the object to a file, pass a resource returned by
+     *                                                     fopen() to save the object to a stream resource, or pass a
+     *                                                     Guzzle EntityBody object to save the contents to an
+     *                                                     EntityBody.
      * @param array                               $options Associative array of options:
      *                                                     - chunk_size: The size of each chunk to download. Defaults
      *                                                                   to PHP's max integer size
-     *                                                     - params:     Any additional GetObject parameters to use with
-     *                                                                   each range GET request (e.g. Version to
-     *                                                                   download a specific version of an object)
+     *                                                     - params:     Any additional GetObject or HeadObject
+     *                                                                   parameters to use with each command issued by
+     *                                                                   the client. (e.g. pass "Version" to download a
+     *                                                                   specific version of an object)
      * @throws RuntimeException if the target variable points to a file that cannot be opened
      */
     public function __construct(S3Client $client, $bucket, $key, $target, array $options = array())
@@ -59,10 +85,12 @@ class RangeDownload extends AbstractHasDispatcher
         $this->params['Bucket'] = $bucket;
         $this->params['Key'] = $key;
 
+        // If a string is passed, then assume that the download should stream to a file on disk
         if (is_string($target)) {
             if (!($target = fopen($target, 'a+'))) {
                 throw new RuntimeException("Unable to open {$target} for writing");
             }
+            // Always append to the file
             fseek($target, 0, SEEK_END);
         }
 
@@ -111,11 +139,11 @@ class RangeDownload extends AbstractHasDispatcher
     }
 
     /**
-     * Downloads the next chunk of the object
+     * Get the operation command that will next be executed
      *
-     * @return bool Returns false if the download has completed or true if a download completed
+     * @return S3Command|bool
      */
-    protected function downloadNext()
+    public function getNextCommand()
     {
         if (!$this->hasMore()) {
             return false;
@@ -130,21 +158,61 @@ class RangeDownload extends AbstractHasDispatcher
             unset($this->params['Range']);
         }
 
+        // Set the starting offset so that the body is never seeked to before this point in the event of a retry
         $this->params['SaveAs']->setOffset($current);
+
         $command = $this->client->getCommand('GetObject', $this->params);
+
         $event = array(
             'target'     => $this->target,
             'total'      => $this->meta['ContentLength'],
-            'start'      => $current,
-            'end'        => $targetByte,
+            'start_byte' => $current,
+            'end_byte'   => $targetByte,
             'command'    => $command,
             'chunk_size' => $this->chunkSize,
             'metadata'   => $this->meta
         );
 
-        $this->dispatch(self::BEFORE_SEND, $event);
+        $that = $this;
+        $clientDispatcher = $this->client->getEventDispatcher();
+
+        // Add a listener to ensure that the before event is dispatched only once
+        $clientDispatcher->addListener(
+            'command.before_send',
+            $before = function ($e) use ($command, $event, $that, &$before, $clientDispatcher) {
+                if ($e['command'] === $command) {
+                    $clientDispatcher->removeListener('command.before_send', $before);
+                    $that->dispatch(ResumableDownload::BEFORE_SEND, $event);
+                }
+            }
+        );
+
+        // Add a listener to ensure that the after event is dispatched only once
+        $clientDispatcher->addListener(
+            'command.after_send',
+            $after = function ($e) use ($command, $event, $that, &$after, $clientDispatcher) {
+                if ($e['command'] === $command) {
+                    $clientDispatcher->removeListener('command.after_send', $after);
+                    $that->dispatch(ResumableDownload::AFTER_SEND, $event);
+                }
+            }
+        );
+
+        return $command;
+    }
+
+    /**
+     * Downloads the next chunk of the object
+     *
+     * @return bool Returns false if the download has completed or true if a download completed
+     */
+    protected function downloadNext()
+    {
+        if (!($command = $this->getNextCommand())) {
+            return false;
+        }
+
         $command->execute();
-        $this->dispatch(self::AFTER_SEND, $event);
 
         return true;
     }
