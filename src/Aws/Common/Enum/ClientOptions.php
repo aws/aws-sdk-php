@@ -125,11 +125,6 @@ class ClientOptions extends Enum
     const SSL_CERT = 'ssl.certificate_authority';
 
     /**
-     * @var string Set to true to output curl debug information during transfers
-     */
-    const WIRE = 'curl.CURLOPT_VERBOSE';
-
-    /**
      * @var string Service description to use with the client
      */
     const SERVICE_DESCRIPTION = 'service.description';

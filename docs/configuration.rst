@@ -32,7 +32,7 @@ instantiated with those settings. To do this, pass an array of settings (includi
 first argument of ``Aws\Common\Aws::factory()``.
 
 Using a Custom Configuration File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 You can use a custom configuration file that allows you to create custom named clients with pre-configured settings.
 
@@ -113,13 +113,13 @@ If you prefer JSON syntax, you can define your configuration in JSON format inst
     }
 
 What Happens If You Do Not Provide Credentials?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 The SDK needs your AWS Access Key ID and Secret Access Key in order to make requests to AWS. However, you are not
 required to provide your credentials at the time you instantiate the SDK or service client.
 
 Using Environment Credentials
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you do not provide credentials, the SDK will attempt to find credentials in your environment by checking in
 ``$_SERVER`` and using the ``getenv()`` function to look for the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_KEY``
@@ -130,7 +130,7 @@ If you are hosting your application on AWS Elastic Beanstalk, you can set the ``
 credentials automatically.
 
 Using Instance Profile Credentials
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you do not provide credentials and there are no environment credentials available, the SDK will attempt to retrieve
 `IAM Instance Profile credentials <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
@@ -140,7 +140,7 @@ If absolutely no credentials are provided or found, you will receive an
 ``Aws\Common\Exception\InstanceProfileCredentialsException`` when you try to make a request.
 
 Manually Setting Credentials
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also manually set your credentials after the service client has been instantiated. To do this, use the
 ``setCredentials()`` method to set an entirely new ``Credentials`` object for the client.
@@ -158,3 +158,53 @@ You can also manually set your credentials after the service client has been ins
 
     $newCredentials = new Credentials('your-aws-access-key-id', 'your-aws-secret-access-key');
     $s3->setCredentials($newCredentials);
+
+Setting a region
+----------------
+
+Some clients require a ``region`` configuration setting. You can find out if the client you are using requires a region
+and the regions available to a client by consulting the documentation for that particular client
+(see :ref:`supported-services`).
+
+Here's an example of creating an Amazon DynamoDB client that uses the ``us-west-1`` region:
+
+.. code-block:: php
+
+    require 'vendor/autoload.php';
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Create a client that uses the us-west-1 region
+    $client = DynamoDbClient::factory(array(
+        'key'    => 'abc',
+        'secret' => '123',
+        'region' => 'us-west-1'
+    ));
+
+Setting a custom endpoint
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can specify a completely customized endpoint for a client using the client's ``base_url`` option. If the client you
+are using requires a region, then must still specify the name of the region using the ``region`` option. Setting a
+custom endpoint can be useful if you're using a mock web server that emulates a web service, you're testing against a
+private beta endpoint, or you are trying to a use a region not yet supported by the SDK.
+
+Here's an example of creating an Amazon DynamoDB client that uses a completely customized endpoint:
+
+.. code-block:: php
+
+    require 'vendor/autoload.php';
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Create a client that that contacts a completely customized base URL
+    $client = DynamoDbClient::factory(array(
+        'base_url' => 'http://my-custom-url',
+        'region'   => 'my-region-1',
+        'key'      => 'abc',
+        'secret'   => '123'
+    ));
+
+If your custom endpoint uses signature version 4 and must be signed with custom signature scoping values, then you can
+specify the signature scoping values using ``signature.service`` (the scoped name of the service) and
+``signature.region`` (the region that you are contacting). These values are typically not required.

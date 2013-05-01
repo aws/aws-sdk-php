@@ -75,6 +75,8 @@ Migrating from SDK 1 to SDK 2
 * :doc:`migration-guide`
 * :doc:`side-by-side`
 
+.. _supported-services:
+
 Supported services
 ------------------
 
