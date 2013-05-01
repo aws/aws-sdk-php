@@ -43,30 +43,92 @@
         </if>
     </target>
 
-    <target name="phar" description="Create a phar with an autoloader">
-        <phingcall target="test-init" />
-        <pharpackage destfile="build/aws.phar" stub="build/phar-stub.php" basedir=".">
-            <fileset dir=".">
-                <!-- Add AWS classes -->
-                <include name="src/**/*.php" />
-                <include name="src/**/*.json" />
-                <include name="src/**/*.xml" />
-                <!-- Include the Symfony2 class loader component -->
-                <include name="vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php" />
-                <!-- Install Guzzle and its dependencies -->
-                <include name="vendor/guzzle/guzzle/src/**/*.php" />
-                <include name="vendor/guzzle/guzzle/src/**/*.pem" />
-                <include name="vendor/guzzle/guzzle/src/**/.md5" />
-                <include name="vendor/symfony/event-dispatcher/**/*.php" />
-                <include name="vendor/doctrine/common/lib/Doctrine/Common/Cache/*.php" />
-                <include name="vendor/psr/log/**/*.php" />
-                <include name="vendor/monolog/monolog/src/**/*.php" />
+    <target name="create-staging" description="Creates a staging directory for zip and phar creation">
+
+        <delete dir="${dir.output}/staging" failonerror="false" quiet="true"/>
+        <mkdir dir="${dir.output}/staging"/>
+        <mkdir dir="${dir.output}/staging/Aws"/>
+        <mkdir dir="${dir.output}/staging/Guzzle"/>
+        <mkdir dir="${dir.output}/staging/Doctrine/Common/Cache"/>
+        <mkdir dir="${dir.output}/staging/Symfony"/>
+        <mkdir dir="${dir.output}/staging/Monolog"/>
+
+        <patternset id="sdk-files">
+            <include name="**/*.php" />
+            <include name="**/*.pem" />
+            <include name="**/*.md5" />
+            <include name="**/LICENSE*" />
+        </patternset>
+
+        <!-- Copy AWS deps -->
+        <copy file="${project.basedir}/build/aws-autoloader.php" tofile="${dir.output}/staging/aws-autoloader.php"/>
+        <copy todir="${dir.output}/staging">
+            <fileset dir="src">
+                <patternset refid="sdk-files"/>
+            </fileset>
+        </copy>
+        <copy file="${project.basedir}/LICENSE.md" tofile="${dir.output}/staging/Aws/LICENSE.md"/>
+        <copy file="${project.basedir}/NOTICE.md" tofile="${dir.output}/staging/Aws/NOTICE.md"/>
+
+        <!-- Copy Symfony dependencies -->
+        <copy todir="${dir.output}/staging">
+            <fileset dir="vendor/symfony/event-dispatcher">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+        <copy todir="${dir.output}/staging">
+            <fileset dir="vendor/symfony/class-loader">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
+        <!-- Copy Guzzle deps -->
+        <copy todir="${dir.output}/staging">
+            <fileset dir="vendor/guzzle/guzzle/src">
+                <patternset refid="sdk-files"/>
+            </fileset>
+        </copy>
+
+        <!-- Copy Monolog deps -->
+        <copy todir="${dir.output}/staging">
+            <fileset dir="vendor/monolog/monolog/src">
+                <patternset refid="sdk-files"/>
+            </fileset>
+        </copy>
+
+        <!-- Copy PSR deps -->
+        <copy todir="${dir.output}/staging">
+            <fileset dir="vendor/psr/log">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
+        <!-- Copy Doctrine deps -->
+        <copy todir="${dir.output}/staging">
+            <fileset dir="vendor/doctrine/cache/lib">
+                <patternset refid="sdk-files"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <target name="phar" depends="create-staging" description="Create a phar with an autoloader">
+        <pharpackage destfile="build/aws.phar" stub="build/phar-stub.php" basedir="${dir.output}/staging">
+            <fileset dir="${dir.output}/staging">
+                <include name="**/**"/>
             </fileset>
             <metadata>
                 <element name="link" value="${sdk_url}" />
             </metadata>
         </pharpackage>
-        <exec command="php -d aws_phar=aws.phar `which phpunit`" passthru="true" />
+    </target>
+
+    <target name="zip" depends="create-staging" description="Create a ZIP file containing the SDK and its dependencies">
+        <zip destfile="build/aws.zip" basedir="${dir.output}/staging">
+            <fileset dir="${dir.output}/staging">
+                <include name="**/**"/>
+            </fileset>
+        </zip>
     </target>
 
     <target name="test-init" description="Initialize test dependencies">

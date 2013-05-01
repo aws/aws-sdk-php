@@ -14,11 +14,22 @@
  * permissions and limitations under the License.
  */
 
-Phar::mapPhar('aws.phar');
+require_once __DIR__ . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
-define('AWS_PHAR', true);
-define('AWS_FILE_PREFIX', 'phar://aws.phar');
+if (!defined('AWS_FILE_PREFIX')) {
+    define('AWS_FILE_PREFIX', __DIR__);
+}
 
-return (require 'phar://aws.phar/aws-autoloader.php');
+$classLoader = new Symfony\Component\ClassLoader\UniversalClassLoader();
+$classLoader->registerNamespaces(array(
+    'Aws'      => AWS_FILE_PREFIX,
+    'Guzzle'   => AWS_FILE_PREFIX,
+    'Symfony'  => AWS_FILE_PREFIX,
+    'Doctrine' => AWS_FILE_PREFIX,
+    'Psr'      => AWS_FILE_PREFIX,
+    'Monolog'  => AWS_FILE_PREFIX
+));
 
-__HALT_COMPILER();
+$classLoader->register();
+
+return $classLoader;
