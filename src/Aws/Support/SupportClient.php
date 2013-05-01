@@ -44,7 +44,7 @@ use Guzzle\Service\Resource\Model;
  */
 class SupportClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2012-12-15';
+    const LATEST_API_VERSION = '2013-04-15';
 
     /**
      * Factory method to create a new AWS Support client using an array of configuration options.

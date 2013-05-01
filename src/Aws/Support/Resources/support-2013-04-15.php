@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2012-12-15',
+    'apiVersion' => '2013-04-15',
     'endpointPrefix' => 'support',
     'serviceFullName' => 'AWS Support',
     'serviceType' => 'json',
