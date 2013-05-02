@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Updated the service description for AWS Data Pipeline to include more docs and improved error messages
+
 2.3.1 (2013-04-30)
 ------------------
 

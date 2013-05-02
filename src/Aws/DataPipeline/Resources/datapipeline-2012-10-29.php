@@ -219,7 +219,7 @@ return array (
                 ),
                 'objectIds' => array(
                     'required' => true,
-                    'description' => 'Identifiers of the pipeline objects that contain the definitions to be described. You can pass as many as 25 identifiers in a single call to DescribeObjects',
+                    'description' => 'Identifiers of the pipeline objects that contain the definitions to be described. You can pass as many as 25 identifiers in a single call to DescribeObjects.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -230,6 +230,7 @@ return array (
                     ),
                 ),
                 'evaluateExpressions' => array(
+                    'description' => 'Indicates whether any expressions in the object should be evaluated when the object descriptions are returned.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -417,7 +418,7 @@ return array (
                     'maxLength' => 1024,
                 ),
                 'version' => array(
-                    'description' => 'The version of the pipeline definition to retrieve.',
+                    'description' => 'The version of the pipeline definition to retrieve. This parameter accepts the values latest (default) and active. Where latest indicates the last definition saved to the pipeline and active indicates the last definition of the pipeline that was activated.',
                     'type' => 'string',
                     'location' => 'json',
                     'maxLength' => 1024,
@@ -526,7 +527,7 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'document' => array(
-                            'description' => 'A description of an Amazon EC2 instance that is generated when the instance is launched and exposed to the instance via the instance meta-data service in the form of a JSON representation of an object.',
+                            'description' => 'A description of an Amazon EC2 instance that is generated when the instance is launched and exposed to the instance via the instance metadata service in the form of a JSON representation of an object.',
                             'type' => 'string',
                             'maxLength' => 1024,
                         ),
@@ -822,7 +823,7 @@ return array (
             'responseClass' => 'ReportTaskRunnerHeartbeatOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Task runners call ReportTaskRunnerHeartbeat to indicate that they are operational. In the case of AWS Data Pipeline Task Runner launched on a resource managed by AWS Data Pipeline, the web service can use this call to detect when the task runner application has failed and restart a new instance.',
+            'summary' => 'Task runners call ReportTaskRunnerHeartbeat every 15 minutes to indicate that they are operational. In the case of AWS Data Pipeline Task Runner launched on a resource managed by AWS Data Pipeline, the web service can use this call to detect when the task runner application has failed and restart a new instance.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -983,18 +984,19 @@ return array (
                         'FALSE',
                     ),
                 ),
-                'errorCode' => array(
-                    'description' => 'If an error occurred during the task, specifies a numerical value that represents the error. This value is set on the physical attempt object. It is used to display error information to the user. The web service does not parse this value.',
-                    'type' => 'numeric',
+                'errorId' => array(
+                    'description' => 'If an error occurred during the task, this value specifies an id value that represents the error. This value is set on the physical attempt object. It is used to display error information to the user. It should not start with string "Service_" which is reserved by the system.',
+                    'type' => 'string',
                     'location' => 'json',
+                    'maxLength' => 1024,
                 ),
                 'errorMessage' => array(
-                    'description' => 'If an error occurred during the task, specifies a text description of the error. This value is set on the physical attempt object. It is used to display error information to the user. The web service does not parse this value.',
+                    'description' => 'If an error occurred during the task, this value specifies a text description of the error. This value is set on the physical attempt object. It is used to display error information to the user. The web service does not parse this value.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'errorStackTrace' => array(
-                    'description' => 'If an error occurred during the task, specifies the stack trace associated with the error. This value is set on the physical attempt object. It is used to display error information to the user. The web service does not parse this value.',
+                    'description' => 'If an error occurred during the task, this value specifies the stack trace associated with the error. This value is set on the physical attempt object. It is used to display error information to the user. The web service does not parse this value.',
                     'type' => 'string',
                     'location' => 'json',
                     'maxLength' => 1024,
@@ -1345,7 +1347,7 @@ return array (
                     ),
                 ),
                 'marker' => array(
-                    'description' => 'If not null, indicates the starting point for the set of pipeline identifiers that the next call to ListPipelines will retrieve. If null, there are no more pipeline identifiers. .',
+                    'description' => 'If not null, indicates the starting point for the set of pipeline identifiers that the next call to ListPipelines will retrieve. If null, there are no more pipeline identifiers.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1432,7 +1434,7 @@ return array (
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ValidationError',
-                        'description' => 'Defines a validation error returned by PutPipelineDefinition or ValidatePipelineDefinition. The set of validation errors that can be returned are defined by AWS Data Pipeline.',
+                        'description' => 'Defines a validation error returned by PutPipelineDefinition or ValidatePipelineDefinition. Validation errors prevent pipeline activation. The set of validation errors that can be returned are defined by AWS Data Pipeline.',
                         'type' => 'object',
                         'properties' => array(
                             'id' => array(
@@ -1443,7 +1445,31 @@ return array (
                                 'description' => 'A description of the validation error.',
                                 'type' => 'array',
                                 'items' => array(
-                                    'name' => 'validationError',
+                                    'name' => 'validationMessage',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'validationWarnings' => array(
+                    'description' => 'A list of the validation warnings that are associated with the objects defined in pipelineObjects.',
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ValidationWarning',
+                        'description' => 'Defines a validation warning returned by PutPipelineDefinition or ValidatePipelineDefinition. Validation warnings do not prevent pipeline activation. The set of validation warnings that can be returned are defined by AWS Data Pipeline.',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'description' => 'The identifier of the object that contains the validation warning.',
+                                'type' => 'string',
+                            ),
+                            'warnings' => array(
+                                'description' => 'A description of the validation warning.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'validationMessage',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1514,7 +1540,7 @@ return array (
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ValidationError',
-                        'description' => 'Defines a validation error returned by PutPipelineDefinition or ValidatePipelineDefinition. The set of validation errors that can be returned are defined by AWS Data Pipeline.',
+                        'description' => 'Defines a validation error returned by PutPipelineDefinition or ValidatePipelineDefinition. Validation errors prevent pipeline activation. The set of validation errors that can be returned are defined by AWS Data Pipeline.',
                         'type' => 'object',
                         'properties' => array(
                             'id' => array(
@@ -1525,7 +1551,31 @@ return array (
                                 'description' => 'A description of the validation error.',
                                 'type' => 'array',
                                 'items' => array(
-                                    'name' => 'validationError',
+                                    'name' => 'validationMessage',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'validationWarnings' => array(
+                    'description' => 'Lists the validation warnings that were found by ValidatePipelineDefinition.',
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ValidationWarning',
+                        'description' => 'Defines a validation warning returned by PutPipelineDefinition or ValidatePipelineDefinition. Validation warnings do not prevent pipeline activation. The set of validation warnings that can be returned are defined by AWS Data Pipeline.',
+                        'type' => 'object',
+                        'properties' => array(
+                            'id' => array(
+                                'description' => 'The identifier of the object that contains the validation warning.',
+                                'type' => 'string',
+                            ),
+                            'warnings' => array(
+                                'description' => 'A description of the validation warning.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'validationMessage',
                                     'type' => 'string',
                                 ),
                             ),
