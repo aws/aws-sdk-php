@@ -23,7 +23,6 @@ use Aws\Common\Enum;
  */
 class AutoScalingType extends Enum
 {
-    const ALWAYS_RUNNING = 'AlwaysRunning';
-    const TIME_BASED_AUTO_SCALING = 'TimeBasedAutoScaling';
-    const LOAD_BASED_AUTO_SCALING = 'LoadBasedAutoScaling';
+    const LOAD = 'load';
+    const TIMER = 'timer';
 }

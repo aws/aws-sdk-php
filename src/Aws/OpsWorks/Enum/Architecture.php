@@ -14,9 +14,15 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\OpsWorks\Exception;
+namespace Aws\OpsWorks\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * Indicates that a request was invalid.
+ * Contains enumerable Architecture values
  */
-class ValidationException extends OpsWorksException {}
+class Architecture extends Enum
+{
+    const X86_64 = 'x86_64';
+    const I386 = 'i386';
+}

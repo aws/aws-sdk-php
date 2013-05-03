@@ -61,13 +61,11 @@ return array (
                     'location' => 'json',
                 ),
                 'Name' => array(
-                    'required' => true,
                     'description' => 'The cloned stack name.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Region' => array(
-                    'required' => true,
                     'description' => 'The cloned stack AWS region, such as "us-east-1". For more information about AWS regions, see Regions and Endpoints',
                     'type' => 'string',
                     'location' => 'json',
@@ -78,6 +76,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'StackAttributesKeys',
+                        ),
                     ),
                 ),
                 'ServiceRoleArn' => array(
@@ -87,7 +88,6 @@ return array (
                     'location' => 'json',
                 ),
                 'DefaultInstanceProfileArn' => array(
-                    'required' => true,
                     'description' => 'The ARN of an IAM profile that is the default profile for all of the stack\'s EC2 instances. For more information about IAM ARNs, see Using Identifiers.',
                     'type' => 'string',
                     'location' => 'json',
@@ -174,6 +174,14 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'DefaultRootDeviceType' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'enum' => array(
+                        'ebs',
+                        'instance-store',
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -212,6 +220,10 @@ return array (
                 'StackId' => array(
                     'required' => true,
                     'description' => 'The stack ID.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Shortname' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -318,6 +330,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'AppAttributesKeys',
+                        ),
                     ),
                 ),
             ),
@@ -362,7 +377,6 @@ return array (
                     'location' => 'json',
                 ),
                 'AppId' => array(
-                    'required' => true,
                     'description' => 'The app ID, for app deployments.',
                     'type' => 'string',
                     'location' => 'json',
@@ -400,11 +414,13 @@ return array (
                             ),
                         ),
                         'Args' => array(
-                            'required' => true,
                             'description' => 'An array of command arguments. This parameter is currently used only to specify the list of recipes to be executed by the ExecuteRecipes command.',
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'array',
+                                'data' => array(
+                                    'shape_name' => 'String',
+                                ),
                                 'items' => array(
                                     'name' => 'String',
                                     'type' => 'string',
@@ -475,6 +491,7 @@ return array (
                     ),
                 ),
                 'InstanceType' => array(
+                    'required' => true,
                     'description' => 'The instance type, which can be one of the following:',
                     'type' => 'string',
                     'location' => 'json',
@@ -484,9 +501,8 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
-                        'AlwaysRunning',
-                        'TimeBasedAutoScaling',
-                        'LoadBasedAutoScaling',
+                        'load',
+                        'timer',
                     ),
                 ),
                 'Hostname' => array(
@@ -509,11 +525,31 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'Architecture' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'enum' => array(
+                        'x86_64',
+                        'i386',
+                    ),
+                ),
+                'RootDeviceType' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'enum' => array(
+                        'ebs',
+                        'instance-store',
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
                     'reason' => 'Indicates that a request was invalid.',
                     'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
                 ),
             ),
         ),
@@ -551,6 +587,17 @@ return array (
                     'description' => 'The layer type. A stack cannot have more than one layer of the same type.',
                     'type' => 'string',
                     'location' => 'json',
+                    'enum' => array(
+                        'lb',
+                        'web',
+                        'php-app',
+                        'rails-app',
+                        'nodejs-app',
+                        'memcached',
+                        'db-master',
+                        'monitoring-master',
+                        'custom',
+                    ),
                 ),
                 'Name' => array(
                     'required' => true,
@@ -559,6 +606,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Shortname' => array(
+                    'required' => true,
                     'description' => 'The layer short name, which is used internally by OpsWorks and by Chef recipes. The shortname is also used as the name for the directory where your app files are installed. It can have a maximum of 200 characters, which are limited to the alphanumeric characters, \'-\', \'_\', and \'.\'.',
                     'type' => 'string',
                     'location' => 'json',
@@ -569,6 +617,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'LayerAttributesKeys',
+                        ),
                     ),
                 ),
                 'CustomInstanceProfileArn' => array(
@@ -690,6 +741,10 @@ return array (
                     'reason' => 'Indicates that a request was invalid.',
                     'class' => 'ValidationException',
                 ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
             ),
         ),
         'CreateStack' => array(
@@ -733,6 +788,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'StackAttributesKeys',
+                        ),
                     ),
                 ),
                 'ServiceRoleArn' => array(
@@ -813,6 +871,14 @@ return array (
                     'description' => 'A default SSH key for the stack instances. You can override this value when you create or update an instance.',
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'DefaultRootDeviceType' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'enum' => array(
+                        'ebs',
+                        'instance-store',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1322,11 +1388,6 @@ return array (
                 ),
                 'LayerId' => array(
                     'description' => 'A layer ID.',
-                    'type' => 'string',
-                    'location' => 'json',
-                ),
-                'AppId' => array(
-                    'description' => 'An app ID.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2032,6 +2093,10 @@ return array (
                     'reason' => 'Indicates that a request was invalid.',
                     'class' => 'ValidationException',
                 ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
             ),
         ),
         'SetTimeBasedAutoScaling' => array(
@@ -2064,7 +2129,6 @@ return array (
                     'location' => 'json',
                 ),
                 'AutoScalingSchedule' => array(
-                    'required' => true,
                     'description' => 'An AutoScalingSchedule with the instance schedule.',
                     'type' => 'object',
                     'location' => 'json',
@@ -2074,6 +2138,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                         'Tuesday' => array(
@@ -2081,6 +2148,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                         'Wednesday' => array(
@@ -2088,6 +2158,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                         'Thursday' => array(
@@ -2095,6 +2168,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                         'Friday' => array(
@@ -2102,6 +2178,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                         'Saturday' => array(
@@ -2109,6 +2188,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                         'Sunday' => array(
@@ -2116,6 +2198,9 @@ return array (
                             'type' => 'object',
                             'additionalProperties' => array(
                                 'type' => 'string',
+                                'data' => array(
+                                    'shape_name' => 'Hour',
+                                ),
                             ),
                         ),
                     ),
@@ -2426,6 +2511,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'AppAttributesKeys',
+                        ),
                     ),
                 ),
             ),
@@ -2470,7 +2558,6 @@ return array (
                     'location' => 'json',
                 ),
                 'LayerIds' => array(
-                    'required' => true,
                     'description' => 'The instance\'s layer IDs.',
                     'type' => 'array',
                     'location' => 'json',
@@ -2489,9 +2576,8 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
-                        'AlwaysRunning',
-                        'TimeBasedAutoScaling',
-                        'LoadBasedAutoScaling',
+                        'load',
+                        'timer',
                     ),
                 ),
                 'Hostname' => array(
@@ -2508,6 +2594,14 @@ return array (
                     'description' => 'The instance SSH key name.',
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'Architecture' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'enum' => array(
+                        'x86_64',
+                        'i386',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -2566,6 +2660,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'LayerAttributesKeys',
+                        ),
                     ),
                 ),
                 'CustomInstanceProfileArn' => array(
@@ -2733,6 +2830,9 @@ return array (
                     'location' => 'json',
                     'additionalProperties' => array(
                         'type' => 'string',
+                        'data' => array(
+                            'shape_name' => 'StackAttributesKeys',
+                        ),
                     ),
                 ),
                 'ServiceRoleArn' => array(
@@ -2811,6 +2911,14 @@ return array (
                     'description' => 'A default SSH key for the stack instances. You can override this value when you create or update an instance.',
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'DefaultRootDeviceType' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'enum' => array(
+                        'ebs',
+                        'instance-store',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -2979,6 +3087,9 @@ return array (
                                 'description' => 'The app stack ID.',
                                 'type' => 'string',
                             ),
+                            'Shortname' => array(
+                                'type' => 'string',
+                            ),
                             'Name' => array(
                                 'description' => 'The app name.',
                                 'type' => 'string',
@@ -3105,7 +3216,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Status' => array(
-                                'description' => 'The command status',
+                                'description' => 'The command status:',
                                 'type' => 'string',
                             ),
                             'ExitCode' => array(
@@ -3117,7 +3228,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Type' => array(
-                                'description' => 'The command name.',
+                                'description' => 'The command type:',
                                 'type' => 'string',
                             ),
                         ),
@@ -3191,7 +3302,7 @@ return array (
                                 ),
                             ),
                             'Status' => array(
-                                'description' => 'The deployment status.',
+                                'description' => 'The deployment status:',
                                 'type' => 'string',
                             ),
                             'CustomJson' => array(
@@ -3295,7 +3406,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Status' => array(
-                                'description' => 'The instance status.',
+                                'description' => 'The instance status:',
                                 'type' => 'string',
                             ),
                             'Os' => array(
@@ -3348,6 +3459,15 @@ return array (
                             ),
                             'LastServiceErrorId' => array(
                                 'description' => 'The ID of the last service error. Call DescribeServiceErrors for details.',
+                                'type' => 'string',
+                            ),
+                            'Architecture' => array(
+                                'type' => 'string',
+                            ),
+                            'RootDeviceType' => array(
+                                'type' => 'string',
+                            ),
+                            'RootDeviceVolumeId' => array(
                                 'type' => 'string',
                             ),
                         ),
@@ -3716,7 +3836,7 @@ return array (
                                 'type' => 'numeric',
                             ),
                             'Device' => array(
-                                'description' => 'The array\'s device name.',
+                                'description' => 'The array\'s Linux device. For example /dev/mdadm0.',
                                 'type' => 'string',
                             ),
                             'MountPoint' => array(
@@ -3875,6 +3995,9 @@ return array (
                                 'description' => 'Date when the stack was created.',
                                 'type' => 'string',
                             ),
+                            'DefaultRootDeviceType' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -4025,7 +4148,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Status' => array(
-                                'description' => 'The volume status. The possible values are:',
+                                'description' => 'The value returned by DescribeVolumes.',
                                 'type' => 'string',
                             ),
                             'Size' => array(

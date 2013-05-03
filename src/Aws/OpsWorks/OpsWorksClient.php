@@ -48,14 +48,12 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  * @method Model describePermissions(array $args = array()) {@command OpsWorks DescribePermissions}
  * @method Model describeRaidArrays(array $args = array()) {@command OpsWorks DescribeRaidArrays}
  * @method Model describeServiceErrors(array $args = array()) {@command OpsWorks DescribeServiceErrors}
- * @method Model describeSshKeys(array $args = array()) {@command OpsWorks DescribeSshKeys}
  * @method Model describeStacks(array $args = array()) {@command OpsWorks DescribeStacks}
  * @method Model describeTimeBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeTimeBasedAutoScaling}
  * @method Model describeUserProfiles(array $args = array()) {@command OpsWorks DescribeUserProfiles}
  * @method Model describeVolumes(array $args = array()) {@command OpsWorks DescribeVolumes}
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
- * @method Model searchPackages(array $args = array()) {@command OpsWorks SearchPackages}
  * @method Model setLoadBasedAutoScaling(array $args = array()) {@command OpsWorks SetLoadBasedAutoScaling}
  * @method Model setPermission(array $args = array()) {@command OpsWorks SetPermission}
  * @method Model setTimeBasedAutoScaling(array $args = array()) {@command OpsWorks SetTimeBasedAutoScaling}
