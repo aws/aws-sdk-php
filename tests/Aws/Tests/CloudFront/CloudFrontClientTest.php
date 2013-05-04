@@ -37,13 +37,13 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesSignedUrlsForHttp()
     {
         $ts = time() + 1000;
+        /** @var $client \Aws\CloudFront\CloudFrontClient */
         $client = $this->getServiceBuilder()->get('cloudfront');
 
         if ($client->getConfig('private_key') == 'change_me') {
             $this->markTestSkipped('CloudFront private_key not set');
         }
 
-        /** @var $client \Aws\CloudFront\CloudFrontClient */
         $url = $client->getSignedUrl(array(
             'url'     => 'http://abc.cloudfront.net/images/image.jpg?color=red',
             'expires' => $ts
@@ -54,6 +54,8 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
             "http://abc.cloudfront.net/images/image.jpg?color=red&Expires={$ts}&Signature=",
             $url
         );
+        $this->assertContains("Key-Pair-Id={$kp}", $url);
+
         $signature = $urlObject->getQuery('Signature');
         $this->assertNotContains('?', $signature);
         $this->assertNotContains('=', $signature);
@@ -62,14 +64,31 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertNotContains('+', $signature);
     }
 
+    public function testCreatesSignedUrlsWithCustomPolicy()
+    {
+        /** @var $client \Aws\CloudFront\CloudFrontClient */
+        $client = $this->getServiceBuilder()->get('cloudfront');
+
+        if ($client->getConfig('private_key') == 'change_me') {
+            $this->markTestSkipped('CloudFront private_key not set');
+        }
+
+        $url = $client->getSignedUrl(array(
+            'url'    => 'http://abc.cloudfront.net/images/image.jpg',
+            'policy' => '{}'
+        ));
+        $policy = Url::factory($url)->getQuery()->get('Policy');
+        $this->assertRegExp('/^[0-9a-zA-Z-_~]+$/', $policy);
+    }
+
     public function testCreatesSignedUrlsForRtmp()
     {
         $ts = time() + 1000;
+        /** @var $client \Aws\CloudFront\CloudFrontClient */
         $client = $this->getServiceBuilder()->get('cloudfront');
         if ($client->getConfig('private_key') == 'change_me') {
             $this->markTestSkipped('CloudFront private_key not set');
         }
-        /** @var $client \Aws\CloudFront\CloudFrontClient */
         $url = $client->getSignedUrl(array(
             'url'     => 'rtmp://foo.cloudfront.net/test.mp4',
             'expires' => $ts
@@ -124,12 +143,23 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \Aws\Common\Exception\InvalidArgumentException
-     * @expectedExceptionMessage An Amazon CloudFront keypair ID
+     * @expectedExceptionMessage Invalid URL: bar.com
+     */
+    public function testEnsuresUriSchemeIsPresent()
+    {
+        $this->getServiceBuilder()->get('cloudfront')->getSignedUrl(array(
+            'url'     => 'bar.com',
+            'expires' => time() + 100
+        ));
+    }
+
+    /**
+     * @expectedException \Guzzle\Common\Exception\InvalidArgumentException
      */
     public function testEnsuresKeyPairsAreSet()
     {
         $client = $this->getServiceBuilder()->get('cloudfront', true);
         $client->getConfig()->remove('key_pair_id');
-        $client->getSignedUrl(array('url' => 'foo://bar.com'));
+        $client->getSignedUrl(array('url' => 'http://bar.com', 'expires' => time() + 60));
     }
 }

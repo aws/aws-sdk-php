@@ -20,9 +20,9 @@ use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Enum\Region;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
+use Aws\Common\Exception\RequiredExtensionNotLoadedException;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
 use Guzzle\Service\Resource\Model;
@@ -94,6 +94,11 @@ class CloudFrontClient extends AbstractClient
      * - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See
      *   `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
      *
+     * Options specific to CloudFront
+     *
+     * - key_pair_id: The ID of the key pair used to sign CloudFront URLs for private distributions.
+     * - private_key: The filepath ot the private key used to sign CloudFront URLs for private distributions.
+     *
      * @param array|Collection $config Client configuration data
      *
      * @return self
@@ -125,34 +130,45 @@ class CloudFrontClient extends AbstractClient
     }
 
     /**
-     * Create a signed URL
+     * Create a signed URL. Keep in mind that URLs meant for use in media/flash players may have different requirements
+     * for URL formats (e.g. some require that the extension be removed, some require the file name to be prefixed -
+     * mp4:<path>, some require you to add "/cfx/st" into your URL). See
+     * http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html for
+     * additional details and help.
      *
      * This method accepts an array of configuration options:
-     * - url:       (string)  URL of the resource being signed (can include query string and wildcards). For example:
-     *                        rtmp://s5c39gqb8ow64r.cloudfront.net/videos/mp3_name.mp3
-     *                        http://d111111abcdef8.cloudfront.net/images/horizon.jpg?size=large&license=yes
-     * - policy:    (string)  JSON policy. Use this option when creating a signed URL for a custom policy.
-     * - expires:   (int)     UTC Unix timestamp used when signing with a canned policy. Not required when passing a
-     *                        custom 'policy' option.
+     * - url:         (string)  URL of the resource being signed (can include query string and wildcards). For example:
+     *                          rtmp://s5c39gqb8ow64r.cloudfront.net/videos/mp3_name.mp3
+     *                          http://d111111abcdef8.cloudfront.net/images/horizon.jpg?size=large&license=yes
+     * - policy:      (string)  JSON policy. Use this option when creating a signed URL for a custom policy.
+     * - expires:     (int)     UTC Unix timestamp used when signing with a canned policy. Not required when passing a
+     *                          custom 'policy' option.
+     * - key_pair_id: (string)  The ID of the key pair used to sign CloudFront URLs for private distributions.
+     * - private_key: (string)  The filepath ot the private key used to sign CloudFront URLs for private distributions.
      *
      * @param array $options Array of configuration options used when signing
      *
-     * @return string                   The file URL with authentication parameters.
-     * @throws InvalidArgumentException if key_pair_id and private_key have not been configured on the client
+     * @return string                              The file URL with authentication parameters
+     * @throws InvalidArgumentException            if key_pair_id and private_key have not been configured on the client
+     * @throws RequiredExtensionNotLoadedException if the openssl extension is not installed
+     * @link   http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
      */
     public function getSignedUrl(array $options)
     {
-        if (!$this->getConfig('key_pair_id') || !$this->getConfig('private_key')) {
-            throw new InvalidArgumentException(
-                'An Amazon CloudFront keypair ID (key_pair_id) and an RSA private key (private_key) is required'
-            );
+        if (!extension_loaded('openssl')) {
+            //@codeCoverageIgnoreStart
+            throw new RequiredExtensionNotLoadedException('The openssl extension is required to sign CloudFront urls.');
+            //@codeCoverageIgnoreEnd
         }
 
         // Initialize the configuration data and ensure that the url was specified
-        $options = Collection::fromConfig($options, null, array('url'));
-        // Determine the scheme of the policy
+        $options = Collection::fromConfig($options, array_filter(array(
+            'key_pair_id' => $this->getConfig('key_pair_id'),
+            'private_key' => $this->getConfig('private_key'),
+        )), array('url', 'key_pair_id', 'private_key'));
+
+        // Determine the scheme of the url
         $urlSections = explode('://', $options['url']);
-        // Ensure that the URL contained a scheme and parts after the scheme
         if (count($urlSections) < 2) {
             throw new InvalidArgumentException('Invalid URL: ' . $options['url']);
         }
@@ -173,14 +189,14 @@ class CloudFrontClient extends AbstractClient
         }
 
         // Sign the policy using the CloudFront private key
-        $signedPolicy = $this->rsaSha1Sign($policy, $this->getConfig('private_key'));
+        $signedPolicy = $this->rsaSha1Sign($policy, $options['private_key']);
         // Remove whitespace, base64 encode the policy, and replace special characters
         $signedPolicy = strtr(base64_encode($signedPolicy), '+=/', '-_~');
 
         $url->getQuery()
             ->useUrlEncoding(false)
             ->set('Signature', $signedPolicy)
-            ->set('Key-Pair-Id', $this->getConfig('key_pair_id'));
+            ->set('Key-Pair-Id', $options['key_pair_id']);
 
         if ($scheme != 'rtmp') {
             // HTTP and HTTPS signed URLs include the full URL

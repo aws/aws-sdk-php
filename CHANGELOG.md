@@ -5,6 +5,8 @@ Next Release
 ------------
 
 * Updated the service description for AWS Data Pipeline to include more docs and improved error messages
+* Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead
+  of when instantiating the client.
 
 2.3.1 (2013-04-30)
 ------------------
