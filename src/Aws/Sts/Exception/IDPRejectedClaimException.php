@@ -17,6 +17,6 @@
 namespace Aws\Sts\Exception;
 
 /**
- * The request was rejected because the policy document was too large. The error message describes how big the policy document is, in packed form, as a percentage of what the API allows.
+ * The non-AWS identity provider (IDP) that was asked to verify the incoming identity token rejected the identity claim. This might be because the claim is invalid, has expired, or has been explicitly revoked by the user. The error message contains details about the response from the non-AWS identity provider.
  */
-class PackedPolicyTooLargeException extends StsException {}
+class IDPRejectedClaimException extends StsException {}

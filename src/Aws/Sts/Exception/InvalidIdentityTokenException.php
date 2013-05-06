@@ -17,6 +17,6 @@
 namespace Aws\Sts\Exception;
 
 /**
- * The request was rejected because the policy document was too large. The error message describes how big the policy document is, in packed form, as a percentage of what the API allows.
+ * Exception that occurs when a InvalidIdentityTokenException error is encountered
  */
-class PackedPolicyTooLargeException extends StsException {}
+class InvalidIdentityTokenException extends StsException {}
