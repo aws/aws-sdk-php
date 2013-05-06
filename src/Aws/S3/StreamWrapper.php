@@ -536,6 +536,18 @@ class StreamWrapper
     }
 
     /**
+     * Cast the stream to return the underlying file resource
+     *
+     * @param int $cast_as STREAM_CAST_FOR_SELECT or STREAM_CAST_AS_STREAM
+     *
+     * @return resource
+     */
+    public function stream_cast($cast_as)
+    {
+        return $this->body->getStream();
+    }
+
+    /**
      * Get the stream context options available to the current stream
      *
      * @return array
