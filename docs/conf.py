@@ -93,22 +93,13 @@ exclude_patterns = ['_build']
 # output. They are ignored by default.
 #show_authors = False
 
-sys.path.append(os.path.abspath('_themes'))
-sys.path.append(os.path.abspath('_themes/flask'))
-
-# The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'flask_theme_support.FlaskyStyle'
-
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
-
 
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme_path = ['_themes']
-html_theme = 'flask'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -149,7 +140,7 @@ html_static_path = ['_static']
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
-    '**':       ['sidebarlogo.html', 'localtoc.html', 'relations.html', 'searchbox.html']
+    '**': ['sidebarlogo.html', 'localtoc.html', 'searchbox.html', 'feedback.html']
 }
 
 # Additional templates that should be rendered to pages, maps page names to
@@ -260,8 +251,30 @@ texinfo_documents = [
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
 
-# -- Custom HTML template vars ------------------------------------------------
+# -- HTML theme settings ------------------------------------------------
 
-html_context = {
-    'TRACKING': os.getenv('TRACKING', False)
+# Ensure that the theme was symlinked
+if not os.path.isdir(os.path.abspath('_themes/guzzle_sphinx_theme')):
+    if os.environ.get('GUZZLE_SPHINX_THEME', None):
+        path = os.path.abspath(os.environ['GUZZLE_SPHINX_THEME'])
+        sys.path.append(path)
+        html_theme_path = [path]
+        print html_theme_path
+    else:
+      raise Exception('You must symlink '
+          ' https://github.com/guzzle/guzzle_sphinx_theme to _themes/guzzle_theme')
+
+sys.path.append(os.path.abspath('_themes'))
+pygments_style = 'guzzle_sphinx_theme.GuzzleStyle'
+html_translator_class = 'guzzle_sphinx_theme.HTMLTranslator'
+html_theme_path.append('_themes')
+html_theme = 'guzzle_sphinx_theme'
+
+# Guzzle theme options (see theme.conf for more information)
+html_theme_options = {
+    # hack to add tracking
+    "google_analytics_account": os.getenv('TRACKING', False),
+    "project_nav_name": "AWS SDK for PHP",
+    "github_user": "aws",
+    "github_repo": "aws-sdk-php"
 }
