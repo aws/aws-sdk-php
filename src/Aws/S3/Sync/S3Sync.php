@@ -1,16 +1,25 @@
 <?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
 
 namespace Aws\S3\Sync;
 
-use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\Exception\UnexpectedValueException;
+use Aws\Common\Exception\RuntimeException;
 use Aws\S3\S3Client;
-use Aws\S3\Model\Acp;
-use FilesystemIterator as FI;
 use Guzzle\Common\AbstractHasDispatcher;
-use Guzzle\Common\Event;
 use Guzzle\Iterator\ChunkedIterator;
-use Guzzle\Iterator\FilterIterator;
 
 /**
  * Uploads a local directory tree to Amazon S3
@@ -27,14 +36,14 @@ class S3Sync extends AbstractHasDispatcher
     protected $client;
 
     /**
+     * @var string Bucket that will contain the objects
+     */
+    protected $bucket;
+
+    /**
      * @var \Iterator Iterator that returns SplFileInfo objects to upload
      */
     protected $fileIterator;
-
-    /**
-     * @var string Directory separator for Amazon S3 keys
-     */
-    protected $directorySeparator = '/';
 
     /**
      * @var int Number of files that can be transferred concurrently
@@ -42,55 +51,30 @@ class S3Sync extends AbstractHasDispatcher
     protected $concurrency = 3;
 
     /**
-     * @var string|Acp Access control policy to set on each object
+     * @var FileNameObjectKeyProviderInterface
      */
-    protected $acp = 'private';
+    protected $keyProvider;
 
     /**
      * Create a new S3Sync object that recursively uploads all of the files from a directory
      *
-     * @param S3Client $client       Client used to transfer requests
-     * @param string   $path         Path to the directory to transfer
-     * @param bool     $onlyModified Set to true to only transfer files that don't exist in Amazon S3, have been
-     *                               modified since they were uploaded, or the size of the file has changed.
-     * @return self
-     */
-    public static function fromDirectory(S3Client $client, $path, $onlyModified = true)
-    {
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(
-            $path,
-            FI::SKIP_DOTS | FI::UNIX_PATHS | FI::FOLLOW_SYMLINKS
-        ));
-
-        return new self($client, $iterator);
-    }
-
-    /**
-     * Create a new S3Sync object that recursively uploads all of the files from a directory that matches a glob pattern
-     *
-     * @param S3Client $client       Client used to transfer requests
-     * @param string   $path         Glob expression path to the directory to transfer
-     * @param bool     $onlyModified Set to true to only transfer files that don't exist in Amazon S3, have been
-     *                               modified since they were uploaded, or the size of the file has changed.
+     * @param S3Client  $client   Client used to transfer requests
+     * @param string    $bucket   Bucket that will contain the objects
+     * @param \Iterator $iterator Iterator used to yield {@see \SplFileInfo} objects to upload
+     * @param FileNameObjectKeyProviderInterface $keyProvider Object used to convert filenames to object keys
      *
      * @return self
-     * @link http://www.php.net/manual/en/function.glob.php
      */
-    public static function fromGlob(S3Client $client, $path, $onlyModified = true)
-    {
-        $iterator = new \GlobIterator($path, FI::SKIP_DOTS | FI::UNIX_PATHS | FI::FOLLOW_SYMLINKS);
-
-        return new self($client, $iterator);
-    }
-
-    /**
-     * @param S3Client  $client       Client used to transfer requests
-     * @param \Iterator $fileIterator Iterator that returns SplFileInfo objects to upload
-     */
-    public function __construct(S3Client $client, \Iterator $fileIterator)
-    {
+    public function __construct(
+        S3Client $client,
+        $bucket,
+        \Iterator $iterator,
+        FilenameObjectKeyProviderInterface $keyProvider
+    ) {
         $this->client = $client;
-        $this->fileIterator = $this->filterIterator($fileIterator);
+        $this->fileIterator = $iterator;
+        $this->bucket = $bucket;
+        $this->keyProvider = $keyProvider;
     }
 
     /**
@@ -102,88 +86,15 @@ class S3Sync extends AbstractHasDispatcher
     }
 
     /**
-     * Set the access control policy to apply to each uploaded object
-     *
-     * @param string|Acp $acp Access control policy object or a canned-ACL string (e.g. public-read, private, etc)
-     *
-     * @return self
-     * @throws InvalidArgumentException
-     */
-    public function setAcp($acp)
-    {
-        if (!is_string($acp) && !($acp instanceof Acp)) {
-            throw new InvalidArgumentException('Access control policy must be an Acp object or a canned-ACL');
-        }
-
-        $this->acp = $acp;
-
-        return $this;
-    }
-
-    /**
-     * Specify the directory separator to use when uploading. The default separator is "/"
-     *
-     * @param string $separator Separator to use to separate paths
-     *
-     * @return self
-     */
-    public function setDirectorySeparator($separator)
-    {
-        $this->directorySeparator = $separator;
-
-        return $this;
-    }
-
-    /**
      * Set the number of files that can be transferred concurrently
      *
      * @param int $concurrency Number of concurrent transfers
      *
      * @return self
      */
-    public function setConcurrentTransferLimit($concurrency)
+    public function setConcurrency($concurrency)
     {
         $this->concurrency = $concurrency;
-
-        return $this;
-    }
-
-    /**
-     * Add an object key filter that uses a regular expression to replace parts of an object key before uploading.
-     *
-     * Uses PHP's preg_replace to find and replace the full path of an object before uploading.
-     *
-     * @param string $search  Regular expression search (in preg_replace format)
-     * @param string $replace Regular expression replace
-     *
-     * @return self
-     * @link http://php.net/manual/en/function.preg-replace.php
-     */
-    public function addRegexKeyReplacement($search, $replace)
-    {
-        $this->getEventDispatcher()->addListener(
-            self::BEFORE_UPLOAD_EVENT,
-            function (Event $e) use ($search, $replace) {
-                $e['command']->set('Key', preg_replace($search, $replace, $e['command']->get('Key')));
-            }
-        );
-
-        return $this;
-    }
-
-    /**
-     * Add a filename filter that uses a regular expression to filter out files that you do not wish to upload.
-     *
-     * @param string $search Regular expression search (in preg_match format). Any filename that matches this regex
-     *                       will not be uploaded.
-     * @return self
-     */
-    public function addRegexFilter($search)
-    {
-        $this->fileIterator = new FilterIterator($this->fileIterator, function ($i) use ($search) {
-            return !preg_match($search, (string) $i);
-        });
-        $this->fileIterator->rewind();
 
         return $this;
     }
@@ -193,39 +104,53 @@ class S3Sync extends AbstractHasDispatcher
      */
     public function transfer()
     {
+        // Pull out chunks of uploads to upload in parallel
         $iterator = new ChunkedIterator($this->fileIterator, $this->concurrency);
+        // Create the base event data object
+        $event = array('sync' => $this, 'client' => $this->client);
 
         foreach ($iterator as $files) {
             $commands = array();
-            foreach ($files as $f) {
-                $commands[] = $this->client->putObject(array(
-                    'Bucket' =>
-                ));
+            foreach ($files as $file) {
+                $command = $this->createUploadCommand($file);
+                // Emit a before upload event for any listeners
+                $event['command'] = $command;
+                $event['file'] = $file;
+                $this->dispatch(self::BEFORE_UPLOAD_EVENT, $event);
+                $commands[] = $command;
             }
-            echo "\n";
+            // Execute the commands in parallel
+            $this->client->execute($commands);
+            // Notify listeners that each command finished
+            unset($event['file']);
+            foreach ($commands as $command) {
+                $event['command'] = $command;
+                $this->dispatch(self::AFTER_UPLOAD_EVENT, $event);
+            }
         }
     }
 
     /**
-     * Wraps a generated iterator in a filter iterator that removes directories
+     * Create an upload command based on a SplFileInfo object
      *
-     * @param \Iterator $iterator Iterator to wrap
+     * @param \SplFileInfo $file File object
      *
-     * @return \Iterator
-     * @throws UnexpectedValueException
+     * @return S3Command
+     * @throws RuntimeException If the file cannot be opened
      */
-    protected function filterIterator(\Iterator $iterator)
+    protected function createUploadCommand(\SplFileInfo $file)
     {
-        $f = new FilterIterator($iterator, function ($i) {
-            if (!$i instanceof \SplFileInfo) {
-                throw new UnexpectedValueException('All iterators for S3Sync must return SplFileInfo objects');
-            }
-            // Never fake the upload of an empty directory
-            return !$i->isDir();
-        });
+        // Open the file for reading
+        if (!($resource = fopen($file, 'r'))) {
+            throw new RuntimeException("Could not open {$file} for reading");
+        }
 
-        $f->rewind();
+        $command = $this->client->getCommand('PutObject', array(
+            'Bucket' => $this->bucket,
+            'Key'    => $this->keyProvider->generateKey($file),
+            'Body'   => $resource
+        ));
 
-        return $f;
+        return $command;
     }
 }
