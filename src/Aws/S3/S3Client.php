@@ -467,7 +467,7 @@ class S3Client extends AbstractClient
      * @param bool             $accept403 Set to true if 403s are acceptable
      *
      * @return bool
-     * @throws S3Exception if there is an unhandled exception
+     * @throws S3Exception|\Exception if there is an unhandled exception
      */
     protected function checkExistenceWithCommand(CommandInterface $command, $accept403 = false)
     {
