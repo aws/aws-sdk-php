@@ -59,6 +59,22 @@ class ClearBucketTest extends \Guzzle\Tests\GuzzleTestCase
     public function testClearsBucketUsingDefaultIterator()
     {
         $client = $this->getServiceBuilder()->get('s3');
+        $this->setMockResponse($client, array(
+            's3/list_objects_page_3',
+            's3/list_objects_page_4',
+            's3/list_objects_page_5',
+            's3/delete_multiple_objects'
+        ));
+        $clear = new ClearBucket($client, 'foo');
+        $clear->setIterator($client->getIterator('ListObjects', array(
+            'Bucket' => 'foo'
+        )));
+        $this->assertEquals(2, $clear->clear());
+    }
+
+    public function testClearsBucketUsingRegularListBucketIterator()
+    {
+        $client = $this->getServiceBuilder()->get('s3');
         $mock = $this->setMockResponse($client, array(
             's3/get_bucket_object_versions_page_2',
             's3/delete_multiple_objects'

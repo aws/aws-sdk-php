@@ -143,15 +143,14 @@ class ClearBucket extends AbstractHasDispatcher
      * Clear the bucket
      *
      * @return int Returns the number of deleted keys
+     * @throws ExceptionCollection
      */
     public function clear()
     {
         $that = $this;
         $batch = DeleteObjectsBatch::factory($this->client, $this->bucket, $this->mfa);
         $batch = new NotifyingBatch($batch, function ($items) use ($that) {
-            $that->dispatch(ClearBucket::AFTER_DELETE, array(
-                'keys' => $items
-            ));
+            $that->dispatch(ClearBucket::AFTER_DELETE, array('keys' => $items));
         });
         $batch = new FlushingBatch(new ExceptionBufferingBatch($batch), 1000);
 
@@ -164,7 +163,11 @@ class ClearBucket extends AbstractHasDispatcher
 
         $deleted = 0;
         foreach ($this->getIterator() as $object) {
-            $versionId = $object['VersionId'] == 'null' ? null : $object['VersionId'];
+            if (isset($object['VersionId'])) {
+                $versionId = $object['VersionId'] == 'null' ? null : $object['VersionId'];
+            } else {
+                $versionId = null;
+            }
             $batch->addKey($object['Key'], $versionId);
             $deleted++;
         }
@@ -180,9 +183,7 @@ class ClearBucket extends AbstractHasDispatcher
         }
 
         // Let any listeners know that the bucket was cleared
-        $this->dispatch(self::AFTER_CLEAR, array(
-            'deleted' => $deleted
-        ));
+        $this->dispatch(self::AFTER_CLEAR, array('deleted' => $deleted));
 
         return $deleted;
     }
