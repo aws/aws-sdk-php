@@ -16,6 +16,7 @@
 
 namespace Aws\S3;
 
+use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\UploadBodyListener;
@@ -28,6 +29,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
 use Guzzle\Common\Collection;
+use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
@@ -39,6 +41,10 @@ use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Command\Factory\CompositeFactory;
+
+use Aws\S3\Model\MultipartUpload\UploadBuilder;
+use Aws\Common\Model\MultipartUpload\AbstractTransfer;
+use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
 
 /**
  * Client to interact with Amazon Simple Storage Service
@@ -458,6 +464,133 @@ class S3Client extends AbstractClient
         StreamWrapper::register($this);
 
         return $this;
+    }
+
+    /**
+     * Upload a file, stream, or string to a bucket. If the upload size exceeds the specified threshold, the upload
+     * will be performed using parallel multipart uploads.
+     *
+     * @param string $bucket  Bucket to upload the object
+     * @param string $key     Key of the object
+     * @param mixed  $data    Object data to upload. Can be a Guzzle\Http\EntityBodyInterface, stream resource, or
+     *                        string of data to upload.
+     * @param string $acl     Canned ACL to apply to the object
+     * @param array  $options Custom options used when executing commands:
+     *     - object_parameters: Custom parameters to use with the upload. The parameters must map to a PutObject
+     *       or InitiateMultipartUpload operation parameters.
+     *     - min_part_size: Minimum size to allow for each uploaded part when performing a multipart upload.
+     *     - concurrency: Maximum number of concurrent multipart uploads.
+     *     - before_upload: Callback to invoke before each multipart upload. The callback will receive a
+     *       Guzzle\Common\Event object with context.
+     *
+     * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more options and customization
+     * @return \Guzzle\Service\Resource\Model Returns the modeled result of the performed operation
+     */
+    public function upload($bucket, $key, $data, $acl = 'private', array $options = array())
+    {
+        // Extract configuration options
+        $minPartSize = isset($options['min_part_size']) ? $options['min_part_size'] : AbstractMulti::MIN_PART_SIZE;
+        $params = isset($options['object_parameters']) ? $options['object_parameters'] : array();
+        $concurrency = isset($options['concurrency']) ? $options['concurrency'] : 3;
+        $data = EntityBody::factory($data);
+        $params['ACL'] = $acl;
+
+        // Perform a simple PutObject operation
+        if (!$data->getSize() || $data->getSize() < $minPartSize) {
+            return $this->putObject(array(
+                'Bucket' => $bucket,
+                'Key'    => $key,
+                'Body'   => $data
+            ) + $params);
+        }
+
+        // The size of the object is greater than our min part size, so create a multipart upload
+        $upload = UploadBuilder::newInstance()
+            ->setBucket($bucket)
+            ->setKey($key)
+            ->setMinPartSize($minPartSize)
+            ->setConcurrency($concurrency ?: 3)
+            ->setClient($this)
+            ->setSource($data);
+
+        // Set any custom options used when initiating the upload
+        foreach ($params as $key => $value) {
+            $upload->setOption($key, $value);
+        }
+
+        $transfer = $upload->build();
+        if (isset($options['before_upload'])) {
+            $transfer->getEventDispatcher()->addListener(
+                AbstractTransfer::BEFORE_PART_UPLOAD,
+                $options['before_upload']
+            );
+        }
+
+        return $transfer->upload();
+    }
+
+    /**
+     * Recursively uploads all files in a given directory to a given bucket.
+     *
+     * @param string $directory                 Full path to a directory to upload
+     * @param string $bucket                    Name of the bucket
+     * @param string $virtualDirectoryKeyPrefix Key prefix to add to each upload
+     * @param array  $options                   Upload options
+     *     - concurrency: Maximum number of parallel uploads
+     *     - put_object_parameters: Array of parameters to use with each PutObject operation performed during the
+     *       uploads
+     *     - base_dir: Base directory to remove from each object key
+     *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
+     *     - before_upload: Callback to invoke before each upload. The callback will receive a
+     *       Guzzle\Common\Event object with context.
+     *     - after_upload: Callback to invoke after each upload. The callback will receive a
+     *       Guzzle\Common\Event object with context.
+     *
+     * @see Aws\S3\S3Sync\S3Sync for more options and customization
+     * @return self
+     */
+    public function uploadDirectory(
+        $directory,
+        $bucket,
+        $virtualDirectoryKeyPrefix = null,
+        array $options = array()
+    ) {
+
+    }
+
+    /**
+     * Downloads all objects in the virtual directory designated by the keyPrefix given to the destination
+     * directory given.
+     *
+     * @param string $destinationDirectory The directory to place downloaded files. Subdirectories will be created as
+     *                                     necessary.
+     * @param string $bucket               The bucket containing the virtual directory
+     * @param string $keyPrefix            The key prefix for the virtual directory, or null for the entire bucket
+     *
+     * @return self
+     */
+    public function downloadDirectory($destinationDirectory, $bucket, $keyPrefix = null)
+    {
+
+    }
+
+    /**
+     * Deletes objects from Amazon S3 that match the result of an iterator or ListObjects criteria.
+     *
+     * @param array|AwsResourceIterator $criteria Pass an iterator to delete the object keys of an iterator, or pass
+     *                                            in an array of parameters that will be used to create a ListObjects
+     *                                            operation.
+     * @param array                     $options  Options used when deleting the object:
+     *     - before_delete: Callback to invoke before each delete. The callback will receive a
+     *       Guzzle\Common\Event object with context.
+     *
+     * @see Aws\S3\S3Client::listObjects
+     * @see Aws\S3\Model\ClearBucket For more options or customization
+     * @return self
+     */
+    public function deleteMatchingObjects($criteria, array $options = array())
+    {
+
     }
 
     /**

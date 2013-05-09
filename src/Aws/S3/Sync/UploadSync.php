@@ -24,11 +24,10 @@ use Guzzle\Iterator\ChunkedIterator;
 /**
  * Uploads a local directory tree to Amazon S3
  */
-class S3Sync extends AbstractHasDispatcher
+class UploadSync extends AbstractHasDispatcher
 {
     const BEFORE_UPLOAD_EVENT = 's3.sync.before_upload';
     const AFTER_UPLOAD_EVENT = 's3.sync.after_upload';
-    const PROGRESS_EVENT = 's3.sync.progress';
 
     /**
      * @var S3Client Client used to transfer requests
@@ -56,8 +55,6 @@ class S3Sync extends AbstractHasDispatcher
     protected $keyProvider;
 
     /**
-     * Create a new S3Sync object that recursively uploads all of the files from a directory
-     *
      * @param S3Client  $client   Client used to transfer requests
      * @param string    $bucket   Bucket that will contain the objects
      * @param \Iterator $iterator Iterator used to yield {@see \SplFileInfo} objects to upload

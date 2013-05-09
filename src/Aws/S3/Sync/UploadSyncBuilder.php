@@ -8,7 +8,7 @@ use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\Event;
 use Guzzle\Iterator\FilterIterator;
 
-class SyncBuilder
+class UploadSyncBuilder
 {
     /**
      * @var S3Client Amazon S3 client used to send requests
@@ -338,7 +338,7 @@ class SyncBuilder
             );
         }
 
-        $sync = new S3Sync(
+        $sync = new UploadSync(
             $this->client,
             $this->bucket,
             $this->fileIterator,
@@ -348,13 +348,13 @@ class SyncBuilder
         $sync->setConcurrency($this->concurrency);
 
         if ($this->computeMd5) {
-            $sync->getEventDispatcher()->addListener(S3Sync::BEFORE_UPLOAD_EVENT, function (Event $e) {
+            $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) {
                 $e['command']->set('ContentMD5', md5_file($e['file']));
             });
         }
 
         if ($acp = $this->acp) {
-            $sync->getEventDispatcher()->addListener(S3Sync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($acp) {
+            $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($acp) {
                 if (is_string($acp)) {
                     $e['command']->set('ACL', $acp);
                 } else {
@@ -364,7 +364,7 @@ class SyncBuilder
         }
 
         if ($headers = $this->customHeaders) {
-            $sync->getEventDispatcher()->addListener(S3Sync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($headers) {
+            $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($headers) {
                 $e['command']['command.headers'] = $headers + $e['command']['command.headers'];
             });
         }
@@ -412,7 +412,7 @@ class SyncBuilder
     {
         $f = new FilterIterator($iterator, function ($i) {
             if (!$i instanceof \SplFileInfo) {
-                throw new UnexpectedValueException('All iterators for S3Sync must return SplFileInfo objects');
+                throw new UnexpectedValueException('All iterators for UploadSync must return SplFileInfo objects');
             }
             // Never fake the upload of an empty directory
             return !$i->isDir();
