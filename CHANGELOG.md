@@ -4,7 +4,8 @@ CHANGELOG
 Next Release
 ------------
 
-* Updated the service description for AWS OpsWorks and added support for using EBS-backed instances
+* [OpsWorks] Added support for using Elastic Load Balancer to the AWS OpsWorks client
+* Added support for using EBS-backed instances to the AWS OpsWorks client
 * Updated the service description for AWS Data Pipeline to include more docs and improved error messages
 * Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead
   of when instantiating the client.
