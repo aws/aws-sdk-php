@@ -374,9 +374,50 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * Put and get an item with a binary attribute
+     * Perform a parallel scan of multiple table segments
      *
      * @depends testScan
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
+     */
+    public function testParallelScan()
+    {
+        $client = $this->client;
+        // @begin
+
+        $params = array(
+            'TableName' => 'errors',
+            'ScanFilter' => array(
+                'error' => array(
+                    'AttributeValueList' => array(
+                        array('S' => 'overflow')
+                    ),
+                    'ComparisonOperator' => 'CONTAINS'
+                ),
+            ),
+            'TotalSegments' => 2
+        );
+
+        $scanCommands = array();
+        $scanCommands[] = $client->getCommand('Scan', array('Segment' => 0) + $params);
+        $scanCommands[] = $client->getCommand('Scan', array('Segment' => 1) + $params);
+        $client->execute($scanCommands);
+
+        /** @var $scanCommand \Guzzle\Service\Command\OperationCommand */
+        foreach ($scanCommands as $scanCommand) {
+            $result = $scanCommand->getResult();
+            foreach ($result->get('Items') as $item) {
+                echo $item['error']['S'] . "\n";
+            }
+        }
+
+        // @end
+        $this->assertNotEmpty($this->getActualOutput());
+    }
+
+    /**
+     * Put and get an item with a binary attribute
+     *
+     * @depends testParallelScan
      * @example Aws\DynamoDb\DynamoDbClient::putItem 2012-08-10
      * @example Aws\DynamoDb\DynamoDbClient::getItem 2012-08-10
      */
@@ -518,7 +559,7 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         $client = $this->client;
         // @begin
 
-        // Create a "Orders" table
+        // Create an "Orders" table
         $client->createTable(array(
             'TableName' => 'Orders',
             'AttributeDefinitions' => array(

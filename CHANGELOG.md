@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for doing parallel scans to the Amazon DynamoDB client
 * Updated the service description for AWS OpsWorks and added support for using EBS-backed instances
 * Updated the service description for AWS Data Pipeline to include more docs and improved error messages
 * Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead

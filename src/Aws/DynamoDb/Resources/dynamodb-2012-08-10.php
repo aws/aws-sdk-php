@@ -79,7 +79,7 @@ return array (
             'responseClass' => 'BatchGetItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'The BatchGetItem operation returns the attributes for multiple items from multiple tables using their primary keys. The maximum number of items that can be retrieved for a single operation is 100. Also, the number of items retrieved is constrained by a 1 MB size limit. If the response size limit is exceeded or a partial result is returned because the table’s provisioned throughput is exceeded, or because of an internal processing failure, Amazon DynamoDB returns an UnprocessedKeys value so you can retry the operation starting with the next item to get. Amazon DynamoDB automatically adjusts the number of items returned per page to enforce this limit. For example, even if you ask to retrieve 100 items, but each individual item is 50 KB in size, the system returns 20 items and an appropriate UnprocessedKeys value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one set.',
+            'summary' => 'The BatchGetItem operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -97,7 +97,7 @@ return array (
                 ),
                 'RequestItems' => array(
                     'required' => true,
-                    'description' => 'A map of one or more table names and, for each table, the corresponding primary keys for the items to retrieve. While requesting items, each table name can be invoked only once per operation.',
+                    'description' => 'A map of one or more table names and, for each table, the corresponding primary keys for the items to retrieve. Each table name can be invoked only once.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -198,11 +198,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -218,7 +218,7 @@ return array (
             'responseClass' => 'BatchWriteItemOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'This operation enables you to put or delete several items across multiple tables in a single API call.',
+            'summary' => 'The BatchWriteItem operation puts or deletes multiple items in one or more tables. A single call to BatchWriteItem can write up to 1 MB of data, which can comprise as many as 25 put or delete requests. Individual items to be written can be as large as 64 KB.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -236,7 +236,7 @@ return array (
                 ),
                 'RequestItems' => array(
                     'required' => true,
-                    'description' => 'A map of one or more table names and, for each table, a list of operations to perform (DeleteRequest or PutRequest).',
+                    'description' => 'A map of one or more table names and, for each table, a list of operations to be performed (DeleteRequest or PutRequest). Each element in the map consists of the following:',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -389,7 +389,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
-                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
+                    'description' => 'If set to SIZE, statistics about item collections, if any, that were modified during the operation are returned in the response. If set to NONE (the default), no statistics are returned..',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -400,11 +400,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -480,7 +480,7 @@ return array (
                 ),
                 'KeySchema' => array(
                     'required' => true,
-                    'description' => 'Specifies the attributes that make up the primary key for the table. The attributes in KeySchema must also be defined in the AttributeDefinitions array. For more information, see Data Model of the Amazon DynamoDB Developer Guide.',
+                    'description' => 'Specifies the attributes that make up the primary key for the table. The attributes in KeySchema must also be defined in the AttributeDefinitions array. For more information, see Data Model in the Amazon DynamoDB Developer Guide.',
                     'type' => 'array',
                     'location' => 'json',
                     'minItems' => 1,
@@ -510,7 +510,7 @@ return array (
                     ),
                 ),
                 'LocalSecondaryIndexes' => array(
-                    'description' => 'One or more secondary indexes to be created on the table. Each index is scoped to a given hash key value. There is a 10 gigabyte size limit per hash key; otherwise, the size of a local secondary index is unconstrained.',
+                    'description' => 'One or more secondary indexes (the maximum is five) to be created on the table. Each index is scoped to a given hash key value. There is a 10 gigabyte size limit per hash key; otherwise, the size of a local secondary index is unconstrained.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -592,13 +592,13 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
+                            'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
                         'WriteCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
+                            'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -611,7 +611,7 @@ return array (
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -795,7 +795,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
-                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
+                    'description' => 'If set to SIZE, statistics about item collections, if any, that were modified during the operation are returned in the response. If set to NONE (the default), no statistics are returned..',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -810,11 +810,11 @@ return array (
                     'class' => 'ConditionalCheckFailedException',
                 ),
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -865,11 +865,11 @@ return array (
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -885,7 +885,7 @@ return array (
             'responseClass' => 'DescribeTableOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Returns information about the table, including the current status of the table, when it was created, the primary key schema,and any indexes on the table.',
+            'summary' => 'Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -912,7 +912,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -1036,11 +1036,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -1269,7 +1269,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
-                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
+                    'description' => 'If set to SIZE, statistics about item collections, if any, that were modified during the operation are returned in the response. If set to NONE (the default), no statistics are returned..',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1284,11 +1284,11 @@ return array (
                     'class' => 'ConditionalCheckFailedException',
                 ),
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -1361,7 +1361,7 @@ return array (
                     ),
                 ),
                 'Limit' => array(
-                    'description' => 'The maximum number of items to evaluate (not necessarily the number of matching items). If Amazon DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, and a LastEvaluatedKey to apply in a subsequent operation, so that you can pick up where you left off. Also, if the processed data set size exceeds 1 MB before Amazon DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the operation. For more information see Query and Scan of the Amazon DynamoDB Developer Guide.',
+                    'description' => 'The maximum number of items to evaluate (not necessarily the number of matching items). If Amazon DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, and a LastEvaluatedKey to apply in a subsequent operation, so that you can pick up where you left off. Also, if the processed data set size exceeds 1 MB before Amazon DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the operation. For more information see Query and Scan in the Amazon DynamoDB Developer Guide.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
@@ -1460,7 +1460,7 @@ return array (
                     ),
                 ),
                 'ScanIndexForward' => array(
-                    'description' => 'Specifies ascending (true) or descending (false) traversal of the index. Amazon DynamoDB returns results reflecting the requested order determined by the range key: If the data type is Number, the results are returned in numeric order; otherwise, the results are returned in order of ASCII character code values.',
+                    'description' => 'Specifies ascending (true) or descending (false) traversal of the index. Amazon DynamoDB returns results reflecting the requested order determined by the range key. If the data type is Number, the results are returned in numeric order. For String, the results are returned in order of ASCII character code values. For Binary, Amazon DynamoDB treats each byte of the binary data as unsigned when it compares binary values.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -1532,11 +1532,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -1587,7 +1587,7 @@ return array (
                     ),
                 ),
                 'Limit' => array(
-                    'description' => 'The maximum number of items to evaluate (not necessarily the number of matching items). If Amazon DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, and a LastEvaluatedKey to apply in a subsequent operation, so that you can pick up where you left off. Also, if the processed data set size exceeds 1 MB before Amazon DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the operation. For more information see Query and Scan of the Amazon DynamoDB Developer Guide.',
+                    'description' => 'The maximum number of items to evaluate (not necessarily the number of matching items). If Amazon DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, and a LastEvaluatedKey to apply in a subsequent operation, so that you can pick up where you left off. Also, if the processed data set size exceeds 1 MB before Amazon DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a LastEvaluatedKey to apply in a subsequent operation to continue the operation. For more information see Query and Scan in the Amazon DynamoDB Developer Guide.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
@@ -1754,14 +1754,27 @@ return array (
                         'NONE',
                     ),
                 ),
+                'TotalSegments' => array(
+                    'description' => 'For parallel Scan requests, TotalSegmentsrepresents the total number of segments for a table that is being scanned. Segments are a way to logically divide a table into equally sized portions, for the duration of the Scan request. The value of TotalSegments corresponds to the number of application "workers" (such as threads or processes) that will perform the parallel Scan. For example, if you want to scan a table using four application threads, you would specify a TotalSegments value of 4.',
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 4096,
+                ),
+                'Segment' => array(
+                    'description' => 'For parallel Scan requests, Segment identifies an individual segment to be scanned by an application "worker" (such as a thread or a process). Each worker issues a Scan request with a distinct value for the segment it will scan.',
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'maximum' => 4095,
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -2015,7 +2028,7 @@ return array (
                     ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
-                    'description' => 'Indicates whether to return statistics about item collections, if any, that were modified during the operation. The default for ReturnItemCollectionMetrics is NONE, meaning that no statistics will be returned. To obtain the statistics, set ReturnItemCollectionMetrics to SIZE.',
+                    'description' => 'If set to SIZE, statistics about item collections, if any, that were modified during the operation are returned in the response. If set to NONE (the default), no statistics are returned..',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -2030,11 +2043,11 @@ return array (
                     'class' => 'ConditionalCheckFailedException',
                 ),
                 array(
-                    'reason' => 'Your request rate is too high, or the request is too large. The AWS SDKs for Amazon DynamoDB automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests, using the strategies listed in Error Retries and Exponential Backoff of the Amazon DynamoDB Developer Guide.',
+                    'reason' => 'The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
@@ -2085,13 +2098,13 @@ return array (
                     'properties' => array(
                         'ReadCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
+                            'description' => 'The maximum number of strongly consistent reads consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
                         'WriteCapacityUnits' => array(
                             'required' => true,
-                            'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements of the Amazon DynamoDB Developer Guide.',
+                            'description' => 'The maximum number of writes consumed per second before Amazon DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.',
                             'type' => 'numeric',
                             'minimum' => 1,
                         ),
@@ -2104,11 +2117,11 @@ return array (
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.',
+                    'reason' => 'The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 20. The total limit of tables in the ACTIVE state is 250.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -2178,7 +2191,7 @@ return array (
                     ),
                 ),
                 'UnprocessedKeys' => array(
-                    'description' => 'A map of tables and their respective keys that were not processed with the current response, possibly due to reaching a limit on the response size. The UnprocessedKeys value is in the same form as RequestItems, so the value can be provided directly to a subsequent BatchGetItem operation. For more information, see RequestItems in the Request Parameters section.',
+                    'description' => 'A map of tables and their respective keys that were not processed with the current response. The UnprocessedKeys value is in the same form as RequestItems, so the value can be provided directly to a subsequent BatchGetItem operation. For more information, see RequestItems in the Request Parameters section.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -2251,12 +2264,12 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
-                    'description' => 'The capacity units consumed by the operation.',
+                    'description' => 'The write capacity units consumed by the operation.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ConsumedCapacity',
-                        'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput of the Amazon DynamoDB Developer Guide.',
+                        'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'TableName' => array(
@@ -2277,7 +2290,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'UnprocessedItems' => array(
-                    'description' => 'A map of tables, and requests against those tables, that were not processed with the current response. This might be due to a response exceeding the 1 MB HTTP payload limit, or an item in the batch exceeding the 64 KB item size limit. The UnprocessedKeys value is in the same form as RequestItems, so you can provide this value directly to a subsequent BatchGetItem operation. For more information, see RequestItems in the Request Parameters section.',
+                    'description' => 'A map of tables and requests against those tables that were not processed. The UnprocessedKeys value is in the same form as RequestItems, so you can provide this value directly to a subsequent BatchGetItem operation. For more information, see RequestItems in the Request Parameters section.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -2470,7 +2483,7 @@ return array (
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ConsumedCapacity',
-                        'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput of the Amazon DynamoDB Developer Guide.',
+                        'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'TableName' => array(
@@ -2557,7 +2570,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
-                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits in the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
@@ -2840,7 +2853,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
-                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits in the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
@@ -2995,7 +3008,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
-                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits in the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
@@ -3478,7 +3491,7 @@ return array (
                     'location' => 'json',
                 ),
                 'ScannedCount' => array(
-                    'description' => 'The number of items in the complete scan, before any filters are applied. A high ScannedCount value with few, or no, Count results indicates an inefficient Scan operation. For more information, see Count and ScannedCount of the Amazon DynamoDB Developer Guide.',
+                    'description' => 'The number of items in the complete scan, before any filters are applied. A high ScannedCount value with few, or no, Count results indicates an inefficient Scan operation. For more information, see Count and ScannedCount in the Amazon DynamoDB Developer Guide.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
@@ -3743,7 +3756,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'NumberOfDecreasesToday' => array(
-                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits of the Amazon DynamoDB Developer Guide.',
+                                    'description' => 'The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Limits in the Amazon DynamoDB Developer Guide.',
                                     'type' => 'numeric',
                                 ),
                                 'ReadCapacityUnits' => array(
