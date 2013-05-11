@@ -193,7 +193,7 @@ class ConfigResourceWaiter extends AbstractResourceWaiter
      *
      * @return bool
      */
-    protected function checkPath(Model $model, $key = null, $checkValue, $all = true)
+    protected function checkPath(Model $model, $key = null, $checkValue = array(), $all = true)
     {
         // If no key is set, then just assume true because the request succeeded
         if (!$key) {
