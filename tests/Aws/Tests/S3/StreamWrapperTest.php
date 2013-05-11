@@ -33,7 +33,7 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('s3');
+        $this->client = $this->getServiceBuilder()->get('s3', true);
         StreamWrapper::register($this->client);
     }
 
