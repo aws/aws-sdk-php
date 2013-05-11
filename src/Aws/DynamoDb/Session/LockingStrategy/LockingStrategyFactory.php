@@ -56,7 +56,7 @@ class LockingStrategyFactory
      *
      * @throws InvalidArgumentException If the locking strategy doesn't exist
      */
-    public function factory($lockingStrategy = null, SessionHandlerConfig $config)
+    public function factory($lockingStrategy = null, SessionHandlerConfig $config = null)
     {
         // If the locking strategy is null, let's give it the name "null"
         if ($lockingStrategy === null) {
