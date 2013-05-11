@@ -417,7 +417,7 @@ class StreamWrapper
         // Reset the cache
         $this->clearStatInfo();
         $params = $this->getParams($path);
-        $delim = $this->getOptions('delimiter') ?: '/';
+        $delim = $this->getOption('delimiter') ?: '/';
         if ($params['Key']) {
             $params['Key'] = rtrim($params['Key'], $delim) . $delim;
         }
