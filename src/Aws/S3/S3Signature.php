@@ -74,7 +74,7 @@ class S3Signature implements S3SignatureInterface
      */
     public function signString($string, CredentialsInterface $credentials)
     {
-        return base64_encode(hash_hmac('sha1', $string, $credentials->getSecretKey(), true));
+        return rawurlencode(base64_encode(hash_hmac('sha1', $string, $credentials->getSecretKey(), true)));
     }
 
     /**
