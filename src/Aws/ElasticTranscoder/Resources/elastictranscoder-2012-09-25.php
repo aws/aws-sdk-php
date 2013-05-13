@@ -81,23 +81,21 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -111,13 +109,11 @@ return array (
             'summary' => 'To create a job, send a POST request to the /2012-09-25/jobs resource.',
             'parameters' => array(
                 'PipelineId' => array(
-                    'required' => true,
                     'description' => 'The Id of the pipeline that you want Elastic Transcoder to use for transcoding. The pipeline determines several settings, including the Amazon S3 bucket from which Elastic Transcoder gets the files to transcode and the bucket into which Elastic Transcoder puts the transcoded files.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Input' => array(
-                    'required' => true,
                     'description' => 'A section of the request body that provides information about the file that is being transcoded.',
                     'type' => 'object',
                     'location' => 'json',
@@ -151,8 +147,6 @@ return array (
                     ),
                 ),
                 'Output' => array(
-                    'required' => true,
-                    'description' => 'A section of the request body that provides information about the transcoded (target) file.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -167,35 +161,111 @@ return array (
                             'type' => 'string',
                         ),
                         'Rotate' => array(
-                            'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values:',
+                            'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values: auto, 0, 90, 180, 270. The value auto generally works only if the file that you\'re transcoding contains rotation metadata.',
                             'type' => 'string',
                         ),
                         'PresetId' => array(
                             'description' => 'The Id of the preset to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding.',
                             'type' => 'string',
                         ),
+                        'SegmentDuration' => array(
+                            'description' => 'If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'Outputs' => array(
+                    'description' => 'A section of the request body that provides information about the transcoded (target) files. We recommend that you use the Outputs syntax instead of the Output syntax.',
+                    'type' => 'array',
+                    'location' => 'json',
+                    'maxItems' => 30,
+                    'items' => array(
+                        'name' => 'CreateJobOutput',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID. If a file with the specified name already exists in the output bucket, the job fails.',
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 255,
+                            ),
+                            'ThumbnailPattern' => array(
+                                'description' => 'Whether you want Elastic Transcoder to create thumbnails for your videos and, if so, how you want Elastic Transcoder to name the files.',
+                                'type' => 'string',
+                            ),
+                            'Rotate' => array(
+                                'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values: auto, 0, 90, 180, 270. The value auto generally works only if the file that you\'re transcoding contains rotation metadata.',
+                                'type' => 'string',
+                            ),
+                            'PresetId' => array(
+                                'description' => 'The Id of the preset to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding.',
+                                'type' => 'string',
+                            ),
+                            'SegmentDuration' => array(
+                                'description' => 'If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds.',
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'OutputKeyPrefix' => array(
+                    'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 255,
+                ),
+                'Playlists' => array(
+                    'description' => 'If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), Playlists contains information about the master playlists that you want Elastic Transcoder to create.',
+                    'type' => 'array',
+                    'location' => 'json',
+                    'maxItems' => 30,
+                    'items' => array(
+                        'name' => 'CreateJobPlaylist',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'description' => 'The name that you want Elastic Transcoder to assign to the master playlist, for example, antarctic-vacation.m3u8. The name cannot include a / character. The filename extension must be .m3u8. If you create more than one master playlist (not recommended), the values of all Name objects must be unique.',
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 255,
+                            ),
+                            'Format' => array(
+                                'description' => 'This value must currently be HLSv3.',
+                                'type' => 'string',
+                            ),
+                            'OutputKeys' => array(
+                                'description' => 'For each output in this job that you want to include in a master playlist, the value of the Outputs:Key object. If you include more than one output in a playlist, the value of SegmentDuration for all of the outputs must be the same.',
+                                'type' => 'array',
+                                'maxItems' => 30,
+                                'items' => array(
+                                    'name' => 'Key',
+                                    'type' => 'string',
+                                    'minLength' => 1,
+                                    'maxLength' => 255,
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Too many operations for a given AWS account. For example, the number of pipelines exceeds the maximum allowed.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -209,7 +279,6 @@ return array (
             'summary' => 'To create a pipeline, send a POST request to the 2012-09-25/pipelines resource.',
             'parameters' => array(
                 'Name' => array(
-                    'required' => true,
                     'description' => 'The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
                     'type' => 'string',
                     'location' => 'json',
@@ -217,25 +286,21 @@ return array (
                     'maxLength' => 40,
                 ),
                 'InputBucket' => array(
-                    'required' => true,
                     'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'OutputBucket' => array(
-                    'required' => true,
                     'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Role' => array(
-                    'required' => true,
                     'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to create the pipeline.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Notifications' => array(
-                    'required' => true,
                     'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status.',
                     'type' => 'object',
                     'location' => 'json',
@@ -258,26 +323,102 @@ return array (
                         ),
                     ),
                 ),
+                'ContentConfig' => array(
+                    'description' => 'The optional ContentConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists: which bucket to use, which users you want to have access to the files, the type of access you want users to have, and the storage class that you want to assign to the files.',
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Bucket' => array(
+                            'type' => 'string',
+                        ),
+                        'StorageClass' => array(
+                            'type' => 'string',
+                        ),
+                        'Permissions' => array(
+                            'type' => 'array',
+                            'maxItems' => 30,
+                            'items' => array(
+                                'name' => 'Permission',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'GranteeType' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Grantee' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 255,
+                                    ),
+                                    'Access' => array(
+                                        'type' => 'array',
+                                        'maxItems' => 30,
+                                        'items' => array(
+                                            'name' => 'AccessControl',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ThumbnailConfig' => array(
+                    'description' => 'The optional ThumbnailConfig object specifies several values, including the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files, which users you want to have access to the files, the type of access you want users to have, and the storage class that you want to assign to the files.',
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Bucket' => array(
+                            'type' => 'string',
+                        ),
+                        'StorageClass' => array(
+                            'type' => 'string',
+                        ),
+                        'Permissions' => array(
+                            'type' => 'array',
+                            'maxItems' => 30,
+                            'items' => array(
+                                'name' => 'Permission',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'GranteeType' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Grantee' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 255,
+                                    ),
+                                    'Access' => array(
+                                        'type' => 'array',
+                                        'maxItems' => 30,
+                                        'items' => array(
+                                            'name' => 'AccessControl',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'Too many operations for a given AWS account. For example, the number of pipelines exceeds the maximum allowed.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -291,7 +432,6 @@ return array (
             'summary' => 'To create a preset, send a POST request to the /2012-09-25/presets resource.',
             'parameters' => array(
                 'Name' => array(
-                    'required' => true,
                     'description' => 'The name of the preset. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
                     'type' => 'string',
                     'location' => 'json',
@@ -305,13 +445,11 @@ return array (
                     'maxLength' => 255,
                 ),
                 'Container' => array(
-                    'required' => true,
                     'description' => 'The container type for the output file. This value must be mp4.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Video' => array(
-                    'required' => true,
                     'description' => 'A section of the request body that specifies the video parameters.',
                     'type' => 'object',
                     'location' => 'json',
@@ -327,6 +465,9 @@ return array (
                                 'type' => 'string',
                                 'minLength' => 1,
                                 'maxLength' => 255,
+                                'data' => array(
+                                    'shape_name' => 'CodecOption',
+                                ),
                             ),
                         ),
                         'KeyframesMaxDist' => array(
@@ -338,7 +479,7 @@ return array (
                             'type' => 'string',
                         ),
                         'BitRate' => array(
-                            'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. We recommend that you specify a value less than or equal to the maximum H.264-compliant value listed in the following list for your level and profile:',
+                            'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile:',
                             'type' => 'string',
                         ),
                         'FrameRate' => array(
@@ -346,18 +487,37 @@ return array (
                             'type' => 'string',
                         ),
                         'Resolution' => array(
-                            'description' => 'The width and height of the video in the output file, in pixels. Valid values are auto and width x height:',
+                            'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                             'type' => 'string',
                         ),
                         'AspectRatio' => array(
-                            'description' => 'The display aspect ratio of the video in the output file. Valid values include:',
+                            'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                            'type' => 'string',
+                        ),
+                        'MaxWidth' => array(
+                            'description' => 'The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096.',
+                            'type' => 'string',
+                        ),
+                        'MaxHeight' => array(
+                            'description' => 'The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072.',
+                            'type' => 'string',
+                        ),
+                        'DisplayAspectRatio' => array(
+                            'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                            'type' => 'string',
+                        ),
+                        'SizingPolicy' => array(
+                            'description' => 'Specify one of the following values to control scaling of the output video:',
+                            'type' => 'string',
+                        ),
+                        'PaddingPolicy' => array(
+                            'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'Audio' => array(
-                    'required' => true,
-                    'description' => 'A section of the request body that specifies the audio parameters',
+                    'description' => 'A section of the request body that specifies the audio parameters.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -380,7 +540,6 @@ return array (
                     ),
                 ),
                 'Thumbnails' => array(
-                    'required' => true,
                     'description' => 'A section of the request body that specifies the thumbnail parameters, if any.',
                     'type' => 'object',
                     'location' => 'json',
@@ -394,11 +553,27 @@ return array (
                             'type' => 'string',
                         ),
                         'Resolution' => array(
-                            'description' => 'The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object.',
+                            'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                             'type' => 'string',
                         ),
                         'AspectRatio' => array(
-                            'description' => 'The aspect ratio of thumbnails. Valid values include:',
+                            'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                            'type' => 'string',
+                        ),
+                        'MaxWidth' => array(
+                            'description' => 'The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096.',
+                            'type' => 'string',
+                        ),
+                        'MaxHeight' => array(
+                            'description' => 'The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072.',
+                            'type' => 'string',
+                        ),
+                        'SizingPolicy' => array(
+                            'description' => 'Specify one of the following values to control scaling of thumbnails:',
+                            'type' => 'string',
+                        ),
+                        'PaddingPolicy' => array(
+                            'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.',
                             'type' => 'string',
                         ),
                     ),
@@ -406,15 +581,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
+                    'class' => 'LimitExceededException',
+                ),
+                array(
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -436,23 +614,21 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -474,19 +650,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -518,19 +693,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -545,7 +719,7 @@ return array (
             'parameters' => array(
                 'Status' => array(
                     'required' => true,
-                    'description' => 'To get information about all of the jobs associated with the current AWS account that have a given status, specify the following status: Submitted, Progressing, Completed, Canceled, or Error.',
+                    'description' => 'To get information about all of the jobs associated with the current AWS account that have a given status, specify the following status: Submitted, Progressing, Complete, Canceled, or Error.',
                     'type' => 'string',
                     'location' => 'uri',
                 ),
@@ -562,19 +736,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -588,15 +761,15 @@ return array (
             'summary' => 'To get a list of the pipelines associated with the current AWS account, send a GET request to the /2012-09-25/pipelines resource.',
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -612,15 +785,15 @@ return array (
             'summary' => 'To get a list of all presets associated with the current AWS account, send a GET request to the /2012-09-25/presets resource.',
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -644,19 +817,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -678,19 +850,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -712,19 +883,18 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -738,28 +908,25 @@ return array (
             'summary' => 'To test the IAM role that\'s used by Elastic Transcoder to create the pipeline, send a POST request to the /2012-09-25/roleTests resource.',
             'parameters' => array(
                 'Role' => array(
-                    'required' => true,
                     'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to test.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InputBucket' => array(
-                    'required' => true,
                     'description' => 'The Amazon S3 bucket that contains media files to be transcoded. The action attempts to read from this bucket.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'OutputBucket' => array(
-                    'required' => true,
                     'description' => 'The Amazon S3 bucket that Elastic Transcoder will write transcoded media files to. The action attempts to read from this bucket.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Topics' => array(
-                    'required' => true,
                     'description' => 'The ARNs of one or more Amazon Simple Notification Service (Amazon SNS) topics that you want the action to send a test notification to.',
                     'type' => 'array',
                     'location' => 'json',
+                    'maxItems' => 30,
                     'items' => array(
                         'name' => 'SnsTopic',
                         'type' => 'string',
@@ -768,19 +935,164 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
+                    'class' => 'InternalServiceException',
+                ),
+            ),
+        ),
+        'UpdatePipeline' => array(
+            'httpMethod' => 'PUT',
+            'uri' => '/2012-09-25/pipelines/{Id}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'UpdatePipelineResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Id' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 40,
+                ),
+                'InputBucket' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Role' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Notifications' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Progressing' => array(
+                            'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify when Elastic Transcoder has started to process the job.',
+                            'type' => 'string',
+                        ),
+                        'Completed' => array(
+                            'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing the job.',
+                            'type' => 'string',
+                        ),
+                        'Warning' => array(
+                            'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters a warning condition.',
+                            'type' => 'string',
+                        ),
+                        'Error' => array(
+                            'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition.',
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'ContentConfig' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Bucket' => array(
+                            'type' => 'string',
+                        ),
+                        'StorageClass' => array(
+                            'type' => 'string',
+                        ),
+                        'Permissions' => array(
+                            'type' => 'array',
+                            'maxItems' => 30,
+                            'items' => array(
+                                'name' => 'Permission',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'GranteeType' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Grantee' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 255,
+                                    ),
+                                    'Access' => array(
+                                        'type' => 'array',
+                                        'maxItems' => 30,
+                                        'items' => array(
+                                            'name' => 'AccessControl',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'ThumbnailConfig' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Bucket' => array(
+                            'type' => 'string',
+                        ),
+                        'StorageClass' => array(
+                            'type' => 'string',
+                        ),
+                        'Permissions' => array(
+                            'type' => 'array',
+                            'maxItems' => 30,
+                            'items' => array(
+                                'name' => 'Permission',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'GranteeType' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Grantee' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 255,
+                                    ),
+                                    'Access' => array(
+                                        'type' => 'array',
+                                        'maxItems' => 30,
+                                        'items' => array(
+                                            'name' => 'AccessControl',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
+                    'class' => 'AccessDeniedException',
+                ),
+                array(
+                    'class' => 'ResourceInUseException',
+                ),
+                array(
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -800,7 +1112,6 @@ return array (
                     'location' => 'uri',
                 ),
                 'Notifications' => array(
-                    'required' => true,
                     'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status.',
                     'type' => 'object',
                     'location' => 'json',
@@ -826,23 +1137,21 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -862,7 +1171,6 @@ return array (
                     'location' => 'uri',
                 ),
                 'Status' => array(
-                    'required' => true,
                     'description' => 'The new status of the pipeline:',
                     'type' => 'string',
                     'location' => 'json',
@@ -870,23 +1178,21 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
-                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
+                    'class' => 'IncompatibleVersionException',
+                ),
+                array(
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
-                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -945,11 +1251,14 @@ return array (
                             ),
                         ),
                         'Output' => array(
-                            'description' => 'A section of the request or response body that provides information about the transcoded (target) file.',
+                            'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
                             'type' => 'object',
                             'properties' => array(
+                                'Id' => array(
+                                    'type' => 'string',
+                                ),
                                 'Key' => array(
-                                    'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID. If a file with the specified name already exists in the output bucket, the job fails.',
+                                    'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
                                     'type' => 'string',
                                 ),
                                 'ThumbnailPattern' => array(
@@ -961,18 +1270,125 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'PresetId' => array(
-                                    'description' => 'The Id of the preset to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding.',
+                                    'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                    'type' => 'string',
+                                ),
+                                'SegmentDuration' => array(
+                                    'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                     'type' => 'string',
                                 ),
                                 'Status' => array(
-                                    'description' => 'Status of the job. The value of Status is one of the following: Submitted, Progressing, Completed, Canceled, or Error.',
+                                    'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                     'type' => 'string',
                                 ),
                                 'StatusDetail' => array(
                                     'description' => 'Information that further explains Status.',
                                     'type' => 'string',
                                 ),
+                                'Duration' => array(
+                                    'description' => 'Duration of the output file, in seconds.',
+                                    'type' => 'numeric',
+                                ),
+                                'Width' => array(
+                                    'description' => 'Specifies the width of the output file in pixels.',
+                                    'type' => 'numeric',
+                                ),
+                                'Height' => array(
+                                    'description' => 'Height of the output file, in pixels.',
+                                    'type' => 'numeric',
+                                ),
                             ),
+                        ),
+                        'Outputs' => array(
+                            'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'JobOutput',
+                                'description' => 'Outputs recommended instead.If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Key' => array(
+                                        'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
+                                        'type' => 'string',
+                                    ),
+                                    'ThumbnailPattern' => array(
+                                        'description' => 'Whether you want Elastic Transcoder to create thumbnails for your videos and, if so, how you want Elastic Transcoder to name the files.',
+                                        'type' => 'string',
+                                    ),
+                                    'Rotate' => array(
+                                        'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values:',
+                                        'type' => 'string',
+                                    ),
+                                    'PresetId' => array(
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'type' => 'string',
+                                    ),
+                                    'SegmentDuration' => array(
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                        'type' => 'string',
+                                    ),
+                                    'StatusDetail' => array(
+                                        'description' => 'Information that further explains Status.',
+                                        'type' => 'string',
+                                    ),
+                                    'Duration' => array(
+                                        'description' => 'Duration of the output file, in seconds.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Width' => array(
+                                        'description' => 'Specifies the width of the output file in pixels.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Height' => array(
+                                        'description' => 'Height of the output file, in pixels.',
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'OutputKeyPrefix' => array(
+                            'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                            'type' => 'string',
+                        ),
+                        'Playlists' => array(
+                            'description' => 'Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), Playlists contains information about the master playlists that you want Elastic Transcoder to create.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Playlist',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Format' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'OutputKeys' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Key',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'StatusDetail' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'Status' => array(
+                            'description' => 'The status of the job: Submitted, Progressing, l, Canceled, or Error.',
+                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -991,6 +1407,9 @@ return array (
                             'description' => 'The identifier for the pipeline. You use this value to identify the pipeline in which you want to perform a variety of operations, such as creating a job or a preset.',
                             'type' => 'string',
                         ),
+                        'Arn' => array(
+                            'type' => 'string',
+                        ),
                         'Name' => array(
                             'description' => 'The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
                             'type' => 'string',
@@ -1000,15 +1419,15 @@ return array (
                             'type' => 'string',
                         ),
                         'InputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
+                            'description' => 'The Amazon S3 bucket from which Elastic Transcoder gets media files for transcoding.',
                             'type' => 'string',
                         ),
                         'OutputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
+                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files, thumbnails, and playlists. Either you specify this value, or you specify both ContentConfig and ThumbnailConfig.',
                             'type' => 'string',
                         ),
                         'Role' => array(
-                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to create the pipeline.',
+                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that Elastic Transcoder uses to transcode jobs for this pipeline.',
                             'type' => 'string',
                         ),
                         'Notifications' => array(
@@ -1030,6 +1449,74 @@ return array (
                                 'Error' => array(
                                     'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition.',
                                     'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ContentConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ThumbnailConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -1108,7 +1595,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'BitRate' => array(
-                                    'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. We recommend that you specify a value less than or equal to the maximum H.264-compliant value listed in the following list for your level and profile:',
+                                    'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile:',
                                     'type' => 'string',
                                 ),
                                 'FrameRate' => array(
@@ -1116,11 +1603,31 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Resolution' => array(
-                                    'description' => 'The width and height of the video in the output file, in pixels. Valid values are auto and width x height:',
+                                    'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                                     'type' => 'string',
                                 ),
                                 'AspectRatio' => array(
-                                    'description' => 'The display aspect ratio of the video in the output file. Valid values include:',
+                                    'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                                    'type' => 'string',
+                                ),
+                                'MaxWidth' => array(
+                                    'description' => 'The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096.',
+                                    'type' => 'string',
+                                ),
+                                'MaxHeight' => array(
+                                    'description' => 'The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072.',
+                                    'type' => 'string',
+                                ),
+                                'DisplayAspectRatio' => array(
+                                    'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                                    'type' => 'string',
+                                ),
+                                'SizingPolicy' => array(
+                                    'description' => 'Specify one of the following values to control scaling of the output video:',
+                                    'type' => 'string',
+                                ),
+                                'PaddingPolicy' => array(
+                                    'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1138,11 +1645,27 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Resolution' => array(
-                                    'description' => 'The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object.',
+                                    'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                                     'type' => 'string',
                                 ),
                                 'AspectRatio' => array(
-                                    'description' => 'The aspect ratio of thumbnails. Valid values include:',
+                                    'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                                    'type' => 'string',
+                                ),
+                                'MaxWidth' => array(
+                                    'description' => 'The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096.',
+                                    'type' => 'string',
+                                ),
+                                'MaxHeight' => array(
+                                    'description' => 'The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072.',
+                                    'type' => 'string',
+                                ),
+                                'SizingPolicy' => array(
+                                    'description' => 'Specify one of the following values to control scaling of thumbnails:',
+                                    'type' => 'string',
+                                ),
+                                'PaddingPolicy' => array(
+                                    'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1212,11 +1735,14 @@ return array (
                                 ),
                             ),
                             'Output' => array(
-                                'description' => 'A section of the request or response body that provides information about the transcoded (target) file.',
+                                'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
                                 'type' => 'object',
                                 'properties' => array(
+                                    'Id' => array(
+                                        'type' => 'string',
+                                    ),
                                     'Key' => array(
-                                        'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID. If a file with the specified name already exists in the output bucket, the job fails.',
+                                        'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
                                         'type' => 'string',
                                     ),
                                     'ThumbnailPattern' => array(
@@ -1228,18 +1754,125 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'PresetId' => array(
-                                        'description' => 'The Id of the preset to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding.',
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'type' => 'string',
+                                    ),
+                                    'SegmentDuration' => array(
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
-                                        'description' => 'Status of the job. The value of Status is one of the following: Submitted, Progressing, Completed, Canceled, or Error.',
+                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                         'type' => 'string',
                                     ),
                                     'StatusDetail' => array(
                                         'description' => 'Information that further explains Status.',
                                         'type' => 'string',
                                     ),
+                                    'Duration' => array(
+                                        'description' => 'Duration of the output file, in seconds.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Width' => array(
+                                        'description' => 'Specifies the width of the output file in pixels.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Height' => array(
+                                        'description' => 'Height of the output file, in pixels.',
+                                        'type' => 'numeric',
+                                    ),
                                 ),
+                            ),
+                            'Outputs' => array(
+                                'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'JobOutput',
+                                    'description' => 'Outputs recommended instead.If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Id' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Key' => array(
+                                            'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
+                                            'type' => 'string',
+                                        ),
+                                        'ThumbnailPattern' => array(
+                                            'description' => 'Whether you want Elastic Transcoder to create thumbnails for your videos and, if so, how you want Elastic Transcoder to name the files.',
+                                            'type' => 'string',
+                                        ),
+                                        'Rotate' => array(
+                                            'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values:',
+                                            'type' => 'string',
+                                        ),
+                                        'PresetId' => array(
+                                            'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                            'type' => 'string',
+                                        ),
+                                        'SegmentDuration' => array(
+                                            'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                            'type' => 'string',
+                                        ),
+                                        'StatusDetail' => array(
+                                            'description' => 'Information that further explains Status.',
+                                            'type' => 'string',
+                                        ),
+                                        'Duration' => array(
+                                            'description' => 'Duration of the output file, in seconds.',
+                                            'type' => 'numeric',
+                                        ),
+                                        'Width' => array(
+                                            'description' => 'Specifies the width of the output file in pixels.',
+                                            'type' => 'numeric',
+                                        ),
+                                        'Height' => array(
+                                            'description' => 'Height of the output file, in pixels.',
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'OutputKeyPrefix' => array(
+                                'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                                'type' => 'string',
+                            ),
+                            'Playlists' => array(
+                                'description' => 'Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), Playlists contains information about the master playlists that you want Elastic Transcoder to create.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Playlist',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Name' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Format' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'OutputKeys' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Key',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'StatusDetail' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Status' => array(
+                                'description' => 'The status of the job: Submitted, Progressing, l, Canceled, or Error.',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -1303,11 +1936,14 @@ return array (
                                 ),
                             ),
                             'Output' => array(
-                                'description' => 'A section of the request or response body that provides information about the transcoded (target) file.',
+                                'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
                                 'type' => 'object',
                                 'properties' => array(
+                                    'Id' => array(
+                                        'type' => 'string',
+                                    ),
                                     'Key' => array(
-                                        'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID. If a file with the specified name already exists in the output bucket, the job fails.',
+                                        'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
                                         'type' => 'string',
                                     ),
                                     'ThumbnailPattern' => array(
@@ -1319,18 +1955,125 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'PresetId' => array(
-                                        'description' => 'The Id of the preset to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding.',
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'type' => 'string',
+                                    ),
+                                    'SegmentDuration' => array(
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
-                                        'description' => 'Status of the job. The value of Status is one of the following: Submitted, Progressing, Completed, Canceled, or Error.',
+                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                         'type' => 'string',
                                     ),
                                     'StatusDetail' => array(
                                         'description' => 'Information that further explains Status.',
                                         'type' => 'string',
                                     ),
+                                    'Duration' => array(
+                                        'description' => 'Duration of the output file, in seconds.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Width' => array(
+                                        'description' => 'Specifies the width of the output file in pixels.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Height' => array(
+                                        'description' => 'Height of the output file, in pixels.',
+                                        'type' => 'numeric',
+                                    ),
                                 ),
+                            ),
+                            'Outputs' => array(
+                                'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'JobOutput',
+                                    'description' => 'Outputs recommended instead.If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Id' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Key' => array(
+                                            'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
+                                            'type' => 'string',
+                                        ),
+                                        'ThumbnailPattern' => array(
+                                            'description' => 'Whether you want Elastic Transcoder to create thumbnails for your videos and, if so, how you want Elastic Transcoder to name the files.',
+                                            'type' => 'string',
+                                        ),
+                                        'Rotate' => array(
+                                            'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values:',
+                                            'type' => 'string',
+                                        ),
+                                        'PresetId' => array(
+                                            'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                            'type' => 'string',
+                                        ),
+                                        'SegmentDuration' => array(
+                                            'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                            'type' => 'string',
+                                        ),
+                                        'StatusDetail' => array(
+                                            'description' => 'Information that further explains Status.',
+                                            'type' => 'string',
+                                        ),
+                                        'Duration' => array(
+                                            'description' => 'Duration of the output file, in seconds.',
+                                            'type' => 'numeric',
+                                        ),
+                                        'Width' => array(
+                                            'description' => 'Specifies the width of the output file in pixels.',
+                                            'type' => 'numeric',
+                                        ),
+                                        'Height' => array(
+                                            'description' => 'Height of the output file, in pixels.',
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'OutputKeyPrefix' => array(
+                                'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                                'type' => 'string',
+                            ),
+                            'Playlists' => array(
+                                'description' => 'Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), Playlists contains information about the master playlists that you want Elastic Transcoder to create.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Playlist',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Name' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Format' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'OutputKeys' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Key',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'StatusDetail' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Status' => array(
+                                'description' => 'The status of the job: Submitted, Progressing, l, Canceled, or Error.',
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -1359,6 +2102,9 @@ return array (
                                 'description' => 'The identifier for the pipeline. You use this value to identify the pipeline in which you want to perform a variety of operations, such as creating a job or a preset.',
                                 'type' => 'string',
                             ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
                             'Name' => array(
                                 'description' => 'The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
                                 'type' => 'string',
@@ -1368,15 +2114,15 @@ return array (
                                 'type' => 'string',
                             ),
                             'InputBucket' => array(
-                                'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
+                                'description' => 'The Amazon S3 bucket from which Elastic Transcoder gets media files for transcoding.',
                                 'type' => 'string',
                             ),
                             'OutputBucket' => array(
-                                'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
+                                'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files, thumbnails, and playlists. Either you specify this value, or you specify both ContentConfig and ThumbnailConfig.',
                                 'type' => 'string',
                             ),
                             'Role' => array(
-                                'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to create the pipeline.',
+                                'description' => 'The IAM Amazon Resource Name (ARN) for the role that Elastic Transcoder uses to transcode jobs for this pipeline.',
                                 'type' => 'string',
                             ),
                             'Notifications' => array(
@@ -1398,6 +2144,74 @@ return array (
                                     'Error' => array(
                                         'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition.',
                                         'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'ContentConfig' => array(
+                                'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Bucket' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'StorageClass' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Permissions' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Permission',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'GranteeType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Grantee' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Access' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'AccessControl',
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ThumbnailConfig' => array(
+                                'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Bucket' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'StorageClass' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Permissions' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Permission',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'GranteeType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Grantee' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Access' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'AccessControl',
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -1480,7 +2294,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'BitRate' => array(
-                                        'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. We recommend that you specify a value less than or equal to the maximum H.264-compliant value listed in the following list for your level and profile:',
+                                        'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile:',
                                         'type' => 'string',
                                     ),
                                     'FrameRate' => array(
@@ -1488,11 +2302,31 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Resolution' => array(
-                                        'description' => 'The width and height of the video in the output file, in pixels. Valid values are auto and width x height:',
+                                        'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                                         'type' => 'string',
                                     ),
                                     'AspectRatio' => array(
-                                        'description' => 'The display aspect ratio of the video in the output file. Valid values include:',
+                                        'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                                        'type' => 'string',
+                                    ),
+                                    'MaxWidth' => array(
+                                        'description' => 'The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096.',
+                                        'type' => 'string',
+                                    ),
+                                    'MaxHeight' => array(
+                                        'description' => 'The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072.',
+                                        'type' => 'string',
+                                    ),
+                                    'DisplayAspectRatio' => array(
+                                        'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                                        'type' => 'string',
+                                    ),
+                                    'SizingPolicy' => array(
+                                        'description' => 'Specify one of the following values to control scaling of the output video:',
+                                        'type' => 'string',
+                                    ),
+                                    'PaddingPolicy' => array(
+                                        'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight.',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1510,11 +2344,27 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Resolution' => array(
-                                        'description' => 'The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object.',
+                                        'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                                         'type' => 'string',
                                     ),
                                     'AspectRatio' => array(
-                                        'description' => 'The aspect ratio of thumbnails. Valid values include:',
+                                        'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                                        'type' => 'string',
+                                    ),
+                                    'MaxWidth' => array(
+                                        'description' => 'The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096.',
+                                        'type' => 'string',
+                                    ),
+                                    'MaxHeight' => array(
+                                        'description' => 'The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072.',
+                                        'type' => 'string',
+                                    ),
+                                    'SizingPolicy' => array(
+                                        'description' => 'Specify one of the following values to control scaling of thumbnails:',
+                                        'type' => 'string',
+                                    ),
+                                    'PaddingPolicy' => array(
+                                        'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1576,11 +2426,14 @@ return array (
                             ),
                         ),
                         'Output' => array(
-                            'description' => 'A section of the request or response body that provides information about the transcoded (target) file.',
+                            'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
                             'type' => 'object',
                             'properties' => array(
+                                'Id' => array(
+                                    'type' => 'string',
+                                ),
                                 'Key' => array(
-                                    'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID. If a file with the specified name already exists in the output bucket, the job fails.',
+                                    'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
                                     'type' => 'string',
                                 ),
                                 'ThumbnailPattern' => array(
@@ -1592,18 +2445,125 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'PresetId' => array(
-                                    'description' => 'The Id of the preset to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding.',
+                                    'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                    'type' => 'string',
+                                ),
+                                'SegmentDuration' => array(
+                                    'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                     'type' => 'string',
                                 ),
                                 'Status' => array(
-                                    'description' => 'Status of the job. The value of Status is one of the following: Submitted, Progressing, Completed, Canceled, or Error.',
+                                    'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                     'type' => 'string',
                                 ),
                                 'StatusDetail' => array(
                                     'description' => 'Information that further explains Status.',
                                     'type' => 'string',
                                 ),
+                                'Duration' => array(
+                                    'description' => 'Duration of the output file, in seconds.',
+                                    'type' => 'numeric',
+                                ),
+                                'Width' => array(
+                                    'description' => 'Specifies the width of the output file in pixels.',
+                                    'type' => 'numeric',
+                                ),
+                                'Height' => array(
+                                    'description' => 'Height of the output file, in pixels.',
+                                    'type' => 'numeric',
+                                ),
                             ),
+                        ),
+                        'Outputs' => array(
+                            'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'JobOutput',
+                                'description' => 'Outputs recommended instead.If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Id' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Key' => array(
+                                        'description' => 'The name to assign to the transcoded file. Elastic Transcoder saves the file in the Amazon S3 bucket specified by the OutputBucket object in the pipeline that is specified by the pipeline ID.',
+                                        'type' => 'string',
+                                    ),
+                                    'ThumbnailPattern' => array(
+                                        'description' => 'Whether you want Elastic Transcoder to create thumbnails for your videos and, if so, how you want Elastic Transcoder to name the files.',
+                                        'type' => 'string',
+                                    ),
+                                    'Rotate' => array(
+                                        'description' => 'The number of degrees clockwise by which you want Elastic Transcoder to rotate the output relative to the input. Enter one of the following values:',
+                                        'type' => 'string',
+                                    ),
+                                    'PresetId' => array(
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'type' => 'string',
+                                    ),
+                                    'SegmentDuration' => array(
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                        'type' => 'string',
+                                    ),
+                                    'StatusDetail' => array(
+                                        'description' => 'Information that further explains Status.',
+                                        'type' => 'string',
+                                    ),
+                                    'Duration' => array(
+                                        'description' => 'Duration of the output file, in seconds.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Width' => array(
+                                        'description' => 'Specifies the width of the output file in pixels.',
+                                        'type' => 'numeric',
+                                    ),
+                                    'Height' => array(
+                                        'description' => 'Height of the output file, in pixels.',
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'OutputKeyPrefix' => array(
+                            'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                            'type' => 'string',
+                        ),
+                        'Playlists' => array(
+                            'description' => 'Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Container is ts (MPEG-TS), Playlists contains information about the master playlists that you want Elastic Transcoder to create.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Playlist',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Format' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'OutputKeys' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Key',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'StatusDetail' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'Status' => array(
+                            'description' => 'The status of the job: Submitted, Progressing, l, Canceled, or Error.',
+                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -1622,6 +2582,9 @@ return array (
                             'description' => 'The identifier for the pipeline. You use this value to identify the pipeline in which you want to perform a variety of operations, such as creating a job or a preset.',
                             'type' => 'string',
                         ),
+                        'Arn' => array(
+                            'type' => 'string',
+                        ),
                         'Name' => array(
                             'description' => 'The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
                             'type' => 'string',
@@ -1631,15 +2594,15 @@ return array (
                             'type' => 'string',
                         ),
                         'InputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
+                            'description' => 'The Amazon S3 bucket from which Elastic Transcoder gets media files for transcoding.',
                             'type' => 'string',
                         ),
                         'OutputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
+                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files, thumbnails, and playlists. Either you specify this value, or you specify both ContentConfig and ThumbnailConfig.',
                             'type' => 'string',
                         ),
                         'Role' => array(
-                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to create the pipeline.',
+                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that Elastic Transcoder uses to transcode jobs for this pipeline.',
                             'type' => 'string',
                         ),
                         'Notifications' => array(
@@ -1661,6 +2624,74 @@ return array (
                                 'Error' => array(
                                     'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition.',
                                     'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ContentConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ThumbnailConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -1739,7 +2770,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'BitRate' => array(
-                                    'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. We recommend that you specify a value less than or equal to the maximum H.264-compliant value listed in the following list for your level and profile:',
+                                    'description' => 'The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile:',
                                     'type' => 'string',
                                 ),
                                 'FrameRate' => array(
@@ -1747,11 +2778,31 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Resolution' => array(
-                                    'description' => 'The width and height of the video in the output file, in pixels. Valid values are auto and width x height:',
+                                    'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                                     'type' => 'string',
                                 ),
                                 'AspectRatio' => array(
-                                    'description' => 'The display aspect ratio of the video in the output file. Valid values include:',
+                                    'description' => 'To better control resolution and aspect ratio of output videos, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, PaddingPolicy, and DisplayAspectRatio instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                                    'type' => 'string',
+                                ),
+                                'MaxWidth' => array(
+                                    'description' => 'The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096.',
+                                    'type' => 'string',
+                                ),
+                                'MaxHeight' => array(
+                                    'description' => 'The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072.',
+                                    'type' => 'string',
+                                ),
+                                'DisplayAspectRatio' => array(
+                                    'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                                    'type' => 'string',
+                                ),
+                                'SizingPolicy' => array(
+                                    'description' => 'Specify one of the following values to control scaling of the output video:',
+                                    'type' => 'string',
+                                ),
+                                'PaddingPolicy' => array(
+                                    'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1769,11 +2820,27 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Resolution' => array(
-                                    'description' => 'The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object.',
+                                    'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
                                     'type' => 'string',
                                 ),
                                 'AspectRatio' => array(
-                                    'description' => 'The aspect ratio of thumbnails. Valid values include:',
+                                    'description' => 'To better control resolution and aspect ratio of thumbnails, we recommend that you use the values MaxWidth, MaxHeight, SizingPolicy, and PaddingPolicy instead of Resolution and AspectRatio. The two groups of settings are mutually exclusive. Do not use them together.',
+                                    'type' => 'string',
+                                ),
+                                'MaxWidth' => array(
+                                    'description' => 'The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096.',
+                                    'type' => 'string',
+                                ),
+                                'MaxHeight' => array(
+                                    'description' => 'The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072.',
+                                    'type' => 'string',
+                                ),
+                                'SizingPolicy' => array(
+                                    'description' => 'Specify one of the following values to control scaling of thumbnails:',
+                                    'type' => 'string',
+                                ),
+                                'PaddingPolicy' => array(
+                                    'description' => 'When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1800,23 +2867,25 @@ return array (
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
-                        'name' => 'ExceptionMessage',
+                        'name' => 'String',
                         'type' => 'string',
                     ),
                 ),
             ),
         ),
-        'UpdatePipelineNotificationsResponse' => array(
+        'UpdatePipelineResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
                 'Pipeline' => array(
-                    'description' => 'A section of the response body that provides information about the pipeline.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'Id' => array(
                             'description' => 'The identifier for the pipeline. You use this value to identify the pipeline in which you want to perform a variety of operations, such as creating a job or a preset.',
+                            'type' => 'string',
+                        ),
+                        'Arn' => array(
                             'type' => 'string',
                         ),
                         'Name' => array(
@@ -1828,15 +2897,15 @@ return array (
                             'type' => 'string',
                         ),
                         'InputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
+                            'description' => 'The Amazon S3 bucket from which Elastic Transcoder gets media files for transcoding.',
                             'type' => 'string',
                         ),
                         'OutputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
+                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files, thumbnails, and playlists. Either you specify this value, or you specify both ContentConfig and ThumbnailConfig.',
                             'type' => 'string',
                         ),
                         'Role' => array(
-                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to create the pipeline.',
+                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that Elastic Transcoder uses to transcode jobs for this pipeline.',
                             'type' => 'string',
                         ),
                         'Notifications' => array(
@@ -1861,11 +2930,79 @@ return array (
                                 ),
                             ),
                         ),
+                        'ContentConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ThumbnailConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
         ),
-        'UpdatePipelineStatusResponse' => array(
+        'UpdatePipelineNotificationsResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -1878,6 +3015,9 @@ return array (
                             'description' => 'The identifier for the pipeline. You use this value to identify the pipeline in which you want to perform a variety of operations, such as creating a job or a preset.',
                             'type' => 'string',
                         ),
+                        'Arn' => array(
+                            'type' => 'string',
+                        ),
                         'Name' => array(
                             'description' => 'The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
                             'type' => 'string',
@@ -1887,15 +3027,15 @@ return array (
                             'type' => 'string',
                         ),
                         'InputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you saved the media files that you want to transcode.',
+                            'description' => 'The Amazon S3 bucket from which Elastic Transcoder gets media files for transcoding.',
                             'type' => 'string',
                         ),
                         'OutputBucket' => array(
-                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
+                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files, thumbnails, and playlists. Either you specify this value, or you specify both ContentConfig and ThumbnailConfig.',
                             'type' => 'string',
                         ),
                         'Role' => array(
-                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to create the pipeline.',
+                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that Elastic Transcoder uses to transcode jobs for this pipeline.',
                             'type' => 'string',
                         ),
                         'Notifications' => array(
@@ -1917,6 +3057,204 @@ return array (
                                 'Error' => array(
                                     'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition.',
                                     'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ContentConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ThumbnailConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'UpdatePipelineStatusResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Pipeline' => array(
+                    'description' => 'A section of the response body that provides information about the pipeline.',
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Id' => array(
+                            'description' => 'The identifier for the pipeline. You use this value to identify the pipeline in which you want to perform a variety of operations, such as creating a job or a preset.',
+                            'type' => 'string',
+                        ),
+                        'Arn' => array(
+                            'type' => 'string',
+                        ),
+                        'Name' => array(
+                            'description' => 'The name of the pipeline. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.',
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'description' => 'The current status of the pipeline:',
+                            'type' => 'string',
+                        ),
+                        'InputBucket' => array(
+                            'description' => 'The Amazon S3 bucket from which Elastic Transcoder gets media files for transcoding.',
+                            'type' => 'string',
+                        ),
+                        'OutputBucket' => array(
+                            'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files, thumbnails, and playlists. Either you specify this value, or you specify both ContentConfig and ThumbnailConfig.',
+                            'type' => 'string',
+                        ),
+                        'Role' => array(
+                            'description' => 'The IAM Amazon Resource Name (ARN) for the role that Elastic Transcoder uses to transcode jobs for this pipeline.',
+                            'type' => 'string',
+                        ),
+                        'Notifications' => array(
+                            'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Progressing' => array(
+                                    'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify when Elastic Transcoder has started to process the job.',
+                                    'type' => 'string',
+                                ),
+                                'Completed' => array(
+                                    'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing the job.',
+                                    'type' => 'string',
+                                ),
+                                'Warning' => array(
+                                    'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters a warning condition.',
+                                    'type' => 'string',
+                                ),
+                                'Error' => array(
+                                    'description' => 'The Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition.',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ContentConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'ThumbnailConfig' => array(
+                            'description' => 'Information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. Either you specify both ContentConfig and ThumbnailConfig, or you specify OutputBucket.',
+                            'type' => 'object',
+                            'properties' => array(
+                                'Bucket' => array(
+                                    'type' => 'string',
+                                ),
+                                'StorageClass' => array(
+                                    'type' => 'string',
+                                ),
+                                'Permissions' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Permission',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'GranteeType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Grantee' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Access' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'AccessControl',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),

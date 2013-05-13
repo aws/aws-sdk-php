@@ -17,7 +17,6 @@
 namespace Aws\ElasticTranscoder\Exception;
 
 /**
- * The requested resource does not exist or is not available. For example, the pipeline to which you're trying to add a
- * job that doesn't exist or is still being created.
+ * Exception that occurs when a IncompatibleVersionException error is encountered
  */
-class ResourceNotFoundException extends ElasticTranscoderException {}
+class IncompatibleVersionException extends ElasticTranscoderException {}

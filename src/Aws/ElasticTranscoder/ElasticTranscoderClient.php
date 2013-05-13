@@ -40,6 +40,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model readPipeline(array $args = array()) {@command ElasticTranscoder ReadPipeline}
  * @method Model readPreset(array $args = array()) {@command ElasticTranscoder ReadPreset}
  * @method Model testRole(array $args = array()) {@command ElasticTranscoder TestRole}
+ * @method Model updatePipeline(array $args = array()) {@command ElasticTranscoder UpdatePipeline}
  * @method Model updatePipelineNotifications(array $args = array()) {@command ElasticTranscoder UpdatePipelineNotifications}
  * @method Model updatePipelineStatus(array $args = array()) {@command ElasticTranscoder UpdatePipelineStatus}
  *
