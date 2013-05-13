@@ -53,8 +53,19 @@ class SignatureListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'request.before_send' => array('onRequestBeforeSend', -255)
+            'request.before_send'        => array('onRequestBeforeSend', -255),
+            'client.credentials_changed' => array('onCredentialsChanged')
         );
+    }
+
+    /**
+     * Updates the listener with new credentials if the client is updated
+     *
+     * @param Event $event Event emitted
+     */
+    public function onCredentialsChanged(Event $event)
+    {
+        $this->credentials = $event['credentials'];
     }
 
     /**

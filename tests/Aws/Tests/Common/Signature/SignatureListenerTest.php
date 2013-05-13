@@ -18,6 +18,7 @@ namespace Aws\Tests\Common\Signature;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureListener;
+use Guzzle\Common\Collection;
 use Guzzle\Http\Message\Request;
 use Guzzle\Common\Event;
 
@@ -48,11 +49,28 @@ class SignatureListenerTest extends \Guzzle\Tests\GuzzleTestCase
         $listener->onRequestBeforeSend($event);
     }
 
+    public function testCredentialsGetUpdated()
+    {
+        $credentials = new Credentials('access-key-one', 'secret');
+        $signature = $this->getMock('Aws\Common\Signature\SignatureV4');
+        $config = new Collection();
+
+        $client = new \Aws\S3\S3Client($credentials, $signature, $config);
+        $listener = new SignatureListener($credentials, $signature);
+        $client->addSubscriber($listener);
+
+        $this->assertEquals('access-key-one', $this->readAttribute($listener, 'credentials')->getAccessKeyId());
+        $client->setCredentials(new Credentials('access-key-two', 'secret'));
+        $this->assertEquals('access-key-two', $this->readAttribute($listener, 'credentials')->getAccessKeyId());
+    }
+
     /**
      * @covers Aws\Common\Signature\SignatureListener::getSubscribedEvents
      */
     public function testSubscribesToEvents()
     {
-        $this->assertArrayHasKey('request.before_send', SignatureListener::getSubscribedEvents());
+        $events = SignatureListener::getSubscribedEvents();
+        $this->assertArrayHasKey('request.before_send', $events);
+        $this->assertArrayHasKey('client.credentials_changed', $events);
     }
 }
