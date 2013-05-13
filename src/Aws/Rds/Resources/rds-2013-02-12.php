@@ -5816,12 +5816,12 @@ return array (
         ),
         '__DBInstanceState' => array(
             'operation' => 'DescribeDBInstances',
-            'acceptor.key' => 'DBInstances/*/DBInstanceStatus',
+            'acceptor.path' => 'DBInstances/*/DBInstanceStatus',
+            'acceptor.type' => 'output',
         ),
         'DBInstanceAvailable' => array(
             'extends' => '__DBInstanceState',
             'success.value' => 'available',
-            'description' => 'Wait until a DB instance is available.',
             'failure.value' => array(
                 'deleted',
                 'deleting',
