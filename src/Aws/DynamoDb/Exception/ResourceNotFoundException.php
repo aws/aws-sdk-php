@@ -17,6 +17,6 @@
 namespace Aws\DynamoDb\Exception;
 
 /**
- * The operation tried to access a nonexistent resource. For example, you tried to access a table which does not exist, or is too early in the CREATING process.
+ * The operation tried to access a nonexistent table or index. The resource may not be specified correctly, or its status may not be ACTIVE.
  */
 class ResourceNotFoundException extends DynamoDbException {}

@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for doing parallel scans to the Amazon DynamoDB client
 * [OpsWorks] Added support for using Elastic Load Balancer to the AWS OpsWorks client
 * Added support for using EBS-backed instances to the AWS OpsWorks client
 * Updated the service description for AWS Data Pipeline to include more docs and improved error messages
