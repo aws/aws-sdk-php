@@ -1,15 +1,16 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.3.2 (2013-05-15)
+------------------
 
 * Added support for doing parallel scans to the Amazon DynamoDB client
 * [OpsWorks] Added support for using Elastic Load Balancer to the AWS OpsWorks client
 * Added support for using EBS-backed instances to the AWS OpsWorks client
 * Updated the service description for AWS Data Pipeline to include more docs and improved error messages
 * Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead
-  of when instantiating the client.
+  of when instantiating the client
+* Fixed an issue where the `setCredentials()` method did not properly update the `SignatureListener`
 
 2.3.1 (2013-04-30)
 ------------------

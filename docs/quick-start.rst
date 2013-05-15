@@ -35,7 +35,6 @@ You can quickly get up and running by using a web service client's factory metho
     require 'vendor/autoload.php';
 
     use Aws\S3\S3Client;
-    use Aws\Common\Enum\Region;
 
     // Instantiate the S3 client with your AWS credentials and desired AWS region
     $client = S3Client::factory(array(
