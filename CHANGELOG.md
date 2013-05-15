@@ -6,13 +6,18 @@ CHANGELOG
 
 * Added support for doing parallel scans to the Amazon DynamoDB client
 * [OpsWorks] Added support for using Elastic Load Balancer to the AWS OpsWorks client
-* Added support for using EBS-backed instances to the AWS OpsWorks client
-* Updated the service description for AWS Data Pipeline to include more docs and improved error messages
+* Added support for using EBS-backed instances to the AWS OpsWorks client along with some other minor updates
+* Added support for finer-grained error messages to the AWS Data Pipeline client and updated the service description
 * Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead
   of when instantiating the client
-* Fixed an issue where the `setCredentials()` method did not properly update the `SignatureListener`
+* Fixed the API version for the AWS Support client to be `2013-04-15`
+* Fixed issue #78 by implementing `Aws\S3\StreamWrapper::stream_cast()` for the S3 stream wrapper
+* Fixed issue #79 by updating the S3 `ClearBucket` object to work with the `ListObjects` operation
 * Fixed issue #80 where the `ETag` was incorrectly labeled as a header value instead of being in the XML body for
   the S3 `CompleteMultipartUpload` operation response
+* Fixed an issue where the `setCredentials()` method did not properly update the `SignatureListener`
+* Updated the required version of Guzzle to `">=3.4.3,<4"` to support Guzzle 3.5 which provides the SDK with improved
+  memory management
 
 2.3.1 (2013-04-30)
 ------------------
