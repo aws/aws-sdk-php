@@ -3067,7 +3067,7 @@ return array (
                 'ETag' => array(
                     'description' => 'Entity tag for the uploaded object.',
                     'type' => 'string',
-                    'location' => 'header',
+                    'location' => 'xml',
                 ),
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured, this will contain the expiration date (expiry-date) and rule ID (rule-id). The value of rule-id is URL encoded.',

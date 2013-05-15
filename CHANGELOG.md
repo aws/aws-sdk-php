@@ -8,6 +8,8 @@ Next Release
 * Updated the service description for AWS Data Pipeline to include more docs and improved error messages
 * Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead
   of when instantiating the client.
+* Fixed issue #80 where the `ETag` was incorrectly labeled as a header value instead of being in the XML body for
+  the S3 `CompleteMultipartUpload` operation response
 
 2.3.1 (2013-04-30)
 ------------------
