@@ -26,6 +26,7 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 /**
  * Client to interact with AWS OpsWorks
  *
+ * @method Model attachElasticLoadBalancer(array $args = array()) {@command OpsWorks AttachElasticLoadBalancer}
  * @method Model cloneStack(array $args = array()) {@command OpsWorks CloneStack}
  * @method Model createApp(array $args = array()) {@command OpsWorks CreateApp}
  * @method Model createDeployment(array $args = array()) {@command OpsWorks CreateDeployment}
@@ -42,6 +43,7 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  * @method Model describeCommands(array $args = array()) {@command OpsWorks DescribeCommands}
  * @method Model describeDeployments(array $args = array()) {@command OpsWorks DescribeDeployments}
  * @method Model describeElasticIps(array $args = array()) {@command OpsWorks DescribeElasticIps}
+ * @method Model describeElasticLoadBalancers(array $args = array()) {@command OpsWorks DescribeElasticLoadBalancers}
  * @method Model describeInstances(array $args = array()) {@command OpsWorks DescribeInstances}
  * @method Model describeLayers(array $args = array()) {@command OpsWorks DescribeLayers}
  * @method Model describeLoadBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeLoadBasedAutoScaling}
@@ -52,6 +54,7 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  * @method Model describeTimeBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeTimeBasedAutoScaling}
  * @method Model describeUserProfiles(array $args = array()) {@command OpsWorks DescribeUserProfiles}
  * @method Model describeVolumes(array $args = array()) {@command OpsWorks DescribeVolumes}
+ * @method Model detachElasticLoadBalancer(array $args = array()) {@command OpsWorks DetachElasticLoadBalancer}
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
  * @method Model setLoadBasedAutoScaling(array $args = array()) {@command OpsWorks SetLoadBasedAutoScaling}

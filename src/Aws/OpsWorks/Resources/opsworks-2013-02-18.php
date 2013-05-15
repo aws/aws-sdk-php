@@ -31,6 +31,53 @@ return array (
         ),
     ),
     'operations' => array(
+        'AttachElasticLoadBalancer' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Attaches an Elastic Load Balancing instance to a specified layer.',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.AttachElasticLoadBalancer',
+                ),
+                'ElasticLoadBalancerName' => array(
+                    'required' => true,
+                    'description' => 'The Elastic Load Balancing instance\'s name.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'LayerId' => array(
+                    'required' => true,
+                    'description' => 'The ID of the layer that the Elastic Load Balancing instance is to be attached to.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'CloneStack' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -38,7 +85,7 @@ return array (
             'responseClass' => 'CloneStackResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Creates a clone of a specified stack.',
+            'summary' => 'Creates a clone of a specified stack. For more information, see Clone a Stack.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -66,7 +113,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Region' => array(
-                    'description' => 'The cloned stack AWS region, such as "us-east-1". For more information about AWS regions, see Regions and Endpoints',
+                    'description' => 'The cloned stack AWS region, such as "us-east-1". For more information about AWS regions, see Regions and Endpoints.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -137,11 +184,11 @@ return array (
                             'type' => 'string',
                         ),
                         'Username' => array(
-                            'description' => 'The user name.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'Password' => array(
-                            'description' => 'The repository\'s password.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'SshKey' => array(
@@ -175,6 +222,7 @@ return array (
                     ),
                 ),
                 'DefaultRootDeviceType' => array(
+                    'description' => 'The default root device type. This value is used by default for all instances in the cloned stack, but you can override it when you create an instance. For more information, see Storage for the Root Device.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -201,7 +249,7 @@ return array (
             'responseClass' => 'CreateAppResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Creates an app for a specified stack.',
+            'summary' => 'Creates an app for a specified stack. For more information, see Creating Apps.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -224,6 +272,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Shortname' => array(
+                    'description' => 'The app\'s short name.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -271,11 +320,11 @@ return array (
                             'type' => 'string',
                         ),
                         'Username' => array(
-                            'description' => 'The user name.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'Password' => array(
-                            'description' => 'The repository\'s password.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'SshKey' => array(
@@ -289,7 +338,7 @@ return array (
                     ),
                 ),
                 'Domains' => array(
-                    'description' => 'The app virtual host settings, with multiple domains separated by commas. For example: \'www.mysite.com, mysite.com\'',
+                    'description' => 'The app virtual host settings, with multiple domains separated by commas. For example: \'www.example.com, example.com\'',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -377,7 +426,7 @@ return array (
                     'location' => 'json',
                 ),
                 'AppId' => array(
-                    'description' => 'The app ID, for app deployments.',
+                    'description' => 'The app ID. This parameter is required for app deployments, but not for other deployment commands.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -392,7 +441,7 @@ return array (
                 ),
                 'Command' => array(
                     'required' => true,
-                    'description' => 'A DeploymentCommand object that describes details of the operation.',
+                    'description' => 'A DeploymentCommand object that specifies the deployment command and any associated arguments.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -458,7 +507,7 @@ return array (
             'responseClass' => 'CreateInstanceResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Creates an instance in a specified stack.',
+            'summary' => 'Creates an instance in a specified stack. For more information, see Adding an Instance to a Layer.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -492,7 +541,7 @@ return array (
                 ),
                 'InstanceType' => array(
                     'required' => true,
-                    'description' => 'The instance type, which can be one of the following:',
+                    'description' => 'The instance type. OpsWorks supports all instance types except Cluster Compute, Cluster GPU, and High Memory Cluster. For more information, see Instance Families and Types. The parameter values that you use to specify the various types are in the API Name column of the Available Instance Types table.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -511,7 +560,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Os' => array(
-                    'description' => 'The instance operating system.',
+                    'description' => 'The instance\'s operating system, which must be either "Amazon Linux" or "Ubuntu 12.04 LTS".',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -526,6 +575,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Architecture' => array(
+                    'description' => 'The instance architecture. Instance types do not necessarily support both architectures. For a list of the architectures that are supported by the different instance types, see Instance Families and Types.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -534,6 +584,7 @@ return array (
                     ),
                 ),
                 'RootDeviceType' => array(
+                    'description' => 'The instance root device type. For more information, see Storage for the Root Device.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -560,7 +611,7 @@ return array (
             'responseClass' => 'CreateLayerResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Creates a layer.',
+            'summary' => 'Creates a layer. For more information, see How to Create a Layer.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -584,7 +635,7 @@ return array (
                 ),
                 'Type' => array(
                     'required' => true,
-                    'description' => 'The layer type. A stack cannot have more than one layer of the same type.',
+                    'description' => 'The layer type. A stack cannot have more than one layer of the same type. This parameter must be set to one of the following:',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -754,7 +805,7 @@ return array (
             'responseClass' => 'CreateStackResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Creates a new stack.',
+            'summary' => 'Creates a new stack. For more information, see Create a New Stack.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -850,11 +901,11 @@ return array (
                             'type' => 'string',
                         ),
                         'Username' => array(
-                            'description' => 'The user name.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'Password' => array(
-                            'description' => 'The repository\'s password.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'SshKey' => array(
@@ -873,6 +924,7 @@ return array (
                     'location' => 'json',
                 ),
                 'DefaultRootDeviceType' => array(
+                    'description' => 'The default root device type. This value is used by default for all instances in the cloned stack, but you can override it when you create an instance. For more information, see Storage for the Root Device.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -895,7 +947,7 @@ return array (
             'responseClass' => 'CreateUserProfileResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Creates a new user.',
+            'summary' => 'Creates a new user profile.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -983,7 +1035,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Deletes a specified instance.',
+            'summary' => 'Deletes a specified instance. You must stop an instance before you can delete it. For more information, see Deleting Instances.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1036,7 +1088,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Deletes a specified layer. You must first remove all associated instances.',
+            'summary' => 'Deletes a specified layer. You must first stop and then delete all associated instances. For more information, see How to Delete a Layer.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1077,7 +1129,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Deletes a specified stack. You must first delete all instances and layers.',
+            'summary' => 'Deletes a specified stack. You must first delete all instances, layers, and apps. For more information, see Shut Down a Stack.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1118,7 +1170,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Deletes a user.',
+            'summary' => 'Deletes a user profile.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1176,12 +1228,12 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeApps',
                 ),
                 'StackId' => array(
-                    'description' => 'The app stack ID.',
+                    'description' => 'The app stack ID. If you use this parameter, DescribeApps returns a description of the apps in the specified stack.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'AppIds' => array(
-                    'description' => 'An array of app IDs for the apps to be described.',
+                    'description' => 'An array of app IDs for the apps to be described. If you use this parameter, DescribeApps returns a description of the specified apps. Otherwise, it returns a description of every app.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1225,17 +1277,17 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeCommands',
                 ),
                 'DeploymentId' => array(
-                    'description' => 'The deployment ID.',
+                    'description' => 'The deployment ID. If you include this parameter, DescribeCommands returns a description of the commands associated with the specified deployment.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InstanceId' => array(
-                    'description' => 'The instance ID.',
+                    'description' => 'The instance ID. If you include this parameter, DescribeCommands returns a description of the commands associated with the specified instance.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'CommandIds' => array(
-                    'description' => 'An array of IDs for the commands to be described.',
+                    'description' => 'An array of command IDs. If you include this parameter, DescribeCommands returns a description of the specified commands. Otherwise, it returns a description of every command.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1279,17 +1331,17 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeDeployments',
                 ),
                 'StackId' => array(
-                    'description' => 'The stack ID.',
+                    'description' => 'The stack ID. If you include this parameter, DescribeDeployments returns a description of the commands associated with the specified stack.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'AppId' => array(
-                    'description' => 'The app ID.',
+                    'description' => 'The app ID. If you include this parameter, DescribeDeployments returns a description of the commands associated with the specified app.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'DeploymentIds' => array(
-                    'description' => 'An array of deployment IDs to be described.',
+                    'description' => 'An array of deployment IDs to be described. If you include this parameter, DescribeDeployments returns a description of the specified deployments. Otherwise, it returns a description of every deployment.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1333,12 +1385,61 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeElasticIps',
                 ),
                 'InstanceId' => array(
-                    'description' => 'The instance ID.',
+                    'description' => 'The instance ID. If you include this parameter, DescribeElasticIps returns a description of the Elastic IP addresses associated with the specified instance.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Ips' => array(
-                    'description' => 'An array of Elastic IP addresses to be described.',
+                    'description' => 'An array of Elastic IP addresses to be described. If you include this parameter, DescribeElasticIps returns a description of the specified Elastic IP addresses. Otherwise, it returns a description of every Elastic IP address.',
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeElasticLoadBalancers' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeElasticLoadBalancersResult',
+            'responseType' => 'model',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Describes a stack\'s Elastic Load Balancing instances.',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DescribeElasticLoadBalancers',
+                ),
+                'StackId' => array(
+                    'description' => 'A stack ID. The action describes the Elastic Load Balancing instances for the stack.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'LayerIds' => array(
+                    'description' => 'A list of layer IDs. The action describes the Elastic Load Balancing instances for the specified layers.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1382,17 +1483,17 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeInstances',
                 ),
                 'StackId' => array(
-                    'description' => 'A stack ID.',
+                    'description' => 'A stack ID. If you use this parameter, DescribeInstances returns descriptions of the instances associated with the specified stack.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'LayerId' => array(
-                    'description' => 'A layer ID.',
+                    'description' => 'A layer ID. If you use this parameter, DescribeInstances returns descriptions of the instances associated with the specified layer.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InstanceIds' => array(
-                    'description' => 'An array of instance IDs to be described.',
+                    'description' => 'An array of instance IDs to be described. If you use this parameter, DescribeInstances returns a description of the specified instances. Otherwise, it returns a description of every instance.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1442,7 +1543,7 @@ return array (
                     'location' => 'json',
                 ),
                 'LayerIds' => array(
-                    'description' => 'An array of layer IDs that specify the layers to be described.',
+                    'description' => 'An array of layer IDs that specify the layers to be described. If you omit this parameter, DescribeLayers returns a description of every layer in the specified stack.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1514,7 +1615,7 @@ return array (
             'responseClass' => 'DescribePermissionsResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Describes the permissions for a specified stack. You must specify at least one of the two request values.',
+            'summary' => 'Describes the permissions for a specified stack.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1578,12 +1679,12 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeRaidArrays',
                 ),
                 'InstanceId' => array(
-                    'description' => 'The instance ID.',
+                    'description' => 'The instance ID. If you use this parameter, DescribeRaidArrays returns descriptions of the RAID arrays associated with the specified instance.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'RaidArrayIds' => array(
-                    'description' => 'An array of RAID array IDs to be described.',
+                    'description' => 'An array of RAID array IDs. If you use this parameter, DescribeRaidArrays returns descriptions of the specified arrays. Otherwise, it returns a description of every array.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1627,17 +1728,17 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeServiceErrors',
                 ),
                 'StackId' => array(
-                    'description' => 'The stack ID.',
+                    'description' => 'The stack ID. If you use this parameter, DescribeServiceErrors returns descriptions of the errors associated with the specified stack.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InstanceId' => array(
-                    'description' => 'The instance ID.',
+                    'description' => 'The instance ID. If you use this parameter, DescribeServiceErrors returns descriptions of the errors associated with the specified instance.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'ServiceErrorIds' => array(
-                    'description' => 'An array of service error IDs to be described.',
+                    'description' => 'An array of service error IDs. If you use this parameter, DescribeServiceErrors returns descriptions of the specified errors. Otherwise, it returns a description of every error.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1681,7 +1782,7 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeStacks',
                 ),
                 'StackIds' => array(
-                    'description' => 'An array of stack IDs that specify the stacks to be described.',
+                    'description' => 'An array of stack IDs that specify the stacks to be described. If you omit this parameter, DescribeStacks returns a description of every stack.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1815,17 +1916,17 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeVolumes',
                 ),
                 'InstanceId' => array(
-                    'description' => 'The instance ID.',
+                    'description' => 'The instance ID. If you use this parameter, DescribeVolumes returns descriptions of the volumes associated with the specified instance.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'RaidArrayId' => array(
-                    'description' => 'The RAID array ID.',
+                    'description' => 'The RAID array ID. If you use this parameter, DescribeVolumes returns descriptions of the volumes associated with the specified RAID array.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'VolumeIds' => array(
-                    'description' => 'Am array of volume IDs to be described.',
+                    'description' => 'Am array of volume IDs. If you use this parameter, DescribeVolumes returns descriptions of the specified volumes. Otherwise, it returns a description of every volume.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1839,6 +1940,49 @@ return array (
                     'reason' => 'Indicates that a request was invalid.',
                     'class' => 'ValidationException',
                 ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'DetachElasticLoadBalancer' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Detaches a specified Elastic Load Balancing instance from it\'s layer.',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DetachElasticLoadBalancer',
+                ),
+                'ElasticLoadBalancerName' => array(
+                    'required' => true,
+                    'description' => 'The Elastic Load Balancing instance\'s name.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'LayerId' => array(
+                    'required' => true,
+                    'description' => 'The ID of the layer that the Elastic Load Balancing instance is attached to.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
                 array(
                     'reason' => 'Indicates that a resource was not found.',
                     'class' => 'ResourceNotFoundException',
@@ -1889,7 +2033,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Reboots a specified instance.',
+            'summary' => 'Reboots a specified instance. For more information, see Starting, Stopping, and Rebooting Instances.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1930,7 +2074,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Specify the load-based auto scaling configuration for a specified layer.',
+            'summary' => 'Specify the load-based auto scaling configuration for a specified layer. For more information, see Managing Load with Time-based and Load-based Instances.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2047,7 +2191,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Specifies a stack\'s permissions.',
+            'summary' => 'Specifies a stack\'s permissions. For more information, see Security and Permissions.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2106,7 +2250,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Specify the time-based auto scaling configuration for a specified instance.',
+            'summary' => 'Specify the time-based auto scaling configuration for a specified instance. For more information, see Managing Load with Time-based and Load-based Instances.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2224,7 +2368,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Starts a specified instance.',
+            'summary' => 'Starts a specified instance. For more information, see Starting, Stopping, and Rebooting Instances.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2306,7 +2450,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Stops a specified instance. When you stop a standard instance, the data disappears and must be reinstalled when you restart the instance. You can stop an Amazon EBS-backed instance without losing data.',
+            'summary' => 'Stops a specified instance. When you stop a standard instance, the data disappears and must be reinstalled when you restart the instance. You can stop an Amazon EBS-backed instance without losing data. For more information, see Starting, Stopping, and Rebooting Instances.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2452,11 +2596,11 @@ return array (
                             'type' => 'string',
                         ),
                         'Username' => array(
-                            'description' => 'The user name.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'Password' => array(
-                            'description' => 'The repository\'s password.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'SshKey' => array(
@@ -2470,7 +2614,7 @@ return array (
                     ),
                 ),
                 'Domains' => array(
-                    'description' => 'The app\'s virtual host settings, with multiple domains separated by commas. For example: \'www.mysite.com, mysite.com\'',
+                    'description' => 'The app\'s virtual host settings, with multiple domains separated by commas. For example: \'www.example.com, example.com\'',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -2567,7 +2711,7 @@ return array (
                     ),
                 ),
                 'InstanceType' => array(
-                    'description' => 'The instance type, which can be one of the following:',
+                    'description' => 'The instance type. OpsWorks supports all instance types except Cluster Compute, Cluster GPU, and High Memory Cluster. For more information, see Instance Families and Types. The parameter values that you use to specify the various types are in the API Name column of the Available Instance Types table.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2596,6 +2740,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Architecture' => array(
+                    'description' => 'The instance architecture. Instance types do not necessarily support both architectures. For a list of the architectures that are supported by the different instance types, see Instance Families and Types.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -2650,7 +2795,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Shortname' => array(
-                    'description' => 'The layer short name, which is used internally by OpsWorks, by Chef. The shortname is also used as the name for the directory where your app files are installed. It can have a maximum of 200 characters and must be in the following format: /\\A[a-z0-9\\-\\_\\.]+\\Z/.',
+                    'description' => 'The layer short name, which is used internally by OpsWorksand by Chef. The shortname is also used as the name for the directory where your app files are installed. It can have a maximum of 200 characters and must be in the following format: /\\A[a-z0-9\\-\\_\\.]+\\Z/.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2890,11 +3035,11 @@ return array (
                             'type' => 'string',
                         ),
                         'Username' => array(
-                            'description' => 'The user name.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'Password' => array(
-                            'description' => 'The repository\'s password.',
+                            'description' => 'This parameter depends on the repository type.',
                             'type' => 'string',
                         ),
                         'SshKey' => array(
@@ -2913,6 +3058,7 @@ return array (
                     'location' => 'json',
                 ),
                 'DefaultRootDeviceType' => array(
+                    'description' => 'The default root device type. This value is used by default for all instances in the cloned stack, but you can override it when you create an instance. For more information, see Storage for the Root Device.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -2939,7 +3085,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Updates a specified user\'s SSH name and public key.',
+            'summary' => 'Updates a specified user profile.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -2985,6 +3131,10 @@ return array (
         ),
     ),
     'models' => array(
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+        ),
         'CloneStackResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3062,10 +3212,6 @@ return array (
                 ),
             ),
         ),
-        'EmptyOutput' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-        ),
         'DescribeAppsResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3088,6 +3234,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Shortname' => array(
+                                'description' => 'The app\'s short name.',
                                 'type' => 'string',
                             ),
                             'Name' => array(
@@ -3115,11 +3262,11 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Username' => array(
-                                        'description' => 'The user name.',
+                                        'description' => 'This parameter depends on the repository type.',
                                         'type' => 'string',
                                     ),
                                     'Password' => array(
-                                        'description' => 'The repository\'s password.',
+                                        'description' => 'This parameter depends on the repository type.',
                                         'type' => 'string',
                                     ),
                                     'SshKey' => array(
@@ -3133,7 +3280,7 @@ return array (
                                 ),
                             ),
                             'Domains' => array(
-                                'description' => 'The app vhost settings, with multiple domains separated by commas. For example: \'www.mysite.com, mysite.com\'',
+                                'description' => 'The app vhost settings, with multiple domains separated by commas. For example: \'www.example.com, example.com\'',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'String',
@@ -3183,7 +3330,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Commands' => array(
-                    'description' => 'An array of InstanceCommand objects that describe each of the specified commands.',
+                    'description' => 'An array of Command objects that describe each of the specified commands.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -3352,6 +3499,60 @@ return array (
                 ),
             ),
         ),
+        'DescribeElasticLoadBalancersResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ElasticLoadBalancers' => array(
+                    'description' => 'A list of ElasticLoadBalancer objects that describe the specified Elastic Load Balancing instances.',
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'ElasticLoadBalancer',
+                        'description' => 'Describes an Elastic Load Balancing instance.',
+                        'type' => 'object',
+                        'properties' => array(
+                            'ElasticLoadBalancerName' => array(
+                                'description' => 'The Elastic Load Balancing instance\'s name.',
+                                'type' => 'string',
+                            ),
+                            'Region' => array(
+                                'description' => 'The instance\'s AWS region.',
+                                'type' => 'string',
+                            ),
+                            'DnsName' => array(
+                                'description' => 'The instance\'s public DNS name.',
+                                'type' => 'string',
+                            ),
+                            'StackId' => array(
+                                'description' => 'The ID of the stack that the instance is associated with.',
+                                'type' => 'string',
+                            ),
+                            'LayerId' => array(
+                                'description' => 'The ID of the layer that the instance is attached to.',
+                                'type' => 'string',
+                            ),
+                            'AvailabilityZones' => array(
+                                'description' => 'The instance\'s Availability Zones.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'String',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'Ec2InstanceIds' => array(
+                                'description' => 'A list of the EC2 instances that the Elastic Load Balancing instance is managing traffic for.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'String',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DescribeInstancesResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -3398,7 +3599,7 @@ return array (
                                 ),
                             ),
                             'InstanceType' => array(
-                                'description' => 'The instance type, which can be one of the following:',
+                                'description' => 'The instance type. OpsWorks supports all instance types except Cluster Compute, Cluster GPU, and High Memory Cluster. For more information, see Instance Families and Types. The parameter values that specify the various types are in the API Name column of the Available Instance Types table.',
                                 'type' => 'string',
                             ),
                             'InstanceProfileArn' => array(
@@ -3434,7 +3635,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'ElasticIp' => array(
-                                'description' => 'The instance Elastic IP address.',
+                                'description' => 'The instance Elastic IP address .',
                                 'type' => 'string',
                             ),
                             'AutoScalingType' => array(
@@ -3458,16 +3659,19 @@ return array (
                                 'type' => 'string',
                             ),
                             'LastServiceErrorId' => array(
-                                'description' => 'The ID of the last service error. Call DescribeServiceErrors for details.',
+                                'description' => 'The ID of the last service error. For more information, call DescribeServiceErrors.',
                                 'type' => 'string',
                             ),
                             'Architecture' => array(
+                                'description' => 'The instance architecture, "i386" or "x86_64".',
                                 'type' => 'string',
                             ),
                             'RootDeviceType' => array(
+                                'description' => 'The instance root device type. For more information, see Storage for the Root Device.',
                                 'type' => 'string',
                             ),
                             'RootDeviceVolumeId' => array(
+                                'description' => 'The root device volume ID.',
                                 'type' => 'string',
                             ),
                         ),
@@ -3844,7 +4048,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'AvailabilityZone' => array(
-                                'description' => 'The array\'s AWS Availability Zone. For more information, see Regions and Endpoints.',
+                                'description' => 'The array\'s Availability Zone. For more information, see Regions and Endpoints.',
                                 'type' => 'string',
                             ),
                             'CreatedAt' => array(
@@ -3970,11 +4174,11 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Username' => array(
-                                        'description' => 'The user name.',
+                                        'description' => 'This parameter depends on the repository type.',
                                         'type' => 'string',
                                     ),
                                     'Password' => array(
-                                        'description' => 'The repository\'s password.',
+                                        'description' => 'This parameter depends on the repository type.',
                                         'type' => 'string',
                                     ),
                                     'SshKey' => array(
@@ -3996,6 +4200,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'DefaultRootDeviceType' => array(
+                                'description' => 'The default root device type. This value is used by default for all instances in the cloned stack, but you can override it when you create an instance. For more information, see Storage for the Root Device.',
                                 'type' => 'string',
                             ),
                         ),
@@ -4206,6 +4411,9 @@ return array (
             ),
             'DescribeElasticIps' => array(
                 'result_key' => 'ElasticIps',
+            ),
+            'DescribeElasticLoadBalancers' => array(
+                'result_key' => 'ElasticLoadBalancers',
             ),
             'DescribeInstances' => array(
                 'result_key' => 'Instances',
