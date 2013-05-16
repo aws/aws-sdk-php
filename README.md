@@ -2,14 +2,18 @@
 
 The **AWS SDK for PHP** enables PHP developers to easily work with [Amazon Web Services][aws] and build scalable
 solutions with Amazon S3, Amazon DynamoDB, Amazon Glacier, and more. You can get started in minutes by [installing the
-SDK through Composer][docs-installation] or by downloading a [single phar file][install-phar].
+SDK through Composer][docs-installation] or by downloading a single [zip][install-zip] or [phar][install-phar] file.
 
 * [User Guide][docs-guide]
 * [API Docs][docs-api]
 * [SDK Homepage][sdk-website]
 * [Forum][sdk-forum]
 * [Issues][sdk-issues]
-* [Packagist/Composer][install-packagist]
+* Install
+    * [Packagist/Composer][install-packagist]
+    * [PEAR Channel][install-pear]
+    * [Zip Download][install-zip]
+    * [Phar Download][install-phar]
 * [Contribution Guide][docs-contribution]
 * [License][sdk-license]
 
@@ -17,7 +21,8 @@ SDK through Composer][docs-installation] or by downloading a [single phar file][
 
 * Provides easy-to-use HTTP clients for all supported AWS services, regions, and authentication protocols.
 * Built for PHP 5.3.3+ and is compliant with [PSR-0][], [PSR-1][], and [PSR-2][].
-* Easy to install through [Composer][install-packagist], [PEAR][install-pear], or the [`aws.phar`][install-phar].
+* Easy to install through [Composer][install-packagist], [PEAR][install-pear], or single download ([zip][install-zip] or
+  [phar][install-phar]).
 * Built on [Guzzle][] and utilizes many of its features including persistent connections, parallel requests, events and
   plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
   logging][docs-wire-logging], caching, flexible batching, and request retrying with truncated exponential backoff.
@@ -88,6 +93,7 @@ try {
 
 [install-packagist]: https://packagist.org/packages/aws/aws-sdk-php
 [install-phar]: http://pear.amazonwebservices.com/get/aws.phar
+[install-zip]: http://pear.amazonwebservices.com/get/aws.zip
 [install-pear]: http://pear.amazonwebservices.com
 
 [docs-api]: http://docs.aws.amazon.com/aws-sdk-php-2/latest/index.html

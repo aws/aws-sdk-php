@@ -10,6 +10,7 @@ CHANGELOG
 * Added support for finer-grained error messages to the AWS Data Pipeline client and updated the service description
 * Added the ability to set the `key_pair_id` and `private_key` options at the time of signing a CloudFront URL instead
   of when instantiating the client
+* Added a new [Zip Download](http://pear.amazonwebservices.com/get/aws.zip) for installing the SDK
 * Fixed the API version for the AWS Support client to be `2013-04-15`
 * Fixed issue #78 by implementing `Aws\S3\StreamWrapper::stream_cast()` for the S3 stream wrapper
 * Fixed issue #79 by updating the S3 `ClearBucket` object to work with the `ListObjects` operation
