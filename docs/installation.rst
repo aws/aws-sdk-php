@@ -65,7 +65,7 @@ with the phar file are the following required and suggested libraries:
 
 -  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
 -  `Symfony2 EventDispatcher <http://symfony.com/doc/master/components/event_dispatcher/introduction.html>`_ for events
--  `Monolog <https://github.com/seldaek/monolog>`_ for logging
+-  `Monolog <https://github.com/seldaek/monolog>`_ and `Psr\\Log <https://github.com/php-fig/log>`_ for logging
 -  `Doctrine <https://github.com/doctrine/common>`_ for caching
 
 You can `download the packaged Phar <http://pear.amazonwebservices.com/get/aws.phar>`_ and simply include it in your
@@ -84,6 +84,35 @@ If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK a
 
     ``suhosin.executor.include.whitelist = phar``
 
+Installing via Zip
+------------------
+
+Each release of the AWS SDK for PHP (since 2.3.2) ships with a zip file containing all of the classes and dependencies
+you need to run the SDK in a `PSR-0 <https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md>`_
+compatible directory structure. Additionally, the zip file includes a class autoloader for the AWS SDK for PHP and the
+following required and suggested libraries:
+
+-  `Guzzle <https://github.com/guzzle/guzzle>`_ for HTTP requests
+-  `Symfony2 EventDispatcher <http://symfony.com/doc/master/components/event_dispatcher/introduction.html>`_ for events
+-  `Monolog <https://github.com/seldaek/monolog>`_ and `Psr\\Log <https://github.com/php-fig/log>`_ for logging
+-  `Doctrine <https://github.com/doctrine/common>`_ for caching
+
+Using the zip file is great if you:
+
+1. Prefer not to or cannot use package managers like Composer and PEAR.
+2. Cannot use phar files due to environment limitations.
+3. Want to use only specific files from the SDK.
+
+To get started, you must `download the zip file <http://pear.amazonwebservices.com/get/aws.zip>`_, unzip it into your
+project to a location of your choosing, and include the autoloader::
+
+    require '/path/to/aws-autoloader.php';
+
+Alternatively, you can write your own autoloader or use an existing one from your project.
+
+If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK and build a zip file yourself using the
+*"zip"* task.
+
 Installing via PEAR
 ~~~~~~~~~~~~~~~~~~~
 
@@ -99,7 +128,7 @@ From the command-line, you can install the SDK with PEAR as follows (this might 
     pear channel-discover pear.amazonwebservices.com
     pear install aws/sdk
 
-Alternatively you can combine all three of the preceding statements into one by doing the following:
+Alternatively, you can combine all three of the preceding statements into one by doing the following:
 
 .. code-block:: sh
 
