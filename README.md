@@ -44,12 +44,12 @@ SDK through Composer][docs-installation] or by downloading a single [zip][instal
 1. **Install the SDK** – Using [Composer][] is the recommended way to install the AWS SDK for PHP. The SDK is available
    via [Packagist][] under the [`aws/aws-sdk-php`][install-packagist] package. Please see the
    [Installation][docs-installation] section of the user guide for more detailed information about installing the SDK
-   through Composer and other means.
+   through Composer and other means (e.g., [Phar][install-phar], [Zip][install-zip], [PEAR][install-pear]).
 1. **Using the SDK** – The best way to become familiar with how to use the SDK is to read the [User Guide][docs-guide].
    The [Quick Start Guide][docs-quickstart] will help you become familiar with the basic concepts, and there are also
    specific guides for each of the [supported services][docs-services].
 
-## Quick Examples
+## Quick Example
 
 ### Upload a File to Amazon S3
 
@@ -65,7 +65,7 @@ use Aws\S3\Exception\S3Exception;
 // Instantiate an S3 client
 $s3 = Aws::factory('/path/to/config.php')->get('s3');
 
-// Upload a publicly accessible file. File size, file type, and MD5 hash are automatically calculated by the SDK
+// Upload a publicly accessible file. The file size, file type, and MD5 hash are automatically calculated by the SDK
 try {
     $s3->putObject(array(
         'Bucket' => 'my-bucket',
@@ -74,7 +74,7 @@ try {
         'ACL'    => CannedAcl::PUBLIC_READ
     ));
 } catch (S3Exception $e) {
-    echo "The file was not uploaded.\n";
+    echo "There was an error uploading the file.\n";
 }
 ```
 
@@ -84,7 +84,6 @@ try {
 * [Upload a large file to Amazon S3 in parts][example-s3-multipart]
 * [Put an item in your Amazon DynamoDB table][example-dynamodb-putitem]
 * [Send a message to your Amazon SQS queue][example-sqs-sendmessage]
-
 
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
