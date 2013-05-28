@@ -21,11 +21,19 @@ namespace Aws\Tests\Sts\Integration;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
+    /**
+     * @var \Aws\Sts\StsClient
+     */
+    protected $client;
+
+    public function setUp()
+    {
+        $this->client = $client = $this->getServiceBuilder()->get('sts');
+    }
+
     public function testRetrievesFederatedToken()
     {
-        $client = $this->getServiceBuilder()->get('sts');
-
-        $command = $client->getCommand('GetFederationToken', array(
+        $command = $this->client->getCommand('GetFederationToken', array(
             'DurationSeconds' => 3609,
             'Name'            => 'foo',
             'Policy'          => json_encode(array(
@@ -63,20 +71,41 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function testRetrievesSessionTokenWithDefaultDuration()
     {
-        $client = $this->getServiceBuilder()->get('sts');
-        $command = $client->getCommand('GetSessionToken');
+        $command = $this->client->getCommand('GetSessionToken');
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $command->getResult());
     }
 
     public function testRetrievesSessionTokenWithCustomDuration()
     {
-        $client = $this->getServiceBuilder()->get('sts');
-        $command = $client->getCommand('GetSessionToken', array(
+        $command = $this->client->getCommand('GetSessionToken', array(
             'DurationSeconds' => 5000
         ));
 
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $command->getResult());
         $this->assertEquals('GetSessionToken', $command->getRequest()->getPostField('Action'));
         $this->assertEquals(5000, $command->getRequest()->getPostField('DurationSeconds'));
+    }
+
+    /**
+     * @expectedException \Aws\Sts\Exception\StsException
+     * @expectedExceptionMessage Not authorized to perform sts:AssumeRoleWithWebIdentity
+     */
+    public function testFailsOnBadWebIdentity()
+    {
+        $this->client->assumeRoleWithWebIdentity(array(
+            'RoleArn'          => 'arn:aws:iam::123123123123:role/DummyRole.',
+            'RoleSessionName'  => 'dummy-session-name',
+            'WebIdentityToken' => 'dummy-oauth-token',
+            'ProviderId'       => 'dummy-provider-name',
+            'Policy'           => json_encode(array(
+                'Statement' => array(
+                    array(
+                        'Effect'   => 'Deny',
+                        'Action'   => 's3:GetObject',
+                        'Resource' => 'arn:aws:s3:::mybucket/dummy/*'
+                    )
+                )
+            )),
+        ));
     }
 }

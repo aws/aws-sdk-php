@@ -17,6 +17,6 @@
 namespace Aws\Sts\Exception;
 
 /**
- * The request was rejected because the policy document was too large. The error message describes how big the policy document is, in packed form, as a percentage of what the API allows.
+ * The request could not be fulfilled because the non-AWS identity provider (IDP) that was asked to verify the incoming identity token could not be reached. This is often a transient error caused by network conditions. Retry the request a limited number of times so that you don't exceed the request rate. If the error persists, the non-AWS identity provider might be down or not responding.
  */
-class PackedPolicyTooLargeException extends StsException {}
+class IDPCommunicationErrorException extends StsException {}
