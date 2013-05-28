@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+2.3.3 (2013-03-28)
+------------------
+
+* Added support for web identity federation in the AWS Security Token Service (STS) API
+* Fixed an issue with creating pre-signed Amazon CloudFront RTMP URLs
+* Fixed issue #85 to correct the parameter serialization of NetworkInterfaces within the Amazon EC2 RequestSpotInstances
+  operation
+
 2.3.2 (2013-05-15)
 ------------------
 
