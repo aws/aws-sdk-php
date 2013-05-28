@@ -94,8 +94,8 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
             'expires' => $ts
         ));
         $kp = $client->getConfig('key_pair_id');
-        $this->assertStringStartsWith("test.mp4%3FExpires%3D{$ts}%26Signature%3D", $url);
-        $this->assertContains("Key-Pair-Id%3D{$kp}", $url);
+        $this->assertStringStartsWith("test.mp4?Expires={$ts}&Signature=", $url);
+        $this->assertContains("Key-Pair-Id={$kp}", $url);
     }
 
     public function testCreatesCannedSignedUrlsForRtmpWhileStrippingFileExtension()
@@ -107,14 +107,14 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
         // Try with no leading path
         $result = $m->invoke($client, 'rtmp', 'rtmp://foo.cloudfront.net/test.mp4', $ts);
         $this->assertEquals(
-            '{"Statement":[{"Resource":"test","Condition":{"DateLessThan":{"AWS:EpochTime":' . $ts . '}}}]}',
+            '{"Statement":[{"Resource":"test.mp4","Condition":{"DateLessThan":{"AWS:EpochTime":' . $ts . '}}}]}',
             $result
         );
         $this->assertInternalType('array', json_decode($result, true));
         // Try with nested path
         $result = $m->invoke($client, 'rtmp', 'rtmp://foo.cloudfront.net/videos/test.mp4', $ts);
         $this->assertEquals(
-            '{"Statement":[{"Resource":"videos/test","Condition":{"DateLessThan":{"AWS:EpochTime":' . $ts . '}}}]}',
+            '{"Statement":[{"Resource":"videos/test.mp4","Condition":{"DateLessThan":{"AWS:EpochTime":' . $ts . '}}}]}',
             $result
         );
     }

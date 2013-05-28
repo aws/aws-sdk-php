@@ -204,9 +204,6 @@ class CloudFrontClient extends AbstractClient
         } else {
             // Use a relative URL when creating Flash player URLs
             $url->setScheme(null)->setHost(null);
-            // Encode query string variables for flash players
-            $url = str_replace(array('?', '=', '&'), array('%3F', '%3D', '%26'), (string) $url);
-
             return substr($url, 1);
         }
     }
@@ -250,7 +247,7 @@ class CloudFrontClient extends AbstractClient
             $parts = parse_url($url);
             $pathParts = pathinfo($parts['path']);
             // Add path leading to file, strip file extension, and add a query string if present
-            $resource = ltrim($pathParts['dirname'] . '/' . $pathParts['filename'], '/')
+            $resource = ltrim($pathParts['dirname'] . '/' . $pathParts['basename'], '/')
                 . (isset($parts['query']) ? "?{$parts['query']}" : '');
         } else {
             throw new InvalidArgumentException("Invalid URI scheme: {$scheme}. Must be one of http or rtmp.");
