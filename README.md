@@ -5,7 +5,8 @@ solutions with Amazon S3, Amazon DynamoDB, Amazon Glacier, and more. You can get
 SDK through Composer][docs-installation] or by downloading a single [zip][install-zip] or [phar][install-phar] file.
 
 * **Install**
-    * [Packagist/Composer][install-packagist]
+    * [Instructions][docs-installation]
+    * [Packagist/Composer Package][install-packagist]
     * [PEAR Channel][install-pear]
     * [Zip Download][install-zip]
     * [Phar Download][install-phar]
