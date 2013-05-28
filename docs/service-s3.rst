@@ -159,7 +159,7 @@ easier to upload large files using multipart upload.
         ->setSource('/path/to/large/file.mov')
         ->setBucket('mybucket')
         ->setKey('my-object-key')
-        ->setOption('Metadata', array('Foo' => 'Bar')),
+        ->setOption('Metadata', array('Foo' => 'Bar'))
         ->setOption('CacheControl', 'max-age=3600')
         ->build();
 
