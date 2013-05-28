@@ -5133,6 +5133,7 @@ return array (
                             ),
                         ),
                         'Placement' => array(
+                            'description' => 'Describes where an Amazon EC2 instance is running within an Amazon EC2 region.',
                             'type' => 'object',
                             'properties' => array(
                                 'AvailabilityZone' => array(
@@ -5469,6 +5470,7 @@ return array (
                     ),
                 ),
                 'Description' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5569,6 +5571,7 @@ return array (
                     ),
                 ),
                 'SourceDestCheck' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5580,6 +5583,7 @@ return array (
                     ),
                 ),
                 'DisableApiTermination' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5591,6 +5595,7 @@ return array (
                     ),
                 ),
                 'InstanceType' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5601,6 +5606,7 @@ return array (
                     ),
                 ),
                 'Kernel' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5611,6 +5617,7 @@ return array (
                     ),
                 ),
                 'Ramdisk' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5621,6 +5628,7 @@ return array (
                     ),
                 ),
                 'UserData' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5631,6 +5639,7 @@ return array (
                     ),
                 ),
                 'InstanceInitiatedShutdownBehavior' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5650,6 +5659,7 @@ return array (
                     ),
                 ),
                 'EbsOptimized' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5685,6 +5695,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Description' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5695,6 +5706,7 @@ return array (
                     ),
                 ),
                 'SourceDestCheck' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5883,6 +5895,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'EnableDnsSupport' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5894,6 +5907,7 @@ return array (
                     ),
                 ),
                 'EnableDnsHostnames' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -6610,9 +6624,9 @@ return array (
                         ),
                         'NetworkInterfaces' => array(
                             'type' => 'array',
-                            'sentAs' => 'NetworkInterfaceSet',
+                            'sentAs' => 'NetworkInterface',
                             'items' => array(
-                                'name' => 'NetworkInterfaceSet',
+                                'name' => 'NetworkInterface',
                                 'type' => 'object',
                                 'properties' => array(
                                     'NetworkInterfaceId' => array(
@@ -6644,9 +6658,8 @@ return array (
                                     ),
                                     'PrivateIpAddresses' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'PrivateIpAddressesSet',
                                         'items' => array(
-                                            'name' => 'PrivateIpAddressesSet',
+                                            'name' => 'PrivateIpAddressSpecification',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'PrivateIpAddress' => array(
@@ -8956,6 +8969,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'SpotDatafeedSubscription' => array(
+                    'description' => 'The SpotDatafeedSubscriptionType data type.',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'spotDatafeedSubscription',
@@ -10662,6 +10676,7 @@ return array (
                     ),
                 ),
                 'EbsOptimized' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'ebsOptimized',
@@ -10734,6 +10749,7 @@ return array (
                                 ),
                             ),
                             'InstanceState' => array(
+                                'description' => 'Represents the state of an Amazon EC2 instance.',
                                 'type' => 'object',
                                 'sentAs' => 'instanceState',
                                 'properties' => array(
@@ -11129,6 +11145,7 @@ return array (
                                             'sentAs' => 'spotInstanceRequestId',
                                         ),
                                         'License' => array(
+                                            'description' => 'Represents an active license in use and attached to an Amazon EC2 instance.',
                                             'type' => 'object',
                                             'sentAs' => 'license',
                                             'properties' => array(
@@ -11702,6 +11719,7 @@ return array (
                     'sentAs' => 'networkInterfaceId',
                 ),
                 'Description' => array(
+                    'description' => 'String value',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'description',
@@ -11714,6 +11732,7 @@ return array (
                     ),
                 ),
                 'SourceDestCheck' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'sourceDestCheck',
@@ -13035,6 +13054,7 @@ return array (
                                 'sentAs' => 'availabilityZoneGroup',
                             ),
                             'LaunchSpecification' => array(
+                                'description' => 'The LaunchSpecificationType data type.',
                                 'type' => 'object',
                                 'sentAs' => 'launchSpecification',
                                 'properties' => array(
@@ -13484,6 +13504,7 @@ return array (
                     'sentAs' => 'volumeId',
                 ),
                 'AutoEnableIO' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'autoEnableIO',
@@ -13768,6 +13789,7 @@ return array (
                     'sentAs' => 'vpcId',
                 ),
                 'EnableDnsSupport' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'enableDnsSupport',
@@ -13780,6 +13802,7 @@ return array (
                     ),
                 ),
                 'EnableDnsHostnames' => array(
+                    'description' => 'Boolean value',
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'enableDnsHostnames',
@@ -14690,6 +14713,7 @@ return array (
                                 'sentAs' => 'availabilityZoneGroup',
                             ),
                             'LaunchSpecification' => array(
+                                'description' => 'The LaunchSpecificationType data type.',
                                 'type' => 'object',
                                 'sentAs' => 'launchSpecification',
                                 'properties' => array(
@@ -15261,6 +15285,7 @@ return array (
                                 'sentAs' => 'spotInstanceRequestId',
                             ),
                             'License' => array(
+                                'description' => 'Represents an active license in use and attached to an Amazon EC2 instance.',
                                 'type' => 'object',
                                 'sentAs' => 'license',
                                 'properties' => array(
