@@ -39,12 +39,11 @@ and values.
 
     $result = $client->domainMetadata(array('DomainName' => 'mydomain'));
     echo $result['ItemCount'] . "\n";
-    echo $result['ItemNameSizeBytes'] . "\n";
+    echo $result['ItemNamesSizeBytes'] . "\n";
     echo $result['AttributeNameCount'] . "\n";
-    echo $result['AttributeNameSizeBytes'] . "\n";
+    echo $result['AttributeNamesSizeBytes'] . "\n";
     echo $result['AttributeValueCount'] . "\n";
-    echo $result['AttributeNameSizeBytes'] . "\n";
-    echo $result['AttributeValueSizeBytes'] . "\n";
+    echo $result['AttributeValuesSizeBytes'] . "\n";
     echo $result['Timestamp'] . "\n";
 
 Adding items
