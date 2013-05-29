@@ -92,7 +92,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
     /**
      * {@inheritdoc}
      */
-    public function __call($method, $args = null)
+    public function __call($method, $args)
     {
         if (substr($method, 0, 9) == 'waitUntil') {
             // Allow magic method calls for waiters (e.g. $client->waitUntil<WaiterName>($resource, $options))
