@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.3.3 (2013-03-28)
+2.3.3 (2013-05-28)
 ------------------
 
 * Added support for web identity federation in the AWS Security Token Service (STS) API
