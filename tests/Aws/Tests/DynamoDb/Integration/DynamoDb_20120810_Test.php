@@ -402,7 +402,6 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         $scanCommands[] = $client->getCommand('Scan', array('Segment' => 1) + $params);
         $client->execute($scanCommands);
 
-        /** @var $scanCommand \Guzzle\Service\Command\OperationCommand */
         foreach ($scanCommands as $scanCommand) {
             $result = $scanCommand->getResult();
             foreach ($result->get('Items') as $item) {
