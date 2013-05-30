@@ -182,7 +182,8 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             'Bucket' => 'test'
         ));
         $command->prepare();
-        $this->assertEquals('/test/foo/baz%20/bar%21', $command->getRequest()->getPath());
+        $this->assertEquals('/foo/baz%20/bar%21', $command->getRequest()->getPath());
+        $this->assertEquals('test.s3.amazonaws.com', $command->getRequest()->getHost());
     }
 
     public function testExplodesKeys()
