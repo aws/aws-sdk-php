@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Exception\Parser;
 
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -26,7 +27,7 @@ abstract class AbstractJsonExceptionParser implements ExceptionParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse(Response $response)
+    public function parse(RequestInterface $request, Response $response)
     {
         // Build array of default error data
         $data = array(

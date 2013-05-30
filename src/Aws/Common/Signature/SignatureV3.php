@@ -37,7 +37,7 @@ class SignatureV3 extends AbstractSignature
     protected function getHeadersToSign(RequestInterface $request)
     {
         $headers = array();
-        foreach ($request->getHeaders() as $k => $v) {
+        foreach ($request->getHeaders()->toArray() as $k => $v) {
             $k = strtolower($k);
             if ($k == 'host' || strpos($k, 'x-amz-') !== false) {
                 $headers[$k] = implode(',', $v);

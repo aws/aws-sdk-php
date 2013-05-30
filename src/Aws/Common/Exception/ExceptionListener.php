@@ -52,7 +52,7 @@ class ExceptionListener implements EventSubscriberInterface
      */
     public function onRequestError(Event $event)
     {
-        $e = $this->factory->fromResponse($event['response']);
+        $e = $this->factory->fromResponse($event['request'], $event['response']);
         $event->stopPropagation();
         throw $e;
     }
