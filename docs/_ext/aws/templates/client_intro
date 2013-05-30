@@ -49,14 +49,11 @@ First you need to create a client object using one of the following techniques.
 Factory method
 ~~~~~~~~~~~~~~
 
-The easiest way to get up and running is to use the ``Aws\{{namespace}}\{{namespace}}Client::factory()`` method.
-
-You can pass your access keys or omit them if you are using `AWS Identity and Access Management (IAM) roles for EC2
-instances <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_ or
-credentials sourced from the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables.
+The easiest way to get up and running quickly is to use the ``Aws\{{namespace}}\{{namespace}}Client::factory()`` method
+and provide your credentials (``key`` and ``secret``).
 
 {% if not globalEndpoint -%}
-A ``region`` parameter is required and must be set to one of the following values: ``{{ regions|join("``, ``") }}``
+A ``region`` parameter is also required and must be set to one of the following values: ``{{ regions|join("``, ``") }}``
 {% endif %}
 
 .. code-block:: php
@@ -70,6 +67,10 @@ A ``region`` parameter is required and must be set to one of the following value
         'version' => '{{specifiedApiVersion}}'{% endif %}
     ));
 
+You can provide your access keys like in the preceding example, or you can choose to omit them if you are using `AWS
+Identity and Access Management (IAM) roles for EC2 instances
+<http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_ or credentials
+sourced from the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables.
 
 Service locator
 ~~~~~~~~~~~~~~~
