@@ -56,6 +56,10 @@ You can create a custom configuration file that extends the default configuratio
         )
     );
 
+Make sure to include the ``'includes' => array('_aws'),`` line in your configuration file, because this extends the
+default configuration that makes all of the service clients available to the service builder. If this is missing, then
+you will get an exception when trying to retrieve a service client.
+
 You can use your custom configuration file with the ``Aws\Common\Aws`` class by passing the full path to the
 configuration file in the first argument of the ``factory()`` method:
 
@@ -134,7 +138,7 @@ Using Instance Profile Credentials
 
 If you do not provide credentials and there are no environment credentials available, the SDK will attempt to retrieve
 `IAM Instance Profile credentials <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
-These credentials are only available on Amazon EC2 instances configured with an Instance Profile.
+These credentials are only available on Amazon EC2 instances configured with an IAM role.
 
 If absolutely no credentials are provided or found, you will receive an
 ``Aws\Common\Exception\InstanceProfileCredentialsException`` when you try to make a request.
