@@ -49,21 +49,17 @@ class S3ExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $request = new Request('HEAD', $url);
         $response = Response::fromMessage("HTTP/1.1 $message\r\n\r\n");
-        $response->setRequest($request);
-
         $parser = new S3ExceptionParser();
-        $result = $parser->parse($response);
-
+        $result = $parser->parse($request, $response);
         $this->assertEquals($code, $result['code']);
     }
 
     public function testParsesResponseWith301()
     {
+        $request = new Request('HEAD', 'http://example.com');
         $response = Response::fromMessage("HTTP/1.1 301 Moved Permanently\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><Error><Code>PermanentRedirect</Code><Message>The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint.</Message><RequestId>DUMMY_REQUEST_ID</RequestId><Bucket>DUMMY_BUCKET_NAME</Bucket><HostId>DUMMY_HOST_ID</HostId><Endpoint>s3.amazonaws.com</Endpoint></Error>");
-
         $parser = new S3ExceptionParser();
-        $result = $parser->parse($response);
-
+        $result = $parser->parse($request, $response);
         $this->assertEquals('PermanentRedirect', $result['code']);
     }
 }

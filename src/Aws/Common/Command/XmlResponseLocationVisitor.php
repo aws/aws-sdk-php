@@ -35,8 +35,13 @@ class XmlResponseLocationVisitor extends XmlVisitor
      * Accounts for wrapper nodes
      * {@inheritdoc}
      */
-    public function visit(CommandInterface $command, Response $response, Parameter $param, &$value, $context =  null)
-    {
+    public function visit(
+        CommandInterface $command,
+        Response $response,
+        Parameter $param,
+        &$value,
+        $context =  null
+    ) {
         parent::visit($command, $response, $param, $value, $context);
 
         // Account for wrapper nodes (e.g. RDS, ElastiCache, etc)

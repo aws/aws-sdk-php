@@ -17,6 +17,7 @@
 namespace Aws\Tests\Common\Exception\Parser;
 
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
+use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -27,6 +28,7 @@ class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testParsesClientErrorResponses()
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage(
             "HTTP/1.1 400 Bad Request\r\n" .
             "x-amzn-requestid: xyz\r\n\r\n" .
@@ -43,11 +45,12 @@ class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
                 '__type'  => 'foo',
                 'message' => 'lorem ipsum'
             )
-        ), $parser->parse($response));
+        ), $parser->parse($request, $response));
     }
 
     public function testParsesServerErrorResponsesWithMixedCasing()
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage(
             "HTTP/1.1 500 Internal Server Error\r\n" .
             "x-amzn-requestid: 123\r\n\r\n" .
@@ -64,6 +67,6 @@ class JsonQueryExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
                 '__type'  => 'abc#bazFault',
                 'message' => 'dolor'
             )
-        ), $parser->parse($response));
+        ), $parser->parse($request, $response));
     }
 }

@@ -17,6 +17,7 @@
 namespace Aws\Tests\Common\Exception\Parser;
 
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
+use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -69,9 +70,10 @@ class DefaultXmlExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testParsesResponses($xml)
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\n\r\n{$xml}");
         $parser = new DefaultXmlExceptionParser();
-        $result = $parser->parse($response);
+        $result = $parser->parse($request, $response);
         $this->assertInternalType('array', $result);
         $this->assertEquals('client', $result['type']);
         $this->assertEquals('Error code text', $result['code']);
@@ -82,18 +84,20 @@ class DefaultXmlExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testParsesResponsesWithNoBodyAndNoRequestId()
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\n\r\n");
         $parser = new DefaultXmlExceptionParser();
-        $result = $parser->parse($response);
+        $result = $parser->parse($request, $response);
         $this->assertEquals('400 Bad Request', $result['message']);
         $this->assertNull($result['parsed']);
     }
 
     public function testParsesResponsesWithNoBody()
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage("HTTP/1.1 400 Bad Request\r\nX-Amz-Request-ID: Foo\r\n\r\n");
         $parser = new DefaultXmlExceptionParser();
-        $result = $parser->parse($response);
+        $result = $parser->parse($request, $response);
         $this->assertEquals('400 Bad Request (Request-ID: Foo)', $result['message']);
         $this->assertEquals('Foo', $result['request_id']);
     }

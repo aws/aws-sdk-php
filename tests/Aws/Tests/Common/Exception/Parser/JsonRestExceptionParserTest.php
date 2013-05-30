@@ -17,6 +17,7 @@
 namespace Aws\Tests\Common\Exception\Parser;
 
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
+use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -26,6 +27,7 @@ class JsonRestExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function testParsesClientErrorResponses()
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage(
             "HTTP/1.1 400 Bad Request\r\n" .
             "x-amzn-requestid: xyz\r\n\r\n" .
@@ -43,11 +45,12 @@ class JsonRestExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
                 'message' => 'lorem ipsum',
                 'code'    => 'foo'
             )
-        ), $parser->parse($response));
+        ), $parser->parse($request, $response));
     }
 
     public function testParsesClientErrorResponseWithCodeInHeader()
     {
+        $request = new Request('GET', 'http://example.com');
         $response = Response::fromMessage(
             "HTTP/1.1 400 Bad Request\r\n" .
             "x-amzn-RequestId: xyz\r\n" .
@@ -64,6 +67,6 @@ class JsonRestExceptionParserTest extends \Guzzle\Tests\GuzzleTestCase
             'parsed'     => array(
                 'message' => 'lorem ipsum',
             )
-        ), $parser->parse($response));
+        ), $parser->parse($request, $response));
     }
 }

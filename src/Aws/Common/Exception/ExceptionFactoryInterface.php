@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Exception;
 
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -26,9 +27,10 @@ interface ExceptionFactoryInterface
     /**
      * Returns an AWS service specific exception
      *
-     * @param Response $response Unsuccessful response that was encountered
+     * @param RequestInterface $request  Unsuccessful request
+     * @param Response         $response Unsuccessful response that was encountered
      *
      * @return \Exception|AwsExceptionInterface
      */
-    public function fromResponse(Response $response);
+    public function fromResponse(RequestInterface $request, Response $response);
 }

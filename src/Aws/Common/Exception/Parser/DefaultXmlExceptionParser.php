@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Exception\Parser;
 
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -26,7 +27,7 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse(Response $response)
+    public function parse(RequestInterface $request, Response $response)
     {
         $data = array(
             'code'       => null,
@@ -39,7 +40,7 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
         if ($body = $response->getBody(true)) {
             $this->parseBody(new \SimpleXMLElement($body), $data);
         } else {
-            $this->parseHeaders($response, $data);
+            $this->parseHeaders($request, $response, $data);
         }
 
         return $data;
@@ -48,10 +49,11 @@ class DefaultXmlExceptionParser implements ExceptionParserInterface
     /**
      * Parses additional exception information from the response headers
      *
-     * @param Response $response The response from the request
-     * @param array    $data     The current set of exception data
+     * @param RequestInterface $request  Request that was issued
+     * @param Response         $response The response from the request
+     * @param array            $data     The current set of exception data
      */
-    protected function parseHeaders(Response $response, array &$data)
+    protected function parseHeaders(RequestInterface $request, Response $response, array &$data)
     {
         $data['message'] = $response->getStatusCode() . ' ' . $response->getReasonPhrase();
         if ($requestId = $response->getHeader('x-amz-request-id')) {
