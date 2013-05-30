@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Exception;
 
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -27,6 +28,11 @@ class ServiceResponseException extends RuntimeException
      * @var Response Response
      */
     protected $response;
+
+    /**
+     * @var RequestInterface Request
+     */
+    protected $request;
 
     /**
      * @var string Request ID
@@ -124,6 +130,26 @@ class ServiceResponseException extends RuntimeException
     }
 
     /**
+     * Set the associated request
+     *
+     * @param RequestInterface $request
+     */
+    public function setRequest(RequestInterface $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Get the associated request object
+     *
+     * @return RequestInterface|null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
      * Get the status code of the response
      *
      * @return int|null
@@ -148,8 +174,8 @@ class ServiceResponseException extends RuntimeException
             . 'AWS Error Message: ' . $this->getMessage();
 
         // Add the User-Agent if available
-        if ($this->response && $this->response->getRequest()) {
-            $message .= ', ' . 'User-Agent: ' . $this->response->getRequest()->getHeader('User-Agent');
+        if ($this->request) {
+            $message .= ', ' . 'User-Agent: ' . $this->request->getHeader('User-Agent');
         }
 
         return $message;

@@ -18,6 +18,7 @@ namespace Aws\Tests\Common\Exception;
 
 use Aws\Common\Exception\ExceptionListener;
 use Aws\Common\Exception\ServiceResponseException;
+use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 use Guzzle\Common\Event;
 
@@ -34,6 +35,7 @@ class ExceptionListenerTest extends \Guzzle\Tests\GuzzleTestCase
     public function testThrowsServiceSpecificExceptions()
     {
         $e = new ServiceResponseException('Foo');
+        $request = new Request('POST', 'http://www.example.com');
         $response = new Response(200);
 
         $factory = $this->getMockBuilder('Aws\Common\Exception\ExceptionFactoryInterface')
@@ -42,14 +44,11 @@ class ExceptionListenerTest extends \Guzzle\Tests\GuzzleTestCase
 
         $factory->expects($this->once())
             ->method('fromResponse')
-            ->with($response)
+            ->with($request, $response)
             ->will($this->returnValue($e));
 
         $listener = new ExceptionListener($factory);
-
-        $event = new Event(array(
-            'response' => $response
-        ));
+        $event = new Event(array('request' => $request, 'response' => $response));
 
         try {
             $listener->onRequestError($event);

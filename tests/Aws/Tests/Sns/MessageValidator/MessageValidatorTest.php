@@ -91,7 +91,7 @@ class MessageValidatorTest extends \Guzzle\Tests\GuzzleTestCase
             'TopicArn'       => 'baz',
             'Type'           => 'Notification',
             'SigningCertURL' => 'https://foo.amazonaws.com/bar',
-            'Signature'      => null,
+            'Signature'      => '',
         ));
 
         // Get the signature for a real message

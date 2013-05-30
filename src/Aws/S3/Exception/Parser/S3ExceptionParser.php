@@ -17,6 +17,7 @@
 namespace Aws\S3\Exception\Parser;
 
 use Aws\Common\Exception\Parser\DefaultXmlExceptionParser;
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -27,9 +28,9 @@ class S3ExceptionParser extends DefaultXmlExceptionParser
     /**
      * {@inheritdoc}
      */
-    public function parse(Response $response)
+    public function parse(RequestInterface $request, Response $response)
     {
-        $data = parent::parse($response);
+        $data = parent::parse($request, $response);
 
         if ($response->getStatusCode() === 301) {
             $data['type'] = 'client';
@@ -44,13 +45,11 @@ class S3ExceptionParser extends DefaultXmlExceptionParser
     /**
      * {@inheritdoc}
      */
-    protected function parseHeaders(Response $response, array &$data)
+    protected function parseHeaders(RequestInterface $request, Response $response, array &$data)
     {
-        parent::parseHeaders($response, $data);
+        parent::parseHeaders($request, $response, $data);
 
         // Get the request
-        /** @var $request \Guzzle\Http\Message\Request */
-        $request = $response->getRequest();
         $status  = $response->getStatusCode();
         $method  = $request->getMethod();
 

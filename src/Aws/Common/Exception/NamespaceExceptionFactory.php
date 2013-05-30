@@ -17,6 +17,7 @@
 namespace Aws\Common\Exception;
 
 use Aws\Common\Exception\Parser\ExceptionParserInterface;
+use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**
@@ -60,9 +61,9 @@ class NamespaceExceptionFactory implements ExceptionFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function fromResponse(Response $response)
+    public function fromResponse(RequestInterface $request, Response $response)
     {
-        $parts = $this->parser->parse($response);
+        $parts = $this->parser->parse($request, $response);
 
         // Removing leading 'AWS.' and embedded periods
         $className = $this->baseNamespace . '\\' . str_replace(array('AWS.', '.'), '', $parts['code']);
@@ -72,19 +73,20 @@ class NamespaceExceptionFactory implements ExceptionFactoryInterface
 
         $className = class_exists($className) ? $className : $this->defaultException;
 
-        return $this->createException($className, $response, $parts);
+        return $this->createException($className, $request, $response, $parts);
     }
 
     /**
      * Create an prepare an exception object
      *
-     * @param string   $className Name of the class to create
-     * @param Response $response  Response received
-     * @param array    $parts     Parsed exception data
+     * @param string           $className Name of the class to create
+     * @param RequestInterface $request   Request
+     * @param Response         $response  Response received
+     * @param array            $parts     Parsed exception data
      *
      * @return \Exception
      */
-    protected function createException($className, Response $response, array $parts)
+    protected function createException($className, RequestInterface $request, Response $response, array $parts)
     {
         $class = new $className($parts['message']);
 
@@ -92,6 +94,7 @@ class NamespaceExceptionFactory implements ExceptionFactoryInterface
             $class->setExceptionCode($parts['code']);
             $class->setExceptionType($parts['type']);
             $class->setResponse($response);
+            $class->setRequest($request);
             $class->setRequestId($parts['request_id']);
         }
 
