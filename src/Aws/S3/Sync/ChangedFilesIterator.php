@@ -41,6 +41,16 @@ class ChangedFilesIterator extends \FilterIterator
     protected $keyProvider;
 
     /**
+     * @var array Previously loaded list object data
+     */
+    protected $listedObjects = array();
+
+    /**
+     * @var \Iterator
+     */
+    protected $bucketIterator;
+
+    /**
      * @param \Iterator                          $iterator    Iterator to wrap and filter
      * @param S3Client                           $client      Client used to send requests
      * @param string                             $bucket      Amazon S3 bucket
@@ -59,22 +69,60 @@ class ChangedFilesIterator extends \FilterIterator
         $this->rewind();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function accept()
     {
-        try {
-            $current = $this->current();
-            $result = $this->client->headObject(array(
-                'Bucket' => $this->bucket,
-                'Key'    => $this->keyProvider->generateKey((string) $current)
-            ));
-            // Ensure the Content-Length matches and it hasn't been modified since the mtime
-            return $current->getSize() != $result['ContentLength'] ||
-                $current->getMTime() > strtotime($result['LastModified']);
-        } catch (NoSuchKeyException $e) {
+        $current = $this->current();
+        $key = $this->keyProvider->generateKey((string) $current);
+        if (!($data = $this->getS3Data($key))) {
             return true;
         }
+        unset($this->listedObjects[$key]);
+        // Ensure the Content-Length matches and it hasn't been modified since the mtime
+        return $current->getSize() != $data['s'] || $current->getMTime() > strtotime($data['l']);
+    }
+
+    /**
+     * @return \Iterator
+     */
+    protected function getBucketIterator()
+    {
+        if (!$this->bucketIterator) {
+            $this->bucketIterator = $this->client->getIterator('ListObjects', array(
+                'Bucket' => $this->bucket,
+                'Prefix' => $this->keyProvider->getPrefix()
+            ));
+            $this->bucketIterator->rewind();
+        }
+
+        return $this->bucketIterator;
+    }
+
+    /**
+     * Get key information from Amazon S3 either from cache or from a ListObjects iterator
+     *
+     * @param $key Amazon S3 key
+     *
+     * @return array|bool Returns an array of key data, or false if the key is not in S3
+     */
+    protected function getS3Data($key)
+    {
+        if (isset($this->listedObjects[$key])) {
+            return $this->listedObjects[$key];
+        }
+
+        $it = $this->getBucketIterator();
+
+        while ($it->valid()) {
+            $value = $it->current();
+            $data = array('l' => $value['LastModified'], 's' => (int) $value['Size']);
+            if ($value['Key'] == $key) {
+                return $data;
+            } else {
+                $this->listedObjects[$value['Key']] = $data;
+            }
+            $it->next();
+        }
+
+        return false;
     }
 }
