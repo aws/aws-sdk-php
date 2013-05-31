@@ -18,9 +18,9 @@ namespace Aws\Sts;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -96,5 +96,27 @@ class StsClient extends AbstractClient
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sts-%s.php'
             ))
             ->build();
+    }
+
+    /**
+     * Creates a credentials object from the credential data return by an STS operation
+     *
+     * @param Model $result The result of an STS operation
+     *
+     * @return Credentials
+     * @throws InvalidArgumentException if the result does not contain credential data
+     */
+    public function createCredentials(Model $result)
+    {
+        if (!$result->hasKey('Credentials')) {
+            throw new InvalidArgumentException('The modeled result provided contained no credentials.');
+        }
+
+        return new Credentials(
+            $result->getPath('Credentials/AccessKeyId'),
+            $result->getPath('Credentials/SecretAccessKey'),
+            $result->getPath('Credentials/SessionToken'),
+            $result->getPath('Credentials/Expiration')
+        );
     }
 }
