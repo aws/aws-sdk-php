@@ -16,6 +16,7 @@
 
 namespace Aws\S3;
 
+use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
@@ -33,6 +34,7 @@ use Aws\S3\Sync\UploadSyncBuilder;
 use Guzzle\Common\Collection;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Iterator\FilterIterator;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
@@ -571,43 +573,41 @@ class S3Client extends AbstractClient
     }
 
     /**
-     * Downloads all objects in the virtual directory designated by the keyPrefix given to the destination
-     * directory given.
-     *
-     * @param string $destinationDirectory The directory to place downloaded files. Subdirectories will be created as
-     *                                     necessary.
-     * @param string $bucket               The bucket containing the virtual directory
-     * @param string $keyPrefix            The key prefix for the virtual directory, or null for the entire bucket
-     */
-    public function downloadDirectory($destinationDirectory, $bucket, $keyPrefix = null)
-    {
-
-    }
-
-    /**
      * Deletes objects from Amazon S3 that match the result of a ListObjects operation. For example, this allows you
      * to do things like delete all objects that match a specific key prefix.
      *
-     * @param string                    $bucket      Bucket that contains the object keys
-     * @param array|AwsResourceIterator $keyCriteria Pass an iterator to delete the object keys of an iterator, or pass
-     *                                               in an array of parameters that will be used to create a ListObjects
-     *                                               operation.
-     * @param array                     $options     Options used when deleting the object:
+     * @param string $bucket  Bucket that contains the object keys
+     * @param string $prefix  Optionally delete only objects under this key prefix
+     * @param string $regex   Delete only objects that match this regex
+     * @param array  $options Options used when deleting the object:
      *     - before_delete: Callback to invoke before each delete. The callback will receive a
      *       Guzzle\Common\Event object with context.
      *
      * @see Aws\S3\S3Client::listObjects
      * @see Aws\S3\Model\ClearBucket For more options or customization
      * @return int Returns the number of deleted keys
+     * @throws RuntimeException if no prefix and no regex is given
      */
-    public function deleteMatchingObjects($bucket, $keyCriteria, array $options = array())
+    public function deleteMatchingObjects($bucket, $prefix = '', $regex = '', array $options = array())
     {
-        if (is_array($keyCriteria)) {
-            $keyCriteria = $this->getIterator('ListObjects', $keyCriteria);
+        if (!$prefix && !$regex) {
+            throw new RuntimeException('A prefix or regex is required. Use S3Client::clearBucket() if you want to '
+                . 'delete the contents of the entire bucket.');
         }
 
         $clear = new ClearBucket($this, $bucket);
-        $clear->setIterator($keyCriteria);
+        $iterator = $this->client->getIterator('ListObjectVersions', array(
+            'Bucket' => $bucket,
+            'Prefix' => $prefix
+        ));
+
+        if ($regex) {
+            $iterator = new FilterIterator($iterator, function ($current) use ($regex) {
+                return preg_match($regex, $current['Key']);
+            });
+        }
+
+        $clear->setIterator($iterator);
         if (isset($options['before_delete'])) {
             $clear->getEventDispatcher()->addListener(ClearBucket::BEFORE_CLEAR, $options['before_delete']);
         }

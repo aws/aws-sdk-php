@@ -113,11 +113,11 @@ class ClearBucket extends AbstractHasDispatcher
      * only specific keys from a bucket (e.g. keys that match a certain prefix or delimiter, or perhaps keys that
      * pass through a filtered, decorated iterator).
      *
-     * @param AwsResourceIterator $iterator Iterator used to yield the keys to be deleted
+     * @param \Iterator $iterator Iterator used to yield the keys to be deleted
      *
      * @return self
      */
-    public function setIterator(AwsResourceIterator $iterator)
+    public function setIterator(\Iterator $iterator)
     {
         $this->iterator = $iterator;
 

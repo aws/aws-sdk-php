@@ -29,4 +29,11 @@ interface FilenameObjectKeyProviderInterface
      * @return string
      */
     public function generateKey($filename);
+
+    /**
+     * Get the key prefix used by the key provider
+     *
+     * @return string Returns an empty string or the key prefix
+     */
+    public function getPrefix();
 }
