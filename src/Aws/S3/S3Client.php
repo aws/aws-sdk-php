@@ -28,6 +28,8 @@ use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
+use Aws\S3\Sync\UploadSync;
+use Aws\S3\Sync\UploadSyncBuilder;
 use Guzzle\Common\Collection;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
@@ -480,9 +482,9 @@ class S3Client extends AbstractClient
      *
      * @param string $bucket  Bucket to upload the object
      * @param string $key     Key of the object
-     * @param mixed  $data    Object data to upload. Can be a Guzzle\Http\EntityBodyInterface, stream resource, or
+     * @param mixed  $body    Object data to upload. Can be a Guzzle\Http\EntityBodyInterface, stream resource, or
      *                        string of data to upload.
-     * @param string $acl     Canned ACL to apply to the object
+     * @param string $acl     ACL to apply to the object
      * @param array  $options Custom options used when executing commands:
      *     - object_parameters: Custom parameters to use with the upload. The parameters must map to a PutObject
      *       or InitiateMultipartUpload operation parameters.
@@ -494,47 +496,38 @@ class S3Client extends AbstractClient
      * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more options and customization
      * @return \Guzzle\Service\Resource\Model Returns the modeled result of the performed operation
      */
-    public function upload($bucket, $key, $data, $acl = 'private', array $options = array())
+    public function upload($bucket, $key, $body, $acl = 'private', array $options = array())
     {
-        // Extract configuration options
-        $minPartSize = isset($options['min_part_size']) ? $options['min_part_size'] : AbstractMulti::MIN_PART_SIZE;
-        $params = isset($options['object_parameters']) ? $options['object_parameters'] : array();
-        $concurrency = isset($options['concurrency']) ? $options['concurrency'] : 3;
-        $data = EntityBody::factory($data);
-        $params['ACL'] = $acl;
+        $options = Collection::fromConfig(array_change_key_case($options), array(
+            'min_part_size'     => AbstractMulti::MIN_PART_SIZE,
+            'object_parameters' => array(),
+            'concurrency'       => 3
+        ));
 
-        // Perform a simple PutObject operation
-        if (!$data->getSize() || $data->getSize() < $minPartSize) {
+        $body = EntityBody::factory($body);
+        if ($body->getSize() >= $options['min_part_size']) {
+            // Perform a multipart upload if the file is large enough
+            return UploadBuilder::newInstance()
+                ->setBucket($bucket)
+                ->setKey($key)
+                ->setMinPartSize($options['min_part_size'])
+                ->setConcurrency($options['concurrency'])
+                ->setClient($this)
+                ->setSource($body)
+                ->setTransferOptions($options->toArray())
+                ->beforeUpload($options['before_upload'])
+                ->addOptions($options['object_parameters'])
+                ->build()
+                ->upload();
+        } else {
+            // Perform a simple PutObject operation
             return $this->putObject(array(
                 'Bucket' => $bucket,
                 'Key'    => $key,
-                'Body'   => $data
-            ) + $params);
+                'Body'   => $body,
+                'ACL'    => $acl
+            ) + $options['object_parameters']);
         }
-
-        // The size of the object is greater than our min part size, so create a multipart upload
-        $upload = UploadBuilder::newInstance()
-            ->setBucket($bucket)
-            ->setKey($key)
-            ->setMinPartSize($minPartSize)
-            ->setConcurrency($concurrency ?: 3)
-            ->setClient($this)
-            ->setSource($data);
-
-        // Set any custom options used when initiating the upload
-        foreach ($params as $key => $value) {
-            $upload->setOption($key, $value);
-        }
-
-        $transfer = $upload->build();
-        if (isset($options['before_upload'])) {
-            $transfer->getEventDispatcher()->addListener(
-                AbstractTransfer::BEFORE_PART_UPLOAD,
-                $options['before_upload']
-            );
-        }
-
-        return $transfer->upload();
     }
 
     /**
@@ -544,18 +537,15 @@ class S3Client extends AbstractClient
      * @param string $bucket                    Name of the bucket
      * @param string $virtualDirectoryKeyPrefix Key prefix to add to each upload
      * @param array  $options                   Upload options
-     *     - concurrency: Maximum number of parallel uploads
-     *     - put_object_parameters: Array of parameters to use with each PutObject operation performed during the
-     *       uploads
+     *     - object_parameters: Array of parameters to use with each PutObject operation performed during the uploads
      *     - base_dir: Base directory to remove from each object key
      *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
+     *     - concurrency: Maximum number of parallel uploads (defaults to 3)
      *     - before_upload: Callback to invoke before each upload. The callback will receive a
      *       Guzzle\Common\Event object with context.
-     *     - after_upload: Callback to invoke after each upload. The callback will receive a
-     *       Guzzle\Common\Event object with context.
+     *     - debug: Set to true to enable debug mode to print information about each upload
      *
      * @see Aws\S3\S3Sync\S3Sync for more options and customization
-     * @return self
      */
     public function uploadDirectory(
         $directory,
@@ -563,7 +553,28 @@ class S3Client extends AbstractClient
         $virtualDirectoryKeyPrefix = null,
         array $options = array()
     ) {
+        $options = Collection::fromConfig($options, array(
+            'concurrency'       => 3,
+            'object_parameters' => array(),
+            'base_dir'          => $directory
+        ));
 
+        $uploader = UploadSyncBuilder::getInstance()
+            ->uploadFromDirectory($directory)
+            ->setBucket($bucket)
+            ->setKeyPrefix($virtualDirectoryKeyPrefix)
+            ->setConcurrency($options['concurrency'])
+            ->setBaseDir($options['base_dir'])
+            ->disableCheck($options['force'])
+            ->setPutObjectParams($options['object_parameters'])
+            ->enableDebugOutput($options['debug'])
+            ->build();
+
+        if ($options['before_upload']) {
+            $uploader->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, $options['before_upload']);
+        }
+
+        $uploader->transfer();
     }
 
     /**
@@ -574,8 +585,6 @@ class S3Client extends AbstractClient
      *                                     necessary.
      * @param string $bucket               The bucket containing the virtual directory
      * @param string $keyPrefix            The key prefix for the virtual directory, or null for the entire bucket
-     *
-     * @return self
      */
     public function downloadDirectory($destinationDirectory, $bucket, $keyPrefix = null)
     {
@@ -583,22 +592,34 @@ class S3Client extends AbstractClient
     }
 
     /**
-     * Deletes objects from Amazon S3 that match the result of an iterator or ListObjects criteria.
+     * Deletes objects from Amazon S3 that match the result of a ListObjects operation. For example, this allows you
+     * to do things like delete all objects that match a specific key prefix.
      *
-     * @param array|AwsResourceIterator $criteria Pass an iterator to delete the object keys of an iterator, or pass
-     *                                            in an array of parameters that will be used to create a ListObjects
-     *                                            operation.
-     * @param array                     $options  Options used when deleting the object:
+     * @param string                    $bucket      Bucket that contains the object keys
+     * @param array|AwsResourceIterator $keyCriteria Pass an iterator to delete the object keys of an iterator, or pass
+     *                                               in an array of parameters that will be used to create a ListObjects
+     *                                               operation.
+     * @param array                     $options     Options used when deleting the object:
      *     - before_delete: Callback to invoke before each delete. The callback will receive a
      *       Guzzle\Common\Event object with context.
      *
      * @see Aws\S3\S3Client::listObjects
      * @see Aws\S3\Model\ClearBucket For more options or customization
-     * @return self
+     * @return int Returns the number of deleted keys
      */
-    public function deleteMatchingObjects($criteria, array $options = array())
+    public function deleteMatchingObjects($bucket, $keyCriteria, array $options = array())
     {
+        if (is_array($keyCriteria)) {
+            $keyCriteria = $this->getIterator('ListObjects', $keyCriteria);
+        }
 
+        $clear = new ClearBucket($this, $bucket);
+        $clear->setIterator($keyCriteria);
+        if (isset($options['before_delete'])) {
+            $clear->getEventDispatcher()->addListener(ClearBucket::BEFORE_CLEAR, $options['before_delete']);
+        }
+
+        return $clear->clear();
     }
 
     /**

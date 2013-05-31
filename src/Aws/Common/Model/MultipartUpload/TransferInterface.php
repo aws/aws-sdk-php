@@ -53,4 +53,14 @@ interface TransferInterface extends HasDispatcherInterface
      * @return TransferStateInterface
      */
     public function stop();
+
+    /**
+     * Set an option on the transfer object
+     *
+     * @param string $option Option to set
+     * @param mixed  $value  The value to set
+     *
+     * @return self
+     */
+    public function setOption($option, $value);
 }

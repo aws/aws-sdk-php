@@ -149,6 +149,21 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     }
 
     /**
+     * Set an option on the transfer
+     *
+     * @param string $option Name of the option
+     * @param mixed  $value  Value to set
+     *
+     * @return self
+     */
+    public function setOption($option, $value)
+    {
+        $this->options[$option] = $value;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      * @throws MultipartUploadException when an error is encountered. Use getLastException() to get more information.
      * @throws RuntimeException         when attempting to upload an aborted transfer

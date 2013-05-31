@@ -16,11 +16,11 @@
 
 namespace Aws\S3\Model\MultipartUpload;
 
-use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\S3\Model\Acp;
+use Guzzle\Common\Collection;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -57,6 +57,16 @@ class UploadBuilder extends AbstractUploadBuilder
      * @var array Array of initiate command options
      */
     protected $commandOptions = array();
+
+    /**
+     * @var array Array of transfer options
+     */
+    protected $transferOptions = array();
+
+    /**
+     * @var Callable Function to invoke before each multipart upload
+     */
+    protected $beforeUploadListener;
 
     /**
      * Set the bucket to upload the object to
@@ -185,6 +195,50 @@ class UploadBuilder extends AbstractUploadBuilder
     }
 
     /**
+     * Add an array of options to pass to the initial CreateMultipartUpload operation
+     *
+     * @param array $options Array of CreateMultipartUpload operation parameters
+     *
+     * @return self
+     */
+    public function addOptions(array $options)
+    {
+        $this->commandOptions = array_replace($this->commandOptions, $options);
+
+        return $this;
+    }
+
+    /**
+     * Set an array of transfer options to apply to the upload transfer object
+     *
+     * @param array $options Transfer options
+     *
+     * @return self
+     */
+    public function setTransferOptions(array $options)
+    {
+        $this->transferOptions = $options;
+
+        return $this;
+    }
+
+    /**
+     * Set a callable function or closure to add a listener before each multipart part is uploaded. This function will
+     * recieve a {@see \Guzzle\Common\Event} object that can be used like an associative array. The keys available to
+     * the event object include: 'transfer', 'source', 'options', 'client', 'part_size', 'state', and 'command'
+     *
+     * @param mixed $callback Callable to invoke before each upload
+     *
+     * @return self
+     */
+    public function beforeUpload($callback)
+    {
+        $this->beforeUploadListener = $callback;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      * @throws InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
      * @throws InvalidArgumentException when missing required properties (bucket, key, client, source)
@@ -222,9 +276,22 @@ class UploadBuilder extends AbstractUploadBuilder
             'concurrency'   => $this->concurrency
         );
 
-        return $this->concurrency > 1
+        $transfer = $this->concurrency > 1
             ? new ParallelTransfer($this->client, $this->state, $this->source, $options)
             : new SerialTransfer($this->client, $this->state, $this->source, $options);
+
+        foreach ($this->transferOptions as $key => $value) {
+            $transfer->setOption($key, $value);
+        }
+
+        if ($this->beforeUploadListener) {
+            $transfer->getEventDispatcher()->addListener(
+                AbstractTransfer::BEFORE_PART_UPLOAD,
+                $this->beforeUploadListener
+            );
+        }
+
+        return $transfer;
     }
 
     /**

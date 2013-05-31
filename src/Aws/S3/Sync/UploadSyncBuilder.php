@@ -1,12 +1,29 @@
 <?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
 
 namespace Aws\S3\Sync;
 
+use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use \FilesystemIterator as FI;
+use Aws\Common\Exception\UnexpectedValueException;
 use Aws\S3\S3Client;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\Event;
 use Guzzle\Iterator\FilterIterator;
+use Guzzle\Service\Command\CommandInterface;
 
 class UploadSyncBuilder
 {
@@ -41,9 +58,9 @@ class UploadSyncBuilder
     protected $computeMd5 = true;
 
     /**
-     * @var array Extra headers to apply to each upload
+     * @var array Custom parameters to add to each PutObject operation
      */
-    protected $customHeaders = array();
+    protected $params = array();
 
     /**
      * @var FilenameObjectKeyProviderInterface Key provided used to translate filenames to object keys
@@ -69,6 +86,11 @@ class UploadSyncBuilder
      * @var bool Whether or not to only upload modified or new files
      */
     protected $onlyNewOrModified = true;
+
+    /**
+     * @var bool Whether or not debug output is enable
+     */
+    protected $debug;
 
     /**
      * Get an instance of a builder object
@@ -256,15 +278,15 @@ class UploadSyncBuilder
     }
 
     /**
-     * Specify an array of custom HTTP headers to add to each uploaded object
+     * Specify an array of PutObject operation parameters to apply to each upload
      *
-     * @param array $headers Associative array of HTTP headers
+     * @param array $params Associative array of PutObject paramters
      *
      * @return self
      */
-    public function setCustomHeaders(array $headers)
+    public function setPutObjectParams(array $params)
     {
-        $this->customHeaders = $headers;
+        $this->params = $params;
 
         return $this;
     }
@@ -315,10 +337,23 @@ class UploadSyncBuilder
         return $this;
     }
 
+    /**
+     * Enable debug mode
+     *
+     * @param bool $enabled Set to true or false to enable or disable debug output
+     *
+     * @return self
+     */
+    public function enableDebugOutput($enabled = true)
+    {
+        $this->debug = $enabled;
+
+        return $this;
+    }
+
     public function build()
     {
         $this->validateRequirements();
-
         $this->fileIterator = $this->filterIterator($this->fileIterator);
 
         if (!$this->keyProvider) {
@@ -338,35 +373,20 @@ class UploadSyncBuilder
             );
         }
 
-        $sync = new UploadSync(
-            $this->client,
-            $this->bucket,
-            $this->fileIterator,
-            $this->keyProvider
-        );
-
+        $sync = new UploadSync($this->client, $this->bucket, $this->fileIterator, $this->keyProvider);
         $sync->setConcurrency($this->concurrency);
-
-        if ($this->computeMd5) {
-            $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) {
-                $e['command']->set('ContentMD5', md5_file($e['file']));
-            });
-        }
+        $this->addMd5Listener($sync);
 
         if ($acp = $this->acp) {
-            $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($acp) {
-                if (is_string($acp)) {
-                    $e['command']->set('ACL', $acp);
-                } else {
-                    $e['command']->set('ACP', $acp);
-                }
-            });
+            $this->addAcpListener($sync);
         }
 
-        if ($headers = $this->customHeaders) {
-            $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($headers) {
-                $e['command']['command.headers'] = $headers + $e['command']['command.headers'];
-            });
+        if ($this->params) {
+            $this->addCustomParamListener($sync);
+        }
+
+        if ($this->debug) {
+            $this->addDebugListener($sync);
         }
 
         return $sync;
@@ -421,5 +441,86 @@ class UploadSyncBuilder
         $f->rewind();
 
         return $f;
+    }
+
+    /**
+     * Add the custom param listener to a transfer object
+     *
+     * @param UploadSync $sync
+     */
+    private function addCustomParamListener(UploadSync $sync)
+    {
+        $params = $this->params;
+        $sync->getEventDispatcher()->addListener(
+            UploadSync::BEFORE_UPLOAD_EVENT,
+            function (Event $e) use ($params) {
+                if ($e['command'] instanceof CommandInterface) {
+                    $e['command']->overwriteWith($params);
+                } else {
+                    // Multipart upload transfer object
+                    foreach ($params as $k => $v) {
+                        $e['command']->setOption($k, $v);
+                    }
+                }
+            }
+        );
+    }
+
+    /**
+     * Add a listener to an UploadSync object to set an ACL or ACP
+     *
+     * @param UploadSync $sync
+     */
+    private function addAcpListener(UploadSync $sync)
+    {
+        $acp = $this->acp;
+        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($acp) {
+            $name = is_string($acp) ? 'ACL' : 'ACP';
+            if ($e['command'] instanceof CommandInterface) {
+                $command = $e['command'];
+                $command[$name] = $acp;
+            } else {
+                // Multipart upload transfer object
+                $e['command']->setOption($name, $acp);
+            }
+        });
+    }
+
+    /**
+     * Add a listener to an UploadSync object to set or disable MD5 validation
+     *
+     * @param UploadSync $sync
+     */
+    private function addMd5Listener(UploadSync $sync)
+    {
+        $compute = $this->computeMd5;
+        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) use ($compute) {
+            if ($e['command'] instanceof CommandInterface) {
+                $command = $e['command'];
+                $command['ContentMD5'] = $compute ? md5_file($e['file']) : false;
+            } else {
+                // Multipart upload transfer object
+                $e['command']->setOption('part_md5', $compute);
+            }
+        });
+    }
+
+    /**
+     * Add a listener to echo debug output while uploading
+     *
+     * @param UploadSync $sync
+     */
+    private function addDebugListener(UploadSync $sync)
+    {
+        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) {
+            if ($e['command'] instanceof CommandInterface) {
+                echo "Uploading " . $e['command']->get('Key') . ' (' . $e['command']['Body']->getSize() . " bytes)\n";
+            } else {
+                $e['command']->getEventDispatcher()->addListener(AbstractTransfer::BEFORE_PART_UPLOAD, function ($e) {
+                    echo "Multipart upload {$e['Key']}, part {$e['PartNumber']} ("
+                        . $e['Body']->getSize() . " bytes)\n";
+                });
+            }
+        });
     }
 }
