@@ -15,6 +15,7 @@
  */
 
 return array(
+    'class' => 'Aws\Common\Aws',
     'services' => array(
 
         'default_settings' => array(
