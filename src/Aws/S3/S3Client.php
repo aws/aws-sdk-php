@@ -43,7 +43,6 @@ use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Command\Factory\CompositeFactory;
-
 use Aws\S3\Model\MultipartUpload\UploadBuilder;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
@@ -556,16 +555,18 @@ class S3Client extends AbstractClient
         $options = Collection::fromConfig($options, array(
             'concurrency'       => 3,
             'object_parameters' => array(),
-            'base_dir'          => $directory
+            'base_dir'          => $directory,
+            'force'             => false
         ));
 
         $uploader = UploadSyncBuilder::getInstance()
             ->uploadFromDirectory($directory)
+            ->setClient($this)
             ->setBucket($bucket)
             ->setKeyPrefix($virtualDirectoryKeyPrefix)
             ->setConcurrency($options['concurrency'])
             ->setBaseDir($options['base_dir'])
-            ->disableCheck($options['force'])
+            ->forceUploads($options['force'])
             ->setPutObjectParams($options['object_parameters'])
             ->enableDebugOutput($options['debug'])
             ->build();

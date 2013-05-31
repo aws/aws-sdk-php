@@ -177,7 +177,7 @@ class UploadSync extends AbstractHasDispatcher
         return $this->client->getCommand('PutObject', array(
             'Bucket' => $this->bucket,
             'Key'    => $key,
-            'Body'   => $resource
+            'Body'   => $body
         ));
     }
 }

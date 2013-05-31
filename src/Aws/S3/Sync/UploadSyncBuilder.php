@@ -85,7 +85,7 @@ class UploadSyncBuilder
     /**
      * @var bool Whether or not to only upload modified or new files
      */
-    protected $onlyNewOrModified = true;
+    protected $forcingUploads = false;
 
     /**
      * @var bool Whether or not debug output is enable
@@ -324,15 +324,15 @@ class UploadSyncBuilder
     }
 
     /**
-     * Specify whether or not to upload only modified or new files to Amazon S3
+     * Set to true to force uploads even if a file exists on Amazon S3 and is the same as the local file
      *
-     * @param bool $onlyModifiedOrNew Set to true to only upload modified or new files, false to upload all files
+     * @param bool $force Set to true to upload all files and bypass checking if it exists first
      *
      * @return self
      */
-    public function disableCheck($onlyModifiedOrNew = true)
+    public function forceUploads($force = false)
     {
-        $this->onlyNewOrModified = $onlyModifiedOrNew;
+        $this->forcingUploads = (bool) $force;
 
         return $this;
     }
@@ -364,7 +364,7 @@ class UploadSyncBuilder
             );
         }
 
-        if ($this->onlyNewOrModified) {
+        if (!$this->forcingUploads) {
             $this->fileIterator = new ChangedFilesIterator(
                 $this->fileIterator,
                 $this->client,
@@ -513,14 +513,33 @@ class UploadSyncBuilder
     private function addDebugListener(UploadSync $sync)
     {
         $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, function (Event $e) {
-            if ($e['command'] instanceof CommandInterface) {
-                echo "Uploading " . $e['command']->get('Key') . ' (' . $e['command']['Body']->getSize() . " bytes)\n";
-            } else {
-                $e['command']->getEventDispatcher()->addListener(AbstractTransfer::BEFORE_PART_UPLOAD, function ($e) {
-                    echo "Multipart upload {$e['Key']}, part {$e['PartNumber']} ("
-                        . $e['Body']->getSize() . " bytes)\n";
-                });
+
+            $c = $e['command'];
+
+            if ($c instanceof CommandInterface) {
+                $uri = $c['Body']->getUri();
+                $size = $c['Body']->getSize();
+                echo "Uploading {$uri} -> {$c['Key']} ({$size} bytes)\n";
+                return;
             }
+
+            // Multipart upload
+            $body = $c->getSource();
+            $totalSize = $body->getSize();
+            $progress = 0;
+            echo "Beginning multipart upload: " . $body->getUri() . ' -> ';
+            echo $c->getState()->getFromId('Key') . " ({$totalSize} bytes)\n";
+
+            $c->getEventDispatcher()->addListener(
+                AbstractTransfer::BEFORE_PART_UPLOAD,
+                function ($e) use (&$progress, $totalSize) {
+                    $command = $e['command'];
+                    $size = $command['Body']->getContentLength();
+                    $percentage = number_format(($progress / $totalSize) * 100, 2);
+                    echo "- Part {$command['PartNumber']} ({$size} bytes, {$percentage}%)\n";
+                    $progress .=  $size;
+                }
+            );
         });
     }
 }
