@@ -44,23 +44,19 @@ class Aws extends ServiceBuilder
      * 4. If you are on Amazon EC2, you can use the default configuration file and not provide any credentials so that
      *    you are using InstanceProfile credentials.
      *
-     * @param array|string|\SimpleXMLElement $config An instantiated SimpleXMLElement containing configuration data, the
-     *                                               full path to an .xml, .php, pr .js|.json file, or when using the
-     *                                               default configuration file, an associative array of data to use as
-     *                                               global parameters to pass to each service as it is instantiated.
-     * @param array $globalParameters                Global parameters to pass to every service as it is instantiated.
+     * @param array|string $config           The full path to an .xml, .php, or .js|.json file, or an associative array
+     *                                       of data to use as global parameters to pass to each service.
+     * @param array        $globalParameters Global parameters to pass to every service as it is instantiated.
      *
      * @return Aws
      */
     public static function factory($config = null, array $globalParameters = array())
     {
         if (!$config) {
-            // If nothing is passed in, then use the default configuration file
-            // with Instance profile credentials
+            // If nothing is passed in, then use the default configuration file with credentials from the environment
             $config = self::getDefaultServiceDefinition();
         } elseif (is_array($config)) {
-            // If an array was passed, then use the default configuration file
-            // with global parameter overrides in the first argument
+            // If an array was passed, then use the default configuration file with parameter overrides
             $globalParameters = $config;
             $config = self::getDefaultServiceDefinition();
         }
