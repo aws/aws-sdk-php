@@ -270,19 +270,15 @@ class UploadBuilder extends AbstractUploadBuilder
             $this->state = $this->initiateMultipartUpload();
         }
 
-        $options = array(
+        $options = array_replace(array(
             'min_part_size' => $this->minPartSize,
             'part_md5'      => (bool) $this->calculatePartMd5,
             'concurrency'   => $this->concurrency
-        );
+        ), $this->transferOptions);
 
         $transfer = $this->concurrency > 1
             ? new ParallelTransfer($this->client, $this->state, $this->source, $options)
             : new SerialTransfer($this->client, $this->state, $this->source, $options);
-
-        foreach ($this->transferOptions as $key => $value) {
-            $transfer->setOption($key, $value);
-        }
 
         if ($this->beforeUploadListener) {
             $transfer->getEventDispatcher()->addListener(

@@ -21,6 +21,7 @@ use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Http\EntityBody;
+use Guzzle\Http\EntityBodyInterface;
 use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Resource\Model;
 
@@ -161,6 +162,16 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
         $this->options[$option] = $value;
 
         return $this;
+    }
+
+    /**
+     * Get the source body of the upload
+     *
+     * @return EntityBodyInterface
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 
     /**
