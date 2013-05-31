@@ -44,8 +44,8 @@ class Aws extends ServiceBuilder
      * 4. If you are on Amazon EC2, you can use the default configuration file and not provide any credentials so that
      *    you are using InstanceProfile credentials.
      *
-     * @param array|string $config           The full path to an .xml, .php, or .js|.json file, or an associative array
-     *                                       of data to use as global parameters to pass to each service.
+     * @param array|string $config           The full path to a .php or .js|.json file, or an associative array of data
+     *                                       to use as global parameters to pass to each service.
      * @param array        $globalParameters Global parameters to pass to every service as it is instantiated.
      *
      * @return Aws
