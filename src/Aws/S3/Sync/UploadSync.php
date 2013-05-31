@@ -16,9 +16,14 @@
 
 namespace Aws\S3\Sync;
 
+use Aws\S3\Model\MultipartUpload\UploadBuilder;
 use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Model\MultipartUpload\TransferInterface;
 use Aws\S3\S3Client;
+use Aws\S3\Command\S3Command;
+use Aws\S3\Model\MultipartUpload\AbstractTransfer;
 use Guzzle\Common\AbstractHasDispatcher;
+use Guzzle\Http\EntityBody;
 use Guzzle\Iterator\ChunkedIterator;
 
 /**
@@ -59,19 +64,21 @@ class UploadSync extends AbstractHasDispatcher
      * @param string    $bucket   Bucket that will contain the objects
      * @param \Iterator $iterator Iterator used to yield {@see \SplFileInfo} objects to upload
      * @param FileNameObjectKeyProviderInterface $keyProvider Object used to convert filenames to object keys
-     *
-     * @return self
+     * @param int       $multipartUploadSize Use a multipart upload when an object size is greater than or equal to
+     *                                       this value
      */
     public function __construct(
         S3Client $client,
         $bucket,
         \Iterator $iterator,
-        FilenameObjectKeyProviderInterface $keyProvider
+        FilenameObjectKeyProviderInterface $keyProvider,
+        $multipartUploadSize = AbstractTransfer::MIN_PART_SIZE
     ) {
         $this->client = $client;
         $this->fileIterator = $iterator;
         $this->bucket = $bucket;
         $this->keyProvider = $keyProvider;
+        $this->multipartUploadSize = $multipartUploadSize;
     }
 
     /**
@@ -107,32 +114,41 @@ class UploadSync extends AbstractHasDispatcher
         $event = array('sync' => $this, 'client' => $this->client);
 
         foreach ($iterator as $files) {
+
             $commands = array();
             foreach ($files as $file) {
                 $command = $this->createUploadCommand($file);
-                // Emit a before upload event for any listeners
                 $event['command'] = $command;
                 $event['file'] = $file;
                 $this->dispatch(self::BEFORE_UPLOAD_EVENT, $event);
-                $commands[] = $command;
+                if ($command instanceof TransferInterface) {
+                    // Upload using a multi-part upload if the file is too large
+                    $command->upload();
+                    $this->dispatch(self::AFTER_UPLOAD_EVENT, $event);
+                } else {
+                    $commands[] = $command;
+                }
             }
-            // Execute the commands in parallel
-            $this->client->execute($commands);
-            // Notify listeners that each command finished
-            unset($event['file']);
-            foreach ($commands as $command) {
-                $event['command'] = $command;
-                $this->dispatch(self::AFTER_UPLOAD_EVENT, $event);
+
+            if ($commands) {
+                // Execute the commands in parallel
+                $this->client->execute($commands);
+                // Notify listeners that each command finished
+                unset($event['file']);
+                foreach ($commands as $command) {
+                    $event['command'] = $command;
+                    $this->dispatch(self::AFTER_UPLOAD_EVENT, $event);
+                }
             }
         }
     }
 
     /**
-     * Create an upload command based on a SplFileInfo object
+     * Create an upload command or multipart upload transfer object based on a SplFileInfo object
      *
      * @param \SplFileInfo $file File object
      *
-     * @return S3Command
+     * @return S3Command|TransferInterface
      * @throws RuntimeException If the file cannot be opened
      */
     protected function createUploadCommand(\SplFileInfo $file)
@@ -142,12 +158,26 @@ class UploadSync extends AbstractHasDispatcher
             throw new RuntimeException("Could not open {$file} for reading");
         }
 
-        $command = $this->client->getCommand('PutObject', array(
+        $key = $this->keyProvider->generateKey($file);
+        $body = EntityBody::factory($resource);
+
+        // Use a multi-part upload if the file is larger than the cutoff size
+        if ($body->getSize() >= $this->multipartUploadSize) {
+            return UploadBuilder::newInstance()
+                ->setBucket($this->bucket)
+                ->setBucket($this->bucket)
+                ->setKey($key)
+                ->setMinPartSize($this->multipartUploadSize)
+                ->setOption('ACL', 'private')
+                ->setClient($this->client)
+                ->setSource($body)
+                ->build();
+        }
+
+        return $this->client->getCommand('PutObject', array(
             'Bucket' => $this->bucket,
-            'Key'    => $this->keyProvider->generateKey($file),
+            'Key'    => $key,
             'Body'   => $resource
         ));
-
-        return $command;
     }
 }

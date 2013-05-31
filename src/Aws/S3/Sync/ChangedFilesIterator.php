@@ -70,7 +70,6 @@ class ChangedFilesIterator extends \FilterIterator
                 'Bucket' => $this->bucket,
                 'Key'    => $this->keyProvider->generateKey((string) $current)
             ));
-
             // Ensure the Content-Length matches and it hasn't been modified since the mtime
             return $current->getSize() != $result['ContentLength'] ||
                 $current->getMTime() > strtotime($result['LastModified']);
