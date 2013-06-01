@@ -45,7 +45,7 @@ class UploadSyncBuilder
     /**
      * @var int Number of files that can be transferred concurrently
      */
-    protected $concurrency = 3;
+    protected $concurrency = 10;
 
     /**
      * @var string|Acp Access control policy to set on each object
