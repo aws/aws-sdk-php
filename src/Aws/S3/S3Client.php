@@ -17,7 +17,6 @@
 namespace Aws\S3;
 
 use Aws\Common\Exception\RuntimeException;
-use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\UploadBodyListener;
@@ -533,7 +532,7 @@ class S3Client extends AbstractClient
      *     - object_parameters: Array of parameters to use with each PutObject operation performed during the uploads
      *     - base_dir: Base directory to remove from each object key
      *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
-     *     - concurrency: Maximum number of parallel uploads (defaults to 3)
+     *     - concurrency: Maximum number of parallel uploads (defaults to 10)
      *     - before_upload: Callback to invoke before each upload. The callback will receive a
      *       Guzzle\Common\Event object with context.
      *     - debug: Set to true to enable debug mode to print information about each upload
@@ -547,7 +546,7 @@ class S3Client extends AbstractClient
         array $options = array()
     ) {
         $options = Collection::fromConfig($options, array(
-            'concurrency'       => 3,
+            'concurrency'       => 10,
             'object_parameters' => array(),
             'base_dir'          => $directory,
             'force'             => false
