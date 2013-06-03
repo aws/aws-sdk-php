@@ -225,7 +225,10 @@ class ClientBuilder
                         new HttpBackoffStrategy(array(500, 503, 509),
                             // Retry failed requests due to transient network or cURL problems
                             new CurlBackoffStrategy(null,
-                                new ExponentialBackoffStrategy()
+                                // Retry requests that failed due to expired credentials
+                                new ExpiredCredentialsChecker($this->exceptionParser,
+                                    new ExponentialBackoffStrategy()
+                                )
                             )
                         )
                     )

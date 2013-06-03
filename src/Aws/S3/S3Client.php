@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\UploadBodyListener;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Client\ExpiredCredentialsChecker;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
@@ -181,6 +182,8 @@ class S3Client extends AbstractClient
      */
     public static function factory($config = array())
     {
+        $exceptionParser = new S3ExceptionParser();
+
         // Configure the custom exponential backoff plugin for retrying S3 specific errors
         if (!isset($config[Options::BACKOFF])) {
             $config[Options::BACKOFF] = new BackoffPlugin(
@@ -188,7 +191,9 @@ class S3Client extends AbstractClient
                     new HttpBackoffStrategy(null,
                         new SocketTimeoutChecker(
                             new CurlBackoffStrategy(null,
-                                new ExponentialBackoffStrategy()
+                                new ExpiredCredentialsChecker($exceptionParser,
+                                    new ExponentialBackoffStrategy()
+                                )
                             )
                         )
                     )
@@ -203,7 +208,7 @@ class S3Client extends AbstractClient
                 Options::VERSION => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-%s.php'
             ))
-            ->setExceptionParser(new S3ExceptionParser())
+            ->setExceptionParser($exceptionParser)
             ->setIteratorsConfig(array(
                 'more_key' => 'IsTruncated',
                 'operations' => array(
