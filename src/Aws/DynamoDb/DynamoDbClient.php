@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\ThrottlingErrorChecker;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
+use Aws\Common\Client\ExpiredCredentialsChecker;
 use Aws\DynamoDb\Model\Attribute;
 use Aws\DynamoDb\Session\SessionHandler;
 use Guzzle\Common\Collection;
@@ -115,8 +116,10 @@ class DynamoDbClient extends AbstractClient
                             new HttpBackoffStrategy(null,
                                 // Retry failed requests due to transient network or cURL problems
                                 new CurlBackoffStrategy(null,
-                                     // Use the custom retry delay method instead of default exponential backoff
-                                     new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
+                                    new ExpiredCredentialsChecker($exceptionParser,
+                                         // Use the custom retry delay method instead of default exponential backoff
+                                         new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
+                                    )
                                 )
                             )
                         )
