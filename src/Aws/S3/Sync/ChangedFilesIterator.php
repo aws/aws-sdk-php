@@ -78,7 +78,7 @@ class ChangedFilesIterator extends \FilterIterator
         }
         unset($this->listedObjects[$key]);
         // Ensure the Content-Length matches and it hasn't been modified since the mtime
-        return $current->getSize() != $data['s'] || $current->getMTime() > strtotime($data['l']);
+        return $current->getSize() != $data[1] || $current->getMTime() > strtotime($data[0]);
     }
 
     /**
@@ -114,7 +114,7 @@ class ChangedFilesIterator extends \FilterIterator
 
         while ($it->valid()) {
             $value = $it->current();
-            $data = array('l' => $value['LastModified'], 's' => (int) $value['Size']);
+            $data = array($value['LastModified'], (int) $value['Size']);
             if ($value['Key'] == $key) {
                 return $data;
             } else {
