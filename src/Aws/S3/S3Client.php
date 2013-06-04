@@ -498,13 +498,13 @@ class S3Client extends AbstractClient
      */
     public function upload($bucket, $key, $body, $acl = 'private', array $options = array())
     {
+        $body = EntityBody::factory($body);
         $options = Collection::fromConfig(array_change_key_case($options), array(
             'min_part_size' => AbstractMulti::MIN_PART_SIZE,
             'params'        => array(),
-            'concurrency'   => 3
+            'concurrency'   => $body->getWrapper() == 'plainfile' ? 3 : 1
         ));
 
-        $body = EntityBody::factory($body);
         if ($body->getSize() < $options['min_part_size']) {
             // Perform a simple PutObject operation
             return $this->putObject(array(

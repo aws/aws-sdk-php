@@ -18,9 +18,11 @@ namespace Aws\Tests\S3;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\S3\S3Client;
+use Guzzle\Http\Message\Response;
 use Guzzle\Http\Url;
 use Guzzle\Http\Message\Request;
 use Guzzle\Plugin\History\HistoryPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\S3\S3Client
@@ -286,21 +288,49 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testUploadsSmallerObjectsUsingPutObject()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
-        $mock = new MockPlugin(array(new Response(200)));
+        $mock = new MockPlugin(array(new Response(206)));
         $client->addSubscriber($mock);
         $history = new HistoryPlugin();
         $client->addSubscriber($history);
-        $result = $client->upload('test', 'key', 'test', 'public', array(
+        $result = $client->upload('test', 'key', 'test', 'public-read', array(
             'params' => array(
                 'Metadata' => array('Foo' => 'Bar')
             )
         ));
-
-
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $this->assertEquals('PutObjectOutput', $result->getStructure()->getName());
+        $this->assertCount(1, $history);
+        $request = $history->getLastRequest();
+        $this->assertEquals('PUT', $request->getMethod());
+        $this->assertEquals('/key', $request->getResource());
+        $this->assertEquals('test.s3.amazonaws.com', $request->getHost());
+        $this->assertEquals('public-read', (string) $request->getHeader('x-amz-acl'));
+        $this->assertEquals('Bar', (string) $request->getHeader('x-amz-meta-Foo'));
+        $this->assertEquals('test', (string) $request->getBody());
     }
 
     public function testUploadsLargerObjectsUsingMultipartUploads()
     {
-
+        $client = $this->getServiceBuilder()->get('s3', array('curl.options' => array(CURLOPT_VERBOSE => true)));
+        $this->setMockResponse($client, array(
+            's3/initiate_multipart_upload',
+            's3/upload_part',
+            's3/upload_part',
+            's3/complete_multipart_upload'
+        ));
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $result = $client->upload('test', 'key', fopen(__FILE__, 'r'), 'public-read', array(
+            'min_part_size' => 4,
+            'params'        => array('Metadata' => array('Foo' => 'Bar'))
+        ));
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $this->assertEquals('CompleteMultipartUploadOutput', $result->getStructure()->getName());
+        $this->assertCount(3, $history);
+        $request = $history->getLastRequest();
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertStringStartsWith('/key?uploadId=', $request->getResource());
+        $this->assertEquals('application/xml', $request->getHeader('Content-Type'));
+        $this->assertContains('<PartNumber>1</PartNumber>', (string) $request->getBody());
     }
 }
