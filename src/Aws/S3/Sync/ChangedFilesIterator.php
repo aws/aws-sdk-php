@@ -82,6 +82,16 @@ class ChangedFilesIterator extends \FilterIterator
     }
 
     /**
+     * Returns an array of the objects found in S3 that were not matched with local files
+     *
+     * @return array
+     */
+    public function getUnmatchedObjects()
+    {
+        return array_keys($this->listedObjects);
+    }
+
+    /**
      * @return \Iterator
      */
     protected function getBucketIterator()

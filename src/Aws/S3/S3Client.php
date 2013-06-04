@@ -603,10 +603,12 @@ class S3Client extends AbstractClient
         }
 
         $clear = new ClearBucket($this, $bucket);
-        $iterator = $this->client->getIterator('ListObjectVersions', array(
-            'Bucket' => $bucket,
-            'Prefix' => $prefix
-        ));
+        $params = array('Bucket' => $bucket);
+        if ($prefix) {
+            $params['Prefix'] = $prefix;
+        }
+
+        $iterator = $this->getIterator('ListObjects', $params);
 
         if ($regex) {
             $iterator = new FilterIterator($iterator, function ($current) use ($regex) {
