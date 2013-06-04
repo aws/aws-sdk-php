@@ -19,6 +19,7 @@ namespace Aws\Tests\S3;
 use Aws\S3\S3Client;
 use Guzzle\Http\Url;
 use Guzzle\Http\Message\Request;
+use Guzzle\Plugin\History\HistoryPlugin;
 
 /**
  * @covers Aws\S3\S3Client
@@ -228,5 +229,37 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         } else {
             $this->assertEquals($expectedUrl, $actualUrl);
         }
+    }
+
+    public function testDeletesMatchingObjects()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+
+        $this->setMockResponse($client, array(
+            's3/list_objects_page_1',
+            's3/list_objects_page_2',
+            's3/list_objects_page_3',
+            's3/list_objects_page_4',
+            's3/list_objects_page_5',
+            's3/delete_multiple_objects'
+        ));
+
+        $event = null;
+        // Delete objects from the foo bucket under the baz key that are a single lowercase letter
+        $result = $client->deleteMatchingObjects('foo', 'baz', '/(c|f)/', array(
+            'before_delete' => function ($e) use (&$event) {
+                $event = $e;
+            }
+        ));
+
+        $this->assertEquals(2, $result);
+        $this->assertEquals(6, count($history));
+        $this->assertEquals('POST', $history->getLastRequest()->getMethod());
+        $this->assertEquals('/?delete', $history->getLastRequest()->getResource());
+        $this->assertContains('<Key>c</Key>', (string) $history->getLastRequest()->getBody());
+        $this->assertContains('<Key>f</Key>', (string) $history->getLastRequest()->getBody());
+        $this->assertNotContains('<Key>e</Key>', (string) $history->getLastRequest()->getBody());
     }
 }
