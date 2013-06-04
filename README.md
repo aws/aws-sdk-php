@@ -15,7 +15,8 @@ SDK through Composer][docs-installation] or by downloading a single [zip][instal
     * [API Docs][docs-api]
     * [Contribution Guide][docs-contribution]
     * [License][sdk-license]
-* **Support**
+* **Community**
+    * [Blog][sdk-blog]
     * [Forum][sdk-forum]
     * [Issues][sdk-issues]
 
@@ -91,6 +92,7 @@ try {
 [sdk-forum]: https://forums.aws.amazon.com/forum.jspa?forumID=80
 [sdk-issues]: https://github.com/aws/aws-sdk-php/issues
 [sdk-license]: http://aws.amazon.com/apache2.0/
+[sdk-blog]: http://blogs.aws.amazon.com/php
 
 [install-packagist]: https://packagist.org/packages/aws/aws-sdk-php
 [install-phar]: http://pear.amazonwebservices.com/get/aws.phar
