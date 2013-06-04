@@ -478,7 +478,7 @@ class S3Client extends AbstractClient
      *                        string of data to upload.
      * @param string $acl     ACL to apply to the object
      * @param array  $options Custom options used when executing commands:
-     *     - object_parameters: Custom parameters to use with the upload. The parameters must map to a PutObject
+     *     - params: Custom parameters to use with the upload. The parameters must map to a PutObject
      *       or InitiateMultipartUpload operation parameters.
      *     - min_part_size: Minimum size to allow for each uploaded part when performing a multipart upload.
      *     - concurrency: Maximum number of concurrent multipart uploads.
@@ -491,35 +491,36 @@ class S3Client extends AbstractClient
     public function upload($bucket, $key, $body, $acl = 'private', array $options = array())
     {
         $options = Collection::fromConfig(array_change_key_case($options), array(
-            'min_part_size'     => AbstractMulti::MIN_PART_SIZE,
-            'object_parameters' => array(),
-            'concurrency'       => 3
+            'min_part_size' => AbstractMulti::MIN_PART_SIZE,
+            'params'        => array(),
+            'concurrency'   => 3
         ));
 
         $body = EntityBody::factory($body);
-        if ($body->getSize() >= $options['min_part_size']) {
-            // Perform a multipart upload if the file is large enough
-            return UploadBuilder::newInstance()
-                ->setBucket($bucket)
-                ->setKey($key)
-                ->setMinPartSize($options['min_part_size'])
-                ->setConcurrency($options['concurrency'])
-                ->setClient($this)
-                ->setSource($body)
-                ->setTransferOptions($options->toArray())
-                ->beforeUpload($options['before_upload'])
-                ->addOptions($options['object_parameters'])
-                ->build()
-                ->upload();
-        } else {
+        if ($body->getSize() < $options['min_part_size']) {
             // Perform a simple PutObject operation
             return $this->putObject(array(
                 'Bucket' => $bucket,
                 'Key'    => $key,
                 'Body'   => $body,
                 'ACL'    => $acl
-            ) + $options['object_parameters']);
+            ) + $options['params']);
         }
+
+        // Perform a multipart upload if the file is large enough
+        return UploadBuilder::newInstance()
+            ->setBucket($bucket)
+            ->setKey($key)
+            ->setMinPartSize($options['min_part_size'])
+            ->setConcurrency($options['concurrency'])
+            ->setClient($this)
+            ->setSource($body)
+            ->setTransferOptions($options->toArray())
+            ->beforeUpload($options['before_upload'])
+            ->addOptions($options['params'])
+            ->setOption('ACL', $acl)
+            ->build()
+            ->upload();
     }
 
     /**
@@ -529,7 +530,7 @@ class S3Client extends AbstractClient
      * @param string $bucket                    Name of the bucket
      * @param string $virtualDirectoryKeyPrefix Key prefix to add to each upload
      * @param array  $options                   Upload options
-     *     - object_parameters: Array of parameters to use with each PutObject operation performed during the uploads
+     *     - params: Array of parameters to use with each PutObject operation performed during the uploads
      *     - base_dir: Base directory to remove from each object key
      *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
      *     - concurrency: Maximum number of parallel uploads (defaults to 10)
@@ -546,10 +547,10 @@ class S3Client extends AbstractClient
         array $options = array()
     ) {
         $options = Collection::fromConfig($options, array(
-            'concurrency'       => 10,
-            'object_parameters' => array(),
-            'base_dir'          => $directory,
-            'force'             => false
+            'concurrency' => 10,
+            'params'      => array(),
+            'base_dir'    => $directory,
+            'force'       => false
         ));
 
         $uploader = UploadSyncBuilder::getInstance()
@@ -560,7 +561,7 @@ class S3Client extends AbstractClient
             ->setConcurrency($options['concurrency'])
             ->setBaseDir($options['base_dir'])
             ->forceUploads($options['force'])
-            ->setPutObjectParams($options['object_parameters'])
+            ->setPutObjectParams($options['params'])
             ->enableDebugOutput($options['debug'])
             ->build();
 
@@ -590,17 +591,11 @@ class S3Client extends AbstractClient
     public function deleteMatchingObjects($bucket, $prefix = '', $regex = '', array $options = array())
     {
         if (!$prefix && !$regex) {
-            throw new RuntimeException('A prefix or regex is required. Use S3Client::clearBucket() if you want to '
-                . 'delete the contents of the entire bucket.');
+            throw new RuntimeException('A prefix or regex is required, or use S3Client::clearBucket().');
         }
 
         $clear = new ClearBucket($this, $bucket);
-        $params = array('Bucket' => $bucket);
-        if ($prefix) {
-            $params['Prefix'] = $prefix;
-        }
-
-        $iterator = $this->getIterator('ListObjects', $params);
+        $iterator = $this->getIterator('ListObjects', array('Bucket' => $bucket, 'Prefix' => $prefix));
 
         if ($regex) {
             $iterator = new FilterIterator($iterator, function ($current) use ($regex) {
