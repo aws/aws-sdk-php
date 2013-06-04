@@ -231,6 +231,15 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         }
     }
 
+    /**
+     * @expectedException \Aws\Common\Exception\RuntimeException
+     */
+    public function testDeletesMatchingObjectsEnsuresPrefixOrRegex()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $client->deleteMatchingObjects('foo', '', '');
+    }
+
     public function testDeletesMatchingObjects()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
@@ -261,5 +270,6 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertContains('<Key>c</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertContains('<Key>f</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertNotContains('<Key>e</Key>', (string) $history->getLastRequest()->getBody());
+        $this->assertInstanceOf('Guzzle\Common\Event', $event);
     }
 }
