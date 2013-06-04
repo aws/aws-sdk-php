@@ -282,4 +282,25 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertNotContains('<Key>e</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertInstanceOf('Guzzle\Common\Event', $event);
     }
+
+    public function testUploadsSmallerObjectsUsingPutObject()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $mock = new MockPlugin(array(new Response(200)));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $result = $client->upload('test', 'key', 'test', 'public', array(
+            'params' => array(
+                'Metadata' => array('Foo' => 'Bar')
+            )
+        ));
+
+
+    }
+
+    public function testUploadsLargerObjectsUsingMultipartUploads()
+    {
+
+    }
 }
