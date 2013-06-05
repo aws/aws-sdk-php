@@ -77,6 +77,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model restoreDBInstanceFromDBSnapshot(array $args = array()) {@command Rds RestoreDBInstanceFromDBSnapshot}
  * @method Model restoreDBInstanceToPointInTime(array $args = array()) {@command Rds RestoreDBInstanceToPointInTime}
  * @method Model revokeDBSecurityGroupIngress(array $args = array()) {@command Rds RevokeDBSecurityGroupIngress}
+ * @method waitUntilDBInstanceAvailable(array $input) Wait using the DBInstanceAvailable waiter. The input array uses the parameters of the DescribeDBInstances operation and waiter specific settings
+ * @method waitUntilDBInstanceDeleted(array $input) Wait using the DBInstanceDeleted waiter. The input array uses the parameters of the DescribeDBInstances operation and waiter specific settings
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-rds.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Rds.RdsClient.html API docs

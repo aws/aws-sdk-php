@@ -5820,4 +5820,38 @@ return array (
             ),
         ),
     ),
+    'waiters' => array(
+        '__default__' => array(
+            'interval' => 30,
+            'max_attempts' => 60,
+        ),
+        '__DBInstanceState' => array(
+            'operation' => 'DescribeDBInstances',
+            'acceptor.path' => 'DBInstances/*/DBInstanceStatus',
+            'acceptor.type' => 'output',
+        ),
+        'DBInstanceAvailable' => array(
+            'extends' => '__DBInstanceState',
+            'success.value' => 'available',
+            'failure.value' => array(
+                'deleted',
+                'deleting',
+                'failed',
+                'incompatible-restore',
+                'incompatible-parameters',
+                'incompatible-parameters',
+                'incompatible-restore',
+            ),
+        ),
+        'DBInstanceDeleted' => array(
+            'extends' => '__DBInstanceState',
+            'success.value' => 'deleted',
+            'failure.value' => array(
+                'creating',
+                'modifying',
+                'rebooting',
+                'resetting-master-credentials',
+            ),
+        ),
+    ),
 );
