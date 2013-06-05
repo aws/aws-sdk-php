@@ -28,6 +28,7 @@ class AwsTest extends \Guzzle\Tests\GuzzleTestCase
         $builder = Aws::factory();
         $this->assertTrue($builder->offsetExists('dynamodb'));
         $this->assertTrue($builder->offsetExists('sts'));
+        $this->assertArrayHasKey('s3', $builder->getConfig());
     }
 
     public function testTreatsArrayInFirstArgAsGlobalParametersUsingDefaultConfigFile()
@@ -45,5 +46,11 @@ class AwsTest extends \Guzzle\Tests\GuzzleTestCase
     public function testReturnsDefaultConfigPath()
     {
         $this->assertContains('aws-config.php', Aws::getDefaultServiceDefinition());
+    }
+
+    public function testCanEnableFacades()
+    {
+        Aws::factory()->enableFacades();
+        $this->assertTrue(class_exists('DynamoDb'));
     }
 }

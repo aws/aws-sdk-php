@@ -87,4 +87,19 @@ class Aws extends ServiceBuilder
     {
         return $this->builderConfig;
     }
+
+    /**
+     * Enables the facades for the clients defined in the service builder
+     *
+     * @return Aws
+     */
+    public function enableFacades()
+    {
+        $facadeClass = 'Aws\\Common\\Facade\\Facade';
+        if (class_exists($facadeClass)) {
+            $facadeClass::mountFacades($this);
+        }
+
+        return $this;
+    }
 }
