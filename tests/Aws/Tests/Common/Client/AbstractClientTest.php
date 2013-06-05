@@ -174,6 +174,23 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client->waitUntilFoo(array('baz' => 'bar'));
     }
 
+    public function testAllowsMagicIterators()
+    {
+        /** @var $client AbstractClient */
+        $client = $this->getMockBuilder('Aws\Common\Client\AbstractClient')
+            ->setConstructorArgs(array(
+                new Credentials('test', '123'),
+                new SignatureV4(),
+                new Collection()
+            ))
+            ->setMethods(array('getIterator'))
+            ->getMockForAbstractClass();
+        $client->expects($this->once())
+            ->method('getIterator')
+            ->with('Foo', array('baz' => 'bar'));
+        $client->getFooIterator(array('baz' => 'bar'));
+    }
+
     /**
      * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage No regions
