@@ -89,16 +89,16 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __call($method, $args)
     {
-        if (substr($method, 0, 9) == 'waitUntil') {
-            // Allow magic method calls for waiters (e.g. $client->waitUntil<WaiterName>($resource, $options))
-            array_unshift($args, substr($method, 9));
-
-            return call_user_func_array(array($this, 'waitUntil'), $args);
+        if (substr($method, 0, 3) === 'get' && substr($method, -8) === 'Iterator') {
+            // Allow magic method calls for iterators (e.g. $client->get<CommandName>Iterator($params))
+            $commandOptions = isset($args[0]) ? $args[0] : null;
+            $iteratorOptions = isset($args[1]) ? $args[1] : array();
+            return $this->getIterator(substr($method, 3, -8), $commandOptions, $iteratorOptions);
+        } elseif (substr($method, 0, 9) == 'waitUntil') {
+            // Allow magic method calls for waiters (e.g. $client->waitUntil<WaiterName>($params))
+            return $this->waitUntil(substr($method, 9), isset($args[0]) ? $args[0]: array());
         } else {
             return parent::__call(ucfirst($method), $args);
         }
