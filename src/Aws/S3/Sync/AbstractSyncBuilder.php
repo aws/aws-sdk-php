@@ -404,6 +404,6 @@ abstract class AbstractSyncBuilder
         // Use opendir so that we can pass stream context to the iterator
         $dh = opendir($dir, stream_context_create(array('s3' => array('delimiter' => ''))));
 
-        return new OpendirIterator($dh, $dir . '/');
+        return $this->filterIterator(new \NoRewindIterator(new OpendirIterator($dh, $dir . '/')));
     }
 }

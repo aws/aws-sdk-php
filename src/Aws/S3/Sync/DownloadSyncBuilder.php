@@ -18,9 +18,11 @@ namespace Aws\S3\Sync;
 
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
+use Aws\S3\ResumableDownload;
 use Aws\S3\S3Client;
 use Guzzle\Common\Event;
 use Guzzle\Http\EntityBody;
+use Guzzle\Service\Command\CommandInterface;
 
 class DownloadSyncBuilder extends AbstractSyncBuilder
 {
@@ -87,7 +89,7 @@ class DownloadSyncBuilder extends AbstractSyncBuilder
 
     protected function getDefaultSourceConverter()
     {
-        return new KeyConverter('s3://'. $this->bucket . '/' . $this->baseDir, $this->directory, $this->delimiter);
+        return new KeyConverter('s3://'. $this->bucket . '/' . $this->baseDir, $this->directory . DIRECTORY_SEPARATOR, $this->delimiter);
     }
 
     protected function getDefaultTargetConverter()
@@ -103,12 +105,17 @@ class DownloadSyncBuilder extends AbstractSyncBuilder
     protected function addDebugListener(AbstractSync $sync)
     {
         $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) {
-            if ($e['command']['SaveAs'] instanceof EntityBodyInterface) {
-                $uri = $e['command']['SaveAs']->getUri();
-            } else{
-                $uri = $e['command']['SaveAs'];
+            if ($e['command'] instanceof CommandInterface) {
+                $from = $e['command']['Bucket'] . '/' . $e['command']['Key'];
+                $to = $e['command']['SaveAs'] instanceof EntityBodyInterface
+                    ? $e['command']['SaveAs']->getUri()
+                    : $e['command']['SaveAs'];
+                echo "Downloading {$from} -> {$to}\n";
+            } elseif ($e['command'] instanceof ResumableDownload) {
+                $from = $e['command']->getBucket() . '/' . $e['command']->getKey();
+                $to = $e['command']->getFilename();
+                echo "Resuming {$from} -> {$to}\n";
             }
-            echo "Downloading {$e['command']['Bucket']}/{$e['command']['Key']} -> {$uri}\n";
         });
     }
 }

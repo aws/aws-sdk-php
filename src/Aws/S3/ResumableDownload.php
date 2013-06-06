@@ -78,6 +78,36 @@ class ResumableDownload
     }
 
     /**
+     * Get the bucket of the download
+     *
+     * @return string
+     */
+    public function getBucket()
+    {
+        return $this->params['Bucket'];
+    }
+
+    /**
+     * Get the key of the download
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->params['Key'];
+    }
+
+    /**
+     * Get the file to which the contents are downloaded
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->target->getUri();
+    }
+
+    /**
      * Download the remainder of the object from Amazon S3
      *
      * Performs a message integrity check if possible
@@ -114,7 +144,7 @@ class ResumableDownload
      *
      * @return Model
      */
-    protected  function getRemaining()
+    protected function getRemaining()
     {
         $current = $this->target->ftell();
         $targetByte = $this->meta['ContentLength'] - 1;
