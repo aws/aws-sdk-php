@@ -23,12 +23,6 @@ use Aws\S3\Sync\KeyConverter;
  */
 class KeyConverterTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testHasPrefix()
-    {
-        $c = new KeyConverter('/', '/foo', '/');
-        $this->assertEquals('/foo', $c->getPrefix());
-    }
-
     public function testConvertsKeys()
     {
         $c = new KeyConverter('/test/123', '/foo', '|');

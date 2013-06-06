@@ -43,8 +43,8 @@ class UploadSync extends AbstractSync
         $key = $this->options['source_converter']->convert($file);
         $body = EntityBody::factory($resource);
 
-        // Use a multi-part upload if the file is larger than the cutoff size
-        if ($body->getSize() >= $this->options['multipart_upload_size']) {
+        // Use a multi-part upload if the file is larger than the cutoff size and is a regular file
+        if ($body->getWrapper() == 'plainfile' && $body->getSize() >= $this->options['multipart_upload_size']) {
             $transfer = UploadBuilder::newInstance()
                 ->setBucket($this->options['bucket'])
                 ->setBucket($this->options['bucket'])
