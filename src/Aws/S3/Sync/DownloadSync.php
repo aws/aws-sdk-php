@@ -17,6 +17,7 @@
 namespace Aws\S3\Sync;
 
 use Aws\Common\Exception\RuntimeException;
+use Aws\S3\ResumableDownload;
 use Aws\S3\S3Client;
 use Aws\S3\Model\MultipartUpload\AbstractTransfer;
 use Guzzle\Http\EntityBody;
@@ -28,6 +29,7 @@ class DownloadSync extends AbstractSync
 {
     protected function createTransferAction(\SplFileInfo $file)
     {
+        list($bucket, $key) = explode('/', substr($file, 5), 2);
         $filename = '/' . $this->options['source_converter']->convert($file);
         $directory = dirname($filename);
 
@@ -40,10 +42,8 @@ class DownloadSync extends AbstractSync
 
         // Allow a previously interrupted download to resume
         if (file_exists($filename) && $this->options['resumable']) {
-            return function () { echo 'Resume!'; };
+            return new ResumableDownload($this->options['client'], $bucket, $key, $filename);
         }
-
-        list($bucket, $key) = explode('/', substr($file, 5), 2);
 
         return $this->options['client']->getCommand('GetObject', array(
             'Bucket' => $bucket,

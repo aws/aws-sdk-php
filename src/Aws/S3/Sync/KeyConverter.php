@@ -48,8 +48,8 @@ class KeyConverter implements FilenameConverterInterface
         $key = str_replace($this->baseDir, '', $filename);
         // Replace Windows directory separators to become Unix style, and convert that to the custom dir separator
         $key = str_replace('/', $this->delimiter, str_replace('\\', '/', $key));
-        // Add the key prefix
-        $key = $this->prefix . $key;
+        // Add the key prefix and remove double slashes
+        $key = str_replace($this->delimiter . $this->delimiter, $this->delimiter, $this->prefix . $key);
 
         return ltrim($key, $this->delimiter);
     }

@@ -134,12 +134,12 @@ class UploadSyncBuilder extends AbstractSyncBuilder
 
     protected function getDefaultSourceConverter()
     {
-        return new KeyConverter($this->baseDir, $this->keyPrefix, $this->delimiter);
+        return new KeyConverter($this->baseDir, $this->keyPrefix . $this->delimiter, $this->delimiter);
     }
 
     protected function getDefaultTargetConverter()
     {
-        return new KeyConverter('s3://' . $this->bucket, '', DIRECTORY_SEPARATOR);
+        return new KeyConverter('s3://' . $this->bucket . '/', '', DIRECTORY_SEPARATOR);
     }
 
     /**
