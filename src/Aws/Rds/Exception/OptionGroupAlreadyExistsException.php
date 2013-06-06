@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a OptionGroupAlreadyExistsException error is encountered
+ * The option group you are trying to create already exists.
  */
 class OptionGroupAlreadyExistsException extends RdsException {}

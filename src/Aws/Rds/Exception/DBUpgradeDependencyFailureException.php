@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Request would result in user exceeding the allowed number of subnets in a DB subnet Groups.
+ * Exception that occurs when a DBUpgradeDependencyFailureException error is encountered
  */
-class DBSubnetQuotaExceededException extends RdsException {}
+class DBUpgradeDependencyFailureException extends RdsException {}

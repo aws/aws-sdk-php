@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a AuthorizationNotFoundException error is encountered
+ * Specified CIDRIP or EC2 security group is not authorized for the specified DB Security Group.
  */
 class AuthorizationNotFoundException extends RdsException {}

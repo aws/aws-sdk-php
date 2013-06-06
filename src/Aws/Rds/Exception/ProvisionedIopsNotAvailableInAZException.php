@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a ProvisionedIopsNotAvailableInAZException error is encountered
+ * Provisioned IOPS not available in the specified Availability Zone.
  */
 class ProvisionedIopsNotAvailableInAZException extends RdsException {}

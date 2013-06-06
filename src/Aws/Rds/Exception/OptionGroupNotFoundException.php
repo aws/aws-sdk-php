@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a OptionGroupNotFoundException error is encountered
+ * The specified option group could not be found.
  */
 class OptionGroupNotFoundException extends RdsException {}

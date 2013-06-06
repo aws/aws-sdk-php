@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a SubscriptionNotFoundException error is encountered
+ * The subscription name does not exist.
  */
 class SubscriptionNotFoundException extends RdsException {}

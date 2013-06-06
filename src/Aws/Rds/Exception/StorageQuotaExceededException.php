@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a StorageQuotaExceededException error is encountered
+ * Request would result in user exceeding the allowed amount of storage available across all DB Instances.
  */
 class StorageQuotaExceededException extends RdsException {}

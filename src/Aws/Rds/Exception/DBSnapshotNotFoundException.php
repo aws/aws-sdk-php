@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a DBSnapshotNotFoundException error is encountered
+ * DBSnapshotIdentifier does not refer to an existing DB Snapshot.
  */
 class DBSnapshotNotFoundException extends RdsException {}

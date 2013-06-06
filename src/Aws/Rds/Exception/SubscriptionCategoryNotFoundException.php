@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a SubscriptionCategoryNotFoundException error is encountered
+ * The supplied category does not exist.
  */
 class SubscriptionCategoryNotFoundException extends RdsException {}

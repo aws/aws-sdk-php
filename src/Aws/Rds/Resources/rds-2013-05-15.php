@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-02-12',
+    'apiVersion' => '2013-05-15',
     'endpointPrefix' => 'rds',
     'serviceFullName' => 'Amazon Relational Database Service',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -87,7 +87,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -104,9 +104,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The subscription name does not exist.',
                     'class' => 'SubscriptionNotFoundException',
                 ),
                 array(
+                    'reason' => 'The requested source could not be found.',
                     'class' => 'SourceNotFoundException',
                 ),
             ),
@@ -127,11 +129,11 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'ResourceName' => array(
                     'required' => true,
-                    'description' => 'The DB Instance the tags will be added to.',
+                    'description' => 'The DB Instance the tags will be added to. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see Constructing an RDS Amazon Resource Name (ARN).',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -160,9 +162,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -183,7 +187,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -214,15 +218,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the DB Security Group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The specified CIDRIP or EC2 security group is already authorized for the specified DB security group.',
                     'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Database security group authorization quota has been reached.',
                     'class' => 'AuthorizationQuotaExceededException',
                 ),
             ),
@@ -243,7 +251,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SourceDBSnapshotIdentifier' => array(
                     'required' => true,
@@ -260,15 +268,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSnapshotIdentifier is already used by an existing snapshot.',
                     'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the DB Security Snapshot does not allow deletion.',
                     'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Snapshots.',
                     'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
@@ -289,7 +301,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBName' => array(
                     'description' => 'The meaning of this parameter differs according to the database engine you use.',
@@ -433,39 +445,51 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'User already has a DB Instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
+                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'Provisioned IOPS not available in the specified Availability Zone.',
                     'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -486,7 +510,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -540,45 +564,59 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'User already has a DB Instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
+                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'Provisioned IOPS not available in the specified Availability Zone.',
                     'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -599,7 +637,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -622,9 +660,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Parameter Groups.',
                     'class' => 'DBParameterGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'A DB Parameter Group with the same name exists.',
                     'class' => 'DBParameterGroupAlreadyExistsException',
                 ),
             ),
@@ -645,7 +685,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -662,12 +702,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A database security group with the name specified in DBSecurityGroupName already exists.',
                     'class' => 'DBSecurityGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Security Groups.',
                     'class' => 'DBSecurityGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'A DB security group is not allowed for this action.',
                     'class' => 'DBSecurityGroupNotSupportedException',
                 ),
             ),
@@ -688,7 +731,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -705,15 +748,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSnapshotIdentifier is already used by an existing snapshot.',
                     'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Snapshots.',
                     'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
@@ -734,7 +781,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -762,18 +809,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSubnetGroupName is already used by an existing DBSubnetGroup.',
                     'class' => 'DBSubnetGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Subnet Groups.',
                     'class' => 'DBSubnetGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a DB subnet Groups.',
                     'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -794,7 +846,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -842,24 +894,31 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'You have reached the maximum number of event subscriptions.',
                     'class' => 'EventSubscriptionQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The supplied subscription name already exists.',
                     'class' => 'SubscriptionAlreadyExistException',
                 ),
                 array(
+                    'reason' => 'SNS has responded that there is a problem with the SND topic specified.',
                     'class' => 'SNSInvalidTopicException',
                 ),
                 array(
+                    'reason' => 'You do not have permission to publish to the SNS topic ARN.',
                     'class' => 'SNSNoAuthorizationException',
                 ),
                 array(
+                    'reason' => 'The SNS topic ARN does not exist.',
                     'class' => 'SNSTopicArnNotFoundException',
                 ),
                 array(
+                    'reason' => 'The supplied category does not exist.',
                     'class' => 'SubscriptionCategoryNotFoundException',
                 ),
                 array(
+                    'reason' => 'The requested source could not be found.',
                     'class' => 'SourceNotFoundException',
                 ),
             ),
@@ -880,7 +939,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -909,9 +968,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The option group you are trying to create already exists.',
                     'class' => 'OptionGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The quota of 20 option groups was exceeded for this AWS account.',
                     'class' => 'OptionGroupQuotaExceededException',
                 ),
             ),
@@ -932,7 +993,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -954,15 +1015,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier is already used by an existing snapshot.',
                     'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Snapshots.',
                     'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
@@ -983,7 +1048,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -994,9 +1059,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The DB Parameter Group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -1017,7 +1084,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -1028,9 +1095,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the DB Security Group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
@@ -1051,7 +1120,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -1062,9 +1131,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the DB Security Snapshot does not allow deletion.',
                     'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -1085,7 +1156,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1096,12 +1167,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The DB Subnet Group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBSubnetGroupStateException',
                 ),
                 array(
+                    'reason' => 'The DB subnet is not in the available state.',
                     'class' => 'InvalidDBSubnetStateException',
                 ),
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
             ),
@@ -1122,7 +1196,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1133,9 +1207,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The subscription name does not exist.',
                     'class' => 'SubscriptionNotFoundException',
                 ),
                 array(
+                    'reason' => 'This error can occur if someone else is modifying a subscription. You should retry the action.',
                     'class' => 'InvalidEventSubscriptionStateException',
                 ),
             ),
@@ -1156,7 +1232,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1167,9 +1243,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The Option Group is not in the available state.',
                     'class' => 'InvalidOptionGroupStateException',
                 ),
             ),
@@ -1190,7 +1268,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'Engine' => array(
                     'description' => 'The database engine to return.',
@@ -1247,7 +1325,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'description' => 'The user-supplied instance identifier. If this parameter is specified, information from only the specific DB Instance is returned. This parameter isn\'t case sensitive.',
@@ -1267,6 +1345,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -1287,9 +1366,10 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
+                    'required' => true,
                     'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1300,7 +1380,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'FileLastWritten' => array(
-                    'description' => 'Filters the available log files for files written since the specified date.',
+                    'description' => 'Filters the available log files for files written since the specified date, in POSIX timestamp format.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1322,6 +1402,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -1342,7 +1423,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupName' => array(
                     'description' => 'The name of a specific DB Parameter Group to return details for.',
@@ -1362,6 +1443,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -1382,7 +1464,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1408,6 +1490,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -1428,7 +1511,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSecurityGroupName' => array(
                     'description' => 'The name of the DB Security Group to return details for.',
@@ -1448,6 +1531,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
@@ -1468,7 +1552,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'description' => 'A DB Instance Identifier to retrieve the list of DB Snapshots for. Cannot be used in conjunction with DBSnapshotIdentifier. This parameter isn\'t case sensitive.',
@@ -1498,6 +1582,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -1518,7 +1603,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSubnetGroupName' => array(
                     'description' => 'The name of the DB Subnet Group to return details for.',
@@ -1538,6 +1623,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
             ),
@@ -1558,7 +1644,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupFamily' => array(
                     'required' => true,
@@ -1594,7 +1680,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SourceType' => array(
                     'description' => 'The type of source that will be generating the events.',
@@ -1619,7 +1705,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SubscriptionName' => array(
                     'description' => 'The name of the RDS event notification subscription you want to describe.',
@@ -1639,6 +1725,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The subscription name does not exist.',
                     'class' => 'SubscriptionNotFoundException',
                 ),
             ),
@@ -1659,7 +1746,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SourceIdentifier' => array(
                     'description' => 'The identifier of the event source for which events will be returned. If not specified, then all sources are included in the response.',
@@ -1740,7 +1827,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'EngineName' => array(
                     'required' => true,
@@ -1781,7 +1868,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'OptionGroupName' => array(
                     'description' => 'The name of the option group to describe. Cannot be supplied together with EngineName or MajorEngineVersion.',
@@ -1811,6 +1898,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -1831,7 +1919,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'Engine' => array(
                     'required' => true,
@@ -1888,7 +1976,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'ReservedDBInstanceId' => array(
                     'description' => 'The reserved DB Instance identifier filter value. Specify this parameter to show only the reservation that matches the specified reservation ID.',
@@ -1939,6 +2027,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified reserved DB Instance not found.',
                     'class' => 'ReservedDBInstanceNotFoundException',
                 ),
             ),
@@ -1959,7 +2048,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'description' => 'The offering identifier filter value. Specify this parameter to show only the available offering that matches the specified reservation identifier.',
@@ -2005,6 +2094,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedDBInstancesOfferingNotFoundException',
                 ),
             ),
@@ -2025,14 +2115,16 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
+                    'required' => true,
                     'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'LogFileName' => array(
+                    'required' => true,
                     'description' => 'The name of the log file to be downloaded.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -2050,6 +2142,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -2070,20 +2163,22 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'ResourceName' => array(
                     'required' => true,
-                    'description' => 'The DB Instance with tags to be listed.',
+                    'description' => 'The DB Instance with tags to be listed. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see Constructing an RDS Amazon Resource Name (ARN).',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -2104,7 +2199,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2214,37 +2309,51 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'The state of the DB Security Group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'User already has a DB Instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'Provisioned IOPS not available in the specified Availability Zone.',
                     'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
+                ),
+                array(
+                    'class' => 'DBUpgradeDependencyFailureException',
                 ),
             ),
         ),
@@ -2264,7 +2373,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2334,9 +2443,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The DB Parameter Group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBParameterGroupStateException',
                 ),
             ),
@@ -2357,7 +2468,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -2384,18 +2495,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a DB subnet Groups.',
                     'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The DB subnet is already in use in the availability zone.',
                     'class' => 'SubnetAlreadyInUseException',
                 ),
                 array(
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -2416,7 +2532,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -2453,21 +2569,27 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'You have reached the maximum number of event subscriptions.',
                     'class' => 'EventSubscriptionQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The subscription name does not exist.',
                     'class' => 'SubscriptionNotFoundException',
                 ),
                 array(
+                    'reason' => 'SNS has responded that there is a problem with the SND topic specified.',
                     'class' => 'SNSInvalidTopicException',
                 ),
                 array(
+                    'reason' => 'You do not have permission to publish to the SNS topic ARN.',
                     'class' => 'SNSNoAuthorizationException',
                 ),
                 array(
+                    'reason' => 'The SNS topic ARN does not exist.',
                     'class' => 'SNSTopicArnNotFoundException',
                 ),
                 array(
+                    'reason' => 'The supplied category does not exist.',
                     'class' => 'SubscriptionCategoryNotFoundException',
                 ),
             ),
@@ -2488,7 +2610,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -2605,9 +2727,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The Option Group is not in the available state.',
                     'class' => 'InvalidOptionGroupStateException',
                 ),
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -2628,7 +2752,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2649,9 +2773,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -2672,7 +2798,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'required' => true,
@@ -2693,12 +2819,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedDBInstancesOfferingNotFoundException',
                 ),
                 array(
+                    'reason' => 'User already has a reservation with the given identifier.',
                     'class' => 'ReservedDBInstanceAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would exceed the user\'s DB Instance quota.',
                     'class' => 'ReservedDBInstanceQuotaExceededException',
                 ),
             ),
@@ -2709,7 +2838,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
-            'summary' => 'Reboots a previously provisioned RDS instance. This API results in the application of modified DBParameterGroup parameters with ApplyStatus of pending-reboot to the RDS instance. This action is taken as soon as possible, and results in a momentary outage to the RDS instance during which the RDS instance status is set to rebooting. If the RDS instance is configured for MultiAZ, it is possible that the reboot will be conducted through a failover. A DBInstance event is created when the reboot is completed.',
+            'summary' => 'Rebooting a DB instance restarts the database engine service. A reboot also applies to the DB instance any modifications to the associated DB parameter group that were pending. Rebooting a DB instance results in a momentary outage of the instance, during which the DB instance status is set to rebooting. If the RDS instance is configured for MultiAZ, it is possible that the reboot will be conducted through a failover. An Amazon RDS event is created when the reboot is completed.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -2719,7 +2848,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2736,9 +2865,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -2759,7 +2890,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -2776,9 +2907,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The subscription name does not exist.',
                     'class' => 'SubscriptionNotFoundException',
                 ),
                 array(
+                    'reason' => 'The requested source could not be found.',
                     'class' => 'SourceNotFoundException',
                 ),
             ),
@@ -2799,11 +2932,11 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'ResourceName' => array(
                     'required' => true,
-                    'description' => 'The DB Instance the tags will be removed from.',
+                    'description' => 'The DB Instance the tags will be removed from. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see Constructing an RDS Amazon Resource Name (ARN).',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -2821,9 +2954,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -2844,7 +2979,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2919,9 +3054,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The DB Parameter Group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -2942,7 +3079,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -3022,42 +3159,55 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'User already has a DB Instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
+                    'reason' => 'The state of the DB Security Snapshot does not allow deletion.',
                     'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'Cannot restore from vpc backup to non-vpc DB instance.',
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
+                    'reason' => 'Provisioned IOPS not available in the specified Availability Zone.',
                     'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -3078,7 +3228,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'SourceDBInstanceIdentifier' => array(
                     'required' => true,
@@ -3174,45 +3324,59 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'User already has a DB Instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
+                    'reason' => 'The specified DB Instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
+                    'reason' => 'SourceDBInstanceIdentifier refers to a DB Instance with BackupRetentionPeriod equal to 0.',
                     'class' => 'PointInTimeRestoreNotEnabledException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'Cannot restore from vpc backup to non-vpc DB instance.',
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
+                    'reason' => 'Provisioned IOPS not available in the specified Availability Zone.',
                     'class' => 'ProvisionedIopsNotAvailableInAZException',
                 ),
                 array(
+                    'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
                 ),
             ),
@@ -3233,7 +3397,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-02-12',
+                    'default' => '2013-05-15',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -3264,12 +3428,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB Security Group.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the DB Security Group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
             ),
@@ -3666,6 +3833,7 @@ return array (
                                                 'type' => 'string',
                                             ),
                                             'SubnetAvailabilityZone' => array(
+                                                'description' => 'Contains Availability Zone information.',
                                                 'type' => 'object',
                                                 'properties' => array(
                                                     'Name' => array(
@@ -3802,6 +3970,34 @@ return array (
                             'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                             'type' => 'boolean',
                         ),
+                        'StatusInfos' => array(
+                            'description' => 'The status of a Read Replica. If the instance is not a for a read replica, this will be blank.',
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'DBInstanceStatusInfo',
+                                'description' => 'Provides a list of status information for a DB instance.',
+                                'type' => 'object',
+                                'sentAs' => 'DBInstanceStatusInfo',
+                                'properties' => array(
+                                    'StatusType' => array(
+                                        'description' => 'This value is currently "read replication."',
+                                        'type' => 'string',
+                                    ),
+                                    'Normal' => array(
+                                        'description' => 'Boolean value that is true if the instance is operating normally, or false if the instance is in an error state.',
+                                        'type' => 'boolean',
+                                    ),
+                                    'Status' => array(
+                                        'description' => 'Status of the DB instance. For a StatusType of Read Replica, the values can be replicating, error, stopped, or terminated.',
+                                        'type' => 'string',
+                                    ),
+                                    'Message' => array(
+                                        'description' => 'Details of the error if there is an error for the instance. If the instance is not in an error state, this value is blank.',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -3876,6 +4072,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'SubnetAvailabilityZone' => array(
+                                        'description' => 'Contains Availability Zone information.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'Name' => array(
@@ -3945,6 +4142,10 @@ return array (
                                     ),
                                     'Persistent' => array(
                                         'description' => 'Indicate if this option is persistent.',
+                                        'type' => 'boolean',
+                                    ),
+                                    'Permanent' => array(
+                                        'description' => 'Indicate if this option is permanent.',
                                         'type' => 'boolean',
                                     ),
                                     'Port' => array(
@@ -4303,6 +4504,7 @@ return array (
                                                     'type' => 'string',
                                                 ),
                                                 'SubnetAvailabilityZone' => array(
+                                                    'description' => 'Contains Availability Zone information.',
                                                     'type' => 'object',
                                                     'properties' => array(
                                                         'Name' => array(
@@ -4439,6 +4641,34 @@ return array (
                                 'description' => 'Specifies the accessibility options for the DB Instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.',
                                 'type' => 'boolean',
                             ),
+                            'StatusInfos' => array(
+                                'description' => 'The status of a Read Replica. If the instance is not a for a read replica, this will be blank.',
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'DBInstanceStatusInfo',
+                                    'description' => 'Provides a list of status information for a DB instance.',
+                                    'type' => 'object',
+                                    'sentAs' => 'DBInstanceStatusInfo',
+                                    'properties' => array(
+                                        'StatusType' => array(
+                                            'description' => 'This value is currently "read replication."',
+                                            'type' => 'string',
+                                        ),
+                                        'Normal' => array(
+                                            'description' => 'Boolean value that is true if the instance is operating normally, or false if the instance is in an error state.',
+                                            'type' => 'boolean',
+                                        ),
+                                        'Status' => array(
+                                            'description' => 'Status of the DB instance. For a StatusType of Read Replica, the values can be replicating, error, stopped, or terminated.',
+                                            'type' => 'string',
+                                        ),
+                                        'Message' => array(
+                                            'description' => 'Details of the error if there is an error for the instance. If the instance is not in an error state, this value is blank.',
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4463,7 +4693,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'LastWritten' => array(
-                                'description' => 'The date and time that the last log entry was written.',
+                                'description' => 'A POSIX timestamp when the last log entry was written.',
                                 'type' => 'numeric',
                             ),
                             'Size' => array(
@@ -4805,6 +5035,7 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'SubnetAvailabilityZone' => array(
+                                            'description' => 'Contains Availability Zone information.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'Name' => array(
@@ -5061,6 +5292,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'OptionGroupOptions' => array(
+                    'description' => 'List of available option group options.',
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
@@ -5107,7 +5339,11 @@ return array (
                                 ),
                             ),
                             'Persistent' => array(
-                                'description' => 'Specifies whether the option is persistent in an option group.',
+                                'description' => 'A persistent option cannot be removed from the option group once the option group is used, but this option can be removed from the db instance while modifying the related data and assigning another option group without this option.',
+                                'type' => 'boolean',
+                            ),
+                            'Permanent' => array(
+                                'description' => 'A permanent option cannot be removed from the option group once the option group is used, and it cannot be removed from the db instance after assigning an option group with this permanent option.',
                                 'type' => 'boolean',
                             ),
                             'OptionGroupOptionSettings' => array(
@@ -5204,6 +5440,10 @@ return array (
                                         ),
                                         'Persistent' => array(
                                             'description' => 'Indicate if this option is persistent.',
+                                            'type' => 'boolean',
+                                        ),
+                                        'Permanent' => array(
+                                            'description' => 'Indicate if this option is permanent.',
                                             'type' => 'boolean',
                                         ),
                                         'Port' => array(

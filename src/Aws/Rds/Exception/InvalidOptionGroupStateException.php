@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a InvalidOptionGroupStateException error is encountered
+ * The Option Group is not in the available state.
  */
 class InvalidOptionGroupStateException extends RdsException {}

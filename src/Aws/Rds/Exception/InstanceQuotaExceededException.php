@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a InstanceQuotaExceededException error is encountered
+ * Request would result in user exceeding the allowed number of DB Instances.
  */
 class InstanceQuotaExceededException extends RdsException {}

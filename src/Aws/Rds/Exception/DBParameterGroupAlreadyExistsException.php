@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a DBParameterGroupAlreadyExistsException error is encountered
+ * A DB Parameter Group with the same name exists.
  */
 class DBParameterGroupAlreadyExistsException extends RdsException {}

@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a InvalidSubnetException error is encountered
+ * Request subnet is valid, or all subnets are not in common Vpc.
  */
 class InvalidSubnetException extends RdsException {}

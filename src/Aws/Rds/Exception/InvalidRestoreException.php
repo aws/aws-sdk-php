@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a InvalidRestoreException error is encountered
+ * Cannot restore from vpc backup to non-vpc DB instance.
  */
 class InvalidRestoreException extends RdsException {}

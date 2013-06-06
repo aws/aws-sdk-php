@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a SubscriptionAlreadyExistException error is encountered
+ * The supplied subscription name already exists.
  */
 class SubscriptionAlreadyExistException extends RdsException {}

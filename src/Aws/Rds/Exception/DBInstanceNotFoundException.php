@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a DBInstanceNotFoundException error is encountered
+ * DBInstanceIdentifier does not refer to an existing DB Instance.
  */
 class DBInstanceNotFoundException extends RdsException {}

@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a DBSnapshotAlreadyExistsException error is encountered
+ * DBSnapshotIdentifier is already used by an existing snapshot.
  */
 class DBSnapshotAlreadyExistsException extends RdsException {}
