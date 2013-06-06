@@ -301,7 +301,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testUploadsLargerObjectsUsingMultipartUploads()
     {
-        $client = $this->getServiceBuilder()->get('s3', array('curl.options' => array(CURLOPT_VERBOSE => true)));
+        $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array(
             's3/initiate_multipart_upload',
             's3/upload_part',
@@ -322,5 +322,12 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertStringStartsWith('/key?uploadId=', $request->getResource());
         $this->assertEquals('application/xml', $request->getHeader('Content-Type'));
         $this->assertContains('<PartNumber>1</PartNumber>', (string) $request->getBody());
+    }
+
+    public function testUploadsDirectories()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
     }
 }

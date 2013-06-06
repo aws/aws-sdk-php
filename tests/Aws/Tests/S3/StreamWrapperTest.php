@@ -16,8 +16,11 @@
 
 namespace Aws\Tests\S3;
 
+use Aws\Common\Credentials\Credentials;
 use Aws\S3\S3Client;
+use Aws\S3\S3Signature;
 use Aws\S3\StreamWrapper;
+use Guzzle\Common\Collection;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\EntityBody;
 
@@ -427,6 +430,25 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         }
         $this->assertEquals($expected, $files);
         $this->assertEquals(10, count($this->getMockedRequests()));
+
+        closedir($r);
+    }
+
+    public function testCanSetDelimiterStreamContext()
+    {
+        $this->setMockResponse($this->client, array('s3/list_objects_page_5'));
+
+        $c = null;
+        $this->client->getEventDispatcher()->addListener('client.command.create', function ($e) use (&$c) {
+            $c = $e['command'];
+        });
+
+        $dir = 's3://bucket';
+        $r = opendir($dir, stream_context_create(array('s3' => array('delimiter' => ''))));
+
+        $this->assertEquals('bucket', $c['Bucket']);
+        $this->assertEquals('', $c['Delimiter']);
+        $this->assertEquals('', $c['Prefix']);
 
         closedir($r);
     }

@@ -16,120 +16,94 @@
 
 namespace Aws\S3\Sync;
 
-use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\S3Client;
 
 /**
- * Iterator used to filter an internal iterator to only yield files that do not exist in Amazon S3 or have been
- * updated since they were uploaded
+ * Iterator used to filter an internal iterator to only yield files that do not exist in the target iterator or files
+ * that have changed
  */
 class ChangedFilesIterator extends \FilterIterator
 {
-    /**
-     * @var S3Client
-     */
-    protected $client;
+    /** @var \Iterator */
+    protected $sourceIterator;
+
+    /** @var \Iterator */
+    protected $targetIterator;
+
+    /** @var FilenameConverterInterface */
+    protected $sourceConverter;
+
+    /** @var FilenameConverterInterface */
+    protected $targetConverter;
+
+    /** @var array Previously loaded data */
+    protected $cache = array();
 
     /**
-     * @var string Bucket that contains objects to check against
-     */
-    protected $bucket;
-
-    /**
-     * @var FilenameObjectKeyProviderInterface Object used to convert filenames to object keys
-     */
-    protected $keyProvider;
-
-    /**
-     * @var array Previously loaded list object data
-     */
-    protected $listedObjects = array();
-
-    /**
-     * @var \Iterator
-     */
-    protected $bucketIterator;
-
-    /**
-     * @param \Iterator                          $iterator    Iterator to wrap and filter
-     * @param S3Client                           $client      Client used to send requests
-     * @param string                             $bucket      Amazon S3 bucket
-     * @param FilenameObjectKeyProviderInterface $keyProvider Key provider that converts filenames to object keys
+     * @param \Iterator                  $sourceIterator  Iterator to wrap and filter
+     * @param \Iterator                  $targetIterator  Iterator used to compare against the source iterator
+     * @param FilenameConverterInterface $sourceConverter Key converter to convert source to target keys
+     * @param FilenameConverterInterface $targetConverter Key converter to convert target to source keys
      */
     public function __construct(
-        \Iterator $iterator,
-        S3Client $client,
-        $bucket,
-        FilenameObjectKeyProviderInterface $keyProvider
+        \Iterator $sourceIterator,
+        \Iterator $targetIterator,
+        FilenameConverterInterface $sourceConverter,
+        FilenameConverterInterface $targetConverter
     ) {
-        parent::__construct($iterator);
-        $this->client = $client;
-        $this->bucket = $bucket;
-        $this->keyProvider = $keyProvider;
+        parent::__construct($sourceIterator);
+        $this->targetIterator = $targetIterator;
+        $this->sourceConverter = $sourceConverter;
+        $this->targetConverter = $targetConverter;
         $this->rewind();
     }
 
     public function accept()
     {
         $current = $this->current();
-        $key = $this->keyProvider->generateKey((string) $current);
-        if (!($data = $this->getS3Data($key))) {
+        $key = $this->sourceConverter->convert((string) $current);
+        if (!($data = $this->getTargetData($key))) {
             return true;
         }
-        unset($this->listedObjects[$key]);
+        unset($this->cache[$key]);
+
         // Ensure the Content-Length matches and it hasn't been modified since the mtime
-        return $current->getSize() != $data[1] || $current->getMTime() > strtotime($data[0]);
+        return $current->getSize() != $data[1] || $current->getMTime() > $data[0];
     }
 
     /**
-     * Returns an array of the objects found in S3 that were not matched with local files
+     * Returns an array of the files from the target iterator that were not found in the source iterator
      *
      * @return array
      */
-    public function getUnmatchedObjects()
+    public function getUnmatched()
     {
-        return array_keys($this->listedObjects);
+        return array_keys($this->cache);
     }
 
     /**
-     * @return \Iterator
+     * Get key information from the target iterator for a particular filename
+     *
+     * @param string $key Target iterator filename
+     *
+     * @return array|bool Returns an array of data, or false if the key is not in the iterator
      */
-    protected function getBucketIterator()
+    protected function getTargetData($key)
     {
-        if (!$this->bucketIterator) {
-            $this->bucketIterator = $this->client->getIterator('ListObjects', array(
-                'Bucket' => $this->bucket,
-                'Prefix' => $this->keyProvider->getPrefix()
-            ));
-            $this->bucketIterator->rewind();
+        if (isset($this->cache[$key])) {
+            return $this->cache[$key];
         }
 
-        return $this->bucketIterator;
-    }
-
-    /**
-     * Get key information from Amazon S3 either from cache or from a ListObjects iterator
-     *
-     * @param $key Amazon S3 key
-     *
-     * @return array|bool Returns an array of key data, or false if the key is not in S3
-     */
-    protected function getS3Data($key)
-    {
-        if (isset($this->listedObjects[$key])) {
-            return $this->listedObjects[$key];
-        }
-
-        $it = $this->getBucketIterator();
+        $it = $this->targetIterator;
 
         while ($it->valid()) {
             $value = $it->current();
-            $data = array($value['LastModified'], (int) $value['Size']);
-            if ($value['Key'] == $key) {
+            $data = array($value->getMTime(), $value->getSize());
+            $filename = $this->targetConverter->convert((string) $value);
+            if ($filename == $key) {
                 return $data;
-            } else {
-                $this->listedObjects[$value['Key']] = $data;
             }
+            $this->cache[$filename] = $data;
             $it->next();
         }
 

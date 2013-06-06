@@ -17,29 +17,23 @@
 namespace Aws\S3\Sync;
 
 /**
- * Generates Amazon S3 object keys from local filenames
+ * Converts filenames from one system to another
  */
-class FilenameObjectKeyProvider implements FilenameObjectKeyProviderInterface
+class KeyConverter implements FilenameConverterInterface
 {
-    /**
-     * @var string Directory separator for Amazon S3 keys
-     */
+    /** @var string Directory separator for Amazon S3 keys */
     protected $delimiter;
 
-    /**
-     * @var string Prefix to prepend to each Amazon S3 object key
-     */
+    /** @var string Prefix to prepend to each Amazon S3 object key */
     protected $prefix;
 
-    /**
-     * @var string Base directory to remove from each file path before converting to an object key
-     */
+    /** @var string Base directory to remove from each file path before converting to an object key */
     protected $baseDir;
 
     /**
-     * @param string $baseDir   Base directory to remove from each file path before converting to an object key
-     * @param string $prefix    Prefix at prepend to each Amazon S3 object key
-     * @param string $delimiter Directory separator for Amazon S3 keys
+     * @param string $baseDir   Base directory to remove from each converted name
+     * @param string $prefix    Amazon S3 prefix
+     * @param string $delimiter Directory separator used with generated names
      */
     public function __construct($baseDir, $prefix = '', $delimiter = '/')
     {
@@ -48,20 +42,20 @@ class FilenameObjectKeyProvider implements FilenameObjectKeyProviderInterface
         $this->delimiter = $delimiter;
     }
 
-    public function generateKey($filename)
+    public function getPrefix()
     {
-        // Remove the base directory from the key
+        return $this->prefix;
+    }
+
+    public function convert($filename)
+    {
+        // Remove base directory from the key
         $key = str_replace($this->baseDir, '', $filename);
         // Replace Windows directory separators to become Unix style, and convert that to the custom dir separator
         $key = str_replace('/', $this->delimiter, str_replace('\\', '/', $key));
         // Add the key prefix
         $key = $this->prefix . $key;
 
-        return $key;
-    }
-
-    public function getPrefix()
-    {
-        return $this->prefix;
+        return ltrim($key, $this->delimiter);
     }
 }
