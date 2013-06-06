@@ -16,15 +16,15 @@
 
 namespace Aws\S3\Sync;
 
+use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Exception\UnexpectedValueException;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\Common\Model\MultipartUpload\TransferInterface;
 use Aws\S3\S3Client;
-use Aws\Common\Exception\RuntimeException;
-use Aws\Common\Exception\UnexpectedValueException;
 use Guzzle\Common\Event;
 use Guzzle\Common\HasDispatcherInterface;
-use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Iterator\FilterIterator;
+use Guzzle\Service\Command\CommandInterface;
 
 abstract class AbstractSyncBuilder
 {
