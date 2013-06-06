@@ -42,11 +42,6 @@ class KeyConverter implements FilenameConverterInterface
         $this->delimiter = $delimiter;
     }
 
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
     public function convert($filename)
     {
         // Remove base directory from the key
