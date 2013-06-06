@@ -31,39 +31,29 @@ use Guzzle\Iterator\ChunkedIterator;
  */
 class UploadSync extends AbstractHasDispatcher
 {
-    const BEFORE_UPLOAD_EVENT = 's3.sync.before_upload';
-    const AFTER_UPLOAD_EVENT = 's3.sync.after_upload';
+    const BEFORE_TRANSFER = 's3.sync.before_transfer';
+    const AFTER_TRANSFER = 's3.sync.after_transfer';
 
-    /**
-     * @var S3Client Client used to transfer requests
-     */
+    /** @var S3Client Client used to transfer requests */
     protected $client;
 
-    /**
-     * @var string Bucket that will contain the objects
-     */
+    /** @var string Bucket that will contain the objects */
     protected $bucket;
 
-    /**
-     * @var \Iterator Iterator that returns SplFileInfo objects to upload
-     */
+    /** @var \Iterator Iterator that returns SplFileInfo objects to upload */
     protected $fileIterator;
 
-    /**
-     * @var int Number of files that can be transferred concurrently
-     */
+    /** @var int Number of files that can be transferred concurrently */
     protected $concurrency = 3;
 
-    /**
-     * @var FileNameObjectKeyProviderInterface
-     */
-    protected $keyProvider;
+    /** @var FilenameConverterInterface */
+    protected $sourceConverter;
 
     /**
      * @param S3Client  $client   Client used to transfer requests
      * @param string    $bucket   Bucket that will contain the objects
      * @param \Iterator $iterator Iterator used to yield {@see \SplFileInfo} objects to upload
-     * @param FileNameObjectKeyProviderInterface $keyProvider Object used to convert filenames to object keys
+     * @param FilenameConverterInterface $sourceConverter Used to convert filenames to Amazon S3 keys
      * @param int       $multipartUploadSize Use a multipart upload when an object size is greater than or equal to
      *                                       this value
      */
@@ -71,22 +61,19 @@ class UploadSync extends AbstractHasDispatcher
         S3Client $client,
         $bucket,
         \Iterator $iterator,
-        FilenameObjectKeyProviderInterface $keyProvider,
+        FilenameConverterInterface $sourceConverter,
         $multipartUploadSize = AbstractTransfer::MIN_PART_SIZE
     ) {
         $this->client = $client;
         $this->fileIterator = $iterator;
         $this->bucket = $bucket;
-        $this->keyProvider = $keyProvider;
+        $this->sourceConverter = $sourceConverter;
         $this->multipartUploadSize = $multipartUploadSize;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getAllEvents()
     {
-        return array(self::BEFORE_UPLOAD_EVENT, self::AFTER_UPLOAD_EVENT, self::PROGRESS_EVENT);
+        return array(self::BEFORE_TRANSFER, self::AFTER_TRANSFER);
     }
 
     /**
@@ -104,7 +91,7 @@ class UploadSync extends AbstractHasDispatcher
     }
 
     /**
-     * Begin uploading files to Amazon S3
+     * Begin transferring files
      */
     public function transfer()
     {
@@ -120,11 +107,11 @@ class UploadSync extends AbstractHasDispatcher
                 $command = $this->createUploadCommand($file);
                 $event['command'] = $command;
                 $event['file'] = $file;
-                $this->dispatch(self::BEFORE_UPLOAD_EVENT, $event);
+                $this->dispatch(self::BEFORE_TRANSFER, $event);
                 if ($command instanceof TransferInterface) {
                     // Upload using a multi-part upload if the file is too large
                     $command->upload();
-                    $this->dispatch(self::AFTER_UPLOAD_EVENT, $event);
+                    $this->dispatch(self::AFTER_TRANSFER, $event);
                 } else {
                     $commands[] = $command;
                 }
@@ -137,7 +124,7 @@ class UploadSync extends AbstractHasDispatcher
                 unset($event['file']);
                 foreach ($commands as $command) {
                     $event['command'] = $command;
-                    $this->dispatch(self::AFTER_UPLOAD_EVENT, $event);
+                    $this->dispatch(self::AFTER_TRANSFER, $event);
                 }
             }
         }
@@ -158,7 +145,7 @@ class UploadSync extends AbstractHasDispatcher
             throw new RuntimeException("Could not open {$file} for reading");
         }
 
-        $key = $this->keyProvider->generateKey($file);
+        $key = $this->sourceConverter->convert($file);
         $body = EntityBody::factory($resource);
 
         // Use a multi-part upload if the file is larger than the cutoff size

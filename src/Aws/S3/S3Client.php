@@ -534,10 +534,10 @@ class S3Client extends AbstractClient
     /**
      * Recursively uploads all files in a given directory to a given bucket.
      *
-     * @param string $directory                 Full path to a directory to upload
-     * @param string $bucket                    Name of the bucket
-     * @param string $virtualDirectoryKeyPrefix Key prefix to add to each upload
-     * @param array  $options                   Upload options
+     * @param string $directory Full path to a directory to upload
+     * @param string $bucket    Name of the bucket
+     * @param string $keyPrefix Virtual directory key prefix to add to each upload
+     * @param array  $options   Associative array of upload options
      *     - params: Array of parameters to use with each PutObject operation performed during the uploads
      *     - base_dir: Base directory to remove from each object key
      *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
@@ -548,12 +548,8 @@ class S3Client extends AbstractClient
      *
      * @see Aws\S3\S3Sync\S3Sync for more options and customization
      */
-    public function uploadDirectory(
-        $directory,
-        $bucket,
-        $virtualDirectoryKeyPrefix = null,
-        array $options = array()
-    ) {
+    public function uploadDirectory($directory, $bucket, $keyPrefix = null, array $options = array())
+    {
         $options = Collection::fromConfig($options, array(
             'concurrency' => 10,
             'params'      => array(),
@@ -565,11 +561,11 @@ class S3Client extends AbstractClient
             ->uploadFromDirectory($directory)
             ->setClient($this)
             ->setBucket($bucket)
-            ->setKeyPrefix($virtualDirectoryKeyPrefix)
+            ->setKeyPrefix($keyPrefix)
             ->setConcurrency($options['concurrency'])
             ->setBaseDir($options['base_dir'])
-            ->forceUploads($options['force'])
-            ->setPutObjectParams($options['params'])
+            ->force($options['force'])
+            ->setOperationParams($options['params'])
             ->enableDebugOutput($options['debug'])
             ->build();
 

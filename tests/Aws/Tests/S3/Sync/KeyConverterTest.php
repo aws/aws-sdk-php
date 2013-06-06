@@ -14,26 +14,24 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Sync;
+namespace Aws\Tests\S3\Sync;
+
+use Aws\S3\Sync\KeyConverter;
 
 /**
- * Generates Amazon S3 object keys from local filenames
+ * @covers Aws\S3\Sync\KeyConverter
  */
-interface FilenameObjectKeyProviderInterface
+class KeyConverterTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /**
-     * Convert a local filename to an Amazon S3 key
-     *
-     * @param string $filename Name of the local file
-     *
-     * @return string
-     */
-    public function generateKey($filename);
+    public function testHasPrefix()
+    {
+        $c = new KeyConverter('/', '/foo', '/');
+        $this->assertEquals('/foo', $c->getPrefix());
+    }
 
-    /**
-     * Get the key prefix used by the key provider
-     *
-     * @return string Returns an empty string or the key prefix
-     */
-    public function getPrefix();
+    public function testConvertsKeys()
+    {
+        $c = new KeyConverter('/test/123', '/foo', '|');
+        $this->assertEquals('/foo|abc|123', $c->convert('/test/123/abc/123'));
+    }
 }
