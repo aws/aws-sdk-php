@@ -545,8 +545,7 @@ class S3Client extends AbstractClient
         $options = Collection::fromConfig($options, array(
             'concurrency' => 10,
             'params'      => array(),
-            'base_dir'    => $directory,
-            'force'       => false
+            'base_dir'    => $directory
         ));
 
         $uploader = UploadSyncBuilder::getInstance()
