@@ -17,7 +17,6 @@
 namespace Aws\S3\Sync;
 
 use \FilesystemIterator as FI;
-use Aws\S3\Iterator\OpendirIterator;
 use Aws\S3\Model\Acp;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\S3Client;
@@ -113,6 +112,7 @@ class UploadSyncBuilder extends AbstractSyncBuilder
             'bucket' => $this->bucket,
             'iterator' => $this->sourceIterator,
             'source_converter' => $this->sourceConverter,
+            'target_converter' => $this->targetConverter,
             'concurrency' => $this->concurrency
         ));
 
@@ -123,24 +123,13 @@ class UploadSyncBuilder extends AbstractSyncBuilder
         if ($this->params) {
             $this->addCustomParamListener($sync);
         }
-        if ($this->debug) {
-            $this->addDebugListener($sync);
-        }
 
         return $sync;
     }
 
     protected function getTargetIterator()
     {
-        // Ensure that the stream wrapper is registered
-        $this->client->registerStreamWrapper();
-        // Calculate the opendir() bucket and optional key prefix location
-        // Remove the delimiter as it is not needed for this
-        $dir = rtrim('s3://' . $this->bucket . ($this->keyPrefix ? ('/' . $this->keyPrefix) : ''), '/');
-        // Use opendir so that we can pass stream context to the iterator
-        $dh = opendir($dir, stream_context_create(array('s3' => array('delimiter' => ''))));
-
-        return new OpendirIterator($dh, $dir . '/');
+        return $this->createS3Iterator();
     }
 
     protected function getDefaultSourceConverter()
@@ -192,12 +181,7 @@ class UploadSyncBuilder extends AbstractSyncBuilder
         });
     }
 
-    /**
-     * Add a listener to echo debug output while uploading
-     *
-     * @param UploadSync $sync
-     */
-    private function addDebugListener(UploadSync $sync)
+    protected function addDebugListener(AbstractSync $sync)
     {
         $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) {
 

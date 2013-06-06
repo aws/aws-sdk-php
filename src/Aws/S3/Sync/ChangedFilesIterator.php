@@ -51,11 +51,10 @@ class ChangedFilesIterator extends \FilterIterator
         FilenameConverterInterface $sourceConverter,
         FilenameConverterInterface $targetConverter
     ) {
-        parent::__construct($sourceIterator);
         $this->targetIterator = $targetIterator;
         $this->sourceConverter = $sourceConverter;
         $this->targetConverter = $targetConverter;
-        $this->rewind();
+        parent::__construct($sourceIterator);
     }
 
     public function accept()

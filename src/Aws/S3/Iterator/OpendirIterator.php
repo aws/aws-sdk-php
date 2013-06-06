@@ -25,8 +25,8 @@ class OpendirIterator implements \Iterator
     /** @var resource */
     protected $dirHandle;
 
-    /** @var string */
-    protected $currentFilename;
+    /** @var \SplFileInfo */
+    protected $currentFile;
 
     /** @var int */
     protected $key = -1;
@@ -35,8 +35,8 @@ class OpendirIterator implements \Iterator
     protected $filePrefix;
 
     /**
-     * @param resource $dirHandle Opened directory handled returned from opendir
-     * @param string   $filePrefix    Prefix to add to each filename
+     * @param resource $dirHandle  Opened directory handled returned from opendir
+     * @param string   $filePrefix Prefix to add to each filename
      */
     public function __construct($dirHandle, $filePrefix = '')
     {
@@ -60,14 +60,17 @@ class OpendirIterator implements \Iterator
 
     public function current()
     {
-        if ($this->currentFilename) {
-            return new \SplFileInfo($this->filePrefix . $this->currentFilename);
-        }
+        return $this->currentFile;
     }
 
     public function next()
     {
-        $this->currentFilename = readdir($this->dirHandle);
+        if ($file = readdir($this->dirHandle)) {
+            $this->currentFile = new \SplFileInfo($this->filePrefix . $file);
+        } else {
+            $this->currentFile = false;
+        }
+
         $this->key++;
     }
 
@@ -78,6 +81,6 @@ class OpendirIterator implements \Iterator
 
     public function valid()
     {
-        return $this->currentFilename !== false;
+        return $this->currentFile !== false;
     }
 }
