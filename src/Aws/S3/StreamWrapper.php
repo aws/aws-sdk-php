@@ -286,7 +286,13 @@ class StreamWrapper
      */
     public function stream_stat()
     {
-        return fstat($this->body->getStream());
+        $stat = fstat($this->body->getStream());
+        // Add the size of the underlying stream if it is known
+        if ($this->mode == 'r' && $this->body->getSize()) {
+            $stat[7] = $stat['size'] = $this->body->getSize();
+        }
+
+        return $stat;
     }
 
     /**
