@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
+* Added "magic" access to iterators to make using iterators more convenient (e.g., `$s3->getListBucketsIterator()`)
+* Added the `waitUntilDBInstanceAvailable` and `waitUntilDBInstanceDeleted` waiters to the Amazon RDS client
+* Added the `createCredentials` method to the AWS STS client to make it easier to create a credentials object from the
+  results of an STS operation
+* Updated request retrying logic to automatically refresh expired credentials and retry with new ones
+* Fixed issue #94 so that the `Aws\S3\BucketStyleListener` is invoked on `command.after_prepare` and presigned URLs
+  are generated correctly from commands
+
 2.3.4 (2013-05-30)
 ------------------
 
