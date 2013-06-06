@@ -40,7 +40,7 @@ class UploadSync extends AbstractSync
             throw new RuntimeException("Could not open {$file} for reading");
         }
 
-        $key = $this->options['converter']->convert($file);
+        $key = $this->options['source_converter']->convert($file);
         $body = EntityBody::factory($resource);
 
         // Use a multi-part upload if the file is larger than the cutoff size
