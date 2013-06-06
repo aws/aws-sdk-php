@@ -108,18 +108,21 @@ class UploadSyncBuilder extends AbstractSyncBuilder
 
     protected function specificBuild()
     {
-        $sync = new UploadSync($this->client, $this->bucket, $this->sourceIterator, $this->sourceConverter);
-        $sync->setConcurrency($this->concurrency);
-        $this->addMd5Listener($sync);
+        $sync = new UploadSync(array(
+            'client' => $this->client,
+            'bucket' => $this->bucket,
+            'iterator' => $this->sourceIterator,
+            'source_converter' => $this->sourceConverter,
+            'concurrency' => $this->concurrency
+        ));
 
+        $this->addMd5Listener($sync);
         if ($acp = $this->acp) {
             $this->addAcpListener($sync);
         }
-
         if ($this->params) {
             $this->addCustomParamListener($sync);
         }
-
         if ($this->debug) {
             $this->addDebugListener($sync);
         }

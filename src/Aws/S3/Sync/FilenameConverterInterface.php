@@ -29,11 +29,4 @@ interface FilenameConverterInterface
      * @return string
      */
     public function convert($filename);
-
-    /**
-     * Get the key prefix used by the converter
-     *
-     * @return string Returns an empty string or the key prefix
-     */
-    public function getPrefix();
 }
