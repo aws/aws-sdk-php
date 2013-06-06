@@ -21,6 +21,7 @@ use Aws\Common\Exception\UnexpectedValueException;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\Common\Model\MultipartUpload\TransferInterface;
 use Aws\S3\S3Client;
+use Aws\S3\Iterator\OpendirIterator;
 use Guzzle\Common\Event;
 use Guzzle\Common\HasDispatcherInterface;
 use Guzzle\Iterator\FilterIterator;
@@ -264,21 +265,26 @@ abstract class AbstractSyncBuilder
     public function build()
     {
         $this->validateRequirements();
-        $this->sourceIterator = $this->filterIterator($this->sourceIterator);
         $this->sourceConverter = $this->sourceConverter ?: $this->getDefaultSourceConverter();
         $this->targetConverter = $this->targetConverter ?: $this->getDefaultTargetConverter();
 
         // Only wrap the source iterator in a changed files iterator if we are not forcing the transfers
         if (!$this->forcing) {
             $this->sourceIterator = new ChangedFilesIterator(
-                $this->sourceIterator,
+                new \NoRewindIterator($this->sourceIterator),
                 $this->getTargetIterator(),
                 $this->sourceConverter,
                 $this->targetConverter
             );
+            $this->sourceIterator->rewind();
         }
 
-        return $this->specificBuild();
+        $sync = $this->specificBuild();
+        if ($this->debug) {
+            $this->addDebugListener($sync);
+        }
+
+        return $sync;
     }
 
     /**
@@ -304,19 +310,26 @@ abstract class AbstractSyncBuilder
     abstract protected function getDefaultTargetConverter();
 
     /**
+     * Add a listener to the sync object to output debug information while transferring
+     *
+     * @param AbstractSync $sync
+     */
+    abstract protected function addDebugListener(AbstractSync $sync);
+
+    /**
      * Validate that the builder has the minimal requirements
      *
      * @throws RuntimeException if the builder is not configured completely
      */
     protected function validateRequirements()
     {
-        $this->assertFileIteratorSet();
         if (!$this->client) {
             throw new RuntimeException('No client was provided');
         }
         if (!$this->bucket) {
             throw new RuntimeException('No bucket was provided');
         }
+        $this->assertFileIteratorSet();
     }
 
     /**
@@ -345,13 +358,10 @@ abstract class AbstractSyncBuilder
             if (!$i instanceof \SplFileInfo) {
                 throw new UnexpectedValueException('All iterators for UploadSync must return SplFileInfo objects');
             }
-            // Never fake the upload of an empty directory
-            return !$i->isDir();
+            return $i->isFile();
         });
 
-        if (!$f->valid()) {
-            $f->rewind();
-        }
+        $f->rewind();
 
         return $f;
     }
@@ -377,5 +387,23 @@ abstract class AbstractSyncBuilder
                 }
             }
         );
+    }
+
+    /**
+     * Create an Amazon S3 file iterator based on the given builder settings
+     *
+     * @return OpendirIterator
+     */
+    protected function createS3Iterator()
+    {
+        // Ensure that the stream wrapper is registered
+        $this->client->registerStreamWrapper();
+        // Calculate the opendir() bucket and optional key prefix location
+        // Remove the delimiter as it is not needed for this
+        $dir = rtrim('s3://' . $this->bucket . ($this->keyPrefix ? ('/' . $this->keyPrefix) : ''), '/');
+        // Use opendir so that we can pass stream context to the iterator
+        $dh = opendir($dir, stream_context_create(array('s3' => array('delimiter' => ''))));
+
+        return new OpendirIterator($dh, $dir . '/');
     }
 }
