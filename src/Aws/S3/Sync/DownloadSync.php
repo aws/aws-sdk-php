@@ -32,7 +32,7 @@ class DownloadSync extends AbstractSync
         $directory = dirname($filename);
 
         // Create the directory if it does not exist
-        if (!is_dir($directory) && !mkdir($directory)) {
+        if (!is_dir($directory) && !mkdir($directory, 0777, true)) {
             // @codeCoverageIgnoreStart
             throw new RuntimeException('Could not create directory: ' . $directory);
             // @codeCoverageIgnoreEnd
