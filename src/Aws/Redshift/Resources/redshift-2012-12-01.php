@@ -37,7 +37,12 @@ return array (
         'eu-west-1' => array(
             'http' => false,
             'https' => true,
-            'hostname' => 'https://redshift.eu-west-1.amazonaws.com',
+            'hostname' => 'redshift.eu-west-1.amazonaws.com',
+        ),
+        'ap-northeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'redshift.ap-northeast-1.amazonaws.com',
         ),
     ),
     'operations' => array(

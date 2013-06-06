@@ -5,6 +5,7 @@ Next Release
 ------------
 
 * Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
+* Added support for using the `ap-northeast-1` region to the Amazon Redshift client
 * Added "magic" access to iterators to make using iterators more convenient (e.g., `$s3->getListBucketsIterator()`)
 * Added the `waitUntilDBInstanceAvailable` and `waitUntilDBInstanceDeleted` waiters to the Amazon RDS client
 * Added the `createCredentials` method to the AWS STS client to make it easier to create a credentials object from the
