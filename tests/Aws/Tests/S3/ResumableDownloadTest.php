@@ -26,13 +26,8 @@ use Guzzle\Plugin\Mock\MockPlugin;
  */
 class ResumableDownloadTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testHasEvents()
-    {
-        $this->assertNotEmpty(ResumableDownload::getAllEvents());
-    }
-
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit_Framework_Error_Warning
      */
     public function testEnsuresFilesCanBeOpened()
     {
@@ -40,59 +35,21 @@ class ResumableDownloadTest extends \Guzzle\Tests\GuzzleTestCase
         new ResumableDownload($client, 'test', 'key', '/does/not/exist/foo');
     }
 
-    public function testHasMoreDeterminesBasedOnTargetLengthVsTotalLength()
-    {
-        $client = $this->getServiceBuilder()->get('s3');
-        $this->setMockResponse($client, array(
-            // HEAD response
-            new Response(200, array('Content-Length' => 10))
-        ));
-        $target = EntityBody::factory();
-        $resumable = new ResumableDownload($client, 'test', 'key', $target);
-        $this->assertTrue($resumable->hasMore());
-        $target->write('testtestte');
-        $this->assertFalse($resumable->hasMore());
-    }
-
     public function testDownloadsUsingRangeRequests()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
-        $mock = new MockPlugin();
+        $mock = new MockPlugin(array(new Response(200, array('Content-Length' => 9)), new Response(200, array('Content-Length' => 5), '_test')));
         $client->addSubscriber($mock);
-        $mock->addResponse(new Response(200, array('Content-Length' => 15)));
-        $eventCount = count($client->getEventDispatcher()->getListeners());
-
-        $target = EntityBody::factory();
-        $resumable = new ResumableDownload($client, 'test', 'key', $target, array('chunk_size' => 5));
-
-        $events = array();
-        $resumable->getEventDispatcher()->addListener(ResumableDownload::BEFORE_SEND, function ($e) use (&$events) {
-            $events[] = $e;
-        });
-
-        $resumable->getEventDispatcher()->addListener(ResumableDownload::AFTER_SEND, function ($e) use (&$events) {
-            $events[] = $e;
-        });
+        $target = EntityBody::factory('test');
+        $target->seek(0, SEEK_END);
+        $resumable = new ResumableDownload($client, 'test', 'key', $target);
+        $resumable();
 
         $mocked = $mock->getReceivedRequests();
-        $this->assertCount(1, $mocked);
+        $this->assertCount(2, $mocked);
         $this->assertEquals('HEAD', $mocked[0]->getMethod());
-
-        $mock->addResponse(new Response(200, array('Content-Length' => 5), '12345'));
-        $mock->addResponse(new Response(200, array('Content-Length' => 5), '67891'));
-        $mock->addResponse(new Response(200, array('Content-Length' => 5), '01112'));
-        $resumable->download();
-        $this->assertEquals('123456789101112', (string) $target);
-        $mocked = $mock->getReceivedRequests();
-        $this->assertEquals(4, count($mocked));
-        $this->assertEquals('bytes=0-4', (string) $mocked[1]->getHeader('Range'));
-        $this->assertEquals('bytes=5-9', (string) $mocked[2]->getHeader('Range'));
-        $this->assertEquals('bytes=10-14', (string) $mocked[3]->getHeader('Range'));
-
-        // Events are emitted 6 times (3 downloads with 2 events per download)
-        $this->assertEquals(6, count($events));
-        // Ensure that the event listeners were removed from the client
-        $this->assertCount(0, $client->getEventDispatcher()->getListeners('command.after_send'));
+        $this->assertEquals('GET', $mocked[1]->getMethod());
+        $this->assertEquals('bytes=4-8', (string) $mocked[1]->getHeader('Range'));
     }
 
     /**
@@ -102,34 +59,17 @@ class ResumableDownloadTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresMd5Match()
     {
         $client = $this->getServiceBuilder()->get('s3');
-        $mock = new MockPlugin();
+        $mock = new MockPlugin(array(
+            new Response(200, array(
+                'Content-Length' => 15,
+                'Content-MD5'    => '5032561e973f16047f3109e6a3f7f173'
+            )),
+            new Response(200, array('Content-Length' => 1), '1')
+        ));
         $client->addSubscriber($mock);
-        $mock->addResponse(new Response(200, array(
-            'Content-Length' => 15,
-            'Content-MD5' => '5032561e973f16047f3109e6a3f7f173'
-        )));
-        $target = EntityBody::factory('111111111111111');
+        $target = EntityBody::factory('11111111111111');
         $target->seek(0, SEEK_END);
         $resumable = new ResumableDownload($client, 'test', 'key', $target);
-        $resumable->download();
-    }
-
-    public function testDoesNotSendRangeHeaderWhenFullRequest()
-    {
-        $client = $this->getServiceBuilder()->get('s3');
-        $mock = new MockPlugin();
-        $client->addSubscriber($mock);
-        $mock->addResponse(new Response(200, array('Content-Length' => 15)));
-        $target = EntityBody::factory();
-        $resumable = new ResumableDownload($client, 'test', 'key', $target);
-        $mocked = $mock->getReceivedRequests();
-        $this->assertCount(1, $mocked);
-        $this->assertEquals('HEAD', $mocked[0]->getMethod());
-        $mock->addResponse(new Response(200, array('Content-Length' => 15), '123456789101112'));
-        $resumable->download();
-        $this->assertEquals('123456789101112', (string) $target);
-        $mocked = $mock->getReceivedRequests();
-        $this->assertEquals(2, count($mocked));
-        $this->assertNull($mocked[1]->getHeader('Range'));
+        $resumable();
     }
 }
