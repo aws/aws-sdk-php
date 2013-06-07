@@ -35,7 +35,7 @@ class KeyConverter implements FilenameConverterInterface
      * @param string $prefix    Amazon S3 prefix
      * @param string $delimiter Directory separator used with generated names
      */
-    public function __construct($baseDir, $prefix = '', $delimiter = '/')
+    public function __construct($baseDir = '', $prefix = '', $delimiter = '/')
     {
         $this->baseDir = $baseDir;
         $this->prefix = $prefix;
