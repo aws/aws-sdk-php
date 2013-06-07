@@ -64,10 +64,9 @@ class ChangedFilesIterator extends \FilterIterator
         if (!($data = $this->getTargetData($key))) {
             return true;
         }
-        unset($this->cache[$key]);
 
         // Ensure the Content-Length matches and it hasn't been modified since the mtime
-        return $current->getSize() != $data[1] || $current->getMTime() > $data[0];
+        return $current->getSize() != $data[0] || $current->getMTime() > $data[1];
     }
 
     /**
@@ -90,14 +89,16 @@ class ChangedFilesIterator extends \FilterIterator
     protected function getTargetData($key)
     {
         if (isset($this->cache[$key])) {
-            return $this->cache[$key];
+            $result = $this->cache[$key];
+            unset($this->cache[$key]);
+            return $result;
         }
 
         $it = $this->targetIterator;
 
         while ($it->valid()) {
             $value = $it->current();
-            $data = array($value->getMTime(), $value->getSize());
+            $data = array($value->getSize(), $value->getMTime());
             $filename = $this->targetConverter->convert((string) $value);
             if ($filename == $key) {
                 return $data;
