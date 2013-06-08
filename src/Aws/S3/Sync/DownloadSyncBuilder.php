@@ -76,6 +76,10 @@ class DownloadSyncBuilder extends AbstractSyncBuilder
 
     protected function getTargetIterator()
     {
+        if (!$this->directory) {
+            throw new RuntimeException('A directory is required');
+        }
+
         if (!is_dir($this->directory) && !mkdir($this->directory, 0777, true)) {
             // @codeCoverageIgnoreStart
             throw new RuntimeException('Unable to create root download directory: ' . $this->directory);
