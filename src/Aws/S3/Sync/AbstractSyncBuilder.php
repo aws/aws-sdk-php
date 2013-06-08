@@ -280,6 +280,11 @@ abstract class AbstractSyncBuilder
         }
 
         $sync = $this->specificBuild();
+
+        if ($this->params) {
+            $this->addCustomParamListener($sync);
+        }
+
         if ($this->debug) {
             $this->addDebugListener($sync);
         }
