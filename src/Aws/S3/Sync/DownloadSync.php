@@ -29,16 +29,10 @@ class DownloadSync extends AbstractSync
 {
     protected function createTransferAction(\SplFileInfo $file)
     {
-        list($bucket, $key) = explode('/', substr($file, 5), 2);
-        $filename = '/' . $this->options['source_converter']->convert($file);
-        $directory = dirname($filename);
-
-        // Create the directory if it does not exist
-        if (!is_dir($directory) && !mkdir($directory, 0777, true)) {
-            // @codeCoverageIgnoreStart
-            throw new RuntimeException('Could not create directory: ' . $directory);
-            // @codeCoverageIgnoreEnd
-        }
+        $sourceFilename = $file->getPathname();
+        list($bucket, $key) = explode('/', substr($sourceFilename, 5), 2);
+        $filename = '/' . ltrim($this->options['source_converter']->convert($sourceFilename), '/');
+        $this->createDirectory($filename);
 
         // Allow a previously interrupted download to resume
         if (file_exists($filename) && $this->options['resumable']) {
@@ -50,5 +44,17 @@ class DownloadSync extends AbstractSync
             'Key'    => $key,
             'SaveAs' => $filename
         ));
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected function createDirectory($filename)
+    {
+        $directory = dirname($filename);
+        // Create the directory if it does not exist
+        if (!is_dir($directory) && !mkdir($directory, 0777, true)) {
+            throw new RuntimeException('Could not create directory: ' . $directory);
+        }
     }
 }

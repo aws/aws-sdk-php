@@ -36,15 +36,18 @@ class UploadSync extends AbstractSync
     protected function createTransferAction(\SplFileInfo $file)
     {
         // Open the file for reading
-        if (!($resource = fopen($file, 'r'))) {
-            throw new RuntimeException("Could not open {$file} for reading");
+        $filename = $file->getPathName();
+        if (!($resource = fopen($filename, 'r'))) {
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException("Could not open {$filename} for reading");
+            // @codeCoverageIgnoreEnd
         }
 
-        $key = $this->options['source_converter']->convert($file);
+        $key = $this->options['source_converter']->convert($filename);
         $body = EntityBody::factory($resource);
 
         // Use a multi-part upload if the file is larger than the cutoff size and is a regular file
-        if ($body->getWrapper() == 'plainfile' && $body->getSize() >= $this->options['multipart_upload_size']) {
+        if ($body->getWrapper() == 'plainfile' && $file->getSize() >= $this->options['multipart_upload_size']) {
             $transfer = UploadBuilder::newInstance()
                 ->setBucket($this->options['bucket'])
                 ->setBucket($this->options['bucket'])
