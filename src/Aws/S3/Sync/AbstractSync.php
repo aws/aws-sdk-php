@@ -44,7 +44,7 @@ abstract class AbstractSync extends AbstractHasDispatcher
     {
         $this->options = Collection::fromConfig(
             $options,
-            array(),
+            array('concurrency' => 10),
             array('client', 'bucket', 'iterator', 'source_converter')
         );
         $this->init();
@@ -56,46 +56,14 @@ abstract class AbstractSync extends AbstractHasDispatcher
     }
 
     /**
-     * Hook to initialize subclasses
-     */
-    protected function init() {}
-
-    /**
      * Begin transferring files
      */
     public function transfer()
     {
         // Pull out chunks of uploads to upload in parallel
         $iterator = new ChunkedIterator($this->options['iterator'], $this->options['concurrency']);
-        // Create the base event data object
-        $event = array('sync' => $this, 'client' => $this->options['client']);
-
         foreach ($iterator as $files) {
-
-            $commands = array();
-            foreach ($files as $file) {
-                $action = $this->createTransferAction($file);
-                $event['command'] = $action;
-                $event['file'] = $file;
-                $this->dispatch(self::BEFORE_TRANSFER, $event);
-                if ($action instanceof CommandInterface) {
-                    $commands[] = $action;
-                } else {
-                    $action();
-                    $this->dispatch(self::AFTER_TRANSFER, $event);
-                }
-            }
-
-            if ($commands) {
-                // Execute the commands in parallel
-                $this->options['client']->execute($commands);
-                // Notify listeners that each command finished
-                unset($event['file']);
-                foreach ($commands as $command) {
-                    $event['command'] = $command;
-                    $this->dispatch(self::AFTER_TRANSFER, $event);
-                }
-            }
+            $this->transferFiles($files);
         }
     }
 
@@ -107,4 +75,54 @@ abstract class AbstractSync extends AbstractHasDispatcher
      * @return CommandInterface|callable
      */
     abstract protected function createTransferAction(\SplFileInfo $file);
+
+    /**
+     * Hook to initialize subclasses
+     * @codeCoverageIgnore
+     */
+    protected function init() {}
+
+    /**
+     * Process and transfer a group of files
+     *
+     * @param array $files Files to transfer
+     */
+    protected function transferFiles(array $files)
+    {
+        // Create the base event data object
+        $event = array('sync' => $this, 'client' => $this->options['client']);
+
+        $commands = array();
+        foreach ($files as $file) {
+            $action = $this->createTransferAction($file);
+            $event = array('command' => $action, 'file' => $file) + $event;
+            $this->dispatch(self::BEFORE_TRANSFER, $event);
+            if ($action instanceof CommandInterface) {
+                $commands[] = $action;
+            } else {
+                $action();
+                $this->dispatch(self::AFTER_TRANSFER, $event);
+            }
+        }
+
+        $this->transferCommands($commands);
+    }
+
+    /**
+     * Transfer an array of commands in parallel
+     *
+     * @param array $commands Commands to transfer
+     */
+    protected function transferCommands(array $commands)
+    {
+        if ($commands) {
+            $this->options['client']->execute($commands);
+            // Notify listeners that each command finished
+            $event = array('sync' => $this, 'client' => $this->options['client']);
+            foreach ($commands as $command) {
+                $event['command'] = $command;
+                $this->dispatch(self::AFTER_TRANSFER, $event);
+            }
+        }
+    }
 }
