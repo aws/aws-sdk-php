@@ -108,18 +108,16 @@ class PostObject extends Collection
         // Format ttd option
         $ttd = $options['ttd'];
         $ttd = is_numeric($ttd) ? (int) $ttd : strtotime($ttd);
-        $options->remove('ttd');
+        unset($options['ttd']);
 
         // Save policy if passed in
-        $rawPolicy = $options->get('policy');
-        $options->remove('policy');
+        $rawPolicy = $options['policy'];
+        unset($options['policy']);
 
         // Setup policy document
         $policy = array(
             'expiration' => gmdate(DateFormat::ISO8601_S3, $ttd),
-            'conditions' => array(
-                array('bucket' => $this->bucket),
-            )
+            'conditions' => array(array('bucket' => $this->bucket))
         );
 
         // Configure the endpoint/action

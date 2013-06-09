@@ -79,14 +79,10 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
                     'key' => 'foo/bar/${filename}',
                     'Content-Type' => 'text/',
                     'acl' => 'private',
-                    'policy' => 'eyJleHBpcmF0aW9uIjoiMTk4NC0xMS0yNFQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJmb'
-                        . '28ifSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiZm9vXC9iYXJc'
-                        . 'LyJdLFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwidGV4dFwvIl0seyJhY2wiOiJwcml2YXRlIn1dfQ==',
-                    'signature' => 'rSOwG7EilzRkYcCbpfwqaoMVzs4='
+                    'policy' => 'eyJleHBpcmF0aW9uIjoiMTk4NC0xMS0yNFQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJmb28ifSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwidGV4dFwvIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJmb29cL2JhclwvIl1dfQ==',
+                    'signature' => 'FHY919PP/ZzL/IRw8QX6Yd/i7hw='
                 ),
-                'policy' => '{"expiration":"1984-11-24T00:00:00Z","conditions":[{"bucket":"foo"},{"success_action_stat'
-                    . 'us":"201"},["starts-with","$key","foo\/bar\/"],["starts-with","$Content-Type","text\/"],{"acl":'
-                    . '"private"}]}'
+                'policy' => '{"expiration":"1984-11-24T00:00:00Z","conditions":[{"bucket":"foo"},{"success_action_status":"201"},["starts-with","$Content-Type","text\/"],{"acl":"private"},["starts-with","$key","foo\/bar\/"]]}'
             )
         );
 
@@ -128,9 +124,9 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
         $postObject = new PostObject($this->client, 'foo', $options);
         $postObject->prepareData();
 
-        $this->assertSame($expected['attributes'], $postObject->getFormAttributes());
-        $this->assertSame($expected['inputs'], $postObject->getFormInputs());
-        $this->assertSame($expected['policy'], $postObject->getJsonPolicy());
+        $this->assertEquals($expected['attributes'], $postObject->getFormAttributes());
+        $this->assertEquals($expected['inputs'], $postObject->getFormInputs());
+        $this->assertEquals($expected['policy'], $postObject->getJsonPolicy());
     }
 
     public function testClientAndBucketGettersAndSetters()
