@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSubnetGroupAlreadyExistsException error is encountered
+ * A ClusterSubnetGroupName is already used by an existing cluster subnet group.
  */
 class ClusterSubnetGroupAlreadyExistsException extends RedshiftException {}

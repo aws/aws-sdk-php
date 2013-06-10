@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ReservedNodeQuotaExceededException error is encountered
+ * Request would exceed the user&#039;s compute node quota.
  */
 class ReservedNodeQuotaExceededException extends RedshiftException {}

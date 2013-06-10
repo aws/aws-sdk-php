@@ -328,7 +328,7 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-meta-',
                     'additionalProperties' => array(
-                        'description' => 'The metadata value.',
+                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retreiving headers.',
                         'type' => 'string',
                     ),
                 ),
@@ -583,7 +583,7 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-meta-',
                     'additionalProperties' => array(
-                        'description' => 'The metadata value.',
+                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retreiving headers.',
                         'type' => 'string',
                     ),
                 ),
@@ -2617,7 +2617,7 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-meta-',
                     'additionalProperties' => array(
-                        'description' => 'The metadata value.',
+                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retreiving headers.',
                         'type' => 'string',
                     ),
                 ),

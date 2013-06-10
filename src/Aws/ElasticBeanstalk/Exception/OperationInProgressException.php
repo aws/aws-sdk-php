@@ -17,7 +17,6 @@
 namespace Aws\ElasticBeanstalk\Exception;
 
 /**
- * Unable to perform the specified operation because another operation is already in progress affecting an an element i
- * n this activity.
+ * Unable to perform the specified operation because another operation is already in progress affecting an an element in this activity.
  */
 class OperationInProgressException extends ElasticBeanstalkException {}

@@ -71,6 +71,7 @@ return array (
                     'description' => 'Represents any email addresses contained in the CC line of an email added to the support case.',
                     'type' => 'array',
                     'location' => 'json',
+                    'maxItems' => 10,
                     'items' => array(
                         'name' => 'CcEmailAddress',
                         'type' => 'string',
@@ -146,13 +147,14 @@ return array (
                     'description' => 'List of email addresses that AWS Support copies on case correspondence.',
                     'type' => 'array',
                     'location' => 'json',
+                    'maxItems' => 10,
                     'items' => array(
                         'name' => 'CcEmailAddress',
                         'type' => 'string',
                     ),
                 ),
                 'language' => array(
-                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -200,6 +202,7 @@ return array (
                     'description' => 'A list of Strings comprising ID numbers for support cases you want returned. The maximum number of cases is 100.',
                     'type' => 'array',
                     'location' => 'json',
+                    'maxItems' => 100,
                     'items' => array(
                         'name' => 'CaseId',
                         'type' => 'string',
@@ -239,7 +242,7 @@ return array (
                     'maximum' => 100,
                 ),
                 'language' => array(
-                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -345,13 +348,14 @@ return array (
                     'description' => 'List in JSON format of service codes available for AWS services.',
                     'type' => 'array',
                     'location' => 'json',
+                    'maxItems' => 100,
                     'items' => array(
                         'name' => 'ServiceCode',
                         'type' => 'string',
                     ),
                 ),
                 'language' => array(
-                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -387,7 +391,7 @@ return array (
                     'default' => 'AWSSupport_20130415.DescribeSeverityLevels',
                 ),
                 'language' => array(
-                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -396,46 +400,6 @@ return array (
                 array(
                     'reason' => 'Returns HTTP error 500.',
                     'class' => 'InternalServerErrorException',
-                ),
-            ),
-        ),
-        'ResolveCase' => array(
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'ResolveCaseResponse',
-            'responseType' => 'model',
-            'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Takes a CaseId and returns the initial state of the case along with the state of the case after the call to ResolveCase completed.',
-            'parameters' => array(
-                'Content-Type' => array(
-                    'static' => true,
-                    'location' => 'header',
-                    'default' => 'application/x-amz-json-1.1',
-                ),
-                'command.expects' => array(
-                    'static' => true,
-                    'default' => 'application/json',
-                ),
-                'X-Amz-Target' => array(
-                    'static' => true,
-                    'location' => 'header',
-                    'default' => 'AWSSupport_20130415.ResolveCase',
-                ),
-                'caseId' => array(
-                    'description' => 'String that indicates the AWS Support caseID requested or returned in the call. The caseID is an alphanumeric string formatted as shown in this example CaseId: case-12345678910-2013-c4c1d2bf33c5cf47',
-                    'type' => 'string',
-                    'location' => 'json',
-                ),
-            ),
-            'errorResponses' => array(
-                array(
-                    'reason' => 'Returns HTTP error 500.',
-                    'class' => 'InternalServerErrorException',
-                ),
-                array(
-                    'reason' => 'Returned when the CaseId requested could not be located.',
-                    'class' => 'CaseIdNotFoundException',
                 ),
             ),
         ),
@@ -509,7 +473,7 @@ return array (
                     'location' => 'json',
                 ),
                 'language' => array(
-                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -587,7 +551,7 @@ return array (
                 ),
                 'language' => array(
                     'required' => true,
-                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                    'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -632,6 +596,46 @@ return array (
                 array(
                     'reason' => 'Returns HTTP error 500.',
                     'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'ResolveCase' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ResolveCaseResponse',
+            'responseType' => 'model',
+            'responseNotes' => 'Returns a json_decoded array of the response body',
+            'summary' => 'Takes a CaseId and returns the initial state of the case along with the state of the case after the call to ResolveCase completed.',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'AWSSupport_20130415.ResolveCase',
+                ),
+                'caseId' => array(
+                    'description' => 'String that indicates the AWS Support caseID requested or returned in the call. The caseID is an alphanumeric string formatted as shown in this example CaseId: case-12345678910-2013-c4c1d2bf33c5cf47',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returns HTTP error 500.',
+                    'class' => 'InternalServerErrorException',
+                ),
+                array(
+                    'reason' => 'Returned when the CaseId requested could not be located.',
+                    'class' => 'CaseIdNotFoundException',
                 ),
             ),
         ),
@@ -754,7 +758,7 @@ return array (
                                 ),
                             ),
                             'language' => array(
-                                'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively.',
+                                'description' => 'Specifies the ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English and Japanese, for which the codes are en and ja, respectively. Language parameters must be passed explicitly for operations that take them.',
                                 'type' => 'string',
                             ),
                         ),
@@ -877,22 +881,6 @@ return array (
                 ),
             ),
         ),
-        'ResolveCaseResponse' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'initialCaseStatus' => array(
-                    'description' => 'Status of the case when the ResolveCase request was sent.',
-                    'type' => 'string',
-                    'location' => 'json',
-                ),
-                'finalCaseStatus' => array(
-                    'description' => 'Status of the case after the ResolveCase request was processed.',
-                    'type' => 'string',
-                    'location' => 'json',
-                ),
-            ),
-        ),
         'DescribeTrustedAdvisorCheckRefreshStatusesResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -945,6 +933,7 @@ return array (
                             'type' => 'string',
                         ),
                         'resourcesSummary' => array(
+                            'description' => 'JSON-formatted object that lists details about AWS resources that were analyzed in a call to Trusted Advisor DescribeTrustedAdvisorCheckSummaries.',
                             'type' => 'object',
                             'properties' => array(
                                 'resourcesProcessed' => array(
@@ -1053,6 +1042,7 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'resourcesSummary' => array(
+                                'description' => 'JSON-formatted object that lists details about AWS resources that were analyzed in a call to Trusted Advisor DescribeTrustedAdvisorCheckSummaries.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'resourcesProcessed' => array(
@@ -1162,6 +1152,22 @@ return array (
                             'type' => 'numeric',
                         ),
                     ),
+                ),
+            ),
+        ),
+        'ResolveCaseResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'initialCaseStatus' => array(
+                    'description' => 'Status of the case when the ResolveCase request was sent.',
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'finalCaseStatus' => array(
+                    'description' => 'Status of the case after the ResolveCase request was processed.',
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
         ),

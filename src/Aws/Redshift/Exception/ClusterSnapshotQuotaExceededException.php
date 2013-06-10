@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSnapshotQuotaExceededException error is encountered
+ * The request would result in the user exceeding the allowed number of cluster snapshots.
  */
 class ClusterSnapshotQuotaExceededException extends RedshiftException {}

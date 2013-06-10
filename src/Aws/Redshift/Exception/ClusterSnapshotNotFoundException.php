@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSnapshotNotFoundException error is encountered
+ * The snapshot identifier does not refer to an existing cluster snapshot.
  */
 class ClusterSnapshotNotFoundException extends RedshiftException {}

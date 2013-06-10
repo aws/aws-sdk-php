@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterParameterGroupQuotaExceededException error is encountered
+ * The request would result in the user exceeding the allowed number of cluster parameter groups.
  */
 class ClusterParameterGroupQuotaExceededException extends RedshiftException {}

@@ -281,6 +281,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'Attribute',
                     'additionalProperties' => array(
+                        'description' => 'The name of a queue attribute.',
                         'type' => 'string',
                         'data' => array(
                             'shape_name' => 'QueueAttributeName',
@@ -793,6 +794,7 @@ return array (
                     'location' => 'aws.query',
                     'sentAs' => 'Attribute',
                     'additionalProperties' => array(
+                        'description' => 'The name of a queue attribute.',
                         'type' => 'string',
                         'data' => array(
                             'shape_name' => 'QueueAttributeName',
@@ -991,6 +993,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Value' => array(
+                                'description' => 'The value of a queue attribute.',
                                 'type' => 'string',
                             ),
                         ),
@@ -1100,6 +1103,7 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'Value' => array(
+                                            'description' => 'The value of a queue attribute.',
                                             'type' => 'string',
                                         ),
                                     ),

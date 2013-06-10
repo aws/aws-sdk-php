@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSecurityGroupNotFoundException error is encountered
+ * The cluster security group name does not refer to an existing cluster security group.
  */
 class ClusterSecurityGroupNotFoundException extends RedshiftException {}

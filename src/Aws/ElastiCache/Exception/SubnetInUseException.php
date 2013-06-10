@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Exception that occurs when a SubnetInUseException error is encountered
+ * Request subnet is currently in use.
  */
 class SubnetInUseException extends ElastiCacheException {}

@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterParameterGroupAlreadyExistsException error is encountered
+ * A cluster parameter group with the same name already exists.
  */
 class ClusterParameterGroupAlreadyExistsException extends RedshiftException {}

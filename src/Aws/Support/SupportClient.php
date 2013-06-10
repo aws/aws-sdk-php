@@ -32,12 +32,12 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeCommunications(array $args = array()) {@command Support DescribeCommunications}
  * @method Model describeServices(array $args = array()) {@command Support DescribeServices}
  * @method Model describeSeverityLevels(array $args = array()) {@command Support DescribeSeverityLevels}
- * @method Model resolveCase(array $args = array()) {@command Support ResolveCase}
  * @method Model describeTrustedAdvisorCheckRefreshStatuses(array $args = array()) {@command Support DescribeTrustedAdvisorCheckRefreshStatuses}
  * @method Model describeTrustedAdvisorCheckResult(array $args = array()) {@command Support DescribeTrustedAdvisorCheckResult}
  * @method Model describeTrustedAdvisorCheckSummaries(array $args = array()) {@command Support DescribeTrustedAdvisorCheckSummaries}
  * @method Model describeTrustedAdvisorChecks(array $args = array()) {@command Support DescribeTrustedAdvisorChecks}
  * @method Model refreshTrustedAdvisorCheck(array $args = array()) {@command Support RefreshTrustedAdvisorCheck}
+ * @method Model resolveCase(array $args = array()) {@command Support ResolveCase}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-support.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Support.SupportClient.html API docs

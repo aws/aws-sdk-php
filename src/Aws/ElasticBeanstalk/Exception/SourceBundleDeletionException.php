@@ -17,7 +17,6 @@
 namespace Aws\ElasticBeanstalk\Exception;
 
 /**
- * Unable to delete the Amazon S3 source bundle associated with the application version, although the application versi
- * on deleted successfully.
+ * Unable to delete the Amazon S3 source bundle associated with the application version, although the application version deleted successfully.
  */
 class SourceBundleDeletionException extends ElasticBeanstalkException {}

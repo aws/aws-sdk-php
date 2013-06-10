@@ -712,6 +712,7 @@ return array (
                                         'maxLength' => 1024,
                                     ),
                                     'operator' => array(
+                                        'description' => 'Contains a logical operation for comparing the value of a field with a specified value.',
                                         'type' => 'object',
                                         'properties' => array(
                                             '' => array(

@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a InsufficientClusterCapacityException error is encountered
+ * The number of nodes specified exceeds the allotted capacity of the cluster.
  */
 class InsufficientClusterCapacityException extends RedshiftException {}

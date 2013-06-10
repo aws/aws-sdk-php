@@ -91,11 +91,13 @@ return array (
                 ),
                 'offeringId' => array(
                     'required' => true,
+                    'description' => 'The ID of the offering.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionName' => array(
                     'required' => true,
+                    'description' => 'The name of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -135,6 +137,7 @@ return array (
                     'default' => 'OvertureService.CreatePrivateVirtualInterface',
                 ),
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -144,24 +147,31 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'virtualInterfaceName' => array(
+                            'description' => 'The name of the virtual interface assigned by the customer',
                             'type' => 'string',
                         ),
                         'vlan' => array(
+                            'description' => 'VLAN ID',
                             'type' => 'numeric',
                         ),
                         'asn' => array(
+                            'description' => 'Autonomous system (AS) number for Border Gateway Protocol (BGP) configuration',
                             'type' => 'numeric',
                         ),
                         'authKey' => array(
+                            'description' => 'Authentication key for BGP configuration',
                             'type' => 'string',
                         ),
                         'amazonAddress' => array(
+                            'description' => 'IP address assigned to the Amazon interface.',
                             'type' => 'string',
                         ),
                         'customerAddress' => array(
+                            'description' => 'IP address assigned to the customer interface.',
                             'type' => 'string',
                         ),
                         'virtualGatewayId' => array(
+                            'description' => 'The ID of the virtual private gateway to a VPC. Only applies to private virtual interfaces.',
                             'type' => 'string',
                         ),
                     ),
@@ -202,6 +212,7 @@ return array (
                     'default' => 'OvertureService.CreatePublicVirtualInterface',
                 ),
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -211,24 +222,31 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'virtualInterfaceName' => array(
+                            'description' => 'The name of the virtual interface assigned by the customer',
                             'type' => 'string',
                         ),
                         'vlan' => array(
+                            'description' => 'VLAN ID',
                             'type' => 'numeric',
                         ),
                         'asn' => array(
+                            'description' => 'Autonomous system (AS) number for Border Gateway Protocol (BGP) configuration',
                             'type' => 'numeric',
                         ),
                         'authKey' => array(
+                            'description' => 'Authentication key for BGP configuration',
                             'type' => 'string',
                         ),
                         'amazonAddress' => array(
+                            'description' => 'IP address assigned to the Amazon interface.',
                             'type' => 'string',
                         ),
                         'customerAddress' => array(
+                            'description' => 'IP address assigned to the customer interface.',
                             'type' => 'string',
                         ),
                         'routeFilterPrefixes' => array(
+                            'description' => 'A list of routes to be advertised to the AWS network in this region (public virtual interface) or your VPC (private virtual interface).',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'RouteFilterPrefix',
@@ -281,6 +299,7 @@ return array (
                 ),
                 'connectionId' => array(
                     'required' => true,
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -320,6 +339,7 @@ return array (
                     'default' => 'OvertureService.DeleteVirtualInterface',
                 ),
                 'virtualInterfaceId' => array(
+                    'description' => 'ID of the virtual interface.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -360,6 +380,7 @@ return array (
                 ),
                 'connectionId' => array(
                     'required' => true,
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -399,6 +420,7 @@ return array (
                     'default' => 'OvertureService.DescribeConnections',
                 ),
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -439,6 +461,7 @@ return array (
                 ),
                 'offeringId' => array(
                     'required' => true,
+                    'description' => 'The ID of the offering.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -531,7 +554,7 @@ return array (
             'responseClass' => 'VirtualInterfaces',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Displays all virtual interfaces for an AWS account. Virtual interfaces deleted fewer than 15 minutes before DescribeVirtualInterfaces is called are also returned. If a virtual interface ID is included then only a single virtual interface will be returned.',
+            'summary' => 'Displays all virtual interfaces for an AWS account. Virtual interfaces deleted fewer than 15 minutes before DescribeVirtualInterfaces is called are also returned. If a connection ID is included then only virtual interfaces associated with this connection will be returned. If a virtual interface ID is included then only a single virtual interface will be returned.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -548,10 +571,12 @@ return array (
                     'default' => 'OvertureService.DescribeVirtualInterfaces',
                 ),
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'virtualInterfaceId' => array(
+                    'description' => 'ID of the virtual interface.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -574,22 +599,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionName' => array(
+                    'description' => 'The name of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionState' => array(
+                    'description' => 'State of the connection. Requested: The initial state of connection. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: The connection has been approved, and is being initialized. Available: The network link is up, and the connection is ready for use. Down: The network link is down. Deleted: The connection has been deleted.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'region' => array(
+                    'description' => 'The AWS region where the offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'location' => array(
+                    'description' => 'Where the AWS Direct Connect offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -600,38 +630,47 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'virtualInterfaceId' => array(
+                    'description' => 'ID of the virtual interface.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'location' => array(
+                    'description' => 'Where the AWS Direct Connect offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'virtualInterfaceType' => array(
+                    'description' => 'The type of virtual interface',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'virtualInterfaceName' => array(
+                    'description' => 'The name of the virtual interface assigned by the customer',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'vlan' => array(
+                    'description' => 'VLAN ID',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'asn' => array(
+                    'description' => 'Autonomous system (AS) number for Border Gateway Protocol (BGP) configuration',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'authKey' => array(
+                    'description' => 'Authentication key for BGP configuration',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'amazonAddress' => array(
+                    'description' => 'IP address assigned to the Amazon interface.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -641,6 +680,7 @@ return array (
                     'location' => 'json',
                 ),
                 'virtualInterfaceState' => array(
+                    'description' => 'State of the virtual interface. Verifying: This state only applies to public virtual interfaces. Each public virtual interface needs validation before the virtual interface can be created. Pending: A virtual interface is in this state from the time that it is created until the virtual interface is ready to forward traffic. Available: A virtual interface that is able to forward traffic. Deleting: A virtual interface is in this state immediately after calling DeleteVirtualInterface until it can no longer forward traffic. Deleted: A virtual interface that cannot forward traffic.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -650,10 +690,12 @@ return array (
                     'location' => 'json',
                 ),
                 'virtualGatewayId' => array(
+                    'description' => 'The ID of the virtual private gateway to a VPC. Only applies to private virtual interfaces.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'routeFilterPrefixes' => array(
+                    'description' => 'A list of routes to be advertised to the AWS network in this region (public virtual interface) or your VPC (private virtual interface).',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -675,6 +717,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'virtualInterfaceState' => array(
+                    'description' => 'State of the virtual interface. Verifying: This state only applies to public virtual interfaces. Each public virtual interface needs validation before the virtual interface can be created. Pending: A virtual interface is in this state from the time that it is created until the virtual interface is ready to forward traffic. Available: A virtual interface that is able to forward traffic. Deleting: A virtual interface is in this state immediately after calling DeleteVirtualInterface until it can no longer forward traffic. Deleted: A virtual interface that cannot forward traffic.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -685,30 +728,37 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'connectionId' => array(
+                    'description' => 'ID of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionName' => array(
+                    'description' => 'The name of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionState' => array(
+                    'description' => 'State of the connection. Requested: The initial state of connection. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: The connection has been approved, and is being initialized. Available: The network link is up, and the connection is ready for use. Down: The network link is down. Deleted: The connection has been deleted.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'region' => array(
+                    'description' => 'The AWS region where the offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'location' => array(
+                    'description' => 'Where the AWS Direct Connect offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'bandwidth' => array(
+                    'description' => 'Bandwidth of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionCosts' => array(
+                    'description' => 'A list of connection costs.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -736,6 +786,7 @@ return array (
                     ),
                 ),
                 'orderSteps' => array(
+                    'description' => 'A list of connection order steps.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -786,18 +837,23 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'connectionId' => array(
+                                'description' => 'ID of the connection.',
                                 'type' => 'string',
                             ),
                             'connectionName' => array(
+                                'description' => 'The name of the connection.',
                                 'type' => 'string',
                             ),
                             'connectionState' => array(
+                                'description' => 'State of the connection. Requested: The initial state of connection. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: The connection has been approved, and is being initialized. Available: The network link is up, and the connection is ready for use. Down: The network link is down. Deleted: The connection has been deleted.',
                                 'type' => 'string',
                             ),
                             'region' => array(
+                                'description' => 'The AWS region where the offering is located.',
                                 'type' => 'string',
                             ),
                             'location' => array(
+                                'description' => 'Where the AWS Direct Connect offering is located.',
                                 'type' => 'string',
                             ),
                         ),
@@ -810,14 +866,17 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'offeringId' => array(
+                    'description' => 'The ID of the offering.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'region' => array(
+                    'description' => 'The AWS region where the offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'location' => array(
+                    'description' => 'Where the AWS Direct Connect offering is located.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -826,14 +885,17 @@ return array (
                     'location' => 'json',
                 ),
                 'description' => array(
+                    'description' => 'Description of the offering.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'bandwidth' => array(
+                    'description' => 'Bandwidth of the connection.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'connectionCosts' => array(
+                    'description' => 'A list of connection costs.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -861,6 +923,7 @@ return array (
                     ),
                 ),
                 'orderSteps' => array(
+                    'description' => 'A list of offering order steps.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -907,12 +970,15 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'offeringId' => array(
+                                'description' => 'The ID of the offering.',
                                 'type' => 'string',
                             ),
                             'region' => array(
+                                'description' => 'The AWS region where the offering is located.',
                                 'type' => 'string',
                             ),
                             'location' => array(
+                                'description' => 'Where the AWS Direct Connect offering is located.',
                                 'type' => 'string',
                             ),
                             'offeringName' => array(
@@ -920,12 +986,15 @@ return array (
                                 'type' => 'string',
                             ),
                             'description' => array(
+                                'description' => 'Description of the offering.',
                                 'type' => 'string',
                             ),
                             'bandwidth' => array(
+                                'description' => 'Bandwidth of the connection.',
                                 'type' => 'string',
                             ),
                             'connectionCosts' => array(
+                                'description' => 'A list of connection costs.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'ConnectionCost',
@@ -961,7 +1030,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'virtualGateways' => array(
-                    'description' => 'A list of virtual gateways.',
+                    'description' => 'A list of virtual private gateways.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -970,9 +1039,11 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'virtualGatewayId' => array(
+                                'description' => 'The ID of the virtual private gateway to a VPC. Only applies to private virtual interfaces.',
                                 'type' => 'string',
                             ),
                             'virtualGatewayState' => array(
+                                'description' => 'State of the virtual private gateway. Pending: This is the initial state after calling CreateVpnGateway. Available: Ready for use by a private virtual interface. Deleting: This is the initial state after calling DeleteVpnGateway. Deleted: In this state, a private virtual interface is unable to send traffic over this gateway.',
                                 'type' => 'string',
                             ),
                         ),
@@ -994,30 +1065,39 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'virtualInterfaceId' => array(
+                                'description' => 'ID of the virtual interface.',
                                 'type' => 'string',
                             ),
                             'location' => array(
+                                'description' => 'Where the AWS Direct Connect offering is located.',
                                 'type' => 'string',
                             ),
                             'connectionId' => array(
+                                'description' => 'ID of the connection.',
                                 'type' => 'string',
                             ),
                             'virtualInterfaceType' => array(
+                                'description' => 'The type of virtual interface',
                                 'type' => 'string',
                             ),
                             'virtualInterfaceName' => array(
+                                'description' => 'The name of the virtual interface assigned by the customer',
                                 'type' => 'string',
                             ),
                             'vlan' => array(
+                                'description' => 'VLAN ID',
                                 'type' => 'numeric',
                             ),
                             'asn' => array(
+                                'description' => 'Autonomous system (AS) number for Border Gateway Protocol (BGP) configuration',
                                 'type' => 'numeric',
                             ),
                             'authKey' => array(
+                                'description' => 'Authentication key for BGP configuration',
                                 'type' => 'string',
                             ),
                             'amazonAddress' => array(
+                                'description' => 'IP address assigned to the Amazon interface.',
                                 'type' => 'string',
                             ),
                             'customerAddress' => array(
@@ -1025,6 +1105,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'virtualInterfaceState' => array(
+                                'description' => 'State of the virtual interface. Verifying: This state only applies to public virtual interfaces. Each public virtual interface needs validation before the virtual interface can be created. Pending: A virtual interface is in this state from the time that it is created until the virtual interface is ready to forward traffic. Available: A virtual interface that is able to forward traffic. Deleting: A virtual interface is in this state immediately after calling DeleteVirtualInterface until it can no longer forward traffic. Deleted: A virtual interface that cannot forward traffic.',
                                 'type' => 'string',
                             ),
                             'customerRouterConfig' => array(
@@ -1032,9 +1113,11 @@ return array (
                                 'type' => 'string',
                             ),
                             'virtualGatewayId' => array(
+                                'description' => 'The ID of the virtual private gateway to a VPC. Only applies to private virtual interfaces.',
                                 'type' => 'string',
                             ),
                             'routeFilterPrefixes' => array(
+                                'description' => 'A list of routes to be advertised to the AWS network in this region (public virtual interface) or your VPC (private virtual interface).',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'RouteFilterPrefix',

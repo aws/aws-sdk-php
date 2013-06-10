@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a InvalidClusterSubnetStateException error is encountered
+ * The state of the subnet is invalid.
  */
 class InvalidClusterSubnetStateException extends RedshiftException {}

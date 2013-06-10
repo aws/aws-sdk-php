@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ResizeNotFoundException error is encountered
+ * A resize operation for the specified cluster is not found.
  */
 class ResizeNotFoundException extends RedshiftException {}

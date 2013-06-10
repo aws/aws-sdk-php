@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Exception that occurs when a ReservedCacheNodeQuotaExceededException error is encountered
+ * Request would exceed the user's Cache Node quota.
  */
 class ReservedCacheNodeQuotaExceededException extends ElastiCacheException {}

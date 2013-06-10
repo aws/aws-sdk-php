@@ -1649,6 +1649,7 @@ return array (
                                     'sentAs' => 'member',
                                     'properties' => array(
                                         'Listener' => array(
+                                            'description' => 'The Listener data type.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'Protocol' => array(

@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a InvalidClusterSubnetGroupStateException error is encountered
+ * The cluster subnet group cannot be deleted because it is in use.
  */
 class InvalidClusterSubnetGroupStateException extends RedshiftException {}

@@ -17,7 +17,6 @@
 namespace Aws\ElasticLoadBalancing\Exception;
 
 /**
- * A Listener already exists for the given LoadBalancerName and LoadBalancerPort, but with a different InstancePort, Pr
- * otocol, or SSLCertificateId.
+ * A Listener already exists for the given LoadBalancerName and LoadBalancerPort, but with a different InstancePort, Protocol, or SSLCertificateId.
  */
 class DuplicateListenerException extends ElasticLoadBalancingException {}

@@ -17,6 +17,6 @@
 namespace Aws\Swf\Exception;
 
 /**
- * Exception that occurs when a UnknownResourceException error is encountered
+ * Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.
  */
 class UnknownResourceException extends SwfException {}

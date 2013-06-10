@@ -594,12 +594,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Bad or out-of-range value was supplied for the input parameter.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'An input parameter that is mandatory for processing the request is not supplied.',
                     'class' => 'MissingRequiredParameterException',
                 ),
                 array(
+                    'reason' => 'Parameters that must not be used together were used together.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
                 array(
@@ -679,6 +682,7 @@ return array (
                     'class' => 'InternalServiceException',
                 ),
                 array(
+                    'reason' => 'Bad or out-of-range value was supplied for the input parameter.',
                     'class' => 'InvalidParameterValueException',
                 ),
             ),
@@ -1040,12 +1044,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Bad or out-of-range value was supplied for the input parameter.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'An input parameter that is mandatory for processing the request is not supplied.',
                     'class' => 'MissingRequiredParameterException',
                 ),
                 array(
+                    'reason' => 'Parameters that must not be used together were used together.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
                 array(

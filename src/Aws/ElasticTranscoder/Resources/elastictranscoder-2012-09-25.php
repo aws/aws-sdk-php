@@ -70,7 +70,7 @@ return array (
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'To delete a job, send a DELETE request to the /2012-09-25/jobs/[jobId] resource.',
+            'summary' => 'To cancel a job, send a DELETE request to the /2012-09-25/jobs/[jobId] resource.',
             'parameters' => array(
                 'Id' => array(
                     'required' => true,
@@ -81,21 +81,26 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -129,7 +134,7 @@ return array (
                             'type' => 'string',
                         ),
                         'Resolution' => array(
-                            'description' => 'The resolution, in pixels, of the input file. If you want Elastic Transcoder to automatically detect the resolution of the input file, specify auto. If you want to specify the resolution for the input file, enter values in the format width in pixels by height in pixels.',
+                            'description' => 'This value must be auto, which causes Elastic Transcoder to automatically detect the resolution of the input file.',
                             'type' => 'string',
                         ),
                         'AspectRatio' => array(
@@ -225,7 +230,7 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'Name' => array(
-                                'description' => 'The name that you want Elastic Transcoder to assign to the master playlist, for example, antarctic-vacation.m3u8. The name cannot include a / character. The filename extension must be .m3u8. If you create more than one master playlist (not recommended), the values of all Name objects must be unique.',
+                                'description' => 'The name that you want Elastic Transcoder to assign to the master playlist, for example, nyc-vacation.m3u8. The name cannot include a / character. If you create more than one master playlist (not recommended), the values of all Name objects must be unique. Elastic Transcoder automatically appends .m3u8 to the file name. If you include .m3u8 in Name, it will appear twice in the file name.',
                                 'type' => 'string',
                                 'minLength' => 1,
                                 'maxLength' => 255,
@@ -251,21 +256,26 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Too many operations for a given AWS account. For example, the number of pipelines exceeds the maximum allowed.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -291,7 +301,7 @@ return array (
                     'location' => 'json',
                 ),
                 'OutputBucket' => array(
-                    'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.',
+                    'description' => 'The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files. (Use this, or use ContentConfig:Bucket plus ThumbnailConfig:Bucket.)',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -363,7 +373,7 @@ return array (
                     ),
                 ),
                 'ThumbnailConfig' => array(
-                    'description' => 'The optional ThumbnailConfig object specifies several values, including the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files, which users you want to have access to the files, the type of access you want users to have, and the storage class that you want to assign to the files.',
+                    'description' => 'The ThumbnailConfig object specifies several values, including the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files, which users you want to have access to the files, the type of access you want users to have, and the storage class that you want to assign to the files.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -404,21 +414,26 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'Too many operations for a given AWS account. For example, the number of pipelines exceeds the maximum allowed.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -455,7 +470,7 @@ return array (
                     'location' => 'json',
                     'properties' => array(
                         'Codec' => array(
-                            'description' => 'The video codec for the output file. This value must be H.264.',
+                            'description' => 'The video codec for the output file. Valid values include H.264 and vp8. You can only specify vp8 when the container type is webm.',
                             'type' => 'string',
                         ),
                         'CodecOptions' => array(
@@ -503,7 +518,7 @@ return array (
                             'type' => 'string',
                         ),
                         'DisplayAspectRatio' => array(
-                            'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                            'description' => 'The value that Elastic Transcoder adds to the metadata in the output file.',
                             'type' => 'string',
                         ),
                         'SizingPolicy' => array(
@@ -581,18 +596,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Too many operations for a given AWS account. For example, the number of pipelines exceeds the maximum allowed.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -614,21 +633,26 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -650,18 +674,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -693,18 +721,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -736,18 +768,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -761,15 +797,18 @@ return array (
             'summary' => 'To get a list of the pipelines associated with the current AWS account, send a GET request to the /2012-09-25/pipelines resource.',
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -785,15 +824,18 @@ return array (
             'summary' => 'To get a list of all presets associated with the current AWS account, send a GET request to the /2012-09-25/presets resource.',
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -817,18 +859,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -850,18 +896,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -883,18 +933,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -935,18 +989,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -978,6 +1036,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Notifications' => array(
+                    'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic or topics to notify in order to report job status.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -1078,21 +1137,26 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -1112,7 +1176,7 @@ return array (
                     'location' => 'uri',
                 ),
                 'Notifications' => array(
-                    'description' => 'The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status.',
+                    'description' => 'The topic ARN for the Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -1137,21 +1201,26 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -1171,28 +1240,33 @@ return array (
                     'location' => 'uri',
                 ),
                 'Status' => array(
-                    'description' => 'The new status of the pipeline:',
+                    'description' => 'The desired status of the pipeline:',
                     'type' => 'string',
                     'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'One or more required parameter values were not provided in the request.',
                     'class' => 'ValidationException',
                 ),
                 array(
                     'class' => 'IncompatibleVersionException',
                 ),
                 array(
+                    'reason' => 'The requested resource does not exist or is not available. For example, the pipeline to which you\'re trying to add a job doesn\'t exist or is still being created.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'General authentication failure. The request was not signed correctly.',
                     'class' => 'AccessDeniedException',
                 ),
                 array(
+                    'reason' => 'Elastic Transcoder encountered an unexpected exception while trying to fulfill the request.',
                     'class' => 'InternalServiceException',
                 ),
             ),
@@ -1233,7 +1307,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Resolution' => array(
-                                    'description' => 'The resolution, in pixels, of the input file. If you want Elastic Transcoder to automatically detect the resolution of the input file, specify auto. If you want to specify the resolution for the input file, enter values in the format width in pixels by height in pixels.',
+                                    'description' => 'This value must be auto, which causes Elastic Transcoder to automatically detect the resolution of the input file.',
                                     'type' => 'string',
                                 ),
                                 'AspectRatio' => array(
@@ -1251,10 +1325,11 @@ return array (
                             ),
                         ),
                         'Output' => array(
-                            'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
+                            'description' => 'If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
                             'type' => 'object',
                             'properties' => array(
                                 'Id' => array(
+                                    'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                     'type' => 'string',
                                 ),
                                 'Key' => array(
@@ -1270,15 +1345,15 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'PresetId' => array(
-                                    'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                    'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                     'type' => 'string',
                                 ),
                                 'SegmentDuration' => array(
-                                    'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                    'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                     'type' => 'string',
                                 ),
                                 'Status' => array(
-                                    'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                    'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                     'type' => 'string',
                                 ),
                                 'StatusDetail' => array(
@@ -1300,7 +1375,7 @@ return array (
                             ),
                         ),
                         'Outputs' => array(
-                            'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                            'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into only one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'JobOutput',
@@ -1308,6 +1383,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'Id' => array(
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                         'type' => 'string',
                                     ),
                                     'Key' => array(
@@ -1323,15 +1399,15 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'PresetId' => array(
-                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                         'type' => 'string',
                                     ),
                                     'SegmentDuration' => array(
-                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
-                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                        'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                         'type' => 'string',
                                     ),
                                     'StatusDetail' => array(
@@ -1354,7 +1430,7 @@ return array (
                             ),
                         ),
                         'OutputKeyPrefix' => array(
-                            'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                            'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists. We recommend that you add a / or some other delimiter to the end of the OutputKeyPrefix.',
                             'type' => 'string',
                         ),
                         'Playlists' => array(
@@ -1576,7 +1652,7 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'Codec' => array(
-                                    'description' => 'The video codec for the output file. This value must be H.264.',
+                                    'description' => 'The video codec for the output file. Valid values include H.264 and vp8. You can only specify vp8 when the container type is webm.',
                                     'type' => 'string',
                                 ),
                                 'CodecOptions' => array(
@@ -1619,7 +1695,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'DisplayAspectRatio' => array(
-                                    'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                                    'description' => 'The value that Elastic Transcoder adds to the metadata in the output file.',
                                     'type' => 'string',
                                 ),
                                 'SizingPolicy' => array(
@@ -1717,7 +1793,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Resolution' => array(
-                                        'description' => 'The resolution, in pixels, of the input file. If you want Elastic Transcoder to automatically detect the resolution of the input file, specify auto. If you want to specify the resolution for the input file, enter values in the format width in pixels by height in pixels.',
+                                        'description' => 'This value must be auto, which causes Elastic Transcoder to automatically detect the resolution of the input file.',
                                         'type' => 'string',
                                     ),
                                     'AspectRatio' => array(
@@ -1735,10 +1811,11 @@ return array (
                                 ),
                             ),
                             'Output' => array(
-                                'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
+                                'description' => 'If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'Id' => array(
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                         'type' => 'string',
                                     ),
                                     'Key' => array(
@@ -1754,15 +1831,15 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'PresetId' => array(
-                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                         'type' => 'string',
                                     ),
                                     'SegmentDuration' => array(
-                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
-                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                        'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                         'type' => 'string',
                                     ),
                                     'StatusDetail' => array(
@@ -1784,7 +1861,7 @@ return array (
                                 ),
                             ),
                             'Outputs' => array(
-                                'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                                'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into only one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'JobOutput',
@@ -1792,6 +1869,7 @@ return array (
                                     'type' => 'object',
                                     'properties' => array(
                                         'Id' => array(
+                                            'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                             'type' => 'string',
                                         ),
                                         'Key' => array(
@@ -1807,15 +1885,15 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'PresetId' => array(
-                                            'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                            'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                             'type' => 'string',
                                         ),
                                         'SegmentDuration' => array(
-                                            'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                            'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                             'type' => 'string',
                                         ),
                                         'Status' => array(
-                                            'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                            'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                             'type' => 'string',
                                         ),
                                         'StatusDetail' => array(
@@ -1838,7 +1916,7 @@ return array (
                                 ),
                             ),
                             'OutputKeyPrefix' => array(
-                                'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                                'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists. We recommend that you add a / or some other delimiter to the end of the OutputKeyPrefix.',
                                 'type' => 'string',
                             ),
                             'Playlists' => array(
@@ -1918,7 +1996,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Resolution' => array(
-                                        'description' => 'The resolution, in pixels, of the input file. If you want Elastic Transcoder to automatically detect the resolution of the input file, specify auto. If you want to specify the resolution for the input file, enter values in the format width in pixels by height in pixels.',
+                                        'description' => 'This value must be auto, which causes Elastic Transcoder to automatically detect the resolution of the input file.',
                                         'type' => 'string',
                                     ),
                                     'AspectRatio' => array(
@@ -1936,10 +2014,11 @@ return array (
                                 ),
                             ),
                             'Output' => array(
-                                'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
+                                'description' => 'If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'Id' => array(
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                         'type' => 'string',
                                     ),
                                     'Key' => array(
@@ -1955,15 +2034,15 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'PresetId' => array(
-                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                         'type' => 'string',
                                     ),
                                     'SegmentDuration' => array(
-                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
-                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                        'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                         'type' => 'string',
                                     ),
                                     'StatusDetail' => array(
@@ -1985,7 +2064,7 @@ return array (
                                 ),
                             ),
                             'Outputs' => array(
-                                'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                                'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into only one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'JobOutput',
@@ -1993,6 +2072,7 @@ return array (
                                     'type' => 'object',
                                     'properties' => array(
                                         'Id' => array(
+                                            'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                             'type' => 'string',
                                         ),
                                         'Key' => array(
@@ -2008,15 +2088,15 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'PresetId' => array(
-                                            'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                            'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                             'type' => 'string',
                                         ),
                                         'SegmentDuration' => array(
-                                            'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                            'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                             'type' => 'string',
                                         ),
                                         'Status' => array(
-                                            'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                            'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                             'type' => 'string',
                                         ),
                                         'StatusDetail' => array(
@@ -2039,7 +2119,7 @@ return array (
                                 ),
                             ),
                             'OutputKeyPrefix' => array(
-                                'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                                'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists. We recommend that you add a / or some other delimiter to the end of the OutputKeyPrefix.',
                                 'type' => 'string',
                             ),
                             'Playlists' => array(
@@ -2275,7 +2355,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'Codec' => array(
-                                        'description' => 'The video codec for the output file. This value must be H.264.',
+                                        'description' => 'The video codec for the output file. Valid values include H.264 and vp8. You can only specify vp8 when the container type is webm.',
                                         'type' => 'string',
                                     ),
                                     'CodecOptions' => array(
@@ -2318,7 +2398,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'DisplayAspectRatio' => array(
-                                        'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                                        'description' => 'The value that Elastic Transcoder adds to the metadata in the output file.',
                                         'type' => 'string',
                                     ),
                                     'SizingPolicy' => array(
@@ -2408,7 +2488,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'Resolution' => array(
-                                    'description' => 'The resolution, in pixels, of the input file. If you want Elastic Transcoder to automatically detect the resolution of the input file, specify auto. If you want to specify the resolution for the input file, enter values in the format width in pixels by height in pixels.',
+                                    'description' => 'This value must be auto, which causes Elastic Transcoder to automatically detect the resolution of the input file.',
                                     'type' => 'string',
                                 ),
                                 'AspectRatio' => array(
@@ -2426,10 +2506,11 @@ return array (
                             ),
                         ),
                         'Output' => array(
-                            'description' => 'Outputs recommended instead. A section of the request or response body that provides information about the transcoded (target) file.',
+                            'description' => 'If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the Output object lists information about the first output. This duplicates the information that is listed for the first output in the Outputs object.',
                             'type' => 'object',
                             'properties' => array(
                                 'Id' => array(
+                                    'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                     'type' => 'string',
                                 ),
                                 'Key' => array(
@@ -2445,15 +2526,15 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'PresetId' => array(
-                                    'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                    'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                     'type' => 'string',
                                 ),
                                 'SegmentDuration' => array(
-                                    'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                    'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                     'type' => 'string',
                                 ),
                                 'Status' => array(
-                                    'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                    'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                     'type' => 'string',
                                 ),
                                 'StatusDetail' => array(
@@ -2475,7 +2556,7 @@ return array (
                             ),
                         ),
                         'Outputs' => array(
-                            'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
+                            'description' => 'Information about the output files. We recommend that you use the Outputs syntax for all jobs, even when you want Elastic Transcoder to transcode a file into only one format. Do not use both the Outputs and Output syntaxes in the same request. You can create a maximum of 30 outputs per job.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'JobOutput',
@@ -2483,6 +2564,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'Id' => array(
+                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. In the Output syntax, this value is always 1.',
                                         'type' => 'string',
                                     ),
                                     'Key' => array(
@@ -2498,15 +2580,15 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'PresetId' => array(
-                                        'description' => 'A sequential counter, starting with 1, that identifies an output among the outputs from the current job. If you use Output, which creates only one output, this value is always 1.',
+                                        'description' => 'The value of the Id object for the preset that you want to use for this job. The preset determines the audio, video, and thumbnail settings that Elastic Transcoder uses for transcoding. To use a preset that you created, specify the preset ID that Elastic Transcoder returned in the response when you created the preset. You can also use the Elastic Transcoder system presets, which you can get with ListPresets.',
                                         'type' => 'string',
                                     ),
                                     'SegmentDuration' => array(
-                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
+                                        'description' => '(Outputs in MPEG-TS format only.If you specify a preset in PresetId for which the value of Containeris ts (MPEG-TS), SegmentDuration is the maximum duration of each .ts file in seconds. The range of valid values is 1 to 60 seconds. If the duration of the video is not evenly divisible by SegmentDuration, the duration of the last segment is the remainder of total length/SegmentDuration. Elastic Transcoder creates an output-specific playlist for each output that you specify in OutputKeys. To add an output to the master playlist for this job, include it in OutputKeys.',
                                         'type' => 'string',
                                     ),
                                     'Status' => array(
-                                        'description' => 'If you specified more than one output for the job, the status of the corresponding output. If you specified only one output for the job, Output:Status of the job is the same as Job:Status. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
+                                        'description' => 'The status of one output in a job. If you specified only one output for the job, Outputs:Status is always the same as Job:Status. If you specified more than one output: Job:Status and Outputs:Status for all of the outputs is Submitted until Elastic Transcoder starts to process the first output. When Elastic Transcoder starts to process the first output, Outputs:Status for that output and Job:Status both change to Progressing. For each output, the value of Outputs:Status remains Submitted until Elastic Transcoder starts to process the output. Job:Status remains Progressing until all of the outputs reach a terminal status, either Complete or Error. When all of the outputs reach a terminal status, Job:Status changes to Complete only if Outputs:Status for all of the outputs is Complete. If Outputs:Status for one or more outputs is Error, the terminal status for Job:Status is also Error. The value of Status is one of the following: Submitted, Progressing, Complete, Canceled, or Error.',
                                         'type' => 'string',
                                     ),
                                     'StatusDetail' => array(
@@ -2529,7 +2611,7 @@ return array (
                             ),
                         ),
                         'OutputKeyPrefix' => array(
-                            'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists.',
+                            'description' => 'The value, if any, that you want Elastic Transcoder to prepend to the names of all files that this job creates, including output files, thumbnails, and playlists. We recommend that you add a / or some other delimiter to the end of the OutputKeyPrefix.',
                             'type' => 'string',
                         ),
                         'Playlists' => array(
@@ -2751,7 +2833,7 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'Codec' => array(
-                                    'description' => 'The video codec for the output file. This value must be H.264.',
+                                    'description' => 'The video codec for the output file. Valid values include H.264 and vp8. You can only specify vp8 when the container type is webm.',
                                     'type' => 'string',
                                 ),
                                 'CodecOptions' => array(
@@ -2794,7 +2876,7 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'DisplayAspectRatio' => array(
-                                    'description' => 'The value that Elastic Transcoder adds to the metadata in the output file. If you set DisplayAspectRatio to auto, Elastic Transcoder chooses an aspect ratio that ensures square pixels. If you specify another option, Elastic Transcoder sets that value in the output file.',
+                                    'description' => 'The value that Elastic Transcoder adds to the metadata in the output file.',
                                     'type' => 'string',
                                 ),
                                 'SizingPolicy' => array(
@@ -2878,6 +2960,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Pipeline' => array(
+                    'description' => 'The pipeline (queue) that is used to manage jobs.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(

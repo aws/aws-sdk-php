@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Exception that occurs when a InvalidSubnetException error is encountered
+ * Request subnet is invalid, or all subnets are not in the same VPC.
  */
 class InvalidSubnetException extends ElastiCacheException {}

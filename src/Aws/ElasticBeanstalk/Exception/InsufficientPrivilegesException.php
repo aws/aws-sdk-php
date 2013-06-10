@@ -17,7 +17,6 @@
 namespace Aws\ElasticBeanstalk\Exception;
 
 /**
- * Unable to perform the specified operation because the user does not have enough privileges for one of more downstrea
- * m aws services
+ * Unable to perform the specified operation because the user does not have enough privileges for one of more downstream aws services
  */
 class InsufficientPrivilegesException extends ElasticBeanstalkException {}

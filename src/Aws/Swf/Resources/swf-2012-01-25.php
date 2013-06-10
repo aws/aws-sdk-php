@@ -111,6 +111,7 @@ return array (
                     'properties' => array(
                         'oldestDate' => array(
                             'required' => true,
+                            'description' => 'Specifies the oldest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -118,6 +119,7 @@ return array (
                             ),
                         ),
                         'latestDate' => array(
+                            'description' => 'Specifies the latest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -133,6 +135,7 @@ return array (
                     'properties' => array(
                         'oldestDate' => array(
                             'required' => true,
+                            'description' => 'Specifies the oldest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -140,6 +143,7 @@ return array (
                             ),
                         ),
                         'latestDate' => array(
+                            'description' => 'Specifies the latest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -155,6 +159,7 @@ return array (
                     'properties' => array(
                         'workflowId' => array(
                             'required' => true,
+                            'description' => 'The workflowId to pass of match the criteria of this filter.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -168,11 +173,13 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'Name of the workflow type. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
+                            'description' => 'Version of the workflow type.',
                             'type' => 'string',
                             'maxLength' => 64,
                         ),
@@ -185,6 +192,7 @@ return array (
                     'properties' => array(
                         'tag' => array(
                             'required' => true,
+                            'description' => 'Specifies the tag that must be associated with the execution for it to meet the filter criteria. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -198,6 +206,7 @@ return array (
                     'properties' => array(
                         'status' => array(
                             'required' => true,
+                            'description' => 'The close status that must match the close status of an execution for it to meet the criteria of this filter. This field is required.',
                             'type' => 'string',
                             'enum' => array(
                                 'COMPLETED',
@@ -213,9 +222,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -259,6 +270,7 @@ return array (
                     'properties' => array(
                         'oldestDate' => array(
                             'required' => true,
+                            'description' => 'Specifies the oldest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -266,6 +278,7 @@ return array (
                             ),
                         ),
                         'latestDate' => array(
+                            'description' => 'Specifies the latest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -281,11 +294,13 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'Name of the workflow type. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
+                            'description' => 'Version of the workflow type.',
                             'type' => 'string',
                             'maxLength' => 64,
                         ),
@@ -298,6 +313,7 @@ return array (
                     'properties' => array(
                         'tag' => array(
                             'required' => true,
+                            'description' => 'Specifies the tag that must be associated with the execution for it to meet the filter criteria. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -311,6 +327,7 @@ return array (
                     'properties' => array(
                         'workflowId' => array(
                             'required' => true,
+                            'description' => 'The workflowId to pass of match the criteria of this filter.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -320,9 +337,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -366,6 +385,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -375,9 +395,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -421,6 +443,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -430,9 +453,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -476,12 +501,14 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
+                            'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -491,12 +518,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the specified activity or workflow type was already deprecated.',
                     'class' => 'TypeDeprecatedException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -535,12 +565,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the specified domain has been deprecated.',
                     'class' => 'DomainDeprecatedException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -584,12 +617,14 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
+                            'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -599,12 +634,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the specified activity or workflow type was already deprecated.',
                     'class' => 'TypeDeprecatedException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -648,12 +686,14 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
+                            'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -663,9 +703,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -704,9 +746,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -750,12 +794,14 @@ return array (
                     'properties' => array(
                         'workflowId' => array(
                             'required' => true,
+                            'description' => 'The user defined identifier associated with the workflow execution.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'runId' => array(
                             'required' => true,
+                            'description' => 'A system generated unique identifier for the workflow execution.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -765,9 +811,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -811,12 +859,14 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
+                            'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -826,9 +876,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -872,12 +924,14 @@ return array (
                     'properties' => array(
                         'workflowId' => array(
                             'required' => true,
+                            'description' => 'The user defined identifier associated with the workflow execution.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'runId' => array(
                             'required' => true,
+                            'description' => 'A system generated unique identifier for the workflow execution.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -905,9 +959,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -981,9 +1037,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
             ),
@@ -1026,6 +1084,7 @@ return array (
                     'properties' => array(
                         'oldestDate' => array(
                             'required' => true,
+                            'description' => 'Specifies the oldest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -1033,6 +1092,7 @@ return array (
                             ),
                         ),
                         'latestDate' => array(
+                            'description' => 'Specifies the latest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -1048,6 +1108,7 @@ return array (
                     'properties' => array(
                         'oldestDate' => array(
                             'required' => true,
+                            'description' => 'Specifies the oldest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -1055,6 +1116,7 @@ return array (
                             ),
                         ),
                         'latestDate' => array(
+                            'description' => 'Specifies the latest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -1070,6 +1132,7 @@ return array (
                     'properties' => array(
                         'workflowId' => array(
                             'required' => true,
+                            'description' => 'The workflowId to pass of match the criteria of this filter.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1083,6 +1146,7 @@ return array (
                     'properties' => array(
                         'status' => array(
                             'required' => true,
+                            'description' => 'The close status that must match the close status of an execution for it to meet the criteria of this filter. This field is required.',
                             'type' => 'string',
                             'enum' => array(
                                 'COMPLETED',
@@ -1102,11 +1166,13 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'Name of the workflow type. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
+                            'description' => 'Version of the workflow type.',
                             'type' => 'string',
                             'maxLength' => 64,
                         ),
@@ -1119,6 +1185,7 @@ return array (
                     'properties' => array(
                         'tag' => array(
                             'required' => true,
+                            'description' => 'Specifies the tag that must be associated with the execution for it to meet the filter criteria. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1146,9 +1213,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1207,6 +1276,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1250,6 +1320,7 @@ return array (
                     'properties' => array(
                         'oldestDate' => array(
                             'required' => true,
+                            'description' => 'Specifies the oldest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -1257,6 +1328,7 @@ return array (
                             ),
                         ),
                         'latestDate' => array(
+                            'description' => 'Specifies the latest start or close date and time to return.',
                             'type' => array(
                                 'object',
                                 'string',
@@ -1272,11 +1344,13 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'Name of the workflow type. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
+                            'description' => 'Version of the workflow type.',
                             'type' => 'string',
                             'maxLength' => 64,
                         ),
@@ -1289,6 +1363,7 @@ return array (
                     'properties' => array(
                         'tag' => array(
                             'required' => true,
+                            'description' => 'Specifies the tag that must be associated with the execution for it to meet the filter criteria. This field is required.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1320,6 +1395,7 @@ return array (
                     'properties' => array(
                         'workflowId' => array(
                             'required' => true,
+                            'description' => 'The workflowId to pass of match the criteria of this filter.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1329,9 +1405,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1405,9 +1483,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
             ),
@@ -1451,6 +1531,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1466,12 +1547,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
                 array(
+                    'reason' => 'Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -1515,6 +1599,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1548,12 +1633,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
                 array(
+                    'reason' => 'Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -1598,9 +1686,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1677,6 +1767,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1698,15 +1789,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.',
                     'class' => 'TypeAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1759,12 +1854,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned if the specified domain already exists. You will get this fault even if the existing domain is in deprecated status.',
                     'class' => 'DomainAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1841,6 +1939,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -1860,15 +1959,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.',
                     'class' => 'TypeAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1921,9 +2024,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -1968,9 +2073,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -2015,9 +2122,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -2068,9 +2177,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -2112,10 +2223,12 @@ return array (
                     'location' => 'json',
                     'items' => array(
                         'name' => 'Decision',
+                        'description' => 'Specifies a decision made by the decider. A decision can be one of these types:',
                         'type' => 'object',
                         'properties' => array(
                             'decisionType' => array(
                                 'required' => true,
+                                'description' => 'Specifies the type of the decision.',
                                 'type' => 'string',
                                 'enum' => array(
                                     'ScheduleActivityTask',
@@ -2133,20 +2246,24 @@ return array (
                                 ),
                             ),
                             'scheduleActivityTaskDecisionAttributes' => array(
+                                'description' => 'Provides details of the ScheduleActivityTask decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityType' => array(
                                         'required' => true,
+                                        'description' => 'The type of the activity task to schedule. This field is required.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
                                                 'required' => true,
+                                                'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 256,
                                             ),
                                             'version' => array(
                                                 'required' => true,
+                                                'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 64,
@@ -2155,27 +2272,33 @@ return array (
                                     ),
                                     'activityId' => array(
                                         'required' => true,
+                                        'description' => 'The activityId of the activity task. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks. This data is not sent to the activity.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'input' => array(
+                                        'description' => 'The input provided to the activity task.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'scheduleToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for this activity task.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'taskList' => array(
+                                        'description' => 'If set, specifies the name of the task list in which to schedule the activity task. If not specified, the defaultTaskList registered with the activity type will be used.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
                                                 'required' => true,
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 256,
@@ -2183,24 +2306,29 @@ return array (
                                         ),
                                     ),
                                     'scheduleToStartTimeout' => array(
+                                        'description' => 'If set, specifies the maximum duration the activity task can wait to be assigned to a worker. This overrides the default schedule-to-start timeout specified when registering the activity type using RegisterActivityType.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'startToCloseTimeout' => array(
+                                        'description' => 'If set, specifies the maximum duration a worker may take to process this activity task. This overrides the default start-to-close timeout specified when registering the activity type using RegisterActivityType.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'heartbeatTimeout' => array(
+                                        'description' => 'If set, specifies the maximum time before which a worker processing a task of this type must report progress by calling RecordActivityTaskHeartbeat. If the timeout is exceeded, the activity task is automatically timed out. If the worker subsequently attempts to record a heartbeat or returns a result, it will be ignored. This overrides the default heartbeat timeout specified when registering the activity type using RegisterActivityType.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                 ),
                             ),
                             'requestCancelActivityTaskDecisionAttributes' => array(
+                                'description' => 'Provides details of the RequestCancelActivityTask decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityId' => array(
                                         'required' => true,
+                                        'description' => 'The activityId of the activity task to be canceled.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
@@ -2208,52 +2336,64 @@ return array (
                                 ),
                             ),
                             'completeWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the CompleteWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'result' => array(
+                                        'description' => 'The result of the workflow execution. The form of the result is implementation defined.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                 ),
                             ),
                             'failWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the FailWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'A descriptive reason for the failure that may help in diagnostics.',
                                         'type' => 'string',
                                         'maxLength' => 256,
                                     ),
                                     'details' => array(
+                                        'description' => 'Optional details of the failure.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                 ),
                             ),
                             'cancelWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the CancelWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'details' => array(
+                                        'description' => 'Optional details of the cancellation.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                 ),
                             ),
                             'continueAsNewWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the ContinueAsNewWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'input' => array(
+                                        'description' => 'The input provided to the new workflow execution.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'If set, specifies the total duration for this workflow execution. This overrides the defaultExecutionStartToCloseTimeout specified when registering the workflow type.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'taskList' => array(
+                                        'description' => 'Represents a task list.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
                                                 'required' => true,
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 256,
@@ -2261,10 +2401,12 @@ return array (
                                         ),
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'Specifies the maximum duration of decision tasks for the new workflow execution. This parameter overrides the defaultTaskStartToCloseTimout specified when registering the workflow type using RegisterWorkflowType.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'If set, specifies the policy to use for the child workflow executions of the new execution if it is terminated by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout. This policy overrides the default child policy specified when registering the workflow type using RegisterWorkflowType. The supported child policies are:',
                                         'type' => 'string',
                                         'enum' => array(
                                             'TERMINATE',
@@ -2273,6 +2415,7 @@ return array (
                                         ),
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags to associate with the new workflow execution. A maximum of 5 tags can be specified. You can list workflow executions with a specific tag by calling ListOpenWorkflowExecutions or ListClosedWorkflowExecutions and specifying a TagFilter.',
                                         'type' => 'array',
                                         'maxItems' => 5,
                                         'items' => array(
@@ -2290,35 +2433,42 @@ return array (
                                 ),
                             ),
                             'recordMarkerDecisionAttributes' => array(
+                                'description' => 'Provides details of the RecordMarker decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'markerName' => array(
                                         'required' => true,
+                                        'description' => 'The name of the marker. This file is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'details' => array(
+                                        'description' => 'Optional details of the marker.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                 ),
                             ),
                             'startTimerDecisionAttributes' => array(
+                                'description' => 'Provides details of the StartTimer decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
                                         'required' => true,
+                                        'description' => 'The unique Id of the timer. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'startToFireTimeout' => array(
                                         'required' => true,
+                                        'description' => 'The duration to wait before firing the timer. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 8,
@@ -2326,10 +2476,12 @@ return array (
                                 ),
                             ),
                             'cancelTimerDecisionAttributes' => array(
+                                'description' => 'Provides details of the CancelTimer decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
                                         'required' => true,
+                                        'description' => 'The unique Id of the timer to cancel. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
@@ -2337,68 +2489,82 @@ return array (
                                 ),
                             ),
                             'signalExternalWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the SignalExternalWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
                                         'required' => true,
+                                        'description' => 'The workflowId of the workflow execution to be signaled. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the workflow execution to be signaled.',
                                         'type' => 'string',
                                         'maxLength' => 64,
                                     ),
                                     'signalName' => array(
                                         'required' => true,
+                                        'description' => 'The name of the signal.The target workflow execution will use the signal name and input to process the signal. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'input' => array(
+                                        'description' => 'Optional input to be provided with the signal.The target workflow execution will use the signal name and input to process the signal.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent decision tasks.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                 ),
                             ),
                             'requestCancelExternalWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the RequestCancelExternalWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
                                         'required' => true,
+                                        'description' => 'The workflowId of the external workflow execution to cancel. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution to cancel.',
                                         'type' => 'string',
                                         'maxLength' => 64,
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                 ),
                             ),
                             'startChildWorkflowExecutionDecisionAttributes' => array(
+                                'description' => 'Provides details of the StartChildWorkflowExecution decision. It is not set for other decision types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowType' => array(
                                         'required' => true,
+                                        'description' => 'The type of the workflow execution to be started. This field is required.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
                                                 'required' => true,
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 256,
                                             ),
                                             'version' => array(
                                                 'required' => true,
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 64,
@@ -2407,27 +2573,33 @@ return array (
                                     ),
                                     'workflowId' => array(
                                         'required' => true,
+                                        'description' => 'The workflowId of the workflow execution. This field is required.',
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 256,
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks. This data is not sent to the child workflow execution.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'input' => array(
+                                        'description' => 'The input to be provided to the workflow execution.',
                                         'type' => 'string',
                                         'maxLength' => 32768,
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The total duration for this workflow execution. This overrides the defaultExecutionStartToCloseTimeout specified when registering the workflow type.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The name of the task list to be used for decision tasks of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
                                                 'required' => true,
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 256,
@@ -2435,10 +2607,12 @@ return array (
                                         ),
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'Specifies the maximum duration of decision tasks for this workflow execution. This parameter overrides the defaultTaskStartToCloseTimout specified when registering the workflow type using RegisterWorkflowType.',
                                         'type' => 'string',
                                         'maxLength' => 8,
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'If set, specifies the policy to use for the child workflow executions if the workflow execution being started is terminated by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout. This policy overrides the default child policy specified when registering the workflow type using RegisterWorkflowType. The supported child policies are:',
                                         'type' => 'string',
                                         'enum' => array(
                                             'TERMINATE',
@@ -2447,6 +2621,7 @@ return array (
                                         ),
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags to associate with the child workflow execution. A maximum of 5 tags can be specified. You can list workflow executions with a specific tag by calling ListOpenWorkflowExecutions or ListClosedWorkflowExecutions and specifying a TagFilter.',
                                         'type' => 'array',
                                         'maxItems' => 5,
                                         'items' => array(
@@ -2470,9 +2645,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -2539,9 +2716,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -2593,12 +2772,14 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
                         ),
                         'version' => array(
                             'required' => true,
+                            'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 64,
@@ -2612,6 +2793,7 @@ return array (
                     'properties' => array(
                         'name' => array(
                             'required' => true,
+                            'description' => 'The name of the task list.',
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 256,
@@ -2661,18 +2843,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the specified activity or workflow type was already deprecated.',
                     'class' => 'TypeDeprecatedException',
                 ),
                 array(
+                    'reason' => 'Returned by StartWorkflowExecution when an open execution with the same workflowId is already running in the specified domain.',
                     'class' => 'WorkflowExecutionAlreadyStartedException',
                 ),
                 array(
+                    'reason' => 'Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
                 array(
@@ -2750,9 +2937,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.',
                     'class' => 'UnknownResourceException',
                 ),
                 array(
+                    'reason' => 'Returned when the caller does not have sufficient permissions to invoke the action.',
                     'class' => 'OperationNotPermittedException',
                 ),
             ),
@@ -2764,10 +2953,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'count' => array(
+                    'description' => 'The number of workflow executions.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'truncated' => array(
+                    'description' => 'If set to true, indicates that the actual count was more than the maximum supported by this API and the count returned is the truncated value.',
                     'type' => 'boolean',
                     'location' => 'json',
                 ),
@@ -2778,10 +2969,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'count' => array(
+                    'description' => 'The number of tasks in the task list.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'truncated' => array(
+                    'description' => 'If set to true, indicates that the actual count was more than the maximum supported by this API and the count returned is the truncated value.',
                     'type' => 'boolean',
                     'location' => 'json',
                 ),
@@ -2796,56 +2989,71 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'typeInfo' => array(
+                    'description' => 'General information about the activity type.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'activityType' => array(
+                            'description' => 'The ActivityType type structure representing the activity type.',
                             'type' => 'object',
                             'properties' => array(
                                 'name' => array(
+                                    'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                     'type' => 'string',
                                 ),
                                 'version' => array(
+                                    'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'status' => array(
+                            'description' => 'The current status of the activity type.',
                             'type' => 'string',
                         ),
                         'description' => array(
+                            'description' => 'The description of the activity type provided in RegisterActivityType.',
                             'type' => 'string',
                         ),
                         'creationDate' => array(
+                            'description' => 'The date and time this activity type was created through RegisterActivityType.',
                             'type' => 'string',
                         ),
                         'deprecationDate' => array(
+                            'description' => 'If DEPRECATED, the date and time DeprecateActivityType was called.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'configuration' => array(
+                    'description' => 'The configuration settings registered with the activity type.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'defaultTaskStartToCloseTimeout' => array(
+                            'description' => 'The optional default maximum duration for tasks of an activity type specified when registering the activity type. You can override this default when scheduling a task through the ScheduleActivityTask Decision.',
                             'type' => 'string',
                         ),
                         'defaultTaskHeartbeatTimeout' => array(
+                            'description' => 'The optional default maximum time, specified when registering the activity type, before which a worker processing a task must report progress by calling RecordActivityTaskHeartbeat. You can override this default when scheduling a task through the ScheduleActivityTask Decision. If the activity worker subsequently attempts to record a heartbeat or returns a result, the activity worker receives an UnknownResource fault. In this case, Amazon SWF no longer considers the activity task to be valid; the activity worker should clean up the activity task.',
                             'type' => 'string',
                         ),
                         'defaultTaskList' => array(
+                            'description' => 'The optional default task list specified for this activity type at registration. This default task list is used if a task list is not provided when a task is scheduled through the ScheduleActivityTask Decision. You can override this default when scheduling a task through the ScheduleActivityTask Decision.',
                             'type' => 'object',
                             'properties' => array(
                                 'name' => array(
+                                    'description' => 'The name of the task list.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'defaultTaskScheduleToStartTimeout' => array(
+                            'description' => 'The optional default maximum duration, specified when registering the activity type, that a task of an activity type can wait before being assigned to a worker. You can override this default when scheduling a task through the ScheduleActivityTask Decision.',
                             'type' => 'string',
                         ),
                         'defaultTaskScheduleToCloseTimeout' => array(
+                            'description' => 'The optional default maximum duration, specified when registering the activity type, for tasks of this activity type. You can override this default when scheduling a task through the ScheduleActivityTask Decision.',
                             'type' => 'string',
                         ),
                     ),
@@ -2857,25 +3065,31 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'domainInfo' => array(
+                    'description' => 'Contains general information about a domain.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'name' => array(
+                            'description' => 'The name of the domain. This name is unique within the account.',
                             'type' => 'string',
                         ),
                         'status' => array(
+                            'description' => 'The status of the domain:',
                             'type' => 'string',
                         ),
                         'description' => array(
+                            'description' => 'The description of the domain provided through RegisterDomain.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'configuration' => array(
+                    'description' => 'Contains the configuration settings of a domain.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'workflowExecutionRetentionPeriodInDays' => array(
+                            'description' => 'The retention period for workflow executions in this domain.',
                             'type' => 'string',
                         ),
                     ),
@@ -2887,55 +3101,70 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'executionInfo' => array(
+                    'description' => 'Information about the workflow execution.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'execution' => array(
+                            'description' => 'The workflow execution this information is about.',
                             'type' => 'object',
                             'properties' => array(
                                 'workflowId' => array(
+                                    'description' => 'The user defined identifier associated with the workflow execution.',
                                     'type' => 'string',
                                 ),
                                 'runId' => array(
+                                    'description' => 'A system generated unique identifier for the workflow execution.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'workflowType' => array(
+                            'description' => 'The type of the workflow execution.',
                             'type' => 'object',
                             'properties' => array(
                                 'name' => array(
+                                    'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                     'type' => 'string',
                                 ),
                                 'version' => array(
+                                    'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'startTimestamp' => array(
+                            'description' => 'The time when the execution was started.',
                             'type' => 'string',
                         ),
                         'closeTimestamp' => array(
+                            'description' => 'The time when the workflow execution was closed. Set only if the execution status is CLOSED.',
                             'type' => 'string',
                         ),
                         'executionStatus' => array(
+                            'description' => 'The current status of the execution.',
                             'type' => 'string',
                         ),
                         'closeStatus' => array(
+                            'description' => 'If the execution status is closed then this specifies how the execution was closed:',
                             'type' => 'string',
                         ),
                         'parent' => array(
+                            'description' => 'If this workflow execution is a child of another execution then contains the workflow execution that started this execution.',
                             'type' => 'object',
                             'properties' => array(
                                 'workflowId' => array(
+                                    'description' => 'The user defined identifier associated with the workflow execution.',
                                     'type' => 'string',
                                 ),
                                 'runId' => array(
+                                    'description' => 'A system generated unique identifier for the workflow execution.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'tagList' => array(
+                            'description' => 'The list of tags associated with the workflow execution. Tags can be used to identify and list workflow executions of interest through the visibility APIs. A workflow execution can have a maximum of 5 tags.',
                             'type' => 'array',
                             'items' => array(
                                 'name' => 'Tag',
@@ -2943,56 +3172,70 @@ return array (
                             ),
                         ),
                         'cancelRequested' => array(
+                            'description' => 'Set to true if a cancellation is requested for this workflow execution.',
                             'type' => 'boolean',
                         ),
                     ),
                 ),
                 'executionConfiguration' => array(
+                    'description' => 'The configuration settings for this workflow execution including timeout values, tasklist etc.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'taskStartToCloseTimeout' => array(
+                            'description' => 'The maximum duration allowed for decision tasks for this workflow execution.',
                             'type' => 'string',
                         ),
                         'executionStartToCloseTimeout' => array(
+                            'description' => 'The total duration for this workflow execution.',
                             'type' => 'string',
                         ),
                         'taskList' => array(
+                            'description' => 'The task list used for the decision tasks generated for this workflow execution.',
                             'type' => 'object',
                             'properties' => array(
                                 'name' => array(
+                                    'description' => 'The name of the task list.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'childPolicy' => array(
+                            'description' => 'The policy to use for the child workflow executions if this workflow execution is terminated, by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout. The supported child policies are:',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'openCounts' => array(
+                    'description' => 'The number of tasks for this workflow execution. This includes open and closed tasks of all types.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'openActivityTasks' => array(
+                            'description' => 'The count of activity tasks whose status is OPEN.',
                             'type' => 'numeric',
                         ),
                         'openDecisionTasks' => array(
+                            'description' => 'The count of decision tasks whose status is OPEN. A workflow execution can have at most one open decision task.',
                             'type' => 'numeric',
                         ),
                         'openTimers' => array(
+                            'description' => 'The count of timers started by this workflow execution that have not fired yet.',
                             'type' => 'numeric',
                         ),
                         'openChildWorkflowExecutions' => array(
+                            'description' => 'The count of child workflow executions whose status is OPEN.',
                             'type' => 'numeric',
                         ),
                     ),
                 ),
                 'latestActivityTaskTimestamp' => array(
+                    'description' => 'The time when the last activity task was scheduled for this workflow execution. You can use this information to determine if the workflow has not made progress for an unusually long period of time and might require a corrective action.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'latestExecutionContext' => array(
+                    'description' => 'The latest executionContext provided by the decider for this workflow execution. A decider can provide an executionContext, which is a free form string, when closing a decision task using RespondDecisionTaskCompleted.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -3003,53 +3246,67 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'typeInfo' => array(
+                    'description' => 'General information about the workflow type.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'workflowType' => array(
+                            'description' => 'The workflow type this information is about.',
                             'type' => 'object',
                             'properties' => array(
                                 'name' => array(
+                                    'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                     'type' => 'string',
                                 ),
                                 'version' => array(
+                                    'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'status' => array(
+                            'description' => 'The current status of the workflow type.',
                             'type' => 'string',
                         ),
                         'description' => array(
+                            'description' => 'The description of the type registered through RegisterWorkflowType.',
                             'type' => 'string',
                         ),
                         'creationDate' => array(
+                            'description' => 'The date when this type was registered.',
                             'type' => 'string',
                         ),
                         'deprecationDate' => array(
+                            'description' => 'If the type is in deprecated state, then it is set to the date when the type was deprecated.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'configuration' => array(
+                    'description' => 'Configuration settings of the workflow type registered through RegisterWorkflowType',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'defaultTaskStartToCloseTimeout' => array(
+                            'description' => 'The optional default maximum duration, specified when registering the workflow type, that a decision task for executions of this workflow type might take before returning completion or failure. If the task does not close in the specified time then the task is automatically timed out and rescheduled. If the decider eventually reports a completion or failure, it is ignored. This default can be overridden when starting a workflow execution using the StartWorkflowExecution action or the StartChildWorkflowExecution Decision.',
                             'type' => 'string',
                         ),
                         'defaultExecutionStartToCloseTimeout' => array(
+                            'description' => 'The optional default maximum duration, specified when registering the workflow type, for executions of this workflow type. This default can be overridden when starting a workflow execution using the StartWorkflowExecution action or the StartChildWorkflowExecution Decision.',
                             'type' => 'string',
                         ),
                         'defaultTaskList' => array(
+                            'description' => 'The optional default task list, specified when registering the workflow type, for decisions tasks scheduled for workflow executions of this type. This default can be overridden when starting a workflow execution using the StartWorkflowExecution action or the StartChildWorkflowExecution Decision.',
                             'type' => 'object',
                             'properties' => array(
                                 'name' => array(
+                                    'description' => 'The name of the task list.',
                                     'type' => 'string',
                                 ),
                             ),
                         ),
                         'defaultChildPolicy' => array(
+                            'description' => 'The optional default policy to use for the child workflow executions when a workflow execution of this type is terminated, by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout. This default can be overridden when starting a workflow execution using the StartWorkflowExecution action or the StartChildWorkflowExecution Decision. The supported child policies are:',
                             'type' => 'string',
                         ),
                     ),
@@ -3061,56 +3318,72 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'events' => array(
+                    'description' => 'The list of history events.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'HistoryEvent',
+                        'description' => 'Event within a workflow execution. A history event can be one of these types:',
                         'type' => 'object',
                         'properties' => array(
                             'eventTimestamp' => array(
+                                'description' => 'The date and time when the event occurred.',
                                 'type' => 'string',
                             ),
                             'eventType' => array(
+                                'description' => 'The type of the history event.',
                                 'type' => 'string',
                             ),
                             'eventId' => array(
+                                'description' => 'The system generated id of the event. This id uniquely identifies the event with in the workflow execution history.',
                                 'type' => 'numeric',
                             ),
                             'workflowExecutionStartedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'input' => array(
+                                        'description' => 'The input provided to the workflow execution (if any).',
                                         'type' => 'string',
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for this workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration of decision tasks for this workflow type.',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy to use for the child workflow executions if this workflow execution is terminated, by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout. The supported child policies are: TERMINATE: the child executions will be terminated. REQUEST_CANCEL: a request to cancel will be attempted for each child execution by recording a WorkflowExecutionCancelRequested event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event. ABANDON: no action will be taken. The child executions will continue to run.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The name of the task list for scheduling the decision tasks for this workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The workflow type of this execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags associated with this workflow execution. An execution can have up to 5 tags.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Tag',
@@ -3118,134 +3391,171 @@ return array (
                                         ),
                                     ),
                                     'continuedExecutionRunId' => array(
+                                        'description' => 'If this workflow execution was started due to a ContinueAsNewWorkflowExecution decision, then it contains the runId of the previous workflow execution that was closed and continued as this execution.',
                                         'type' => 'string',
                                     ),
                                     'parentWorkflowExecution' => array(
+                                        'description' => 'The source workflow execution that started this workflow execution. The member is not set if the workflow execution was not started by a workflow.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'parentInitiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this workflow execution. The source event with this Id can be found in the history of the source workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'result' => array(
+                                        'description' => 'The result produced by the workflow execution upon successful completion.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CompleteWorkflowExecution decision to complete this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'completeWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type CompleteWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CompleteWorkflowExecution decision to complete this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'The descriptive reason provided for the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details of the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the FailWorkflowExecution decision to fail this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'failWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type FailWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the FailWorkflowExecution decision to fail this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timeoutType' => array(
+                                        'description' => 'The type of timeout that caused this event.',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy used for the child workflow executions of this workflow execution. The supported child policies are: TERMINATE: the child executions will be terminated. REQUEST_CANCEL: a request to cancel will be attempted for each child execution by recording a WorkflowExecutionCancelRequested event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event. ABANDON: no action will be taken. The child executions will continue to run.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowExecutionCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'details' => array(
+                                        'description' => 'Details for the cancellation (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'cancelWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type CancelWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionContinuedAsNewEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionContinuedAsNew then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'input' => array(
+                                        'description' => 'The input provided to the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the ContinueAsNewWorkflowExecution decision that started this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'newExecutionRunId' => array(
+                                        'description' => 'The runId of the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The total duration allowed for the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'Represents a task list.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration of decision tasks for the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy to use for the child workflow executions of the new execution if it is terminated by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout.',
                                         'type' => 'string',
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags associated with the new workflow execution.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Tag',
@@ -3253,12 +3563,15 @@ return array (
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'Represents a workflow type.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
@@ -3266,384 +3579,493 @@ return array (
                                 ),
                             ),
                             'continueAsNewWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ContinueAsNewWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the ContinueAsNewWorkflowExecution decision that started this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionTerminatedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionTerminated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'The reason provided for the termination (if any).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details provided for the termination (if any).',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy used for the child workflow executions of this workflow execution. The supported child policies are:',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'If set, indicates that the workflow execution was automatically terminated, and specifies the cause. This happens if the parent workflow execution times out or is terminated and the child policy is set to terminate child executions.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowExecutionCancelRequestedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionCancelRequested then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'externalWorkflowExecution' => array(
+                                        'description' => 'The external workflow execution for which the cancellation was requested.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'externalInitiatedEventId' => array(
+                                        'description' => 'The id of the RequestCancelExternalWorkflowExecutionInitiated event corresponding to the RequestCancelExternalWorkflowExecution decision to cancel this workflow execution.The source event with this Id can be found in the history of the source workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'cause' => array(
+                                        'description' => 'If set, indicates that the request to cancel the workflow execution was automatically generated, and specifies the cause. This happens if the parent workflow execution times out or is terminated, and the child policy is set to cancel child executions.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'decisionTaskScheduledEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskScheduled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'taskList' => array(
+                                        'description' => 'The name of the task list in which the decision task was scheduled.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'startToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for this decision task. The task is considered timed out if it does not completed within this duration.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'decisionTaskStartedEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'identity' => array(
+                                        'description' => 'Identity of the decider making the request. This enables diagnostic tracing when problems arise. The form of this identity is user defined.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the DecisionTaskScheduled event that was recorded when this decision task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'decisionTaskCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'executionContext' => array(
+                                        'description' => 'User defined context for the workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the DecisionTaskScheduled event that was recorded when this decision task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the DecisionTaskStarted event recorded when this decision task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'decisionTaskTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timeoutType' => array(
+                                        'description' => 'The type of timeout that expired before the decision task could be completed.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the DecisionTaskScheduled event that was recorded when this decision task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the DecisionTaskStarted event recorded when this decision task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskScheduledEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskScheduled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityType' => array(
+                                        'description' => 'The type of the activity task.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'activityId' => array(
+                                        'description' => 'The unique id of the activity task.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'The input provided to the activity task.',
                                         'type' => 'string',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks. This data is not sent to the activity.',
                                         'type' => 'string',
                                     ),
                                     'scheduleToStartTimeout' => array(
+                                        'description' => 'The maximum amount of time the activity task can wait to be assigned to a worker.',
                                         'type' => 'string',
                                     ),
                                     'scheduleToCloseTimeout' => array(
+                                        'description' => 'The maximum amount of time for this activity task.',
                                         'type' => 'string',
                                     ),
                                     'startToCloseTimeout' => array(
+                                        'description' => 'The maximum amount of time a worker may take to process the activity task.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The task list in which the activity task has been scheduled.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision that resulted in the scheduling of this activity task. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'heartbeatTimeout' => array(
+                                        'description' => 'The maximum time before which the worker processing this task must report progress by calling RecordActivityTaskHeartbeat. If the timeout is exceeded, the activity task is automatically timed out. If the worker subsequently attempts to record a heartbeat or return a result, it will be ignored.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'activityTaskStartedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'identity' => array(
+                                        'description' => 'Identity of the worker that was assigned this task. This aids diagnostics when problems arise. The form of this identity is user defined.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'result' => array(
+                                        'description' => 'The results of the activity task (if any).',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'The reason provided for the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details of the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timeoutType' => array(
+                                        'description' => 'The type of the timeout that caused this event.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'details' => array(
+                                        'description' => 'Contains the content of the details parameter for the last call made by the activity to RecordActivityTaskHeartbeat.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'activityTaskCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'details' => array(
+                                        'description' => 'Details of the cancellation (if any).',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'latestCancelRequestedEventId' => array(
+                                        'description' => 'If set, contains the Id of the last ActivityTaskCancelRequested event recorded for this activity task. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskCancelRequestedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskcancelRequested then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelActivityTask decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'activityId' => array(
+                                        'description' => 'The unique ID of the task.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowExecutionSignaledEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionSignaled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'signalName' => array(
+                                        'description' => 'The name of the signal received. The decider can use the signal name and inputs to determine how to the process the signal.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'Inputs provided with the signal (if any). The decider can use the signal name and inputs to determine how to process the signal.',
                                         'type' => 'string',
                                     ),
                                     'externalWorkflowExecution' => array(
+                                        'description' => 'The workflow execution that sent the signal. This is set only of the signal was sent by another workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'externalInitiatedEventId' => array(
+                                        'description' => 'The id of the SignalExternalWorkflowExecutionInitiated event corresponding to the SignalExternalWorkflow decision to signal this workflow execution.The source event with this Id can be found in the history of the source workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event. This field is set only if the signal was initiated by another workflow execution.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'markerRecordedEventAttributes' => array(
+                                'description' => 'If the event is of type MarkerRecorded then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'markerName' => array(
+                                        'description' => 'The name of the marker.',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'Details of the marker (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RecordMarker decision that requested this marker. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'recordMarkerFailedEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'markerName' => array(
+                                        'description' => 'The marker\'s name.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RecordMarkerFailed decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'timerStartedEventAttributes' => array(
+                                'description' => 'If the event is of type TimerStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The unique Id of the timer that was started.',
                                         'type' => 'string',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks.',
                                         'type' => 'string',
                                     ),
                                     'startToFireTimeout' => array(
+                                        'description' => 'The duration of time after which the timer will fire.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartTimer decision for this activity task. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'timerFiredEventAttributes' => array(
+                                'description' => 'If the event is of type TimerFired then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The unique Id of the timer that fired.',
                                         'type' => 'string',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The id of the TimerStarted event that was recorded when this timer was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'timerCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type TimerCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The unique Id of the timer that was canceled.',
                                         'type' => 'string',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The id of the TimerStarted event that was recorded when this timer was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelTimer decision to cancel this timer. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'startChildWorkflowExecutionInitiatedEventAttributes' => array(
+                                'description' => 'If the event is of type StartChildWorkflowExecutionInitiated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the child workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent decision tasks. This data is not sent to the activity.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'The inputs provided to the child workflow execution (if any).',
                                         'type' => 'string',
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for the child workflow execution. If the workflow execution is not closed within this duration, it will be timed out and force terminated.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The name of the task list used for the decision tasks of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartChildWorkflowExecution Decision to request this child workflow execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy to use for the child workflow executions if this execution gets terminated by explicitly calling the TerminateWorkflowExecution action or due to an expired timeout.',
                                         'type' => 'string',
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration allowed for the decision tasks for this workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags to associated with the child workflow execution.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Tag',
@@ -3653,273 +4075,349 @@ return array (
                                 ),
                             ),
                             'childWorkflowExecutionStartedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was started.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was completed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'result' => array(
+                                        'description' => 'The result of the child workflow execution (if any).',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that failed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'reason' => array(
+                                        'description' => 'The reason for the failure (if provided).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details of the failure (if provided).',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that timed out.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'timeoutType' => array(
+                                        'description' => 'The type of the timeout that caused the child workflow execution to time out.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was canceled.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'details' => array(
+                                        'description' => 'Details of the cancellation (if provided).',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionTerminatedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionTerminated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was terminated.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'signalExternalWorkflowExecutionInitiatedEventAttributes' => array(
+                                'description' => 'If the event is of type SignalExternalWorkflowExecutionInitiated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution to send the signal to.',
                                         'type' => 'string',
                                     ),
                                     'signalName' => array(
+                                        'description' => 'The name of the signal.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'Input provided to the signal (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the SignalExternalWorkflowExecution decision for this signal. This information can be useful for diagnosing problems by tracing back the cause of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent decision tasks.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'externalWorkflowExecutionSignaledEventAttributes' => array(
+                                'description' => 'If the event is of type ExternalWorkflowExecutionSignaled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The external workflow execution that the signal was delivered to.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the SignalExternalWorkflowExecutionInitiated event corresponding to the SignalExternalWorkflowExecution decision to request this signal. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'signalExternalWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type SignalExternalWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow execution that the signal was being delivered to.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution that the signal was being delivered to.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the SignalExternalWorkflowExecutionInitiated event corresponding to the SignalExternalWorkflowExecution decision to request this signal. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the SignalExternalWorkflowExecution decision for this signal. This information can be useful for diagnosing problems by tracing back the cause of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
@@ -3928,57 +4426,73 @@ return array (
                                 ),
                             ),
                             'externalWorkflowExecutionCancelRequestedEventAttributes' => array(
+                                'description' => 'If the event is of type ExternalWorkflowExecutionCancelRequested then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The external workflow execution to which the cancellation request was delivered.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the RequestCancelExternalWorkflowExecutionInitiated event corresponding to the RequestCancelExternalWorkflowExecution decision to cancel this external workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'requestCancelExternalWorkflowExecutionInitiatedEventAttributes' => array(
+                                'description' => 'If the event is of type RequestCancelExternalWorkflowExecutionInitiated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow execution to be canceled.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution to be canceled.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelExternalWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'requestCancelExternalWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type RequestCancelExternalWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow to which the cancel request was to be delivered.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the RequestCancelExternalWorkflowExecutionInitiated event corresponding to the RequestCancelExternalWorkflowExecution decision to cancel this external workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelExternalWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
@@ -3987,96 +4501,123 @@ return array (
                                 ),
                             ),
                             'scheduleActivityTaskFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ScheduleActivityTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityType' => array(
+                                        'description' => 'The activity type provided in the ScheduleActivityTask decision that failed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'activityId' => array(
+                                        'description' => 'The activityId provided in the ScheduleActivityTask decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision that resulted in the scheduling of this activity task. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'requestCancelActivityTaskFailedEventAttributes' => array(
+                                'description' => 'If the event is of type RequestCancelActivityTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityId' => array(
+                                        'description' => 'The activityId provided in the RequestCancelActivityTask decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelActivityTask decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'startTimerFailedEventAttributes' => array(
+                                'description' => 'If the event is of type StartTimerFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The timerId provided in the StartTimer decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartTimer decision for this activity task. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'cancelTimerFailedEventAttributes' => array(
+                                'description' => 'If the event is of type CancelTimerFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The timerId provided in the CancelTimer decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelTimer decision to cancel this timer. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'startChildWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type StartChildWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowType' => array(
+                                        'description' => 'The workflow type provided in the StartChildWorkflowExecution Decision that failed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the child workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartChildWorkflowExecution Decision to request this child workflow execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
@@ -4088,6 +4629,7 @@ return array (
                     ),
                 ),
                 'nextPageToken' => array(
+                    'description' => 'The token for the next page. If set, the history consists of more than one page and the next page can be retrieved by repeating the request with this token and all other arguments unchanged.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -4098,39 +4640,49 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'typeInfos' => array(
+                    'description' => 'List of activity type information.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ActivityTypeInfo',
+                        'description' => 'Detailed information about an activity type.',
                         'type' => 'object',
                         'properties' => array(
                             'activityType' => array(
+                                'description' => 'The ActivityType type structure representing the activity type.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'name' => array(
+                                        'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                         'type' => 'string',
                                     ),
                                     'version' => array(
+                                        'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'status' => array(
+                                'description' => 'The current status of the activity type.',
                                 'type' => 'string',
                             ),
                             'description' => array(
+                                'description' => 'The description of the activity type provided in RegisterActivityType.',
                                 'type' => 'string',
                             ),
                             'creationDate' => array(
+                                'description' => 'The date and time this activity type was created through RegisterActivityType.',
                                 'type' => 'string',
                             ),
                             'deprecationDate' => array(
+                                'description' => 'If DEPRECATED, the date and time DeprecateActivityType was called.',
                                 'type' => 'string',
                             ),
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
+                    'description' => 'Returns a value if the results are paginated. To get the next page of results, repeat the request specifying this token and all other arguments unchanged.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -4141,58 +4693,74 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'executionInfos' => array(
+                    'description' => 'The list of workflow information structures.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'WorkflowExecutionInfo',
+                        'description' => 'Contains information about a workflow execution.',
                         'type' => 'object',
                         'properties' => array(
                             'execution' => array(
+                                'description' => 'The workflow execution this information is about.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The user defined identifier associated with the workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'A system generated unique identifier for the workflow execution.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowType' => array(
+                                'description' => 'The type of the workflow execution.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'name' => array(
+                                        'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                         'type' => 'string',
                                     ),
                                     'version' => array(
+                                        'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'startTimestamp' => array(
+                                'description' => 'The time when the execution was started.',
                                 'type' => 'string',
                             ),
                             'closeTimestamp' => array(
+                                'description' => 'The time when the workflow execution was closed. Set only if the execution status is CLOSED.',
                                 'type' => 'string',
                             ),
                             'executionStatus' => array(
+                                'description' => 'The current status of the execution.',
                                 'type' => 'string',
                             ),
                             'closeStatus' => array(
+                                'description' => 'If the execution status is closed then this specifies how the execution was closed:',
                                 'type' => 'string',
                             ),
                             'parent' => array(
+                                'description' => 'If this workflow execution is a child of another execution then contains the workflow execution that started this execution.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The user defined identifier associated with the workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'A system generated unique identifier for the workflow execution.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'tagList' => array(
+                                'description' => 'The list of tags associated with the workflow execution. Tags can be used to identify and list workflow executions of interest through the visibility APIs. A workflow execution can have a maximum of 5 tags.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'Tag',
@@ -4200,12 +4768,14 @@ return array (
                                 ),
                             ),
                             'cancelRequested' => array(
+                                'description' => 'Set to true if a cancellation is requested for this workflow execution.',
                                 'type' => 'boolean',
                             ),
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
+                    'description' => 'The token of the next page in the result. If set, the results have more than one page. The next page can be retrieved by repeating the request with this token and all other arguments unchanged.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -4216,25 +4786,31 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'domainInfos' => array(
+                    'description' => 'A list of DomainInfo structures.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'DomainInfo',
+                        'description' => 'Contains general information about a domain.',
                         'type' => 'object',
                         'properties' => array(
                             'name' => array(
+                                'description' => 'The name of the domain. This name is unique within the account.',
                                 'type' => 'string',
                             ),
                             'status' => array(
+                                'description' => 'The status of the domain:',
                                 'type' => 'string',
                             ),
                             'description' => array(
+                                'description' => 'The description of the domain provided through RegisterDomain.',
                                 'type' => 'string',
                             ),
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
+                    'description' => 'Returns a value if the results are paginated. To get the next page of results, repeat the request specifying this token and all other arguments unchanged.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -4245,39 +4821,49 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'typeInfos' => array(
+                    'description' => 'The list of workflow type information.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'WorkflowTypeInfo',
+                        'description' => 'Contains information about a workflow type.',
                         'type' => 'object',
                         'properties' => array(
                             'workflowType' => array(
+                                'description' => 'The workflow type this information is about.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'name' => array(
+                                        'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                         'type' => 'string',
                                     ),
                                     'version' => array(
+                                        'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'status' => array(
+                                'description' => 'The current status of the workflow type.',
                                 'type' => 'string',
                             ),
                             'description' => array(
+                                'description' => 'The description of the type registered through RegisterWorkflowType.',
                                 'type' => 'string',
                             ),
                             'creationDate' => array(
+                                'description' => 'The date when this type was registered.',
                                 'type' => 'string',
                             ),
                             'deprecationDate' => array(
+                                'description' => 'If the type is in deprecated state, then it is set to the date when the type was deprecated.',
                                 'type' => 'string',
                             ),
                         ),
                     ),
                 ),
                 'nextPageToken' => array(
+                    'description' => 'The token for the next page of type information. If set then the list consists of more than one page. You can retrieve the next page by repeating the request (that returned the structure) with the this token and all other arguments unchanged.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -4288,42 +4874,52 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'taskToken' => array(
+                    'description' => 'The opaque string used as a handle on the task. This token is used by workers to communicate progress and response information back to the system about the task.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'activityId' => array(
+                    'description' => 'The unique ID of the task.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'startedEventId' => array(
+                    'description' => 'The id of the ActivityTaskStarted event recorded in the history.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'workflowExecution' => array(
+                    'description' => 'The workflow execution that started this activity task.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'workflowId' => array(
+                            'description' => 'The user defined identifier associated with the workflow execution.',
                             'type' => 'string',
                         ),
                         'runId' => array(
+                            'description' => 'A system generated unique identifier for the workflow execution.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'activityType' => array(
+                    'description' => 'The type of this activity task.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'name' => array(
+                            'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                             'type' => 'string',
                         ),
                         'version' => array(
+                            'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'input' => array(
+                    'description' => 'The inputs provided when the activity task was scheduled. The form of the input is user defined and should be meaningful to the activity implementation.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -4334,88 +4930,112 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'taskToken' => array(
+                    'description' => 'The opaque string used as a handle on the task. This token is used by workers to communicate progress and response information back to the system about the task.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'startedEventId' => array(
+                    'description' => 'The id of the DecisionTaskStarted event recorded in the history.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'workflowExecution' => array(
+                    'description' => 'The workflow execution for which this decision task was created.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'workflowId' => array(
+                            'description' => 'The user defined identifier associated with the workflow execution.',
                             'type' => 'string',
                         ),
                         'runId' => array(
+                            'description' => 'A system generated unique identifier for the workflow execution.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'workflowType' => array(
+                    'description' => 'The type of the workflow execution for which this decision task was created.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
                         'name' => array(
+                            'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                         ),
                         'version' => array(
+                            'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                             'type' => 'string',
                         ),
                     ),
                 ),
                 'events' => array(
+                    'description' => 'A paginated list of history events of the workflow execution. The decider uses this during the processing of the decision task.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'HistoryEvent',
+                        'description' => 'Event within a workflow execution. A history event can be one of these types:',
                         'type' => 'object',
                         'properties' => array(
                             'eventTimestamp' => array(
+                                'description' => 'The date and time when the event occurred.',
                                 'type' => 'string',
                             ),
                             'eventType' => array(
+                                'description' => 'The type of the history event.',
                                 'type' => 'string',
                             ),
                             'eventId' => array(
+                                'description' => 'The system generated id of the event. This id uniquely identifies the event with in the workflow execution history.',
                                 'type' => 'numeric',
                             ),
                             'workflowExecutionStartedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'input' => array(
+                                        'description' => 'The input provided to the workflow execution (if any).',
                                         'type' => 'string',
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for this workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration of decision tasks for this workflow type.',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy to use for the child workflow executions if this workflow execution is terminated, by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout. The supported child policies are: TERMINATE: the child executions will be terminated. REQUEST_CANCEL: a request to cancel will be attempted for each child execution by recording a WorkflowExecutionCancelRequested event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event. ABANDON: no action will be taken. The child executions will continue to run.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The name of the task list for scheduling the decision tasks for this workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The workflow type of this execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags associated with this workflow execution. An execution can have up to 5 tags.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Tag',
@@ -4423,134 +5043,171 @@ return array (
                                         ),
                                     ),
                                     'continuedExecutionRunId' => array(
+                                        'description' => 'If this workflow execution was started due to a ContinueAsNewWorkflowExecution decision, then it contains the runId of the previous workflow execution that was closed and continued as this execution.',
                                         'type' => 'string',
                                     ),
                                     'parentWorkflowExecution' => array(
+                                        'description' => 'The source workflow execution that started this workflow execution. The member is not set if the workflow execution was not started by a workflow.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'parentInitiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this workflow execution. The source event with this Id can be found in the history of the source workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'result' => array(
+                                        'description' => 'The result produced by the workflow execution upon successful completion.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CompleteWorkflowExecution decision to complete this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'completeWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type CompleteWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CompleteWorkflowExecution decision to complete this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'The descriptive reason provided for the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details of the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the FailWorkflowExecution decision to fail this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'failWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type FailWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the FailWorkflowExecution decision to fail this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timeoutType' => array(
+                                        'description' => 'The type of timeout that caused this event.',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy used for the child workflow executions of this workflow execution. The supported child policies are: TERMINATE: the child executions will be terminated. REQUEST_CANCEL: a request to cancel will be attempted for each child execution by recording a WorkflowExecutionCancelRequested event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event. ABANDON: no action will be taken. The child executions will continue to run.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowExecutionCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'details' => array(
+                                        'description' => 'Details for the cancellation (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'cancelWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type CancelWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionContinuedAsNewEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionContinuedAsNew then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'input' => array(
+                                        'description' => 'The input provided to the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the ContinueAsNewWorkflowExecution decision that started this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'newExecutionRunId' => array(
+                                        'description' => 'The runId of the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The total duration allowed for the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'Represents a task list.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration of decision tasks for the new workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy to use for the child workflow executions of the new execution if it is terminated by calling the TerminateWorkflowExecution action explicitly or due to an expired timeout.',
                                         'type' => 'string',
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags associated with the new workflow execution.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Tag',
@@ -4558,12 +5215,15 @@ return array (
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'Represents a workflow type.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
@@ -4571,384 +5231,493 @@ return array (
                                 ),
                             ),
                             'continueAsNewWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ContinueAsNewWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'cause' => array(
+                                        'description' => 'The cause of the failure. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the ContinueAsNewWorkflowExecution decision that started this execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'workflowExecutionTerminatedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionTerminated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'The reason provided for the termination (if any).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details provided for the termination (if any).',
                                         'type' => 'string',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy used for the child workflow executions of this workflow execution. The supported child policies are:',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'If set, indicates that the workflow execution was automatically terminated, and specifies the cause. This happens if the parent workflow execution times out or is terminated and the child policy is set to terminate child executions.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowExecutionCancelRequestedEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionCancelRequested then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'externalWorkflowExecution' => array(
+                                        'description' => 'The external workflow execution for which the cancellation was requested.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'externalInitiatedEventId' => array(
+                                        'description' => 'The id of the RequestCancelExternalWorkflowExecutionInitiated event corresponding to the RequestCancelExternalWorkflowExecution decision to cancel this workflow execution.The source event with this Id can be found in the history of the source workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'cause' => array(
+                                        'description' => 'If set, indicates that the request to cancel the workflow execution was automatically generated, and specifies the cause. This happens if the parent workflow execution times out or is terminated, and the child policy is set to cancel child executions.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'decisionTaskScheduledEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskScheduled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'taskList' => array(
+                                        'description' => 'The name of the task list in which the decision task was scheduled.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'startToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for this decision task. The task is considered timed out if it does not completed within this duration.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'decisionTaskStartedEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'identity' => array(
+                                        'description' => 'Identity of the decider making the request. This enables diagnostic tracing when problems arise. The form of this identity is user defined.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the DecisionTaskScheduled event that was recorded when this decision task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'decisionTaskCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'executionContext' => array(
+                                        'description' => 'User defined context for the workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the DecisionTaskScheduled event that was recorded when this decision task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the DecisionTaskStarted event recorded when this decision task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'decisionTaskTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timeoutType' => array(
+                                        'description' => 'The type of timeout that expired before the decision task could be completed.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the DecisionTaskScheduled event that was recorded when this decision task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the DecisionTaskStarted event recorded when this decision task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskScheduledEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskScheduled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityType' => array(
+                                        'description' => 'The type of the activity task.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'activityId' => array(
+                                        'description' => 'The unique id of the activity task.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'The input provided to the activity task.',
                                         'type' => 'string',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks. This data is not sent to the activity.',
                                         'type' => 'string',
                                     ),
                                     'scheduleToStartTimeout' => array(
+                                        'description' => 'The maximum amount of time the activity task can wait to be assigned to a worker.',
                                         'type' => 'string',
                                     ),
                                     'scheduleToCloseTimeout' => array(
+                                        'description' => 'The maximum amount of time for this activity task.',
                                         'type' => 'string',
                                     ),
                                     'startToCloseTimeout' => array(
+                                        'description' => 'The maximum amount of time a worker may take to process the activity task.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The task list in which the activity task has been scheduled.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision that resulted in the scheduling of this activity task. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'heartbeatTimeout' => array(
+                                        'description' => 'The maximum time before which the worker processing this task must report progress by calling RecordActivityTaskHeartbeat. If the timeout is exceeded, the activity task is automatically timed out. If the worker subsequently attempts to record a heartbeat or return a result, it will be ignored.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'activityTaskStartedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'identity' => array(
+                                        'description' => 'Identity of the worker that was assigned this task. This aids diagnostics when problems arise. The form of this identity is user defined.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'result' => array(
+                                        'description' => 'The results of the activity task (if any).',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'reason' => array(
+                                        'description' => 'The reason provided for the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details of the failure (if any).',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timeoutType' => array(
+                                        'description' => 'The type of the timeout that caused this event.',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'details' => array(
+                                        'description' => 'Contains the content of the details parameter for the last call made by the activity to RecordActivityTaskHeartbeat.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'activityTaskCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'details' => array(
+                                        'description' => 'Details of the cancellation (if any).',
                                         'type' => 'string',
                                     ),
                                     'scheduledEventId' => array(
+                                        'description' => 'The id of the ActivityTaskScheduled event that was recorded when this activity task was scheduled. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ActivityTaskStarted event recorded when this activity task was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'latestCancelRequestedEventId' => array(
+                                        'description' => 'If set, contains the Id of the last ActivityTaskCancelRequested event recorded for this activity task. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'activityTaskCancelRequestedEventAttributes' => array(
+                                'description' => 'If the event is of type ActivityTaskcancelRequested then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelActivityTask decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'activityId' => array(
+                                        'description' => 'The unique ID of the task.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'workflowExecutionSignaledEventAttributes' => array(
+                                'description' => 'If the event is of type WorkflowExecutionSignaled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'signalName' => array(
+                                        'description' => 'The name of the signal received. The decider can use the signal name and inputs to determine how to the process the signal.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'Inputs provided with the signal (if any). The decider can use the signal name and inputs to determine how to process the signal.',
                                         'type' => 'string',
                                     ),
                                     'externalWorkflowExecution' => array(
+                                        'description' => 'The workflow execution that sent the signal. This is set only of the signal was sent by another workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'externalInitiatedEventId' => array(
+                                        'description' => 'The id of the SignalExternalWorkflowExecutionInitiated event corresponding to the SignalExternalWorkflow decision to signal this workflow execution.The source event with this Id can be found in the history of the source workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event. This field is set only if the signal was initiated by another workflow execution.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'markerRecordedEventAttributes' => array(
+                                'description' => 'If the event is of type MarkerRecorded then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'markerName' => array(
+                                        'description' => 'The name of the marker.',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'Details of the marker (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RecordMarker decision that requested this marker. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'recordMarkerFailedEventAttributes' => array(
+                                'description' => 'If the event is of type DecisionTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'markerName' => array(
+                                        'description' => 'The marker\'s name.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RecordMarkerFailed decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'timerStartedEventAttributes' => array(
+                                'description' => 'If the event is of type TimerStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The unique Id of the timer that was started.',
                                         'type' => 'string',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks.',
                                         'type' => 'string',
                                     ),
                                     'startToFireTimeout' => array(
+                                        'description' => 'The duration of time after which the timer will fire.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartTimer decision for this activity task. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'timerFiredEventAttributes' => array(
+                                'description' => 'If the event is of type TimerFired then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The unique Id of the timer that fired.',
                                         'type' => 'string',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The id of the TimerStarted event that was recorded when this timer was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'timerCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type TimerCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The unique Id of the timer that was canceled.',
                                         'type' => 'string',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The id of the TimerStarted event that was recorded when this timer was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelTimer decision to cancel this timer. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'startChildWorkflowExecutionInitiatedEventAttributes' => array(
+                                'description' => 'If the event is of type StartChildWorkflowExecutionInitiated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the child workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent decision tasks. This data is not sent to the activity.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'The inputs provided to the child workflow execution (if any).',
                                         'type' => 'string',
                                     ),
                                     'executionStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration for the child workflow execution. If the workflow execution is not closed within this duration, it will be timed out and force terminated.',
                                         'type' => 'string',
                                     ),
                                     'taskList' => array(
+                                        'description' => 'The name of the task list used for the decision tasks of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the task list.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartChildWorkflowExecution Decision to request this child workflow execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'childPolicy' => array(
+                                        'description' => 'The policy to use for the child workflow executions if this execution gets terminated by explicitly calling the TerminateWorkflowExecution action or due to an expired timeout.',
                                         'type' => 'string',
                                     ),
                                     'taskStartToCloseTimeout' => array(
+                                        'description' => 'The maximum duration allowed for the decision tasks for this workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'tagList' => array(
+                                        'description' => 'The list of tags to associated with the child workflow execution.',
                                         'type' => 'array',
                                         'items' => array(
                                             'name' => 'Tag',
@@ -4958,273 +5727,349 @@ return array (
                                 ),
                             ),
                             'childWorkflowExecutionStartedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionStarted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was started.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionCompletedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionCompleted then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was completed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'result' => array(
+                                        'description' => 'The result of the child workflow execution (if any).',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that failed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'reason' => array(
+                                        'description' => 'The reason for the failure (if provided).',
                                         'type' => 'string',
                                     ),
                                     'details' => array(
+                                        'description' => 'The details of the failure (if provided).',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionTimedOutEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionTimedOut then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that timed out.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'timeoutType' => array(
+                                        'description' => 'The type of the timeout that caused the child workflow execution to time out.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionCanceledEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionCanceled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was canceled.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'details' => array(
+                                        'description' => 'Details of the cancellation (if provided).',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'childWorkflowExecutionTerminatedEventAttributes' => array(
+                                'description' => 'If the event is of type ChildWorkflowExecutionTerminated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The child workflow execution that was terminated.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'workflowType' => array(
+                                        'description' => 'The type of the child workflow execution.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'startedEventId' => array(
+                                        'description' => 'The Id of the ChildWorkflowExecutionStarted event recorded when this child workflow execution was started. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'signalExternalWorkflowExecutionInitiatedEventAttributes' => array(
+                                'description' => 'If the event is of type SignalExternalWorkflowExecutionInitiated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution to send the signal to.',
                                         'type' => 'string',
                                     ),
                                     'signalName' => array(
+                                        'description' => 'The name of the signal.',
                                         'type' => 'string',
                                     ),
                                     'input' => array(
+                                        'description' => 'Input provided to the signal (if any).',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the SignalExternalWorkflowExecution decision for this signal. This information can be useful for diagnosing problems by tracing back the cause of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent decision tasks.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'externalWorkflowExecutionSignaledEventAttributes' => array(
+                                'description' => 'If the event is of type ExternalWorkflowExecutionSignaled then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The external workflow execution that the signal was delivered to.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the SignalExternalWorkflowExecutionInitiated event corresponding to the SignalExternalWorkflowExecution decision to request this signal. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'signalExternalWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type SignalExternalWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow execution that the signal was being delivered to.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution that the signal was being delivered to.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the SignalExternalWorkflowExecutionInitiated event corresponding to the SignalExternalWorkflowExecution decision to request this signal. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the SignalExternalWorkflowExecution decision for this signal. This information can be useful for diagnosing problems by tracing back the cause of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
@@ -5233,57 +6078,73 @@ return array (
                                 ),
                             ),
                             'externalWorkflowExecutionCancelRequestedEventAttributes' => array(
+                                'description' => 'If the event is of type ExternalWorkflowExecutionCancelRequested then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowExecution' => array(
+                                        'description' => 'The external workflow execution to which the cancellation request was delivered.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'workflowId' => array(
+                                                'description' => 'The user defined identifier associated with the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                             'runId' => array(
+                                                'description' => 'A system generated unique identifier for the workflow execution.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the RequestCancelExternalWorkflowExecutionInitiated event corresponding to the RequestCancelExternalWorkflowExecution decision to cancel this external workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'requestCancelExternalWorkflowExecutionInitiatedEventAttributes' => array(
+                                'description' => 'If the event is of type RequestCancelExternalWorkflowExecutionInitiated then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow execution to be canceled.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution to be canceled.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelExternalWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
+                                        'description' => 'Optional data attached to the event that can be used by the decider in subsequent workflow tasks.',
                                         'type' => 'string',
                                     ),
                                 ),
                             ),
                             'requestCancelExternalWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type RequestCancelExternalWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the external workflow to which the cancel request was to be delivered.',
                                         'type' => 'string',
                                     ),
                                     'runId' => array(
+                                        'description' => 'The runId of the external workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the RequestCancelExternalWorkflowExecutionInitiated event corresponding to the RequestCancelExternalWorkflowExecution decision to cancel this external workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelExternalWorkflowExecution decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
@@ -5292,96 +6153,123 @@ return array (
                                 ),
                             ),
                             'scheduleActivityTaskFailedEventAttributes' => array(
+                                'description' => 'If the event is of type ScheduleActivityTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityType' => array(
+                                        'description' => 'The activity type provided in the ScheduleActivityTask decision that failed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of this activity. The combination of activity type name and version must be unique within a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of this activity. The combination of activity type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'activityId' => array(
+                                        'description' => 'The activityId provided in the ScheduleActivityTask decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision that resulted in the scheduling of this activity task. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'requestCancelActivityTaskFailedEventAttributes' => array(
+                                'description' => 'If the event is of type RequestCancelActivityTaskFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'activityId' => array(
+                                        'description' => 'The activityId provided in the RequestCancelActivityTask decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the RequestCancelActivityTask decision for this cancellation request. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'startTimerFailedEventAttributes' => array(
+                                'description' => 'If the event is of type StartTimerFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The timerId provided in the StartTimer decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartTimer decision for this activity task. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'cancelTimerFailedEventAttributes' => array(
+                                'description' => 'If the event is of type CancelTimerFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'timerId' => array(
+                                        'description' => 'The timerId provided in the CancelTimer decision that failed.',
                                         'type' => 'string',
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the CancelTimer decision to cancel this timer. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                 ),
                             ),
                             'startChildWorkflowExecutionFailedEventAttributes' => array(
+                                'description' => 'If the event is of type StartChildWorkflowExecutionFailed then this member is set and provides detailed information about the event. It is not set for other event types.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'workflowType' => array(
+                                        'description' => 'The workflow type provided in the StartChildWorkflowExecution Decision that failed.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'name' => array(
+                                                'description' => 'The name of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                             'version' => array(
+                                                'description' => 'The version of the workflow type. This field is required. The combination of workflow type name and version must be unique with in a domain.',
                                                 'type' => 'string',
                                             ),
                                         ),
                                     ),
                                     'cause' => array(
+                                        'description' => 'The cause of the failure to process the decision. This information is generated by the system and can be useful for diagnostic purposes.',
                                         'type' => 'string',
                                     ),
                                     'workflowId' => array(
+                                        'description' => 'The workflowId of the child workflow execution.',
                                         'type' => 'string',
                                     ),
                                     'initiatedEventId' => array(
+                                        'description' => 'The id of the StartChildWorkflowExecutionInitiated event corresponding to the StartChildWorkflowExecution Decision to start this child workflow execution. This information can be useful for diagnosing problems by tracing back the chain of events leading up to this event.',
                                         'type' => 'numeric',
                                     ),
                                     'decisionTaskCompletedEventId' => array(
+                                        'description' => 'The id of the DecisionTaskCompleted event corresponding to the decision task that resulted in the StartChildWorkflowExecution Decision to request this child workflow execution. This information can be useful for diagnosing problems by tracing back the cause of events.',
                                         'type' => 'numeric',
                                     ),
                                     'control' => array(
@@ -5393,10 +6281,12 @@ return array (
                     ),
                 ),
                 'nextPageToken' => array(
+                    'description' => 'Returns a value if the results are paginated. To get the next page of results, repeat the request specifying this token and all other arguments unchanged.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'previousStartedEventId' => array(
+                    'description' => 'The id of the DecisionTaskStarted event of the previous decision task of this workflow execution that was processed by the decider. This can be used to determine the events in the history new since the last decision task received by the decider.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
@@ -5407,6 +6297,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'cancelRequested' => array(
+                    'description' => 'Set to true if cancellation of the task is requested.',
                     'type' => 'boolean',
                     'location' => 'json',
                 ),

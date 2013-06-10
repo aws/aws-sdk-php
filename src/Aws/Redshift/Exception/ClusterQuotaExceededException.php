@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterQuotaExceededException error is encountered
+ * The request would exceed the allowed number of cluster instances for this account.
  */
 class ClusterQuotaExceededException extends RedshiftException {}

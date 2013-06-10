@@ -17,6 +17,6 @@
 namespace Aws\Swf\Exception;
 
 /**
- * Exception that occurs when a TypeAlreadyExistsException error is encountered
+ * Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.
  */
 class TypeAlreadyExistsException extends SwfException {}

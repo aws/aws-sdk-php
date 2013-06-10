@@ -237,7 +237,7 @@ return array (
                 ),
                 'ApplicationName' => array(
                     'required' => true,
-                    'description' => 'The name of the application to associate with this configuration template. If no application is found with this name, returns an InvalidParameterValue error.',
+                    'description' => 'The name of the application to associate with this configuration template. If no application is found with this name, AWS Elastic Beanstalk returns an InvalidParameterValue error.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -258,7 +258,7 @@ return array (
                     'maxLength' => 100,
                 ),
                 'SourceConfiguration' => array(
-                    'description' => 'If specified, uses the configuration values from the specified configuration template to create a new configuration.',
+                    'description' => 'If specified, AWS Elastic Beanstalk uses the configuration values from the specified configuration template to create a new configuration.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -288,7 +288,7 @@ return array (
                     'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
-                    'description' => 'If specified, sets the specified configuration option to the requested value. The new value overrides the value obtained from the solution stack or the source configuration template.',
+                    'description' => 'If specified, AWS Elastic Beanstalk sets the specified configuration option to the requested value. The new value overrides the value obtained from the solution stack or the source configuration template.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'OptionSettings.member',
@@ -366,14 +366,14 @@ return array (
                     'maxLength' => 23,
                 ),
                 'TemplateName' => array(
-                    'description' => 'The name of the configuration template to use in deployment. If no configuration template is found with this name, returns an InvalidParameterValue error.',
+                    'description' => 'The name of the configuration template to use in deployment. If no configuration template is found with this name, AWS Elastic Beanstalk returns an InvalidParameterValue error.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'SolutionStackName' => array(
-                    'description' => 'This is an alternative to specifying a configuration name. If specified, sets the configuration values to the default values associated with the specified solution stack.',
+                    'description' => 'This is an alternative to specifying a configuration name. If specified, AWS Elastic Beanstalk sets the configuration values to the default values associated with the specified solution stack.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'maxLength' => 100,
@@ -392,7 +392,7 @@ return array (
                     'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
-                    'description' => 'If specified, sets the specified configuration options to the requested value in the configuration set for the new environment. These override the values obtained from the solution stack or the configuration template.',
+                    'description' => 'If specified, AWS Elastic Beanstalk sets the specified configuration options to the requested value in the configuration set for the new environment. These override the values obtained from the solution stack or the configuration template.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'OptionSettings.member',
@@ -680,7 +680,7 @@ return array (
                     'default' => '2010-12-01',
                 ),
                 'ApplicationName' => array(
-                    'description' => 'If specified, restricts the returned descriptions to only include ones that are associated with the specified application.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to only include ones that are associated with the specified application.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -719,7 +719,7 @@ return array (
                     'default' => '2010-12-01',
                 ),
                 'ApplicationNames' => array(
-                    'description' => 'If specified, restricts the returned descriptions to only include those with the specified names.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to only include those with the specified names.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'ApplicationNames.member',
@@ -899,21 +899,21 @@ return array (
                     'default' => '2010-12-01',
                 ),
                 'ApplicationName' => array(
-                    'description' => 'If specified, restricts the returned descriptions to include only those that are associated with this application.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those that are associated with this application.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
-                    'description' => 'If specified, restricts the returned descriptions to include only those that are associated with this application version.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those that are associated with this application version.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'EnvironmentIds' => array(
-                    'description' => 'If specified, restricts the returned descriptions to include only those that have the specified IDs.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those that have the specified IDs.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'EnvironmentIds.member',
@@ -923,7 +923,7 @@ return array (
                     ),
                 ),
                 'EnvironmentNames' => array(
-                    'description' => 'If specified, restricts the returned descriptions to include only those that have the specified names.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those that have the specified names.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'EnvironmentNames.member',
@@ -971,40 +971,40 @@ return array (
                     'default' => '2010-12-01',
                 ),
                 'ApplicationName' => array(
-                    'description' => 'If specified, restricts the returned descriptions to include only those associated with this application.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those associated with this application.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'VersionLabel' => array(
-                    'description' => 'If specified, restricts the returned descriptions to those associated with this application version.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to those associated with this application version.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'TemplateName' => array(
-                    'description' => 'If specified, restricts the returned descriptions to those that are associated with this environment configuration.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to those that are associated with this environment configuration.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'EnvironmentId' => array(
-                    'description' => 'If specified, restricts the returned descriptions to those associated with this environment.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to those associated with this environment.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'EnvironmentName' => array(
-                    'description' => 'If specified, restricts the returned descriptions to those associated with this environment.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to those associated with this environment.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
                     'maxLength' => 23,
                 ),
                 'RequestId' => array(
-                    'description' => 'If specified, restricts the described events to include only those associated with this request ID.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the described events to include only those associated with this request ID.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1022,7 +1022,7 @@ return array (
                     ),
                 ),
                 'StartTime' => array(
-                    'description' => 'If specified, restricts the returned descriptions to those that occur on or after this time.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to those that occur on or after this time.',
                     'type' => array(
                         'object',
                         'string',
@@ -1032,7 +1032,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
-                    'description' => 'If specified, restricts the returned descriptions to those that occur up to, but not including, the EndTime.',
+                    'description' => 'If specified, AWS Elastic Beanstalk restricts the returned descriptions to those that occur up to, but not including, the EndTime.',
                     'type' => array(
                         'object',
                         'string',
@@ -1509,34 +1509,34 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'EnvironmentName' => array(
-                    'description' => 'The name of the environment to update. If no environment with this name exists, returns an InvalidParameterValue error.',
+                    'description' => 'The name of the environment to update. If no environment with this name exists, AWS Elastic Beanstalk returns an InvalidParameterValue error.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
                     'maxLength' => 23,
                 ),
                 'VersionLabel' => array(
-                    'description' => 'If this parameter is specified, deploys the named application version to the environment. If no such application version is found, returns an InvalidParameterValue error.',
+                    'description' => 'If this parameter is specified, AWS Elastic Beanstalk deploys the named application version to the environment. If no such application version is found, returns an InvalidParameterValue error.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'TemplateName' => array(
-                    'description' => 'If this parameter is specified, deploys this configuration template to the environment. If no such configuration template is found, returns an InvalidParameterValue error.',
+                    'description' => 'If this parameter is specified, AWS Elastic Beanstalk deploys this configuration template to the environment. If no such configuration template is found, AWS Elastic Beanstalk returns an InvalidParameterValue error.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
                 'Description' => array(
-                    'description' => 'If this parameter is specified, updates the description of this environment.',
+                    'description' => 'If this parameter is specified, AWS Elastic Beanstalk updates the description of this environment.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
-                    'description' => 'If specified, updates the configuration set associated with the running environment and sets the specified configuration options to the requested value.',
+                    'description' => 'If specified, AWS Elastic Beanstalk updates the configuration set associated with the running environment and sets the specified configuration options to the requested value.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'OptionSettings.member',
@@ -1911,7 +1911,7 @@ return array (
                     'location' => 'xml',
                 ),
                 'Health' => array(
-                    'description' => 'Describes the health status of the environment. indicates the failure levels for a running environment:',
+                    'description' => 'Describes the health status of the environment. AWS Elastic Beanstalk indicates the failure levels for a running environment:',
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -2397,7 +2397,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Health' => array(
-                                'description' => 'Describes the health status of the environment. indicates the failure levels for a running environment:',
+                                'description' => 'Describes the health status of the environment. AWS Elastic Beanstalk indicates the failure levels for a running environment:',
                                 'type' => 'string',
                             ),
                             'Resources' => array(

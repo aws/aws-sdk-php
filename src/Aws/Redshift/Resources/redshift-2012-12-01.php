@@ -88,15 +88,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the cluster security group is not "available".',
                     'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The specified CIDR block or EC2 security group is already authorized for the specified cluster security group.',
                     'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The authorization quota for the cluster security group has been reached.',
                     'class' => 'AuthorizationQuotaExceededException',
                 ),
             ),
@@ -134,15 +138,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The value specified as a snapshot identifier is already used by an existing snapshot.',
                     'class' => 'ClusterSnapshotAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the cluster snapshot is not "available".',
                     'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster snapshots.',
                     'class' => 'ClusterSnapshotQuotaExceededException',
                 ),
             ),
@@ -280,30 +288,39 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The account already has a cluster with the given identifier.',
                     'class' => 'ClusterAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The number of nodes specified exceeds the allotted capacity of the cluster.',
                     'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The request would exceed the allowed number of cluster instances for this account.',
                     'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The operation would exceed the number of nodes allowed for a cluster.',
                     'class' => 'NumberOfNodesPerClusterLimitExceededException',
                 ),
                 array(
+                    'reason' => 'The cluster subnet group name does not refer to an existing cluster subnet group.',
                     'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The cluster subnet group does not cover all Availability Zones.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
             ),
@@ -347,9 +364,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster parameter groups.',
                     'class' => 'ClusterParameterGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'A cluster parameter group with the same name already exists.',
                     'class' => 'ClusterParameterGroupAlreadyExistsException',
                 ),
             ),
@@ -387,9 +406,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A cluster security group with the same name already exists.',
                     'class' => 'ClusterSecurityGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster security groups.',
                     'class' => 'ClusterSecurityGroupQuotaExceededException',
                 ),
             ),
@@ -427,15 +448,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The value specified as a snapshot identifier is already used by an existing snapshot.',
                     'class' => 'ClusterSnapshotAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The specified cluster is not in the available state.',
                     'class' => 'InvalidClusterStateException',
                 ),
                 array(
+                    'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster snapshots.',
                     'class' => 'ClusterSnapshotQuotaExceededException',
                 ),
             ),
@@ -484,15 +509,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A ClusterSubnetGroupName is already used by an existing cluster subnet group.',
                     'class' => 'ClusterSubnetGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The request would result in user exceeding the allowed number of cluster subnet groups.',
                     'class' => 'ClusterSubnetGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups.',
                     'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is valid, or not all of the subnets are in the same VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -535,15 +564,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'The specified cluster is not in the available state.',
                     'class' => 'InvalidClusterStateException',
                 ),
                 array(
+                    'reason' => 'The value specified as a snapshot identifier is already used by an existing snapshot.',
                     'class' => 'ClusterSnapshotAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster snapshots.',
                     'class' => 'ClusterSnapshotQuotaExceededException',
                 ),
             ),
@@ -575,9 +608,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.',
                     'class' => 'InvalidClusterParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
@@ -609,9 +644,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the cluster security group is not "available".',
                     'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
             ),
@@ -643,9 +680,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the cluster snapshot is not "available".',
                     'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
+                    'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
             ),
@@ -677,12 +716,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster subnet group cannot be deleted because it is in use.',
                     'class' => 'InvalidClusterSubnetGroupStateException',
                 ),
                 array(
+                    'reason' => 'The state of the subnet is invalid.',
                     'class' => 'InvalidClusterSubnetStateException',
                 ),
                 array(
+                    'reason' => 'The cluster subnet group name does not refer to an existing cluster subnet group.',
                     'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
             ),
@@ -723,6 +765,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
@@ -769,6 +812,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
@@ -809,6 +853,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
             ),
@@ -879,6 +924,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
             ),
@@ -919,6 +965,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster subnet group name does not refer to an existing cluster subnet group.',
                     'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
             ),
@@ -999,6 +1046,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
                 ),
             ),
@@ -1186,6 +1234,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedNodeOfferingNotFoundException',
                 ),
             ),
@@ -1226,6 +1275,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified reserved compute node not found.',
                     'class' => 'ReservedNodeNotFoundException',
                 ),
             ),
@@ -1257,9 +1307,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'A resize operation for the specified cluster is not found.',
                     'class' => 'ResizeNotFoundException',
                 ),
             ),
@@ -1357,27 +1409,35 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified cluster is not in the available state.',
                     'class' => 'InvalidClusterStateException',
                 ),
                 array(
+                    'reason' => 'The state of the cluster security group is not "available".',
                     'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The number of nodes specified exceeds the allotted capacity of the cluster.',
                     'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
+                    'reason' => 'An request option was specified that is not supported.',
                     'class' => 'UnsupportedOptionException',
                 ),
             ),
@@ -1456,9 +1516,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.',
                     'class' => 'InvalidClusterParameterGroupStateException',
                 ),
             ),
@@ -1506,15 +1568,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster subnet group name does not refer to an existing cluster subnet group.',
                     'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups.',
                     'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'A specified subnet is already in use by another cluster.',
                     'class' => 'SubnetAlreadyInUseException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is valid, or not all of the subnets are in the same VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -1551,12 +1617,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedNodeOfferingNotFoundException',
                 ),
                 array(
+                    'reason' => 'User already has a reservation with the given identifier.',
                     'class' => 'ReservedNodeAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would exceed the user\'s compute node quota.',
                     'class' => 'ReservedNodeQuotaExceededException',
                 ),
             ),
@@ -1588,9 +1657,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified cluster is not in the available state.',
                     'class' => 'InvalidClusterStateException',
                 ),
                 array(
+                    'reason' => 'The ClusterIdentifier parameter does not refer to an existing cluster.',
                     'class' => 'ClusterNotFoundException',
                 ),
             ),
@@ -1674,9 +1745,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.',
                     'class' => 'InvalidClusterParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'The parameter group name does not refer to an existing parameter group.',
                     'class' => 'ClusterParameterGroupNotFoundException',
                 ),
             ),
@@ -1741,27 +1814,35 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The account already has a cluster with the given identifier.',
                     'class' => 'ClusterAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
+                    'reason' => 'The request would exceed the allowed number of cluster instances for this account.',
                     'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The number of nodes specified exceeds the allotted capacity of the cluster.',
                     'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
+                    'reason' => 'The state of the cluster snapshot is not "available".',
                     'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
+                    'reason' => 'The restore is invalid.',
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The operation would exceed the number of nodes allowed for a cluster.',
                     'class' => 'NumberOfNodesPerClusterLimitExceededException',
                 ),
             ),
@@ -1808,12 +1889,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The cluster security group name does not refer to an existing cluster security group.',
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The specified CIDR IP range or EC2 security group is not authorized for the specified cluster security group.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the cluster security group is not "available".',
                     'class' => 'InvalidClusterSecurityGroupStateException',
                 ),
             ),
@@ -2220,6 +2304,7 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'SubnetAvailabilityZone' => array(
+                                        'description' => 'Describes an availability zone.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'Name' => array(
@@ -2544,6 +2629,7 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'SubnetAvailabilityZone' => array(
+                                            'description' => 'Describes an availability zone.',
                                             'type' => 'object',
                                             'properties' => array(
                                                 'Name' => array(

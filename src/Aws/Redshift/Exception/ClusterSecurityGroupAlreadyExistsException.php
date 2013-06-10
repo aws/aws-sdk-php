@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSecurityGroupAlreadyExistsException error is encountered
+ * A cluster security group with the same name already exists.
  */
 class ClusterSecurityGroupAlreadyExistsException extends RedshiftException {}

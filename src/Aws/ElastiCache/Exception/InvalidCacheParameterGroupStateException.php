@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Exception that occurs when a InvalidCacheParameterGroupStateException error is encountered
+ * The state of the Cache Parameter Group does not allow for the requested action to occur.
  */
 class InvalidCacheParameterGroupStateException extends ElastiCacheException {}

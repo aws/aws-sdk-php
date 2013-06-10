@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a AuthorizationNotFoundException error is encountered
+ * The specified CIDR IP range or EC2 security group is not authorized for the specified cluster security group.
  */
 class AuthorizationNotFoundException extends RedshiftException {}

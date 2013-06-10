@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a InvalidRestoreException error is encountered
+ * The restore is invalid.
  */
 class InvalidRestoreException extends RedshiftException {}

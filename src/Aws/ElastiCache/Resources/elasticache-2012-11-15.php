@@ -104,12 +104,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The specified EC2 Security Group is already authorized for the specified Cache Security Group.',
                     'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
@@ -226,27 +229,35 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'User already has a Cache Cluster with the given identifier.',
                     'class' => 'CacheClusterAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Specified Cache node type is not available in the specified Availability Zone.',
                     'class' => 'InsufficientCacheClusterCapacityException',
                 ),
                 array(
+                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Clusters per customer.',
                     'class' => 'ClusterQuotaForCustomerExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes in a single Cache Cluster.',
                     'class' => 'NodeQuotaForClusterExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes per customer.',
                     'class' => 'NodeQuotaForCustomerExceededException',
                 ),
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
@@ -299,12 +310,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Parameter Groups.',
                     'class' => 'CacheParameterGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'A Cache Parameter Group with the name specified in CacheParameterGroupName already exists.',
                     'class' => 'CacheParameterGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
@@ -348,9 +362,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'A Cache Security Group with the name specified in CacheSecurityGroupName already exists.',
                     'class' => 'CacheSecurityGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Security Groups.',
                     'class' => 'CacheSecurityGroupQuotaExceededException',
                 ),
                 array(
@@ -405,15 +421,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheSubnetGroupName is already used by an existing Cache Subnet Group.',
                     'class' => 'CacheSubnetGroupAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Subnet Groups.',
                     'class' => 'CacheSubnetGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a Cache Subnet Group.',
                     'class' => 'CacheSubnetQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Request subnet is invalid, or all subnets are not in the same VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -445,9 +465,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'The specified Cache Cluster is not in the available state.',
                     'class' => 'InvalidCacheClusterStateException',
                 ),
                 array(
@@ -485,9 +507,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
@@ -525,9 +549,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
@@ -565,9 +591,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Request cache subnet group is currently in use.',
                     'class' => 'CacheSubnetGroupInUseException',
                 ),
                 array(
+                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
             ),
@@ -614,6 +642,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
                 array(
@@ -711,6 +740,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
@@ -763,6 +793,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
@@ -809,6 +840,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
@@ -855,6 +887,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
             ),
@@ -1043,6 +1076,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified reserved Cache Node not found.',
                     'class' => 'ReservedCacheNodeNotFoundException',
                 ),
                 array(
@@ -1109,6 +1143,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedCacheNodesOfferingNotFoundException',
                 ),
                 array(
@@ -1218,24 +1253,31 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified Cache Cluster is not in the available state.',
                     'class' => 'InvalidCacheClusterStateException',
                 ),
                 array(
+                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes in a single Cache Cluster.',
                     'class' => 'NodeQuotaForClusterExceededException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes per customer.',
                     'class' => 'NodeQuotaForCustomerExceededException',
                 ),
                 array(
+                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
@@ -1298,9 +1340,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
@@ -1353,15 +1397,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a Cache Subnet Group.',
                     'class' => 'CacheSubnetQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'Request subnet is currently in use.',
                     'class' => 'SubnetInUseException',
                 ),
                 array(
+                    'reason' => 'Request subnet is invalid, or all subnets are not in the same VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -1403,12 +1451,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'Specified offering does not exist.',
                     'class' => 'ReservedCacheNodesOfferingNotFoundException',
                 ),
                 array(
+                    'reason' => 'User already has a reservation with the given identifier.',
                     'class' => 'ReservedCacheNodeAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'Request would exceed the user\'s Cache Node quota.',
                     'class' => 'ReservedCacheNodeQuotaExceededException',
                 ),
                 array(
@@ -1457,9 +1508,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The specified Cache Cluster is not in the available state.',
                     'class' => 'InvalidCacheClusterStateException',
                 ),
                 array(
+                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
             ),
@@ -1519,9 +1572,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
@@ -1571,12 +1626,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'Specified EC2 Security Group is not authorized for the specified Cache Security Group.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
+                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(

@@ -17,6 +17,6 @@
 namespace Aws\Swf\Exception;
 
 /**
- * Exception that occurs when a DomainDeprecatedException error is encountered
+ * Returned when the specified domain has been deprecated.
  */
 class DomainDeprecatedException extends SwfException {}

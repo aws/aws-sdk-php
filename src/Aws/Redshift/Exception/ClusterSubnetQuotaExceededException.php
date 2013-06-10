@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSubnetQuotaExceededException error is encountered
+ * The request would result in user exceeding the allowed number of subnets in a cluster subnet groups.
  */
 class ClusterSubnetQuotaExceededException extends RedshiftException {}

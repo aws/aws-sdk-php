@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSnapshotAlreadyExistsException error is encountered
+ * The value specified as a snapshot identifier is already used by an existing snapshot.
  */
 class ClusterSnapshotAlreadyExistsException extends RedshiftException {}

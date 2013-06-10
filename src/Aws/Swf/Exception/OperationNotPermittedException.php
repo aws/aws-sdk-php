@@ -17,6 +17,6 @@
 namespace Aws\Swf\Exception;
 
 /**
- * Exception that occurs when a OperationNotPermittedException error is encountered
+ * Returned when the caller does not have sufficient permissions to invoke the action.
  */
 class OperationNotPermittedException extends SwfException {}

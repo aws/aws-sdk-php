@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a NumberOfNodesQuotaExceededException error is encountered
+ * The operation would exceed the number of nodes allotted to the account.
  */
 class NumberOfNodesQuotaExceededException extends RedshiftException {}

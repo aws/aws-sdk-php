@@ -3413,6 +3413,7 @@ return array (
                             'type' => 'string',
                         ),
                         'User' => array(
+                            'description' => 'The User data type contains information about a user.',
                             'type' => 'object',
                             'properties' => array(
                                 'Path' => array(
@@ -3449,6 +3450,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'PasswordPolicy' => array(
+                    'description' => 'The PasswordPolicy data type contains information about the account password policy.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -3517,7 +3519,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'entry',
                         'type' => 'object',
@@ -3532,6 +3533,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),
@@ -4565,6 +4567,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'User' => array(
+                                'description' => 'The User data type contains information about a user.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'Path' => array(

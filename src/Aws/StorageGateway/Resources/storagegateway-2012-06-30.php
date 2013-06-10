@@ -99,6 +99,7 @@ return array (
                 ),
                 'GatewayName' => array(
                     'required' => true,
+                    'description' => 'A unique identifier for your gateway. This name becomes part of the gateway Amazon Resources Name (ARN) which is what you use as an input to other operations.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
@@ -163,9 +164,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -216,9 +219,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -248,6 +253,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -268,9 +274,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -300,6 +308,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -307,6 +316,7 @@ return array (
                 ),
                 'DiskIds' => array(
                     'required' => true,
+                    'description' => 'An array of strings that identify disks that are to be configured as working storage. Each string have a minimum length of 1 and maximum length of 300. You can get the disk IDs from the ListLocalDisks API.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -319,9 +329,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -393,9 +405,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -425,6 +439,7 @@ return array (
                 ),
                 'VolumeARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the volume. Use the ListVolumes operation to return a list of gateway volumes.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -432,6 +447,7 @@ return array (
                 ),
                 'SnapshotDescription' => array(
                     'required' => true,
+                    'description' => 'Textual description of the snapshot that appears in the Amazon EC2 console, Elastic Block Store snapshots panel in the Description field, and in the AWS Storage Gateway snapshot Details pane, Description field',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
@@ -440,9 +456,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -489,9 +507,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -521,6 +541,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -528,23 +549,27 @@ return array (
                 ),
                 'DiskId' => array(
                     'required' => true,
+                    'description' => 'The unique identifier for the gateway local disk that is configured as a stored volume. Use ListLocalDisks to list disk IDs for a gateway.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 300,
                 ),
                 'SnapshotId' => array(
+                    'description' => 'The snapshot ID (e.g. "snap-1122aabb") of the snapshot to restore as the new stored volume. Specify this field if you want to create the iSCSI storage volume from a snapshot otherwise do not include this field. To list snapshots for your account use DescribeSnapshots in the Amazon Elastic Compute Cloud API Reference.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'PreserveExistingData' => array(
                     'required' => true,
+                    'description' => 'Specify this field as true if you want to preserve the data on the local disk. Otherwise, specifying this field as false creates an empty volume.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
                 'TargetName' => array(
                     'required' => true,
+                    'description' => 'The name of the iSCSI target used by initiators to connect to the target and as a suffix for the target ARN. For example, specifying TargetName as myvolume results in the target ARN of arn:aws:storagegateway:us-east-1:111122223333:gateway/mygateway/target/iqn.1997-05.com.amazon:myvolume. The target name must be unique across all volumes of a gateway.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
@@ -552,15 +577,18 @@ return array (
                 ),
                 'NetworkInterfaceId' => array(
                     'required' => true,
+                    'description' => 'The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted. Use DescribeGatewayInformation to get a list of the network interfaces available on a gateway.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -590,6 +618,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -597,6 +626,7 @@ return array (
                 ),
                 'BandwidthType' => array(
                     'required' => true,
+                    'description' => 'One of the BandwidthType values that indicates the gateway bandwidth rate limit to delete.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -608,9 +638,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -640,6 +672,7 @@ return array (
                 ),
                 'TargetARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the iSCSI volume target. Use the DescribeStorediSCSIVolumes operation to return to retrieve the TargetARN for specified VolumeARN.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -647,6 +680,7 @@ return array (
                 ),
                 'InitiatorName' => array(
                     'required' => true,
+                    'description' => 'The iSCSI initiator that connects to the target.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
@@ -655,9 +689,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -687,6 +723,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -695,9 +732,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -736,9 +775,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -768,6 +809,7 @@ return array (
                 ),
                 'VolumeARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the volume. Use the ListVolumes operation to return a list of gateway volumes.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -776,9 +818,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -808,6 +852,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -816,9 +861,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -857,9 +904,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -902,9 +951,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -934,6 +985,7 @@ return array (
                 ),
                 'TargetARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the iSCSI volume target. Use the DescribeStorediSCSIVolumes operation to return to retrieve the TargetARN for specified VolumeARN.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -942,9 +994,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -974,6 +1028,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -982,9 +1037,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1014,6 +1071,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1022,9 +1080,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1054,6 +1114,7 @@ return array (
                 ),
                 'VolumeARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the volume. Use the ListVolumes operation to return a list of gateway volumes.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1062,9 +1123,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1094,6 +1157,7 @@ return array (
                 ),
                 'VolumeARNs' => array(
                     'required' => true,
+                    'description' => 'An array of strings where each string represents the Amazon Resource Name (ARN) of a stored volume. All of the specified stored volumes must from the same gateway. Use ListVolumes to get volume ARNs for a gateway.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1106,9 +1170,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1147,9 +1213,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1179,6 +1247,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1187,9 +1256,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1218,12 +1289,14 @@ return array (
                     'default' => 'StorageGateway_20120630.ListGateways',
                 ),
                 'Marker' => array(
+                    'description' => 'An opaque string that indicates the position at which to begin the returned list of gateways.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 1000,
                 ),
                 'Limit' => array(
+                    'description' => 'Specifies that the list of gateways returned be limited to the specified number of items.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
@@ -1231,9 +1304,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1263,6 +1338,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1271,9 +1347,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1312,9 +1390,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1344,18 +1424,21 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
                     'maxLength' => 500,
                 ),
                 'Marker' => array(
+                    'description' => 'A string that indicates the position at which to begin the returned list of volumes. Obtain the marker from the response of a previous List iSCSI Volumes request.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 1000,
                 ),
                 'Limit' => array(
+                    'description' => 'Specifies that the list of volumes returned be limited to the specified number of items.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
@@ -1363,9 +1446,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1395,6 +1480,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1403,9 +1489,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1435,6 +1523,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1443,9 +1532,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1475,17 +1566,20 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
                     'maxLength' => 500,
                 ),
                 'AverageUploadRateLimitInBitsPerSec' => array(
+                    'description' => 'The average upload bandwidth rate limit in bits per second.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 51200,
                 ),
                 'AverageDownloadRateLimitInBitsPerSec' => array(
+                    'description' => 'The average download bandwidth rate limit in bits per second.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 102400,
@@ -1493,9 +1587,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1525,6 +1621,7 @@ return array (
                 ),
                 'TargetARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the iSCSI volume target. Use the DescribeStorediSCSIVolumes operation to return to retrieve the TargetARN for specified VolumeARN.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1532,6 +1629,7 @@ return array (
                 ),
                 'SecretToAuthenticateInitiator' => array(
                     'required' => true,
+                    'description' => 'The secret key that the initiator (e.g. Windows client) must provide to participate in mutual CHAP with the target.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 12,
@@ -1539,12 +1637,14 @@ return array (
                 ),
                 'InitiatorName' => array(
                     'required' => true,
+                    'description' => 'The iSCSI initiator that connects to the target.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 255,
                 ),
                 'SecretToAuthenticateTarget' => array(
+                    'description' => 'The secret key that the target must provide to participate in mutual CHAP with the initiator (e.g. Windows client).',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 12,
@@ -1553,9 +1653,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1585,18 +1687,21 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
                     'maxLength' => 500,
                 ),
                 'GatewayName' => array(
+                    'description' => 'A unique identifier for your gateway. This name becomes part of the gateway Amazon Resources Name (ARN) which is what you use as an input to other operations.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 2,
                     'maxLength' => 255,
                 ),
                 'GatewayTimezone' => array(
+                    'description' => 'One of the GatewayTimezone values that represents the time zone for your gateway. The time zone is used, for example, when a time stamp is given to a snapshot.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1636,9 +1741,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1668,6 +1775,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1676,9 +1784,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1708,6 +1818,7 @@ return array (
                 ),
                 'GatewayARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1715,18 +1826,21 @@ return array (
                 ),
                 'HourOfDay' => array(
                     'required' => true,
+                    'description' => 'The hour component of the maintenance start time represented as hh, where hh is the hour (00 to 23). The hour of the day is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 23,
                 ),
                 'MinuteOfHour' => array(
                     'required' => true,
+                    'description' => 'The minute component of the maintenance start time represented as mm, where mm is the minute (00 to 59). The minute of the hour is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 59,
                 ),
                 'DayOfWeek' => array(
                     'required' => true,
+                    'description' => 'The maintenance start time day of the week.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 6,
@@ -1734,9 +1848,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1766,6 +1882,7 @@ return array (
                 ),
                 'VolumeARN' => array(
                     'required' => true,
+                    'description' => 'The Amazon Resource Name (ARN) of the volume. Use the ListVolumes operation to return a list of gateway volumes.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 50,
@@ -1773,18 +1890,21 @@ return array (
                 ),
                 'StartAt' => array(
                     'required' => true,
+                    'description' => 'The hour of the day at which the snapshot schedule begins represented as hh, where hh is the hour (0 to 23). The hour of the day is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 23,
                 ),
                 'RecurrenceInHours' => array(
                     'required' => true,
+                    'description' => 'Frequency of snapshots. Specify the number of hours between snapshots.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
                     'maximum' => 24,
                 ),
                 'Description' => array(
+                    'description' => 'Optional description of the snapshot that overwrites the existing description.',
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
@@ -1793,9 +1913,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
+                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1807,6 +1929,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1817,6 +1940,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1827,6 +1951,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1837,6 +1962,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1863,10 +1989,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'VolumeARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the volume of which the snapshot was taken.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'SnapshotId' => array(
+                    'description' => 'The snapshot ID that is used to refer to the snapshot in future operations such as describing snapshots (Amazon Elastic Compute Cloud API DescribeSnapshots) or creating a volume from a snapshot (CreateStorediSCSIVolume).',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1898,14 +2026,17 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'VolumeARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the configured volume.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'VolumeSizeInBytes' => array(
+                    'description' => 'The size of the volume in bytes.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'TargetARN' => array(
+                    'description' => 'he Amazon Resource Name (ARN) of the volume target that includes the iSCSI name that initiators can use to connect to the target.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1916,6 +2047,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1926,10 +2058,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TargetARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the target.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InitiatorName' => array(
+                    'description' => 'The iSCSI initiator that connects to the target.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1940,6 +2074,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1961,6 +2096,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'VolumeARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the storage volume that was deleted. It is the same ARN you provided in the request.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1971,14 +2107,17 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'AverageUploadRateLimitInBitsPerSec' => array(
+                    'description' => 'The average upload bandwidth rate limit in bits per second. This field does not appear in the response if the upload rate limit is not set.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'AverageDownloadRateLimitInBitsPerSec' => array(
+                    'description' => 'The average download bandwidth rate limit in bits per second. This field does not appear in the response if the download rate limit is not set.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
@@ -2071,21 +2210,27 @@ return array (
                                 'type' => 'string',
                             ),
                             'VolumeiSCSIAttributes' => array(
+                                'description' => 'Lists iSCSI information about a volume.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'TargetARN' => array(
+                                        'description' => 'The Amazon Resource Name (ARN) of the volume target.',
                                         'type' => 'string',
                                     ),
                                     'NetworkInterfaceId' => array(
+                                        'description' => 'The network interface identifier.',
                                         'type' => 'string',
                                     ),
                                     'NetworkInterfacePort' => array(
+                                        'description' => 'The port used to communicate with iSCSI targets.',
                                         'type' => 'numeric',
                                     ),
                                     'LunNumber' => array(
+                                        'description' => 'The logical disk number.',
                                         'type' => 'numeric',
                                     ),
                                     'ChapEnabled' => array(
+                                        'description' => 'Indicates whether mutual CHAP is enabled for the iSCSI target.',
                                         'type' => 'boolean',
                                     ),
                                 ),
@@ -2100,22 +2245,28 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'ChapCredentials' => array(
+                    'description' => 'An array of ChapInfo objects that represent CHAP credentials. Each object in the array contains CHAP credential information for one target-initiator pair. If no CHAP credentials are set, an empty array is returned. CHAP credential information is provided in a JSON object with the following fields:',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ChapInfo',
+                        'description' => 'Describes Challenge-Handshake Authentication Protocol (CHAP) information that supports authentication between your gateway and iSCSI initiators.',
                         'type' => 'object',
                         'properties' => array(
                             'TargetARN' => array(
+                                'description' => 'The Amazon Resource Name (ARN) of the volume.',
                                 'type' => 'string',
                             ),
                             'SecretToAuthenticateInitiator' => array(
+                                'description' => 'The secret key that the initiator (e.g. Windows client) must provide to participate in mutual CHAP with the target.',
                                 'type' => 'string',
                             ),
                             'InitiatorName' => array(
+                                'description' => 'The iSCSI initiator that connects to the target.',
                                 'type' => 'string',
                             ),
                             'SecretToAuthenticateTarget' => array(
+                                'description' => 'The secret key that the target must provide to participate in mutual CHAP with the initiator (e.g. Windows client).',
                                 'type' => 'string',
                             ),
                         ),
@@ -2128,6 +2279,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2152,15 +2304,19 @@ return array (
                     'location' => 'json',
                     'items' => array(
                         'name' => 'NetworkInterface',
+                        'description' => 'Describes a gateway\'s network interface.',
                         'type' => 'object',
                         'properties' => array(
                             'Ipv4Address' => array(
+                                'description' => 'The Internet Protocol version 4 (IPv4) address of the interface.',
                                 'type' => 'string',
                             ),
                             'MacAddress' => array(
+                                'description' => 'The Media Access Control (MAC) address of the interface.',
                                 'type' => 'string',
                             ),
                             'Ipv6Address' => array(
+                                'description' => 'The Internet Protocol version 6 (IPv6) address of the interface. Currently not supported.',
                                 'type' => 'string',
                             ),
                         ),
@@ -2183,22 +2339,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'HourOfDay' => array(
+                    'description' => 'The hour component of the maintenance start time represented as hh, where hh is the hour (0 to 23). The hour of the day is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'MinuteOfHour' => array(
+                    'description' => 'The minute component of the maintenance start time represented as mm, where mm is the minute (0 to 59). The minute of the hour is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'DayOfWeek' => array(
+                    'description' => 'An ordinal number between 0 and 6 that represents the day of the week, where 0 represents Sunday and 6 represents Saturday. The day of week is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'Timezone' => array(
+                    'description' => 'One of the GatewayTimezone values that indicates the time zone that is set for the gateway. The start time and day of week specified should be in the time zone of the gateway.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2209,22 +2370,27 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'VolumeARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the volume that was specified in the request.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'StartAt' => array(
+                    'description' => 'The hour of the day at which the snapshot schedule begins represented as hh, where hh is the hour (0 to 23). The hour of the day is in the time zone of the gateway.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'RecurrenceInHours' => array(
+                    'description' => 'The number of hours between snapshots.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'Description' => array(
+                    'description' => 'The snapshot description.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Timezone' => array(
+                    'description' => 'One of the GatewayTimezone values that indicates the time zone of the gateway.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2235,55 +2401,72 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'StorediSCSIVolumes' => array(
+                    'description' => 'Describes a single unit of output from DescribeStorediSCSIVolumes. The following fields are returned:',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'StorediSCSIVolume',
+                        'description' => 'Describes an iSCSI stored volume.',
                         'type' => 'object',
                         'properties' => array(
                             'VolumeARN' => array(
+                                'description' => 'The Amazon Resource Name (ARN) of the storage volume.',
                                 'type' => 'string',
                             ),
                             'VolumeId' => array(
+                                'description' => 'The unique identifier of the volume, e.g. vol-AE4B946D.',
                                 'type' => 'string',
                             ),
                             'VolumeType' => array(
+                                'description' => 'One of the VolumeType enumeration values describing the type of the volume.',
                                 'type' => 'string',
                             ),
                             'VolumeStatus' => array(
+                                'description' => 'One of the VolumeStatus values that indicates the state of the storage volume.',
                                 'type' => 'string',
                             ),
                             'VolumeSizeInBytes' => array(
+                                'description' => 'The size of the volume in bytes.',
                                 'type' => 'numeric',
                             ),
                             'VolumeProgress' => array(
+                                'description' => 'Represents the percentage complete if the volume is restoring or bootstrapping that represents the percent of data transferred. This field does not appear in the response if the stored volume is not restoring or bootstrapping.',
                                 'type' => 'numeric',
                             ),
                             'VolumeDiskId' => array(
+                                'description' => 'The disk ID of the local disk that was specified in the CreateStorediSCSIVolume operation.',
                                 'type' => 'string',
                             ),
                             'SourceSnapshotId' => array(
+                                'description' => 'If the stored volume was created from a snapshot, this field contains the snapshot ID used, e.g. snap-78e22663. Otherwise, this field is not included.',
                                 'type' => 'string',
                             ),
                             'PreservedExistingData' => array(
+                                'description' => 'Indicates if when the stored volume was created, existing data on the underlying local disk was preserved.',
                                 'type' => 'boolean',
                             ),
                             'VolumeiSCSIAttributes' => array(
+                                'description' => 'An VolumeiSCSIAttributes object that represents a collection of iSCSI attributes for one stored volume.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'TargetARN' => array(
+                                        'description' => 'The Amazon Resource Name (ARN) of the volume target.',
                                         'type' => 'string',
                                     ),
                                     'NetworkInterfaceId' => array(
+                                        'description' => 'The network interface identifier.',
                                         'type' => 'string',
                                     ),
                                     'NetworkInterfacePort' => array(
+                                        'description' => 'The port used to communicate with iSCSI targets.',
                                         'type' => 'numeric',
                                     ),
                                     'LunNumber' => array(
+                                        'description' => 'The logical disk number.',
                                         'type' => 'numeric',
                                     ),
                                     'ChapEnabled' => array(
+                                        'description' => 'Indicates whether mutual CHAP is enabled for the iSCSI target.',
                                         'type' => 'boolean',
                                     ),
                                 ),
@@ -2328,10 +2511,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'DiskIds' => array(
+                    'description' => 'An array of the gateway\'s local disk IDs that are configured as working storage. Each local disk ID is specified as a string (minimum length of 1 and maximum length of 300). If no local disks are configured as working storage, then the DiskIds array is empty.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -2340,10 +2525,12 @@ return array (
                     ),
                 ),
                 'WorkingStorageUsedInBytes' => array(
+                    'description' => 'The total working storage in bytes in use by the gateway. If no working storage is configured for the gateway, this field returns 0.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
                 'WorkingStorageAllocatedInBytes' => array(
+                    'description' => 'The total working storage in bytes allocated for the gateway. If no working storage is configured for the gateway, this field returns 0.',
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
@@ -2354,19 +2541,23 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Gateways' => array(
+                    'description' => 'An array of GatewayInfo objects.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'GatewayInfo',
+                        'description' => 'Describes a gateway; contains one data member, the GatewayARN of this gateway.',
                         'type' => 'object',
                         'properties' => array(
                             'GatewayARN' => array(
+                                'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                                 'type' => 'string',
                             ),
                         ),
                     ),
                 ),
                 'Marker' => array(
+                    'description' => 'Use the marker in your next request to fetch the next set of gateways in the list. If there are no more gateways to list, this field does not appear in the response.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2377,32 +2568,41 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Disks' => array(
+                    'description' => 'An array of Disk objects.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'Disk',
+                        'description' => 'Describes a gateway local disk.',
                         'type' => 'object',
                         'properties' => array(
                             'DiskId' => array(
+                                'description' => 'The unique device ID or other distinguishing data that identify the local disk.',
                                 'type' => 'string',
                             ),
                             'DiskPath' => array(
+                                'description' => 'The path of the local disk in the gateway virtual machine (VM).',
                                 'type' => 'string',
                             ),
                             'DiskNode' => array(
+                                'description' => 'The device node of the local disk as assigned by the virtualization environment.',
                                 'type' => 'string',
                             ),
                             'DiskSizeInBytes' => array(
+                                'description' => 'The local disk size in bytes.',
                                 'type' => 'numeric',
                             ),
                             'DiskAllocationType' => array(
+                                'description' => 'One of the DiskAllocationType enumeration values that identifies how the local disk is used.',
                                 'type' => 'string',
                             ),
                             'DiskAllocationResource' => array(
+                                'description' => 'The iSCSI Qualified Name (IQN) that is defined for the disk. This field is not included in the response if the local disk is not defined as an iSCSI target. The format of this field is targetIqn::LUNNumber::region-volumeId.',
                                 'type' => 'string',
                             ),
                         ),
@@ -2454,24 +2654,30 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Marker' => array(
+                    'description' => 'Use the marker in your next request to continue pagination of iSCSI volumes. If there are no more volumes to list, this field does not appear in the response body.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'VolumeInfos' => array(
+                    'description' => 'An array of VolumeInfo objects, where each object describes an iSCSI volume. If no volumes are defined for the gateway, then VolumeInfos is an empty array "[]".',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'VolumeInfo',
+                        'description' => 'Describes a storage volume.',
                         'type' => 'object',
                         'properties' => array(
                             'VolumeARN' => array(
+                                'description' => 'The Amazon Resource Name (ARN) for the storage volume. For example, the following is a valid ARN:',
                                 'type' => 'string',
                             ),
                             'VolumeType' => array(
+                                'description' => 'One of the VolumeType values that indicates the configuration of the storage volume, for example as a storage volume.',
                                 'type' => 'string',
                             ),
                         ),
@@ -2484,6 +2690,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2494,6 +2701,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2504,6 +2712,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2514,10 +2723,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TargetARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the target. This is the same target specified in the request.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InitiatorName' => array(
+                    'description' => 'The iSCSI initiator that connects to the target. This is the same initiator name specified in the request.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2528,6 +2739,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2538,6 +2750,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2548,6 +2761,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'description' => 'The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation to return a list of gateways for your account and region.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2558,6 +2772,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'VolumeARN' => array(
+                    'description' => 'The UpdateSnapshotScheduleOutput$VolumeARN of the storage volume whose snapshot schedule was updated. It is the same value you provided in your request.',
                     'type' => 'string',
                     'location' => 'json',
                 ),

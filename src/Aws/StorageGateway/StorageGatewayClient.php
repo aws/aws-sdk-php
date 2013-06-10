@@ -63,7 +63,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateSnapshotSchedule(array $args = array()) {@command StorageGateway UpdateSnapshotSchedule}
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-storagegateway.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.StorageGateway.StorageGatewayClient.html
+ * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.StorageGateway.StorageGatewayClient.html API docs
  */
 class StorageGatewayClient extends AbstractClient
 {

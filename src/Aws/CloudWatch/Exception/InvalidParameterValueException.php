@@ -17,6 +17,6 @@
 namespace Aws\CloudWatch\Exception;
 
 /**
- * Exception that occurs when a InvalidParameterValueException error is encountered
+ * Bad or out-of-range value was supplied for the input parameter.
  */
 class InvalidParameterValueException extends CloudWatchException {}

@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterSecurityGroupQuotaExceededException error is encountered
+ * The request would result in the user exceeding the allowed number of cluster security groups.
  */
 class ClusterSecurityGroupQuotaExceededException extends RedshiftException {}

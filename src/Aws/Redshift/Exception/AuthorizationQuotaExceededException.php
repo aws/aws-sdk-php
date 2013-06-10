@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a AuthorizationQuotaExceededException error is encountered
+ * The authorization quota for the cluster security group has been reached.
  */
 class AuthorizationQuotaExceededException extends RedshiftException {}

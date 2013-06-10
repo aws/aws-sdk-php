@@ -17,6 +17,6 @@
 namespace Aws\CloudWatch\Exception;
 
 /**
- * Exception that occurs when a MissingRequiredParameterException error is encountered
+ * An input parameter that is mandatory for processing the request is not supplied.
  */
 class MissingRequiredParameterException extends CloudWatchException {}

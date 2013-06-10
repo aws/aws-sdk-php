@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Exception that occurs when a ClusterNotFoundException error is encountered
+ * The ClusterIdentifier parameter does not refer to an existing cluster.
  */
 class ClusterNotFoundException extends RedshiftException {}
