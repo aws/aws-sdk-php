@@ -128,10 +128,11 @@ class StreamWrapper
      */
     public static function register(S3Client $client)
     {
-        if (!in_array('s3', stream_get_wrappers())) {
-            stream_wrapper_register('s3', __CLASS__, STREAM_IS_URL);
+        if (in_array('s3', stream_get_wrappers())) {
+            stream_wrapper_unregister('s3');
         }
 
+        stream_wrapper_register('s3', __CLASS__, STREAM_IS_URL);
         self::$client = $client;
     }
 

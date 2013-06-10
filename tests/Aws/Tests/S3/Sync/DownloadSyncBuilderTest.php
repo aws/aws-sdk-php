@@ -32,17 +32,12 @@ class DownloadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanBuild()
     {
-        @stream_wrapper_unregister('s3');
         $client = $this->getServiceBuilder()->get('s3', true);
-        $this->setMockResponse($client, 's3/list_objects_page_5');
-
-        $b = $this->getMockBuilder('Aws\S3\Sync\DownloadSyncBuilder')
-            ->setMethods(array('getTargetIterator'))
-            ->getMock();
-
+        // Set a list object response and a HeadObject response to satisfy the stream wrapper
+        $this->setMockResponse($client, array('s3/list_objects_page_5', 's3/head_success'));
         $b = DownloadSyncBuilder::getInstance();
-        $b->setDirectory(__DIR__)
-            ->setClient($client)
+        $b->setClient($client)
+            ->setDirectory(__DIR__)
             ->setBucket('foo')
             ->allowResumableDownloads(true)
             ->setOperationParams(array('Foo' => 'Bar'))
@@ -55,9 +50,8 @@ class DownloadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testEnsuresDirectoryIsSet()
     {
-        @stream_wrapper_unregister('s3');
         $client = $this->getServiceBuilder()->get('s3', true);
-        $this->setMockResponse($client, 's3/list_objects_page_5');
+        $this->setMockResponse($client, array('s3/list_objects_page_5', 's3/head_success'));
         $b = DownloadSyncBuilder::getInstance();
         $b->setClient($client)->setBucket('foo')->build();
     }
