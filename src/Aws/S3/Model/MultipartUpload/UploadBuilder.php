@@ -64,11 +64,6 @@ class UploadBuilder extends AbstractUploadBuilder
     protected $transferOptions = array();
 
     /**
-     * @var Callable Function to invoke before each multipart upload
-     */
-    protected $beforeUploadListener;
-
-    /**
      * Set the bucket to upload the object to
      *
      * @param string $bucket Name of the bucket
@@ -223,22 +218,6 @@ class UploadBuilder extends AbstractUploadBuilder
     }
 
     /**
-     * Set a callable function or closure to add a listener before each multipart part is uploaded. This function will
-     * recieve a {@see \Guzzle\Common\Event} object that can be used like an associative array. The keys available to
-     * the event object include: 'transfer', 'source', 'options', 'client', 'part_size', 'state', and 'command'
-     *
-     * @param mixed $callback Callable to invoke before each upload
-     *
-     * @return self
-     */
-    public function beforeUpload($callback)
-    {
-        $this->beforeUploadListener = $callback;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      * @throws InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
      * @throws InvalidArgumentException when missing required properties (bucket, key, client, source)
@@ -276,18 +255,9 @@ class UploadBuilder extends AbstractUploadBuilder
             'concurrency'   => $this->concurrency
         ), $this->transferOptions);
 
-        $transfer = $this->concurrency > 1
+        return $this->concurrency > 1
             ? new ParallelTransfer($this->client, $this->state, $this->source, $options)
             : new SerialTransfer($this->client, $this->state, $this->source, $options);
-
-        if ($this->beforeUploadListener) {
-            $transfer->getEventDispatcher()->addListener(
-                AbstractTransfer::BEFORE_PART_UPLOAD,
-                $this->beforeUploadListener
-            );
-        }
-
-        return $transfer;
     }
 
     /**

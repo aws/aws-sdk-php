@@ -508,7 +508,7 @@ class S3Client extends AbstractClient
         }
 
         // Perform a multipart upload if the file is large enough
-        return UploadBuilder::newInstance()
+        $transfer = UploadBuilder::newInstance()
             ->setBucket($bucket)
             ->setKey($key)
             ->setMinPartSize($options['min_part_size'])
@@ -516,11 +516,19 @@ class S3Client extends AbstractClient
             ->setClient($this)
             ->setSource($body)
             ->setTransferOptions($options->toArray())
-            ->beforeUpload($options['before_upload'])
             ->addOptions($options['params'])
             ->setOption('ACL', $acl)
             ->build()
             ->upload();
+
+        if ($options['before_upload']) {
+            $transfer->getEventDispatcher()->addListener(
+                AbstractTransfer::BEFORE_PART_UPLOAD,
+                $options['before_upload']
+            );
+        }
+
+        return $transfer;
     }
 
     /**
