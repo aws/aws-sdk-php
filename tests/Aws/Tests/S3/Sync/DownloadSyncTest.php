@@ -72,7 +72,7 @@ class DownloadSyncTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('/foo/bar', $command['SaveAs']);
     }
 
-    public function testCreatesResumableWhenFileExists()
+    public function testCreatesResumableDownloadWhenFileExists()
     {
         $converter = $this->getMockBuilder('Aws\S3\Sync\KeyConverter')
             ->setMethods(array('convert'))
@@ -104,7 +104,33 @@ class DownloadSyncTest extends \Guzzle\Tests\GuzzleTestCase
         $ref->setAccessible(true);
         $result = $ref->invoke($sync, $this->getSplFile('s3://foo/baz'));
         $this->assertInstanceOf('Aws\S3\ResumableDownload', $result);
+    }
 
+    public function testDoesNotTransferFilesInBatchWithSameNameAsDir()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
 
+        $actualCommands = array(
+            $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'bar', 'SaveAs' => '/tmp/test')),
+            $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'bar', 'SaveAs' => '/tmp/foo')),
+            $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'bar', 'SaveAs' => '/tmp/foo/bar.jpg')),
+            $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'bar', 'SaveAs' => '/tmp/foo/baz/bam')),
+            $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'bar', 'SaveAs' => '/tmp/foo/baz/bam/a'))
+        );
+
+        $sync = $this->getMockBuilder('Aws\S3\Sync\DownloadSync')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $ref = new \ReflectionMethod($sync, 'filterCommands');
+        $ref->setAccessible(true);
+        $result = array_values(array_map(function ($command) {
+            return $command['SaveAs'];
+        }, $ref->invoke($sync, $actualCommands)));
+        $this->assertEquals(array(
+            '/tmp/test',
+            '/tmp/foo/bar.jpg',
+            '/tmp/foo/baz/bam/a'
+        ), $result);
     }
 }

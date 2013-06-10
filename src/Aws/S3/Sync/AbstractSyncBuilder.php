@@ -233,13 +233,13 @@ abstract class AbstractSyncBuilder
     /**
      * Enable debug mode
      *
-     * @param bool $enabled Set to true or false to enable or disable debug output
-     *
+     * @param bool|resource $enabledOrResource Set to true or false to enable or disable debug output. Pass an opened
+     *                                         fopen resource to write to instead of writing to standard out.
      * @return self
      */
-    public function enableDebugOutput($enabled = true)
+    public function enableDebugOutput($enabledOrResource = true)
     {
-        $this->debug = $enabled;
+        $this->debug = $enabledOrResource;
 
         return $this;
     }
@@ -262,6 +262,11 @@ abstract class AbstractSyncBuilder
         return $this;
     }
 
+    /**
+     * Builds a UploadSync or DownloadSync object
+     *
+     * @return AbstractSync
+     */
     public function build()
     {
         $this->validateRequirements();
@@ -286,7 +291,7 @@ abstract class AbstractSyncBuilder
         }
 
         if ($this->debug) {
-            $this->addDebugListener($sync);
+            $this->addDebugListener($sync, is_bool($this->debug) ? STDOUT : $this->debug);
         }
 
         return $sync;
@@ -317,9 +322,10 @@ abstract class AbstractSyncBuilder
     /**
      * Add a listener to the sync object to output debug information while transferring
      *
-     * @param AbstractSync $sync
+     * @param AbstractSync $sync     Sync object to listen to
+     * @param resource     $resource Where to write debug messages
      */
-    abstract protected function addDebugListener(AbstractSync $sync);
+    abstract protected function addDebugListener(AbstractSync $sync, $resource);
 
     /**
      * Validate that the builder has the minimal requirements
@@ -344,7 +350,8 @@ abstract class AbstractSyncBuilder
      */
     protected function assertFileIteratorSet()
     {
-        if (!$this->sourceIterator) {
+        // Interesting... Need to use isset because: Object of class GlobIterator could not be converted to boolean
+        if (!isset($this->sourceIterator)) {
             throw new RuntimeException('A source file iterator must be specified');
         }
     }

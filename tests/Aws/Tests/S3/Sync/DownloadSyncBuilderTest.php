@@ -16,7 +16,10 @@
 
 namespace Aws\Tests\S3\Sync;
 
+use Aws\S3\Command\S3Command;
+use Aws\S3\ResumableDownload;
 use Aws\S3\StreamWrapper;
+use Aws\S3\Sync\DownloadSync;
 use Aws\S3\Sync\DownloadSyncBuilder;
 
 /**
@@ -34,7 +37,7 @@ class DownloadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         // Set a list object response and a HeadObject response to satisfy the stream wrapper
-        $this->setMockResponse($client, array('s3/list_objects_page_5', 's3/head_success'));
+        $this->setMockResponse($client, array('s3/list_objects_empty'));
         $b = DownloadSyncBuilder::getInstance();
         $b->setClient($client)
             ->setDirectory(__DIR__)
@@ -51,8 +54,44 @@ class DownloadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresDirectoryIsSet()
     {
         $client = $this->getServiceBuilder()->get('s3', true);
-        $this->setMockResponse($client, array('s3/list_objects_page_5', 's3/head_success'));
+        $this->setMockResponse($client, array('s3/list_objects_empty'));
         $b = DownloadSyncBuilder::getInstance();
         $b->setClient($client)->setBucket('foo')->build();
+    }
+
+    protected function getDebugSync()
+    {
+        $out = fopen('php://temp', 'r+');
+        $sync = DownloadSyncBuilder::getInstance()
+            ->enableDebugOutput($out)
+            ->setClient($this->getServiceBuilder()->get('s3', true))
+            ->setBucket('Foo')
+            ->setDirectory(__DIR__)
+            ->setSourceIterator(new \ArrayIterator(array(__FILE__)))
+            ->build();
+
+        return array($sync, $out);
+    }
+
+    public function testAddsDebugListenerForCommand()
+    {
+        list($sync, $out) = $this->getDebugSync();
+        $command = new S3Command(array(
+            'Bucket' => 'Foo',
+            'Key'    => 'Bar',
+            'SaveAs' => __FILE__
+        ));
+        $sync->dispatch(DownloadSync::BEFORE_TRANSFER, array('command' => $command));
+        rewind($out);
+        $this->assertContains('Downloading Foo/Bar -> ' . __FILE__, stream_get_contents($out));
+    }
+
+    public function testAddsDebugListenerForResumable()
+    {
+        list($sync, $out) = $this->getDebugSync();
+        $r = new ResumableDownload($this->getServiceBuilder()->get('s3', true), 'Foo', 'Bar', __FILE__);
+        $sync->dispatch(DownloadSync::BEFORE_TRANSFER, array('command' => $r));
+        rewind($out);
+        $this->assertContains('Resuming Foo/Bar -> ' . __FILE__, stream_get_contents($out));
     }
 }

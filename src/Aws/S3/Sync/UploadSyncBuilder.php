@@ -28,8 +28,8 @@ class UploadSyncBuilder extends AbstractSyncBuilder
     /** @var string|Acp Access control policy to set on each object */
     protected $acp = 'private';
 
-    /** @var bool Whether or not to compute Content-MD5 of uploads for data integrity */
-    protected $computeMd5 = true;
+    /** @var int */
+    protected $multipartUploadSize;
 
     /**
      * Set the path that contains files to recursively upload to Amazon S3
@@ -94,13 +94,16 @@ class UploadSyncBuilder extends AbstractSyncBuilder
     }
 
     /**
-     * Disable the calculation of a Content-MD5 value for each upload
+     * Set the multipart upload size threshold. When the size of a file exceeds this value, the file will be uploaded
+     * using a multipart upload.
+     *
+     * @param int $size Size threshold
      *
      * @return self
      */
-    public function disableContentMd5()
+    public function setMultipartUploadSize($size)
     {
-        $this->computeMd5 = false;
+        $this->multipartUploadSize = $size;
 
         return $this;
     }
@@ -113,13 +116,10 @@ class UploadSyncBuilder extends AbstractSyncBuilder
             'iterator' => $this->sourceIterator,
             'source_converter' => $this->sourceConverter,
             'target_converter' => $this->targetConverter,
-            'concurrency' => $this->concurrency
+            'concurrency' => $this->concurrency,
+            'multipart_upload_size' => $this->multipartUploadSize,
+            'acl' => $this->acp
         ));
-
-        $this->addMd5Listener($sync);
-        if ($acp = $this->acp) {
-            $this->addAcpListener($sync);
-        }
 
         return $sync;
     }
@@ -139,55 +139,16 @@ class UploadSyncBuilder extends AbstractSyncBuilder
         return new KeyConverter('s3://' . $this->bucket . '/', '', DIRECTORY_SEPARATOR);
     }
 
-    /**
-     * Add a listener to an UploadSync object to set an ACL or ACP
-     *
-     * @param UploadSync $sync
-     */
-    private function addAcpListener(UploadSync $sync)
+    protected function addDebugListener(AbstractSync $sync, $resource)
     {
-        $acp = $this->acp;
-        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) use ($acp) {
-            $name = is_string($acp) ? 'ACL' : 'ACP';
-            if ($e['command'] instanceof CommandInterface) {
-                $command = $e['command'];
-                $command[$name] = $acp;
-            } else {
-                // Multipart upload transfer object
-                $e['command']->setOption($name, $acp);
-            }
-        });
-    }
-
-    /**
-     * Add a listener to an UploadSync object to set or disable MD5 validation
-     *
-     * @param UploadSync $sync
-     */
-    private function addMd5Listener(UploadSync $sync)
-    {
-        $compute = $this->computeMd5;
-        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) use ($compute) {
-            if ($e['command'] instanceof CommandInterface) {
-                $command = $e['command'];
-                $command['ContentMD5'] = $compute ? md5_file($e['file']) : false;
-            } else {
-                // Multipart upload transfer object
-                $e['command']->setOption('part_md5', $compute);
-            }
-        });
-    }
-
-    protected function addDebugListener(AbstractSync $sync)
-    {
-        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) {
+        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) use ($resource) {
 
             $c = $e['command'];
 
             if ($c instanceof CommandInterface) {
                 $uri = $c['Body']->getUri();
                 $size = $c['Body']->getSize();
-                echo "Uploading {$uri} -> {$c['Key']} ({$size} bytes)\n";
+                fwrite($resource, "Uploading {$uri} -> {$c['Key']} ({$size} bytes)\n");
                 return;
             }
 
@@ -195,16 +156,16 @@ class UploadSyncBuilder extends AbstractSyncBuilder
             $body = $c->getSource();
             $totalSize = $body->getSize();
             $progress = 0;
-            echo "Beginning multipart upload: " . $body->getUri() . ' -> ';
-            echo $c->getState()->getFromId('Key') . " ({$totalSize} bytes)\n";
+            fwrite($resource, "Beginning multipart upload: " . $body->getUri() . ' -> ');
+            fwrite($resource, $c->getState()->getFromId('Key') . " ({$totalSize} bytes)\n");
 
             $c->getEventDispatcher()->addListener(
                 AbstractTransfer::BEFORE_PART_UPLOAD,
-                function ($e) use (&$progress, $totalSize) {
+                function ($e) use (&$progress, $totalSize, $resource) {
                     $command = $e['command'];
                     $size = $command['Body']->getContentLength();
                     $percentage = number_format(($progress / $totalSize) * 100, 2);
-                    echo "- Part {$command['PartNumber']} ({$size} bytes, {$percentage}%)\n";
+                    fwrite($resource, "- Part {$command['PartNumber']} ({$size} bytes, {$percentage}%)\n");
                     $progress .=  $size;
                 }
             );

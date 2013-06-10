@@ -91,6 +91,11 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
         $this->partSize = $this->calculatePartSize();
     }
 
+    public function __invoke()
+    {
+        return $this->upload();
+    }
+
     /**
      * {@inheritdoc}
      */

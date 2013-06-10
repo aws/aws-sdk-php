@@ -69,7 +69,7 @@ class DownloadSync extends AbstractSync
         }
     }
 
-    protected function transferCommands(array $commands)
+    protected function filterCommands(array $commands)
     {
         // Build a list of all of the directories in each command so that we don't attempt to create an empty dir in
         // the same parallel transfer as attempting to create a file in that dir
@@ -87,8 +87,13 @@ class DownloadSync extends AbstractSync
             }
         }
 
-        parent::transferCommands(array_filter($commands, function ($command) use ($dirs) {
+        return array_filter($commands, function ($command) use ($dirs) {
             return !in_array($command['SaveAs'], $dirs);
-        }));
+        });
+    }
+
+    protected function transferCommands(array $commands)
+    {
+        parent::transferCommands($this->filterCommands($commands));
     }
 }
