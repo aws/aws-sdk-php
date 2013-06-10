@@ -93,12 +93,15 @@ class DownloadSyncBuilder extends AbstractSyncBuilder
 
     protected function getDefaultSourceConverter()
     {
-        return new KeyConverter('s3://'. $this->bucket . '/' . $this->baseDir, $this->directory . DIRECTORY_SEPARATOR, $this->delimiter);
+        return new KeyConverter(
+            "s3://{$this->bucket}/{$this->baseDir}",
+            $this->directory . DIRECTORY_SEPARATOR, $this->delimiter
+        );
     }
 
     protected function getDefaultTargetConverter()
     {
-        return new KeyConverter('s3://'. $this->bucket . '/' . $this->baseDir, '', $this->delimiter);
+        return new KeyConverter("s3://{$this->bucket}/{$this->baseDir}", '', $this->delimiter);
     }
 
     protected function assertFileIteratorSet()
@@ -106,19 +109,19 @@ class DownloadSyncBuilder extends AbstractSyncBuilder
         $this->sourceIterator = $this->sourceIterator ?: $this->createS3Iterator();
     }
 
-    protected function addDebugListener(AbstractSync $sync)
+    protected function addDebugListener(AbstractSync $sync, $resource)
     {
-        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) {
+        $sync->getEventDispatcher()->addListener(UploadSync::BEFORE_TRANSFER, function (Event $e) use ($resource) {
             if ($e['command'] instanceof CommandInterface) {
                 $from = $e['command']['Bucket'] . '/' . $e['command']['Key'];
                 $to = $e['command']['SaveAs'] instanceof EntityBodyInterface
                     ? $e['command']['SaveAs']->getUri()
                     : $e['command']['SaveAs'];
-                echo "Downloading {$from} -> {$to}\n";
+                fwrite($resource, "Downloading {$from} -> {$to}\n");
             } elseif ($e['command'] instanceof ResumableDownload) {
                 $from = $e['command']->getBucket() . '/' . $e['command']->getKey();
                 $to = $e['command']->getFilename();
-                echo "Resuming {$from} -> {$to}\n";
+                fwrite($resource, "Resuming {$from} -> {$to}\n");
             }
         });
     }

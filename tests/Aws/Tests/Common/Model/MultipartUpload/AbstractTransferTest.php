@@ -138,4 +138,12 @@ class AbstractTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $transfer->upload();
         $this->assertInstanceOf('Aws\Common\Model\MultipartUpload\AbstractTransferState', $state);
     }
+
+    public function testIsInvokable()
+    {
+        $transfer = $this->getMockedTransfer();
+        $transfer->expects($this->once())
+            ->method('transfer');
+        $transfer();
+    }
 }

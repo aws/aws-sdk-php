@@ -29,8 +29,9 @@ class UploadSync extends AbstractSync
 {
     protected function init()
     {
-        $this->options['multipart_upload_size'] =
-            $this->options['multipart_upload_size'] ?: AbstractTransfer::MIN_PART_SIZE;
+        if (null == $this->options['multipart_upload_size']) {
+            $this->options['multipart_upload_size'] = AbstractTransfer::MIN_PART_SIZE;
+        }
     }
 
     protected function createTransferAction(\SplFileInfo $file)
@@ -46,26 +47,32 @@ class UploadSync extends AbstractSync
         $key = $this->options['source_converter']->convert($filename);
         $body = EntityBody::factory($resource);
 
+        // Determine how the ACL should be applied
+        if ($acl = $this->options['acl']) {
+            $aclType = is_string($this->options['acl']) ? 'ACL' : 'ACP';
+        } else {
+            $acl = 'private';
+            $aclType = 'ACL';
+        }
+
         // Use a multi-part upload if the file is larger than the cutoff size and is a regular file
         if ($body->getWrapper() == 'plainfile' && $file->getSize() >= $this->options['multipart_upload_size']) {
-            $transfer = UploadBuilder::newInstance()
-                ->setBucket($this->options['bucket'])
+            return UploadBuilder::newInstance()
                 ->setBucket($this->options['bucket'])
                 ->setKey($key)
                 ->setMinPartSize($this->options['multipart_upload_size'])
-                ->setOption('ACL', 'private')
+                ->setOption($aclType, $acl)
                 ->setClient($this->options['client'])
                 ->setSource($body)
+                ->setConcurrency($this->options['concurrency'])
                 ->build();
-            return function () use ($transfer) {
-                $transfer->upload();
-            };
         }
 
         return $this->options['client']->getCommand('PutObject', array(
             'Bucket' => $this->options['bucket'],
             'Key'    => $key,
-            'Body'   => $body
+            'Body'   => $body,
+            $aclType => $acl
         ));
     }
 }

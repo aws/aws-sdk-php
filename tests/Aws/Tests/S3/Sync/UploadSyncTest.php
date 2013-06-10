@@ -59,7 +59,7 @@ class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, 's3/initiate_multipart_upload');
         $result = $this->getAction(2, $client);
-        $this->assertInstanceOf('Closure', $result);
+        $this->assertInstanceOf('Aws\S3\Model\MultipartUpload\AbstractTransfer', $result);
     }
 
     protected function getSplFile($filename, $size = 4)
