@@ -94,14 +94,15 @@ abstract class AbstractSync extends AbstractHasDispatcher
 
         $commands = array();
         foreach ($files as $file) {
-            $action = $this->createTransferAction($file);
-            $event = array('command' => $action, 'file' => $file) + $event;
-            $this->dispatch(self::BEFORE_TRANSFER, $event);
-            if ($action instanceof CommandInterface) {
-                $commands[] = $action;
-            } else {
-                $action();
-                $this->dispatch(self::AFTER_TRANSFER, $event);
+            if ($action = $this->createTransferAction($file)) {
+                $event = array('command' => $action, 'file' => $file) + $event;
+                $this->dispatch(self::BEFORE_TRANSFER, $event);
+                if ($action instanceof CommandInterface) {
+                    $commands[] = $action;
+                } elseif (is_callable($action)) {
+                    $action();
+                    $this->dispatch(self::AFTER_TRANSFER, $event);
+                }
             }
         }
 
