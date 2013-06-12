@@ -17,6 +17,7 @@
 namespace Aws\Tests\S3;
 
 use Aws\S3\S3Client;
+use Aws\S3\Sync\UploadSyncBuilder;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Url;
 use Guzzle\Http\Message\Request;
@@ -329,5 +330,80 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('s3', true);
         $history = new HistoryPlugin();
         $client->addSubscriber($history);
+        $params = array('foo' => 'bar');
+
+        $mockBuild = $this->getMockBuilder('Aws\S3\Sync\UploadSync')
+            ->disableOriginalConstructor()
+            ->setMethods(array('transfer'))
+            ->getMock();
+
+        $mockBuild->expects($this->once())
+            ->method('transfer');
+
+        $mock = $this->getMockBuilder('Aws\S3\Sync\UploadSyncBuilder')
+            ->setMethods(array('uploadFromDirectory', 'setClient', 'setBucket', 'setKeyPrefix',
+                'setConcurrency', 'setBaseDir', 'force', 'setOperationParams', 'enableDebugOutput',
+                'setMultipartUploadSize', 'build'))
+            ->getMock();
+
+        $mock->expects($this->once())->method('uploadFromDirectory')->with('/path')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setClient')->with($client)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setBucket')->with('bucket')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setKeyPrefix')->with('prefix')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setBaseDir')->with('/path')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setConcurrency')->with(20)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setOperationParams')->with($params)->will($this->returnSelf());
+        $mock->expects($this->once())->method('enableDebugOutput')->with(true)->will($this->returnSelf());
+        $mock->expects($this->once())->method('force')->with(false)->will($this->returnSelf());
+        $mock->expects($this->once())->method('build')->will($this->returnValue($mockBuild));
+        $mock->expects($this->once())->method('setMultipartUploadSize')->with(10)->will($this->returnValue($mockBuild));
+
+        $client->uploadDirectory('/path', 'bucket', 'prefix', array(
+            'concurrency' => 20,
+            'builder'     => $mock,
+            'params'      => $params,
+            'debug'       => true,
+            'multipart_upload_size' => 10
+        ));
+    }
+
+    public function testDownloadsBuckets()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $params = array('foo' => 'bar');
+
+        $mockBuild = $this->getMockBuilder('Aws\S3\Sync\DownloadSync')
+            ->disableOriginalConstructor()
+            ->setMethods(array('transfer'))
+            ->getMock();
+
+        $mockBuild->expects($this->once())
+            ->method('transfer');
+
+        $mock = $this->getMockBuilder('Aws\S3\Sync\DownloadSyncBuilder')
+            ->setMethods(array('setDirectory', 'setClient', 'setBucket', 'setKeyPrefix', 'allowResumableDownloads',
+                'setConcurrency', 'force', 'setOperationParams', 'enableDebugOutput', 'build'))
+            ->getMock();
+
+        $mock->expects($this->once())->method('setDirectory')->with('/path')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setClient')->with($client)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setBucket')->with('bucket')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setKeyPrefix')->with('prefix')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setConcurrency')->with(20)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setOperationParams')->with($params)->will($this->returnSelf());
+        $mock->expects($this->once())->method('enableDebugOutput')->with(true)->will($this->returnSelf());
+        $mock->expects($this->once())->method('force')->with(false)->will($this->returnSelf());
+        $mock->expects($this->once())->method('allowResumableDownloads')->will($this->returnSelf());
+        $mock->expects($this->once())->method('build')->will($this->returnValue($mockBuild));
+
+        $client->downloadBucket('/path', 'bucket', 'prefix', array(
+            'concurrency' => 20,
+            'builder'     => $mock,
+            'params'      => $params,
+            'debug'       => true,
+            'allow_resumable'   => true
+        ));
     }
 }
