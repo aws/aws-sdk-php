@@ -28,8 +28,9 @@ use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
-use Aws\S3\Sync\UploadSync;
+use Aws\S3\Sync\DownloadSyncBuilder;
 use Aws\S3\Sync\UploadSyncBuilder;
+use Aws\S3\Sync\AbstractSync;
 use Guzzle\Common\Collection;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
@@ -546,41 +547,71 @@ class S3Client extends AbstractClient
      * @param string $bucket    Name of the bucket
      * @param string $keyPrefix Virtual directory key prefix to add to each upload
      * @param array  $options   Associative array of upload options
-     *     - params: Array of parameters to use with each PutObject operation performed during the uploads
+     *     - params: Array of parameters to use with each PutObject operation performed during the transfer
      *     - base_dir: Base directory to remove from each object key
      *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
      *     - concurrency: Maximum number of parallel uploads (defaults to 10)
-     *     - before_upload: Callback to invoke before each upload. The callback will receive a
-     *       Guzzle\Common\Event object with context.
-     *     - debug: Set to true to enable debug mode to print information about each upload
+     *     - debug: Set to true or an fopen resource to enable debug mode to print information about each upload
+     *     - multipart_upload_size: When the size of a file exceeds this value, the file will be uploaded using a
+     *       multipart upload.
      *
      * @see Aws\S3\S3Sync\S3Sync for more options and customization
      */
     public function uploadDirectory($directory, $bucket, $keyPrefix = null, array $options = array())
     {
-        $options = Collection::fromConfig($options, array(
-            'concurrency' => 10,
-            'params'      => array(),
-            'base_dir'    => $directory
-        ));
-
-        $uploader = UploadSyncBuilder::getInstance()
-            ->uploadFromDirectory($directory)
+        $options = Collection::fromConfig($options, array('base_dir' => $directory));
+        $builder = $options['builder'] ?: UploadSyncBuilder::getInstance();
+        $builder->uploadFromDirectory($directory)
             ->setClient($this)
             ->setBucket($bucket)
             ->setKeyPrefix($keyPrefix)
-            ->setConcurrency($options['concurrency'])
+            ->setConcurrency($options['concurrency'] ?: 10)
             ->setBaseDir($options['base_dir'])
             ->force($options['force'])
-            ->setOperationParams($options['params'])
-            ->enableDebugOutput($options['debug'])
-            ->build();
+            ->setOperationParams($options['params'] ?: array())
+            ->enableDebugOutput($options['debug']);
 
-        if ($options['before_upload']) {
-            $uploader->getEventDispatcher()->addListener(UploadSync::BEFORE_UPLOAD_EVENT, $options['before_upload']);
+        if ($options->hasKey('multipart_upload_size')) {
+            $builder->setMultipartUploadSize($options['multipart_upload_size']);
         }
 
-        $uploader->transfer();
+        $builder->build()->transfer();
+    }
+
+    /**
+     * Downloads a bucket to the local filesystem
+     *
+     * @param string $directory Directory to download to
+     * @param string $bucket    Bucket to download from
+     * @param string $keyPrefix Only download objects that use this key prefix
+     * @param array  $options   Associative array of download options
+     *     - params: Array of parameters to use with each GetObject operation performed during the transfer
+     *     - base_dir: Base directory to remove from each object key when storing in the local filesystem
+     *     - force: Set to true to download every file, even if the file is already on the local filesystem and has not
+     *       changed
+     *     - concurrency: Maximum number of parallel downloads (defaults to 10)
+     *     - debug: Set to true or a fopen resource to enable debug mode to print information about each download
+     *     - allow_resumable: Set to true to allow previously interrupted downloads to be resumed using a Range GET
+     */
+    public function downloadBucket($directory, $bucket, $keyPrefix = '', array $options = array())
+    {
+        $options = new Collection($options);
+        $builder = $options['builder'] ?: DownloadSyncBuilder::getInstance();
+        $builder->setDirectory($directory)
+            ->setClient($this)
+            ->setBucket($bucket)
+            ->setKeyPrefix($keyPrefix)
+            ->setConcurrency($options['concurrency'] ?: 10)
+            ->setBaseDir($options['base_dir'])
+            ->force($options['force'])
+            ->setOperationParams($options['params'] ?: array())
+            ->enableDebugOutput($options['debug']);
+
+        if ($options['allow_resumable']) {
+            $builder->allowResumableDownloads();
+        }
+
+        $builder->build()->transfer();
     }
 
     /**
