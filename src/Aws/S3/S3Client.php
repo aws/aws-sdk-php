@@ -310,14 +310,22 @@ class S3Client extends AbstractClient
             $expires = strtotime($expires);
         }
 
-        $copy = clone $request;
+        // Operate on a clone of the request, so the original is not altered
+        $request = clone $request;
 
         // URL encoding already occurs in the URI template expansion. Undo that and encode using the same encoding as
         // GET object, PUT object, etc.
-        $path = $this->encodeKey(rawurldecode($copy->getPath()));
-        $copy->setPath($path);
+        $path = $this->encodeKey(rawurldecode($request->getPath()));
+        $request->setPath($path);
 
-        $copy->getQuery()
+        // Make sure to handle temporary credentials
+        if ($token = $this->credentials->getSecurityToken()) {
+            $request->setHeader('x-amz-security-token', $token);
+            $request->getQuery()->set('x-amz-security-token', $token);
+        }
+
+        // Set query params required for pre-signed URLs
+        $request->getQuery()
             ->set('AWSAccessKeyId', $this->credentials->getAccessKeyId())
             ->set('Expires', $expires)
             ->set('Signature', $this->signature->signString(
@@ -325,7 +333,7 @@ class S3Client extends AbstractClient
                 $this->credentials
             ));
 
-        return $copy->getUrl();
+        return $request->getUrl();
     }
 
     /**

@@ -16,7 +16,8 @@ Next Release
 * Updated the Amazon RDS client to use the 2013-05-15 API version
 * Updated request retrying logic to automatically refresh expired credentials and retry with new ones
 * Fixed issue #94 so that the `Aws\S3\BucketStyleListener` is invoked on `command.after_prepare` and presigned URLs
-  are generated correctly from commands
+  are generated correctly from S3 commands
+* Fixed an issue so that creating presigned URLs using the Amazon S3 client now works with temporary credentials
 
 2.3.4 (2013-05-30)
 ------------------

@@ -16,6 +16,7 @@
 
 namespace Aws\Tests\S3;
 
+use Aws\Common\Credentials\Credentials;
 use Aws\S3\S3Client;
 use Guzzle\Http\Url;
 use Guzzle\Http\Message\Request;
@@ -109,6 +110,15 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('s3');
         $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), new \DateTime('+10 minutes')));
         $this->assertTrue(time() < $url->getQuery()->get('Expires'));
+    }
+
+    public function testCreatesPresignedUrlsWithSessionToken()
+    {
+        /** @var $client S3Client */
+        $client = $this->getServiceBuilder()->get('s3');
+        $client->setCredentials(new Credentials('foo', 'bar', 'baz'));
+        $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), '10 minutes'));
+        $this->assertEquals('baz', $url->getQuery()->get('x-amz-security-token'));
     }
 
     /**
