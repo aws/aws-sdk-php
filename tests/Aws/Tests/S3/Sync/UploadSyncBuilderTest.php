@@ -39,8 +39,10 @@ class UploadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->uploadFromDirectory(__DIR__)->setBucket('foo')->setClient($this->getPreparedClient())->build();
         $i = $this->readAttribute($b, 'options')->get('iterator');
         $this->assertInstanceOf('Aws\S3\Sync\ChangedFilesIterator', $i);
-        $this->assertInstanceOf('NoRewindIterator', $i->getInnerIterator());
-        $this->assertInstanceOf('RecursiveIteratorIterator', $i->getInnerIterator()->getInnerIterator());
+        $this->assertInstanceOf('\NoRewindIterator', $i->getInnerIterator());
+        $i = $i->getInnerIterator()->getInnerIterator();
+        $this->assertInstanceOf('Guzzle\Iterator\FilterIterator', $i);
+        $this->assertInstanceOf('RecursiveIteratorIterator', $i->getInnerIterator());
         $filenames = array_filter(iterator_to_array($i), function ($f) { return (string) $f; });
         $this->assertContains(__FILE__, $filenames);
     }
@@ -51,8 +53,10 @@ class UploadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->uploadFromGlob(__DIR__ . '/*.php')->setBucket('foo')->setClient($this->getPreparedClient())->build();
         $i = $this->readAttribute($b, 'options')->get('iterator');
         $this->assertInstanceOf('Aws\S3\Sync\ChangedFilesIterator', $i);
-        $this->assertInstanceOf('NoRewindIterator', $i->getInnerIterator());
-        $this->assertInstanceOf('GlobIterator', $i->getInnerIterator()->getInnerIterator());
+        $this->assertInstanceOf('\NoRewindIterator', $i->getInnerIterator());
+        $i = $i->getInnerIterator()->getInnerIterator();
+        $this->assertInstanceOf('Guzzle\Iterator\FilterIterator', $i);
+        $this->assertInstanceOf('GlobIterator', $i->getInnerIterator());
         $filenames = array_filter(iterator_to_array($i), function ($f) { return (string) $f; });
         $this->assertContains(__FILE__, $filenames);
     }

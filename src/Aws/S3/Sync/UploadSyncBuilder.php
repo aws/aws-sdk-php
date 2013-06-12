@@ -40,12 +40,11 @@ class UploadSyncBuilder extends AbstractSyncBuilder
      */
     public function uploadFromDirectory($path)
     {
-        $this->sourceIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(
+        $this->baseDir = $path;
+        $this->sourceIterator = $this->filterIterator(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(
             $path,
             FI::SKIP_DOTS | FI::UNIX_PATHS | FI::FOLLOW_SYMLINKS
-        ));
-
-        $this->baseDir = $path;
+        )));
 
         return $this;
     }
@@ -60,7 +59,9 @@ class UploadSyncBuilder extends AbstractSyncBuilder
      */
     public function uploadFromGlob($glob)
     {
-        $this->sourceIterator = new \GlobIterator($glob, FI::SKIP_DOTS | FI::UNIX_PATHS | FI::FOLLOW_SYMLINKS);
+        $this->sourceIterator = $this->filterIterator(
+            new \GlobIterator($glob, FI::SKIP_DOTS | FI::UNIX_PATHS | FI::FOLLOW_SYMLINKS)
+        );
 
         return $this;
     }
