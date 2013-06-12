@@ -16,6 +16,7 @@
 
 namespace Aws\S3;
 
+use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Client\UploadBodyListener;
@@ -27,8 +28,13 @@ use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\S3Signature;
+use Aws\S3\Sync\DownloadSyncBuilder;
+use Aws\S3\Sync\UploadSyncBuilder;
+use Aws\S3\Sync\AbstractSync;
 use Guzzle\Common\Collection;
+use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Iterator\FilterIterator;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
@@ -39,6 +45,9 @@ use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Command\Factory\CompositeFactory;
+use Aws\S3\Model\MultipartUpload\UploadBuilder;
+use Aws\Common\Model\MultipartUpload\AbstractTransfer;
+use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
 
 /**
  * Client to interact with Amazon Simple Storage Service
@@ -461,13 +470,189 @@ class S3Client extends AbstractClient
     }
 
     /**
+     * Upload a file, stream, or string to a bucket. If the upload size exceeds the specified threshold, the upload
+     * will be performed using parallel multipart uploads.
+     *
+     * @param string $bucket  Bucket to upload the object
+     * @param string $key     Key of the object
+     * @param mixed  $body    Object data to upload. Can be a Guzzle\Http\EntityBodyInterface, stream resource, or
+     *                        string of data to upload.
+     * @param string $acl     ACL to apply to the object
+     * @param array  $options Custom options used when executing commands:
+     *     - params: Custom parameters to use with the upload. The parameters must map to a PutObject
+     *       or InitiateMultipartUpload operation parameters.
+     *     - min_part_size: Minimum size to allow for each uploaded part when performing a multipart upload.
+     *     - concurrency: Maximum number of concurrent multipart uploads.
+     *     - before_upload: Callback to invoke before each multipart upload. The callback will receive a
+     *       Guzzle\Common\Event object with context.
+     *
+     * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more options and customization
+     * @return \Guzzle\Service\Resource\Model Returns the modeled result of the performed operation
+     */
+    public function upload($bucket, $key, $body, $acl = 'private', array $options = array())
+    {
+        $body = EntityBody::factory($body);
+        $options = Collection::fromConfig(array_change_key_case($options), array(
+            'min_part_size' => AbstractMulti::MIN_PART_SIZE,
+            'params'        => array(),
+            'concurrency'   => $body->getWrapper() == 'plainfile' ? 3 : 1
+        ));
+
+        if ($body->getSize() < $options['min_part_size']) {
+            // Perform a simple PutObject operation
+            return $this->putObject(array(
+                'Bucket' => $bucket,
+                'Key'    => $key,
+                'Body'   => $body,
+                'ACL'    => $acl
+            ) + $options['params']);
+        }
+
+        // Perform a multipart upload if the file is large enough
+        $transfer = UploadBuilder::newInstance()
+            ->setBucket($bucket)
+            ->setKey($key)
+            ->setMinPartSize($options['min_part_size'])
+            ->setConcurrency($options['concurrency'])
+            ->setClient($this)
+            ->setSource($body)
+            ->setTransferOptions($options->toArray())
+            ->addOptions($options['params'])
+            ->setOption('ACL', $acl)
+            ->build()
+            ->upload();
+
+        if ($options['before_upload']) {
+            $transfer->getEventDispatcher()->addListener(
+                AbstractTransfer::BEFORE_PART_UPLOAD,
+                $options['before_upload']
+            );
+        }
+
+        return $transfer;
+    }
+
+    /**
+     * Recursively uploads all files in a given directory to a given bucket.
+     *
+     * @param string $directory Full path to a directory to upload
+     * @param string $bucket    Name of the bucket
+     * @param string $keyPrefix Virtual directory key prefix to add to each upload
+     * @param array  $options   Associative array of upload options
+     *     - params: Array of parameters to use with each PutObject operation performed during the transfer
+     *     - base_dir: Base directory to remove from each object key
+     *     - force: Set to true to upload every file, even if the file is already in Amazon S3 and has not changed
+     *     - concurrency: Maximum number of parallel uploads (defaults to 10)
+     *     - debug: Set to true or an fopen resource to enable debug mode to print information about each upload
+     *     - multipart_upload_size: When the size of a file exceeds this value, the file will be uploaded using a
+     *       multipart upload.
+     *
+     * @see Aws\S3\S3Sync\S3Sync for more options and customization
+     */
+    public function uploadDirectory($directory, $bucket, $keyPrefix = null, array $options = array())
+    {
+        $options = Collection::fromConfig($options, array('base_dir' => $directory));
+        $builder = $options['builder'] ?: UploadSyncBuilder::getInstance();
+        $builder->uploadFromDirectory($directory)
+            ->setClient($this)
+            ->setBucket($bucket)
+            ->setKeyPrefix($keyPrefix)
+            ->setConcurrency($options['concurrency'] ?: 5)
+            ->setBaseDir($options['base_dir'])
+            ->force($options['force'])
+            ->setOperationParams($options['params'] ?: array())
+            ->enableDebugOutput($options['debug']);
+
+        if ($options->hasKey('multipart_upload_size')) {
+            $builder->setMultipartUploadSize($options['multipart_upload_size']);
+        }
+
+        $builder->build()->transfer();
+    }
+
+    /**
+     * Downloads a bucket to the local filesystem
+     *
+     * @param string $directory Directory to download to
+     * @param string $bucket    Bucket to download from
+     * @param string $keyPrefix Only download objects that use this key prefix
+     * @param array  $options   Associative array of download options
+     *     - params: Array of parameters to use with each GetObject operation performed during the transfer
+     *     - base_dir: Base directory to remove from each object key when storing in the local filesystem
+     *     - force: Set to true to download every file, even if the file is already on the local filesystem and has not
+     *       changed
+     *     - concurrency: Maximum number of parallel downloads (defaults to 10)
+     *     - debug: Set to true or a fopen resource to enable debug mode to print information about each download
+     *     - allow_resumable: Set to true to allow previously interrupted downloads to be resumed using a Range GET
+     */
+    public function downloadBucket($directory, $bucket, $keyPrefix = '', array $options = array())
+    {
+        $options = new Collection($options);
+        $builder = $options['builder'] ?: DownloadSyncBuilder::getInstance();
+        $builder->setDirectory($directory)
+            ->setClient($this)
+            ->setBucket($bucket)
+            ->setKeyPrefix($keyPrefix)
+            ->setConcurrency($options['concurrency'] ?: 10)
+            ->setBaseDir($options['base_dir'])
+            ->force($options['force'])
+            ->setOperationParams($options['params'] ?: array())
+            ->enableDebugOutput($options['debug']);
+
+        if ($options['allow_resumable']) {
+            $builder->allowResumableDownloads();
+        }
+
+        $builder->build()->transfer();
+    }
+
+    /**
+     * Deletes objects from Amazon S3 that match the result of a ListObjects operation. For example, this allows you
+     * to do things like delete all objects that match a specific key prefix.
+     *
+     * @param string $bucket  Bucket that contains the object keys
+     * @param string $prefix  Optionally delete only objects under this key prefix
+     * @param string $regex   Delete only objects that match this regex
+     * @param array  $options Options used when deleting the object:
+     *     - before_delete: Callback to invoke before each delete. The callback will receive a
+     *       Guzzle\Common\Event object with context.
+     *
+     * @see Aws\S3\S3Client::listObjects
+     * @see Aws\S3\Model\ClearBucket For more options or customization
+     * @return int Returns the number of deleted keys
+     * @throws RuntimeException if no prefix and no regex is given
+     */
+    public function deleteMatchingObjects($bucket, $prefix = '', $regex = '', array $options = array())
+    {
+        if (!$prefix && !$regex) {
+            throw new RuntimeException('A prefix or regex is required, or use S3Client::clearBucket().');
+        }
+
+        $clear = new ClearBucket($this, $bucket);
+        $iterator = $this->getIterator('ListObjects', array('Bucket' => $bucket, 'Prefix' => $prefix));
+
+        if ($regex) {
+            $iterator = new FilterIterator($iterator, function ($current) use ($regex) {
+                return preg_match($regex, $current['Key']);
+            });
+        }
+
+        $clear->setIterator($iterator);
+        if (isset($options['before_delete'])) {
+            $clear->getEventDispatcher()->addListener(ClearBucket::BEFORE_CLEAR, $options['before_delete']);
+        }
+
+        return $clear->clear();
+    }
+
+    /**
      * Determines whether or not a resource exists using a command
      *
      * @param CommandInterface $command   Command used to poll for the resource
      * @param bool             $accept403 Set to true if 403s are acceptable
      *
      * @return bool
-     * @throws S3Exception if there is an unhandled exception
+     * @throws S3Exception|\Exception if there is an unhandled exception
      */
     protected function checkExistenceWithCommand(CommandInterface $command, $accept403 = false)
     {

@@ -17,8 +17,12 @@
 namespace Aws\Tests\S3;
 
 use Aws\S3\S3Client;
+use Aws\S3\Sync\UploadSyncBuilder;
+use Guzzle\Http\Message\Response;
 use Guzzle\Http\Url;
 use Guzzle\Http\Message\Request;
+use Guzzle\Plugin\History\HistoryPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\S3\S3Client
@@ -228,5 +232,178 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         } else {
             $this->assertEquals($expectedUrl, $actualUrl);
         }
+    }
+
+    /**
+     * @expectedException \Aws\Common\Exception\RuntimeException
+     */
+    public function testDeletesMatchingObjectsEnsuresPrefixOrRegex()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $client->deleteMatchingObjects('foo', '', '');
+    }
+
+    public function testDeletesMatchingObjects()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+
+        $this->setMockResponse($client, array(
+            's3/list_objects_page_1',
+            's3/list_objects_page_2',
+            's3/list_objects_page_3',
+            's3/list_objects_page_4',
+            's3/list_objects_page_5',
+            's3/delete_multiple_objects'
+        ));
+
+        $event = null;
+        // Delete objects from the foo bucket under the baz key that are a single lowercase letter
+        $result = $client->deleteMatchingObjects('foo', 'baz', '/(c|f)/', array(
+            'before_delete' => function ($e) use (&$event) {
+                $event = $e;
+            }
+        ));
+
+        $this->assertEquals(2, $result);
+        $this->assertEquals(6, count($history));
+        $this->assertEquals('POST', $history->getLastRequest()->getMethod());
+        $this->assertEquals('/?delete', $history->getLastRequest()->getResource());
+        $this->assertContains('<Key>c</Key>', (string) $history->getLastRequest()->getBody());
+        $this->assertContains('<Key>f</Key>', (string) $history->getLastRequest()->getBody());
+        $this->assertNotContains('<Key>e</Key>', (string) $history->getLastRequest()->getBody());
+        $this->assertInstanceOf('Guzzle\Common\Event', $event);
+    }
+
+    public function testUploadsSmallerObjectsUsingPutObject()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $mock = new MockPlugin(array(new Response(206)));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $result = $client->upload('test', 'key', 'test', 'public-read', array(
+            'params' => array(
+                'Metadata' => array('Foo' => 'Bar')
+            )
+        ));
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $this->assertEquals('PutObjectOutput', $result->getStructure()->getName());
+        $this->assertCount(1, $history);
+        $request = $history->getLastRequest();
+        $this->assertEquals('PUT', $request->getMethod());
+        $this->assertEquals('/key', $request->getResource());
+        $this->assertEquals('test.s3.amazonaws.com', $request->getHost());
+        $this->assertEquals('public-read', (string) $request->getHeader('x-amz-acl'));
+        $this->assertEquals('Bar', (string) $request->getHeader('x-amz-meta-Foo'));
+        $this->assertEquals('test', (string) $request->getBody());
+    }
+
+    public function testUploadsLargerObjectsUsingMultipartUploads()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $this->setMockResponse($client, array(
+            's3/initiate_multipart_upload',
+            's3/upload_part',
+            's3/upload_part',
+            's3/complete_multipart_upload'
+        ));
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $result = $client->upload('test', 'key', fopen(__FILE__, 'r'), 'public-read', array(
+            'min_part_size' => 4,
+            'params'        => array('Metadata' => array('Foo' => 'Bar'))
+        ));
+        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        $this->assertEquals('CompleteMultipartUploadOutput', $result->getStructure()->getName());
+        $this->assertCount(3, $history);
+        $request = $history->getLastRequest();
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertStringStartsWith('/key?uploadId=', $request->getResource());
+        $this->assertEquals('application/xml', $request->getHeader('Content-Type'));
+        $this->assertContains('<PartNumber>1</PartNumber>', (string) $request->getBody());
+    }
+
+    public function testUploadsDirectories()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $params = array('foo' => 'bar');
+
+        $mockBuild = $this->getMockBuilder('Aws\S3\Sync\UploadSync')
+            ->disableOriginalConstructor()
+            ->setMethods(array('transfer'))
+            ->getMock();
+
+        $mockBuild->expects($this->once())
+            ->method('transfer');
+
+        $mock = $this->getMockBuilder('Aws\S3\Sync\UploadSyncBuilder')
+            ->setMethods(array('uploadFromDirectory', 'setClient', 'setBucket', 'setKeyPrefix',
+                'setConcurrency', 'setBaseDir', 'force', 'setOperationParams', 'enableDebugOutput',
+                'setMultipartUploadSize', 'build'))
+            ->getMock();
+
+        $mock->expects($this->once())->method('uploadFromDirectory')->with('/path')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setClient')->with($client)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setBucket')->with('bucket')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setKeyPrefix')->with('prefix')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setBaseDir')->with('/path')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setConcurrency')->with(20)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setOperationParams')->with($params)->will($this->returnSelf());
+        $mock->expects($this->once())->method('enableDebugOutput')->with(true)->will($this->returnSelf());
+        $mock->expects($this->once())->method('force')->with(false)->will($this->returnSelf());
+        $mock->expects($this->once())->method('build')->will($this->returnValue($mockBuild));
+        $mock->expects($this->once())->method('setMultipartUploadSize')->with(10)->will($this->returnValue($mockBuild));
+
+        $client->uploadDirectory('/path', 'bucket', 'prefix', array(
+            'concurrency' => 20,
+            'builder'     => $mock,
+            'params'      => $params,
+            'debug'       => true,
+            'multipart_upload_size' => 10
+        ));
+    }
+
+    public function testDownloadsBuckets()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $history = new HistoryPlugin();
+        $client->addSubscriber($history);
+        $params = array('foo' => 'bar');
+
+        $mockBuild = $this->getMockBuilder('Aws\S3\Sync\DownloadSync')
+            ->disableOriginalConstructor()
+            ->setMethods(array('transfer'))
+            ->getMock();
+
+        $mockBuild->expects($this->once())
+            ->method('transfer');
+
+        $mock = $this->getMockBuilder('Aws\S3\Sync\DownloadSyncBuilder')
+            ->setMethods(array('setDirectory', 'setClient', 'setBucket', 'setKeyPrefix', 'allowResumableDownloads',
+                'setConcurrency', 'force', 'setOperationParams', 'enableDebugOutput', 'build'))
+            ->getMock();
+
+        $mock->expects($this->once())->method('setDirectory')->with('/path')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setClient')->with($client)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setBucket')->with('bucket')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setKeyPrefix')->with('prefix')->will($this->returnSelf());
+        $mock->expects($this->once())->method('setConcurrency')->with(20)->will($this->returnSelf());
+        $mock->expects($this->once())->method('setOperationParams')->with($params)->will($this->returnSelf());
+        $mock->expects($this->once())->method('enableDebugOutput')->with(true)->will($this->returnSelf());
+        $mock->expects($this->once())->method('force')->with(false)->will($this->returnSelf());
+        $mock->expects($this->once())->method('allowResumableDownloads')->will($this->returnSelf());
+        $mock->expects($this->once())->method('build')->will($this->returnValue($mockBuild));
+
+        $client->downloadBucket('/path', 'bucket', 'prefix', array(
+            'concurrency' => 20,
+            'builder'     => $mock,
+            'params'      => $params,
+            'debug'       => true,
+            'allow_resumable'   => true
+        ));
     }
 }

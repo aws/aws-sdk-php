@@ -186,6 +186,13 @@ object has been uploaded.
         ->setConcurrency(3)
         ->build();
 
+You can use the ``Aws\S3\S3Client::upload()`` method if you just want to upload files and not worry if they are too
+large to send in a single PutObject operation or require a multipart upload.
+
+.. code-block:: php
+
+    $client->upload('bucket', 'key', 'object body', 'public-read');
+
 Setting ACLs and Access Control Policies
 ----------------------------------------
 
@@ -533,6 +540,166 @@ Another easy way to list the contents of the bucket is using the
     foreach ($finder as $file) {
         echo $file->getType() . ": {$file}\n";
     }
+
+Syncing data with Amazon S3
+---------------------------
+
+Uploading a directory to a bucket
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Uploading a local directory to an Amazon S3 bucket is rather simple:
+
+.. code-block:: php
+
+    $client->uploadDirectory('/local/directory', 'my-bucket');
+
+The ``uploadDirectory()`` method of a client will compare the contents of the local directory to the contents in the
+Amazon S3 bucket and only transfer files that have changed. While iterating over the keys in the bucket and comparing
+against the names of local files using a customizable filename to key converter, the changed files are added to an in
+memory queue and uploaded concurrently. When the size of a file exceeds a customizable ``multipart_upload_size``
+parameter, the uploader will automatically upload the file using a multipart upload.
+
+Customizing the upload sync
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The method signature of the `uploadDirectory()` method allows for the following arguments:
+
+.. code-block:: php
+
+    public function uploadDirectory($directory, $bucket, $keyPrefix = null, array $options = array())
+
+By specifying ``$keyPrefix``, you can cause the uploaded objects to be placed under a virtual folder in the Amazon S3
+bucket. For example, if the ``$bucket`` name is ``my-bucket`` and the ``$keyPrefix`` is 'testing/', then your files
+will be uploaded to ``my-bucket`` under the ``testing/`` virtual folder:
+``https://my-bucket.s3.amazonaws.com/testing/filename.txt``
+
+The ``uploadDirectory()`` method also accepts an optional associative array of ``$options`` that can be used to further
+control the transfer.
+
+=========== ============================================================================================================
+params      Array of parameters to use with each ``PutObject`` or ``CreateMultipartUpload`` operation performed during
+            the transfer. For example, you can specify an ``ACL`` key to change the ACL of each uploaded object.
+            See `PutObject <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_putObject>`_
+            for a list of available options.
+base_dir    Base directory to remove from each object key. By default, the ``$directory`` passed into the
+            ``uploadDirectory()`` method will be removed from each object key.
+force       Set to true to upload every file, even if the file is already in Amazon S3 and has not changed.
+concurrency Maximum number of parallel uploads (defaults to 5)
+debug       Set to true to enable debug mode to print information about each upload. Setting this value to an ``fopen``
+            resource will write the debug output to a stream rather than to ``STDOUT``.
+=========== ============================================================================================================
+
+In the following example, a local directory is uploaded with each object stored in the bucket using a ``public-read``
+ACL, 20 requests are sent in parallel, and debug information is printed to standard output as each request is
+transferred.
+
+.. code-block:: php
+
+    $dir = '/local/directory';
+    $bucket = 'my-bucket';
+    $keyPrefix = '';
+
+    $client->uploadDirectory($dir, $bucket, $keyPrefix, array(
+        'params'      => array('ACL' => 'public-read'),
+        'concurrency' => 20,
+        'debug'       => true
+    ));
+
+More control with the UploadSyncBuilder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``uploadDirectory()`` method is an abstraction layer over the much more powerful ``Aws\S3\Sync\UploadSyncBuilder``.
+You can use an ``UploadSyncBuilder`` object directly if you need more control over the transfer. Using an
+``UploadSyncBuilder`` allows for the following advanced features:
+
+* Can upload only files that match a glob expression
+* Can upload only files that match a regular expression
+* Can specify a custom ``\Iterator`` object to use to yield files to an ``UploadSync`` object. This can be used, for
+  example, to filter out which files are transferred even further using something like the
+  `Symfony 2 Finder component <http://symfony.com/doc/master/components/finder.html>`_.
+* Can specify the ``Aws\S3\Sync\FilenameConverterInterface`` objects used to convert Amazon S3 object names to local
+  filenames and vice versa. This can be useful if you require files to be renamed in a specific way.
+
+.. code-block:: php
+
+    use Aws\S3\Sync\UploadSyncBuilder;
+
+    UploadSyncBuilder::getInstance()
+        ->setClient($client)
+        ->setBucket('my-bucket')
+        ->setAcl('public-read')
+        ->uploadFromGlob('/path/to/file/*.php')
+        ->build()
+        ->transfer();
+
+Downloading a bucket to a directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can download the objects stored in an Amazon S3 bucket using features similar to the ``uploadDirectory()`` method
+and the ``UploadSyncBuilder``. You can download the entire contents of a bucket using the
+``Aws\S3\S3Client::downloadBucket()`` method.
+
+The following example will download all of the objects from ``my-bucket`` and store them in ``/local/directory``.
+Object keys that are under virtual subfolders are converted into a nested directory structure when downloading the
+objects. Any directories missing on the local filesystem will be created automatically.
+
+.. code-block:: php
+
+    $client->downloadBucket('/local/directory', 'my-bucket');
+
+Customizing the download sync
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The method signature of the ``downloadBucket()`` method allows for the following arguments:
+
+.. code-block:: php
+
+    public function downloadBucket($directory, $bucket, $keyPrefix = null, array $options = array())
+
+By specifying ``$keyPrefix``, you can limit the downloaded objects to only keys that begin with the specified
+``$keyPrefix``. This, for example, can be useful for downloading objects under a specific virtual directory.
+
+The ``downloadBucket()`` method also accepts an optional associative array of ``$options`` that can be used to further
+control the transfer.
+
+=============== ============================================================================================================
+params          Array of parameters to use with each ``GetObject`` operation performed during the transfer. See
+                `GetObject <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_getObject>`_
+                for a list of available options.
+base_dir        Base directory to remove from each object key when downloading. By default, the entire object key is
+                used to determine the path to the file on the local filesystem.
+force           Set to true to download every file, even if the file is already on the local filesystem and has not
+                changed.
+concurrency     Maximum number of parallel downloads (defaults to 10)
+debug           Set to true to enable debug mode to print information about each download. Setting this value to an
+                ``fopen`` resource will write the debug output to a stream rather than to ``STDOUT``.
+allow_resumable Set to true to allow previously interrupted downloads to be resumed using a Range GET
+=============== ============================================================================================================
+
+More control with the DownloadSyncBuilder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``downloadBucket()`` method is an abstraction layer over the much more powerful
+``Aws\S3\Sync\DownloadSyncBuilder``. You can use a ``DownloadSyncBuilder`` object directly if you need more control
+over the transfer. Using the ``DownloadSyncBuilder`` allows for the following advanced features:
+
+* Can download only files that match a regular expression
+* Just like the ``UploadSyncBuilder``, you can specify a custom ``\Iterator`` object to use to yield files to a
+  ``DownloadSync`` object.
+* Can specify the ``Aws\S3\Sync\FilenameConverterInterface`` objects used to convert Amazon S3 object names to local
+  filenames and vice versa.
+
+.. code-block:: php
+
+    use Aws\S3\Sync\DownloadSyncBuilder;
+
+    DownloadSyncBuilder::getInstance()
+        ->setDirectory('/path/to/directory')
+        ->setBucket('my-bucket')
+        ->setKeyPrefix('/under-prefix')
+        ->allowResumableDownloads()
+        ->build()
+        ->transfer();
 
 Cleaning up
 -----------

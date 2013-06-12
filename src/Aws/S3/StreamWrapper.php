@@ -128,10 +128,11 @@ class StreamWrapper
      */
     public static function register(S3Client $client)
     {
-        if (!in_array('s3', stream_get_wrappers())) {
-            stream_wrapper_register('s3', __CLASS__, STREAM_IS_URL);
+        if (in_array('s3', stream_get_wrappers())) {
+            stream_wrapper_unregister('s3');
         }
 
+        stream_wrapper_register('s3', __CLASS__, STREAM_IS_URL);
         self::$client = $client;
     }
 
@@ -286,7 +287,13 @@ class StreamWrapper
      */
     public function stream_stat()
     {
-        return fstat($this->body->getStream());
+        $stat = fstat($this->body->getStream());
+        // Add the size of the underlying stream if it is known
+        if ($this->mode == 'r' && $this->body->getSize()) {
+            $stat[7] = $stat['size'] = $this->body->getSize();
+        }
+
+        return $stat;
     }
 
     /**
@@ -417,18 +424,26 @@ class StreamWrapper
         // Reset the cache
         $this->clearStatInfo();
         $params = $this->getParams($path);
-        $delim = $this->getOption('delimiter') ?: '/';
+        $delimiter = $this->getOption('delimiter');
+
+        if ($delimiter === null) {
+            $delimiter = '/';
+        }
+
         if ($params['Key']) {
-            $params['Key'] = rtrim($params['Key'], $delim) . $delim;
+            $suffix = $delimiter ?: '/';
+            $params['Key'] = rtrim($params['Key'], $suffix) . $suffix;
         }
 
         $this->openedBucket = $params['Bucket'];
         $this->openedBucketPrefix = $params['Key'];
-        $this->objectIterator = self::$client->getIterator('ListObjects', array(
-            'Bucket'    => $params['Bucket'],
-            'Delimiter' => $delim,
-            'Prefix'    => $params['Key']
-        ), array(
+        $operationParams = array('Bucket' => $params['Bucket'], 'Prefix' => $params['Key']);
+
+        if ($delimiter) {
+            $operationParams['Delimiter'] = $delimiter;
+        }
+
+        $this->objectIterator = self::$client->getIterator('ListObjects', $operationParams, array(
             'return_prefixes' => true,
             'sort_results'    => true
         ));

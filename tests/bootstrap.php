@@ -70,3 +70,6 @@ $aws->getEventDispatcher()->addListener('service_builder.create_client', functio
 
 // Configure the tests to ise the instantiated AWS service builder
 Guzzle\Tests\GuzzleTestCase::setServiceBuilder($aws);
+
+// Emit deprecation warnings
+Guzzle\Common\Version::$emitWarnings = true;

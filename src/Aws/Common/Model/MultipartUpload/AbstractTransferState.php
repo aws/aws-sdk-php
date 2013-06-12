@@ -57,6 +57,20 @@ abstract class AbstractTransferState implements TransferStateInterface
     }
 
     /**
+     * Get a data value from the transfer state's uploadId
+     *
+     * @param string $key Key to retrieve (e.g. Bucket, Key, UploadId, etc)
+     *
+     * @return string|null
+     */
+    public function getFromId($key)
+    {
+        $params = $this->uploadId->toParams();
+
+        return isset($params[$key]) ? $params[$key] : null;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getPart($partNumber)
