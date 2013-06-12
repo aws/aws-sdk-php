@@ -32,6 +32,9 @@ class DownloadSyncBuilder extends AbstractSyncBuilder
     /** @var string */
     protected $directory;
 
+    /** @var int Number of files that can be transferred concurrently */
+    protected $concurrency = 5;
+
     /**
      * Set the directory where the objects from be downloaded to
      *

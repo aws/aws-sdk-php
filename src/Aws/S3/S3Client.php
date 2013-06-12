@@ -557,7 +557,7 @@ class S3Client extends AbstractClient
             ->setClient($this)
             ->setBucket($bucket)
             ->setKeyPrefix($keyPrefix)
-            ->setConcurrency($options['concurrency'] ?: 10)
+            ->setConcurrency($options['concurrency'] ?: 5)
             ->setBaseDir($options['base_dir'])
             ->force($options['force'])
             ->setOperationParams($options['params'] ?: array())
