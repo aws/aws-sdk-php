@@ -103,6 +103,14 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue(time() < $url->getQuery()->get('Expires'));
     }
 
+    public function testCreatesPresignedUrlsWithDateTime()
+    {
+        /** @var $client S3Client */
+        $client = $this->getServiceBuilder()->get('s3');
+        $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), new \DateTime('+10 minutes')));
+        $this->assertTrue(time() < $url->getQuery()->get('Expires'));
+    }
+
     /**
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage The request object must be associated with the client
@@ -192,5 +200,33 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(array('foo', 'baz ', 'bar!'), S3Client::explodeKey('/foo/baz /bar!'));
         $this->assertEquals(array(''), S3Client::explodeKey(''));
         $this->assertEquals(array(''), S3Client::explodeKey(null));
+    }
+
+    public function dataForCanCreateObjectUrlsTest()
+    {
+        return array(
+            array(null, array(), 'https://foo.s3.amazonaws.com/bar'),
+            array('+1 hour', array(), '#^https\://foo\.s3\.amazonaws\.com/bar\?.*AWSAccessKeyId.*Expires.*Signature.*$#'),
+            array(null, array('Scheme' => 'http'), 'http://foo.s3.amazonaws.com/bar'),
+            array(null, array('Scheme' => 'ftp'), 'ftp://foo.s3.amazonaws.com/bar'),
+            array(null, array('Scheme' => ''), '://foo.s3.amazonaws.com/bar'),
+            array(null, array('Scheme' => null), '//foo.s3.amazonaws.com/bar'),
+            array(null, array('ResponseContentType' => 'image/png'), 'https://foo.s3.amazonaws.com/bar?response-content-type=' . urlencode('image/png')),
+        );
+    }
+
+    /**
+     * @dataProvider dataForCanCreateObjectUrlsTest
+     */
+    public function testCanCreateObjectUrls($expires, array $args, $expectedUrl)
+    {
+        /** @var $client S3Client */
+        $client = $this->getServiceBuilder()->get('s3');
+        $actualUrl = $client->getObjectUrl('foo', 'bar', $expires, $args);
+        if (strpos($expectedUrl, '#^') === 0) {
+            $this->assertRegExp($expectedUrl, $actualUrl);
+        } else {
+            $this->assertEquals($expectedUrl, $actualUrl);
+        }
     }
 }

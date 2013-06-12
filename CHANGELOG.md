@@ -5,6 +5,8 @@ Next Release
 ------------
 
 * Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
+* Added the `Aws\S3\S3Client::getObjectUrl` convenience method for getting the URL of an Amazon S3 object. This works
+  for both public and pre-signed URLs.
 * Added support for using the `ap-northeast-1` region to the Amazon Redshift client
 * Added support for read replica status to the Amazon RDS client
 * Added "magic" access to iterators to make using iterators more convenient (e.g., `$s3->getListBucketsIterator()`)

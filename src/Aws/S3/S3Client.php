@@ -288,9 +288,10 @@ class S3Client extends AbstractClient
     /**
      * Create a pre-signed URL for a request
      *
-     * @param RequestInterface $request Request to generate the URL for. Use the factory methods of the client to create
-     *                                  this request object.
-     * @param int|string $expires The Unix timestamp to expire at or a string that can be evaluated by strtotime
+     * @param RequestInterface     $request Request to generate the URL for. Use the factory methods of the client to
+     *                                      create this request object
+     * @param int|string|\DateTime $expires The time at which the URL should expire. This can be a Unix timestamp, a
+     *                                      PHP DateTime object, or a string that can be evaluated by strtotime
      *
      * @return string
      * @throws InvalidArgumentException if the request is not associated with this client object
@@ -303,7 +304,9 @@ class S3Client extends AbstractClient
                 . 'request object');
         }
 
-        if (!is_numeric($expires)) {
+        if ($expires instanceof \DateTime) {
+            $expires = $expires->getTimestamp();
+        } elseif (!is_numeric($expires)) {
             $expires = strtotime($expires);
         }
 
@@ -323,6 +326,32 @@ class S3Client extends AbstractClient
             ));
 
         return $copy->getUrl();
+    }
+
+    /**
+     * Returns the URL to an object identified by its bucket and key. If an expiration time is provided, the URL will
+     * be signed and set to expire at the provided time.
+     *
+     * @param string $bucket  The name of the bucket where the object is located
+     * @param string $key     The key of the object
+     * @param mixed  $expires The time at which the URL should expire
+     * @param array  $args    Arguments to the GetObject command. Additionally you can specify a "Scheme" if you would
+     *                        like the URL to use a different scheme than what the client is configured to use
+     *
+     * @return string The URL to the object
+     */
+    public function getObjectUrl($bucket, $key, $expires = null, array $args = array())
+    {
+        $command = $this->getCommand('GetObject', $args + array('Bucket' => $bucket, 'Key' => $key));
+
+        if ($command->hasKey('Scheme')) {
+            $scheme = $command['Scheme'];
+            $request = $command->remove('Scheme')->prepare()->setScheme($scheme)->setPort(null);
+        } else {
+            $request = $command->prepare();
+        }
+
+        return $expires ? $this->createPresignedUrl($request, $expires) : $request->getUrl();
     }
 
     /**
