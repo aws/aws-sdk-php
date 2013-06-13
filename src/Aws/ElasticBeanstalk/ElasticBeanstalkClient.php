@@ -22,6 +22,7 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS Elastic Beanstalk
@@ -57,6 +58,12 @@ use Guzzle\Service\Resource\Model;
  * @method Model validateConfigurationSettings(array $args = array()) {@command ElasticBeanstalk ValidateConfigurationSettings}
  * @method waitUntilEnvironmentReady(array $input) Wait using the EnvironmentReady waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
  * @method waitUntilEnvironmentTerminated(array $input) Wait using the EnvironmentTerminated waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
+ * @method ResourceIteratorInterface getDescribeApplicationVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeApplicationVersions operation
+ * @method ResourceIteratorInterface getDescribeApplicationsIterator(array $args = array()) The input array uses the parameters of the DescribeApplications operation
+ * @method ResourceIteratorInterface getDescribeConfigurationOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeConfigurationOptions operation
+ * @method ResourceIteratorInterface getDescribeEnvironmentsIterator(array $args = array()) The input array uses the parameters of the DescribeEnvironments operation
+ * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
+ * @method ResourceIteratorInterface getListAvailableSolutionStacksIterator(array $args = array()) The input array uses the parameters of the ListAvailableSolutionStacks operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticbeanstalk.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticBeanstalk.ElasticBeanstalkClient.html API docs

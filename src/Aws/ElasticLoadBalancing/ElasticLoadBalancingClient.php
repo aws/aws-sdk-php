@@ -22,6 +22,7 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Elastic Load Balancing
@@ -49,6 +50,10 @@ use Guzzle\Service\Resource\Model;
  * @method Model setLoadBalancerListenerSSLCertificate(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerListenerSSLCertificate}
  * @method Model setLoadBalancerPoliciesForBackendServer(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerPoliciesForBackendServer}
  * @method Model setLoadBalancerPoliciesOfListener(array $args = array()) {@command ElasticLoadBalancing SetLoadBalancerPoliciesOfListener}
+ * @method ResourceIteratorInterface getDescribeInstanceHealthIterator(array $args = array()) The input array uses the parameters of the DescribeInstanceHealth operation
+ * @method ResourceIteratorInterface getDescribeLoadBalancerPoliciesIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBalancerPolicies operation
+ * @method ResourceIteratorInterface getDescribeLoadBalancerPolicyTypesIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBalancerPolicyTypes operation
+ * @method ResourceIteratorInterface getDescribeLoadBalancersIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBalancers operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticloadbalancing.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticLoadBalancing.ElasticLoadBalancingClient.html API docs

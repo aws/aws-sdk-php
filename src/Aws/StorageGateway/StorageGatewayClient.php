@@ -22,6 +22,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS Storage Gateway
@@ -61,6 +62,12 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateGatewaySoftwareNow(array $args = array()) {@command StorageGateway UpdateGatewaySoftwareNow}
  * @method Model updateMaintenanceStartTime(array $args = array()) {@command StorageGateway UpdateMaintenanceStartTime}
  * @method Model updateSnapshotSchedule(array $args = array()) {@command StorageGateway UpdateSnapshotSchedule}
+ * @method ResourceIteratorInterface getDescribeCachediSCSIVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeCachediSCSIVolumes operation
+ * @method ResourceIteratorInterface getDescribeStorediSCSIVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeStorediSCSIVolumes operation
+ * @method ResourceIteratorInterface getListGatewaysIterator(array $args = array()) The input array uses the parameters of the ListGateways operation
+ * @method ResourceIteratorInterface getListLocalDisksIterator(array $args = array()) The input array uses the parameters of the ListLocalDisks operation
+ * @method ResourceIteratorInterface getListVolumeRecoveryPointsIterator(array $args = array()) The input array uses the parameters of the ListVolumeRecoveryPoints operation
+ * @method ResourceIteratorInterface getListVolumesIterator(array $args = array()) The input array uses the parameters of the ListVolumes operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-storagegateway.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.StorageGateway.StorageGatewayClient.html API docs

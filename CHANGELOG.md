@@ -9,7 +9,7 @@ Next Release
 * Added an easy to way to delete objects from an Amazon S3 bucket that match a regular expression or key prefix
 * Added an easy to way to upload an object to Amazon S3 that automatically uses a multipart upload if the size of the
   object exceeds a customizable threshold (`$s3->upload()`)
-* Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
+* [SDK] Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
 * Added the `Aws\S3\S3Client::getObjectUrl` convenience method for getting the URL of an Amazon S3 object. This works
   for both public and pre-signed URLs.
 * Added support for using the `ap-northeast-1` region to the Amazon Redshift client

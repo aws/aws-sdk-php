@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Simple Notification Service
@@ -40,6 +41,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model setTopicAttributes(array $args = array()) {@command Sns SetTopicAttributes}
  * @method Model subscribe(array $args = array()) {@command Sns Subscribe}
  * @method Model unsubscribe(array $args = array()) {@command Sns Unsubscribe}
+ * @method ResourceIteratorInterface getListSubscriptionsIterator(array $args = array()) The input array uses the parameters of the ListSubscriptions operation
+ * @method ResourceIteratorInterface getListSubscriptionsByTopicIterator(array $args = array()) The input array uses the parameters of the ListSubscriptionsByTopic operation
+ * @method ResourceIteratorInterface getListTopicsIterator(array $args = array()) The input array uses the parameters of the ListTopics operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sns.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sns.SnsClient.html API docs

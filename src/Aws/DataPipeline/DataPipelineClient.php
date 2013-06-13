@@ -23,6 +23,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS Data Pipeline
@@ -43,6 +44,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model setStatus(array $args = array()) {@command DataPipeline SetStatus}
  * @method Model setTaskStatus(array $args = array()) {@command DataPipeline SetTaskStatus}
  * @method Model validatePipelineDefinition(array $args = array()) {@command DataPipeline ValidatePipelineDefinition}
+ * @method ResourceIteratorInterface getListPipelinesIterator(array $args = array()) The input array uses the parameters of the ListPipelines operation
+ * @method ResourceIteratorInterface getDescribeObjectsIterator(array $args = array()) The input array uses the parameters of the DescribeObjects operation
+ * @method ResourceIteratorInterface getQueryObjectsIterator(array $args = array()) The input array uses the parameters of the QueryObjects operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-datapipeline.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DataPipeline.DataPipelineClient.html API docs

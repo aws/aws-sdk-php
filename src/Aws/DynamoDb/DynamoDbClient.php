@@ -18,20 +18,21 @@ namespace Aws\DynamoDb;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\ExpiredCredentialsChecker;
 use Aws\Common\Client\ThrottlingErrorChecker;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\Common\Client\ExpiredCredentialsChecker;
 use Aws\DynamoDb\Model\Attribute;
 use Aws\DynamoDb\Session\SessionHandler;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
-use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
-use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
-use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
-use Guzzle\Service\Resource\Model;
+use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
+use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
+use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Service\Command\AbstractCommand as Cmd;
+use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon DynamoDB
@@ -51,6 +52,10 @@ use Guzzle\Service\Command\AbstractCommand as Cmd;
  * @method Model updateTable(array $args = array()) {@command DynamoDb UpdateTable}
  * @method waitUntilTableExists(array $input) Wait until a table exists and can be accessed The input array uses the parameters of the DescribeTable operation and waiter specific settings
  * @method waitUntilTableNotExists(array $input) Wait until a table is deleted The input array uses the parameters of the DescribeTable operation and waiter specific settings
+ * @method ResourceIteratorInterface getBatchGetItemIterator(array $args = array()) The input array uses the parameters of the BatchGetItem operation
+ * @method ResourceIteratorInterface getListTablesIterator(array $args = array()) The input array uses the parameters of the ListTables operation
+ * @method ResourceIteratorInterface getQueryIterator(array $args = array()) The input array uses the parameters of the Query operation
+ * @method ResourceIteratorInterface getScanIterator(array $args = array()) The input array uses the parameters of the Scan operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-dynamodb.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html API docs

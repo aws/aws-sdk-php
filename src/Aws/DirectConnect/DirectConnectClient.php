@@ -22,6 +22,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS Direct Connect
@@ -37,6 +38,10 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeOfferings(array $args = array()) {@command DirectConnect DescribeOfferings}
  * @method Model describeVirtualGateways(array $args = array()) {@command DirectConnect DescribeVirtualGateways}
  * @method Model describeVirtualInterfaces(array $args = array()) {@command DirectConnect DescribeVirtualInterfaces}
+ * @method ResourceIteratorInterface getDescribeConnectionsIterator(array $args = array()) The input array uses the parameters of the DescribeConnections operation
+ * @method ResourceIteratorInterface getDescribeOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeOfferings operation
+ * @method ResourceIteratorInterface getDescribeVirtualGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeVirtualGateways operation
+ * @method ResourceIteratorInterface getDescribeVirtualInterfacesIterator(array $args = array()) The input array uses the parameters of the DescribeVirtualInterfaces operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-directconnect.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DirectConnect.DirectConnectClient.html API docs

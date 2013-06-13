@@ -16,17 +16,20 @@
 
 namespace Aws\S3;
 
-use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\ExpiredCredentialsChecker;
 use Aws\Common\Client\UploadBodyListener;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\Client\ExpiredCredentialsChecker;
+use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
+use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
+use Aws\S3\Model\MultipartUpload\UploadBuilder;
 use Aws\S3\S3Signature;
 use Aws\S3\Sync\DownloadSyncBuilder;
 use Aws\S3\Sync\UploadSyncBuilder;
@@ -36,18 +39,16 @@ use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Iterator\FilterIterator;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
-use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
-use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Backoff\ExponentialBackoffStrategy;
+use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
+use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
-use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Command\Factory\CompositeFactory;
-use Aws\S3\Model\MultipartUpload\UploadBuilder;
-use Aws\Common\Model\MultipartUpload\AbstractTransfer;
-use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
+use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Simple Storage Service
@@ -104,6 +105,11 @@ use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
  * @method waitUntilBucketExists(array $input) Wait until a bucket exists. The input array uses the parameters of the HeadBucket operation and waiter specific settings
  * @method waitUntilBucketNotExists(array $input) Wait until a bucket does not exist. The input array uses the parameters of the HeadBucket operation and waiter specific settings
  * @method waitUntilObjectExists(array $input) Wait until an object exists. The input array uses the parameters of the HeadObject operation and waiter specific settings
+ * @method ResourceIteratorInterface getListBucketsIterator(array $args = array()) The input array uses the parameters of the ListBuckets operation
+ * @method ResourceIteratorInterface getListMultipartUploadsIterator(array $args = array()) The input array uses the parameters of the ListMultipartUploads operation
+ * @method ResourceIteratorInterface getListObjectsIterator(array $args = array()) The input array uses the parameters of the ListObjects operation
+ * @method ResourceIteratorInterface getListObjectVersionsIterator(array $args = array()) The input array uses the parameters of the ListObjectVersions operation
+ * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-s3.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html API docs

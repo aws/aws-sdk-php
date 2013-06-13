@@ -26,6 +26,7 @@ use Aws\Common\Exception\RequiredExtensionNotLoadedException;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Url;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon CloudFront
@@ -54,6 +55,10 @@ use Guzzle\Service\Resource\Model;
  * @method waitUntilStreamingDistributionDeployed(array $input) Wait until a streaming distribution is deployed. The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
  * @method waitUntilDistributionDeployed(array $input) Wait until a distribution is deployed. The input array uses the parameters of the GetDistribution operation and waiter specific settings
  * @method waitUntilInvalidationCompleted(array $input) Wait until an invalidation has completed. The input array uses the parameters of the GetInvalidation operation and waiter specific settings
+ * @method ResourceIteratorInterface getListCloudFrontOriginAccessIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListCloudFrontOriginAccessIdentities operation
+ * @method ResourceIteratorInterface getListDistributionsIterator(array $args = array()) The input array uses the parameters of the ListDistributions operation
+ * @method ResourceIteratorInterface getListInvalidationsIterator(array $args = array()) The input array uses the parameters of the ListInvalidations operation
+ * @method ResourceIteratorInterface getListStreamingDistributionsIterator(array $args = array()) The input array uses the parameters of the ListStreamingDistributions operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudfront.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudFront.CloudFrontClient.html API docs

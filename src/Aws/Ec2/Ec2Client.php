@@ -22,6 +22,7 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Elastic Compute Cloud
@@ -193,6 +194,39 @@ use Guzzle\Service\Resource\Model;
  * @method waitUntilConversionTaskCancelled(array $input) Wait using the ConversionTaskCancelled waiter. The input array uses the parameters of the DescribeConversionTasks operation and waiter specific settings
  * @method waitUntilCustomerGatewayAvailable(array $input) Wait using the CustomerGatewayAvailable waiter. The input array uses the parameters of the DescribeCustomerGateways operation and waiter specific settings
  * @method waitUntilConversionTaskDeleted(array $input) Wait using the ConversionTaskDeleted waiter. The input array uses the parameters of the DescribeCustomerGateways operation and waiter specific settings
+ * @method ResourceIteratorInterface getDescribeAccountAttributesIterator(array $args = array()) The input array uses the parameters of the DescribeAccountAttributes operation
+ * @method ResourceIteratorInterface getDescribeAddressesIterator(array $args = array()) The input array uses the parameters of the DescribeAddresses operation
+ * @method ResourceIteratorInterface getDescribeAvailabilityZonesIterator(array $args = array()) The input array uses the parameters of the DescribeAvailabilityZones operation
+ * @method ResourceIteratorInterface getDescribeBundleTasksIterator(array $args = array()) The input array uses the parameters of the DescribeBundleTasks operation
+ * @method ResourceIteratorInterface getDescribeConversionTasksIterator(array $args = array()) The input array uses the parameters of the DescribeConversionTasks operation
+ * @method ResourceIteratorInterface getDescribeCustomerGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeCustomerGateways operation
+ * @method ResourceIteratorInterface getDescribeDhcpOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeDhcpOptions operation
+ * @method ResourceIteratorInterface getDescribeExportTasksIterator(array $args = array()) The input array uses the parameters of the DescribeExportTasks operation
+ * @method ResourceIteratorInterface getDescribeImagesIterator(array $args = array()) The input array uses the parameters of the DescribeImages operation
+ * @method ResourceIteratorInterface getDescribeInstanceStatusIterator(array $args = array()) The input array uses the parameters of the DescribeInstanceStatus operation
+ * @method ResourceIteratorInterface getDescribeInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeInstances operation
+ * @method ResourceIteratorInterface getDescribeInternetGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeInternetGateways operation
+ * @method ResourceIteratorInterface getDescribeKeyPairsIterator(array $args = array()) The input array uses the parameters of the DescribeKeyPairs operation
+ * @method ResourceIteratorInterface getDescribeLicensesIterator(array $args = array()) The input array uses the parameters of the DescribeLicenses operation
+ * @method ResourceIteratorInterface getDescribeNetworkAclsIterator(array $args = array()) The input array uses the parameters of the DescribeNetworkAcls operation
+ * @method ResourceIteratorInterface getDescribeNetworkInterfacesIterator(array $args = array()) The input array uses the parameters of the DescribeNetworkInterfaces operation
+ * @method ResourceIteratorInterface getDescribePlacementGroupsIterator(array $args = array()) The input array uses the parameters of the DescribePlacementGroups operation
+ * @method ResourceIteratorInterface getDescribeRegionsIterator(array $args = array()) The input array uses the parameters of the DescribeRegions operation
+ * @method ResourceIteratorInterface getDescribeReservedInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstances operation
+ * @method ResourceIteratorInterface getDescribeReservedInstancesListingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstancesListings operation
+ * @method ResourceIteratorInterface getDescribeReservedInstancesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedInstancesOfferings operation
+ * @method ResourceIteratorInterface getDescribeRouteTablesIterator(array $args = array()) The input array uses the parameters of the DescribeRouteTables operation
+ * @method ResourceIteratorInterface getDescribeSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeSecurityGroups operation
+ * @method ResourceIteratorInterface getDescribeSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeSnapshots operation
+ * @method ResourceIteratorInterface getDescribeSpotInstanceRequestsIterator(array $args = array()) The input array uses the parameters of the DescribeSpotInstanceRequests operation
+ * @method ResourceIteratorInterface getDescribeSpotPriceHistoryIterator(array $args = array()) The input array uses the parameters of the DescribeSpotPriceHistory operation
+ * @method ResourceIteratorInterface getDescribeSubnetsIterator(array $args = array()) The input array uses the parameters of the DescribeSubnets operation
+ * @method ResourceIteratorInterface getDescribeTagsIterator(array $args = array()) The input array uses the parameters of the DescribeTags operation
+ * @method ResourceIteratorInterface getDescribeVolumeStatusIterator(array $args = array()) The input array uses the parameters of the DescribeVolumeStatus operation
+ * @method ResourceIteratorInterface getDescribeVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeVolumes operation
+ * @method ResourceIteratorInterface getDescribeVpcsIterator(array $args = array()) The input array uses the parameters of the DescribeVpcs operation
+ * @method ResourceIteratorInterface getDescribeVpnConnectionsIterator(array $args = array()) The input array uses the parameters of the DescribeVpnConnections operation
+ * @method ResourceIteratorInterface getDescribeVpnGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeVpnGateways operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-ec2.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Ec2.Ec2Client.html API docs

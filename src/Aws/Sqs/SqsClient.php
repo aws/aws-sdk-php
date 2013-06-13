@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Simple Queue Service
@@ -40,6 +41,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}
  * @method Model sendMessageBatch(array $args = array()) {@command Sqs SendMessageBatch}
  * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
+ * @method ResourceIteratorInterface getListQueuesIterator(array $args = array()) The input array uses the parameters of the ListQueues operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sqs.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sqs.SqsClient.html API docs

@@ -22,6 +22,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS Support
@@ -38,6 +39,13 @@ use Guzzle\Service\Resource\Model;
  * @method Model describeTrustedAdvisorChecks(array $args = array()) {@command Support DescribeTrustedAdvisorChecks}
  * @method Model refreshTrustedAdvisorCheck(array $args = array()) {@command Support RefreshTrustedAdvisorCheck}
  * @method Model resolveCase(array $args = array()) {@command Support ResolveCase}
+ * @method ResourceIteratorInterface getDescribeCasesIterator(array $args = array()) The input array uses the parameters of the DescribeCases operation
+ * @method ResourceIteratorInterface getDescribeCommunicationsIterator(array $args = array()) The input array uses the parameters of the DescribeCommunications operation
+ * @method ResourceIteratorInterface getDescribeServicesIterator(array $args = array()) The input array uses the parameters of the DescribeServices operation
+ * @method ResourceIteratorInterface getDescribeTrustedAdvisorCheckRefreshStatusesIterator(array $args = array()) The input array uses the parameters of the DescribeTrustedAdvisorCheckRefreshStatuses operation
+ * @method ResourceIteratorInterface getDescribeTrustedAdvisorCheckSummariesIterator(array $args = array()) The input array uses the parameters of the DescribeTrustedAdvisorCheckSummaries operation
+ * @method ResourceIteratorInterface getDescribeSeverityLevelsIterator(array $args = array()) The input array uses the parameters of the DescribeSeverityLevels operation
+ * @method ResourceIteratorInterface getDescribeTrustedAdvisorChecksIterator(array $args = array()) The input array uses the parameters of the DescribeTrustedAdvisorChecks operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-support.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Support.SupportClient.html API docs

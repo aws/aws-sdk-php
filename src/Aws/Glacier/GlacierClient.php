@@ -23,6 +23,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Glacier
@@ -48,6 +49,10 @@ use Guzzle\Service\Resource\Model;
  * @method Model uploadMultipartPart(array $args = array()) {@command Glacier UploadMultipartPart}
  * @method waitUntilVaultExists(array $input) Wait until a vault can be accessed. The input array uses the parameters of the DescribeVault operation and waiter specific settings
  * @method waitUntilVaultNotExists(array $input) Wait until a vault is deleted. The input array uses the parameters of the DescribeVault operation and waiter specific settings
+ * @method ResourceIteratorInterface getListJobsIterator(array $args = array()) The input array uses the parameters of the ListJobs operation
+ * @method ResourceIteratorInterface getListMultipartUploadsIterator(array $args = array()) The input array uses the parameters of the ListMultipartUploads operation
+ * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
+ * @method ResourceIteratorInterface getListVaultsIterator(array $args = array()) The input array uses the parameters of the ListVaults operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-glacier.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Glacier.GlacierClient.html API docs

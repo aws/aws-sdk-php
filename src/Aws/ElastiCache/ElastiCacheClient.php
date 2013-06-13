@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon ElastiCache
@@ -51,6 +52,16 @@ use Guzzle\Service\Resource\Model;
  * @method Model rebootCacheCluster(array $args = array()) {@command ElastiCache RebootCacheCluster}
  * @method Model resetCacheParameterGroup(array $args = array()) {@command ElastiCache ResetCacheParameterGroup}
  * @method Model revokeCacheSecurityGroupIngress(array $args = array()) {@command ElastiCache RevokeCacheSecurityGroupIngress}
+ * @method ResourceIteratorInterface getDescribeCacheClustersIterator(array $args = array()) The input array uses the parameters of the DescribeCacheClusters operation
+ * @method ResourceIteratorInterface getDescribeCacheEngineVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeCacheEngineVersions operation
+ * @method ResourceIteratorInterface getDescribeCacheParameterGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeCacheParameterGroups operation
+ * @method ResourceIteratorInterface getDescribeCacheParametersIterator(array $args = array()) The input array uses the parameters of the DescribeCacheParameters operation
+ * @method ResourceIteratorInterface getDescribeCacheSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeCacheSecurityGroups operation
+ * @method ResourceIteratorInterface getDescribeCacheSubnetGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeCacheSubnetGroups operation
+ * @method ResourceIteratorInterface getDescribeEngineDefaultParametersIterator(array $args = array()) The input array uses the parameters of the DescribeEngineDefaultParameters operation
+ * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
+ * @method ResourceIteratorInterface getDescribeReservedCacheNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedCacheNodes operation
+ * @method ResourceIteratorInterface getDescribeReservedCacheNodesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedCacheNodesOfferings operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticache.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElastiCache.ElastiCacheClient.html API docs

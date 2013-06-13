@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS CloudFormation
@@ -38,6 +39,10 @@ use Guzzle\Service\Resource\Model;
  * @method Model listStacks(array $args = array()) {@command CloudFormation ListStacks}
  * @method Model updateStack(array $args = array()) {@command CloudFormation UpdateStack}
  * @method Model validateTemplate(array $args = array()) {@command CloudFormation ValidateTemplate}
+ * @method ResourceIteratorInterface getDescribeStackEventsIterator(array $args = array()) The input array uses the parameters of the DescribeStackEvents operation
+ * @method ResourceIteratorInterface getDescribeStacksIterator(array $args = array()) The input array uses the parameters of the DescribeStacks operation
+ * @method ResourceIteratorInterface getListStackResourcesIterator(array $args = array()) The input array uses the parameters of the ListStackResources operation
+ * @method ResourceIteratorInterface getListStacksIterator(array $args = array()) The input array uses the parameters of the ListStacks operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudformation.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudFormation.CloudFormationClient.html API docs

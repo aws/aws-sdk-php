@@ -22,6 +22,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonRestExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Elastic Transcoder
@@ -43,6 +44,10 @@ use Guzzle\Service\Resource\Model;
  * @method Model updatePipeline(array $args = array()) {@command ElasticTranscoder UpdatePipeline}
  * @method Model updatePipelineNotifications(array $args = array()) {@command ElasticTranscoder UpdatePipelineNotifications}
  * @method Model updatePipelineStatus(array $args = array()) {@command ElasticTranscoder UpdatePipelineStatus}
+ * @method ResourceIteratorInterface getListJobsByPipelineIterator(array $args = array()) The input array uses the parameters of the ListJobsByPipeline operation
+ * @method ResourceIteratorInterface getListJobsByStatusIterator(array $args = array()) The input array uses the parameters of the ListJobsByStatus operation
+ * @method ResourceIteratorInterface getListPipelinesIterator(array $args = array()) The input array uses the parameters of the ListPipelines operation
+ * @method ResourceIteratorInterface getListPresetsIterator(array $args = array()) The input array uses the parameters of the ListPresets operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elastictranscoder.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticTranscoder.ElasticTranscoderClient.html API docs

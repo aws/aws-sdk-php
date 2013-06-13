@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS Identity and Access Management
@@ -94,6 +95,22 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateUser(array $args = array()) {@command Iam UpdateUser}
  * @method Model uploadServerCertificate(array $args = array()) {@command Iam UploadServerCertificate}
  * @method Model uploadSigningCertificate(array $args = array()) {@command Iam UploadSigningCertificate}
+ * @method ResourceIteratorInterface getGetGroupIterator(array $args = array()) The input array uses the parameters of the GetGroup operation
+ * @method ResourceIteratorInterface getListAccessKeysIterator(array $args = array()) The input array uses the parameters of the ListAccessKeys operation
+ * @method ResourceIteratorInterface getListAccountAliasesIterator(array $args = array()) The input array uses the parameters of the ListAccountAliases operation
+ * @method ResourceIteratorInterface getListGroupPoliciesIterator(array $args = array()) The input array uses the parameters of the ListGroupPolicies operation
+ * @method ResourceIteratorInterface getListGroupsIterator(array $args = array()) The input array uses the parameters of the ListGroups operation
+ * @method ResourceIteratorInterface getListGroupsForUserIterator(array $args = array()) The input array uses the parameters of the ListGroupsForUser operation
+ * @method ResourceIteratorInterface getListInstanceProfilesIterator(array $args = array()) The input array uses the parameters of the ListInstanceProfiles operation
+ * @method ResourceIteratorInterface getListInstanceProfilesForRoleIterator(array $args = array()) The input array uses the parameters of the ListInstanceProfilesForRole operation
+ * @method ResourceIteratorInterface getListMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListMFADevices operation
+ * @method ResourceIteratorInterface getListRolePoliciesIterator(array $args = array()) The input array uses the parameters of the ListRolePolicies operation
+ * @method ResourceIteratorInterface getListRolesIterator(array $args = array()) The input array uses the parameters of the ListRoles operation
+ * @method ResourceIteratorInterface getListServerCertificatesIterator(array $args = array()) The input array uses the parameters of the ListServerCertificates operation
+ * @method ResourceIteratorInterface getListSigningCertificatesIterator(array $args = array()) The input array uses the parameters of the ListSigningCertificates operation
+ * @method ResourceIteratorInterface getListUserPoliciesIterator(array $args = array()) The input array uses the parameters of the ListUserPolicies operation
+ * @method ResourceIteratorInterface getListUsersIterator(array $args = array()) The input array uses the parameters of the ListUsers operation
+ * @method ResourceIteratorInterface getListVirtualMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListVirtualMFADevices operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-iam.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Iam.IamClient.html API docs

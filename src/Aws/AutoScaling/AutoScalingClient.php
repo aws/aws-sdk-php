@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Auto Scaling
@@ -59,6 +60,14 @@ use Guzzle\Service\Resource\Model;
  * @method Model suspendProcesses(array $args = array()) {@command AutoScaling SuspendProcesses}
  * @method Model terminateInstanceInAutoScalingGroup(array $args = array()) {@command AutoScaling TerminateInstanceInAutoScalingGroup}
  * @method Model updateAutoScalingGroup(array $args = array()) {@command AutoScaling UpdateAutoScalingGroup}
+ * @method ResourceIteratorInterface getDescribeAutoScalingGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeAutoScalingGroups operation
+ * @method ResourceIteratorInterface getDescribeAutoScalingInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeAutoScalingInstances operation
+ * @method ResourceIteratorInterface getDescribeLaunchConfigurationsIterator(array $args = array()) The input array uses the parameters of the DescribeLaunchConfigurations operation
+ * @method ResourceIteratorInterface getDescribeNotificationConfigurationsIterator(array $args = array()) The input array uses the parameters of the DescribeNotificationConfigurations operation
+ * @method ResourceIteratorInterface getDescribePoliciesIterator(array $args = array()) The input array uses the parameters of the DescribePolicies operation
+ * @method ResourceIteratorInterface getDescribeScalingActivitiesIterator(array $args = array()) The input array uses the parameters of the DescribeScalingActivities operation
+ * @method ResourceIteratorInterface getDescribeScheduledActionsIterator(array $args = array()) The input array uses the parameters of the DescribeScheduledActions operation
+ * @method ResourceIteratorInterface getDescribeTagsIterator(array $args = array()) The input array uses the parameters of the DescribeTags operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-autoscaling.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.AutoScaling.AutoScalingClient.html API docs

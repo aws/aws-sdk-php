@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon CloudWatch
@@ -36,6 +37,10 @@ use Guzzle\Service\Resource\Model;
  * @method Model putMetricAlarm(array $args = array()) {@command CloudWatch PutMetricAlarm}
  * @method Model putMetricData(array $args = array()) {@command CloudWatch PutMetricData}
  * @method Model setAlarmState(array $args = array()) {@command CloudWatch SetAlarmState}
+ * @method ResourceIteratorInterface getDescribeAlarmHistoryIterator(array $args = array()) The input array uses the parameters of the DescribeAlarmHistory operation
+ * @method ResourceIteratorInterface getDescribeAlarmsIterator(array $args = array()) The input array uses the parameters of the DescribeAlarms operation
+ * @method ResourceIteratorInterface getDescribeAlarmsForMetricIterator(array $args = array()) The input array uses the parameters of the DescribeAlarmsForMetric operation
+ * @method ResourceIteratorInterface getListMetricsIterator(array $args = array()) The input array uses the parameters of the ListMetrics operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudwatch.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudWatch.CloudWatchClient.html API docs

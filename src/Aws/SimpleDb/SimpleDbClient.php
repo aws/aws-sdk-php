@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon SimpleDB
@@ -35,6 +36,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model listDomains(array $args = array()) {@command SimpleDb ListDomains}
  * @method Model putAttributes(array $args = array()) {@command SimpleDb PutAttributes}
  * @method Model select(array $args = array()) {@command SimpleDb Select}
+ * @method ResourceIteratorInterface getListDomainsIterator(array $args = array()) The input array uses the parameters of the ListDomains operation
+ * @method ResourceIteratorInterface getSelectIterator(array $args = array()) The input array uses the parameters of the Select operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-simpledb.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.SimpleDb.SimpleDbClient.html API docs

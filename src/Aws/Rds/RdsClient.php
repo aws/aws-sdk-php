@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Relational Database Service
@@ -79,6 +80,24 @@ use Guzzle\Service\Resource\Model;
  * @method Model revokeDBSecurityGroupIngress(array $args = array()) {@command Rds RevokeDBSecurityGroupIngress}
  * @method waitUntilDBInstanceAvailable(array $input) Wait using the DBInstanceAvailable waiter. The input array uses the parameters of the DescribeDBInstances operation and waiter specific settings
  * @method waitUntilDBInstanceDeleted(array $input) Wait using the DBInstanceDeleted waiter. The input array uses the parameters of the DescribeDBInstances operation and waiter specific settings
+ * @method ResourceIteratorInterface getDescribeDBEngineVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeDBEngineVersions operation
+ * @method ResourceIteratorInterface getDescribeDBInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeDBInstances operation
+ * @method ResourceIteratorInterface getDescribeDBLogFilesIterator(array $args = array()) The input array uses the parameters of the DescribeDBLogFiles operation
+ * @method ResourceIteratorInterface getDescribeDBParameterGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeDBParameterGroups operation
+ * @method ResourceIteratorInterface getDescribeDBParametersIterator(array $args = array()) The input array uses the parameters of the DescribeDBParameters operation
+ * @method ResourceIteratorInterface getDescribeDBSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeDBSecurityGroups operation
+ * @method ResourceIteratorInterface getDescribeDBSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeDBSnapshots operation
+ * @method ResourceIteratorInterface getDescribeDBSubnetGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeDBSubnetGroups operation
+ * @method ResourceIteratorInterface getDescribeEngineDefaultParametersIterator(array $args = array()) The input array uses the parameters of the DescribeEngineDefaultParameters operation
+ * @method ResourceIteratorInterface getDescribeEventSubscriptionsIterator(array $args = array()) The input array uses the parameters of the DescribeEventSubscriptions operation
+ * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
+ * @method ResourceIteratorInterface getDescribeOptionGroupOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeOptionGroupOptions operation
+ * @method ResourceIteratorInterface getDescribeOptionGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeOptionGroups operation
+ * @method ResourceIteratorInterface getDescribeOrderableDBInstanceOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeOrderableDBInstanceOptions operation
+ * @method ResourceIteratorInterface getDescribeReservedDBInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedDBInstances operation
+ * @method ResourceIteratorInterface getDescribeReservedDBInstancesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedDBInstancesOfferings operation
+ * @method ResourceIteratorInterface getDownloadDBLogFilePortionIterator(array $args = array()) The input array uses the parameters of the DownloadDBLogFilePortion operation
+ * @method ResourceIteratorInterface getListTagsForResourceIterator(array $args = array()) The input array uses the parameters of the ListTagsForResource operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-rds.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Rds.RdsClient.html API docs

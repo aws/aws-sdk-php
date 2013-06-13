@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Redshift
@@ -61,6 +62,18 @@ use Guzzle\Service\Resource\Model;
  * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings
+ * @method ResourceIteratorInterface getDescribeClusterParameterGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterParameterGroups operation
+ * @method ResourceIteratorInterface getDescribeClusterParametersIterator(array $args = array()) The input array uses the parameters of the DescribeClusterParameters operation
+ * @method ResourceIteratorInterface getDescribeClusterSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterSecurityGroups operation
+ * @method ResourceIteratorInterface getDescribeClusterSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterSnapshots operation
+ * @method ResourceIteratorInterface getDescribeClusterSubnetGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterSubnetGroups operation
+ * @method ResourceIteratorInterface getDescribeClusterVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterVersions operation
+ * @method ResourceIteratorInterface getDescribeClustersIterator(array $args = array()) The input array uses the parameters of the DescribeClusters operation
+ * @method ResourceIteratorInterface getDescribeDefaultClusterParametersIterator(array $args = array()) The input array uses the parameters of the DescribeDefaultClusterParameters operation
+ * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
+ * @method ResourceIteratorInterface getDescribeOrderableClusterOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeOrderableClusterOptions operation
+ * @method ResourceIteratorInterface getDescribeReservedNodeOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodeOfferings operation
+ * @method ResourceIteratorInterface getDescribeReservedNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodes operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-redshift.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Redshift.RedshiftClient.html API docs

@@ -19,9 +19,10 @@ namespace Aws\OpsWorks;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
-use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with AWS OpsWorks
@@ -69,6 +70,20 @@ use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
  * @method Model updateLayer(array $args = array()) {@command OpsWorks UpdateLayer}
  * @method Model updateStack(array $args = array()) {@command OpsWorks UpdateStack}
  * @method Model updateUserProfile(array $args = array()) {@command OpsWorks UpdateUserProfile}
+ * @method ResourceIteratorInterface getDescribeAppsIterator(array $args = array()) The input array uses the parameters of the DescribeApps operation
+ * @method ResourceIteratorInterface getDescribeCommandsIterator(array $args = array()) The input array uses the parameters of the DescribeCommands operation
+ * @method ResourceIteratorInterface getDescribeDeploymentsIterator(array $args = array()) The input array uses the parameters of the DescribeDeployments operation
+ * @method ResourceIteratorInterface getDescribeElasticIpsIterator(array $args = array()) The input array uses the parameters of the DescribeElasticIps operation
+ * @method ResourceIteratorInterface getDescribeElasticLoadBalancersIterator(array $args = array()) The input array uses the parameters of the DescribeElasticLoadBalancers operation
+ * @method ResourceIteratorInterface getDescribeInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeInstances operation
+ * @method ResourceIteratorInterface getDescribeLayersIterator(array $args = array()) The input array uses the parameters of the DescribeLayers operation
+ * @method ResourceIteratorInterface getDescribeLoadBasedAutoScalingIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBasedAutoScaling operation
+ * @method ResourceIteratorInterface getDescribeRaidArraysIterator(array $args = array()) The input array uses the parameters of the DescribeRaidArrays operation
+ * @method ResourceIteratorInterface getDescribeServiceErrorsIterator(array $args = array()) The input array uses the parameters of the DescribeServiceErrors operation
+ * @method ResourceIteratorInterface getDescribeStacksIterator(array $args = array()) The input array uses the parameters of the DescribeStacks operation
+ * @method ResourceIteratorInterface getDescribeTimeBasedAutoScalingIterator(array $args = array()) The input array uses the parameters of the DescribeTimeBasedAutoScaling operation
+ * @method ResourceIteratorInterface getDescribeUserProfilesIterator(array $args = array()) The input array uses the parameters of the DescribeUserProfiles operation
+ * @method ResourceIteratorInterface getDescribeVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeVolumes operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-opsworks.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.OpsWorks.OpsWorksClient.html API docs

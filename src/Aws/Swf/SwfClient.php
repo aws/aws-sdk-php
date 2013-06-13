@@ -22,6 +22,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Simple Workflow Service
@@ -57,6 +58,13 @@ use Guzzle\Service\Resource\Model;
  * @method Model signalWorkflowExecution(array $args = array()) {@command Swf SignalWorkflowExecution}
  * @method Model startWorkflowExecution(array $args = array()) {@command Swf StartWorkflowExecution}
  * @method Model terminateWorkflowExecution(array $args = array()) {@command Swf TerminateWorkflowExecution}
+ * @method ResourceIteratorInterface getGetWorkflowExecutionHistoryIterator(array $args = array()) The input array uses the parameters of the GetWorkflowExecutionHistory operation
+ * @method ResourceIteratorInterface getListActivityTypesIterator(array $args = array()) The input array uses the parameters of the ListActivityTypes operation
+ * @method ResourceIteratorInterface getListClosedWorkflowExecutionsIterator(array $args = array()) The input array uses the parameters of the ListClosedWorkflowExecutions operation
+ * @method ResourceIteratorInterface getListDomainsIterator(array $args = array()) The input array uses the parameters of the ListDomains operation
+ * @method ResourceIteratorInterface getListOpenWorkflowExecutionsIterator(array $args = array()) The input array uses the parameters of the ListOpenWorkflowExecutions operation
+ * @method ResourceIteratorInterface getListWorkflowTypesIterator(array $args = array()) The input array uses the parameters of the ListWorkflowTypes operation
+ * @method ResourceIteratorInterface getPollForDecisionTaskIterator(array $args = array()) The input array uses the parameters of the PollForDecisionTask operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-swf.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Swf.SwfClient.html API docs

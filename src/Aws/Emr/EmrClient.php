@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Elastic MapReduce
@@ -33,6 +34,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model setTerminationProtection(array $args = array()) {@command Emr SetTerminationProtection}
  * @method Model setVisibleToAllUsers(array $args = array()) {@command Emr SetVisibleToAllUsers}
  * @method Model terminateJobFlows(array $args = array()) {@command Emr TerminateJobFlows}
+ * @method ResourceIteratorInterface getDescribeJobFlowsIterator(array $args = array()) The input array uses the parameters of the DescribeJobFlows operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-emr.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Emr.EmrClient.html API docs

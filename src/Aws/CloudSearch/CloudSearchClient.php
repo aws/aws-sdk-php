@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon CloudSearch
@@ -45,6 +46,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model updateStemmingOptions(array $args = array()) {@command CloudSearch UpdateStemmingOptions}
  * @method Model updateStopwordOptions(array $args = array()) {@command CloudSearch UpdateStopwordOptions}
  * @method Model updateSynonymOptions(array $args = array()) {@command CloudSearch UpdateSynonymOptions}
+ * @method ResourceIteratorInterface getDescribeDomainsIterator(array $args = array()) The input array uses the parameters of the DescribeDomains operation
+ * @method ResourceIteratorInterface getDescribeIndexFieldsIterator(array $args = array()) The input array uses the parameters of the DescribeIndexFields operation
+ * @method ResourceIteratorInterface getDescribeRankExpressionsIterator(array $args = array()) The input array uses the parameters of the DescribeRankExpressions operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudsearch.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudSearch.CloudSearchClient.html API docs

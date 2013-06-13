@@ -23,6 +23,7 @@ use Aws\Common\Enum\DateFormat;
 use Aws\Common\Exception\ServiceResponseException;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Route 53
@@ -38,6 +39,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model listHealthChecks(array $args = array()) {@command Route53 ListHealthChecks}
  * @method Model listHostedZones(array $args = array()) {@command Route53 ListHostedZones}
  * @method Model listResourceRecordSets(array $args = array()) {@command Route53 ListResourceRecordSets}
+ * @method ResourceIteratorInterface getListHealthChecksIterator(array $args = array()) The input array uses the parameters of the ListHealthChecks operation
+ * @method ResourceIteratorInterface getListHostedZonesIterator(array $args = array()) The input array uses the parameters of the ListHostedZones operation
+ * @method ResourceIteratorInterface getListResourceRecordSetsIterator(array $args = array()) The input array uses the parameters of the ListResourceRecordSets operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-route53.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Route53.Route53Client.html API docs

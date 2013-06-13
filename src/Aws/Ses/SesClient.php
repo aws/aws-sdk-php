@@ -21,6 +21,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
  * Client to interact with Amazon Simple Email Service
@@ -44,6 +45,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model verifyEmailAddress(array $args = array()) {@command Ses VerifyEmailAddress}
  * @method Model verifyEmailIdentity(array $args = array()) {@command Ses VerifyEmailIdentity}
  * @method waitUntilIdentityExists(array $input) Wait using the IdentityExists waiter. The input array uses the parameters of the GetIdentityVerificationAttributes operation and waiter specific settings
+ * @method ResourceIteratorInterface getListIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListIdentities operation
+ * @method ResourceIteratorInterface getListVerifiedEmailAddressesIterator(array $args = array()) The input array uses the parameters of the ListVerifiedEmailAddresses operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-ses.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Ses.SesClient.html API docs
