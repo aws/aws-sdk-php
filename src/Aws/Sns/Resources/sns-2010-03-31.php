@@ -174,7 +174,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AuthenticateOnUnsubscribe' => array(
-                    'description' => 'Indicates that you want to disallow unauthenticated unsubscribes of the subscription. If value of this parameter is "true" and the request has an AWS signature then only the topic owner and the subscription owner will be permitted to unsubscribe the endpoint. The unsubscribe action will require AWS authentication.',
+                    'description' => 'Disallows unauthenticated unsubscribes of the subscription. If the value of this parameter is true and the request has an AWS signature, then only the topic owner and the subscription owner can unsubscribe the endpoint. The unsubscribe action requires AWS authentication.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -208,7 +208,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'CreateTopicResponse',
             'responseType' => 'model',
-            'summary' => 'The CreateTopic action creates a topic to which notifications can be published. Users can create at most 25 topics. This action is idempotent, so if the requester already owns a topic with the specified name, that topic\'s ARN will be returned without creating a new topic.',
+            'summary' => 'The CreateTopic action creates a topic to which notifications can be published. Users can create at most 100 topics. For more information, see http://aws.amazon.com/sns. This action is idempotent, so if the requester already owns a topic with the specified name, that topic\'s ARN is returned without creating a new topic.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -252,7 +252,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'The DeleteTopic action deletes a topic and all its subscriptions. Deleting a topic might prevent some messages previously sent to the topic from being delivered to subscribers. This action is idempotent, so deleting a topic that does not exist will not result in an error.',
+            'summary' => 'The DeleteTopic action deletes a topic and all its subscriptions. Deleting a topic might prevent some messages previously sent to the topic from being delivered to subscribers. This action is idempotent, so deleting a topic that does not exist does not result in an error.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -340,7 +340,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'GetTopicAttributesResponse',
             'responseType' => 'model',
-            'summary' => 'The GetTopicAttribtues action returns all of the properties of a topic customers have created. Topic properties returned might differ based on the authorization of the user.',
+            'summary' => 'The GetTopicAttributes action returns all of the properties of a topic. Topic properties returned might differ based on the authorization of the user.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -536,12 +536,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Subject' => array(
-                    'description' => 'Optional parameter to be used as the "Subject" line of when the message is delivered to e-mail endpoints. This field will also be included, if present, in the standard JSON messages delivered to other endpoints.',
+                    'description' => 'Optional parameter to be used as the "Subject" line when the message is delivered to email endpoints. This field will also be included, if present, in the standard JSON messages delivered to other endpoints.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'MessageStructure' => array(
-                    'description' => 'Optional parameter. It will have one valid value: "json". If this option, Message is present and set to "json", the value of Message must: be a syntactically valid JSON object. It must contain at least a top level JSON key of "default" with a value that is a string. For any other top level key that matches one of our transport protocols (e.g. "http"), then the corresponding value (if it is a string) will be used for the message published for that protocol',
+                    'description' => 'Set MessageStructure to json if you want to send a different message for each protocol. For example, using one publish action, you can send a short message to your SMS subscribers and a longer message to your email subscribers. If you set MessageStructure to json, the value of the Message parameter must:',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -646,8 +646,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AttributeValue' => array(
-                    'required' => true,
-                    'description' => 'The new value for the attribute.',
+                    'description' => 'The new value for the attribute in JSON format.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -702,7 +701,6 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AttributeValue' => array(
-                    'required' => true,
                     'description' => 'The new value for the attribute.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -747,7 +745,7 @@ return array (
                 ),
                 'TopicArn' => array(
                     'required' => true,
-                    'description' => 'The ARN of topic you want to subscribe to.',
+                    'description' => 'The ARN of the topic you want to subscribe to.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -758,7 +756,6 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Endpoint' => array(
-                    'required' => true,
                     'description' => 'The endpoint that you want to receive notifications. Endpoints vary by protocol:',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -793,7 +790,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'The Unsubscribe action deletes a subscription. If the subscription requires authentication for deletion, only the owner of the subscription or the its topic\'s owner can unsubscribe, and an AWS signature is required. If the Unsubscribe call does not require authentication and the requester is not the subscription owner, a final cancellation message is delivered to the endpoint, so that the endpoint owner can easily resubscribe to the topic if the Unsubscribe request was unintended.',
+            'summary' => 'The Unsubscribe action deletes a subscription. If the subscription requires authentication for deletion, only the owner of the subscription or the topic\'s owner can unsubscribe, and an AWS signature is required. If the Unsubscribe call does not require authentication and the requester is not the subscription owner, a final cancellation message is delivered to the endpoint, so that the endpoint owner can easily resubscribe to the topic if the Unsubscribe request was unintended.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -882,7 +879,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'entry',
                         'type' => 'object',
@@ -897,6 +893,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),
@@ -923,7 +920,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'entry',
                         'type' => 'object',
@@ -938,6 +934,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),

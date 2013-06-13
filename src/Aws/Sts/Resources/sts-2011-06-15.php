@@ -220,6 +220,7 @@ return array (
                     'class' => 'InvalidIdentityTokenException',
                 ),
                 array(
+                    'reason' => 'The web identity token that was passed is expired. Get a new identity token from the identity provider and then retry the request.',
                     'class' => 'ExpiredTokenException',
                 ),
             ),

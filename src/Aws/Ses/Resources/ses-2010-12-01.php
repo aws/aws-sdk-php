@@ -90,7 +90,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'GetIdentityDkimAttributesResponse',
             'responseType' => 'model',
-            'summary' => 'Returns the DNS records, or tokens, that must be present in order for Easy DKIM to sign outgoing email messages.',
+            'summary' => 'Returns the current status of Easy DKIM signing for an entity. For domain name identities, this action also returns the DKIM tokens that are required for Easy DKIM signing, and whether Amazon SES has successfully verified that these tokens have been published.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -121,7 +121,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'GetIdentityNotificationAttributesResponse',
             'responseType' => 'model',
-            'summary' => 'Given a list of verified identities (email addresses and/or domains), returns a structure describing identity notification attributes. For more information about feedback notification, see the Amazon SES Developer Guide.',
+            'summary' => 'Given a list of verified identities (email addresses and/or domains), returns a structure describing identity notification attributes.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -513,7 +513,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'Given an identity (email address or domain), enables or disables whether Amazon SES forwards feedback notifications as email. Feedback forwarding may only be disabled when both complaint and bounce topics are set. For more information about feedback notification, see the Amazon SES Developer Guide.',
+            'summary' => 'Given an identity (email address or domain), enables or disables whether Amazon SES forwards feedback notifications as email. Feedback forwarding may only be disabled when both complaint and bounce topics are set.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -546,7 +546,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
-            'summary' => 'Given an identity (email address or domain), sets the Amazon SNS topic to which Amazon SES will publish bounce and complaint notifications for emails sent with that identity as the Source. Publishing to topics may only be disabled when feedback forwarding is enabled. For more information about feedback notification, see the Amazon SES Developer Guide.',
+            'summary' => 'Given an identity (email address or domain), sets the Amazon SNS topic to which Amazon SES will publish bounce and complaint notifications for emails sent with that identity as the Source. Publishing to topics may only be disabled when feedback forwarding is enabled.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -587,7 +587,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'VerifyDomainDkimResponse',
             'responseType' => 'model',
-            'summary' => 'Returns a set of DNS records, or tokens, that must be published in the domain name\'s DNS to complete the DKIM verification process. These tokens are DNS CNAME records that point to DKIM public keys hosted by Amazon SES. To complete the DKIM verification process, these tokens must be published in the domain\'s DNS. The tokens must remain published in order for Easy DKIM signing to function correctly.',
+            'summary' => 'Returns a set of DKIM tokens for a domain. DKIM tokens are character strings that represent your domain\'s identity. Using these tokens, you will need to create DNS CNAME records that point to DKIM public keys hosted by Amazon SES. Amazon Web Services will eventually detect that you have updated your DNS records; this detection process may take up to 72 hours. Upon successful detection, Amazon SES will be able to DKIM-sign email originating from that domain.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,
@@ -715,7 +715,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'entry',
                         'type' => 'object',
@@ -750,6 +749,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),
@@ -776,7 +776,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'entry',
                         'type' => 'object',
@@ -806,6 +805,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),
@@ -832,7 +832,6 @@ return array (
                             ),
                         ),
                     ),
-                    'additionalProperties' => false,
                     'items' => array(
                         'name' => 'entry',
                         'type' => 'object',
@@ -858,6 +857,7 @@ return array (
                             ),
                         ),
                     ),
+                    'additionalProperties' => false,
                 ),
             ),
         ),

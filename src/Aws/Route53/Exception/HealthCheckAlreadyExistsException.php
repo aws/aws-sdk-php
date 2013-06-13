@@ -17,7 +17,6 @@
 namespace Aws\Route53\Exception;
 
 /**
- * The health check you are trying to create already exists. Route 53 returns this error when a health check has alread
- * y been created with the specified CallerReference.
+ * The health check you are trying to create already exists. Route 53 returns this error when a health check has already been created with the specified CallerReference.
  */
 class HealthCheckAlreadyExistsException extends Route53Exception {}

@@ -17,7 +17,6 @@
 namespace Aws\Route53\Exception;
 
 /**
- * There are resource records associated with this health check. Before you can delete the health check, you must disas
- * sociate it from the resource record sets.
+ * There are resource records associated with this health check. Before you can delete the health check, you must disassociate it from the resource record sets.
  */
 class HealthCheckInUseException extends Route53Exception {}

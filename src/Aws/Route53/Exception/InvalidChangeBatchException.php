@@ -17,7 +17,6 @@
 namespace Aws\Route53\Exception;
 
 /**
- * This error contains a list of one or more error messages. Each error message indicates one error in the change batch
- * . For more information, see Example InvalidChangeBatch Errors.
+ * This error contains a list of one or more error messages. Each error message indicates one error in the change batch. For more information, see Example InvalidChangeBatch Errors.
  */
 class InvalidChangeBatchException extends Route53Exception {}

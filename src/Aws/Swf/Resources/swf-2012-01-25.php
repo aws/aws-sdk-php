@@ -69,8 +69,8 @@ return array (
         'us-gov-west-1' => array(
             'http' => false,
             'https' => true,
-            'hostname' => 'swf.us-gov-west-1.amazonaws.com'
-        )
+            'hostname' => 'swf.us-gov-west-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'CountClosedWorkflowExecutions' => array(

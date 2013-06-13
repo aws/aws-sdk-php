@@ -17,7 +17,6 @@
 namespace Aws\Route53\Exception;
 
 /**
- * The hosted zone contains resource record sets in addition to the default NS and SOA resource record sets. Before you
- *  can delete the hosted zone, you must delete the additional resource record sets.
+ * The hosted zone contains resource record sets in addition to the default NS and SOA resource record sets. Before you can delete the hosted zone, you must delete the additional resource record sets.
  */
 class HostedZoneNotEmptyException extends Route53Exception {}

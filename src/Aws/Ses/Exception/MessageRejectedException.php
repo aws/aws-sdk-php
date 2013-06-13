@@ -17,7 +17,6 @@
 namespace Aws\Ses\Exception;
 
 /**
- * Indicates that the action failed, and the message could not be sent. Check the error stack for more information abou
- * t what caused the error.
+ * Indicates that the action failed, and the message could not be sent. Check the error stack for more information about what caused the error.
  */
 class MessageRejectedException extends SesException {}

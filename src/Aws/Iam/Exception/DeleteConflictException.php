@@ -17,7 +17,6 @@
 namespace Aws\Iam\Exception;
 
 /**
- * The request was rejected because it attempted to delete a resource that has attached subordinate entities. The error
- *  message describes these entities.
+ * The request was rejected because it attempted to delete a resource that has attached subordinate entities. The error message describes these entities.
  */
 class DeleteConflictException extends IamException {}

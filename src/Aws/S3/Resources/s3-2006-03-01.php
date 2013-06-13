@@ -270,7 +270,7 @@ return array (
                     'sentAs' => 'x-amz-copy-source-if-none-match',
                 ),
                 'CopySourceIfUnmodifiedSince' => array(
-                    'description' => 'Copies the object if it hasn\'\'t been modified since the specified time.',
+                    'description' => 'Copies the object if it hasn\'t been modified since the specified time.',
                     'type' => array(
                         'object',
                         'string',
@@ -328,7 +328,7 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-meta-',
                     'additionalProperties' => array(
-                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retreiving headers.',
+                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retrieving headers.',
                         'type' => 'string',
                     ),
                 ),
@@ -583,7 +583,7 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-meta-',
                     'additionalProperties' => array(
-                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retreiving headers.',
+                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retrieving headers.',
                         'type' => 'string',
                     ),
                 ),
@@ -767,7 +767,7 @@ return array (
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteObjectOutput',
             'responseType' => 'model',
-            'summary' => 'Removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn\'\'t a null version, Amazon S3 does not remove any objects.',
+            'summary' => 'Removes the null version (if there is one) of an object and inserts a delete marker, which becomes the latest version of the object. If there isn\'t a null version, Amazon S3 does not remove any objects.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -837,7 +837,7 @@ return array (
                     'location' => 'xml',
                 ),
                 'MFA' => array(
-                    'description' => 'The concatenation of the authentication device\'\'s serial number, a space, and the value that is displayed on your authentication device.',
+                    'description' => 'The concatenation of the authentication device\'s serial number, a space, and the value that is displayed on your authentication device.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
@@ -1374,7 +1374,7 @@ return array (
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'HeadObjectOutput',
             'responseType' => 'model',
-            'summary' => 'The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you\'\'re only interested in an object\'\'s metadata. To use HEAD, you must have READ access to the object.',
+            'summary' => 'The HEAD operation retrieves metadata from an object without returning the object itself. This operation is useful if you\'re only interested in an object\'s metadata. To use HEAD, you must have READ access to the object.',
             'documentationUrl' => 'http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html',
             'parameters' => array(
                 'Bucket' => array(
@@ -1855,6 +1855,17 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'CORSRule',
                         'properties' => array(
+                            'AllowedHeaders' => array(
+                                'description' => 'Specifies which headers are allowed in a pre-flight OPTIONS request.',
+                                'type' => 'array',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'type' => 'string',
+                                    'sentAs' => 'AllowedHeader',
+                                ),
+                            ),
                             'AllowedMethods' => array(
                                 'description' => 'Identifies HTTP methods that the domain/origin specified in the rule is allowed to execute.',
                                 'type' => 'array',
@@ -1956,7 +1967,6 @@ return array (
                                         'format' => 'date-time',
                                     ),
                                     'Days' => array(
-                                        'required' => true,
                                         'description' => 'Indicates the lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer.',
                                         'type' => 'numeric',
                                     ),
@@ -2001,7 +2011,7 @@ return array (
                                         'type' => 'string',
                                         'enum' => array(
                                             'STANDARD',
-                                            'REDUCED_REDUDANCY',
+                                            'REDUCED_REDUNDANCY',
                                             'GLACIER',
                                         ),
                                     ),
@@ -2329,7 +2339,7 @@ return array (
                     'default' => true,
                 ),
                 'MFA' => array(
-                    'description' => 'The value is the concatenation of the authentication device\'\'s serial number, a space, and the value displayed on your authentication device.',
+                    'description' => 'The value is the concatenation of the authentication device\'s serial number, a space, and the value displayed on your authentication device.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
@@ -2557,7 +2567,7 @@ return array (
                     'description' => 'Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically.',
                     'type' => 'numeric',
                     'location' => 'header',
-                    'sentAs' => 'Content-Length'
+                    'sentAs' => 'Content-Length',
                 ),
                 'ContentMD5' => array(
                     'description' => 'Content-MD5 checksum of the body. Set to false to disable',
@@ -2617,7 +2627,7 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-meta-',
                     'additionalProperties' => array(
-                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retreiving headers.',
+                        'description' => 'The metadata key. This will be prefixed with x-amz-meta- before sending to S3 as a header. The x-amz-meta- header will be stripped from the key when retrieving headers.',
                         'type' => 'string',
                     ),
                 ),
@@ -2902,7 +2912,7 @@ return array (
                     'description' => 'Size of the body in bytes. This parameter is useful when the size of the body cannot be determined automatically.',
                     'type' => 'numeric',
                     'location' => 'header',
-                    'sentAs' => 'Content-Length'
+                    'sentAs' => 'Content-Length',
                 ),
                 'Key' => array(
                     'required' => true,
@@ -2991,7 +3001,7 @@ return array (
                     'sentAs' => 'x-amz-copy-source-if-none-match',
                 ),
                 'CopySourceIfUnmodifiedSince' => array(
-                    'description' => 'Copies the object if it hasn\'\'t been modified since the specified time.',
+                    'description' => 'Copies the object if it hasn\'t been modified since the specified time.',
                     'type' => array(
                         'object',
                         'string',
@@ -3064,16 +3074,16 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                 ),
-                'ETag' => array(
-                    'description' => 'Entity tag for the uploaded object.',
-                    'type' => 'string',
-                    'location' => 'xml',
-                ),
                 'Expiration' => array(
                     'description' => 'If the object expiration is configured, this will contain the expiration date (expiry-date) and rule ID (rule-id). The value of rule-id is URL encoded.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-expiration',
+                ),
+                'ETag' => array(
+                    'description' => 'Entity tag of the object.',
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
@@ -3413,6 +3423,18 @@ return array (
                         'type' => 'object',
                         'sentAs' => 'CORSRule',
                         'properties' => array(
+                            'AllowedHeaders' => array(
+                                'description' => 'Specifies which headers are allowed in a pre-flight OPTIONS request.',
+                                'type' => 'array',
+                                'sentAs' => 'AllowedHeader',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'items' => array(
+                                    'type' => 'string',
+                                    'sentAs' => 'AllowedHeader',
+                                ),
+                            ),
                             'AllowedOrigins' => array(
                                 'description' => 'One or more origins you want customers to be able to access the bucket from.',
                                 'type' => 'array',
@@ -4773,16 +4795,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-expiration',
                 ),
+                'ETag' => array(
+                    'description' => 'Entity tag for the uploaded object.',
+                    'type' => 'string',
+                    'location' => 'header',
+                ),
                 'ServerSideEncryption' => array(
                     'description' => 'The Server-side encryption algorithm used when storing this object in S3.',
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
-                ),
-                'ETag' => array(
-                    'description' => 'Entity tag for the uploaded object.',
-                    'type' => 'string',
-                    'location' => 'header',
                 ),
                 'VersionId' => array(
                     'description' => 'Version of the object.',

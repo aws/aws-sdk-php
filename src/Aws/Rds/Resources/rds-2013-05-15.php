@@ -1369,7 +1369,6 @@ return array (
                     'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
-                    'required' => true,
                     'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -2118,13 +2117,11 @@ return array (
                     'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
-                    'required' => true,
                     'description' => 'The customer-assigned name of the DB Instance that contains the log files you want to list.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'LogFileName' => array(
-                    'required' => true,
                     'description' => 'The name of the log file to be downloaded.',
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -2838,7 +2835,7 @@ return array (
             'class' => 'Aws\\Common\\Command\\QueryCommand',
             'responseClass' => 'DBInstanceWrapper',
             'responseType' => 'model',
-            'summary' => 'Rebooting a DB instance restarts the database engine service. A reboot also applies to the DB instance any modifications to the associated DB parameter group that were pending. Rebooting a DB instance results in a momentary outage of the instance, during which the DB instance status is set to rebooting. If the RDS instance is configured for MultiAZ, it is possible that the reboot will be conducted through a failover. An Amazon RDS event is created when the reboot is completed.',
+            'summary' => 'Reboots a previously provisioned RDS instance. This API results in the application of modified DBParameterGroup parameters with ApplyStatus of pending-reboot to the RDS instance. This action is taken as soon as possible, and results in a momentary outage to the RDS instance during which the RDS instance status is set to rebooting. If the RDS instance is configured for MultiAZ, it is possible that the reboot will be conducted through a failover. A DBInstance event is created when the reboot is completed.',
             'parameters' => array(
                 'Action' => array(
                     'static' => true,

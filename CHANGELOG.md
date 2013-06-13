@@ -18,6 +18,7 @@ Next Release
 * Fixed issue #94 so that the `Aws\S3\BucketStyleListener` is invoked on `command.after_prepare` and presigned URLs
   are generated correctly from S3 commands
 * Fixed an issue so that creating presigned URLs using the Amazon S3 client now works with temporary credentials
+* Fixed an issue so that the `CORSRules.AllowedHeaders` parameter is now available when configuring CORS for Amazon S3
 
 2.3.4 (2013-05-30)
 ------------------

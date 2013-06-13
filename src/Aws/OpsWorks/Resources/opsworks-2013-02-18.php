@@ -166,6 +166,7 @@ return array (
                     'location' => 'json',
                 ),
                 'CustomCookbooksSource' => array(
+                    'description' => 'Contains the information required to retrieve an app or cookbook from a repository. For more information, see Creating Apps or Custom Recipes and Cookbooks.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -883,6 +884,7 @@ return array (
                     'location' => 'json',
                 ),
                 'CustomCookbooksSource' => array(
+                    'description' => 'Contains the information required to retrieve an app or cookbook from a repository. For more information, see Creating Apps or Custom Recipes and Cookbooks.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3017,6 +3019,7 @@ return array (
                     'location' => 'json',
                 ),
                 'CustomCookbooksSource' => array(
+                    'description' => 'Contains the information required to retrieve an app or cookbook from a repository. For more information, see Creating Apps or Custom Recipes and Cookbooks.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3429,6 +3432,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Command' => array(
+                                'description' => 'Used to specify a deployment operation.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'Name' => array(
@@ -3783,6 +3787,7 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'DefaultRecipes' => array(
+                                'description' => 'OpsWorks supports five life',
                                 'type' => 'object',
                                 'properties' => array(
                                     'Setup' => array(
@@ -4163,6 +4168,7 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'CustomCookbooksSource' => array(
+                                'description' => 'Contains the information required to retrieve an app or cookbook from a repository. For more information, see Creating Apps or Custom Recipes and Cookbooks.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'Type' => array(

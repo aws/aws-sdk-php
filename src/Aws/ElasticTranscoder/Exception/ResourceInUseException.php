@@ -17,7 +17,6 @@
 namespace Aws\ElasticTranscoder\Exception;
 
 /**
- * The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is
- * currently in use.
+ * The resource you are attempting to change is in use. For example, you are attempting to delete a pipeline that is currently in use.
  */
 class ResourceInUseException extends ElasticTranscoderException {}

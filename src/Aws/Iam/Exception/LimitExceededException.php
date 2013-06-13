@@ -17,7 +17,6 @@
 namespace Aws\Iam\Exception;
 
 /**
- * The request was rejected because it attempted to create resources beyond the current AWS account limits. The error m
- * essage describes the limit exceeded.
+ * The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.
  */
 class LimitExceededException extends IamException {}
