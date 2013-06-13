@@ -70,6 +70,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -115,6 +116,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -122,6 +124,7 @@ return array (
                 ),
                 'IndexField' => array(
                     'required' => true,
+                    'description' => 'Defines a field in the index, including its name, type, and the source of its data. The IndexFieldType indicates which of the options will be present. It is invalid to specify options for a type other than the IndexFieldType.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -263,6 +266,7 @@ return array (
                                                 'type' => 'string',
                                             ),
                                             'Language' => array(
+                                                'description' => 'An IETF RFC 4646 language code. Only the primary language is considered. English (en) is currently the only supported language.',
                                                 'type' => 'string',
                                             ),
                                         ),
@@ -290,6 +294,9 @@ return array (
                                                     'description' => 'The value of a field or source document attribute.',
                                                     'type' => 'string',
                                                     'maxLength' => 1024,
+                                                    'data' => array(
+                                                        'shape_name' => 'FieldValue',
+                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -343,6 +350,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -350,6 +358,7 @@ return array (
                 ),
                 'RankExpression' => array(
                     'required' => true,
+                    'description' => 'A named expression that can be evaluated at search time and used for ranking or thresholding in a search query.',
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -413,6 +422,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -450,6 +460,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -457,6 +468,7 @@ return array (
                 ),
                 'IndexFieldName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of an index field. Field names must begin with a letter and can contain the following characters: a-z (lowercase), 0-9, and _ (underscore). Uppercase letters and hyphens are not allowed. The names "body", "docid", and "text_relevance" are reserved and cannot be specified as field or rank expression names.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -502,6 +514,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -555,6 +568,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -639,6 +653,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -693,6 +708,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -747,6 +763,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -788,6 +805,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -829,6 +847,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -870,6 +889,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -911,6 +931,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -952,6 +973,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -1003,6 +1025,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -1010,6 +1033,7 @@ return array (
                 ),
                 'AccessPolicies' => array(
                     'required' => true,
+                    'description' => 'An IAM access policy as described in The Access Policy Language in Using AWS Identity and Access Management. The maximum size of an access policy document is 100 KB.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1057,6 +1081,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -1064,6 +1089,7 @@ return array (
                 ),
                 'Stems' => array(
                     'required' => true,
+                    'description' => 'Maps terms to their stems, serialized as a JSON document. The document has a single object with one property "stems" whose value is an object mapping terms to their stems. The maximum size of a stemming document is 500 KB. Example: { "stems": {"people": "person", "walking": "walk"} }',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1111,6 +1137,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -1118,6 +1145,7 @@ return array (
                 ),
                 'Stopwords' => array(
                     'required' => true,
+                    'description' => 'Lists stopwords serialized as a JSON document. The document has a single object with one property "stopwords" whose value is an array of strings. The maximum size of a stopwords document is 10 KB. Example: { "stopwords": ["a", "an", "the", "of"] }',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1165,6 +1193,7 @@ return array (
                 ),
                 'DomainName' => array(
                     'required' => true,
+                    'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 3,
@@ -1172,6 +1201,7 @@ return array (
                 ),
                 'Synonyms' => array(
                     'required' => true,
+                    'description' => 'Maps terms to their synonyms, serialized as a JSON document. The document has a single object with one property "synonyms" whose value is an object mapping terms to their synonyms. Each synonym is a simple string or an array of strings. The maximum size of a stopwords document is 100 KB. Example: { "synonyms": {"cat": ["feline", "kitten"], "puppy": "dog"} }',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1206,13 +1236,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'DomainStatus' => array(
+                    'description' => 'The current status of the search domain.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'DomainId' => array(
+                            'description' => 'An internally generated unique identifier for a domain.',
                             'type' => 'string',
                         ),
                         'DomainName' => array(
+                            'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                             'type' => 'string',
                         ),
                         'Created' => array(
@@ -1232,9 +1265,11 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'Arn' => array(
+                                    'description' => 'An Amazon Resource Name (ARN). See Identifiers for IAM Entities in Using AWS Identity and Access Management for more information.',
                                     'type' => 'string',
                                 ),
                                 'Endpoint' => array(
+                                    'description' => 'The URL (including /version/pathPrefix) to which service requests can be submitted.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1244,9 +1279,11 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'Arn' => array(
+                                    'description' => 'An Amazon Resource Name (ARN). See Identifiers for IAM Entities in Using AWS Identity and Access Management for more information.',
                                     'type' => 'string',
                                 ),
                                 'Endpoint' => array(
+                                    'description' => 'The URL (including /version/pathPrefix) to which service requests can be submitted.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1280,10 +1317,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'IndexField' => array(
+                    'description' => 'The value of an IndexField and its current status.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Defines a field in the index, including its name, type, and the source of its data. The IndexFieldType indicates which of the options will be present. It is invalid to specify options for a type other than the IndexFieldType.',
                             'type' => 'object',
                             'properties' => array(
                                 'IndexFieldName' => array(
@@ -1392,6 +1431,7 @@ return array (
                                                         'type' => 'string',
                                                     ),
                                                     'Language' => array(
+                                                        'description' => 'An IETF RFC 4646 language code. Only the primary language is considered. English (en) is currently the only supported language.',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -1426,7 +1466,6 @@ return array (
                                                                 ),
                                                             ),
                                                         ),
-                                                        'additionalProperties' => false,
                                                         'items' => array(
                                                             'name' => 'entry',
                                                             'type' => 'object',
@@ -1442,6 +1481,7 @@ return array (
                                                                 ),
                                                             ),
                                                         ),
+                                                        'additionalProperties' => false,
                                                     ),
                                                 ),
                                             ),
@@ -1451,6 +1491,7 @@ return array (
                             ),
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -1484,6 +1525,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'RankExpression' => array(
+                    'description' => 'The value of a RankExpression and its current status.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -1502,6 +1544,7 @@ return array (
                             ),
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -1535,13 +1578,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'DomainStatus' => array(
+                    'description' => 'The current status of the search domain.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'DomainId' => array(
+                            'description' => 'An internally generated unique identifier for a domain.',
                             'type' => 'string',
                         ),
                         'DomainName' => array(
+                            'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                             'type' => 'string',
                         ),
                         'Created' => array(
@@ -1561,9 +1607,11 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'Arn' => array(
+                                    'description' => 'An Amazon Resource Name (ARN). See Identifiers for IAM Entities in Using AWS Identity and Access Management for more information.',
                                     'type' => 'string',
                                 ),
                                 'Endpoint' => array(
+                                    'description' => 'The URL (including /version/pathPrefix) to which service requests can be submitted.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1573,9 +1621,11 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'Arn' => array(
+                                    'description' => 'An Amazon Resource Name (ARN). See Identifiers for IAM Entities in Using AWS Identity and Access Management for more information.',
                                     'type' => 'string',
                                 ),
                                 'Endpoint' => array(
+                                    'description' => 'The URL (including /version/pathPrefix) to which service requests can be submitted.',
                                     'type' => 'string',
                                 ),
                             ),
@@ -1609,10 +1659,12 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'IndexField' => array(
+                    'description' => 'The value of an IndexField and its current status.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Defines a field in the index, including its name, type, and the source of its data. The IndexFieldType indicates which of the options will be present. It is invalid to specify options for a type other than the IndexFieldType.',
                             'type' => 'object',
                             'properties' => array(
                                 'IndexFieldName' => array(
@@ -1721,6 +1773,7 @@ return array (
                                                         'type' => 'string',
                                                     ),
                                                     'Language' => array(
+                                                        'description' => 'An IETF RFC 4646 language code. Only the primary language is considered. English (en) is currently the only supported language.',
                                                         'type' => 'string',
                                                     ),
                                                 ),
@@ -1755,7 +1808,6 @@ return array (
                                                                 ),
                                                             ),
                                                         ),
-                                                        'additionalProperties' => false,
                                                         'items' => array(
                                                             'name' => 'entry',
                                                             'type' => 'object',
@@ -1771,6 +1823,7 @@ return array (
                                                                 ),
                                                             ),
                                                         ),
+                                                        'additionalProperties' => false,
                                                     ),
                                                 ),
                                             ),
@@ -1780,6 +1833,7 @@ return array (
                             ),
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -1813,6 +1867,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'RankExpression' => array(
+                    'description' => 'The value of a RankExpression and its current status.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -1831,6 +1886,7 @@ return array (
                             ),
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -1873,6 +1929,7 @@ return array (
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -1906,6 +1963,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'DomainStatusList' => array(
+                    'description' => 'The current status of all of your search domains.',
                     'type' => 'array',
                     'location' => 'xml',
                     'items' => array(
@@ -1915,9 +1973,11 @@ return array (
                         'sentAs' => 'member',
                         'properties' => array(
                             'DomainId' => array(
+                                'description' => 'An internally generated unique identifier for a domain.',
                                 'type' => 'string',
                             ),
                             'DomainName' => array(
+                                'description' => 'A string that represents the name of a domain. Domain names must be unique across the domains owned by an account within an AWS region. Domain names must start with a letter or number and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen). Uppercase letters and underscores are not allowed.',
                                 'type' => 'string',
                             ),
                             'Created' => array(
@@ -1937,9 +1997,11 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'Arn' => array(
+                                        'description' => 'An Amazon Resource Name (ARN). See Identifiers for IAM Entities in Using AWS Identity and Access Management for more information.',
                                         'type' => 'string',
                                     ),
                                     'Endpoint' => array(
+                                        'description' => 'The URL (including /version/pathPrefix) to which service requests can be submitted.',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1949,9 +2011,11 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'Arn' => array(
+                                        'description' => 'An Amazon Resource Name (ARN). See Identifiers for IAM Entities in Using AWS Identity and Access Management for more information.',
                                         'type' => 'string',
                                     ),
                                     'Endpoint' => array(
+                                        'description' => 'The URL (including /version/pathPrefix) to which service requests can be submitted.',
                                         'type' => 'string',
                                     ),
                                 ),
@@ -1996,6 +2060,7 @@ return array (
                         'sentAs' => 'member',
                         'properties' => array(
                             'Options' => array(
+                                'description' => 'Defines a field in the index, including its name, type, and the source of its data. The IndexFieldType indicates which of the options will be present. It is invalid to specify options for a type other than the IndexFieldType.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'IndexFieldName' => array(
@@ -2104,6 +2169,7 @@ return array (
                                                             'type' => 'string',
                                                         ),
                                                         'Language' => array(
+                                                            'description' => 'An IETF RFC 4646 language code. Only the primary language is considered. English (en) is currently the only supported language.',
                                                             'type' => 'string',
                                                         ),
                                                     ),
@@ -2138,7 +2204,6 @@ return array (
                                                                     ),
                                                                 ),
                                                             ),
-                                                            'additionalProperties' => false,
                                                             'items' => array(
                                                                 'name' => 'entry',
                                                                 'type' => 'object',
@@ -2154,6 +2219,7 @@ return array (
                                                                     ),
                                                                 ),
                                                             ),
+                                                            'additionalProperties' => false,
                                                         ),
                                                     ),
                                                 ),
@@ -2163,6 +2229,7 @@ return array (
                                 ),
                             ),
                             'Status' => array(
+                                'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'CreationDate' => array(
@@ -2221,6 +2288,7 @@ return array (
                                 ),
                             ),
                             'Status' => array(
+                                'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'CreationDate' => array(
@@ -2255,13 +2323,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'AccessPolicies' => array(
+                    'description' => 'A PolicyDocument that specifies access policies for the search domain\'s services, and the current status of those policies.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'An IAM access policy as described in The Access Policy Language in Using AWS Identity and Access Management. The maximum size of an access policy document is 100 KB.',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2295,13 +2366,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Stems' => array(
+                    'description' => 'The stemming options configured for this search domain and the current status of those options.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Maps terms to their stems, serialized as a JSON document. The document has a single object with one property "stems" whose value is an object mapping terms to their stems. The maximum size of a stemming document is 500 KB. Example: { "stems": {"people": "person", "walking": "walk"} }',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2335,13 +2409,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Stopwords' => array(
+                    'description' => 'The stopword options configured for this search domain and the current status of those options.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Lists stopwords serialized as a JSON document. The document has a single object with one property "stopwords" whose value is an array of strings. The maximum size of a stopwords document is 10 KB. Example: { "stopwords": ["a", "an", "the", "of"] }',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2375,13 +2452,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Synonyms' => array(
+                    'description' => 'The synonym options configured for this search domain and the current status of those options.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Maps terms to their synonyms, serialized as a JSON document. The document has a single object with one property "synonyms" whose value is an object mapping terms to their synonyms. Each synonym is a simple string or an array of strings. The maximum size of a stopwords document is 100 KB. Example: { "synonyms": {"cat": ["feline", "kitten"], "puppy": "dog"} }',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2432,6 +2512,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'DefaultSearchField' => array(
+                    'description' => 'The value of the DefaultSearchField configured for this search domain and its current status.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
@@ -2440,6 +2521,7 @@ return array (
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2473,13 +2555,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'AccessPolicies' => array(
+                    'description' => 'A PolicyDocument that specifies access policies for the search domain\'s services, and the current status of those policies.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'An IAM access policy as described in The Access Policy Language in Using AWS Identity and Access Management. The maximum size of an access policy document is 100 KB.',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2513,13 +2598,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Stems' => array(
+                    'description' => 'The stemming options configured for this search domain and the current status of those options.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Maps terms to their stems, serialized as a JSON document. The document has a single object with one property "stems" whose value is an object mapping terms to their stems. The maximum size of a stemming document is 500 KB. Example: { "stems": {"people": "person", "walking": "walk"} }',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2553,13 +2641,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Stopwords' => array(
+                    'description' => 'The stopword options configured for this search domain and the current status of those options.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Lists stopwords serialized as a JSON document. The document has a single object with one property "stopwords" whose value is an array of strings. The maximum size of a stopwords document is 10 KB. Example: { "stopwords": ["a", "an", "the", "of"] }',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
@@ -2593,13 +2684,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Synonyms' => array(
+                    'description' => 'The synonym options configured for this search domain and the current status of those options.',
                     'type' => 'object',
                     'location' => 'xml',
                     'properties' => array(
                         'Options' => array(
+                            'description' => 'Maps terms to their synonyms, serialized as a JSON document. The document has a single object with one property "synonyms" whose value is an object mapping terms to their synonyms. Each synonym is a simple string or an array of strings. The maximum size of a stopwords document is 100 KB. Example: { "synonyms": {"cat": ["feline", "kitten"], "puppy": "dog"} }',
                             'type' => 'string',
                         ),
                         'Status' => array(
+                            'description' => 'The status of an option, including when it was last updated and whether it is actively in use for searches.',
                             'type' => 'object',
                             'properties' => array(
                                 'CreationDate' => array(
