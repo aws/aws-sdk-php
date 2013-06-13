@@ -245,7 +245,7 @@ way to create an Acp object is through the ``Aws\S3\Model\AcpBuilder``.
         'ACP'        => $acp
     ));
 
-Creating a Pre-Signed URL
+Creating a pre-signed URL
 -------------------------
 
 You can authenticate certain types of requests by passing the required information as query-string parameters instead
@@ -254,7 +254,13 @@ Amazon S3 data, without proxying the request. The idea is to construct a "pre-si
 that an end-user's browser can retrieve. Additionally, you can limit a pre-signed request by specifying an expiration
 time.
 
-You can create a presigned URL for any Amazon S3 operation using the ``getCommand`` method for creating a Guzzle
+The most common scenario is creating a pre-signed URL to GET an object. The easiest way to do this is to use the
+``getObjectUrl`` method of the Amazon S3 client. This same method can also be used to get an unsigned URL of a public
+S3 object.
+
+.. example:: S3/Integration/S3_20060301_Test.php testGetObjectUrl
+
+You can also create pre-signed URLs for any Amazon S3 operation using the ``getCommand`` method for creating a Guzzle
 command object and then calling the ``createPresignedUrl()`` method on the command.
 
 .. example:: S3/Integration/S3_20060301_Test.php testCreatePresignedUrlFromCommand

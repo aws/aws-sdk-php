@@ -530,9 +530,11 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
 
         // Get a plain URL for an Amazon S3 object
         $plainUrl = $client->getObjectUrl($bucket, 'data.txt');
+        // > https://my-bucket.s3.amazonaws.com/data.txt
 
-        // Get a presigned URL for an Amazon S3 object
+        // Get a pre-signed URL for an Amazon S3 object
         $signedUrl = $client->getObjectUrl($bucket, 'data.txt', '+10 minutes');
+        // > https://my-bucket.s3.amazonaws.com/data.txt?AWSAccessKeyId=[...]&Expires=[...]&Signature=[...]
 
         // Create a vanilla Guzzle HTTP client for accessing the URLs
         $http = new \Guzzle\Http\Client;
@@ -546,7 +548,7 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
         echo $response->getStatusCode();
         // > 403
 
-        // Get the contents of the object using the presigned URL
+        // Get the contents of the object using the pre-signed URL
         $response = $http->get($signedUrl)->send();
         echo $response->getBody();
         // > Hello!
