@@ -7,11 +7,11 @@ The **AWS SDK for PHP** enables PHP developers to easily work with [Amazon Web S
 solutions with Amazon S3, Amazon DynamoDB, Amazon Glacier, and more. You can get started in minutes by [installing the
 SDK through Composer][docs-installation] or by downloading a single [zip][install-zip] or [phar][install-phar] file.
 
-* **Install**: [Instructions][docs-installation], [Packagist/Composer][install-packagist], [PEAR][install-pear],
+* **Installation**: [Instructions][docs-installation], [Packagist/Composer][install-packagist], [PEAR][install-pear],
   [Zip Download][install-zip], [Phar Download][install-phar]
 * **Documentation**: [User Guide][docs-guide], [API Docs][docs-api], [Contribution Guide][docs-contribution],
   [License][sdk-license]
-* **Community**: [Blog][sdk-blog], [Forum][sdk-forum], [Issues][sdk-issues]
+* **Communication**: [Blog][sdk-blog], [Forum][sdk-forum], [Issues][sdk-issues]
 
 ## Features
 
