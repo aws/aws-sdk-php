@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a TooManyCloudFrontOriginAccessIdentitiesException error is encountered
+ * Processing your request would cause you to exceed the maximum number of origin access identities allowed.
  */
 class TooManyCloudFrontOriginAccessIdentitiesException extends CloudFrontException {}

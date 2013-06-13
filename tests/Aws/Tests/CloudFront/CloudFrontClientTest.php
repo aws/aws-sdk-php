@@ -29,9 +29,9 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = CloudFrontClient::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
-            'region' => 'us-east-1'
         ));
-        $this->assertInstanceOf('Aws\CloudFront\CloudFrontSignature', $client->getSignature());
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
+        $this->assertEquals('https://cloudfront.amazonaws.com', $client->getBaseUrl());
     }
 
     public function testCreatesSignedUrlsForHttp()
@@ -161,5 +161,23 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('cloudfront', true);
         $client->getConfig()->remove('key_pair_id');
         $client->getSignedUrl(array('url' => 'http://bar.com', 'expires' => time() + 60));
+    }
+
+    public function dataForCorrectSignatureIsInstantiatedTest()
+    {
+        return array(
+            array(array(), 'Aws\Common\Signature\SignatureV4'),
+            array(array('version' => '2013-05-12'), 'Aws\Common\Signature\SignatureV4'),
+            array(array('version' => '2012-05-05'), 'Aws\CloudFront\CloudFrontSignature'),
+        );
+    }
+
+    /**
+     * @dataProvider dataForCorrectSignatureIsInstantiatedTest
+     */
+    public function testCorrectSignatureIsInstantiated(array $config, $signatureClass)
+    {
+        $client = CloudFrontClient::factory($config);
+        $this->assertInstanceOf($signatureClass, $client->getSignature());
     }
 }

@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a TooManyDistributionCNAMEsException error is encountered
+ * Your request contains more CNAMEs than are allowed per distribution.
  */
 class TooManyDistributionCNAMEsException extends CloudFrontException {}

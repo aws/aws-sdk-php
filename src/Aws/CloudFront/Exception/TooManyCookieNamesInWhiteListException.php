@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * Your request contains more cookie names in the whitelist than are allowed per cache behavior.
  */
-class InvalidOriginAccessIdentityException extends CloudFrontException {}
+class TooManyCookieNamesInWhiteListException extends CloudFrontException {}

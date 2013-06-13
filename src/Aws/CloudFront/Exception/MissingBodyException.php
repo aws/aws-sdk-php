@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a MissingBodyException error is encountered
+ * This operation requires a body. Ensure that the body is present and the Content-Type header is set.
  */
 class MissingBodyException extends CloudFrontException {}

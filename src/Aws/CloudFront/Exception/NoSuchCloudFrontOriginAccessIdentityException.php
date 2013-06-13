@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a NoSuchCloudFrontOriginAccessIdentityException error is encountered
+ * The specified origin access identity does not exist.
  */
 class NoSuchCloudFrontOriginAccessIdentityException extends CloudFrontException {}

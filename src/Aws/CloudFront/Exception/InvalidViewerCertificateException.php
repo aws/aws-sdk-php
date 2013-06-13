@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * Exception that occurs when a InvalidViewerCertificateException error is encountered
  */
-class InvalidOriginAccessIdentityException extends CloudFrontException {}
+class InvalidViewerCertificateException extends CloudFrontException {}

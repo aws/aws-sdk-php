@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a AccessDeniedException error is encountered
+ * Access denied.
  */
 class AccessDeniedException extends CloudFrontException {}

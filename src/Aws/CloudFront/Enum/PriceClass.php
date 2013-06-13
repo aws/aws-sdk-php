@@ -14,9 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudFront\Exception;
+namespace Aws\CloudFront\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * Contains enumerable PriceClass values
  */
-class InvalidOriginAccessIdentityException extends CloudFrontException {}
+class PriceClass extends Enum
+{
+    const PRICE_CLASS_100 = 'PriceClass_100';
+    const PRICE_CLASS_200 = 'PriceClass_200';
+    const PRICE_CLASS_ALL = 'PriceClass_All';
+}

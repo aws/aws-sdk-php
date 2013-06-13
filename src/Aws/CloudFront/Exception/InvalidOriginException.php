@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a InvalidOriginException error is encountered
+ * The Amazon S3 origin server specified does not refer to a valid Amazon S3 bucket.
  */
 class InvalidOriginException extends CloudFrontException {}

@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a TrustedSignerDoesNotExistException error is encountered
+ * One or more of your trusted signers do not exist.
  */
 class TrustedSignerDoesNotExistException extends CloudFrontException {}

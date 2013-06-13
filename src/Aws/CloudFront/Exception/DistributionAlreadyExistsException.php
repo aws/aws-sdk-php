@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a DistributionAlreadyExistsException error is encountered
+ * The caller reference you attempted to create the distribution with is associated with another distribution.
  */
 class DistributionAlreadyExistsException extends CloudFrontException {}

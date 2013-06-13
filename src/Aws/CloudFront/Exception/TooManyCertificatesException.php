@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * You cannot create anymore custom ssl certificates.
  */
-class InvalidOriginAccessIdentityException extends CloudFrontException {}
+class TooManyCertificatesException extends CloudFrontException {}

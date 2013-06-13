@@ -36,7 +36,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
     public static function setUpBeforeClass()
     {
         $s3 = self::getServiceBuilder()->get('s3');
-        self::$bucketName = crc32(gethostname()) . 'cftest';
+        self::$bucketName = crc32(gethostname()) . '_cftest';
 
         // Create the test bucket
         self::log('Creating bucket for testing distributions: ' . self::$bucketName);
@@ -66,14 +66,25 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         self::log('Deleting test bucket');
         $s3->deleteBucket(array('Bucket' => self::$bucketName));
 
+        /** @var \Aws\CloudFront\CloudFrontClient $cf */
         $cf = self::getServiceBuilder()->get('cloudfront');
+
+        sleep(60);
+
         if (self::$originId) {
             self::log('Deleting origin access identity');
-            $cf->deleteCloudFrontOriginAccessIdentity(array('Id' => self::$originId));
+            $result = $cf->getCloudFrontOriginAccessIdentity(array('Id' => self::$originId));
+            $cf->deleteCloudFrontOriginAccessIdentity(array(
+                'Id'      => self::$originId,
+                'IfMatch' => $result['ETag'],
+            ));
         }
+
         if (self::$distributionId) {
             self::log('Deleting distribution');
-            $cf->deleteDistribution(array('Id' => self::$distributionId));
+            $cf->deleteDistribution(array(
+                'Id' => self::$distributionId,
+            ));
         }
     }
 
@@ -143,14 +154,18 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
                     'Items'    => array('self')
                 ),
                 'ForwardedValues' => array(
-                    'QueryString' => false
+                    'QueryString' => false,
+                    'Cookies' => array(
+                        'Forward' => 'all'
+                    )
                 )
             ),
             'DefaultRootObject' => 'foo.txt',
             'Logging' => array(
                 'Enabled' => false,
                 'Bucket' => '',
-                'Prefix' => ''
+                'Prefix' => '',
+                'IncludeCookies' => true,
             ),
             'Origins' => array(
                 'Quantity' => 1,
@@ -163,7 +178,8 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
                         )
                     )
                 )
-            )
+            ),
+            'PriceClass' => 'PriceClass_All',
         ));
 
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);

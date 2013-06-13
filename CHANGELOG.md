@@ -8,13 +8,20 @@ Next Release
 * Added the `Aws\S3\S3Client::getObjectUrl` convenience method for getting the URL of an Amazon S3 object. This works
   for both public and pre-signed URLs.
 * Added support for using the `ap-northeast-1` region to the Amazon Redshift client
+* Added support for configuring custom SSL certificates to the Amazon CloudFront client via the `ViewerCertificate`
+  parameter
 * Added support for read replica status to the Amazon RDS client
 * Added "magic" access to iterators to make using iterators more convenient (e.g., `$s3->getListBucketsIterator()`)
 * Added the `waitUntilDBInstanceAvailable` and `waitUntilDBInstanceDeleted` waiters to the Amazon RDS client
 * Added the `createCredentials` method to the AWS STS client to make it easier to create a credentials object from the
   results of an STS operation
+* [BC] Updated the Amazon CloudFront client to use the new 2013-05-12 API version which includes changes in how you
+  configure distributions. If you are not ready to upgrade to the new API, you can configure the SDK to use the previous
+  version of the API by setting the `version` option to `2012-05-05` when you instantiate the client (See
+  [`UPGRADING.md`](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)).
 * Updated the Amazon RDS client to use the 2013-05-15 API version
 * Updated request retrying logic to automatically refresh expired credentials and retry with new ones
+* Updated the Amazon CloudFront client to sign requests with Signature V4
 * Fixed issue #94 so that the `Aws\S3\BucketStyleListener` is invoked on `command.after_prepare` and presigned URLs
   are generated correctly from S3 commands
 * Fixed an issue so that creating presigned URLs using the Amazon S3 client now works with temporary credentials

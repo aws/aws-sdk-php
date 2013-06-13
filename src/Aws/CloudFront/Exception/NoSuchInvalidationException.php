@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a NoSuchInvalidationException error is encountered
+ * The specified invalidation does not exist.
  */
 class NoSuchInvalidationException extends CloudFrontException {}

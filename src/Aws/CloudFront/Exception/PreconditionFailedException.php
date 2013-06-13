@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a PreconditionFailedException error is encountered
+ * The precondition given in one or more of the request-header fields evaluated to false.
  */
 class PreconditionFailedException extends CloudFrontException {}

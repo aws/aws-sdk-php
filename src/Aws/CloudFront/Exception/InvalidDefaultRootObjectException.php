@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a InvalidDefaultRootObjectException error is encountered
+ * The default root object file name is too big or contains an invalid character.
  */
 class InvalidDefaultRootObjectException extends CloudFrontException {}

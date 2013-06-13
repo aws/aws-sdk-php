@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * Your request contains forward cookies option which doesn&#039;t match with the expectation for the whitelisted list of cookie names. Either list of cookie names has been specified when not allowed or list of cookie names is missing when expected.
  */
-class InvalidOriginAccessIdentityException extends CloudFrontException {}
+class InvalidForwardCookiesException extends CloudFrontException {}

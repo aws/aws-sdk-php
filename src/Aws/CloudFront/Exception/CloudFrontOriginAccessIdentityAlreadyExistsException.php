@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * Exception that occurs when a CloudFrontOriginAccessIdentityAlreadyExistsException error is encountered
+ * If the CallerReference is a value you already sent in a previous request to create an identity but the content of the CloudFrontOriginAccessIdentityConfig is different from the original request, CloudFront returns a CloudFrontOriginAccessIdentityAlreadyExists error.
  */
 class CloudFrontOriginAccessIdentityAlreadyExistsException extends CloudFrontException {}

@@ -14,9 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudFront\Exception;
+namespace Aws\CloudFront\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * Contains enumerable ItemSelection values
  */
-class InvalidOriginAccessIdentityException extends CloudFrontException {}
+class ItemSelection extends Enum
+{
+    const NONE = 'none';
+    const WHITELIST = 'whitelist';
+    const ALL = 'all';
+}
