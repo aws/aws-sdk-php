@@ -4,6 +4,11 @@ CHANGELOG
 Next Release
 ------------
 
+* Added abstractions for uploading a local directory to an Amazon S3 bucket (`$s3->uploadDirectory()`)
+* Added abstractions for downloading an Amazon S3 bucket to local directory (`$s3->downloadBucket()`)
+* Added an easy to way to delete objects from an Amazon S3 bucket that match a regular expression or key prefix
+* Added an easy to way to upload an object to Amazon S3 that automatically uses a multipart upload if the size of the
+  object exceeds a customizable threshold (`$s3->upload()`)
 * Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
 * Added the `Aws\S3\S3Client::getObjectUrl` convenience method for getting the URL of an Amazon S3 object. This works
   for both public and pre-signed URLs.
@@ -22,15 +27,18 @@ Next Release
 * Updated the Amazon RDS client to use the 2013-05-15 API version
 * Updated request retrying logic to automatically refresh expired credentials and retry with new ones
 * Updated the Amazon CloudFront client to sign requests with Signature V4
+* Updated the S3 Stream Wrapper so that you can use stream resources in any S3 operation without having to manually
+  specify the `ContentLength` option
 * Fixed issue #94 so that the `Aws\S3\BucketStyleListener` is invoked on `command.after_prepare` and presigned URLs
   are generated correctly from S3 commands
 * Fixed an issue so that creating presigned URLs using the Amazon S3 client now works with temporary credentials
 * Fixed an issue so that the `CORSRules.AllowedHeaders` parameter is now available when configuring CORS for Amazon S3
+* Set the Guzzle dependency to ~3.7.0
 
 2.3.4 (2013-05-30)
 ------------------
 
-* Setting the Guzzle dependency to ~3.6.0
+* Set the Guzzle dependency to ~3.6.0
 
 2.3.3 (2013-05-28)
 ------------------
