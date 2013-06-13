@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.4.0 (2013-06-13)
+------------------
 
 * Added abstractions for uploading a local directory to an Amazon S3 bucket (`$s3->uploadDirectory()`)
 * Added abstractions for downloading an Amazon S3 bucket to local directory (`$s3->downloadBucket()`)

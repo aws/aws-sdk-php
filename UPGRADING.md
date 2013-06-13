@@ -1,10 +1,26 @@
 Upgrading Guide
 ===============
 
+Upgrade from 2.3 to 2.4
+-----------------------
+
+### Amazon CloudFront Client
+
+The new 2013-05-12 API version of Amazon CloudFront includes support for custom SSL certificates via the
+`ViewerCertificate` parameter, but also introduces breaking changes to the API. Version 2.4 of the SDK now ships with
+two versions of the Amazon CloudFront service description, one for the new 2013-05-12 API and one for the next most
+recent 2012-05-05 API. The SDK defaults to using the newest API version, so CloudFront users may experience a breaking
+change to their projects when upgrading. This can be easily circumvented by switching back to the 2012-05-05 API by
+using the `version` option when instantiating the CloudFront client.
+
+### Guzzle 3.7
+
+Version 2.4 of the AWS SDK for PHP requires at least version 3.7 of Guzzle.
+
 Upgrade from 2.2 to 2.3
 -----------------------
 
-### DynamoDB Client
+### Amazon DynamoDB Client
 
 The newly released 2012-08-10 API version of the Amazon DynamoDB service includes the new Local Secondary Indexes
 feature, but also introduces breaking changes to the API. The most notable change is in the way that you specify keys
@@ -50,6 +66,21 @@ If you are using a config file with `Aws\Common\Aws`, then you can modify your f
 
 The [SDK user guide](http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/index.html) has a guide and examples for both
 versions of the API.
+
+### Guzzle 3.4.1
+
+Version 2.3 of the AWS SDK for PHP requires at least version 3.4.1 of Guzzle.
+
+Upgrade from 2.1 to 2.2
+-----------------------
+
+### Full Service Coverage
+
+The AWS SDK for PHP now supports the full set of AWS services.
+
+### Guzzle 3.3
+
+Version 2.2 of the AWS SDK for PHP requires at least version 3.3 of Guzzle.
 
 Upgrade from 2.0 to 2.1
 -----------------------
