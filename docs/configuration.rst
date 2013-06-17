@@ -14,10 +14,12 @@ Excerpt from ``src/Aws/Common/Resources/aws-config.php``:
                 'params' => array()
             ),
             'dynamodb' => array(
+                'alias'   => 'DynamoDb',
                 'extends' => 'default_settings',
                 'class'   => 'Aws\DynamoDb\DynamoDbClient'
             ),
             's3' => array(
+                'alias'   => 'S3',
                 'extends' => 'default_settings',
                 'class'   => 'Aws\S3\S3Client'
             )

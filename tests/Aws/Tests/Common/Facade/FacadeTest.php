@@ -37,4 +37,18 @@ class FacadeTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue(class_exists('Foo\\S3'));
         $this->assertInstanceOf('Aws\S3\Command\S3Command', \Foo\S3::getCommand('ListBuckets'));
     }
+
+    public function testCanAccessMockedClientFromFacade()
+    {
+        $aws = $this->getServiceBuilder();
+        $aws->enableFacades('Foo\Bar');
+
+        $mockS3Client = $this->getMockBuilder('Aws\S3\S3Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $aws->set('s3', $mockS3Client);
+
+        $retrievedS3Client = \Foo\Bar\S3::getClient();
+        $this->assertSame($mockS3Client, $retrievedS3Client);
+    }
 }
