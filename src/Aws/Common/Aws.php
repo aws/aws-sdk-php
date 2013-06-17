@@ -91,13 +91,15 @@ class Aws extends ServiceBuilder
     /**
      * Enables the facades for the clients defined in the service builder
      *
+     * @param string|null $namespace The namespace that the facades should be mounted to. Defaults to global namespace
+     *
      * @return Aws
      */
-    public function enableFacades()
+    public function enableFacades($namespace = null)
     {
         $facadeClass = 'Aws\\Common\\Facade\\Facade';
         if (class_exists($facadeClass)) {
-            $facadeClass::mountFacades($this);
+            $facadeClass::mountFacades($this, $namespace);
         }
 
         return $this;

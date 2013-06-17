@@ -27,6 +27,14 @@ class FacadeTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCanMountAndUseFacades()
     {
         Facade::mountFacades($this->getServiceBuilder());
+        $this->assertTrue(class_exists('S3'));
         $this->assertInstanceOf('Aws\S3\Command\S3Command', \S3::getCommand('ListBuckets'));
+    }
+
+    public function testCanMountAndUseFacadesToArbitraryNamespaces()
+    {
+        Facade::mountFacades($this->getServiceBuilder(), 'Foo');
+        $this->assertTrue(class_exists('Foo\\S3'));
+        $this->assertInstanceOf('Aws\S3\Command\S3Command', \Foo\S3::getCommand('ListBuckets'));
     }
 }

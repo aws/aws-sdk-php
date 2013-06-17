@@ -29,18 +29,21 @@ abstract class Facade implements FacadeInterface
     /**
      * Mounts the facades by extracting information from the service builder config and using creating class aliases
      *
+     * @param string|null $targetNamespace Namespace that the facades should be mounted to. Defaults to global namespace
+     *
      * @param Aws $serviceBuilder
      */
-    public static function mountFacades(Aws $serviceBuilder)
+    public static function mountFacades(Aws $serviceBuilder, $targetNamespace = null)
     {
         self::$serviceBuilder = $serviceBuilder;
         require_once __DIR__ . '/facade-classes.php';
         foreach ($serviceBuilder->getConfig() as $service) {
             if (isset($service['alias'], $service['class'])) {
                 $facadeClass = __NAMESPACE__ . '\\' . $service['alias'];
-                if (!class_exists($service['alias'])) {
+                $facadeAlias = ltrim($targetNamespace . '\\' . $service['alias'], '\\');
+                if (!class_exists($facadeAlias)) {
                     // @codeCoverageIgnoreStart
-                    class_alias($facadeClass, $service['alias']);
+                    class_alias($facadeClass, $facadeAlias);
                     // @codeCoverageIgnoreEnd
                 }
             }
