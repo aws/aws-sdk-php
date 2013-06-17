@@ -21,7 +21,7 @@ return array (
     'serviceAbbreviation' => 'Amazon SNS',
     'serviceType' => 'query',
     'resultWrapped' => true,
-    'signatureVersion' => 'v2',
+    'signatureVersion' => 'v4',
     'namespace' => 'Sns',
     'regions' => array(
         'us-east-1' => array(

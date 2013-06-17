@@ -27,6 +27,7 @@ CHANGELOG
 * Updated the Amazon RDS client to use the 2013-05-15 API version
 * Updated request retrying logic to automatically refresh expired credentials and retry with new ones
 * Updated the Amazon CloudFront client to sign requests with Signature V4
+* Updated the Amazon SNS client to sign requests with Signature V4, which enables larger payloads
 * Updated the S3 Stream Wrapper so that you can use stream resources in any S3 operation without having to manually
   specify the `ContentLength` option
 * Fixed issue #94 so that the `Aws\S3\BucketStyleListener` is invoked on `command.after_prepare` and presigned URLs
