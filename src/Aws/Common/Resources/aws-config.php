@@ -40,6 +40,13 @@ return array(
             'class'   => 'Aws\CloudFront\CloudFrontClient'
         ),
 
+        'cloudfront_20120505' => array(
+            'extends' => 'cloudfront',
+            'params' => array(
+                'version' => '2012-05-05'
+            )
+        ),
+
         'cloudsearch' => array(
             'alias'   => 'CloudSearch',
             'extends' => 'default_settings',
