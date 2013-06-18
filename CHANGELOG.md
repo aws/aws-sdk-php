@@ -4,6 +4,10 @@ CHANGELOG
 2.4.0 (2013-06-13)
 ------------------
 
+* [BC] Updated the Amazon CloudFront client to use the new 2013-05-12 API version which includes changes in how you
+  configure distributions. If you are not ready to upgrade to the new API, you can configure the SDK to use the previous
+  version of the API by setting the `version` option to `2012-05-05` when you instantiate the client (See
+  [`UPGRADING.md`](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md))
 * Added abstractions for uploading a local directory to an Amazon S3 bucket (`$s3->uploadDirectory()`)
 * Added abstractions for downloading an Amazon S3 bucket to local directory (`$s3->downloadBucket()`)
 * Added an easy to way to delete objects from an Amazon S3 bucket that match a regular expression or key prefix
@@ -11,7 +15,7 @@ CHANGELOG
   object exceeds a customizable threshold (`$s3->upload()`)
 * [SDK] Added facade classes for simple, static access to clients (e.g., `S3::putObject([...])`)
 * Added the `Aws\S3\S3Client::getObjectUrl` convenience method for getting the URL of an Amazon S3 object. This works
-  for both public and pre-signed URLs.
+  for both public and pre-signed URLs
 * Added support for using the `ap-northeast-1` region to the Amazon Redshift client
 * Added support for configuring custom SSL certificates to the Amazon CloudFront client via the `ViewerCertificate`
   parameter
@@ -20,10 +24,6 @@ CHANGELOG
 * Added the `waitUntilDBInstanceAvailable` and `waitUntilDBInstanceDeleted` waiters to the Amazon RDS client
 * Added the `createCredentials` method to the AWS STS client to make it easier to create a credentials object from the
   results of an STS operation
-* [BC] Updated the Amazon CloudFront client to use the new 2013-05-12 API version which includes changes in how you
-  configure distributions. If you are not ready to upgrade to the new API, you can configure the SDK to use the previous
-  version of the API by setting the `version` option to `2012-05-05` when you instantiate the client (See
-  [`UPGRADING.md`](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)).
 * Updated the Amazon RDS client to use the 2013-05-15 API version
 * Updated request retrying logic to automatically refresh expired credentials and retry with new ones
 * Updated the Amazon CloudFront client to sign requests with Signature V4
