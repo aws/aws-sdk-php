@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.4.0 (2013-06-13)
+2.4.0 (2013-06-18)
 ------------------
 
 * [BC] Updated the Amazon CloudFront client to use the new 2013-05-12 API version which includes changes in how you
