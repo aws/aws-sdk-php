@@ -5,9 +5,9 @@ Static Client Facades
 Introduction
 ------------
 
-Version 2.4 and later of the AWS SDK for PHP includes the ability to enable and use static client facades. These
-"facades" provide an easy, static interface to clients available in the service builder. For example, when working with
-a normal client instance, you might have code that looks like the following:
+Version 2.4 of the AWS SDK for PHP adds the ability to enable and use static client facades. These "facades" provide an
+easy, static interface to service clients available in the service builder. For example, when working with a normal
+client instance, you might have code that looks like the following:
 
 .. code-block:: php
 
@@ -31,16 +31,17 @@ The use of static client facades is completely optional. We have included this f
 PHP developers who prefer static notation or who are familiar with PHP frameworks like Code Ignitor, Laravel, or Kohana
 where this style of method invocation is common.
 
-Using static client facades has very little benefit over using client instances. It can sometimes save you lines of
-code and having to inject the service builder or client instance into the context of where you want to use it. In some
-cases this can make your code easier to write or understand. Whether or not you should use the client facades is purely
-a matter of preference.
+Though using static client facades has little real benefit over using client instances, it can make your code more
+concise and prevent your from having to inject the service builder or client instance into the context of where you
+need the client object. This can make your code easier to write and understand. Whether or not you should use the client
+facades is purely a matter of preference.
 
-The way in which client facades work in the AWS SDK for PHP is similar to how `facades work in the Laravel 4 framework
-<http://laravel.com/docs/facades>`_. Even though you are calling static classes, all of the method calls are proxied to
-method calls on actual client instances, the ones stored in the service builder. This means that they can be mocked
-during tests, which removes one of the general disadvantages to using static classes in object-oriented programming. For
-information about how to test code that uses client facades, please see the **Testing Code that Uses Client Facades**
+The way in which client facades work in the AWS SDK for PHP is similar to how `facades work in the Laravel 4
+Framework <http://laravel.com/docs/facades>`_. Even though you are calling static classes, all of the method calls are
+proxied to method calls on actual client instances — the ones stored in the service builder. This means that the usage
+of the clients via the client facades can still be mocked in your unit tests, which removes one of the general
+disadvantages to using static classes in object-oriented programming. For information about how to test code that uses
+client facades, please see the **Testing Code that Uses Client Facades**
 below.
 
 Enabling and Using Client Facades
