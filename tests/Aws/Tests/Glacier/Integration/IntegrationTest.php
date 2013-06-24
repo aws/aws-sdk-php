@@ -94,8 +94,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Perform a single upload.');
         $archiveId = $this->client->uploadArchive(array(
             'vaultName'          => self::TEST_VAULT,
-            'archiveDescription' => 'Foo   bar',
-            'body'               => $content
+            'archiveDescription' => 'Foo   bar   1',
+            'body'               => $content,
         ))->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
@@ -111,8 +111,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $generator = UploadPartGenerator::factory($content, $partSize);
         $this->assertEquals($length, $generator->getArchiveSize());
         $uploadId = $this->client->initiateMultipartUpload(array(
-            'vaultName' => self::TEST_VAULT,
-            'partSize'  => $partSize
+            'vaultName'          => self::TEST_VAULT,
+            'archiveDescription' => 'Foo   bar   2',
+            'partSize'           => $partSize,
         ))->get('uploadId');
         /** @var $part UploadPart */
         foreach ($generator as $part) {
@@ -132,7 +133,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             'vaultName'   => self::TEST_VAULT,
             'uploadId'    => $uploadId,
             'archiveSize' => $generator->getArchiveSize(),
-            'checksum'    => $generator->getRootChecksum()
+            'checksum'    => $generator->getRootChecksum(),
         ))->get('archiveId');
         $this->assertNotEmpty($archiveId);
 
@@ -153,7 +154,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             ->setSource($source)
             ->setVaultName(self::TEST_VAULT)
             ->setPartSize(Size::MB)
-            ->setArchiveDescription('Foo   bar')
+            ->setArchiveDescription('Foo   bar   3')
             ->build();
 
         $transfer->getEventDispatcher()->addListener($transfer::BEFORE_PART_UPLOAD, function ($event) {
@@ -192,5 +193,10 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         $this->assertNotEmpty($result['archiveId']);
         $this->assertEquals($result['checksum'], $transfer->getState()->getPartGenerator()->getRootChecksum());
+
+        $this->client->deleteArchive(array(
+            'vaultName' => self::TEST_VAULT,
+            'archiveId' => $result['archiveId']
+        ));
     }
 }
