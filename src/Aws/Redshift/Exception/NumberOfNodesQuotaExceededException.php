@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The operation would exceed the number of nodes allotted to the account.
+ * The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.
  */
 class NumberOfNodesQuotaExceededException extends RedshiftException {}

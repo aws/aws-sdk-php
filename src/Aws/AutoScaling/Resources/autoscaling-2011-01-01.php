@@ -127,7 +127,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AvailabilityZones' => array(
-                    'description' => 'A list of Availability Zones for the Auto Scaling group.',
+                    'description' => 'A list of Availability Zones for the Auto Scaling group. This is required unless you have specified subnets.',
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'AvailabilityZones.member',
@@ -389,6 +389,7 @@ return array (
                     'maxLength' => 1600,
                 ),
                 'EbsOptimized' => array(
+                    'description' => 'Whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization is not available with all instance types. Additional usage charges apply when using an EBS Optimized instance. For information about EBS-optimized instances, go to EBS-Optimized Instances in the Amazon Elastic Compute Cloud User Guide.',
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
@@ -1153,7 +1154,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -1163,7 +1164,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'NextToken' => array(
@@ -1509,7 +1510,7 @@ return array (
                     'maxLength' => 255,
                 ),
                 'Cooldown' => array(
-                    'description' => 'The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start.',
+                    'description' => 'The amount of time, in seconds, after a scaling activity completes and before the next scaling acitvity can start.',
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
@@ -1567,7 +1568,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'StartTime' => array(
@@ -1577,7 +1578,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -1587,7 +1588,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'Recurrence' => array(
@@ -2357,6 +2358,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'EbsOptimized' => array(
+                                'description' => 'Specifies whether the instance is optimized for EBS I/O (true) or not (false).',
                                 'type' => 'boolean',
                             ),
                         ),

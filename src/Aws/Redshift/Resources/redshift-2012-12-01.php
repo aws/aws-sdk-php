@@ -19,7 +19,6 @@ return array (
     'endpointPrefix' => 'redshift',
     'serviceFullName' => 'Amazon Redshift',
     'serviceType' => 'query',
-    'timestampFormat' => 'iso8601',
     'resultWrapped' => true,
     'signatureVersion' => 'v4',
     'namespace' => 'Redshift',
@@ -100,7 +99,7 @@ return array (
                     'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The authorization quota for the cluster security group has been reached.',
+                    'reason' => 'The authorization quota for the cluster security group has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'AuthorizationQuotaExceededException',
                 ),
             ),
@@ -304,11 +303,11 @@ return array (
                     'class' => 'ClusterSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The request would exceed the allowed number of cluster instances for this account.',
+                    'reason' => 'The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'The operation would exceed the number of nodes allotted to the account.',
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
@@ -322,6 +321,10 @@ return array (
                 array(
                     'reason' => 'The cluster subnet group does not cover all Availability Zones.',
                     'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'The cluster subnet group cannot be deleted because it is in use.',
+                    'class' => 'InvalidClusterSubnetGroupStateException',
                 ),
             ),
         ),
@@ -364,7 +367,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The request would result in the user exceeding the allowed number of cluster parameter groups.',
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster parameter groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterParameterGroupQuotaExceededException',
                 ),
                 array(
@@ -410,7 +413,7 @@ return array (
                     'class' => 'ClusterSecurityGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The request would result in the user exceeding the allowed number of cluster security groups.',
+                    'reason' => 'The request would result in the user exceeding the allowed number of cluster security groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterSecurityGroupQuotaExceededException',
                 ),
             ),
@@ -513,11 +516,11 @@ return array (
                     'class' => 'ClusterSubnetGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The request would result in user exceeding the allowed number of cluster subnet groups.',
+                    'reason' => 'The request would result in user exceeding the allowed number of cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterSubnetGroupQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups.',
+                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
@@ -1421,7 +1424,7 @@ return array (
                     'class' => 'ClusterNotFoundException',
                 ),
                 array(
-                    'reason' => 'The operation would exceed the number of nodes allotted to the account.',
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
@@ -1572,7 +1575,7 @@ return array (
                     'class' => 'ClusterSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups.',
+                    'reason' => 'The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterSubnetQuotaExceededException',
                 ),
                 array(
@@ -1625,7 +1628,7 @@ return array (
                     'class' => 'ReservedNodeAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would exceed the user\'s compute node quota.',
+                    'reason' => 'Request would exceed the user\'s compute node quota. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ReservedNodeQuotaExceededException',
                 ),
             ),
@@ -1822,7 +1825,7 @@ return array (
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
-                    'reason' => 'The request would exceed the allowed number of cluster instances for this account.',
+                    'reason' => 'The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'ClusterQuotaExceededException',
                 ),
                 array(
@@ -1838,12 +1841,20 @@ return array (
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'reason' => 'The operation would exceed the number of nodes allotted to the account.',
+                    'reason' => 'The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
                     'class' => 'NumberOfNodesQuotaExceededException',
                 ),
                 array(
                     'reason' => 'The operation would exceed the number of nodes allowed for a cluster.',
                     'class' => 'NumberOfNodesPerClusterLimitExceededException',
+                ),
+                array(
+                    'reason' => 'The cluster subnet group does not cover all Availability Zones.',
+                    'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'The cluster subnet group cannot be deleted because it is in use.',
+                    'class' => 'InvalidClusterSubnetGroupStateException',
                 ),
             ),
         ),

@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The request would result in the user exceeding the allowed number of cluster parameter groups.
+ * The request would result in the user exceeding the allowed number of cluster parameter groups. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.
  */
 class ClusterParameterGroupQuotaExceededException extends RedshiftException {}

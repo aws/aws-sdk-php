@@ -55,6 +55,7 @@ class ErrorCode extends Enum
     const LUN_ALREADY_ALLOCATED  = 'LunAlreadyAllocated ';
     const LUN_INVALID = 'LunInvalid';
     const MAXIMUM_CONTENT_LENGTH_EXCEEDED = 'MaximumContentLengthExceeded';
+    const MAXIMUM_TAPE_CARTRIDGE_COUNT_EXCEEDED = 'MaximumTapeCartridgeCountExceeded';
     const MAXIMUM_VOLUME_COUNT_EXCEEDED = 'MaximumVolumeCountExceeded';
     const NETWORK_CONFIGURATION_CHANGED = 'NetworkConfigurationChanged';
     const NO_DISKS_AVAILABLE = 'NoDisksAvailable';
@@ -73,6 +74,7 @@ class ErrorCode extends Enum
     const SNAPSHOT_SCHEDULE_NOT_FOUND = 'SnapshotScheduleNotFound';
     const STAGING_AREA_FULL = 'StagingAreaFull';
     const STORAGE_FAILURE = 'StorageFailure';
+    const TAPE_CARTRIDGE_NOT_FOUND = 'TapeCartridgeNotFound';
     const TARGET_ALREADY_EXISTS = 'TargetAlreadyExists';
     const TARGET_INVALID = 'TargetInvalid';
     const TARGET_NOT_FOUND = 'TargetNotFound';

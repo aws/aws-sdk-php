@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * Request would exceed the user&#039;s compute node quota.
+ * Request would exceed the user&#039;s compute node quota. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.
  */
 class ReservedNodeQuotaExceededException extends RedshiftException {}

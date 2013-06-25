@@ -3803,6 +3803,7 @@ return array (
                         'cc1.4xlarge',
                         'cc2.8xlarge',
                         'cg1.4xlarge',
+                        'cr1.8xlarge',
                     ),
                 ),
                 'AvailabilityZone' => array(
@@ -4195,7 +4196,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -4205,7 +4206,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'InstanceTypes' => array(
@@ -4234,6 +4235,7 @@ return array (
                             'cc1.4xlarge',
                             'cc2.8xlarge',
                             'cg1.4xlarge',
+                            'cr1.8xlarge',
                         ),
                     ),
                 ),
@@ -5096,11 +5098,11 @@ return array (
                         'Architecture' => array(
                             'type' => 'string',
                         ),
-                        'SecurityGroups' => array(
+                        'GroupNames' => array(
                             'type' => 'array',
-                            'sentAs' => 'SecurityGroup',
+                            'sentAs' => 'GroupName',
                             'items' => array(
-                                'name' => 'SecurityGroup',
+                                'name' => 'GroupName',
                                 'type' => 'string',
                             ),
                         ),
@@ -5130,6 +5132,7 @@ return array (
                                 'cc1.4xlarge',
                                 'cc2.8xlarge',
                                 'cg1.4xlarge',
+                                'cr1.8xlarge',
                             ),
                         ),
                         'Placement' => array(
@@ -5150,68 +5153,12 @@ return array (
                                 ),
                             ),
                         ),
-                        'BlockDeviceMappings' => array(
-                            'type' => 'array',
-                            'sentAs' => 'BlockDeviceMapping',
-                            'items' => array(
-                                'name' => 'BlockDeviceMapping',
-                                'description' => 'The BlockDeviceMappingItemType data type.',
-                                'type' => 'object',
-                                'properties' => array(
-                                    'VirtualName' => array(
-                                        'description' => 'Specifies the virtual device name.',
-                                        'type' => 'string',
-                                    ),
-                                    'DeviceName' => array(
-                                        'description' => 'Specifies the device name (e.g., /dev/sdh).',
-                                        'type' => 'string',
-                                    ),
-                                    'Ebs' => array(
-                                        'description' => 'Specifies parameters used to automatically setup Amazon EBS volumes when the instance is launched.',
-                                        'type' => 'object',
-                                        'properties' => array(
-                                            'SnapshotId' => array(
-                                                'description' => 'The ID of the snapshot from which the volume will be created.',
-                                                'type' => 'string',
-                                            ),
-                                            'VolumeSize' => array(
-                                                'description' => 'The size of the volume, in gigabytes.',
-                                                'type' => 'numeric',
-                                            ),
-                                            'DeleteOnTermination' => array(
-                                                'description' => 'Specifies whether the Amazon EBS volume is deleted on instance termination.',
-                                                'type' => 'boolean',
-                                                'format' => 'boolean-string',
-                                            ),
-                                            'VolumeType' => array(
-                                                'type' => 'string',
-                                                'enum' => array(
-                                                    'standard',
-                                                    'io1',
-                                                ),
-                                            ),
-                                            'Iops' => array(
-                                                'type' => 'numeric',
-                                            ),
-                                        ),
-                                    ),
-                                    'NoDevice' => array(
-                                        'description' => 'Specifies the device name to suppress during instance launch.',
-                                        'type' => 'string',
-                                    ),
-                                ),
-                            ),
-                        ),
                         'Monitoring' => array(
                             'type' => 'boolean',
                             'format' => 'boolean-string',
                         ),
                         'SubnetId' => array(
                             'type' => 'string',
-                        ),
-                        'DisableApiTermination' => array(
-                            'type' => 'boolean',
-                            'format' => 'boolean-string',
                         ),
                         'InstanceInitiatedShutdownBehavior' => array(
                             'type' => 'string',
@@ -6403,7 +6350,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -6412,7 +6359,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'ReasonCodes' => array(
@@ -6475,7 +6422,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'ValidUntil' => array(
@@ -6485,7 +6432,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'LaunchGroup' => array(
@@ -6536,6 +6483,7 @@ return array (
                                 'cc1.4xlarge',
                                 'cc2.8xlarge',
                                 'cg1.4xlarge',
+                                'cr1.8xlarge',
                             ),
                         ),
                         'Placement' => array(
@@ -7125,6 +7073,7 @@ return array (
                         'cc1.4xlarge',
                         'cc2.8xlarge',
                         'cg1.4xlarge',
+                        'cr1.8xlarge',
                     ),
                 ),
                 'Placement' => array(
@@ -7260,6 +7209,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AdditionalInfo' => array(
+                    'description' => 'Do not use. Reserved for internal use.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),

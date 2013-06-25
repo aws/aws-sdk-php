@@ -38,7 +38,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Attaches an Elastic Load Balancing instance to a specified layer.',
+            'summary' => 'Attaches an Elastic Load Balancing load balancer to a specified layer.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -56,13 +56,13 @@ return array (
                 ),
                 'ElasticLoadBalancerName' => array(
                     'required' => true,
-                    'description' => 'The Elastic Load Balancing instance\'s name.',
+                    'description' => 'The Elastic Load Balancing load balancer\'s name.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'LayerId' => array(
                     'required' => true,
-                    'description' => 'The ID of the layer that the Elastic Load Balancing instance is to be attached to.',
+                    'description' => 'The ID of the layer that the Elastic Load Balancing load balancer is to be attached to.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1419,7 +1419,7 @@ return array (
             'responseClass' => 'DescribeElasticLoadBalancersResult',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Describes a stack\'s Elastic Load Balancing instances.',
+            'summary' => 'Describes a stack\'s Elastic Load Balancing load balancers.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1436,12 +1436,12 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeElasticLoadBalancers',
                 ),
                 'StackId' => array(
-                    'description' => 'A stack ID. The action describes the Elastic Load Balancing instances for the stack.',
+                    'description' => 'A stack ID. The action describes the Elastic Load Balancing load balancers for the stack.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'LayerIds' => array(
-                    'description' => 'A list of layer IDs. The action describes the Elastic Load Balancing instances for the specified layers.',
+                    'description' => 'A list of layer IDs. The action describes the Elastic Load Balancing load balancers for the specified layers.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1955,7 +1955,7 @@ return array (
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Detaches a specified Elastic Load Balancing instance from it\'s layer.',
+            'summary' => 'Detaches a specified Elastic Load Balancing load balancer from it\'s layer.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,
@@ -1973,13 +1973,13 @@ return array (
                 ),
                 'ElasticLoadBalancerName' => array(
                     'required' => true,
-                    'description' => 'The Elastic Load Balancing instance\'s name.',
+                    'description' => 'The Elastic Load Balancing load balancer\'s name.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'LayerId' => array(
                     'required' => true,
-                    'description' => 'The ID of the layer that the Elastic Load Balancing instance is attached to.',
+                    'description' => 'The ID of the layer that the Elastic Load Balancing load balancer is attached to.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -3508,36 +3508,36 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'ElasticLoadBalancers' => array(
-                    'description' => 'A list of ElasticLoadBalancer objects that describe the specified Elastic Load Balancing instances.',
+                    'description' => 'A list of ElasticLoadBalancer objects that describe the specified Elastic Load Balancing load balancers.',
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
                         'name' => 'ElasticLoadBalancer',
-                        'description' => 'Describes an Elastic Load Balancing instance.',
+                        'description' => 'Describes an Elastic Load Balancing load balancer.',
                         'type' => 'object',
                         'properties' => array(
                             'ElasticLoadBalancerName' => array(
-                                'description' => 'The Elastic Load Balancing instance\'s name.',
+                                'description' => 'The Elastic Load Balancing load balancer\'s name.',
                                 'type' => 'string',
                             ),
                             'Region' => array(
-                                'description' => 'The instance\'s AWS region.',
+                                'description' => 'The load balancer\'s AWS region.',
                                 'type' => 'string',
                             ),
                             'DnsName' => array(
-                                'description' => 'The instance\'s public DNS name.',
+                                'description' => 'The load balancer\'s public DNS name.',
                                 'type' => 'string',
                             ),
                             'StackId' => array(
-                                'description' => 'The ID of the stack that the instance is associated with.',
+                                'description' => 'The ID of the stack that the load balancer is associated with.',
                                 'type' => 'string',
                             ),
                             'LayerId' => array(
-                                'description' => 'The ID of the layer that the instance is attached to.',
+                                'description' => 'The ID of the layer that the load balancer is attached to.',
                                 'type' => 'string',
                             ),
                             'AvailabilityZones' => array(
-                                'description' => 'The instance\'s Availability Zones.',
+                                'description' => 'The load balancer\'s Availability Zones.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'String',
@@ -3545,7 +3545,7 @@ return array (
                                 ),
                             ),
                             'Ec2InstanceIds' => array(
-                                'description' => 'A list of the EC2 instances that the Elastic Load Balancing instance is managing traffic for.',
+                                'description' => 'A list of the EC2 instances that the Elastic Load Balancing load balancer is managing traffic for.',
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'String',

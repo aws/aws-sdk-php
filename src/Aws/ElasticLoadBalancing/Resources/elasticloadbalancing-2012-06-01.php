@@ -454,7 +454,7 @@ return array (
                     ),
                 ),
                 'Scheme' => array(
-                    'description' => 'The type of a LoadBalancer. This option is only available for LoadBalancers attached to a Amazon VPC. By default, Elastic Load Balancer creates an internet-facing load balancer with publicly resolvable DNS name that resolves to public IP addresses. Specify the value internal for this option to create an internal load balancer with a DNS name that resolves to private IP addresses.',
+                    'description' => 'The type of a LoadBalancer.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -514,7 +514,7 @@ return array (
                 ),
                 'LoadBalancerName' => array(
                     'required' => true,
-                    'description' => 'The name of the new LoadBalancer. The name must be unique within your AWS account.',
+                    'description' => 'The name of the LoadBalancer.',
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1487,7 +1487,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'State' => array(
-                                'description' => 'Specifies the current status of the instance.',
+                                'description' => 'Specifies the current state of the instance. Valid value: InService|OutOfService',
                                 'type' => 'string',
                             ),
                             'ReasonCode' => array(
@@ -1495,7 +1495,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Description' => array(
-                                'description' => 'Provides a description of the instance.',
+                                'description' => 'Provides a description of the instance state.',
                                 'type' => 'string',
                             ),
                         ),
@@ -1858,7 +1858,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'Scheme' => array(
-                                'description' => 'Specifies the type of a load balancer. If it is internet-facing, the load balancer has a publicly resolvable DNS name that resolves to public IP addresses. If it is internal, the load balancer has a publicly resolvable DNS name that resolves to private IP addresses. This option is only available for load balancers attached to a VPC.',
+                                'description' => 'Specifies the type of LoadBalancer.',
                                 'type' => 'string',
                             ),
                         ),

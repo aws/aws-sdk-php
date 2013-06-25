@@ -700,10 +700,6 @@ return array (
                     'description' => 'The DKIM attributes for an email address or a domain.',
                     'type' => 'array',
                     'location' => 'xml',
-                    'data' => array(
-                        'xmlMap' => array(
-                        ),
-                    ),
                     'filters' => array(
                         array(
                             'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
@@ -761,10 +757,6 @@ return array (
                     'description' => 'A map of Identity to IdentityNotificationAttributes.',
                     'type' => 'array',
                     'location' => 'xml',
-                    'data' => array(
-                        'xmlMap' => array(
-                        ),
-                    ),
                     'filters' => array(
                         array(
                             'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
@@ -817,10 +809,6 @@ return array (
                     'description' => 'A map of Identities to IdentityVerificationAttributes objects.',
                     'type' => 'array',
                     'location' => 'xml',
-                    'data' => array(
-                        'xmlMap' => array(
-                        ),
-                    ),
                     'filters' => array(
                         array(
                             'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',

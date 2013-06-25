@@ -20,7 +20,6 @@ return array (
     'serviceFullName' => 'Amazon CloudWatch',
     'serviceAbbreviation' => 'CloudWatch',
     'serviceType' => 'query',
-    'timestampFormat' => 'iso8601',
     'resultWrapped' => true,
     'signatureVersion' => 'v2',
     'namespace' => 'CloudWatch',

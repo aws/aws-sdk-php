@@ -977,7 +977,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -987,7 +987,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'Duration' => array(

@@ -294,7 +294,7 @@ return array (
                     'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
-                        'description' => 'A specification identifying an individual configuration option along with its current value.',
+                        'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'Namespace' => array(
@@ -379,7 +379,7 @@ return array (
                     'maxLength' => 100,
                 ),
                 'CNAMEPrefix' => array(
-                    'description' => 'If specified, the environment attempts to use this value as the prefix for the CNAME. If not specified, the environment uses the environment name.',
+                    'description' => 'If specified, the environment attempts to use this value as the prefix for the CNAME. If not specified, the CNAME is generated automatically by appending a random alphanumeric string to the environment name.',
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
@@ -398,7 +398,7 @@ return array (
                     'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
-                        'description' => 'A specification identifying an individual configuration option along with its current value.',
+                        'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'Namespace' => array(
@@ -947,7 +947,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
             ),
@@ -1028,7 +1028,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'EndTime' => array(
@@ -1038,7 +1038,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time-http',
+                    'format' => 'date-time',
                     'location' => 'aws.query',
                 ),
                 'MaxRecords' => array(
@@ -1438,7 +1438,7 @@ return array (
                     'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
-                        'description' => 'A specification identifying an individual configuration option along with its current value.',
+                        'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'Namespace' => array(
@@ -1542,7 +1542,7 @@ return array (
                     'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
-                        'description' => 'A specification identifying an individual configuration option along with its current value.',
+                        'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'Namespace' => array(
@@ -1637,7 +1637,7 @@ return array (
                     'sentAs' => 'OptionSettings.member',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
-                        'description' => 'A specification identifying an individual configuration option along with its current value.',
+                        'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                         'type' => 'object',
                         'properties' => array(
                             'Namespace' => array(
@@ -1825,7 +1825,7 @@ return array (
                     'location' => 'xml',
                     'items' => array(
                         'name' => 'ConfigurationOptionSetting',
-                        'description' => 'A specification identifying an individual configuration option along with its current value.',
+                        'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                         'type' => 'object',
                         'sentAs' => 'member',
                         'properties' => array(
@@ -2213,7 +2213,7 @@ return array (
                                 'type' => 'array',
                                 'items' => array(
                                     'name' => 'ConfigurationOptionSetting',
-                                    'description' => 'A specification identifying an individual configuration option along with its current value.',
+                                    'description' => 'A specification identifying an individual configuration option along with its current value. For a list of possible option values, go to Option Values in the AWS Elastic Beanstalk Developer Guide.',
                                     'type' => 'object',
                                     'sentAs' => 'member',
                                     'properties' => array(

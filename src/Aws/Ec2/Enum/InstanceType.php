@@ -40,4 +40,5 @@ class InstanceType extends Enum
     const CC1_4XLARGE = 'cc1.4xlarge';
     const CC2_8XLARGE = 'cc2.8xlarge';
     const CG1_4XLARGE = 'cg1.4xlarge';
+    const CR1_8XLARGE = 'cr1.8xlarge';
 }

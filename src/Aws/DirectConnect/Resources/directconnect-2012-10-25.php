@@ -609,7 +609,7 @@ return array (
                     'location' => 'json',
                 ),
                 'connectionState' => array(
-                    'description' => 'State of the connection. Requested: The initial state of connection. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: The connection has been approved, and is being initialized. Available: The network link is up, and the connection is ready for use. Down: The network link is down. Deleted: The connection has been deleted.',
+                    'description' => 'State of the connection. Requested: The initial state of connection immediately after creation. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: A connection is pending after the customer receives the LOA and remains pending until the completion of the partner circuit. Available: A connection that is completed and ready for use. A connection must be available before virtual interfaces can be created. Deleted: A connection that has been deleted.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -738,7 +738,7 @@ return array (
                     'location' => 'json',
                 ),
                 'connectionState' => array(
-                    'description' => 'State of the connection. Requested: The initial state of connection. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: The connection has been approved, and is being initialized. Available: The network link is up, and the connection is ready for use. Down: The network link is down. Deleted: The connection has been deleted.',
+                    'description' => 'State of the connection. Requested: The initial state of connection immediately after creation. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: A connection is pending after the customer receives the LOA and remains pending until the completion of the partner circuit. Available: A connection that is completed and ready for use. A connection must be available before virtual interfaces can be created. Deleted: A connection that has been deleted.',
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -845,7 +845,7 @@ return array (
                                 'type' => 'string',
                             ),
                             'connectionState' => array(
-                                'description' => 'State of the connection. Requested: The initial state of connection. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: The connection has been approved, and is being initialized. Available: The network link is up, and the connection is ready for use. Down: The network link is down. Deleted: The connection has been deleted.',
+                                'description' => 'State of the connection. Requested: The initial state of connection immediately after creation. The connection stays in the requested state until the Letter of Authorization (LOA) is sent to the customer. Pending: A connection is pending after the customer receives the LOA and remains pending until the completion of the partner circuit. Available: A connection that is completed and ready for use. A connection must be available before virtual interfaces can be created. Deleted: A connection that has been deleted.',
                                 'type' => 'string',
                             ),
                             'region' => array(

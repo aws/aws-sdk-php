@@ -188,6 +188,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -253,7 +254,7 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'PutRequest' => array(
-                                    'description' => 'Represents a request to perform a DeleteItem operation.',
+                                    'description' => 'Represents a request to perform a PutItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Item' => array(
@@ -315,7 +316,7 @@ return array (
                                     ),
                                 ),
                                 'DeleteRequest' => array(
-                                    'description' => 'Represents a request to perform a PutItem operation.',
+                                    'description' => 'Represents a request to perform a DeleteItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Key' => array(
@@ -381,6 +382,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -557,6 +559,7 @@ return array (
                             ),
                             'Projection' => array(
                                 'required' => true,
+                                'description' => 'Represents attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'ProjectionType' => array(
@@ -587,6 +590,7 @@ return array (
                 ),
                 'ProvisionedThroughput' => array(
                     'required' => true,
+                    'description' => 'The provisioned throughput settings for the specified table. The settings can be modified using the UpdateTable operation.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -720,6 +724,7 @@ return array (
                         ),
                         'properties' => array(
                             'Value' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
@@ -787,6 +792,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1026,6 +1032,7 @@ return array (
                     'location' => 'json',
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1194,6 +1201,7 @@ return array (
                         ),
                         'properties' => array(
                             'Value' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
@@ -1261,6 +1269,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1466,7 +1475,7 @@ return array (
                     'location' => 'json',
                 ),
                 'ExclusiveStartKey' => array(
-                    'description' => 'The primary key of the item from which to continue an earlier operation. An earlier operation might provide this value as the LastEvaluatedKey if that operation was interrupted before completion; either because of the result set size or because of the setting for Limit. The LastEvaluatedKey can be passed back in a new request to continue the operation from that point.',
+                    'description' => 'The primary key of the first item that this operation will evaluate. Use the value that was returned for LastEvaluatedKey in the previous operation.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -1522,6 +1531,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1691,7 +1701,7 @@ return array (
                     ),
                 ),
                 'ExclusiveStartKey' => array(
-                    'description' => 'The primary key of the item from which to continue an earlier operation. An earlier operation might provide this value as the LastEvaluatedKey if that operation was interrupted before completion; either because of the result set size or because of the setting for Limit. The LastEvaluatedKey can be passed back in a new request to continue the operation from that point.',
+                    'description' => 'The primary key of the first item that this operation will evaluate. Use the value that was returned for LastEvaluatedKey in the previous operation.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -1747,6 +1757,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -1755,14 +1766,14 @@ return array (
                     ),
                 ),
                 'TotalSegments' => array(
-                    'description' => 'For parallel Scan requests, TotalSegmentsrepresents the total number of segments for a table that is being scanned. Segments are a way to logically divide a table into equally sized portions, for the duration of the Scan request. The value of TotalSegments corresponds to the number of application "workers" (such as threads or processes) that will perform the parallel Scan. For example, if you want to scan a table using four application threads, you would specify a TotalSegments value of 4.',
+                    'description' => 'For a parallel Scan request, TotalSegments represents the total number of segments into which the Scan operation will be divided. The value of TotalSegments corresponds to the number of application workers that will perform the parallel scan. For example, if you want to scan a table using four application threads, you would specify a TotalSegments value of 4.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
                     'maximum' => 4096,
                 ),
                 'Segment' => array(
-                    'description' => 'For parallel Scan requests, Segment identifies an individual segment to be scanned by an application "worker" (such as a thread or a process). Each worker issues a Scan request with a distinct value for the segment it will scan.',
+                    'description' => 'For a parallel Scan request, Segment identifies an individual segment to be scanned by an application worker.',
                     'type' => 'numeric',
                     'location' => 'json',
                     'maximum' => 4095,
@@ -1883,6 +1894,7 @@ return array (
                         ),
                         'properties' => array(
                             'Value' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
@@ -1953,6 +1965,7 @@ return array (
                         ),
                         'properties' => array(
                             'Value' => array(
+                                'description' => 'Represents the data for an attribute. You can set one, and only one, of the elements.',
                                 'type' => 'object',
                                 'properties' => array(
                                     'S' => array(
@@ -2020,6 +2033,7 @@ return array (
                     ),
                 ),
                 'ReturnConsumedCapacity' => array(
+                    'description' => 'If set to TOTAL, ConsumedCapacity is included in the response; if set to NONE (the default), ConsumedCapacity is not included.',
                     'type' => 'string',
                     'location' => 'json',
                     'enum' => array(
@@ -2093,6 +2107,7 @@ return array (
                 ),
                 'ProvisionedThroughput' => array(
                     'required' => true,
+                    'description' => 'The provisioned throughput settings for the specified table. The settings can be modified using the UpdateTable operation.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -2137,7 +2152,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Responses' => array(
-                    'description' => 'A map of table name to a list of items. Each object in Responsesconsists of a table name, along with a map of attribute data consisting of the data type and attribute value.',
+                    'description' => 'A map of table name to a list of items. Each object in Responses consists of a table name, along with a map of attribute data consisting of the data type and attribute value.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -2301,7 +2316,7 @@ return array (
                             'type' => 'object',
                             'properties' => array(
                                 'PutRequest' => array(
-                                    'description' => 'Represents a request to perform a DeleteItem operation.',
+                                    'description' => 'Represents a request to perform a PutItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Item' => array(
@@ -2353,7 +2368,7 @@ return array (
                                     ),
                                 ),
                                 'DeleteRequest' => array(
-                                    'description' => 'Represents a request to perform a PutItem operation.',
+                                    'description' => 'Represents a request to perform a DeleteItem operation.',
                                     'type' => 'object',
                                     'properties' => array(
                                         'Key' => array(
@@ -2504,6 +2519,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TableDescription' => array(
+                    'description' => 'Contains the properties of a table.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -2623,6 +2639,7 @@ return array (
                                         ),
                                     ),
                                     'Projection' => array(
+                                        'description' => 'Represents attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
@@ -2706,6 +2723,7 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -2787,6 +2805,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TableDescription' => array(
+                    'description' => 'Contains the properties of a table.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -2906,6 +2925,7 @@ return array (
                                         ),
                                     ),
                                     'Projection' => array(
+                                        'description' => 'Represents attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
@@ -2942,6 +2962,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Table' => array(
+                    'description' => 'Contains the properties of a table.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3061,6 +3082,7 @@ return array (
                                         ),
                                     ),
                                     'Projection' => array(
+                                        'description' => 'Represents attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(
@@ -3144,6 +3166,7 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3231,6 +3254,7 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3415,6 +3439,7 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3543,6 +3568,7 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3563,7 +3589,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Attributes' => array(
-                    'description' => 'A map of attribute values as they appeard before the UpdateItem operation, but only if ReturnValues was specified as something other than NONE in the request. Each element represents one attribute.',
+                    'description' => 'A map of attribute values as they appeared before the UpdateItem operation, but only if ReturnValues was specified as something other than NONE in the request. Each element represents one attribute.',
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
@@ -3610,6 +3636,7 @@ return array (
                     ),
                 ),
                 'ConsumedCapacity' => array(
+                    'description' => 'The table name that consumed provisioned throughput, and the number of capacity units consumed by it. ConsumedCapacity is only returned if it was asked for in the request. For more information, see Provisioned Throughput in the Amazon DynamoDB Developer Guide.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3624,6 +3651,7 @@ return array (
                     ),
                 ),
                 'ItemCollectionMetrics' => array(
+                    'description' => 'Information about item collections, if any, that were affected by the operation. ItemCollectionMetrics is only returned if it was asked for in the request. If the table does not have any secondary indexes, this information is not returned in the response.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3690,6 +3718,7 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'TableDescription' => array(
+                    'description' => 'Contains the properties of a table.',
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -3809,6 +3838,7 @@ return array (
                                         ),
                                     ),
                                     'Projection' => array(
+                                        'description' => 'Represents attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.',
                                         'type' => 'object',
                                         'properties' => array(
                                             'ProjectionType' => array(

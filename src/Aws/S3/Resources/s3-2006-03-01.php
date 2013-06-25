@@ -2465,8 +2465,7 @@ return array (
                                 'type' => 'object',
                                 'properties' => array(
                                     'HostName' => array(
-                                        'required' => true,
-                                        'description' => 'Name of the host where requests will be redirected.',
+                                        'description' => 'The host name to use in the redirect request.',
                                         'type' => 'string',
                                     ),
                                     'HttpRedirectCode' => array(
@@ -3808,6 +3807,10 @@ return array (
                                 'description' => 'Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can can specify a different error code to return.',
                                 'type' => 'object',
                                 'properties' => array(
+                                    'HostName' => array(
+                                        'description' => 'The host name to use in the redirect request.',
+                                        'type' => 'string',
+                                    ),
                                     'ReplaceKeyPrefixWith' => array(
                                         'description' => 'The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with KeyPrefixEquals set to docs/ and in the Redirect set ReplaceKeyPrefixWith to /documents. Not required if one of the siblings is present. Can be present only if ReplaceKeyWith is not provided.',
                                         'type' => 'string',
@@ -3818,10 +3821,6 @@ return array (
                                     ),
                                     'HttpRedirectCode' => array(
                                         'description' => 'The HTTP redirect code to use on the response. Not required if one of the siblings is present.',
-                                        'type' => 'string',
-                                    ),
-                                    'HostName' => array(
-                                        'description' => 'Name of the host where requests will be redirected.',
                                         'type' => 'string',
                                     ),
                                     'Protocol' => array(

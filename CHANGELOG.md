@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for the `cr1.8xlarge` EC2 instance type. Use the `Aws\Ec2\Enum\CR1_8XLARGE` const for easy access
+* [SDK] Fixed an issue with data formats throughout the SDK due to a regression. Dates are now sent over the wire with
+  the correct format. This issue affected the Amazon EC2, Amazon ElastiCache, AWS Elastic Beanstalk, Amazon EMR, and
+  Amazon RDS clients
+* Fixed an issue with the parameter serialization of the `ImportInstance` operation in the Amazon EC2 client
+* Fixed an issue with the Amazon S3 client where the `RoutingRules.Redirect.HostName` parameter of the
+  `PutBucketWebsite` operation was erroneously marked as required
+
 2.4.0 (2013-06-18)
 ------------------
 

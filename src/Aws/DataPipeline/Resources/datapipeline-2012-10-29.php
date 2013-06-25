@@ -561,7 +561,7 @@ return array (
             'responseClass' => 'PutPipelineDefinitionOutput',
             'responseType' => 'model',
             'responseNotes' => 'Returns a json_decoded array of the response body',
-            'summary' => 'Adds tasks, schedules, and preconditions that control the behavior of the pipeline. You can use PutPipelineDefinition to populate a new pipeline or to update an existing pipeline that has not yet been activated.',
+            'summary' => 'Adds tasks, schedules, and preconditions that control the behavior of the pipeline. You can use PutPipelineDefinition to populate a new pipeline.',
             'parameters' => array(
                 'Content-Type' => array(
                     'static' => true,

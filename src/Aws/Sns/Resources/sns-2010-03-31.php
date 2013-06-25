@@ -864,10 +864,6 @@ return array (
                     'description' => 'A map of the subscription\'s attributes. Attributes in this map include the following:',
                     'type' => 'array',
                     'location' => 'xml',
-                    'data' => array(
-                        'xmlMap' => array(
-                        ),
-                    ),
                     'filters' => array(
                         array(
                             'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
@@ -905,10 +901,6 @@ return array (
                     'description' => 'A map of the topic\'s attributes. Attributes in this map include the following:',
                     'type' => 'array',
                     'location' => 'xml',
-                    'data' => array(
-                        'xmlMap' => array(
-                        ),
-                    ),
                     'filters' => array(
                         array(
                             'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',

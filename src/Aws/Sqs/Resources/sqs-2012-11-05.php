@@ -211,7 +211,7 @@ return array (
                     'sentAs' => 'ChangeMessageVisibilityBatchRequestEntry',
                     'items' => array(
                         'name' => 'ChangeMessageVisibilityBatchRequestEntry',
-                        'description' => 'Encloses a receipt handle and an entry id for each message in ChangeMessageVisibilityBatchRequest.',
+                        'description' => 'Encloses a receipt handle and an entry id for each message in ChangeMessageVisibilityBatch.',
                         'type' => 'object',
                         'properties' => array(
                             'Id' => array(
@@ -829,7 +829,7 @@ return array (
                     ),
                     'items' => array(
                         'name' => 'ChangeMessageVisibilityBatchResultEntry',
-                        'description' => 'Encloses the id of an entry in ChangeMessageVisibilityBatchRequest.',
+                        'description' => 'Encloses the id of an entry in ChangeMessageVisibilityBatch.',
                         'type' => 'object',
                         'sentAs' => 'ChangeMessageVisibilityBatchResultEntry',
                         'properties' => array(
@@ -900,7 +900,7 @@ return array (
                     ),
                     'items' => array(
                         'name' => 'DeleteMessageBatchResultEntry',
-                        'description' => 'Encloses the id an entry in DeleteMessageBatchRequest.',
+                        'description' => 'Encloses the id an entry in DeleteMessageBatch.',
                         'type' => 'object',
                         'sentAs' => 'DeleteMessageBatchResultEntry',
                         'properties' => array(
@@ -1145,7 +1145,7 @@ return array (
                     ),
                     'items' => array(
                         'name' => 'SendMessageBatchResultEntry',
-                        'description' => 'Encloses a message ID for successfully enqueued message of a SendMessageBatchRequest.',
+                        'description' => 'Encloses a message ID for successfully enqueued message of a SendMessageBatch.',
                         'type' => 'object',
                         'sentAs' => 'SendMessageBatchResultEntry',
                         'properties' => array(
