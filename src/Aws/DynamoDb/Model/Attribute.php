@@ -154,11 +154,11 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * Retrieve the formatted data.
+     * Retrieve the formatted data
      *
-     * @param string $format The format to apply to the data.
+     * @param string $format The format to apply to the data
      *
-     * @return string The formatted version of the data.
+     * @return string The formatted version of the data
      */
     public function getFormatted($format = Attribute::FORMAT_PUT)
     {
@@ -178,9 +178,9 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * Retrieve the attribute type.
+     * Retrieve the attribute type
      *
-     * @return string The attribute type.
+     * @return string The attribute type
      */
     public function getType()
     {
@@ -188,9 +188,9 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * Retrieve the attribute value.
+     * Retrieve the attribute value
      *
-     * @return string The attribute value.
+     * @return string The attribute value
      */
     public function getValue()
     {
@@ -198,11 +198,12 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * Set the attribute type.
+     * Set the attribute type
      *
-     * @param string $type The attribute type to set.
+     * @param string $type The attribute type to set
      *
-     * @return string The attribute type.
+     * @return self
+     * @throws InvalidArgumentException
      */
     public function setType($type)
     {
@@ -216,11 +217,12 @@ class Attribute implements ToArrayInterface
     }
 
     /**
-     * Set the attribute value.
+     * Set the attribute value
      *
-     * @param string $type The attribute value to set.
+     * @param string|array $value The attribute value
      *
-     * @return string The attribute value.
+     * @return self
+     * @throws InvalidArgumentException
      */
     public function setValue($value)
     {
