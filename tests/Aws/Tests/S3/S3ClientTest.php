@@ -201,7 +201,8 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('s3');
         $command = $client->getCommand('PutObject', array(
             'Key'    => 'foo/baz /bar!',
-            'Bucket' => 'test'
+            'Bucket' => 'test',
+            'Body'   => ''
         ));
         $command->prepare();
         $this->assertEquals('/foo/baz%20/bar%21', $command->getRequest()->getPath());

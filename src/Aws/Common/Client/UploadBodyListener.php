@@ -67,6 +67,7 @@ class UploadBodyListener implements EventSubscriberInterface
      * Converts filenames and file handles into EntityBody objects before the command is validated
      *
      * @param Event $event Event emitted
+     * @throws InvalidArgumentException
      */
     public function onCommandBeforePrepare(Event $event)
     {

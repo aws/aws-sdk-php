@@ -31,7 +31,7 @@ class SnsClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-east-1'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV2', $client->getSignature());
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://sns.us-east-1.amazonaws.com', $client->getBaseUrl());
     }

@@ -40,7 +40,7 @@ class FacadeTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCanAccessMockedClientFromFacade()
     {
-        $aws = $this->getServiceBuilder();
+        $aws = clone $this->getServiceBuilder();
         $aws->enableFacades('Foo\Bar');
 
         $mockS3Client = $this->getMockBuilder('Aws\S3\S3Client')

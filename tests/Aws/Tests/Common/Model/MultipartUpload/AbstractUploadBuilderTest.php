@@ -65,7 +65,7 @@ class AbstractUploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testHasChainableSetterMethods()
     {
-        $client =  $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $body = EntityBody::factory('foo');
         $b = $this->mockBuilder
             ->resumeFrom('foo')

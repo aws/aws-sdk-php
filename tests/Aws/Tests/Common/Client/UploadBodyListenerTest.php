@@ -27,7 +27,7 @@ class UploadBodyListenerTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $this->assertInternalType('array', UploadBodyListener::getSubscribedEvents());
 
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $command = $client->getCommand('PutObject', array(
             'Bucket'     => 'foo',
             'Key'        => 'bar',
@@ -42,7 +42,7 @@ class UploadBodyListenerTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testFileHandlesGetConvertedToBodies()
     {
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $command = $client->getCommand('PutObject', array(
             'Bucket' => 'foo',
             'Key'    => 'bar',
