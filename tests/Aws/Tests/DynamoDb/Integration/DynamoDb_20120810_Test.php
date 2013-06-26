@@ -17,6 +17,7 @@
 namespace Aws\DynamoDb\Integration;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Iterator\ItemIterator;
 
 /**
  * @group example
@@ -374,9 +375,51 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * Perform a parallel scan of multiple table segments
+     * Get normalized results of a Scan operation using a Scan iterator with an ItemIterator
      *
      * @depends testScan
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
+     * @example Aws\DynamoDb\Iterator\ItemIterator
+     */
+    public function testScanWithItemIterator()
+    {
+        $client = $this->client;
+        // @begin
+
+        $iterator = new ItemIterator($client->getIterator('Scan', array(
+            'TableName' => 'errors',
+            'ScanFilter' => array(
+                'error' => array(
+                    'AttributeValueList' => array(
+                        array('S' => 'overflow')
+                    ),
+                    'ComparisonOperator' => 'CONTAINS'
+                ),
+                'time' => array(
+                    'AttributeValueList' => array(
+                        array('N' => strtotime('-15 minutes'))
+                    ),
+                    'ComparisonOperator' => 'GT'
+                )
+            )
+        )));
+
+        // Each item will contain the attributes we added
+        foreach ($iterator as $item) {
+            // Grab the time number value
+            echo $item['time'] . "\n";
+            // Grab the error string value
+            echo $item['error'] . "\n";
+        }
+
+        // @end
+        $this->assertNotEmpty($this->getActualOutput());
+    }
+
+    /**
+     * Perform a parallel scan of multiple table segments
+     *
+     * @depends testScanWithItemIterator
      * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
      */
     public function testParallelScan()

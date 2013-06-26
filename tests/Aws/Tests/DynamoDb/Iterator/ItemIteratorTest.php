@@ -35,6 +35,18 @@ class ItemIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'a' => array('S' => 'a2'),
                 'b' => array('N' => 2),
+            ),
+            array(
+                'a' => array('S' => 'a3'),
+                'c' => array('B' => base64_encode('c3')),
+            ),
+            array(
+                'a' => array('S' => 'a4'),
+                'd' => array('SS' => array('d4a', 'd4b')),
+            ),
+            array(
+                'a' => array('S' => 'a5'),
+                'e' => array('BS' => array(base64_encode('e5a'), base64_encode('e5b'))),
             )
         );
 
@@ -46,10 +58,33 @@ class ItemIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'a' => 'a2',
                 'b' => 2,
+            ),
+            array(
+                'a' => 'a3',
+                'c' => 'c3',
+            ),
+            array(
+                'a' => 'a4',
+                'd' => array('d4a', 'd4b'),
+            ),
+            array(
+                'a' => 'a5',
+                'e' => array('e5a', 'e5b'),
             )
         );
 
-        $actualItems = iterator_to_array(ItemIterator::fromArray($originalItems));
+        $iterator = new ItemIterator(new \ArrayIterator($originalItems));
+        $this->assertCount(5, $iterator);
+        $actualItems = $iterator->toArray();
         $this->assertEquals($targetItems, $actualItems);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFailsOnNonCountableIterator()
+    {
+        $inner = new \InfiniteIterator(new \ArrayIterator(range(0, 9)));
+        $items = new ItemIterator($inner);
     }
 }

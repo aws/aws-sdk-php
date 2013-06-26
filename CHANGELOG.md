@@ -4,6 +4,8 @@ CHANGELOG
 Next Release
 ------------
 
+* Added the `Aws\DynamoDb\DynamoDbClient::getItemsFromResult()` method and the `Aws\DynamoDb\Iterator\ItemIterator`
+  class to make it easier to get items from the results of DynamoDB operations in a simpler form
 * Added support for the `cr1.8xlarge` EC2 instance type. Use the `Aws\Ec2\Enum\CR1_8XLARGE` const for easy access
 * [SDK] Fixed an issue with data formats throughout the SDK due to a regression. Dates are now sent over the wire with
   the correct format. This issue affected the Amazon EC2, Amazon ElastiCache, AWS Elastic Beanstalk, Amazon EMR, and

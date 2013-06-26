@@ -16,29 +16,64 @@
 
 namespace Aws\DynamoDb\Iterator;
 
+use Aws\Common\Exception\InvalidArgumentException;
+use Aws\DynamoDb\Enum\AttributeType;
+use Guzzle\Common\ToArrayInterface;
+
 /**
- * Converts items to a simple hash format before yielding
+ * Converts items to a simple hash format before yielding. Also performs base64_decode on values specified as binary
  */
-class ItemIterator extends \IteratorIterator
+class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInterface
 {
     /**
-     * Creates an ItemIterator from an array (instead of an iterator) of items
+     * Ensures that the inner iterator is both Traversable and Countable
      *
-     * @param array $items
+     * {@inheritdoc}
      *
-     * @return ItemIterator
+     * @throws InvalidArgumentException
      */
-    public static function fromArray(array $items)
+    public function __construct(\Traversable $iterator)
     {
-        return new ItemIterator(new \ArrayIterator($items));
+        if (!($iterator instanceof \Countable)) {
+            throw new InvalidArgumentException('The inner iterator for an ItemIterator must be Countable.');
+        }
+
+        parent::__construct($iterator);
+    }
+
+    public function current()
+    {
+        return array_map(array($this, 'processAttribute'), parent::current());
+    }
+
+    public function count()
+    {
+        return $this->getInnerIterator()->count();
+    }
+
+    public function toArray()
+    {
+        return iterator_to_array($this, false);
     }
 
     /**
-     * An item is a hash of hashes, but this method converts the item to a simple hash
-     * {@inheritdoc}
+     * Converts an item's attribute from the DynamoDB format to a typeless value in order to simplify the overall
+     * array structure of an item. The method also base64 decodes the value any Binary attributes
+     *
+     * @param array $attribute
+     *
+     * @return array|string
      */
-    public function current()
+    protected function processAttribute(array $attribute)
     {
-        return array_map('current', parent::current());
+        list($type, $value) = each($attribute);
+
+        if ($type === 'B') {
+            $value = base64_decode($value);
+        } elseif ($type === 'BS') {
+            $value = array_map('base64_decode', $value);
+        }
+
+        return $value;
     }
 }
