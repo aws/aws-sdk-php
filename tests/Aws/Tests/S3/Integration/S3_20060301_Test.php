@@ -49,8 +49,9 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
         }
 
         // Wait until the bucket does not exist before starting the test
-        self::log('Waiting until the bucket does not exist');
+        self::log('Waiting until the bucket does not exist and sleeping for a few seconds');
         $client->waitUntilBucketNotExists(array('Bucket' => $bucket));
+        sleep(5);
         self::log('Beginning test');
     }
 
@@ -599,6 +600,7 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     {
         $client = $this->client;
         $bucket = $this->bucket;
+        $client->waitUntilBucketExists(array('Bucket' => $bucket));
         // @begin
 
         // Delete the objects in the bucket before attempting to delete
