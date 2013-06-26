@@ -16,6 +16,7 @@
 
 namespace Aws\Common\Client;
 
+use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Event;
 use Guzzle\Http\EntityBody;
 use Guzzle\Service\Command\AbstractCommand as Command;
@@ -81,13 +82,13 @@ class UploadBodyListener implements EventSubscriberInterface
                 $body = fopen($source, 'r');
             }
 
-            if (null !== $body) {
-                $body = EntityBody::factory($body);
-            }
-
             // Prepare the body parameter and remove the source file parameter
-            $command->remove($this->sourceParameter);
-            $command->set($this->bodyParameter, $body);
+            if (null !== $body) {
+                $command->remove($this->sourceParameter);
+                $command->set($this->bodyParameter, EntityBody::factory($body));
+            } else {
+                throw new InvalidArgumentException("You must specify a non-null value for the {$this->bodyParameter} or {$this->sourceParameter} parameters.");
+            }
         }
     }
 }
