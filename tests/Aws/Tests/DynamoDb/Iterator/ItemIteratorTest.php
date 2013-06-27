@@ -17,6 +17,7 @@
 namespace Aws\Tests\DynamoDb\Iterator;
 
 use Aws\DynamoDb\Iterator\ItemIterator;
+use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 use Aws\Common\Iterator\AwsResourceIterator;
 
@@ -51,32 +52,36 @@ class ItemIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         );
 
         $targetItems = array(
-            array(
+            new Collection(array(
                 'a' => 'a1',
                 'b' => 1,
-            ),
-            array(
+            )),
+            new Collection(array(
                 'a' => 'a2',
                 'b' => 2,
-            ),
-            array(
+            )),
+            new Collection(array(
                 'a' => 'a3',
                 'c' => 'c3',
-            ),
-            array(
+            )),
+            new Collection(array(
                 'a' => 'a4',
                 'd' => array('d4a', 'd4b'),
-            ),
-            array(
+            )),
+            new Collection(array(
                 'a' => 'a5',
                 'e' => array('e5a', 'e5b'),
-            )
+            ))
         );
 
         $iterator = new ItemIterator(new \ArrayIterator($originalItems));
         $this->assertCount(5, $iterator);
         $actualItems = $iterator->toArray();
-        $this->assertEquals($targetItems, $actualItems);
+        foreach ($actualItems as $index => $item) {
+            $this->assertInstanceOf('Guzzle\Common\Collection', $item);
+            $this->assertEquals($item->toArray(), $targetItems[$index]->toArray());
+        }
+
     }
 
     /**

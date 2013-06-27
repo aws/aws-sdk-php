@@ -18,10 +18,12 @@ namespace Aws\DynamoDb\Iterator;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\DynamoDb\Enum\AttributeType;
+use Guzzle\Common\Collection;
 use Guzzle\Common\ToArrayInterface;
 
 /**
- * Converts items to a simple hash format before yielding. Also performs base64_decode on values specified as binary
+ * Converts items to a simple associative array form with type information removed. Also performs base64_decode on
+ * values specified as binary. Each item is yielded as an array-accessible Collection object
  */
 class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInterface
 {
@@ -41,9 +43,13 @@ class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInter
         parent::__construct($iterator);
     }
 
+    /**
+     * {@inheritdoc}
+     * @return Collection
+     */
     public function current()
     {
-        return array_map(array($this, 'processAttribute'), parent::current());
+        return new Collection(array_map(array($this, 'processAttribute'), parent::current()));
     }
 
     public function count()

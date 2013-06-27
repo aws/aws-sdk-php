@@ -17,10 +17,13 @@
 namespace Aws\DynamoDb\Iterator;
 
 use Aws\Common\Iterator\AwsResourceIterator;
+use Guzzle\Common\Version;
 use Guzzle\Service\Resource\Model;
 
 /**
  * Iterator for a DynamoDB Scan operation. Can also get the total scanned count
+ *
+ * @deprecated Getting the scanned count is possible using event listeners, so this class is not needed
  */
 class ScanIterator extends AwsResourceIterator
 {
@@ -36,6 +39,9 @@ class ScanIterator extends AwsResourceIterator
      */
     public function getScannedCount()
     {
+        Version::warn('This method is deprecated and will be removed in a future version of the SDK. Getting the '
+            . 'scanned count is possible using event listeners.');
+
         return $this->scannedCount;
     }
 

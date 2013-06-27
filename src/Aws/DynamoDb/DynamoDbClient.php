@@ -154,6 +154,7 @@ class DynamoDbClient extends AbstractClient
                     'BatchGetItem' => array(
                         'token_param' => 'RequestItems',
                         'token_key'   => 'UnprocessedKeys',
+                        'result_key'  => 'Responses/*',
                     ),
                     'ListTables' => array(
                         'result_key'  => 'TableNames',
@@ -197,29 +198,6 @@ class DynamoDbClient extends AbstractClient
         }
 
         return $formatted;
-    }
-
-    /**
-     * Collects items from the result of a DynamoDB operation and returns them as an iterator. The iterator will yield
-     * the items in a simple associative array form with type information removed. Any binary types (B, BS) will be
-     * base64 decoded automatically as they are yielded.
-     *
-     * @param Model $result  The result of a DynamoDB operation that potentially contains items (e.g., BatchGetItem,
-     *                       DeleteItem, GetItem, PutItem, Query, Scan, UpdateItem)
-     *
-     * @return ItemIterator|array
-     */
-    public function getItemsFromResult(Model $result)
-    {
-        if (!($items = $result->get('Items'))) {
-            if ($item = $result->get('Item') ?: $result->get('Attributes')) {
-                $items = array($item);
-            } else {
-                $items = $result->getPath('Responses/*');
-            }
-        }
-
-        return new ItemIterator(new \ArrayIterator($items ?: array()));
     }
 
     /**
