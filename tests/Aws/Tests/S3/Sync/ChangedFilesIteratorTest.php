@@ -29,26 +29,20 @@ class ChangedFilesIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         $ctime = strtotime('January 1, 2013');
 
         $a = $this->getMockBuilder('SplFileinfo')
-            ->setMethods(array('getSize', 'getMTime'))
+            ->setMethods(array('getSize', 'getMTime', '__toString'))
             ->disableOriginalConstructor()
             ->getMock();
-        $a->expects($this->any())
-            ->method('getSize')
-            ->will($this->returnValue(10));
-        $a->expects($this->any())
-            ->method('getMTime')
-            ->will($this->returnValue($ctime));
+        $a->expects($this->any())->method('getSize')->will($this->returnValue(10));
+        $a->expects($this->any())->method('getMTime')->will($this->returnValue($ctime));
+        $a->expects($this->any())->method('__toString')->will($this->returnValue(''));
 
         $b = $this->getMockBuilder('SplFileinfo')
-            ->setMethods(array('getSize', 'getMTime'))
+            ->setMethods(array('getSize', 'getMTime', '__toString'))
             ->disableOriginalConstructor()
             ->getMock();
-        $b->expects($this->any())
-            ->method('getSize')
-            ->will($this->returnValue(11));
-        $b->expects($this->any())
-            ->method('getMTime')
-            ->will($this->returnValue($ctime));
+        $b->expects($this->any())->method('getSize')->will($this->returnValue(11));
+        $b->expects($this->any())->method('getMTime')->will($this->returnValue($ctime));
+        $a->expects($this->any())->method('__toString')->will($this->returnValue(''));
 
         $c = 0;
         $converter = $this->getMockBuilder('Aws\S3\Sync\KeyConverter')
@@ -92,15 +86,12 @@ class ChangedFilesIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     public function testComparesData($size1, $time1, $returnValue, $present)
     {
         $a = $this->getMockBuilder('SplFileinfo')
-            ->setMethods(array('getSize', 'getMTime'))
+            ->setMethods(array('getSize', 'getMTime', '__toString'))
             ->disableOriginalConstructor()
             ->getMock();
-        $a->expects($this->any())
-            ->method('getSize')
-            ->will($this->returnValue($size1));
-        $a->expects($this->any())
-            ->method('getMTime')
-            ->will($this->returnValue($time1));
+        $a->expects($this->any())->method('getSize')->will($this->returnValue($size1));
+        $a->expects($this->any())->method('getMTime')->will($this->returnValue($time1));
+        $a->expects($this->any())->method('__toString')->will($this->returnValue(''));
 
         $i1 = new \ArrayIterator(array($a));
         $i2 = new \ArrayIterator(array());
