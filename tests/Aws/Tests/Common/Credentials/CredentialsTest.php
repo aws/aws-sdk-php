@@ -138,6 +138,10 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFactoryCreatesCacheWhenSetToTrue()
     {
+        if (!extension_loaded('apc')) {
+            $this->markTestSkipped('APC is not installed');
+        }
+
         $credentials = Credentials::factory(array(
             'key'               => 'foo',
             'secret'            => 'bar',
