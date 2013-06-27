@@ -108,6 +108,10 @@ class RefreshableInstanceProfileCredentialsIntegrationTest extends \Aws\Tests\In
 
     public function testCredentialsUsesApcCacheWhenCacheIsTrue()
     {
+        if (!extension_loaded('apc')) {
+            $this->markTestSkipped('APC is not installed');
+        }
+
         $client = InstanceMetadataClient::factory();
         $credentials = Credentials::factory(array(
             'credentials.client' => $client,
