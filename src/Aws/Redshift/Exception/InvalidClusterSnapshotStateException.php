@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The state of the cluster snapshot is not &quot;available&quot;.
+ * The state of the cluster snapshot is not "available".
  */
 class InvalidClusterSnapshotStateException extends RedshiftException {}
