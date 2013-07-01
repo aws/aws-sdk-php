@@ -28,4 +28,5 @@ class MailboxSimulator extends Enum
     const OUT_OF_THE_OFFICE = 'ooto@simulator.amazonses.com';
     const COMPLAINT = 'complaint@simulator.amazonses.com';
     const BLACKLIST = 'blacklist@simulator.amazonses.com';
+    const SUPPRESSION_LIST = 'suppressionlist@simulator.amazonses.com';
 }
