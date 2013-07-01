@@ -17,6 +17,6 @@
 namespace Aws\CloudFront\Exception;
 
 /**
- * The origin access identity is not valid or doesn&#039;t exist.
+ * The origin access identity is not valid or doesn't exist.
  */
 class InvalidOriginAccessIdentityException extends CloudFrontException {}

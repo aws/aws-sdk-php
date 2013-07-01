@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The state of the cluster security group is not &quot;available&quot;.
+ * The state of the cluster security group is not "available".
  */
 class InvalidClusterSecurityGroupStateException extends RedshiftException {}

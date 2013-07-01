@@ -17,6 +17,6 @@
 namespace Aws\ElasticTranscoder\Exception;
 
 /**
- * The requested resource does not exist or is not available. For example, the pipeline to which you&#039;re trying to add a job doesn&#039;t exist or is still being created.
+ * The requested resource does not exist or is not available. For example, the pipeline to which you're trying to add a job doesn't exist or is still being created.
  */
 class ResourceNotFoundException extends ElasticTranscoderException {}
