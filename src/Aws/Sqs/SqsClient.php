@@ -98,6 +98,7 @@ class SqsClient extends AbstractClient
             ->build();
 
         $client->addSubscriber(new QueueUrlListener());
+        $client->addSubscriber(new Md5ValidatorListener());
 
         return $client;
     }
