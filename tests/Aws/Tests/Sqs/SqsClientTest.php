@@ -17,6 +17,8 @@
 namespace Aws\Tests\Sqs;
 
 use Aws\Sqs\SqsClient;
+use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Mock\MockPlugin;
 
 class SqsClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -43,5 +45,32 @@ class SqsClientTest extends \Guzzle\Tests\GuzzleTestCase
         $sqs = SqsClient::factory(array('region' => 'us-east-1'));
 
         $this->assertEquals($arn, $sqs->getQueueArn($url));
+    }
+
+    /**
+     * @expectedException \Aws\Sqs\Exception\SqsException
+     * @expectedExceptionMessage Body MD5 mismatch for
+     */
+    public function testValidatesSuccessfulMd5OfBody()
+    {
+        $mock = new MockPlugin(array(
+            Response::fromMessage("HTTP/1.1 200 OK\r\nContent-Type: application/xml\r\n\r\n" .
+                "<ReceiveMessageResponse>
+                  <ReceiveMessageResult>
+                    <Message>
+                      <MD5OfBody>fooo</MD5OfBody>
+                      <Body>This is a test message</Body>
+                    </Message>
+                  </ReceiveMessageResult>
+                </ReceiveMessageResponse>"
+            )
+        ));
+        $sqs = SqsClient::factory(array(
+            'key'    => 'abc',
+            'secret' => '123',
+            'region' => 'us-east-1'
+        ));
+        $sqs->addSubscriber($mock);
+        $sqs->receiveMessage(array('QueueUrl' => 'http://foo.com'));
     }
 }
