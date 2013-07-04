@@ -14,6 +14,9 @@ Next Release
 * Fixed an issue with the parameter serialization of the `ImportInstance` operation in the Amazon EC2 client
 * Fixed an issue with the Amazon S3 client where the `RoutingRules.Redirect.HostName` parameter of the
   `PutBucketWebsite` operation was erroneously marked as required
+* Fixed an issue with the Amazon S3 client where the `DeleteObject` operation was missing parameters
+* Fixed an issue with the Amazon S3 client where the `Status` parameter of the `PutBucketVersioning` operation did not
+  properly support the "Suspended" value
 
 2.4.0 (2013-06-18)
 ------------------

@@ -721,6 +721,16 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
+                'MFA' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-mfa',
+                ),
+                'VersionId' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'versionId',
+                ),
             ),
         ),
         'DeleteObjects' => array(
@@ -2182,7 +2192,7 @@ return array (
                     'location' => 'xml',
                     'enum' => array(
                         'Enabled',
-                        'Disabled',
+                        'Suspended',
                     ),
                 ),
                 'SubResource' => array(
