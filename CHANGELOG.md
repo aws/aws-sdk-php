@@ -17,6 +17,8 @@ Next Release
 * Fixed an issue with the Amazon S3 client where the `DeleteObject` operation was missing parameters
 * Fixed an issue with the Amazon S3 client where the `Status` parameter of the `PutBucketVersioning` operation did not
   properly support the "Suspended" value
+* Fixed an issue with the Amazon Glacier `UploadPartGenerator` class so that an exception is thrown if the provided body
+  to upload is less than 1 byte
 
 2.4.0 (2013-06-18)
 ------------------

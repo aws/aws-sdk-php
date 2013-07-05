@@ -77,6 +77,14 @@ class UploadPartGeneratorTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testExceptionWhenBodyIsTooSmall()
+    {
+        UploadPartGenerator::factory('', Size::MB);
+    }
+
+    /**
      * @expectedException \RuntimeException
      */
     public function testExceptionUnserializationIsUnsuccessful()

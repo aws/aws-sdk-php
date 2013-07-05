@@ -91,6 +91,7 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
      *
      * @throws InvalidArgumentException when the part size is invalid (i.e. not a power of 2 of 1MB)
      * @throws InvalidArgumentException when the body is not seekable (must be able to rewind after calculating hashes)
+     * @throws InvalidArgumentException when the archive size is less than one byte
      */
     public function __construct(EntityBodyInterface $body, $partSize)
     {
@@ -109,6 +110,11 @@ class UploadPartGenerator implements \Serializable, \IteratorAggregate, \Countab
         }
 
         $this->generateUploadParts($body);
+
+        // Validate archive size
+        if ($this->archiveSize < 1) {
+            throw new InvalidArgumentException('The archive size must be at least 1 byte.');
+        }
     }
 
     /**
