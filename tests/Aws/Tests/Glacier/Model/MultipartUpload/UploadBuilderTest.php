@@ -38,7 +38,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $builder = UploadBuilder::newInstance();
         $builder->setAccountId('foo')
             ->setVaultName('bar')
-            ->setPartGenerator(UploadPartGenerator::factory(EntityBody::factory(), 1024 * 1024))
+            ->setPartGenerator(UploadPartGenerator::factory(EntityBody::factory('foo'), 1024 * 1024))
             ->setConcurrency(1)
             ->setPartSize(1024 * 1024)
             ->setArchiveDescription('abc');
@@ -55,7 +55,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage You must specify a vault name, client, and source.
      */
     public function testValidatesThatRequiredFieldsAreSet()
@@ -64,7 +64,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage You cannot upload from a non-seekable source.
      */
     public function testValidatesThatNonSeekableStreamsCannotBeResumed()
@@ -108,7 +108,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testResumeThrowsExceptionIfNoPartGenerator()
     {
