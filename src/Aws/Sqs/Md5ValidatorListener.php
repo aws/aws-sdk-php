@@ -43,9 +43,11 @@ class Md5ValidatorListener implements EventSubscriberInterface
         }
 
         $result = $event['command']->getResult();
-        foreach ($result['Messages'] as $message) {
-            if ($message['MD5OfBody'] != md5($message['Body'])) {
-                throw new SqsException('Body MD5 mismatch for ' . var_export($message, true));
+        if (isset($result['Messages'])) {
+            foreach ($result['Messages'] as $message) {
+                if ($message['MD5OfBody'] != md5($message['Body'])) {
+                    throw new SqsException('Body MD5 mismatch for ' . var_export($message, true));
+                }
             }
         }
     }
