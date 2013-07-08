@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.4.1 (2013-06-09)
+------------------
 
 * Added supports for setting watermarks and max framerates to the Amazon Elastic Transcoder client
 * Added the `Aws\DynamoDb\Iterator\ItemIterator` class to make it easier to get items from the results of DynamoDB
