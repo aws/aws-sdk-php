@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------
 
+* Added supports for setting watermarks and max framerates to the Amazon Elastic Transcoder client
 * Added the `Aws\DynamoDb\Iterator\ItemIterator` class to make it easier to get items from the results of DynamoDB
   operations in a simpler form
 * Added support for the `cr1.8xlarge` EC2 instance type. Use `Aws\Ec2\Enum\InstanceType::CR1_8XLARGE`

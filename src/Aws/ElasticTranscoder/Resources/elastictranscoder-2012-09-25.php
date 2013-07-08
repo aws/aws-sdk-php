@@ -161,6 +161,25 @@ return array (
                         'SegmentDuration' => array(
                             'type' => 'string',
                         ),
+                        'Watermarks' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'JobWatermark',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'PresetWatermarkId' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 40,
+                                    ),
+                                    'InputKey' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 255,
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'Outputs' => array(
@@ -187,6 +206,25 @@ return array (
                             ),
                             'SegmentDuration' => array(
                                 'type' => 'string',
+                            ),
+                            'Watermarks' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'JobWatermark',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'PresetWatermarkId' => array(
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 40,
+                                        ),
+                                        'InputKey' => array(
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 255,
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -451,6 +489,9 @@ return array (
                         'FrameRate' => array(
                             'type' => 'string',
                         ),
+                        'MaxFrameRate' => array(
+                            'type' => 'string',
+                        ),
                         'Resolution' => array(
                             'type' => 'string',
                         ),
@@ -471,6 +512,47 @@ return array (
                         ),
                         'PaddingPolicy' => array(
                             'type' => 'string',
+                        ),
+                        'Watermarks' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'PresetWatermark',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Id' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 40,
+                                    ),
+                                    'MaxWidth' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'MaxHeight' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'SizingPolicy' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'HorizontalAlign' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'HorizontalOffset' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'VerticalAlign' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'VerticalOffset' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Opacity' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Target' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -1239,6 +1321,21 @@ return array (
                                 'Height' => array(
                                     'type' => 'numeric',
                                 ),
+                                'Watermarks' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'JobWatermark',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'PresetWatermarkId' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InputKey' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -1279,6 +1376,21 @@ return array (
                                     ),
                                     'Height' => array(
                                         'type' => 'numeric',
+                                    ),
+                                    'Watermarks' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'JobWatermark',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'PresetWatermarkId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InputKey' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -1498,6 +1610,9 @@ return array (
                                 'FrameRate' => array(
                                     'type' => 'string',
                                 ),
+                                'MaxFrameRate' => array(
+                                    'type' => 'string',
+                                ),
                                 'Resolution' => array(
                                     'type' => 'string',
                                 ),
@@ -1518,6 +1633,45 @@ return array (
                                 ),
                                 'PaddingPolicy' => array(
                                     'type' => 'string',
+                                ),
+                                'Watermarks' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'PresetWatermark',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Id' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'MaxWidth' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'MaxHeight' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SizingPolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'HorizontalAlign' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'HorizontalOffset' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'VerticalAlign' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'VerticalOffset' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Opacity' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Target' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
@@ -1637,6 +1791,21 @@ return array (
                                     'Height' => array(
                                         'type' => 'numeric',
                                     ),
+                                    'Watermarks' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'JobWatermark',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'PresetWatermarkId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InputKey' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -1677,6 +1846,21 @@ return array (
                                         ),
                                         'Height' => array(
                                             'type' => 'numeric',
+                                        ),
+                                        'Watermarks' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'JobWatermark',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'PresetWatermarkId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'InputKey' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -1800,6 +1984,21 @@ return array (
                                     'Height' => array(
                                         'type' => 'numeric',
                                     ),
+                                    'Watermarks' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'JobWatermark',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'PresetWatermarkId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InputKey' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -1840,6 +2039,21 @@ return array (
                                         ),
                                         'Height' => array(
                                             'type' => 'numeric',
+                                        ),
+                                        'Watermarks' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'JobWatermark',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'PresetWatermarkId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'InputKey' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -2071,6 +2285,9 @@ return array (
                                     'FrameRate' => array(
                                         'type' => 'string',
                                     ),
+                                    'MaxFrameRate' => array(
+                                        'type' => 'string',
+                                    ),
                                     'Resolution' => array(
                                         'type' => 'string',
                                     ),
@@ -2091,6 +2308,45 @@ return array (
                                     ),
                                     'PaddingPolicy' => array(
                                         'type' => 'string',
+                                    ),
+                                    'Watermarks' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'PresetWatermark',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Id' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'MaxWidth' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'MaxHeight' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'SizingPolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'HorizontalAlign' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'HorizontalOffset' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'VerticalAlign' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'VerticalOffset' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Opacity' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Target' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -2204,6 +2460,21 @@ return array (
                                 'Height' => array(
                                     'type' => 'numeric',
                                 ),
+                                'Watermarks' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'JobWatermark',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'PresetWatermarkId' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'InputKey' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -2244,6 +2515,21 @@ return array (
                                     ),
                                     'Height' => array(
                                         'type' => 'numeric',
+                                    ),
+                                    'Watermarks' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'JobWatermark',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'PresetWatermarkId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'InputKey' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -2463,6 +2749,9 @@ return array (
                                 'FrameRate' => array(
                                     'type' => 'string',
                                 ),
+                                'MaxFrameRate' => array(
+                                    'type' => 'string',
+                                ),
                                 'Resolution' => array(
                                     'type' => 'string',
                                 ),
@@ -2483,6 +2772,45 @@ return array (
                                 ),
                                 'PaddingPolicy' => array(
                                     'type' => 'string',
+                                ),
+                                'Watermarks' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'PresetWatermark',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Id' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'MaxWidth' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'MaxHeight' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SizingPolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'HorizontalAlign' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'HorizontalOffset' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'VerticalAlign' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'VerticalOffset' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Opacity' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Target' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),
