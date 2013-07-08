@@ -19,6 +19,7 @@ Next Release
   properly support the "Suspended" value
 * Fixed an issue with the Amazon Glacier `UploadPartGenerator` class so that an exception is thrown if the provided body
   to upload is less than 1 byte
+* Added MD5 validation to Amazon SQS ReceiveMessage operations
 
 2.4.0 (2013-06-18)
 ------------------
