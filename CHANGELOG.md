@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.4.1 (2013-06-09)
+2.4.1 (2013-06-08)
 ------------------
 
 * Added supports for setting watermarks and max framerates to the Amazon Elastic Transcoder client
