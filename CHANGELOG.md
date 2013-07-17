@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for decoding authorization messages to the AWS STS client
+
 2.4.1 (2013-06-08)
 ------------------
 

@@ -29,6 +29,7 @@ use Guzzle\Service\Resource\Model;
  *
  * @method Model assumeRole(array $args = array()) {@command Sts AssumeRole}
  * @method Model assumeRoleWithWebIdentity(array $args = array()) {@command Sts AssumeRoleWithWebIdentity}
+ * @method Model decodeAuthorizationMessage(array $args = array()) {@command Sts DecodeAuthorizationMessage}
  * @method Model getFederationToken(array $args = array()) {@command Sts GetFederationToken}
  * @method Model getSessionToken(array $args = array()) {@command Sts GetSessionToken}
  *

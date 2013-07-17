@@ -212,6 +212,38 @@ return array (
                 ),
             ),
         ),
+        'DecodeAuthorizationMessage' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DecodeAuthorizationMessageResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DecodeAuthorizationMessage',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-06-15',
+                ),
+                'EncodedMessage' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 10240,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The error returned if the message passed to DecodeAuthorizationMessage was invalid. This can happen if the token contains invalid characters, such as linebreaks.',
+                    'class' => 'InvalidAuthorizationMessageException',
+                ),
+            ),
+        ),
         'GetFederationToken' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -379,6 +411,16 @@ return array (
                 ),
                 'PackedPolicySize' => array(
                     'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'DecodeAuthorizationMessageResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'DecodedMessage' => array(
+                    'type' => 'string',
                     'location' => 'xml',
                 ),
             ),
