@@ -119,7 +119,7 @@ class CompatibilityTest
 $c = new CompatibilityTest();
 $c->title('System requirements');
 $c->addRequire(
-    'Ensuring that the version of PHP >= 5.3.3',
+    'Ensuring that the version of PHP is >= 5.3.3',
     function () { return version_compare(phpversion(), '5.3.3', '>='); },
     'You must update your version of PHP to 5.3.3 to run the AWS SDK for PHP'
 );
@@ -155,7 +155,7 @@ $c->addRequire('Ensuring that file_get_contents works', function () {
 $c->title('System recommendations');
 
 $c->addRecommend(
-    'Checking if PHP version if >= 5.4.1',
+    'Checking if PHP version is >= 5.4.1',
     function () { return version_compare(phpversion(), '5.4.1', '>='); },
     'You are using an older version of PHP (' . phpversion() . '). Consider updating to PHP 5.4.1 or newer to improve the performance and stability of the SDK.'
 );
@@ -165,7 +165,10 @@ $c->addRecommend('Checking if you are running on a 64-bit platform', function ()
 }, 'You are not running on a 64-bit installation of PHP. You may run into issues uploading or downloading files larger than 2GB.');
 
 $c->iniCheck('Ensuring that zend.enable_gc is enabled', 'zend.enable_gc', true, false);
-$c->iniCheck('Ensuring that date.timezone is set', 'date.timezone', true, false);
+
+$c->check('Ensuring that date.timezone is set', function () {
+    return (bool) ini_get('date.timezone');
+}, 'The date.timezone PHP ini setting has not been set in ' . php_ini_loaded_file(), false);
 
 if (extension_loaded('xdebug')) {
     $c->addRecommend('Checking if Xdebug is installed', function () { return false; }, 'Xdebug is installed. Consider uninstalling Xdebug to make the SDK run much faster.');
