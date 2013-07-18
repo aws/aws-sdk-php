@@ -7498,24 +7498,20 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'KeyPair' => array(
-                    'type' => 'object',
+                'KeyName' => array(
+                    'type' => 'string',
                     'location' => 'xml',
-                    'sentAs' => 'keyPair',
-                    'properties' => array(
-                        'KeyName' => array(
-                            'type' => 'string',
-                            'sentAs' => 'keyName',
-                        ),
-                        'KeyFingerprint' => array(
-                            'type' => 'string',
-                            'sentAs' => 'keyFingerprint',
-                        ),
-                        'KeyMaterial' => array(
-                            'type' => 'string',
-                            'sentAs' => 'keyMaterial',
-                        ),
-                    ),
+                    'sentAs' => 'keyName',
+                ),
+                'KeyFingerprint' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'keyFingerprint',
+                ),
+                'KeyMaterial' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'keyMaterial',
                 ),
             ),
         ),
