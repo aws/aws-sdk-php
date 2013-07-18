@@ -27,4 +27,5 @@ class VerificationStatus extends Enum
     const SUCCESS = 'Success';
     const FAILED = 'Failed';
     const TEMPORARY_FAILURE = 'TemporaryFailure';
+    const NOT_STARTED = 'NotStarted';
 }

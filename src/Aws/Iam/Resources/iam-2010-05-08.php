@@ -2650,6 +2650,7 @@ return array (
                     'maxLength' => 64,
                 ),
                 'Password' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
