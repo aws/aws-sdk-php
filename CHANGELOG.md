@@ -4,7 +4,9 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for cross-account snapshot access control to the Amazon Redshift client
 * Added support for decoding authorization messages to the AWS STS client
+* Added an SDK compatibility test to allow users to quickly determine if their system meets the requirements of the SDK
 
 2.4.1 (2013-06-08)
 ------------------

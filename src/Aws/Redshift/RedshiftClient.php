@@ -27,6 +27,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * Client to interact with Amazon Redshift
  *
  * @method Model authorizeClusterSecurityGroupIngress(array $args = array()) {@command Redshift AuthorizeClusterSecurityGroupIngress}
+ * @method Model authorizeSnapshotAccess(array $args = array()) {@command Redshift AuthorizeSnapshotAccess}
  * @method Model copyClusterSnapshot(array $args = array()) {@command Redshift CopyClusterSnapshot}
  * @method Model createCluster(array $args = array()) {@command Redshift CreateCluster}
  * @method Model createClusterParameterGroup(array $args = array()) {@command Redshift CreateClusterParameterGroup}
@@ -59,6 +60,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model resetClusterParameterGroup(array $args = array()) {@command Redshift ResetClusterParameterGroup}
  * @method Model restoreFromClusterSnapshot(array $args = array()) {@command Redshift RestoreFromClusterSnapshot}
  * @method Model revokeClusterSecurityGroupIngress(array $args = array()) {@command Redshift RevokeClusterSecurityGroupIngress}
+ * @method Model revokeSnapshotAccess(array $args = array()) {@command Redshift RevokeSnapshotAccess}
  * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings

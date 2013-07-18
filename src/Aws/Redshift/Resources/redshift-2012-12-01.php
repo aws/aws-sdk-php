@@ -99,6 +99,49 @@ return array (
                 ),
             ),
         ),
+        'AuthorizeSnapshotAccess' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SnapshotWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AuthorizeSnapshotAccess',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'SnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AccountWithRestoreAccess' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
+                    'class' => 'ClusterSnapshotNotFoundException',
+                ),
+                array(
+                    'reason' => 'The specified CIDR block or EC2 security group is already authorized for the specified cluster security group.',
+                    'class' => 'AuthorizationAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The authorization quota for the cluster security group has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.',
+                    'class' => 'AuthorizationQuotaExceededException',
+                ),
+            ),
+        ),
         'CopyClusterSnapshot' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -137,7 +180,7 @@ return array (
                     'class' => 'ClusterSnapshotNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the cluster snapshot is not "available".',
+                    'reason' => 'The state of the cluster snapshot is not "available", or other accounts are authorized to access the snapshot.',
                     'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
@@ -297,6 +340,14 @@ return array (
                 array(
                     'reason' => 'The cluster subnet group cannot be deleted because it is in use.',
                     'class' => 'InvalidClusterSubnetGroupStateException',
+                ),
+                array(
+                    'reason' => 'The requested subnet is valid, or not all of the subnets are in the same VPC.',
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'Your account is not authorized to perform the requested operation.',
+                    'class' => 'UnauthorizedOperationException',
                 ),
             ),
         ),
@@ -485,6 +536,10 @@ return array (
                     'reason' => 'The requested subnet is valid, or not all of the subnets are in the same VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
+                array(
+                    'reason' => 'Your account is not authorized to perform the requested operation.',
+                    'class' => 'UnauthorizedOperationException',
+                ),
             ),
         ),
         'DeleteCluster' => array(
@@ -631,7 +686,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The state of the cluster snapshot is not "available".',
+                    'reason' => 'The state of the cluster snapshot is not "available", or other accounts are authorized to access the snapshot.',
                     'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
@@ -846,6 +901,10 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'OwnerAccount' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1315,6 +1374,10 @@ return array (
                     'reason' => 'An request option was specified that is not supported.',
                     'class' => 'UnsupportedOptionException',
                 ),
+                array(
+                    'reason' => 'Your account is not authorized to perform the requested operation.',
+                    'class' => 'UnauthorizedOperationException',
+                ),
             ),
         ),
         'ModifyClusterParameterGroup' => array(
@@ -1441,6 +1504,10 @@ return array (
                 array(
                     'reason' => 'The requested subnet is valid, or not all of the subnets are in the same VPC.',
                     'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'Your account is not authorized to perform the requested operation.',
+                    'class' => 'UnauthorizedOperationException',
                 ),
             ),
         ),
@@ -1644,8 +1711,16 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'OwnerAccount' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
+                array(
+                    'reason' => 'The owner of the specified snapshot has not authorized your account to access the snapshot.',
+                    'class' => 'AccessToSnapshotDeniedException',
+                ),
                 array(
                     'reason' => 'The account already has a cluster with the given identifier.',
                     'class' => 'ClusterAlreadyExistsException',
@@ -1663,7 +1738,7 @@ return array (
                     'class' => 'InsufficientClusterCapacityException',
                 ),
                 array(
-                    'reason' => 'The state of the cluster snapshot is not "available".',
+                    'reason' => 'The state of the cluster snapshot is not "available", or other accounts are authorized to access the snapshot.',
                     'class' => 'InvalidClusterSnapshotStateException',
                 ),
                 array(
@@ -1685,6 +1760,18 @@ return array (
                 array(
                     'reason' => 'The cluster subnet group cannot be deleted because it is in use.',
                     'class' => 'InvalidClusterSubnetGroupStateException',
+                ),
+                array(
+                    'reason' => 'The requested subnet is valid, or not all of the subnets are in the same VPC.',
+                    'class' => 'InvalidSubnetException',
+                ),
+                array(
+                    'reason' => 'The cluster subnet group name does not refer to an existing cluster subnet group.',
+                    'class' => 'ClusterSubnetGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'Your account is not authorized to perform the requested operation.',
+                    'class' => 'UnauthorizedOperationException',
                 ),
             ),
         ),
@@ -1735,6 +1822,49 @@ return array (
                 array(
                     'reason' => 'The state of the cluster security group is not "available".',
                     'class' => 'InvalidClusterSecurityGroupStateException',
+                ),
+            ),
+        ),
+        'RevokeSnapshotAccess' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'SnapshotWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'RevokeSnapshotAccess',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-12-01',
+                ),
+                'SnapshotIdentifier' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AccountWithRestoreAccess' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The owner of the specified snapshot has not authorized your account to access the snapshot.',
+                    'class' => 'AccessToSnapshotDeniedException',
+                ),
+                array(
+                    'reason' => 'The specified CIDR IP range or EC2 security group is not authorized for the specified cluster security group.',
+                    'class' => 'AuthorizationNotFoundException',
+                ),
+                array(
+                    'reason' => 'The snapshot identifier does not refer to an existing cluster snapshot.',
+                    'class' => 'ClusterSnapshotNotFoundException',
                 ),
             ),
         ),
@@ -1851,6 +1981,40 @@ return array (
                         ),
                         'Encrypted' => array(
                             'type' => 'boolean',
+                        ),
+                        'AccountsWithRestoreAccess' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'AccountWithRestoreAccess',
+                                'type' => 'object',
+                                'sentAs' => 'AccountWithRestoreAccess',
+                                'properties' => array(
+                                    'AccountId' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'OwnerAccount' => array(
+                            'type' => 'string',
+                        ),
+                        'TotalBackupSizeInMegaBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'ActualIncrementalBackupSizeInMegaBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'BackupProgressInMegaBytes' => array(
+                            'type' => 'numeric',
+                        ),
+                        'CurrentBackupRateInMegaBytesPerSecond' => array(
+                            'type' => 'numeric',
+                        ),
+                        'EstimatedSecondsToCompletion' => array(
+                            'type' => 'numeric',
+                        ),
+                        'ElapsedTimeInSeconds' => array(
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
@@ -2280,6 +2444,40 @@ return array (
                             ),
                             'Encrypted' => array(
                                 'type' => 'boolean',
+                            ),
+                            'AccountsWithRestoreAccess' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AccountWithRestoreAccess',
+                                    'type' => 'object',
+                                    'sentAs' => 'AccountWithRestoreAccess',
+                                    'properties' => array(
+                                        'AccountId' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'OwnerAccount' => array(
+                                'type' => 'string',
+                            ),
+                            'TotalBackupSizeInMegaBytes' => array(
+                                'type' => 'numeric',
+                            ),
+                            'ActualIncrementalBackupSizeInMegaBytes' => array(
+                                'type' => 'numeric',
+                            ),
+                            'BackupProgressInMegaBytes' => array(
+                                'type' => 'numeric',
+                            ),
+                            'CurrentBackupRateInMegaBytesPerSecond' => array(
+                                'type' => 'numeric',
+                            ),
+                            'EstimatedSecondsToCompletion' => array(
+                                'type' => 'numeric',
+                            ),
+                            'ElapsedTimeInSeconds' => array(
+                                'type' => 'numeric',
                             ),
                         ),
                     ),
