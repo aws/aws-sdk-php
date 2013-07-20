@@ -8,7 +8,7 @@ The **AWS SDK for PHP** enables PHP developers to easily work with [Amazon Web S
 solutions with Amazon S3, Amazon DynamoDB, Amazon Glacier, and more. You can get started in minutes by [installing the
 SDK through Composer][docs-installation] or by downloading a single [zip][install-zip] or [phar][install-phar] file.
 
-* **Install**
+* **Install**:
   * [Instructions][docs-installation]
   * [Packagist/Composer][install-packagist]
   * Download [Zip][install-zip] or [Phar][install-phar]
@@ -32,7 +32,7 @@ SDK through Composer][docs-installation] or by downloading a single [zip][instal
 * Built on [Guzzle][] and utilizes many of its features including persistent connections, parallel requests, events and
   plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
   logging][docs-wire-logging], caching, flexible batching, and request retrying with truncated exponential backoff.
-* Convenience features including [Iterators][docs-iterators], [Waiters][docs-waiters], [modelled
+* Convenience features including [Iterators][docs-iterators], [Waiters][docs-waiters], and [modelled
   responses][docs-models].
 * Upload directories to and download directories from Amazon S3.
 * Multipart uploader for Amazon S3 and Amazon Glacier that can be paused and resumed.
