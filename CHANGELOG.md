@@ -6,7 +6,9 @@ Next Release
 
 * Added support for cross-account snapshot access control to the Amazon Redshift client
 * Added support for decoding authorization messages to the AWS STS client
+* Added support for checking for required permissions via the `DryRun` parameter to the Amazon EC2 client
 * Added an SDK compatibility test to allow users to quickly determine if their system meets the requirements of the SDK
+* Updated the Amazon EC2 client to use the 2013-06-15 API version
 * Fixed an unmarshalling error with the Amazon EC2 `CreateKeyPair` operation
 
 2.4.1 (2013-06-08)

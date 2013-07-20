@@ -233,7 +233,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class Ec2Client extends AbstractClient
 {
-    const LATEST_API_VERSION = '2013-02-01';
+    const LATEST_API_VERSION = '2013-06-15';
 
     /**
      * Factory method to create a new AWS Elastic Beanstalk client using an array of configuration options:
