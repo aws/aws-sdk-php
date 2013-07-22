@@ -169,7 +169,8 @@ abstract class AbstractSyncBuilder
      */
     public function setKeyPrefix($keyPrefix)
     {
-        $this->keyPrefix = $keyPrefix;
+        // Removing leading slash
+        $this->keyPrefix = ltrim($keyPrefix, '/');
 
         return $this;
     }

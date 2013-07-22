@@ -38,7 +38,7 @@ class AbstractSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setClient($this->getServiceBuilder()->get('s3'))
             ->setConcurrency(2)
             ->setDelimiter('\\')
-            ->setKeyPrefix('prefix/')
+            ->setKeyPrefix('/prefix/')
             ->setOperationParams(array('foo' => 'bar'))
             ->setSourceFilenameConverter($c1)
             ->setTargetFilenameConverter($c1)
