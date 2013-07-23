@@ -172,8 +172,8 @@ class StreamWrapper
         }
 
         // When using mode "x" validate if the file exists before attempting to read
-        if ($mode == 'x' && !self::$client->doesObjectExist($params['Bucket'], $params['Key'], $this->getOptions())) {
-            $errors[] = "{$path} does not exist on Amazon S3";
+        if ($mode == 'x' && self::$client->doesObjectExist($params['Bucket'], $params['Key'], $this->getOptions())) {
+            $errors[] = "{$path} already exists on Amazon S3";
         }
 
         if (!$errors) {
