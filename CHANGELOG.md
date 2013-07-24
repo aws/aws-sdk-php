@@ -10,6 +10,9 @@ Next Release
 * Added an SDK compatibility test to allow users to quickly determine if their system meets the requirements of the SDK
 * Updated the Amazon EC2 client to use the 2013-06-15 API version
 * Fixed an unmarshalling error with the Amazon EC2 `CreateKeyPair` operation
+* Fixed an issue with the Amazon S3 stream wrapper "x" fopen mode
+* Fixed an issue with `Aws\S3\S3Client::downloadBucket` by removing leading slashes from the passed `$keyPrefix`
+  argument
 
 2.4.1 (2013-06-08)
 ------------------
