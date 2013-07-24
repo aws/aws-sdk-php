@@ -82,12 +82,19 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException PHPUnit_Framework_Error_Warning
-     * @expectedExceptionMessage does not exist on Amazon S3
+     * @expectedExceptionMessage s3://bucket/key already exists on Amazon S3
      */
-    public function testValidatesXfileExists()
+    public function testValidatesXMode()
     {
-        $this->setMockResponse($this->client, array(new Response(404)));
+        $this->setMockResponse($this->client, array(new Response(200)));
         fopen('s3://bucket/key', 'x');
+    }
+
+    public function testSuccessfulXMode()
+    {
+        $this->setMockResponse($this->client, array(new Response(404), new Response(200)));
+        $r = fopen('s3://bucket/key', 'x');
+        fclose($r);
     }
 
     /**
