@@ -143,6 +143,18 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'ConfigurationManager' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
                 'UseCustomCookbooks' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
@@ -498,6 +510,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'AmiId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'SshKeyName' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -521,6 +537,11 @@ return array (
                         'ebs',
                         'instance-store',
                     ),
+                ),
+                'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -692,6 +713,11 @@ return array (
                         ),
                     ),
                 ),
+                'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -770,6 +796,18 @@ return array (
                 'CustomJson' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'ConfigurationManager' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
                 ),
                 'UseCustomCookbooks' => array(
                     'type' => 'boolean',
@@ -2452,6 +2490,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'AmiId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'SshKeyName' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -2463,6 +2505,11 @@ return array (
                         'x86_64',
                         'i386',
                     ),
+                ),
+                'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -2616,6 +2663,11 @@ return array (
                         ),
                     ),
                 ),
+                'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2691,6 +2743,18 @@ return array (
                 'CustomJson' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+                'ConfigurationManager' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
                 ),
                 'UseCustomCookbooks' => array(
                     'type' => 'boolean',
@@ -3097,6 +3161,9 @@ return array (
                             'Name' => array(
                                 'type' => 'string',
                             ),
+                            'Domain' => array(
+                                'type' => 'string',
+                            ),
                             'Region' => array(
                                 'type' => 'string',
                             ),
@@ -3129,6 +3196,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'LayerId' => array(
+                                'type' => 'string',
+                            ),
+                            'VpcId' => array(
                                 'type' => 'string',
                             ),
                             'AvailabilityZones' => array(
@@ -3199,6 +3269,9 @@ return array (
                             'Os' => array(
                                 'type' => 'string',
                             ),
+                            'AmiId' => array(
+                                'type' => 'string',
+                            ),
                             'AvailabilityZone' => array(
                                 'type' => 'string',
                             ),
@@ -3243,6 +3316,9 @@ return array (
                             ),
                             'RootDeviceVolumeId' => array(
                                 'type' => 'string',
+                            ),
+                            'InstallUpdatesOnBoot' => array(
+                                'type' => 'boolean',
                             ),
                         ),
                     ),
@@ -3414,6 +3490,9 @@ return array (
                             ),
                             'CreatedAt' => array(
                                 'type' => 'string',
+                            ),
+                            'InstallUpdatesOnBoot' => array(
+                                'type' => 'boolean',
                             ),
                         ),
                     ),
@@ -3639,6 +3718,17 @@ return array (
                             ),
                             'CustomJson' => array(
                                 'type' => 'string',
+                            ),
+                            'ConfigurationManager' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Version' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                             'UseCustomCookbooks' => array(
                                 'type' => 'boolean',
