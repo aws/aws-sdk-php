@@ -3933,6 +3933,25 @@ return array (
                         ),
                     ),
                 ),
+                'Prefix' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'CommonPrefixes' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'data' => array(
+                        'xmlFlattened' => true,
+                    ),
+                    'items' => array(
+                        'type' => 'object',
+                        'properties' => array(
+                            'Prefix' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
