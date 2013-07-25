@@ -28,6 +28,27 @@ use Guzzle\Common\ToArrayInterface;
 class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInterface
 {
     /**
+     * Collects items from the result of a DynamoDB operation and returns them as an ItemIterator.
+     *
+     * @param Collection $result  The result of a DynamoDB operation that potentially contains items
+     *                            (e.g., BatchGetItem, DeleteItem, GetItem, PutItem, Query, Scan, UpdateItem)
+     *
+     * @return self
+     */
+    public static function fromResult(Collection $result)
+    {
+        if (!($items = $result->get('Items'))) {
+            if ($item = $result->get('Item') ?: $result->get('Attributes')) {
+                $items = array($item);
+            } else {
+                $items = $result->getPath('Responses/*');
+            }
+        }
+
+        return new self(new \ArrayIterator($items ?: array()));
+    }
+
+    /**
      * Ensures that the inner iterator is both Traversable and Countable
      *
      * {@inheritdoc}
@@ -41,6 +62,16 @@ class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInter
         }
 
         parent::__construct($iterator);
+    }
+
+    /**
+     * Returns the first item in the iterator
+     */
+    public function getFirst()
+    {
+        $this->rewind();
+
+        return $this->current();
     }
 
     /**
