@@ -1,19 +1,19 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.4.2 (2013-07-25)
+------------------
 
 * Added support for cross-account snapshot access control to the Amazon Redshift client
 * Added support for decoding authorization messages to the AWS STS client
 * Added support for checking for required permissions via the `DryRun` parameter to the Amazon EC2 client
+* Added support for custom Amazon Machine Images (AMIs) and Chef 11 to the AWS OpsWorks client
 * Added an SDK compatibility test to allow users to quickly determine if their system meets the requirements of the SDK
-* Updated the AWS OpsWorks client to support custom Amazon Machine Images (AMIs) and Chef 11
 * Updated the Amazon EC2 client to use the 2013-06-15 API version
 * Fixed an unmarshalling error with the Amazon EC2 `CreateKeyPair` operation
+* Fixed an unmarshalling error with the Amazon S3 `ListMultipartUploads` operation
 * Fixed an issue with the Amazon S3 stream wrapper "x" fopen mode
-* Fixed an issue with `Aws\S3\S3Client::downloadBucket` by removing leading slashes from the passed `$keyPrefix`
-  argument
+* Fixed an issue with `Aws\S3\S3Client::downloadBucket` by removing leading slashes from the passed `$keyPrefix` argument
 
 2.4.1 (2013-06-08)
 ------------------
