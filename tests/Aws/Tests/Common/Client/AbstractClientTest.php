@@ -23,6 +23,7 @@ use Aws\Common\Enum\Region;
 use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
+use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Description\ServiceDescription;
@@ -271,5 +272,22 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('dynamodb', true);
         $this->assertNotNull($client->getApiVersion());
+    }
+
+    /**
+     * @expectedException \Aws\Common\Exception\TransferException
+     */
+    public function testWrapsCurlExceptions()
+    {
+        $this->getServiceBuilder()->get('dynamodb', true);
+        $client = DynamoDbClient::factory(array(
+            'key'            => 'foo',
+            'secret'         => 'bar',
+            'region'         => 'us-west-1',
+            'client.backoff' => false,
+            'base_url'       => 'http://localhost:123',
+            'curl.options'   => array(CURLOPT_TIMEOUT_MS => 1)
+        ));
+        $client->listTables();
     }
 }
