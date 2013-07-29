@@ -33,7 +33,7 @@ class DefaultClient extends AbstractClient
      *     - key: AWS Access Key ID
      *     - secret: AWS secret access key
      *     - credentials: You can optionally provide a custom `Aws\Common\Credentials\CredentialsInterface` object
-     *     - token: Custom AWS security token to use with request authentication
+     *     - token: Custom AWS security token to use with request authentication. Please note that not all services accept temporary credentials. See http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html
      *     - token.ttd: UNIX timestamp for when the custom credentials expire
      *     - credentials.cache.key: Optional custom cache key to use with the credentials
      *     - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
