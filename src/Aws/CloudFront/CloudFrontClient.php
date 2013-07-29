@@ -68,45 +68,16 @@ class CloudFrontClient extends AbstractClient
     const LATEST_API_VERSION = '2013-05-12';
 
     /**
-     * Factory method to create a new Amazon CloudFront client using an array of configuration options:
+     * Factory method to create a new Amazon CloudFront client using an array of configuration options.
      *
-     * Credential options (`key`, `secret`, and optional `token` OR `credentials` is required)
-     *
-     * - key: AWS Access Key ID
-     * - secret: AWS secret access key
-     * - credentials: You can optionally provide a custom `Aws\Common\Credentials\CredentialsInterface` object
-     * - token: Custom AWS security token to use with request authentication
-     * - token.ttd: UNIX timestamp for when the custom credentials expire
-     * - credentials.cache: Used to cache credentials when using providers that require HTTP requests. Set the true
-     *   to use the default APC cache or provide a `Guzzle\Cache\CacheAdapterInterface` object.
-     * - credentials.cache.key: Optional custom cache key to use with the credentials
-     * - credentials.client: Pass this option to specify a custom `Guzzle\Http\ClientInterface` to use if your
-     *   credentials require a HTTP request (e.g. RefreshableInstanceProfileCredentials)
-     *
-     * Region and Endpoint options
-     *
-     * - base_url: Instead of using a `region` and `scheme`, you can specify a custom base URL for the client
-     *
-     * Generic client options
-     *
-     * - ssl.certificate_authority: Set to true to use the bundled CA cert (default), system to use the certificate
-     *   bundled with your system, or pass the full path to an SSL certificate bundle. This option should be used when
-     *   you encounter curl error code 60.
-     * - curl.options: Array of cURL options to apply to every request.
-     *   See http://www.php.net/manual/en/function.curl-setopt.php for a list of available options
-     * - client.backoff.logger: `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use
-     *   'debug' to emit PHP warnings when a retry is issued.
-     * - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See
-     *   `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
-     *
-     * Options specific to CloudFront
-     *
+     * CloudFront specific options (in addition to the default client configuration options):
      * - key_pair_id: The ID of the key pair used to sign CloudFront URLs for private distributions.
      * - private_key: The filepath ot the private key used to sign CloudFront URLs for private distributions.
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
+     * @see \Aws\Common\Client\DefaultClient for a list of other available configuration options
      */
     public static function factory($config = array())
     {
