@@ -16,11 +16,8 @@
 
 namespace Aws\Tests\S3;
 
-use Aws\Common\Credentials\Credentials;
 use Aws\S3\S3Client;
-use Aws\S3\S3Signature;
 use Aws\S3\StreamWrapper;
-use Guzzle\Common\Collection;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\EntityBody;
 

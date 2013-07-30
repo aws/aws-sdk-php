@@ -17,7 +17,6 @@
 namespace Aws\Tests\Sqs;
 
 use Aws\Sqs\Md5ValidatorListener;
-use Guzzle\Http\Message\Request;
 use Guzzle\Common\Event;
 use Guzzle\Service\Resource\Model;
 use Guzzle\Tests\Service\Mock\Command\MockCommand;

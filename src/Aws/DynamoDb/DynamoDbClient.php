@@ -22,7 +22,6 @@ use Aws\Common\Client\ExpiredCredentialsChecker;
 use Aws\Common\Client\ThrottlingErrorChecker;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\DynamoDb\Iterator\ItemIterator;
 use Aws\DynamoDb\Model\Attribute;
 use Aws\DynamoDb\Session\SessionHandler;
 use Guzzle\Common\Collection;

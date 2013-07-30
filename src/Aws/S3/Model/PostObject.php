@@ -16,7 +16,6 @@
 
 namespace Aws\S3\Model;
 
-use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Enum\DateFormat;
 use Aws\S3\S3Client;
 use Guzzle\Common\Collection;

@@ -20,7 +20,6 @@ use Aws\Common\Exception\RuntimeException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\Iterator\ListObjectsIterator;
-use Guzzle\Http\QueryString;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\CachingEntityBody;
 use Guzzle\Stream\PhpStreamRequestFactory;

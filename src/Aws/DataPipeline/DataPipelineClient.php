@@ -18,7 +18,6 @@ namespace Aws\DataPipeline;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Guzzle\Common\Collection;

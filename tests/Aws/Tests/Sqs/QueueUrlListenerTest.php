@@ -18,7 +18,6 @@ namespace Aws\Tests\Sqs;
 
 use Aws\Sqs\QueueUrlListener;
 use Guzzle\Http\Message\Request;
-use Guzzle\Http\Url;
 use Guzzle\Common\Event;
 
 /**

@@ -25,7 +25,6 @@ use Aws\Common\Signature\SignatureListener;
 use Aws\Common\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
-use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Service\Description\ServiceDescription;
 
 /**

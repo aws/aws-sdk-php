@@ -16,8 +16,6 @@
 
 namespace Aws\S3\Sync;
 
-use Aws\S3\S3Client;
-
 /**
  * Iterator used to filter an internal iterator to only yield files that do not exist in the target iterator or files
  * that have changed

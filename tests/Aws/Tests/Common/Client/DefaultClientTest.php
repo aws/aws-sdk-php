@@ -18,7 +18,6 @@ namespace Aws\Tests\Common\Client;
 
 use Aws\Common\Client\DefaultClient;
 use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Enum\Region;
 
 class DefaultClientTest extends \Guzzle\Tests\GuzzleTestCase
 {

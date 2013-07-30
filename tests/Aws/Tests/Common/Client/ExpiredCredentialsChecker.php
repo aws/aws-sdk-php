@@ -25,7 +25,6 @@ use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 use Guzzle\Log\ClosureLogAdapter;
 use Guzzle\Plugin\Log\LogPlugin;
-use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\Common\Client\ExpiredCredentialsChecker

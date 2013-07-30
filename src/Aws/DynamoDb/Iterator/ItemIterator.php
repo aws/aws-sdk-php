@@ -17,7 +17,6 @@
 namespace Aws\DynamoDb\Iterator;
 
 use Aws\Common\Exception\InvalidArgumentException;
-use Aws\DynamoDb\Enum\AttributeType;
 use Guzzle\Common\Collection;
 use Guzzle\Common\ToArrayInterface;
 

@@ -19,7 +19,6 @@ namespace Aws\Tests\DynamoDb\Iterator;
 use Aws\DynamoDb\Iterator\ItemIterator;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
-use Aws\Common\Iterator\AwsResourceIterator;
 
 /**
  * @covers Aws\DynamoDb\Iterator\ItemIterator

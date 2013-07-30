@@ -17,12 +17,6 @@
 namespace Aws\Tests\Common\Command;
 
 use Aws\Common\Command\XmlResponseLocationVisitor;
-use Guzzle\Service\Client;
-use Aws\Common\Command\QueryCommand;
-use Guzzle\Service\Description\Operation;
-use Guzzle\Service\Command\OperationCommand;
-use Guzzle\Service\Description\Parameter;
-use Guzzle\Http\Message\EntityEnclosingRequest;
 
 /**
  * @covers Aws\Common\Command\XmlResponseLocationVisitor

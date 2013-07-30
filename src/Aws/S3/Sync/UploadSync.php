@@ -17,7 +17,6 @@
 namespace Aws\S3\Sync;
 
 use Aws\Common\Exception\RuntimeException;
-use Aws\S3\S3Client;
 use Aws\S3\Model\MultipartUpload\UploadBuilder;
 use Aws\S3\Model\MultipartUpload\AbstractTransfer;
 use Guzzle\Http\EntityBody;

@@ -16,9 +16,6 @@
 
 namespace Aws\Tests\Rds\Waiter;
 
-use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Mock\MockPlugin;
-
 class DBAvailableTest extends \Guzzle\Tests\GuzzleTestCase
 {
 	/**

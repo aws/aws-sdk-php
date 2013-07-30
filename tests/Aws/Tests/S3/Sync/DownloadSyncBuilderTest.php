@@ -18,7 +18,6 @@ namespace Aws\Tests\S3\Sync;
 
 use Aws\S3\Command\S3Command;
 use Aws\S3\ResumableDownload;
-use Aws\S3\StreamWrapper;
 use Aws\S3\Sync\DownloadSync;
 use Aws\S3\Sync\DownloadSyncBuilder;
 

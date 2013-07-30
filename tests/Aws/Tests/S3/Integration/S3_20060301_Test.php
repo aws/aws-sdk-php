@@ -16,7 +16,6 @@
 
 namespace Aws\S3\Integration;
 
-use Aws\DynamoDb\DynamoDbClient;
 use Aws\S3\Model\ClearBucket;
 use Guzzle\Http\EntityBody;
 

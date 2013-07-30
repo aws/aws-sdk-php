@@ -33,7 +33,6 @@ use Aws\S3\Model\MultipartUpload\UploadBuilder;
 use Aws\S3\S3Signature;
 use Aws\S3\Sync\DownloadSyncBuilder;
 use Aws\S3\Sync\UploadSyncBuilder;
-use Aws\S3\Sync\AbstractSync;
 use Guzzle\Common\Collection;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\RequestInterface;
