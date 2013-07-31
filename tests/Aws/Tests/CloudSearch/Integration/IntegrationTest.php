@@ -19,15 +19,12 @@ namespace Aws\Tests\CloudSearch\Integration;
 use Aws\CloudSearch\CloudSearchClient;
 
 /**
+ * "integdomain" is used as the test domain throughout this test
  * @group integration
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
-    const DOMAIN = 'integdomain';
-
-    /**
-     * @var CloudSearchClient
-     */
+    /** @var CloudSearchClient */
     protected $client;
 
     public function setUp()
@@ -40,34 +37,45 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         self::log('Cleaning up');
         $client = self::getServiceBuilder()->get('cloudsearch');
         try {
-            $client->deleteDomain(array('DomainName' => self::DOMAIN));
+            $client->deleteDomain(array('DomainName' => 'integdomain'));
         } catch (\Exception $e) {}
     }
 
+    /**
+     * @example Aws\CloudSearch\CloudSearchClient::createDomain
+     */
     public function testCreatesDomains()
     {
+        $client = $this->client;
         self::log('Creating test domain');
-        $result = $this->client->createDomain(array(
-            'DomainName' => self::DOMAIN
-        ))->toArray();
+        // @begin
+        $result = $client->createDomain(array(
+            'DomainName' => 'integdomain'
+        ));
+        // @end
+        $result = $result->toArray();
         $this->assertArrayHasKey('DomainStatus', $result);
         $this->assertArrayHasKey('DomainId', $result['DomainStatus']);
         $this->assertArrayHasKey('DomainName', $result['DomainStatus']);
         $this->assertTrue($result['DomainStatus']['Created']);
     }
 
+    /**
+     * @depends testCreatesDomains
+     * @example Aws\CloudSearch\CloudSearchClient::describeDomains
+     */
     public function testListsDomains()
     {
         self::log('Listing domains');
-        $found = false;
-        foreach ($this->client->getIterator('DescribeDomains') as $domain) {
-            if ($domain['DomainName'] == self::DOMAIN) {
-                $found = true;
-                break;
-            }
+        $client = $this->client;
+
+        // @begin
+        $iterator = $client->getDescribeDomainsIterator();
+        foreach ($iterator as $domain) {
+            echo $domain['DomainName'] . "\n";
         }
-        if (!$found) {
-            $this->fail('Did not find the domain ' . self::DOMAIN);
-        }
+        // @end
+
+        $this->assertContains('integdomain', $this->getActualOutput());
     }
 }

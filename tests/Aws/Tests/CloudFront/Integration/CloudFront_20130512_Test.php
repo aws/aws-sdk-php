@@ -21,12 +21,11 @@ use Guzzle\Http\Client as HttpClient;
 
 /**
  * @group integration
+ * @group slow
  */
-class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
+class CloudFront_20130512_Test extends \Aws\Tests\IntegrationTestCase
 {
-    /**
-     * @var CloudFrontClient
-     */
+    /** @var CloudFrontClient */
     public $client;
     protected static $originId;
     protected static $bucketName;
@@ -73,33 +72,49 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
         if (self::$originId) {
             self::log('Deleting origin access identity');
-            $result = $cf->getCloudFrontOriginAccessIdentity(array('Id' => self::$originId));
-            $cf->deleteCloudFrontOriginAccessIdentity(array(
-                'Id'      => self::$originId,
-                'IfMatch' => $result['ETag'],
-            ));
+            try {
+                $result = $cf->getCloudFrontOriginAccessIdentity(array('Id' => self::$originId));
+                $cf->deleteCloudFrontOriginAccessIdentity(array(
+                    'Id'      => self::$originId,
+                    'IfMatch' => $result['ETag'],
+                ));
+            } catch (\Exception $e) {
+                echo $e->getMessage() . "\n";
+            }
         }
 
         if (self::$distributionId) {
             self::log('Deleting distribution');
-            $cf->deleteDistribution(array(
-                'Id' => self::$distributionId,
-            ));
+            try {
+                $cf->deleteDistribution(array(
+                    'Id' => self::$distributionId,
+                ));
+            } catch (\Exception $e) {
+                echo $e->getMessage() . "\n";
+            }
         }
     }
 
     public function setUp()
     {
-        $this->client = self::getServiceBuilder()->get('cloudfront');
+        $this->client = self::getServiceBuilder()->get('cloudfront', true);
     }
 
+    /**
+     * @example Aws\CloudFront\CloudFrontClient::createCloudFrontOriginAccessIdentity
+     */
     public function testCreatesOrigins()
     {
-        $command = $this->client->getCommand('CreateCloudFrontOriginAccessIdentity', array(
+        $client = $this->client;
+        // @begin
+        $result = $client->createCloudFrontOriginAccessIdentity(array(
             'CallerReference' => 'foo',
             'Comment'         => 'Hello!'
         ));
-        $result = $command->getResult();
+
+        echo $result['Id'] . ' - ' . $result['S3CanonicalUserId'];
+        // @end
+
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
         $result = $result->toArray();
         $this->assertArrayHasKey('Id', $result);
@@ -112,11 +127,6 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         ), $result['CloudFrontOriginAccessIdentityConfig']);
         $this->assertArrayHasKey('Location', $result);
         $this->assertArrayHasKey('ETag', $result);
-        $this->assertEquals($result['Location'], (string) $command->getResponse()->getHeader('Location'));
-        $this->assertEquals($result['ETag'], (string) $command->getResponse()->getHeader('ETag'));
-
-        // Ensure that the RequestId model value is being populated correctly
-        $this->assertEquals((string) $command->getResponse()->getHeader('x-amz-request-id'), $result['RequestId']);
 
         // Grant CF to read from the bucket
         $s3 = $this->getServiceBuilder()->get('s3');
@@ -129,6 +139,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
     /**
      * @depends testCreatesOrigins
+     * @example Aws\CloudFront\CloudFrontClient::createDistribution
      */
     public function testCreatesDistribution()
     {
@@ -138,7 +149,12 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
 
         self::log("Creating a distribution");
 
-        $result = $this->client->createDistribution(array(
+        $client = $this->client;
+        $originId = self::$originId;
+        $bucketName = self::$bucketName;
+
+        // @begin
+        $result = $client->createDistribution(array(
             'Aliases' => array('Quantity' => 0),
             'CacheBehaviors' => array('Quantity' => 0),
             'Comment' => 'Testing... 123',
@@ -147,7 +163,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'DefaultCacheBehavior' => array(
                 'MinTTL' => 3600,
                 'ViewerProtocolPolicy' => 'allow-all',
-                'TargetOriginId' => self::$originId,
+                'TargetOriginId' => $originId,
                 'TrustedSigners' => array(
                     'Enabled'  => true,
                     'Quantity' => 1,
@@ -171,10 +187,10 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
                 'Quantity' => 1,
                 'Items' => array(
                     array(
-                        'Id' => self::$originId,
-                        'DomainName' => self::$bucketName . '.s3.amazonaws.com',
+                        'Id' => $originId,
+                        'DomainName' => "{$bucketName}.s3.amazonaws.com",
                         'S3OriginConfig' => array(
-                            'OriginAccessIdentity' => 'origin-access-identity/cloudfront/' . self::$originId
+                            'OriginAccessIdentity' => 'origin-access-identity/cloudfront/' . $originId
                         )
                     )
                 )
@@ -182,9 +198,10 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
             'PriceClass' => 'PriceClass_All',
         ));
 
-        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
+        printf('%s - %s', $result['Status'], $result['Location']) . "\n";
+        // @end
+
         $result = $result->toArray();
-        $this->assertArrayHasKey('Id', $result);
         self::$distributionId = $result['Id'];
         $this->assertArrayHasKey('Status', $result);
         $this->assertArrayHasKey('Location', $result);
@@ -193,40 +210,51 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals(1, $result['DistributionConfig']['Origins']['Quantity']);
         $this->assertArrayHasKey(0, $result['DistributionConfig']['Origins']['Items']);
         $this->assertEquals(self::$bucketName . '.s3.amazonaws.com', $result['DistributionConfig']['Origins']['Items'][0]['DomainName']);
-        $id = $result['Id'];
 
-        $result = $this->client->listDistributions();
-        $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
-        $result = $result->toArray();
-        $this->assertGreaterThan(0, $result['Quantity']);
-        $found = false;
-        foreach ($result['Items'] as $item) {
-            if ($item['Id'] == $id) {
-                $found = true;
-                break;
-            }
-        }
-        $this->assertTrue($found);
+        return $result['Id'];
     }
 
     /**
      * @depends testCreatesDistribution
      */
+    public function testListsDistributions($id)
+    {
+        $client = $this->client;
+        // @begin
+        $result = $client->listDistributions();
+        foreach ($result['Items'] as $item) {
+            echo $item['Id'] . "\n";
+        }
+        // @end
+        $this->assertGreaterThan(0, $result['Quantity']);
+        $this->assertContains($id, $this->getActualOutput());
+    }
+
+    /**
+     * @depends testListsDistributions
+     * @example Aws\CloudFront\CloudFrontClient::getSignedUrl
+     */
     public function testCreatesSignedUrls()
     {
+        $client = $this->client;
         self::log('Waiting until the distribution becomes active');
-        $client = $this->getServiceBuilder()->get('cloudfront');
         $client->waitUntil('DistributionDeployed', array('Id' => self::$distributionId));
+        $distributionUrl = self::$distributionUrl;
+
+        // @begin
+        // Create a signed URL that expires in 1 hour
         $url = $client->getSignedUrl(array(
-            'url'     => 'https://' . self::$distributionUrl . '/foo.txt',
-            'expires' => time() + 10000
+            'url'     => 'https://' . $distributionUrl . '/foo.txt',
+            'expires' => time() + 3600
         ));
+        // @end
+
         self::log('URL: ' . $url);
         try {
             $c = new HttpClient();
             $this->assertEquals('hello!', $c->get($url)->send()->getBody(true));
         } catch (\Exception $e) {
-            $this->fail($e->getMessage());
+            $this->markTestIncomplete($e->getMessage());
         }
     }
 }
