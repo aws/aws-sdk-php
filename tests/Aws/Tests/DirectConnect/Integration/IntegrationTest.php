@@ -24,43 +24,93 @@ use Aws\DirectConnect\Enum\ConnectionState;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
-    /**
-     * @var DirectConnectClient
-     */
+    /** @var DirectConnectClient */
     protected $client;
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('directconnect');
+        $this->client = $this->getServiceBuilder()->get('directconnect', true);
     }
 
-    public function testBasicOperations()
+    /**
+     * @example Aws\DirectConnect\DirectConnectClient::describeOfferings
+     */
+    public function testDescribesOfferings()
     {
+        $client = $this->client;
         self::log('Get an offering ID and region to use.');
-        $offerings = $this->client->describeOfferings()->get('offerings');
+
+        // @begin
+        $result = $client->describeOfferings();
+        $offerings = $result['offerings'];
+        // @end
+
+        return $offerings;
+    }
+
+    /**
+     * @depends testDescribesOfferings
+     * @example Aws\DirectConnect\DirectConnectClient::createConnection
+     */
+    public function testCreatesConnection($offerings)
+    {
+        $client = $this->client;
         $offering = $offerings[array_rand($offerings)];
-        $this->client->setRegion($offering['region']);
+        $offeringId = $offering['offeringId'];
+        self::log('Create a connection and make sure it is in the requested state: ' . $offeringId);
 
-        self::log('Create a connection and make sure it is in the requested state.');
-        $result = $this->client->createConnection(array(
+        // @begin
+        $result = $client->createConnection(array(
             'connectionName' => 'PHP Integ Test Connection',
-            'offeringId'     => $offering['offeringId'],
+            'offeringId'     => $offeringId
         ));
-        $connectionId = $result->get('connectionId');
-        $this->assertEquals(ConnectionState::REQUESTED, $result->get('connectionState'));
 
+        $connectionId = $result['connectionId'];
+        // @end
+
+        $this->assertEquals(ConnectionState::REQUESTED, $result['connectionState']);
+
+        return $connectionId;
+    }
+
+    /**
+     * @depends testCreatesConnection
+     * @example Aws\DirectConnect\DirectConnectClient::describeConnections
+     */
+    public function testDescribesConnections($connectionId)
+    {
         self::log('Iterate through the connections and make sure the new one is there.');
-        $found = false;
-        foreach ($this->client->getIterator('DescribeConnections') as $connection) {
-            if ($connection['connectionId'] == $connectionId) {
-                $found = true;
-                break;
-            }
-        }
-        $this->assertTrue($found);
+        $client = $this->client;
 
+        // @begin
+        $iterator = $client->getDescribeConnectionsIterator();
+
+        foreach ($iterator as $connection) {
+            echo $connection['connectionId'] . "\n";
+        }
+        // @end
+        $this->assertContains($connectionId, $this->getActualOutput());
+
+        return $connectionId;
+    }
+
+    /**
+     * @depends testDescribesConnections
+     * @example Aws\DirectConnect\DirectConnectClient::deleteConnection
+     */
+    public function testDeletesConnection($connectionId)
+    {
+        $client = $this->client;
         self::log('Delete the connection and make sure it is in the deleted state.');
-        $result = $this->client->deleteConnection(array('connectionId' => $connectionId));
-        $this->assertEquals(ConnectionState::DELETED, $result->get('connectionState'));
+
+        // @begin
+        $result = $client->deleteConnection(array(
+            'connectionId' => $connectionId
+        ));
+
+        echo $result['connectionState'];
+        // @end
+
+        $this->assertEquals('deleted', $this->getActualOutput());
     }
 }
