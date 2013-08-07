@@ -490,10 +490,11 @@ class StreamWrapper
         if ($this->objectIterator->valid()) {
             $current = $this->objectIterator->current();
             if (isset($current['Prefix'])) {
-                // Include "directories"
-                $result = rtrim(str_replace($this->openedBucketPrefix, '', $current['Prefix']), '/');
-                $key = "s3://{$this->openedBucket}/{$current['Prefix']}";
-                $stat = $this->formatUrlStat($current['Prefix']);
+                // Include "directories". Be sure to strip a trailing "/" on prefixes.
+                $prefix = rtrim($current['Prefix'], '/');
+                $result = str_replace($this->openedBucketPrefix, '', $prefix);
+                $key = "s3://{$this->openedBucket}/{$prefix}";
+                $stat = $this->formatUrlStat($prefix);
             } else {
                 // Remove the prefix from the result to emulate other stream wrappers
                 $result = str_replace($this->openedBucketPrefix, '', $current['Key']);
