@@ -422,7 +422,7 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         }
 
         // This is the order that the mock responses should provide
-        $expected = array('a/', 'b/', 'c', 'd/','e', 'f', 'g/');
+        $expected = array('a', 'b', 'c', 'd', 'e', 'f', 'g');
 
         $this->assertEquals($expected, $files);
         $this->assertEquals(5, count($this->getMockedRequests()));

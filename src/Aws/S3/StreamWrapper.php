@@ -491,7 +491,7 @@ class StreamWrapper
             $current = $this->objectIterator->current();
             if (isset($current['Prefix'])) {
                 // Include "directories"
-                $result = str_replace($this->openedBucketPrefix, '', $current['Prefix']);
+                $result = rtrim(str_replace($this->openedBucketPrefix, '', $current['Prefix']), '/');
                 $key = "s3://{$this->openedBucket}/{$current['Prefix']}";
                 $stat = $this->formatUrlStat($current['Prefix']);
             } else {
