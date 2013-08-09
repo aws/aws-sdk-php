@@ -19,9 +19,10 @@ return array (
     'endpointPrefix' => 'elasticmapreduce',
     'serviceFullName' => 'Amazon Elastic MapReduce',
     'serviceAbbreviation' => 'Amazon EMR',
-    'serviceType' => 'query',
-    'resultWrapped' => true,
-    'signatureVersion' => 'v2',
+    'serviceType' => 'json',
+    'jsonVersion' => '1.1',
+    'targetPrefix' => 'ElasticMapReduce.',
+    'signatureVersion' => 'v4',
     'namespace' => 'Emr',
     'regions' => array(
         'us-east-1' => array(
@@ -69,25 +70,28 @@ return array (
         'AddInstanceGroups' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'AddInstanceGroupsOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'AddInstanceGroups',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.AddInstanceGroups',
                 ),
                 'InstanceGroups' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'InstanceGroups.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'InstanceGroupConfig',
                         'type' => 'object',
@@ -132,7 +136,7 @@ return array (
                 'JobFlowId' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 256,
                 ),
             ),
@@ -146,31 +150,34 @@ return array (
         'AddJobFlowSteps' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'AddJobFlowSteps',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.AddJobFlowSteps',
                 ),
                 'JobFlowId' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 256,
                 ),
                 'Steps' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'Steps.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'StepConfig',
                         'type' => 'object',
@@ -194,7 +201,6 @@ return array (
                                 'properties' => array(
                                     'Properties' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'Properties.member',
                                         'items' => array(
                                             'name' => 'KeyValue',
                                             'type' => 'object',
@@ -221,7 +227,6 @@ return array (
                                     ),
                                     'Args' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'Args.member',
                                         'items' => array(
                                             'name' => 'XmlString',
                                             'type' => 'string',
@@ -244,19 +249,23 @@ return array (
         'DescribeJobFlows' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'DescribeJobFlowsOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DescribeJobFlows',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.DescribeJobFlows',
                 ),
                 'CreatedAfter' => array(
                     'type' => array(
@@ -265,7 +274,7 @@ return array (
                         'integer',
                     ),
                     'format' => 'date-time',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'CreatedBefore' => array(
                     'type' => array(
@@ -274,12 +283,11 @@ return array (
                         'integer',
                     ),
                     'format' => 'date-time',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'JobFlowIds' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'JobFlowIds.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
@@ -288,8 +296,7 @@ return array (
                 ),
                 'JobFlowStates' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'JobFlowStates.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'JobFlowExecutionState',
                         'type' => 'string',
@@ -316,24 +323,27 @@ return array (
         'ModifyInstanceGroups' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'ModifyInstanceGroups',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.ModifyInstanceGroups',
                 ),
                 'InstanceGroups' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'InstanceGroups.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'InstanceGroupModifyConfig',
                         'type' => 'object',
@@ -361,45 +371,49 @@ return array (
         'RunJobFlow' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'RunJobFlowOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'RunJobFlow',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.RunJobFlow',
                 ),
                 'Name' => array(
                     'required' => true,
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 256,
                 ),
                 'LogUri' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 10280,
                 ),
                 'AdditionalInfo' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 10280,
                 ),
                 'AmiVersion' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 256,
                 ),
                 'Instances' => array(
                     'required' => true,
                     'type' => 'object',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'properties' => array(
                         'MasterInstanceType' => array(
                             'type' => 'string',
@@ -416,7 +430,6 @@ return array (
                         ),
                         'InstanceGroups' => array(
                             'type' => 'array',
-                            'sentAs' => 'InstanceGroups.member',
                             'items' => array(
                                 'name' => 'InstanceGroupConfig',
                                 'type' => 'object',
@@ -492,8 +505,7 @@ return array (
                 ),
                 'Steps' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'Steps.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'StepConfig',
                         'type' => 'object',
@@ -517,7 +529,6 @@ return array (
                                 'properties' => array(
                                     'Properties' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'Properties.member',
                                         'items' => array(
                                             'name' => 'KeyValue',
                                             'type' => 'object',
@@ -544,7 +555,6 @@ return array (
                                     ),
                                     'Args' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'Args.member',
                                         'items' => array(
                                             'name' => 'XmlString',
                                             'type' => 'string',
@@ -558,8 +568,7 @@ return array (
                 ),
                 'BootstrapActions' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'BootstrapActions.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'BootstrapActionConfig',
                         'type' => 'object',
@@ -580,7 +589,6 @@ return array (
                                     ),
                                     'Args' => array(
                                         'type' => 'array',
-                                        'sentAs' => 'Args.member',
                                         'items' => array(
                                             'name' => 'XmlString',
                                             'type' => 'string',
@@ -594,22 +602,43 @@ return array (
                 ),
                 'SupportedProducts' => array(
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'SupportedProducts.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'XmlStringMaxLen256',
                         'type' => 'string',
                         'maxLength' => 256,
                     ),
                 ),
+                'NewSupportedProducts' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'SupportedProductConfig',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                                'maxLength' => 256,
+                            ),
+                            'Args' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'XmlString',
+                                    'type' => 'string',
+                                    'maxLength' => 10280,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'VisibleToAllUsers' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
                 'JobFlowRole' => array(
                     'type' => 'string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                     'maxLength' => 10280,
                 ),
             ),
@@ -623,25 +652,28 @@ return array (
         'SetTerminationProtection' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'SetTerminationProtection',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.SetTerminationProtection',
                 ),
                 'JobFlowIds' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'JobFlowIds.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
@@ -652,7 +684,7 @@ return array (
                     'required' => true,
                     'type' => 'boolean',
                     'format' => 'boolean-string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -665,25 +697,28 @@ return array (
         'SetVisibleToAllUsers' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'SetVisibleToAllUsers',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.SetVisibleToAllUsers',
                 ),
                 'JobFlowIds' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'JobFlowIds.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
@@ -694,7 +729,7 @@ return array (
                     'required' => true,
                     'type' => 'boolean',
                     'format' => 'boolean-string',
-                    'location' => 'aws.query',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -707,25 +742,28 @@ return array (
         'TerminateJobFlows' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
             'responseClass' => 'EmptyOutput',
             'responseType' => 'model',
             'parameters' => array(
-                'Action' => array(
+                'Content-Type' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'TerminateJobFlows',
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
                 ),
-                'Version' => array(
+                'command.expects' => array(
                     'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2009-03-31',
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'ElasticMapReduce.TerminateJobFlows',
                 ),
                 'JobFlowIds' => array(
                     'required' => true,
                     'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'JobFlowIds.member',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'XmlString',
                         'type' => 'string',
@@ -748,15 +786,14 @@ return array (
             'properties' => array(
                 'JobFlowId' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
                 'InstanceGroupIds' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'XmlStringMaxLen256',
                         'type' => 'string',
-                        'sentAs' => 'member',
                     ),
                 ),
             ),
@@ -771,11 +808,10 @@ return array (
             'properties' => array(
                 'JobFlows' => array(
                     'type' => 'array',
-                    'location' => 'xml',
+                    'location' => 'json',
                     'items' => array(
                         'name' => 'JobFlowDetail',
                         'type' => 'object',
-                        'sentAs' => 'member',
                         'properties' => array(
                             'JobFlowId' => array(
                                 'type' => 'string',
@@ -835,7 +871,6 @@ return array (
                                         'items' => array(
                                             'name' => 'InstanceGroupDetail',
                                             'type' => 'object',
-                                            'sentAs' => 'member',
                                             'properties' => array(
                                                 'InstanceGroupId' => array(
                                                     'type' => 'string',
@@ -915,7 +950,6 @@ return array (
                                 'items' => array(
                                     'name' => 'StepDetail',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'StepConfig' => array(
                                             'type' => 'object',
@@ -934,7 +968,6 @@ return array (
                                                             'items' => array(
                                                                 'name' => 'KeyValue',
                                                                 'type' => 'object',
-                                                                'sentAs' => 'member',
                                                                 'properties' => array(
                                                                     'Key' => array(
                                                                         'type' => 'string',
@@ -956,7 +989,6 @@ return array (
                                                             'items' => array(
                                                                 'name' => 'XmlString',
                                                                 'type' => 'string',
-                                                                'sentAs' => 'member',
                                                             ),
                                                         ),
                                                     ),
@@ -991,7 +1023,6 @@ return array (
                                 'items' => array(
                                     'name' => 'BootstrapActionDetail',
                                     'type' => 'object',
-                                    'sentAs' => 'member',
                                     'properties' => array(
                                         'BootstrapActionConfig' => array(
                                             'type' => 'object',
@@ -1010,7 +1041,6 @@ return array (
                                                             'items' => array(
                                                                 'name' => 'XmlString',
                                                                 'type' => 'string',
-                                                                'sentAs' => 'member',
                                                             ),
                                                         ),
                                                     ),
@@ -1025,7 +1055,6 @@ return array (
                                 'items' => array(
                                     'name' => 'XmlStringMaxLen256',
                                     'type' => 'string',
-                                    'sentAs' => 'member',
                                 ),
                             ),
                             'VisibleToAllUsers' => array(
@@ -1045,7 +1074,7 @@ return array (
             'properties' => array(
                 'JobFlowId' => array(
                     'type' => 'string',
-                    'location' => 'xml',
+                    'location' => 'json',
                 ),
             ),
         ),
