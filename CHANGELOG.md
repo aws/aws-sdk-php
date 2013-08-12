@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+Next release (TBD)
+------------------
+
+* AWS clients now throw `Aws\Common\Exception\TransferException` exceptions when a network error occurs instead of a
+  `Guzzle\Http\Exception\CurlException`. The TransferException class, however, extends from
+  `Guzzle\Http\Exception\CurlException`. You can continue to catch the Guzzle CurlException or catch
+  `Aws\Common\Exception\AwsException` to catch any exception that can be thrown by an AWS client.
+* Fixed an issue with the Amazon S3 stream wrapper where trailing slashes were being added when listing directories
+
 2.4.2 (2013-07-25)
 ------------------
 
