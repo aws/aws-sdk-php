@@ -18,6 +18,7 @@ namespace Aws\Emr;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Enum\ClientOptions as Options;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
@@ -59,6 +60,7 @@ class EmrClient extends AbstractClient
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/emr-%s.php'
             ))
+            ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();
     }
 }
