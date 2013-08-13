@@ -21,6 +21,7 @@ use Aws\CloudSearch\CloudSearchClient;
 /**
  * "integdomain" is used as the test domain throughout this test
  * @group integration
+ * @group example
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
@@ -42,6 +43,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a domain
+     *
      * @example Aws\CloudSearch\CloudSearchClient::createDomain
      */
     public function testCreatesDomains()
@@ -61,6 +64,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * List domains
+     *
      * @depends testCreatesDomains
      * @example Aws\CloudSearch\CloudSearchClient::describeDomains
      */

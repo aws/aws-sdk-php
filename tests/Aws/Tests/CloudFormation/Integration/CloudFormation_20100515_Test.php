@@ -20,6 +20,7 @@ use Guzzle\Http\Url;
 
 /**
  * @group integration
+ * @group example
  */
 class CloudFormation_20100515_Test extends \Aws\Tests\IntegrationTestCase
 {
@@ -58,6 +59,8 @@ class CloudFormation_20100515_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Iterate over the results of a ListStacks operation
+     *
      * @example Aws\CloudFormation\CloudFormationClient::listStacks
      */
     public function testListStacksCommandAndIterator()

@@ -21,6 +21,7 @@ use Aws\DirectConnect\Enum\ConnectionState;
 
 /**
  * @group integration
+ * @group example
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
@@ -33,6 +34,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * DescribeOfferings operation example
+     *
      * @example Aws\DirectConnect\DirectConnectClient::describeOfferings
      */
     public function testDescribesOfferings()
@@ -49,6 +52,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * CreateConnection operation example
+     *
      * @depends testDescribesOfferings
      * @example Aws\DirectConnect\DirectConnectClient::createConnection
      */
@@ -74,6 +79,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * DescribeConnections operation example
+     *
      * @depends testCreatesConnection
      * @example Aws\DirectConnect\DirectConnectClient::describeConnections
      */
@@ -95,6 +102,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * DeleteConnection operation example
+     *
      * @depends testDescribesConnections
      * @example Aws\DirectConnect\DirectConnectClient::deleteConnection
      */

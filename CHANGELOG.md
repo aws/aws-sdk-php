@@ -1,11 +1,14 @@
 CHANGELOG
 =========
 
-Next release (TBD)
+2.4.3 (2013-08-12)
 ------------------
 
-* AWS clients now throw `Aws\Common\Exception\TransferException` exceptions when a network error occurs instead of a
-  `Guzzle\Http\Exception\CurlException`. The TransferException class, however, extends from
+* Updated the Amazon SNS client API to support mobile push
+* Updated the Amazon Redshift client API to support progress reporting on snapshot restore operations
+* Updated the Amazon Elastic MapReduce client to now use JSON serialization and AWS Signature V4 to securely sign requests
+* AWS SDK for PHP clients now throw `Aws\Common\Exception\TransferException` exceptions when a network error occurs
+  instead of a `Guzzle\Http\Exception\CurlException`. The TransferException class, however, extends from
   `Guzzle\Http\Exception\CurlException`. You can continue to catch the Guzzle CurlException or catch
   `Aws\Common\Exception\AwsException` to catch any exception that can be thrown by an AWS client.
 * Fixed an issue with the Amazon S3 stream wrapper where trailing slashes were being added when listing directories

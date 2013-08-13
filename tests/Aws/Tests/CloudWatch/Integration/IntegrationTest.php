@@ -20,6 +20,7 @@ use Aws\CloudWatch\CloudWatchClient;
 
 /**
  * @group integration
+ * @group example
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
@@ -32,6 +33,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Execute the PutMetricData operation
+     *
      * @example Aws\CloudWatch\CloudWatchClient::putMetricData
      */
     public function testPutsMetricData()
@@ -60,6 +63,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Lists metrics
+     *
      * @example Aws\CloudWatch\CloudWatchClient::listMetrics
      * @depends testPutsMetricData
      */
@@ -88,6 +93,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * GetMetricStatistics
+     *
      * @depends testListsMetrics
      * @example Aws\CloudWatch\CloudWatchClient::getMetricStatistics
      */

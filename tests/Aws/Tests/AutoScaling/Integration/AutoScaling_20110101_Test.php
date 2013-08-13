@@ -21,6 +21,7 @@ use Aws\Ec2\Enum\InstanceType;
 
 /**
  * @group integration
+ * @group example
  */
 class AutoScaling_20110101_Test extends \Aws\Tests\IntegrationTestCase
 {
@@ -36,6 +37,8 @@ class AutoScaling_20110101_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * CreateLaunchConfiguration
+     *
      * @example Aws\AutoScaling\AutoScalingClient::createLaunchConfiguration
      * @example Aws\AutoScaling\AutoScalingClient::createLaunchConfiguration
      */
@@ -54,6 +57,8 @@ class AutoScaling_20110101_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Iterate over the results of DescribeLaunchConfigurations
+     *
      * @example Aws\AutoScaling\AutoScalingClient::describeLaunchConfigurations
      * @depends testCreateLaunchConfiguration
      */
@@ -74,8 +79,6 @@ class AutoScaling_20110101_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * @example Aws\AutoScaling\AutoScalingClient::createLaunchConfiguration
-     * @example Aws\AutoScaling\AutoScalingClient::createLaunchConfiguration
      * @depends testListsLaunchConfigs
      */
     public function testHandlesErrors()
@@ -102,6 +105,8 @@ class AutoScaling_20110101_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Delete a launch configuration
+     *
      * @example Aws\AutoScaling\AutoScalingClient::deleteLaunchConfiguration
      * @depends testHandlesErrors
      */

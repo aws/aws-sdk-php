@@ -22,6 +22,7 @@ use Guzzle\Http\Client as HttpClient;
 /**
  * @group integration
  * @group slow
+ * @group example
  */
 class CloudFront_20130512_Test extends \Aws\Tests\IntegrationTestCase
 {
@@ -101,6 +102,8 @@ class CloudFront_20130512_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create an origin access identity
+     *
      * @example Aws\CloudFront\CloudFrontClient::createCloudFrontOriginAccessIdentity
      */
     public function testCreatesOrigins()
@@ -138,6 +141,8 @@ class CloudFront_20130512_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a distribution
+     *
      * @depends testCreatesOrigins
      * @example Aws\CloudFront\CloudFrontClient::createDistribution
      */
@@ -215,6 +220,8 @@ class CloudFront_20130512_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * List distributions
+     *
      * @depends testCreatesDistribution
      */
     public function testListsDistributions($id)
@@ -231,6 +238,8 @@ class CloudFront_20130512_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a pre-signed URL
+     *
      * @depends testListsDistributions
      * @example Aws\CloudFront\CloudFrontClient::getSignedUrl
      */
