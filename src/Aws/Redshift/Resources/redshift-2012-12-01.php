@@ -121,6 +121,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'SnapshotClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
                 'AccountWithRestoreAccess' => array(
                     'required' => true,
                     'type' => 'string',
@@ -161,6 +165,10 @@ return array (
                 ),
                 'SourceSnapshotIdentifier' => array(
                     'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SourceSnapshotClusterIdentifier' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -680,6 +688,10 @@ return array (
                 ),
                 'SnapshotIdentifier' => array(
                     'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnapshotClusterIdentifier' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1689,6 +1701,10 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'SnapshotClusterIdentifier' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
                 'Port' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1844,6 +1860,10 @@ return array (
                 ),
                 'SnapshotIdentifier' => array(
                     'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'SnapshotClusterIdentifier' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -2163,6 +2183,29 @@ return array (
                         ),
                         'Encrypted' => array(
                             'type' => 'boolean',
+                        ),
+                        'RestoreStatus' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Status' => array(
+                                    'type' => 'string',
+                                ),
+                                'CurrentRestoreRateInMegaBytesPerSecond' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'SnapshotSizeInMegaBytes' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'ProgressInMegaBytes' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'ElapsedTimeInSeconds' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'EstimatedTimeToCompletionInSeconds' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2719,6 +2762,29 @@ return array (
                             ),
                             'Encrypted' => array(
                                 'type' => 'boolean',
+                            ),
+                            'RestoreStatus' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'CurrentRestoreRateInMegaBytesPerSecond' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'SnapshotSizeInMegaBytes' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ProgressInMegaBytes' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ElapsedTimeInSeconds' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'EstimatedTimeToCompletionInSeconds' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
