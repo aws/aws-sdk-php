@@ -430,8 +430,7 @@ class StreamWrapper
         }
 
         if ($params['Key']) {
-            $suffix = $delimiter ?: '/';
-            $params['Key'] = rtrim($params['Key'], $suffix) . $suffix;
+            $params['Key'] = rtrim($params['Key'], $delimiter) . $delimiter;
         }
 
         $this->openedBucket = $params['Bucket'];
