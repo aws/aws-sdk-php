@@ -166,7 +166,7 @@ class UploadSyncBuilder extends AbstractSyncBuilder
                     $size = $command['Body']->getContentLength();
                     $percentage = number_format(($progress / $totalSize) * 100, 2);
                     fwrite($resource, "- Part {$command['PartNumber']} ({$size} bytes, {$percentage}%)\n");
-                    $progress .=  $size;
+                    $progress += $size;
                 }
             );
         });
