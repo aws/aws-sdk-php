@@ -222,7 +222,12 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
         $pathToFile = __FILE__;
         // @begin
 
-        // Upload an object by streaming the contents of a PHP stream
+        // Upload an object by streaming the contents of a PHP stream.
+        // Note: You must supply a "ContentLength" parameter to an
+        // operation if the steam does not respond to fstat() or if the
+        // fstat() of stream does not provide a valid the 'size' attribute.
+        // For example, the "http" stream wrapper will require a ContentLength
+        // parameter because it does not respond to fstat().
         $client->putObject(array(
             'Bucket' => $bucket,
             'Key'    => 'data_from_stream.txt',
