@@ -23,7 +23,7 @@ return array (
     'jsonVersion' => '1.0',
     'targetPrefix' => 'SimpleWorkflowService.',
     'timestampFormat' => 'unixTimestamp',
-    'signatureVersion' => 'v3',
+    'signatureVersion' => 'v4',
     'namespace' => 'Swf',
     'regions' => array(
         'us-east-1' => array(

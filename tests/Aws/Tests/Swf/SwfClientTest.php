@@ -31,7 +31,7 @@ class SwfClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-west-2'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV3', $client->getSignature());
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://swf.us-west-2.amazonaws.com', $client->getBaseUrl());
     }
