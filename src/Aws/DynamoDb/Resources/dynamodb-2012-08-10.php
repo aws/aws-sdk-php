@@ -552,7 +552,7 @@ return array (
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with a local secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -785,7 +785,7 @@ return array (
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with a local secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -1904,7 +1904,7 @@ return array (
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with a local secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
