@@ -18,11 +18,16 @@ namespace Aws\Sts;
 
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
+use Aws\Common\Client\UnsignedOperationsListener;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Signature\SignatureListener;
 use Guzzle\Common\Collection;
+use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Service\Resource\Model;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Client to interact with AWS Security Token Service
@@ -57,13 +62,31 @@ class StsClient extends AbstractClient
         }
 
         // Construct the STS client with the client builder
-        return ClientBuilder::factory(__NAMESPACE__)
+        $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sts-%s.php'
             ))
             ->build();
+
+        // Attach a listener to prevent AssumeRoleWithWebIdentity requests from being signed
+        $client->getEventDispatcher()->addListener('command.before_send', function(Event $event) {
+            /** @var AbstractCommand $command */
+            $command = $event['command'];
+            if ($command->getName() === 'AssumeRoleWithWebIdentity') {
+                /** @var EventDispatcher $dispatcher */
+                $dispatcher = $command->getRequest()->getEventDispatcher();
+                foreach ($dispatcher->getListeners('request.before_send') as $listener) {
+                    if (is_array($listener) && $listener[0] instanceof SignatureListener) {
+                        $dispatcher->removeListener('request.before_send', $listener);
+                        break;
+                    }
+                }
+            }
+        });
+
+        return $client;
     }
 
     /**

@@ -17,6 +17,8 @@
 namespace Aws\Tests\Sts;
 
 use Aws\Sts\StsClient;
+use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Service\Resource\Model;
 
 /**
@@ -79,5 +81,24 @@ class StsClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = StsClient::factory();
         $credentials = $client->createCredentials(new Model(array()));
+    }
+
+    public function testThatAssumeRoleWithWebIdentityRequestsDoNotGetSigned()
+    {
+        $client = StsClient::factory();
+
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200));
+        $client->addSubscriber($mock);
+
+        $command = $client->getCommand('AssumeRoleWithWebIdentity', array(
+            'RoleArn'          => 'xxxxxxxxxxxxxxxxxxxxxx',
+            'RoleSessionName'  => 'xx',
+            'WebIdentityToken' => 'xxxx'
+        ));
+        $request = $command->prepare();
+        $command->execute();
+
+        $this->assertFalse($request->hasHeader('Authorization'));
     }
 }
