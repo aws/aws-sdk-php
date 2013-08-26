@@ -261,6 +261,10 @@ return array (
                     'type' => 'object',
                     'location' => 'aws.query',
                     'sentAs' => 'Attribute',
+                    'data' => array(
+                        'keyName' => 'Name',
+                        'valueName' => 'Value',
+                    ),
                     'additionalProperties' => array(
                         'type' => 'string',
                         'data' => array(
@@ -731,6 +735,10 @@ return array (
                     'type' => 'object',
                     'location' => 'aws.query',
                     'sentAs' => 'Attribute',
+                    'data' => array(
+                        'keyName' => 'Name',
+                        'valueName' => 'Value',
+                    ),
                     'additionalProperties' => array(
                         'type' => 'string',
                         'data' => array(

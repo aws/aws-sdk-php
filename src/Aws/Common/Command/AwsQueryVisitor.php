@@ -66,8 +66,11 @@ class AwsQueryVisitor extends AbstractRequestVisitor
             } elseif ($hasAdditionalProperties) {
                 // Handle map cases like &Attribute.1.Name=<name>&Attribute.1.Value=<value>
                 $additionalPropertyCount++;
-                $query["{$prefix}.{$additionalPropertyCount}.Name"] = $name;
-                $newPrefix = "{$prefix}.{$additionalPropertyCount}.Value";
+                $data = $param->getData();
+                $keyName = isset($data['keyName']) ? $data['keyName'] : 'key';
+                $valueName = isset($data['valueName']) ? $data['valueName'] : 'value';
+                $query["{$prefix}.{$additionalPropertyCount}.{$keyName}"] = $name;
+                $newPrefix = "{$prefix}.{$additionalPropertyCount}.{$valueName}";
                 if (is_array($v)) {
                     $this->customResolver($v, $param->getAdditionalProperties(), $query, $newPrefix);
                 } else {

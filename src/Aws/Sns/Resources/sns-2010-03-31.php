@@ -224,6 +224,7 @@ return array (
                     'required' => true,
                     'type' => 'object',
                     'location' => 'aws.query',
+                    'sentAs' => 'Attributes.entry',
                     'additionalProperties' => array(
                         'type' => 'string',
                         'data' => array(
@@ -281,6 +282,7 @@ return array (
                 'Attributes' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
+                    'sentAs' => 'Attributes.entry',
                     'additionalProperties' => array(
                         'type' => 'string',
                         'data' => array(
@@ -978,6 +980,7 @@ return array (
                     'required' => true,
                     'type' => 'object',
                     'location' => 'aws.query',
+                    'sentAs' => 'Attributes.entry',
                     'additionalProperties' => array(
                         'type' => 'string',
                         'data' => array(
@@ -1031,6 +1034,7 @@ return array (
                     'required' => true,
                     'type' => 'object',
                     'location' => 'aws.query',
+                    'sentAs' => 'Attributes.entry',
                     'additionalProperties' => array(
                         'type' => 'string',
                         'data' => array(

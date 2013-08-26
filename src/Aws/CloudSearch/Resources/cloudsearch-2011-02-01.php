@@ -256,6 +256,7 @@ return array (
                                             ),
                                             'Cases' => array(
                                                 'type' => 'object',
+                                                'sentAs' => 'Cases.entry',
                                                 'additionalProperties' => array(
                                                     'type' => 'string',
                                                     'maxLength' => 1024,
