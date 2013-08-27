@@ -16,6 +16,7 @@
 
 namespace Aws\Tests\S3;
 
+use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Credentials\Credentials;
 use Aws\S3\S3Client;
 use Aws\S3\Sync\UploadSyncBuilder;
@@ -282,7 +283,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(2, $result);
         $this->assertEquals(6, count($history));
         $this->assertEquals('POST', $history->getLastRequest()->getMethod());
-        $this->assertEquals('/?delete', $history->getLastRequest()->getResource());
+        $this->assertEquals('/?delete=', $history->getLastRequest()->getResource());
         $this->assertContains('<Key>c</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertContains('<Key>f</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertNotContains('<Key>e</Key>', (string) $history->getLastRequest()->getBody());
@@ -416,5 +417,55 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             'debug'       => true,
             'allow_resumable'   => true
         ));
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     */
+    public function testEnsuresSigV4HasRegion()
+    {
+        $sig = $this->getMockBuilder('Aws\S3\S3SignatureV4')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3 = S3Client::factory(array(Options::SIGNATURE => $sig));
+        $this->assertSame($sig, $s3->getSignature());
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     */
+    public function testEnsuresSignatureImplementsS3Signature()
+    {
+        $sig = $this->getMockBuilder('Aws\Common\Signature\SignatureInterface')
+            ->getMockForAbstractClass();
+        $s3 = S3Client::factory(array(Options::SIGNATURE => $sig));
+        $this->assertSame($sig, $s3->getSignature());
+    }
+
+    public function testCanForceS3Signature()
+    {
+        $sig = $this->getMockBuilder('Aws\S3\S3Signature')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3 = S3Client::factory(array(Options::SIGNATURE => $sig));
+        $this->assertSame($sig, $s3->getSignature());
+    }
+
+    public function testCanForceSigV4Signature()
+    {
+        $sig = $this->getMockBuilder('Aws\S3\S3SignatureV4')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3 = S3Client::factory(array(
+            Options::SIGNATURE => $sig,
+            Options::REGION => 'us-east-1'
+        ));
+        $this->assertSame($sig, $s3->getSignature());
+    }
+
+    public function testUsesSigV4SignatureInSpecificRegions()
+    {
+        $s3 = S3Client::factory(array(Options::REGION => 'cn-north-1'));
+        $this->assertInstanceOf('Aws\S3\S3SignatureV4', $s3->getSignature());
     }
 }

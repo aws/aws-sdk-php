@@ -417,9 +417,6 @@ class ClientBuilder
                 case 'v2':
                     $signature = new SignatureV2();
                     break;
-                case 'v3':
-                    $signature = new SignatureV3();
-                    break;
                 case 'v3https':
                     $signature = new SignatureV3Https();
                     break;

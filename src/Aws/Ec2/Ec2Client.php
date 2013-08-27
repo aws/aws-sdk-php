@@ -19,6 +19,7 @@ namespace Aws\Ec2;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
+use Aws\Common\Signature\SignatureV4;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Resource\ResourceIteratorInterface;
@@ -247,6 +248,10 @@ class Ec2Client extends AbstractClient
      */
     public static function factory($config = array())
     {
+        if (isset($config['region']) && substr($config['region'], 0, 3) == 'cn-') {
+            $config[Options::SIGNATURE] = new SignatureV4();
+        }
+
         return ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(

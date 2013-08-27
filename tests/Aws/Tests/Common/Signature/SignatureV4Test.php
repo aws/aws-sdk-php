@@ -34,6 +34,10 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
      */
     private function getSignature()
     {
+        // Require the gmdate() hack for the namespace so that the mangled
+        // gmdate value is returned.
+        require_once __DIR__ . '/sigv4_hack.php';
+
         // Mock the timestamp function to use the test suite timestamp
         $signature = $this->getMock('Aws\Common\Signature\SignatureV4', array('getTimestamp', 'getDateTime'));
 
@@ -46,10 +50,10 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $signature->expects($this->any())
             ->method('getDateTime')
             ->will($this->returnValueMap(array(
-            array(DateFormat::RFC1123, 'Mon, 09 Sep 2011 23:36:00 GMT'),
-            array(DateFormat::ISO8601, '20110909T233600Z'),
-            array(DateFormat::SHORT, '20110909')
-        )));
+                array(DateFormat::RFC1123, 'Mon, 09 Sep 2011 23:36:00 GMT'),
+                array(DateFormat::ISO8601, '20110909T233600Z'),
+                array(DateFormat::SHORT, '20110909')
+            )));
 
         return $signature;
     }
@@ -217,5 +221,52 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $credentials = new Credentials('fizz', 'foobar');
         $signature->signRequest($request, $credentials);
         $this->assertEquals(1, count($this->readAttribute($signature, 'hashCache')));
+    }
+
+    public function queryStringProvider()
+    {
+        return array(
+
+            array(array(), ''),
+
+            array(array(
+                'X-Amz-Signature' => 'foo'
+            ), ''),
+
+            array(array(
+                'Foo' => '123',
+                'Bar' => '456'
+            ), 'Bar=456&Foo=123'),
+
+            array(array(
+                'Foo' => array('b', 'a'),
+                'a' => 'bc'
+            ), 'Foo=a&Foo=b&a=bc'),
+
+            array(array(
+                'Foo' => '',
+                'a' => 'b'
+            ), 'Foo=&a=b')
+        );
+    }
+
+    /**
+     * @covers Aws\Common\Signature\AbstractSignature::getCanonicalizedQueryString
+     * @dataProvider queryStringProvider
+     */
+    public function testCreatesCanonicalizedQueryString($headers, $string)
+    {
+        // Make the method publicly callable
+        $method = new \ReflectionMethod('Aws\Common\Signature\SignatureV4', 'getCanonicalizedQueryString');
+        $method->setAccessible(true);
+
+        // Create a request and replace the headers with the test headers
+        $request = new Request('GET', 'http://www.example.com');
+        $request->getQuery()->replace($headers);
+
+        $signature = $this->getMockBuilder('Aws\Common\Signature\SignatureV4')
+            ->getMockForAbstractClass();
+
+        $this->assertEquals($string, $method->invoke($signature, $request));
     }
 }
