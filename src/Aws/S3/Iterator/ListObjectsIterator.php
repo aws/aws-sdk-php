@@ -23,9 +23,10 @@ use Guzzle\Service\Resource\Model;
  * Iterator for an S3 ListObjects command
  *
  * This iterator includes the following additional options:
- *     - return_prefixes: Set to true to receive both prefixes and objects in results
- *     - sort_results: Set to true to sort mixed (object/prefix) results
- *     - names_only: Set to true to receive only the object/prefix names
+ *
+ * - return_prefixes: Set to true to receive both prefixes and objects in results
+ * - sort_results: Set to true to sort mixed (object/prefix) results
+ * - names_only: Set to true to receive only the object/prefix names
  */
 class ListObjectsIterator extends AwsResourceIterator
 {
