@@ -8,13 +8,14 @@ Next Release:
 * Updated the Amazon EC2 client to use the 2013-07-15 API version
 * Updated the Amazon SWF client to sign requests with Signature V4
 * Updated the Instance Metadata client to allow for higher and more customizable connection timeouts
-* Updated the SDK API docs to include sample code for each operation that indicates the parameter structure
-* Updated the SDK API docs to include more information about operations
 * Fixed an issue with the SDK where XML map structures were not being serialized correctly in some cases
 * Fixed issue #136 where a few of the new Amazon SNS mobile push operations were not working properly
 * Fixed an issue where the AWS STS `AssumeRoleWithWebIdentity` operation was requiring credentials and a signature
   unnecessarily
 * Fixed and issue with the `S3Client::uploadDirectory` method so that true key prefixes can be used
+* [Docs] Updated the API docs to include sample code for each operation that indicates the parameter structure
+* [Docs] Updated the API docs to include more information in the descriptions of operations and parameters
+* [Docs] Added a page about Iterators to the user guide
 
 2.4.3 (2013-08-12)
 ------------------

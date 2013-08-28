@@ -117,6 +117,7 @@ SDK features in detail
 ----------------------
 
 * :doc:`feature-dynamodb-session-handler`
+* :doc:`feature-iterators`
 * :doc:`feature-waiters`
 * :doc:`feature-models`
 * :doc:`feature-facades`

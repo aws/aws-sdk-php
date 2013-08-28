@@ -179,5 +179,5 @@ The following is an excerpt of the Amazon Glacier service description that defin
     );
 
 In order for you to contribute waiters to the SDK, you will need to implement them using the waiters DSL. The DSL is not
-documented yet, so if you are interested in helping to implement more waiters, please reach out to us via `GitHub
-<https://github.com/aws/aws-sdk-php/issues>`_.
+documented yet, since it is currently subject to change, so if you are interested in helping to implement more waiters,
+please reach out to us via `GitHub <https://github.com/aws/aws-sdk-php/issues>`_.

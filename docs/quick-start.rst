@@ -142,14 +142,13 @@ same credentials for every client.
     require 'vendor/autoload.php';
 
     use Aws\Common\Aws;
-    use Aws\Common\Enum\Region;
     use Aws\DynamoDb\Exception\DynamoDbException;
 
     // Create a service building using shared credentials for each service
     $aws = Aws::factory(array(
         'key'    => 'your-aws-access-key-id',
         'secret' => 'your-aws-secret-access-key',
-        'region' => Region::US_WEST_2
+        'region' => 'us-west-2'
     ));
 
     // Retrieve the DynamoDB client by its short name from the service builder
@@ -197,7 +196,7 @@ logic in your applications. The SDK throws service specific exceptions when a se
 The HTTP response to the ``createBucket()`` method will receive a ``409 Conflict`` response with a
 ``BucketAlreadyExists`` error code. When the SDK sees the error code it will attempt to throw a named exception that
 matches the name of the HTTP response error code. You can see a full list of supported exceptions for each client by
-looking in the Exception/ directory of a client namespace. For example, src/Aws/S3/Exception contains many different
+looking in the `Exception/` directory of a client namespace. For example, `src/Aws/S3/Exception` contains many different
 exception classes::
 
     .
@@ -220,22 +219,6 @@ To learn more about how to use and configure waiters, please read the detailed g
 Iterators
 ---------
 
-Some AWS operations will return a paginated result set that requires subsequent requests in order to retrieve an entire
-result. The AWS SDK for PHP includes *iterators* that handle the process of sending subsequent requests. Use the
-``getIterator()`` method of a client object in order to retrieve an iterator for a particular command.
+.. include:: _snippets/iterators-intro.txt
 
-.. code-block:: php
-
-    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'my-bucket'));
-
-    foreach ($iterator as $object) {
-        echo $object['Key'] . "\n";
-    }
-
-The ``getIterator()`` method accepts either a command object or the name of an operation as the first argument. The
-second argument is only used when passing a string and instructs the client on what actual operation to execute.
-
-.. code-block:: php
-
-    $command = $client->getCommand('ListObjects', array('Bucket' => 'my-bucket'));
-    $iterator = $client->getIterator($command);
+To learn more about how to use and configure iterators, please read the detailed guide to :doc:`feature-iterators`.
