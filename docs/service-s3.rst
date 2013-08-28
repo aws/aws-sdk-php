@@ -700,6 +700,7 @@ over the transfer. Using the ``DownloadSyncBuilder`` allows for the following ad
     use Aws\S3\Sync\DownloadSyncBuilder;
 
     DownloadSyncBuilder::getInstance()
+        ->setClient($client)
         ->setDirectory('/path/to/directory')
         ->setBucket('my-bucket')
         ->setKeyPrefix('/under-prefix')
