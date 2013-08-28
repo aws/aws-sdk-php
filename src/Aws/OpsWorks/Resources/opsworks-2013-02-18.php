@@ -108,6 +108,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'VpcId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'Attributes' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -136,6 +140,10 @@ return array (
                     'location' => 'json',
                 ),
                 'DefaultAvailabilityZone' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DefaultSubnetId' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -522,6 +530,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'SubnetId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'Architecture' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -761,6 +773,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'VpcId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'Attributes' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -790,6 +806,10 @@ return array (
                     'location' => 'json',
                 ),
                 'DefaultAvailabilityZone' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DefaultSubnetId' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2740,6 +2760,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'DefaultSubnetId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'CustomJson' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -3208,6 +3232,13 @@ return array (
                                     'type' => 'string',
                                 ),
                             ),
+                            'SubnetIds' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'String',
+                                    'type' => 'string',
+                                ),
+                            ),
                             'Ec2InstanceIds' => array(
                                 'type' => 'array',
                                 'items' => array(
@@ -3273,6 +3304,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'AvailabilityZone' => array(
+                                'type' => 'string',
+                            ),
+                            'SubnetId' => array(
                                 'type' => 'string',
                             ),
                             'PublicDns' => array(
@@ -3695,6 +3729,9 @@ return array (
                             'Region' => array(
                                 'type' => 'string',
                             ),
+                            'VpcId' => array(
+                                'type' => 'string',
+                            ),
                             'Attributes' => array(
                                 'type' => 'object',
                                 'additionalProperties' => array(
@@ -3714,6 +3751,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'DefaultAvailabilityZone' => array(
+                                'type' => 'string',
+                            ),
+                            'DefaultSubnetId' => array(
                                 'type' => 'string',
                             ),
                             'CustomJson' => array(

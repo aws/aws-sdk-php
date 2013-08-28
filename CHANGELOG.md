@@ -1,10 +1,10 @@
 CHANGELOG
 =========
 
-2.4.5 (2013-09-04)
-------------------
+Next Release:
+-------------
 
-* Added support for replication groups to the Amazon ElastiCache client
+* Added support for VPC features to the AWS OpsWorks client
 * Added support for using the `us-gov-west-1` region to the AWS CloudFormation client
 
 2.4.4 (2013-08-29)
