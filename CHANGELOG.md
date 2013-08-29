@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.4.4 (2013-08-29)
+------------------
 
 * Added support for assigning a public IP address to an instance at launch to the Amazon EC2 client
 * Updated the Amazon EC2 client to use the 2013-07-15 API version
