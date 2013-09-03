@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2012-11-15',
+    'apiVersion' => '2013-06-15',
     'endpointPrefix' => 'elasticache',
     'serviceFullName' => 'Amazon ElastiCache',
     'serviceType' => 'query',
@@ -80,7 +80,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -100,21 +100,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
+                    'reason' => 'The current state of the cache security group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
-                    'reason' => 'The specified EC2 Security Group is already authorized for the specified Cache Security Group.',
+                    'reason' => 'The specified Amazon EC2 security group is already authorized for the specified cache security group.',
                     'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -134,10 +136,14 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ReplicationGroupId' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -186,6 +192,15 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'SnapshotArns' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'SnapshotArns.member',
+                    'items' => array(
+                        'name' => 'SnapshotArn',
+                        'type' => 'string',
+                    ),
+                ),
                 'PreferredAvailabilityZone' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -210,44 +225,55 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'User already has a Cache Cluster with the given identifier.',
+                    'reason' => 'The specified replication group does not exist.',
+                    'class' => 'ReplicationGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested replication group is not in the available state.',
+                    'class' => 'InvalidReplicationGroupStateException',
+                ),
+                array(
+                    'reason' => 'This user already has a cache cluster with the given identifier.',
                     'class' => 'CacheClusterAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Specified Cache node type is not available in the specified Availability Zone.',
+                    'reason' => 'The requested cache node type is not available in the specified Availability Zone.',
                     'class' => 'InsufficientCacheClusterCapacityException',
                 ),
                 array(
-                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
+                    'reason' => 'The requested cache subnet group name does not refer to an existing cache subnet group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Clusters per customer.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache clusters per customer.',
                     'class' => 'ClusterQuotaForCustomerExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes in a single Cache Cluster.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes in a single cache cluster.',
                     'class' => 'NodeQuotaForClusterExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes per customer.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes per customer.',
                     'class' => 'NodeQuotaForCustomerExceededException',
                 ),
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The VPC network is in an invalid state.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -267,7 +293,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -287,21 +313,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Parameter Groups.',
+                    'reason' => 'The request cannot be processed because it would exceed the maximum number of cache security groups.',
                     'class' => 'CacheParameterGroupQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'A Cache Parameter Group with the name specified in CacheParameterGroupName already exists.',
+                    'reason' => 'A cache parameter group with the requested name already exists.',
                     'class' => 'CacheParameterGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
+                    'reason' => 'The current state of the cache parameter group does not allow the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -321,7 +349,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -336,17 +364,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'A Cache Security Group with the name specified in CacheSecurityGroupName already exists.',
+                    'reason' => 'A cache security group with the specified name already exists.',
                     'class' => 'CacheSecurityGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Security Groups.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache security groups.',
                     'class' => 'CacheSecurityGroupQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -366,7 +396,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -391,20 +421,76 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheSubnetGroupName is already used by an existing Cache Subnet Group.',
+                    'reason' => 'The requested cache subnet group name is already in use by an existing cache subnet group.',
                     'class' => 'CacheSubnetGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Subnet Groups.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache subnet groups.',
                     'class' => 'CacheSubnetGroupQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a Cache Subnet Group.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of subnets in a cache subnet group.',
                     'class' => 'CacheSubnetQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Request subnet is invalid, or all subnets are not in the same VPC.',
+                    'reason' => 'An invalid subnet identifier was specified.',
                     'class' => 'InvalidSubnetException',
+                ),
+            ),
+        ),
+        'CreateReplicationGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ReplicationGroupWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'CreateReplicationGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-06-15',
+                ),
+                'ReplicationGroupId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'PrimaryClusterId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ReplicationGroupDescription' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
+                    'class' => 'CacheClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested cache cluster is not in the available state.',
+                    'class' => 'InvalidCacheClusterStateException',
+                ),
+                array(
+                    'reason' => 'The specified replication group already exists.',
+                    'class' => 'ReplicationGroupAlreadyExistsException',
+                ),
+                array(
+                    'reason' => 'The value for a parameter is invalid.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
+                    'class' => 'InvalidParameterCombinationException',
                 ),
             ),
         ),
@@ -423,7 +509,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -433,17 +519,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
                 array(
-                    'reason' => 'The specified Cache Cluster is not in the available state.',
+                    'reason' => 'The requested cache cluster is not in the available state.',
                     'class' => 'InvalidCacheClusterStateException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -463,7 +551,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -473,17 +561,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
+                    'reason' => 'The current state of the cache parameter group does not allow the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -503,7 +593,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -513,17 +603,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
+                    'reason' => 'The current state of the cache security group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
-                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -543,7 +635,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -553,12 +645,54 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Request cache subnet group is currently in use.',
+                    'reason' => 'The requested cache subnet group is currently in use.',
                     'class' => 'CacheSubnetGroupInUseException',
                 ),
                 array(
-                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
+                    'reason' => 'The requested cache subnet group name does not refer to an existing cache subnet group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
+                ),
+            ),
+        ),
+        'DeleteReplicationGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ReplicationGroupWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DeleteReplicationGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-06-15',
+                ),
+                'ReplicationGroupId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified replication group does not exist.',
+                    'class' => 'ReplicationGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested replication group is not in the available state.',
+                    'class' => 'InvalidReplicationGroupStateException',
+                ),
+                array(
+                    'reason' => 'The value for a parameter is invalid.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
+                    'class' => 'InvalidParameterCombinationException',
                 ),
             ),
         ),
@@ -577,7 +711,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheClusterId' => array(
                     'type' => 'string',
@@ -599,13 +733,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -625,7 +761,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'Engine' => array(
                     'type' => 'string',
@@ -669,7 +805,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupName' => array(
                     'type' => 'string',
@@ -686,13 +822,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -712,7 +850,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -734,13 +872,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -760,7 +900,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSecurityGroupName' => array(
                     'type' => 'string',
@@ -777,13 +917,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -803,7 +945,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSubnetGroupName' => array(
                     'type' => 'string',
@@ -820,7 +962,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
+                    'reason' => 'The requested cache subnet group name does not refer to an existing cache subnet group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
             ),
@@ -840,7 +982,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupFamily' => array(
                     'required' => true,
@@ -858,9 +1000,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -880,7 +1024,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'SourceIdentifier' => array(
                     'type' => 'string',
@@ -929,9 +1073,56 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
+                    'class' => 'InvalidParameterCombinationException',
+                ),
+            ),
+        ),
+        'DescribeReplicationGroups' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ReplicationGroupMessage',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeReplicationGroups',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-06-15',
+                ),
+                'ReplicationGroupId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MaxRecords' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified replication group does not exist.',
+                    'class' => 'ReplicationGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The value for a parameter is invalid.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -951,7 +1142,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'ReservedCacheNodeId' => array(
                     'type' => 'string',
@@ -988,13 +1179,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified reserved Cache Node not found.',
+                    'reason' => 'The requested reserved cache node was not found.',
                     'class' => 'ReservedCacheNodeNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1014,7 +1207,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'ReservedCacheNodesOfferingId' => array(
                     'type' => 'string',
@@ -1047,13 +1240,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Specified offering does not exist.',
+                    'reason' => 'The requested cache node offering does not exist.',
                     'class' => 'ReservedCacheNodesOfferingNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1073,7 +1268,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -1144,40 +1339,43 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified Cache Cluster is not in the available state.',
+                    'reason' => 'The requested cache cluster is not in the available state.',
                     'class' => 'InvalidCacheClusterStateException',
                 ),
                 array(
-                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
+                    'reason' => 'The current state of the cache security group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
-                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes in a single Cache Cluster.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes in a single cache cluster.',
                     'class' => 'NodeQuotaForClusterExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of Cache Nodes per customer.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of cache nodes per customer.',
                     'class' => 'NodeQuotaForCustomerExceededException',
                 ),
                 array(
-                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The VPC network is in an invalid state.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1197,7 +1395,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -1225,17 +1423,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
+                    'reason' => 'The current state of the cache parameter group does not allow the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1255,7 +1455,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSubnetGroupName' => array(
                     'required' => true,
@@ -1278,20 +1478,142 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheSubnetGroupName does not refer to an existing Cache Subnet Group.',
+                    'reason' => 'The requested cache subnet group name does not refer to an existing cache subnet group.',
                     'class' => 'CacheSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a Cache Subnet Group.',
+                    'reason' => 'The request cannot be processed because it would exceed the allowed number of subnets in a cache subnet group.',
                     'class' => 'CacheSubnetQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Request subnet is currently in use.',
+                    'reason' => 'The requested subnet is being used by another cache subnet group.',
                     'class' => 'SubnetInUseException',
                 ),
                 array(
-                    'reason' => 'Request subnet is invalid, or all subnets are not in the same VPC.',
+                    'reason' => 'An invalid subnet identifier was specified.',
                     'class' => 'InvalidSubnetException',
+                ),
+            ),
+        ),
+        'ModifyReplicationGroup' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ReplicationGroupWrapper',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyReplicationGroup',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-06-15',
+                ),
+                'ReplicationGroupId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ReplicationGroupDescription' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CacheSecurityGroupNames' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'CacheSecurityGroupNames.member',
+                    'items' => array(
+                        'name' => 'CacheSecurityGroupName',
+                        'type' => 'string',
+                    ),
+                ),
+                'SecurityGroupIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'SecurityGroupIds.member',
+                    'items' => array(
+                        'name' => 'SecurityGroupId',
+                        'type' => 'string',
+                    ),
+                ),
+                'PreferredMaintenanceWindow' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'NotificationTopicArn' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'CacheParameterGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'NotificationTopicStatus' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ApplyImmediately' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'EngineVersion' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'AutoMinorVersionUpgrade' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
+                'PrimaryClusterId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified replication group does not exist.',
+                    'class' => 'ReplicationGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested replication group is not in the available state.',
+                    'class' => 'InvalidReplicationGroupStateException',
+                ),
+                array(
+                    'reason' => 'The requested cache cluster is not in the available state.',
+                    'class' => 'InvalidCacheClusterStateException',
+                ),
+                array(
+                    'reason' => 'The current state of the cache security group does not allow deletion.',
+                    'class' => 'InvalidCacheSecurityGroupStateException',
+                ),
+                array(
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
+                    'class' => 'CacheClusterNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
+                    'class' => 'CacheSecurityGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
+                    'class' => 'CacheParameterGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'The VPC network is in an invalid state.',
+                    'class' => 'InvalidVPCNetworkStateException',
+                ),
+                array(
+                    'reason' => 'The value for a parameter is invalid.',
+                    'class' => 'InvalidParameterValueException',
+                ),
+                array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
+                    'class' => 'InvalidParameterCombinationException',
                 ),
             ),
         ),
@@ -1310,7 +1632,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'ReservedCacheNodesOfferingId' => array(
                     'required' => true,
@@ -1328,21 +1650,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Specified offering does not exist.',
+                    'reason' => 'The requested cache node offering does not exist.',
                     'class' => 'ReservedCacheNodesOfferingNotFoundException',
                 ),
                 array(
-                    'reason' => 'User already has a reservation with the given identifier.',
+                    'reason' => 'This user already has a reservation with the given identifier.',
                     'class' => 'ReservedCacheNodeAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would exceed the user\'s Cache Node quota.',
+                    'reason' => 'The request cannot be processed because it would exceed the user\'s cache node quota.',
                     'class' => 'ReservedCacheNodeQuotaExceededException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1362,7 +1686,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheClusterId' => array(
                     'required' => true,
@@ -1382,11 +1706,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified Cache Cluster is not in the available state.',
+                    'reason' => 'The requested cache cluster is not in the available state.',
                     'class' => 'InvalidCacheClusterStateException',
                 ),
                 array(
-                    'reason' => 'CacheClusterId does not refer to an existing Cache Cluster.',
+                    'reason' => 'The requested cache cluster ID does not refer to an existing cache cluster.',
                     'class' => 'CacheClusterNotFoundException',
                 ),
             ),
@@ -1406,7 +1730,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheParameterGroupName' => array(
                     'required' => true,
@@ -1439,17 +1763,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The state of the Cache Parameter Group does not allow for the requested action to occur.',
+                    'reason' => 'The current state of the cache parameter group does not allow the requested action to occur.',
                     'class' => 'InvalidCacheParameterGroupStateException',
                 ),
                 array(
-                    'reason' => 'CacheParameterGroupName does not refer to an existing Cache Parameter Group.',
+                    'reason' => 'The requested cache parameter group name does not refer to an existing cache parameter group.',
                     'class' => 'CacheParameterGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1469,7 +1795,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2012-11-15',
+                    'default' => '2013-06-15',
                 ),
                 'CacheSecurityGroupName' => array(
                     'required' => true,
@@ -1489,21 +1815,23 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'CacheSecurityGroupName does not refer to an existing Cache Security Group.',
+                    'reason' => 'The requested cache security group name does not refer to an existing cache security group.',
                     'class' => 'CacheSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Specified EC2 Security Group is not authorized for the specified Cache Security Group.',
+                    'reason' => 'The specified Amazon EC2 security group is not authorized for the specified cache security group.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the Cache Security Group does not allow deletion.',
+                    'reason' => 'The current state of the cache security group does not allow deletion.',
                     'class' => 'InvalidCacheSecurityGroupStateException',
                 ),
                 array(
+                    'reason' => 'The value for a parameter is invalid.',
                     'class' => 'InvalidParameterValueException',
                 ),
                 array(
+                    'reason' => 'Two or more incompatible parameters were specified.',
                     'class' => 'InvalidParameterCombinationException',
                 ),
             ),
@@ -1703,6 +2031,9 @@ return array (
                                     'ParameterGroupStatus' => array(
                                         'type' => 'string',
                                     ),
+                                    'SourceCacheNodeId' => array(
+                                        'type' => 'string',
+                                    ),
                                 ),
                             ),
                         ),
@@ -1724,6 +2055,9 @@ return array (
                                     ),
                                 ),
                             ),
+                        ),
+                        'ReplicationGroupId' => array(
+                            'type' => 'string',
                         ),
                     ),
                 ),
@@ -1788,6 +2122,106 @@ return array (
                                         'properties' => array(
                                             'Name' => array(
                                                 'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ReplicationGroupWrapper' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ReplicationGroup' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'data' => array(
+                        'wrapper' => true,
+                    ),
+                    'properties' => array(
+                        'ReplicationGroupId' => array(
+                            'type' => 'string',
+                        ),
+                        'Description' => array(
+                            'type' => 'string',
+                        ),
+                        'Status' => array(
+                            'type' => 'string',
+                        ),
+                        'PendingModifiedValues' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'PrimaryClusterId' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'MemberClusters' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'ClusterId',
+                                'type' => 'string',
+                                'sentAs' => 'ClusterId',
+                            ),
+                        ),
+                        'NodeGroups' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'NodeGroup',
+                                'type' => 'object',
+                                'sentAs' => 'NodeGroup',
+                                'properties' => array(
+                                    'NodeGroupId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Status' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'PrimaryEndpoint' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Address' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Port' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
+                                    'NodeGroupMembers' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'NodeGroupMember',
+                                            'type' => 'object',
+                                            'sentAs' => 'NodeGroupMember',
+                                            'properties' => array(
+                                                'CacheClusterId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'CacheNodeId' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'ReadEndpoint' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Address' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Port' => array(
+                                                            'type' => 'numeric',
+                                                        ),
+                                                    ),
+                                                ),
+                                                'PreferredAvailabilityZone' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'CurrentRole' => array(
+                                                    'type' => 'string',
+                                                ),
                                             ),
                                         ),
                                     ),
@@ -1957,6 +2391,9 @@ return array (
                                         'ParameterGroupStatus' => array(
                                             'type' => 'string',
                                         ),
+                                        'SourceCacheNodeId' => array(
+                                            'type' => 'string',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -1978,6 +2415,9 @@ return array (
                                         ),
                                     ),
                                 ),
+                            ),
+                            'ReplicationGroupId' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -2378,6 +2818,112 @@ return array (
                 ),
             ),
         ),
+        'ReplicationGroupMessage' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'ReplicationGroups' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ReplicationGroup',
+                        'type' => 'object',
+                        'sentAs' => 'ReplicationGroup',
+                        'properties' => array(
+                            'ReplicationGroupId' => array(
+                                'type' => 'string',
+                            ),
+                            'Description' => array(
+                                'type' => 'string',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                            ),
+                            'PendingModifiedValues' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'PrimaryClusterId' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'MemberClusters' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'ClusterId',
+                                    'type' => 'string',
+                                    'sentAs' => 'ClusterId',
+                                ),
+                            ),
+                            'NodeGroups' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'NodeGroup',
+                                    'type' => 'object',
+                                    'sentAs' => 'NodeGroup',
+                                    'properties' => array(
+                                        'NodeGroupId' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Status' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'PrimaryEndpoint' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Address' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Port' => array(
+                                                    'type' => 'numeric',
+                                                ),
+                                            ),
+                                        ),
+                                        'NodeGroupMembers' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'NodeGroupMember',
+                                                'type' => 'object',
+                                                'sentAs' => 'NodeGroupMember',
+                                                'properties' => array(
+                                                    'CacheClusterId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'CacheNodeId' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'ReadEndpoint' => array(
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Address' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Port' => array(
+                                                                'type' => 'numeric',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    'PreferredAvailabilityZone' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'CurrentRole' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'ReservedCacheNodeMessage' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2630,6 +3176,12 @@ return array (
                 'token_key' => 'Marker',
                 'limit_key' => 'MaxRecords',
                 'result_key' => 'Events',
+            ),
+            'DescribeReplicationGroups' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'MaxRecords',
+                'result_key' => 'ReplicationGroups',
             ),
             'DescribeReservedCacheNodes' => array(
                 'token_param' => 'Marker',

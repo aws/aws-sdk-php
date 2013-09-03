@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Request would result in user exceeding the allowed number of Cache Nodes in a single Cache Cluster.
+ * The request cannot be processed because it would exceed the allowed number of cache nodes in a single cache cluster.
  */
 class NodeQuotaForClusterExceededException extends ElastiCacheException {}

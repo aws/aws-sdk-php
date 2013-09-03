@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * A Cache Parameter Group with the name specified in CacheParameterGroupName already exists.
+ * A cache parameter group with the requested name already exists.
  */
 class CacheParameterGroupAlreadyExistsException extends ElastiCacheException {}

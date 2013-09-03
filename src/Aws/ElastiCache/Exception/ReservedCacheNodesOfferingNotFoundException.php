@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Specified offering does not exist.
+ * The requested cache node offering does not exist.
  */
 class ReservedCacheNodesOfferingNotFoundException extends ElastiCacheException {}

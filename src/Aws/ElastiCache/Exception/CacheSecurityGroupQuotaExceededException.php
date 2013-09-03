@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * Request would result in user exceeding the allowed number of Cache Security Groups.
+ * The request cannot be processed because it would exceed the allowed number of cache security groups.
  */
 class CacheSecurityGroupQuotaExceededException extends ElastiCacheException {}

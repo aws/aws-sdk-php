@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * The requested subnet is being used by another cache subnet group.
+ * The requested replication group is not in the available state.
  */
-class SubnetInUseException extends ElastiCacheException {}
+class InvalidReplicationGroupStateException extends ElastiCacheException {}

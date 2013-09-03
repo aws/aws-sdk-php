@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * CacheSubnetGroupName does not refer to an existing Cache Subnet Group.
+ * The requested cache subnet group name does not refer to an existing cache subnet group.
  */
 class CacheSubnetGroupNotFoundException extends ElastiCacheException {}

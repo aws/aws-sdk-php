@@ -31,10 +31,12 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createCacheParameterGroup(array $args = array()) {@command ElastiCache CreateCacheParameterGroup}
  * @method Model createCacheSecurityGroup(array $args = array()) {@command ElastiCache CreateCacheSecurityGroup}
  * @method Model createCacheSubnetGroup(array $args = array()) {@command ElastiCache CreateCacheSubnetGroup}
+ * @method Model createReplicationGroup(array $args = array()) {@command ElastiCache CreateReplicationGroup}
  * @method Model deleteCacheCluster(array $args = array()) {@command ElastiCache DeleteCacheCluster}
  * @method Model deleteCacheParameterGroup(array $args = array()) {@command ElastiCache DeleteCacheParameterGroup}
  * @method Model deleteCacheSecurityGroup(array $args = array()) {@command ElastiCache DeleteCacheSecurityGroup}
  * @method Model deleteCacheSubnetGroup(array $args = array()) {@command ElastiCache DeleteCacheSubnetGroup}
+ * @method Model deleteReplicationGroup(array $args = array()) {@command ElastiCache DeleteReplicationGroup}
  * @method Model describeCacheClusters(array $args = array()) {@command ElastiCache DescribeCacheClusters}
  * @method Model describeCacheEngineVersions(array $args = array()) {@command ElastiCache DescribeCacheEngineVersions}
  * @method Model describeCacheParameterGroups(array $args = array()) {@command ElastiCache DescribeCacheParameterGroups}
@@ -43,11 +45,13 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeCacheSubnetGroups(array $args = array()) {@command ElastiCache DescribeCacheSubnetGroups}
  * @method Model describeEngineDefaultParameters(array $args = array()) {@command ElastiCache DescribeEngineDefaultParameters}
  * @method Model describeEvents(array $args = array()) {@command ElastiCache DescribeEvents}
+ * @method Model describeReplicationGroups(array $args = array()) {@command ElastiCache DescribeReplicationGroups}
  * @method Model describeReservedCacheNodes(array $args = array()) {@command ElastiCache DescribeReservedCacheNodes}
  * @method Model describeReservedCacheNodesOfferings(array $args = array()) {@command ElastiCache DescribeReservedCacheNodesOfferings}
  * @method Model modifyCacheCluster(array $args = array()) {@command ElastiCache ModifyCacheCluster}
  * @method Model modifyCacheParameterGroup(array $args = array()) {@command ElastiCache ModifyCacheParameterGroup}
  * @method Model modifyCacheSubnetGroup(array $args = array()) {@command ElastiCache ModifyCacheSubnetGroup}
+ * @method Model modifyReplicationGroup(array $args = array()) {@command ElastiCache ModifyReplicationGroup}
  * @method Model purchaseReservedCacheNodesOffering(array $args = array()) {@command ElastiCache PurchaseReservedCacheNodesOffering}
  * @method Model rebootCacheCluster(array $args = array()) {@command ElastiCache RebootCacheCluster}
  * @method Model resetCacheParameterGroup(array $args = array()) {@command ElastiCache ResetCacheParameterGroup}
@@ -60,6 +64,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeCacheSubnetGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeCacheSubnetGroups operation
  * @method ResourceIteratorInterface getDescribeEngineDefaultParametersIterator(array $args = array()) The input array uses the parameters of the DescribeEngineDefaultParameters operation
  * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
+ * @method ResourceIteratorInterface getDescribeReplicationGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeReplicationGroups operation
  * @method ResourceIteratorInterface getDescribeReservedCacheNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedCacheNodes operation
  * @method ResourceIteratorInterface getDescribeReservedCacheNodesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedCacheNodesOfferings operation
  *
@@ -68,7 +73,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class ElastiCacheClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2012-11-15';
+    const LATEST_API_VERSION = '2013-06-15';
 
     /**
      * Factory method to create a new Amazon ElastiCache client using an array of configuration options.

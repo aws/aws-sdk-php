@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * CacheParameterGroupName does not refer to an existing Cache Parameter Group.
+ * The requested cache parameter group name does not refer to an existing cache parameter group.
  */
 class CacheParameterGroupNotFoundException extends ElastiCacheException {}

@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * The specified Cache Cluster is not in the available state.
+ * The requested cache cluster is not in the available state.
  */
 class InvalidCacheClusterStateException extends ElastiCacheException {}

@@ -17,6 +17,6 @@
 namespace Aws\ElastiCache\Exception;
 
 /**
- * CacheClusterId does not refer to an existing Cache Cluster.
+ * The requested cache cluster ID does not refer to an existing cache cluster.
  */
 class CacheClusterNotFoundException extends ElastiCacheException {}
