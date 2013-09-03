@@ -63,6 +63,11 @@ return array (
             'https' => true,
             'hostname' => 'cloudformation.sa-east-1.amazonaws.com',
         ),
+        'us-gov-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudformation.us-gov-west-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'CancelUpdateStack' => array(
