@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.4.5 (2013-09-04)
+------------------
 
 * Added support for replication groups to the Amazon ElastiCache client
 * Added support for using the `us-gov-west-1` region to the AWS CloudFormation client
