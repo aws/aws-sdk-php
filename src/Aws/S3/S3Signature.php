@@ -31,13 +31,32 @@ class S3Signature implements S3SignatureInterface
     /**
      * @var array Query string values that must be signed
      */
-    protected $signableQueryString = array(
-        'acl', 'delete', 'lifecycle', 'location', 'logging', 'notification',
-        'partNumber', 'policy', 'requestPayment', 'torrent', 'uploadId',
-        'uploads', 'versionId', 'versioning', 'versions', 'website',
-        'response-cache-control', 'response-content-disposition',
-        'response-content-encoding', 'response-content-language',
-        'response-content-type', 'response-expires', 'restore', 'tagging', 'cors'
+    protected $signableQueryString = array (
+        'acl',
+        'cors',
+        'delete',
+        'lifecycle',
+        'location',
+        'logging',
+        'notification',
+        'partNumber',
+        'policy',
+        'requestPayment',
+        'response-cache-control',
+        'response-content-disposition',
+        'response-content-encoding',
+        'response-content-language',
+        'response-content-type',
+        'response-expires',
+        'restore',
+        'tagging',
+        'torrent',
+        'uploadId',
+        'uploads',
+        'versionId',
+        'versioning',
+        'versions',
+        'website',
     );
 
     /**
@@ -50,6 +69,9 @@ class S3Signature implements S3SignatureInterface
      */
     public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
     {
+        // Ensure that the signable query string parameters are sorted
+        sort($this->signableQueryString);
+
         // Add the security token header if one is being used by the credentials
         if ($token = $credentials->getSecurityToken()) {
             $request->setHeader('x-amz-security-token', $token);
