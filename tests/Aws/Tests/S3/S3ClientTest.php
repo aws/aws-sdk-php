@@ -300,7 +300,6 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             )
         ));
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
-        $this->assertEquals('PutObjectOutput', $result->getStructure()->getName());
         $this->assertCount(1, $history);
         $request = $history->getLastRequest();
         $this->assertEquals('PUT', $request->getMethod());
@@ -327,7 +326,6 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             'params'        => array('Metadata' => array('Foo' => 'Bar'))
         ));
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
-        $this->assertEquals('CompleteMultipartUploadOutput', $result->getStructure()->getName());
         $this->assertCount(3, $history);
         $request = $history->getLastRequest();
         $this->assertEquals('POST', $request->getMethod());
