@@ -80,6 +80,12 @@ class MessageTest extends \Guzzle\Tests\GuzzleTestCase
         stream_wrapper_restore("php");
     }
 
+    public function testCreateFromRawPostFailsWithMissingData()
+    {
+        $this->setExpectedException('Aws\Common\Exception\UnexpectedValueException');
+        Message::fromRawPostData();
+    }
+
     /**
      * @dataProvider getDataForStringToSignTest
      */

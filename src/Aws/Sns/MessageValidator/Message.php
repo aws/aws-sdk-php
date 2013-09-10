@@ -17,6 +17,7 @@
 namespace Aws\Sns\MessageValidator;
 
 use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Exception\UnexpectedValueException;
 use Guzzle\Common\Collection;
 
 class Message
@@ -86,10 +87,15 @@ class Message
      * Creates a message object from the raw POST data
      *
      * @return Message
+     * @throws UnexpectedValueException If the POST data is absent, or not a valid JSON document
      */
     public static function fromRawPostData()
     {
-        return self::fromArray(json_decode(file_get_contents('php://input'), true));
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (!is_array($data)) {
+            throw new UnexpectedValueException('POST data absent, or not a valid JSON document', json_last_error());
+        }
+        return self::fromArray($data);
     }
 
     /**
