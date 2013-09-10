@@ -8,5 +8,13 @@ if (PHP_VERSION_ID >= 50400) {
      */
     interface SessionHandlerInterface extends \SessionHandlerInterface {}
 } else {
-    interface SessionHandlerInterface {}
+    interface SessionHandlerInterface
+    {
+        public function close();
+        public function destroy($session_id);
+        public function gc($maxLifetime);
+        public function open($savePath, $sessionName);
+        public function read($sessionId);
+        public function write($sessionId, $sessionData);
+    }
 }

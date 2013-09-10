@@ -5,6 +5,14 @@ Next Release:
 -------------
 
 * Added support for VPC features to the AWS OpsWorks client
+* Updated the DynamoDB Session Handler to implement the SessionHandlerInterface of PHP 5.4 when available
+* Updated the SNS Message Validator to throw an exception, instead of an error, when the raw post data is invalid
+* Fixed an issue in the S3 signature which ensures that parameters are sorted correctly for signing
+
+2.4.5 (2013-09-04)
+------------------
+
+* Added support for replication groups to the Amazon ElastiCache client
 * Added support for using the `us-gov-west-1` region to the AWS CloudFormation client
 
 2.4.4 (2013-08-29)
