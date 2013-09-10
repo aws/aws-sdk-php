@@ -39,7 +39,7 @@ use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
  * that garbage collection is not triggered randomly. You should consider using a cron job or similar scheduling
  * technique for triggering garbage collection at appropriate times.
  */
-class SessionHandler
+class SessionHandler implements SessionHandlerInterface
 {
     /**
      * @var DynamoDbClient The DynamoDB client
