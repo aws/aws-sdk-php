@@ -3841,6 +3841,60 @@ return array (
                 ),
             ),
         ),
+        'DescribeReservedInstancesModifications' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeReservedInstancesModificationsResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeReservedInstancesModifications',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-07-15',
+                ),
+                'ReservedInstancesModificationIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ReservedInstancesModificationId',
+                    'items' => array(
+                        'name' => 'ReservedInstancesModificationId',
+                        'type' => 'string',
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filter',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Values' => array(
+                                'type' => 'array',
+                                'sentAs' => 'Value',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DescribeReservedInstancesOfferings' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -5780,6 +5834,60 @@ return array (
                         'DeleteOnTermination' => array(
                             'type' => 'boolean',
                             'format' => 'boolean-string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'ModifyReservedInstances' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'ModifyReservedInstancesResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyReservedInstances',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2013-07-15',
+                ),
+                'ClientToken' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'ReservedInstancesIds' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ReservedInstancesId',
+                    'items' => array(
+                        'name' => 'ReservedInstancesId',
+                        'type' => 'string',
+                    ),
+                ),
+                'TargetConfigurations' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'ReservedInstancesConfigurationSetItemType',
+                    'items' => array(
+                        'name' => 'ReservedInstancesConfigurationSetItemType',
+                        'type' => 'object',
+                        'properties' => array(
+                            'AvailabilityZone' => array(
+                                'type' => 'string',
+                            ),
+                            'Platform' => array(
+                                'type' => 'string',
+                            ),
+                            'InstanceCount' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -11694,6 +11802,10 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'start',
                             ),
+                            'End' => array(
+                                'type' => 'string',
+                                'sentAs' => 'end',
+                            ),
                             'Duration' => array(
                                 'type' => 'numeric',
                                 'sentAs' => 'duration',
@@ -11881,6 +11993,105 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'DescribeReservedInstancesModificationsResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ReservedInstancesModifications' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'sentAs' => 'reservedInstancesModificationsSet',
+                    'items' => array(
+                        'name' => 'item',
+                        'type' => 'object',
+                        'sentAs' => 'item',
+                        'properties' => array(
+                            'ReservedInstancesModificationId' => array(
+                                'type' => 'string',
+                                'sentAs' => 'reservedInstancesModificationId',
+                            ),
+                            'ReservedInstancesIds' => array(
+                                'type' => 'array',
+                                'sentAs' => 'reservedInstancesSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'ReservedInstancesId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'reservedInstancesId',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ModificationResults' => array(
+                                'type' => 'array',
+                                'sentAs' => 'modificationResultSet',
+                                'items' => array(
+                                    'name' => 'item',
+                                    'type' => 'object',
+                                    'sentAs' => 'item',
+                                    'properties' => array(
+                                        'ReservedInstancesId' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'reservedInstancesId',
+                                        ),
+                                        'TargetConfiguration' => array(
+                                            'type' => 'object',
+                                            'sentAs' => 'targetConfiguration',
+                                            'properties' => array(
+                                                'AvailabilityZone' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'availabilityZone',
+                                                ),
+                                                'Platform' => array(
+                                                    'type' => 'string',
+                                                    'sentAs' => 'platform',
+                                                ),
+                                                'InstanceCount' => array(
+                                                    'type' => 'numeric',
+                                                    'sentAs' => 'instanceCount',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'CreateDate' => array(
+                                'type' => 'string',
+                                'sentAs' => 'createDate',
+                            ),
+                            'UpdateDate' => array(
+                                'type' => 'string',
+                                'sentAs' => 'updateDate',
+                            ),
+                            'EffectiveDate' => array(
+                                'type' => 'string',
+                                'sentAs' => 'effectiveDate',
+                            ),
+                            'Status' => array(
+                                'type' => 'string',
+                                'sentAs' => 'status',
+                            ),
+                            'StatusMessage' => array(
+                                'type' => 'string',
+                                'sentAs' => 'statusMessage',
+                            ),
+                            'ClientToken' => array(
+                                'type' => 'string',
+                                'sentAs' => 'clientToken',
+                            ),
+                        ),
+                    ),
+                ),
+                'NextToken' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'nextToken',
                 ),
             ),
         ),
@@ -13920,6 +14131,17 @@ return array (
                 ),
             ),
         ),
+        'ModifyReservedInstancesResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ReservedInstancesModificationId' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'sentAs' => 'reservedInstancesModificationId',
+                ),
+            ),
+        ),
         'MonitorInstancesResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -15055,6 +15277,11 @@ return array (
             ),
             'DescribeReservedInstancesListings' => array(
                 'result_key' => 'ReservedInstancesListings',
+            ),
+            'DescribeReservedInstancesModifications' => array(
+                'token_param' => 'NextToken',
+                'token_key' => 'NextToken',
+                'result_key' => 'ReservedInstancesModifications',
             ),
             'DescribeReservedInstancesOfferings' => array(
                 'token_param' => 'NextToken',
