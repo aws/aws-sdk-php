@@ -1,13 +1,16 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.4.6 (2013-09-12)
+------------------
 
+* Added support for modifying EC2 Reserved Instances to the Amazon EC2 client
 * Added support for VPC features to the AWS OpsWorks client
 * Updated the DynamoDB Session Handler to implement the SessionHandlerInterface of PHP 5.4 when available
 * Updated the SNS Message Validator to throw an exception, instead of an error, when the raw post data is invalid
 * Fixed an issue in the S3 signature which ensures that parameters are sorted correctly for signing
+* Fixed an issue in the S3 client where the Sydney region was not allowed as a `LocationConstraint` for the
+  `PutObject` operation
 
 2.4.5 (2013-09-04)
 ------------------
