@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-07-15',
+    'apiVersion' => '2013-08-15',
     'endpointPrefix' => 'ec2',
     'serviceFullName' => 'Amazon Elastic Compute Cloud',
     'serviceAbbreviation' => 'Amazon EC2',
