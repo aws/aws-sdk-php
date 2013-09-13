@@ -173,7 +173,6 @@ class CloudFrontClient extends AbstractClient
         $signedPolicy = strtr(base64_encode($signedPolicy), '+=/', '-_~');
 
         $url->getQuery()
-            ->useUrlEncoding(false)
             ->set('Signature', $signedPolicy)
             ->set('Key-Pair-Id', $options['key_pair_id']);
 
@@ -182,6 +181,7 @@ class CloudFrontClient extends AbstractClient
             return (string) $url;
         } else {
             // Use a relative URL when creating Flash player URLs
+            $url->getQuery()->useUrlEncoding(false);
             $url->setScheme(null)->setHost(null);
             return substr($url, 1);
         }
