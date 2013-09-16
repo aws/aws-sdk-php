@@ -31,7 +31,7 @@ class CloudSearchClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-east-1'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV2', $this->readAttribute($client, 'signature'));
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $this->readAttribute($client, 'signature'));
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://cloudsearch.us-east-1.amazonaws.com', $client->getBaseUrl());
     }

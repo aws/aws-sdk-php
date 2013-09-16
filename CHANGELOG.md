@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Updated the Amazon CloudSearch client to use Signature Version 4
+
 2.4.6 (2013-09-12)
 ------------------
 
