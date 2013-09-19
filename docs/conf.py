@@ -252,8 +252,8 @@ texinfo_documents = [
 #texinfo_show_urls = 'footnote'
 
 # -- HTML theme settings ------------------------------------------------
-
 import guzzle_sphinx_theme
+extensions.append("guzzle_sphinx_theme")
 pygments_style = 'guzzle_sphinx_theme.GuzzleStyle'
 html_translator_class = 'guzzle_sphinx_theme.HTMLTranslator'
 html_theme_path = guzzle_sphinx_theme.html_theme_path()
@@ -265,5 +265,6 @@ html_theme_options = {
     "google_analytics_account": os.getenv('TRACKING', False),
     "project_nav_name": "AWS SDK for PHP",
     "github_user": "aws",
-    "github_repo": "aws-sdk-php"
+    "github_repo": "aws-sdk-php",
+    "base_url": "http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/"
 }
