@@ -5,6 +5,14 @@ Next Release
 ------------
 
 * Updated the Amazon CloudSearch client to use Signature Version 4
+* Fixed an issue with the Amazon S3 Client so that the top-level XML element of
+  the `CompleteMultipartUpload` operation is correctly sent as
+  `CompleteMultipartUpload`
+* Fixed an issue with the Amazon S3 Client so that you can now disable bucket
+  logging using with the `PutBucketLogging` operation
+* Fixed an issue with the Amazon CloudFront so that query string parameters in
+  pre-signed URLs are correctly URL-encoded
+* Added the ability to easily specify event listeners on waiters
 
 2.4.6 (2013-09-12)
 ------------------
