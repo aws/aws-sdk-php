@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for custom error page configuration to the Amazon CloudFront client
 * Added support for the public IP address association of instances in Auto Scaling group via the Auto Scaling client
 * Added the ability to easily specify event listeners on waiters
 * Updated the Amazon CloudSearch client to use Signature Version 4
