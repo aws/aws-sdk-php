@@ -4,6 +4,7 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for the public IP address association of instances in Auto Scaling group via the Auto Scaling client
 * Updated the Amazon CloudSearch client to use Signature Version 4
 * Fixed an issue with the Amazon S3 Client so that the top-level XML element of
   the `CompleteMultipartUpload` operation is correctly sent as

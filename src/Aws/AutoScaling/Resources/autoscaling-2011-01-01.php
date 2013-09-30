@@ -352,6 +352,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'AssociatePublicIpAddress' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -2102,6 +2107,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'EbsOptimized' => array(
+                                'type' => 'boolean',
+                            ),
+                            'AssociatePublicIpAddress' => array(
                                 'type' => 'boolean',
                             ),
                         ),
