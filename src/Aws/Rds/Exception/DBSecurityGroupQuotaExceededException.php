@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Request would result in user exceeding the allowed number of DB Security Groups.
+ * Request would result in user exceeding the allowed number of DB security groups.
  */
 class DBSecurityGroupQuotaExceededException extends RdsException {}

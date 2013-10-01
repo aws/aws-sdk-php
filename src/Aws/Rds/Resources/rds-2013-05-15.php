@@ -153,11 +153,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -203,11 +203,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the DB Security Group does not allow deletion.',
+                    'reason' => 'The state of the DB security group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
@@ -215,7 +215,7 @@ return array (
                     'class' => 'AuthorizationAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Database security group authorization quota has been reached.',
+                    'reason' => 'DB security group authorization quota has been reached.',
                     'class' => 'AuthorizationQuotaExceededException',
                 ),
             ),
@@ -247,6 +247,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -254,15 +271,15 @@ return array (
                     'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the DB Security Snapshot does not allow deletion.',
+                    'reason' => 'The state of the DB snapshot does not allow deletion.',
                     'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Snapshots.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB snapshots.',
                     'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
@@ -399,46 +416,62 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'User already has a DB Instance with the given identifier.',
+                    'reason' => 'User already has a DB instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
+                    'reason' => 'Specified DB instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
-                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
-                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -508,54 +541,70 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'User already has a DB Instance with the given identifier.',
+                    'reason' => 'User already has a DB instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
+                    'reason' => 'Specified DB instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
-                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
-                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -600,14 +649,31 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Parameter Groups.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB parameter groups.',
                     'class' => 'DBParameterGroupQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'A DB Parameter Group with the same name exists.',
+                    'reason' => 'A DB parameter group with the same name exists.',
                     'class' => 'DBParameterGroupAlreadyExistsException',
                 ),
             ),
@@ -639,14 +705,31 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'A database security group with the name specified in DBSecurityGroupName already exists.',
+                    'reason' => 'A DB security group with the name specified in DBSecurityGroupName already exists.',
                     'class' => 'DBSecurityGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Security Groups.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB security groups.',
                     'class' => 'DBSecurityGroupQuotaExceededException',
                 ),
                 array(
@@ -682,6 +765,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -689,15 +789,15 @@ return array (
                     'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Snapshots.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB snapshots.',
                     'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
@@ -739,26 +839,42 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSubnetGroupName is already used by an existing DBSubnetGroup.',
+                    'reason' => 'DBSubnetGroupName is already used by an existing DB subnet group.',
                     'class' => 'DBSubnetGroupAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Subnet Groups.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB subnet groups.',
                     'class' => 'DBSubnetGroupQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a DB subnet Groups.',
+                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a DB subnet groups.',
                     'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
-                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -816,6 +932,23 @@ return array (
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -886,6 +1019,23 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -932,11 +1082,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
@@ -944,7 +1094,7 @@ return array (
                     'class' => 'DBSnapshotAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Snapshots.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB snapshots.',
                     'class' => 'SnapshotQuotaExceededException',
                 ),
             ),
@@ -974,11 +1124,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The DB Parameter Group cannot be deleted because it is in use.',
+                    'reason' => 'The DB parameter group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBParameterGroupStateException',
                 ),
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -1008,11 +1158,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The state of the DB Security Group does not allow deletion.',
+                    'reason' => 'The state of the DB security group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
@@ -1042,11 +1192,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The state of the DB Security Snapshot does not allow deletion.',
+                    'reason' => 'The state of the DB snapshot does not allow deletion.',
                     'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -1076,7 +1226,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The DB Subnet Group cannot be deleted because it is in use.',
+                    'reason' => 'The DB subnet group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBSubnetGroupStateException',
                 ),
                 array(
@@ -1084,7 +1234,7 @@ return array (
                     'class' => 'InvalidDBSubnetStateException',
                 ),
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
             ),
@@ -1152,7 +1302,7 @@ return array (
                     'class' => 'OptionGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The Option Group is not in the available state.',
+                    'reason' => 'The option group is not in the available state.',
                     'class' => 'InvalidOptionGroupStateException',
                 ),
             ),
@@ -1227,6 +1377,30 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1238,7 +1412,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -1261,6 +1435,7 @@ return array (
                     'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1287,7 +1462,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -1313,6 +1488,30 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1324,7 +1523,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -1366,7 +1565,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -1392,6 +1591,30 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1403,7 +1626,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
             ),
@@ -1437,6 +1660,30 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1448,7 +1695,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -1474,6 +1721,30 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1485,7 +1756,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
             ),
@@ -1565,6 +1836,30 @@ return array (
                 'SubscriptionName' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
+                ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
@@ -1711,6 +2006,30 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'Marker' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1830,6 +2149,30 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'Filters' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Filters.member',
+                    'items' => array(
+                        'name' => 'Filter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'FilterName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'FilterValue' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'sentAs' => 'FilterValue.member',
+                                'items' => array(
+                                    'name' => 'Value',
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -1922,10 +2265,12 @@ return array (
                     'default' => '2013-05-15',
                 ),
                 'DBInstanceIdentifier' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'LogFileName' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -1940,7 +2285,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -1970,11 +2315,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -2086,39 +2431,39 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'reason' => 'The state of the DB Security Group does not allow deletion.',
+                    'reason' => 'The state of the DB security group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
                 array(
-                    'reason' => 'User already has a DB Instance with the given identifier.',
+                    'reason' => 'User already has a DB instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
+                    'reason' => 'Specified DB instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -2206,11 +2551,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'The DB Parameter Group cannot be deleted because it is in use.',
+                    'reason' => 'The DB parameter group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBParameterGroupStateException',
                 ),
             ),
@@ -2254,23 +2599,22 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a DB subnet Groups.',
+                    'reason' => 'Request would result in user exceeding the allowed number of subnets in a DB subnet groups.',
                     'class' => 'DBSubnetQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'The DB subnet is already in use in the availability zone.',
+                    'reason' => 'The DB subnet is already in use in the Availability Zone.',
                     'class' => 'SubnetAlreadyInUseException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
-                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -2459,7 +2803,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The Option Group is not in the available state.',
+                    'reason' => 'The option group is not in the available state.',
                     'class' => 'InvalidOptionGroupStateException',
                 ),
                 array(
@@ -2501,11 +2845,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -2539,6 +2883,23 @@ return array (
                 'DBInstanceCount' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
+                ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -2586,11 +2947,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
             ),
@@ -2669,11 +3030,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
             ),
@@ -2754,11 +3115,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The DB Parameter Group cannot be deleted because it is in use.',
+                    'reason' => 'The DB parameter group cannot be deleted because it is in use.',
                     'class' => 'InvalidDBParameterGroupStateException',
                 ),
                 array(
-                    'reason' => 'DBParameterGroupName does not refer to an existing DB Parameter Group.',
+                    'reason' => 'DBParameterGroupName does not refer to an existing DB parameter group.',
                     'class' => 'DBParameterGroupNotFoundException',
                 ),
             ),
@@ -2841,34 +3202,51 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'User already has a DB Instance with the given identifier.',
+                    'reason' => 'User already has a DB instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB Snapshot.',
+                    'reason' => 'DBSnapshotIdentifier does not refer to an existing DB snapshot.',
                     'class' => 'DBSnapshotNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
+                    'reason' => 'Specified DB instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'reason' => 'The state of the DB Security Snapshot does not allow deletion.',
+                    'reason' => 'The state of the DB snapshot does not allow deletion.',
                     'class' => 'InvalidDBSnapshotStateException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -2876,15 +3254,14 @@ return array (
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
-                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
@@ -2989,38 +3366,55 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'User already has a DB Instance with the given identifier.',
+                    'reason' => 'User already has a DB instance with the given identifier.',
                     'class' => 'DBInstanceAlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB Instance.',
+                    'reason' => 'DBInstanceIdentifier does not refer to an existing DB instance.',
                     'class' => 'DBInstanceNotFoundException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed number of DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed number of DB instances.',
                     'class' => 'InstanceQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'Specified DB Instance class is not available in the specified Availability Zone.',
+                    'reason' => 'Specified DB instance class is not available in the specified Availability Zone.',
                     'class' => 'InsufficientDBInstanceCapacityException',
                 ),
                 array(
-                    'reason' => 'The specified DB Instance is not in the available state.',
+                    'reason' => 'The specified DB instance is not in the available state.',
                     'class' => 'InvalidDBInstanceStateException',
                 ),
                 array(
-                    'reason' => 'SourceDBInstanceIdentifier refers to a DB Instance with BackupRetentionPeriod equal to 0.',
+                    'reason' => 'SourceDBInstanceIdentifier refers to a DB instance with BackupRetentionPeriod equal to 0.',
                     'class' => 'PointInTimeRestoreNotEnabledException',
                 ),
                 array(
-                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB Instances.',
+                    'reason' => 'Request would result in user exceeding the allowed amount of storage available across all DB instances.',
                     'class' => 'StorageQuotaExceededException',
                 ),
                 array(
-                    'reason' => 'DB Subnet Group does not cover all availability zones after it is created because users\' change.',
+                    'reason' => 'DB subnet group does not cover all Availability Zones after it is created because users\' change.',
                     'class' => 'InvalidVPCNetworkStateException',
                 ),
                 array(
@@ -3028,15 +3422,14 @@ return array (
                     'class' => 'InvalidRestoreException',
                 ),
                 array(
-                    'reason' => 'DBSubnetGroupName does not refer to an existing DB Subnet Group.',
+                    'reason' => 'DBSubnetGroupName does not refer to an existing DB subnet group.',
                     'class' => 'DBSubnetGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Subnets in the DB subnet group should cover at least 2 availability zones unless there\'s\'only 1 available zone.',
+                    'reason' => 'Subnets in the DB subnet group should cover at least 2 Availability Zones unless there is only 1 availablility zone.',
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
-                    'reason' => 'Request subnet is valid, or all subnets are not in common Vpc.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
@@ -3090,15 +3483,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'DBSecurityGroupName does not refer to an existing DB Security Group.',
+                    'reason' => 'DBSecurityGroupName does not refer to an existing DB security group.',
                     'class' => 'DBSecurityGroupNotFoundException',
                 ),
                 array(
-                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB Security Group.',
+                    'reason' => 'Specified CIDRIP or EC2 security group is not authorized for the specified DB security group.',
                     'class' => 'AuthorizationNotFoundException',
                 ),
                 array(
-                    'reason' => 'The state of the DB Security Group does not allow deletion.',
+                    'reason' => 'The state of the DB security group does not allow deletion.',
                     'class' => 'InvalidDBSecurityGroupStateException',
                 ),
             ),

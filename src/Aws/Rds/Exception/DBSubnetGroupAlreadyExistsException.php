@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * DBSubnetGroupName is already used by an existing DBSubnetGroup.
+ * DBSubnetGroupName is already used by an existing DB subnet group.
  */
 class DBSubnetGroupAlreadyExistsException extends RdsException {}

@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * The specified DB Instance is not in the available state.
+ * The specified DB instance is not in the available state.
  */
 class InvalidDBInstanceStateException extends RdsException {}

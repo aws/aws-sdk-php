@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Request would result in user exceeding the allowed number of subnets in a DB subnet Groups.
+ * Request would result in user exceeding the allowed number of subnets in a DB subnet groups.
  */
 class DBSubnetQuotaExceededException extends RdsException {}

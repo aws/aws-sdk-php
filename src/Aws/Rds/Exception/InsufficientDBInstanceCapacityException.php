@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Specified DB Instance class is not available in the specified Availability Zone.
+ * Specified DB instance class is not available in the specified Availability Zone.
  */
 class InsufficientDBInstanceCapacityException extends RdsException {}

@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * The DB subnet is already in use in the availability zone.
+ * The DB subnet is already in use in the Availability Zone.
  */
 class SubnetAlreadyInUseException extends RdsException {}

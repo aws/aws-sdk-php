@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * DB Subnet Group does not cover all availability zones after it is created because users' change.
+ * DB subnet group does not cover all Availability Zones after it is created because users' change.
  */
 class InvalidVPCNetworkStateException extends RdsException {}

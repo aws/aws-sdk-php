@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * A database security group with the name specified in DBSecurityGroupName already exists.
+ * A DB security group with the name specified in DBSecurityGroupName already exists.
  */
 class DBSecurityGroupAlreadyExistsException extends RdsException {}

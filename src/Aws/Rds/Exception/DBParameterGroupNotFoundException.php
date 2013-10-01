@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * DBParameterGroupName does not refer to an existing DB Parameter Group.
+ * DBParameterGroupName does not refer to an existing DB parameter group.
  */
 class DBParameterGroupNotFoundException extends RdsException {}

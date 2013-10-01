@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * DBSubnetGroupName does not refer to an existing DB Subnet Group.
+ * DBSubnetGroupName does not refer to an existing DB subnet group.
  */
 class DBSubnetGroupNotFoundException extends RdsException {}
