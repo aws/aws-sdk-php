@@ -16,8 +16,8 @@ Upgrade PHP
 Using an up-to-date version of PHP will generally improve the performance of your PHP applications. Did you know that
 PHP 5.4 is `20-40% faster <http://news.php.net/php.internals/57760>`_ than PHP 5.3?
 `Upgrading to PHP 5.4 <http://www.php.net/manual/en/migration54.php>`_ or greater will provide better performance and
-lower memory usage. If you cannot upgrade from PHP 5.3 to PHP 5.4, upgrading to PHP 5.3.18 or greater will improve
-performance over older version of PHP 5.3.
+lower memory usage. If you cannot upgrade from PHP 5.3 to PHP 5.4 or PHP 5.5, upgrading to PHP 5.3.18 or greater will
+improve performance over older versions of PHP 5.3.
 
 You can install PHP 5.4 on an Amazon Linux AMI using the following command.
 
@@ -25,19 +25,28 @@ You can install PHP 5.4 on an Amazon Linux AMI using the following command.
 
     yum install php54
 
-Use an opcode cache like APC
-----------------------------
+Use PHP 5.5 or an opcode cache like APC
+---------------------------------------
 
-To improve the overall performance of your PHP environment, it is highly recommended that you install an opcode cache
-such as APC, XCache, or WinCache. By default, PHP must load a file from disk, parse the PHP code into opcodes, and
-finally execute the opcodes. Installing an opcode cache like APC allows the parsed opcodes to be cached in memory so
-that you do not need to parse the script on every web server request, and in ideal circumstances, these opcodes can be
-served directly from memory.
+To improve the overall performance of your PHP environment, it is highly recommended that you use an opcode cache
+such as the OPCache built into PHP 5.5, APC, XCache, or WinCache. By default, PHP must load a file from disk, parse
+the PHP code into opcodes, and finally execute the opcodes. Installing an opcode cache allows the parsed opcodes to
+be cached in memory so that you do not need to parse the script on every web server request, and in ideal
+circumstances, these opcodes can be served directly from memory.
 
 We have taken great care to ensure that the SDK will perform well in an environment that utilizes an opcode cache.
 
+.. note::
+
+    PHP 5.5 comes with an opcode cache that is installed and enabled by default:
+    http://php.net/manual/en/book.opcache.php
+
+    If you are using PHP 5.5, then you may skip the remainder of this section.
+
 APC
 ~~~
+
+If you are not able to run PHP 5.5, then we recommend using APC as an opcode cache.
 
 Installing on Amazon Linux
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -123,17 +132,6 @@ autoloader to improve the autoloader's speed. You can generate a classmap autolo
 
 Please consult the :doc:`installation` guide for more information on how to install the SDK using Composer.
 
-Do not use the phar in production
----------------------------------
-
-The phar file bundled with the SDK is meant to help get customers up and running with the SDK as quickly as possible.
-You are encouraged to utilize the phar for exploratory or development purposes, but when running in production, using
-the phar will come at a performance cost. According to the creator of PHP's phar extension,
-`APC does not cache the contents of phar files <http://www.reddit.com/r/PHP/comments/13uwgk/phar_performance/c77kmjb>`_.
-Because of this, you will not benefit at all from APC's opcode caching when using the phar file.
-
-We recommend using Composer with an optimized classmap autoloader when running in production.
-
 Uninstall Xdebug
 ----------------
 
@@ -210,22 +208,6 @@ utilize the `Doctrine Cache <https://github.com/doctrine/cache>`_ PHP library to
             }
         }
 
-Preload frequently included files
----------------------------------
-
-The AWS SDK for PHP 2 adheres to PSR-0 and heavily utilizes class autoloading. Each class is in a separate file and
-are included lazily as they are required. Enabling an opcode cache like APC, setting ``apc.stat=0``, and utilizing an
-optimized Composer autoloader will help to mitigate the performance cost of autoloading the classes needed to utilize
-the SDK. In situations like hosting a webpage where you are loading the same classes over and over, you can shave off a
-bit more time by compiling all of the autoloaded classes into a single file thereby completely eliminating the cost of
-autoloading. This technique can not only speed up the use of the SDK for specific use cases (e.g. using the
-Amazon DynamoDB session handler), but can also speed up other aspects of your application. Even with ``apc.stat=0``,
-preloading classes that you know will be used in your application will be slightly faster than relying on autoloading.
-
-You can easily generate a compiled autoloader file using the
-`ClassPreloader <https://github.com/mtdowling/ClassPreloader>`_ project. View the project's README for information on
-creating a "preloader" for use with the AWS SDK for PHP.
-
 Check if you are being throttled
 --------------------------------
 
@@ -242,6 +224,22 @@ You can check to see if you are being throttled by enabling the exponential back
 
 When using Amazon DynamoDB, you can monitor your tables for throttling using
 `Amazon CloudWatch <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/MonitoringDynamoDB.html#CloudwatchConsole_DynamoDB>`_.
+
+Preload frequently included files
+---------------------------------
+
+The AWS SDK for PHP 2 adheres to PSR-0 and heavily utilizes class autoloading. Each class is in a separate file and
+are included lazily as they are required. Enabling an opcode cache like APC, setting ``apc.stat=0``, and utilizing an
+optimized Composer autoloader will help to mitigate the performance cost of autoloading the classes needed to utilize
+the SDK. In situations like hosting a webpage where you are loading the same classes over and over, you can shave off a
+bit more time by compiling all of the autoloaded classes into a single file thereby completely eliminating the cost of
+autoloading. This technique can not only speed up the use of the SDK for specific use cases (e.g. using the
+Amazon DynamoDB session handler), but can also speed up other aspects of your application. Even with ``apc.stat=0``,
+preloading classes that you know will be used in your application will be slightly faster than relying on autoloading.
+
+You can easily generate a compiled autoloader file using the
+`ClassPreloader <https://github.com/mtdowling/ClassPreloader>`_ project. View the project's README for information on
+creating a "preloader" for use with the AWS SDK for PHP.
 
 Profile your code to find performance bottlenecks
 -------------------------------------------------
