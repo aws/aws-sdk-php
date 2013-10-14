@@ -9,6 +9,7 @@ Next Release
 * Added support for tags and filters to various operations in the Amazon RDS client
 * Added the ability to easily specify event listeners on waiters
 * Updated the Amazon CloudSearch client to use Signature Version 4
+* Updated AWS OpsWorks to the latest version
 * Fixed an issue with the Amazon S3 Client so that the top-level XML element of the `CompleteMultipartUpload` operation
   is correctly sent as `CompleteMultipartUpload`
 * Fixed an issue with the Amazon S3 Client so that you can now disable bucket logging using with the `PutBucketLogging`
