@@ -1,4 +1,4 @@
-# AWS SDK for PHP 2
+# AWS SDK for PHP
 
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php/version.png)](https://packagist.org/packages/aws/aws-sdk-php)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php/d/total.png)](https://packagist.org/packages/aws/aws-sdk-php)

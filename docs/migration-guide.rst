@@ -2,8 +2,8 @@
 Migration Guide
 ===============
 
-This guide shows how to migrate your code to use the new AWS SDK for PHP 2 and how the new SDK differs from the first
-version of the SDK.
+This guide shows how to migrate your code to use the new AWS SDK for PHP and how the new SDK differs from the
+AWS SDK for PHP - Version 1.
 
 Introduction
 ------------
@@ -22,9 +22,9 @@ is compatible with PHP 5.3.3 and newer, and follows the PSR-0 standard for names
 Which Services are Supported?
 -----------------------------
 
-The AWS SDK for PHP 2 supports all of the AWS services supported by Version 1 of the SDK and more, including Amazon
+The AWS SDK for PHP supports all of the AWS services supported by Version 1 of the SDK and more, including Amazon
 Route 53, Amazon Glacier, and AWS Direct Connect. See the `AWS SDK for PHP website <http://aws.amazon.com/sdkforphp/>`_
-for the full list of services supported by the SDK. Be sure to watch or star our `AWS SDK for PHP 2 GitHub repository
+for the full list of services supported by the SDK. Be sure to watch or star our `AWS SDK for PHP GitHub repository
 <https://github.com/aws/aws-sdk-php>`_ to stay up-to-date with the latest changes.
 
 What's New?
