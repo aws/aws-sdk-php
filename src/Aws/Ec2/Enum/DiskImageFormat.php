@@ -23,6 +23,7 @@ use Aws\Common\Enum;
  */
 class DiskImageFormat extends Enum
 {
-    const VMDK = 'vmdk';
-    const VHD = 'vhd';
+    const VMDK = 'VMDK';
+    const RAW = 'RAW';
+    const VHD = 'VHD';
 }
