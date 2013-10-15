@@ -42,6 +42,11 @@ return array (
             'https' => true,
             'hostname' => 'glacier.eu-west-1.amazonaws.com',
         ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.ap-southeast-2.amazonaws.com',
+        ),
         'ap-northeast-1' => array(
             'http' => true,
             'https' => true,
