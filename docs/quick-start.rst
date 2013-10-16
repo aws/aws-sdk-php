@@ -47,6 +47,8 @@ You can quickly get up and running by using a web service client's factory metho
 **Note:** Instantiating a client without providing credentials causes the client to attempt to retrieve `IAM Instance
 Profile credentials
 <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
+Instance Profile Credentials are not supported by every service. `Please check if the service you are using supports
+temporary credentials <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
 
 Commands
 --------
