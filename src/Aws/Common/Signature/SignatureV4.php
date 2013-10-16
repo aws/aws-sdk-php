@@ -192,10 +192,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
 
         // Continue to build the canonical request by adding headers
         foreach ($headers as $key => $values) {
-            // Combine multi-value headers into a sorted comma separated list
-            if (count($values) > 1) {
-                sort($values);
-            }
+            // Combine multi-value headers into a comma separated list
             $canon .= $key . ':' . implode(',', $values) . "\n";
         }
 
