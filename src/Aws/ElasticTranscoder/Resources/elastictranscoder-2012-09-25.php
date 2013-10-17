@@ -180,6 +180,43 @@ return array (
                                 ),
                             ),
                         ),
+                        'AlbumArt' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'MergePolicy' => array(
+                                    'type' => 'string',
+                                ),
+                                'Artwork' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Artwork',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'InputKey' => array(
+                                                'type' => 'string',
+                                                'minLength' => 1,
+                                                'maxLength' => 255,
+                                            ),
+                                            'MaxWidth' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'MaxHeight' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'SizingPolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'PaddingPolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'AlbumArtFormat' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'Outputs' => array(
@@ -222,6 +259,43 @@ return array (
                                             'type' => 'string',
                                             'minLength' => 1,
                                             'maxLength' => 255,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'AlbumArt' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'MergePolicy' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Artwork' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Artwork',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'InputKey' => array(
+                                                    'type' => 'string',
+                                                    'minLength' => 1,
+                                                    'maxLength' => 255,
+                                                ),
+                                                'MaxWidth' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'MaxHeight' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'SizingPolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'PaddingPolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'AlbumArtFormat' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -1336,6 +1410,41 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'AlbumArt' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'MergePolicy' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Artwork' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Artwork',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'InputKey' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'MaxWidth' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'MaxHeight' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'SizingPolicy' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'PaddingPolicy' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'AlbumArtFormat' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -1388,6 +1497,41 @@ return array (
                                                 ),
                                                 'InputKey' => array(
                                                     'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'AlbumArt' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Artwork' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Artwork',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'InputKey' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxWidth' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxHeight' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'SizingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'PaddingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'AlbumArtFormat' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -1806,6 +1950,41 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'AlbumArt' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Artwork' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Artwork',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'InputKey' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxWidth' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxHeight' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'SizingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'PaddingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'AlbumArtFormat' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -1858,6 +2037,41 @@ return array (
                                                     ),
                                                     'InputKey' => array(
                                                         'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'AlbumArt' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'MergePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Artwork' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'Artwork',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'InputKey' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'MaxWidth' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'MaxHeight' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'SizingPolicy' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'PaddingPolicy' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'AlbumArtFormat' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
                                                     ),
                                                 ),
                                             ),
@@ -1999,6 +2213,41 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'AlbumArt' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Artwork' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Artwork',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'InputKey' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxWidth' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxHeight' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'SizingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'PaddingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'AlbumArtFormat' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -2051,6 +2300,41 @@ return array (
                                                     ),
                                                     'InputKey' => array(
                                                         'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'AlbumArt' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'MergePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Artwork' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'Artwork',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'InputKey' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'MaxWidth' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'MaxHeight' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'SizingPolicy' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'PaddingPolicy' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'AlbumArtFormat' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
                                                     ),
                                                 ),
                                             ),
@@ -2475,6 +2759,41 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'AlbumArt' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'MergePolicy' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Artwork' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Artwork',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'InputKey' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'MaxWidth' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'MaxHeight' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'SizingPolicy' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'PaddingPolicy' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'AlbumArtFormat' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -2527,6 +2846,41 @@ return array (
                                                 ),
                                                 'InputKey' => array(
                                                     'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'AlbumArt' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Artwork' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Artwork',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'InputKey' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxWidth' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'MaxHeight' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'SizingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'PaddingPolicy' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'AlbumArtFormat' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),
