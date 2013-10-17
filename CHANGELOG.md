@@ -4,6 +4,7 @@ CHANGELOG
 2.4.7 (2013-10-17)
 ------------------
 
+* Added support for audio transcoding features to the Amazon Elastic Transcoder client
 * Added support for modifying Reserved Instances in a region to the Amazon EC2 client
 * Added support for new resource management features to the AWS OpsWorks client
 * Added support for additional HTTP methods to the Amazon CloudFront client
@@ -22,6 +23,8 @@ CHANGELOG
 * Fixed an issue with the Amazon S3 Client so that you can now disable bucket logging using with the `PutBucketLogging`
   operation
 * Fixed an issue with the Amazon CloudFront so that query string parameters in pre-signed URLs are correctly URL-encoded
+* Fixed an issue with the Signature Version 4 implementation where headers with multiple values were sometimes sorted
+  and signed incorrectly
 
 2.4.6 (2013-09-12)
 ------------------
