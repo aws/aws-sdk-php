@@ -4,12 +4,17 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for modifying Reserved Instances in a region to the Amazon EC2 client
+* Added support for new resource management features to the AWS OpsWorks client
 * Added support for custom error page configuration to the Amazon CloudFront client
 * Added support for the public IP address association of instances in Auto Scaling group via the Auto Scaling client
 * Added support for tags and filters to various operations in the Amazon RDS client
 * Added the ability to easily specify event listeners on waiters
+* Added support for using the `ap-southeast-2` region to the Amazon Glacier client
+* Added support for using the `ap-southeast-1` and `ap-southeast-2` regions to the Amazon Redshift client
+* Updated the Amazon EC2 client to use the 2013-09-11 API version
+* Updated the AWS OpsWorks client to use the 2013-07-15 API version
 * Updated the Amazon CloudSearch client to use Signature Version 4
-* Updated AWS OpsWorks to the latest version
 * Fixed an issue with the Amazon S3 Client so that the top-level XML element of the `CompleteMultipartUpload` operation
   is correctly sent as `CompleteMultipartUpload`
 * Fixed an issue with the Amazon S3 Client so that you can now disable bucket logging using with the `PutBucketLogging`
