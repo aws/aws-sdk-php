@@ -167,7 +167,6 @@ class CloudFrontClientTest extends \Guzzle\Tests\GuzzleTestCase
     {
         return array(
             array(array(), 'Aws\Common\Signature\SignatureV4'),
-            array(array('version' => '2013-08-26'), 'Aws\Common\Signature\SignatureV4'),
             array(array('version' => '2012-05-05'), 'Aws\CloudFront\CloudFrontSignature'),
         );
     }
