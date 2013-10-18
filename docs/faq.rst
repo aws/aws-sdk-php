@@ -5,7 +5,7 @@ Frequently Asked Questions (FAQ)
 What methods are available on a client?
 ---------------------------------------
 
-The AWS SDK for PHP 2 utilizes service descriptions and dynamic
+The AWS SDK for PHP utilizes service descriptions and dynamic
 `magic __call() methods <http://www.php.net/manual/en/language.oop5.overloading.php#object.call>`_ to execute API
 operations. Every magic method supported by a client is documented in the docblock of a client class using ``@method``
 annotations. Several PHP IDEs, including `PHPStorm <http://www.jetbrains.com/phpstorm/>`_ and

@@ -145,6 +145,9 @@ These credentials are only available on Amazon EC2 instances configured with an 
 If absolutely no credentials are provided or found, you will receive an
 ``Aws\Common\Exception\InstanceProfileCredentialsException`` when you try to make a request.
 
+Instance Profile Credentials are not supported by every service. `Please check if the service you are using supports
+temporary credentials <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
+
 Manually Setting Credentials
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -1,19 +1,30 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.4.7 (2013-10-17)
+------------------
 
+* Added support for audio transcoding features to the Amazon Elastic Transcoder client
+* Added support for modifying Reserved Instances in a region to the Amazon EC2 client
+* Added support for new resource management features to the AWS OpsWorks client
+* Added support for additional HTTP methods to the Amazon CloudFront client
 * Added support for custom error page configuration to the Amazon CloudFront client
 * Added support for the public IP address association of instances in Auto Scaling group via the Auto Scaling client
 * Added support for tags and filters to various operations in the Amazon RDS client
 * Added the ability to easily specify event listeners on waiters
+* Added support for using the `ap-southeast-2` region to the Amazon Glacier client
+* Added support for using the `ap-southeast-1` and `ap-southeast-2` regions to the Amazon Redshift client
+* Updated the Amazon EC2 client to use the 2013-09-11 API version
+* Updated the Amazon CloudFront client to use the 2013-09-27 API version
+* Updated the AWS OpsWorks client to use the 2013-07-15 API version
 * Updated the Amazon CloudSearch client to use Signature Version 4
 * Fixed an issue with the Amazon S3 Client so that the top-level XML element of the `CompleteMultipartUpload` operation
   is correctly sent as `CompleteMultipartUpload`
 * Fixed an issue with the Amazon S3 Client so that you can now disable bucket logging using with the `PutBucketLogging`
   operation
 * Fixed an issue with the Amazon CloudFront so that query string parameters in pre-signed URLs are correctly URL-encoded
+* Fixed an issue with the Signature Version 4 implementation where headers with multiple values were sometimes sorted
+  and signed incorrectly
 
 2.4.6 (2013-09-12)
 ------------------

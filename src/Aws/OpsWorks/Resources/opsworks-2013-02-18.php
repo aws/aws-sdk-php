@@ -31,6 +31,90 @@ return array (
         ),
     ),
     'operations' => array(
+        'AssignVolume' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.AssignVolume',
+                ),
+                'VolumeId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'AssociateElasticIp' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.AssociateElasticIp',
+                ),
+                'ElasticIp' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'AttachElasticLoadBalancer' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -684,6 +768,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
+                'AutoAssignPublicIps' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
                 'CustomRecipes' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -1126,6 +1215,82 @@ return array (
                 ),
             ),
         ),
+        'DeregisterElasticIp' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DeregisterElasticIp',
+                ),
+                'ElasticIp' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'DeregisterVolume' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DeregisterVolume',
+                ),
+                'VolumeId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'DescribeApps' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1294,6 +1459,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'StackId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'Ips' => array(
                     'type' => 'array',
                     'location' => 'json',
@@ -1430,7 +1599,6 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeLayers',
                 ),
                 'StackId' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1783,6 +1951,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'StackId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'RaidArrayId' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -1846,6 +2018,44 @@ return array (
                 ),
             ),
         ),
+        'DisassociateElasticIp' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DisassociateElasticIp',
+                ),
+                'ElasticIp' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'GetHostnameSuggestion' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1902,6 +2112,91 @@ return array (
                     'default' => 'OpsWorks_20130218.RebootInstance',
                 ),
                 'InstanceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'RegisterElasticIp' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'RegisterElasticIpResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.RegisterElasticIp',
+                ),
+                'ElasticIp' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'StackId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'RegisterVolume' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'RegisterVolumeResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.RegisterVolume',
+                ),
+                'Ec2VolumeId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'StackId' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
@@ -2329,6 +2624,44 @@ return array (
                 ),
             ),
         ),
+        'UnassignVolume' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.UnassignVolume',
+                ),
+                'VolumeId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'UpdateApp' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2443,6 +2776,48 @@ return array (
                             'shape_name' => 'AppAttributesKeys',
                         ),
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'UpdateElasticIp' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.UpdateElasticIp',
+                ),
+                'ElasticIp' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -2638,6 +3013,11 @@ return array (
                     'location' => 'json',
                 ),
                 'AutoAssignElasticIps' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'AutoAssignPublicIps' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -2870,6 +3250,52 @@ return array (
                     'location' => 'json',
                 ),
                 'SshPublicKey' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'UpdateVolume' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.UpdateVolume',
+                ),
+                'VolumeId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'MountPoint' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -3191,6 +3617,9 @@ return array (
                             'Region' => array(
                                 'type' => 'string',
                             ),
+                            'InstanceId' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -3440,6 +3869,9 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'AutoAssignElasticIps' => array(
+                                'type' => 'boolean',
+                            ),
+                            'AutoAssignPublicIps' => array(
                                 'type' => 'boolean',
                             ),
                             'DefaultRecipes' => array(
@@ -3962,6 +4394,26 @@ return array (
                     'location' => 'json',
                 ),
                 'Hostname' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'RegisterElasticIpResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ElasticIp' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'RegisterVolumeResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'VolumeId' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),

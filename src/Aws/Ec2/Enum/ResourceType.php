@@ -27,9 +27,15 @@ class ResourceType extends Enum
     const DHCP_OPTIONS = 'dhcp-options';
     const IMAGE = 'image';
     const INSTANCE = 'instance';
+    const INTERNET_GATEWAY = 'internet-gateway';
+    const NETWORK_ACL = 'network-acl';
+    const NETWORK_INTERFACE = 'network-interface';
+    const RESERVED_INSTANCES = 'reserved-instances';
+    const ROUTE_TABLE = 'route-table';
     const SNAPSHOT = 'snapshot';
     const SPOT_INSTANCES_REQUEST = 'spot-instances-request';
     const SUBNET = 'subnet';
+    const SECURITY_GROUP = 'security-group';
     const VOLUME = 'volume';
     const VPC = 'vpc';
     const VPN_CONNECTION = 'vpn-connection';

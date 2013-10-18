@@ -1,9 +1,8 @@
 # Contributing to the AWS SDK for PHP
 
 We work hard to provide a high-quality and useful SDK, and we greatly value feedback and contributions from our
-community. Whether it's a new feature, correction, or additional documentation, we welcome your pull requests. With
-version 2 of the SDK, we've tried to make our development even more open than before. Please submit any
-[issues][] or [pull requests][pull-requests] through GitHub.
+community. Whether it's a new feature, correction, or additional documentation, we welcome your pull requests.
+Please submit any [issues][] or [pull requests][pull-requests] through GitHub.
 
 ## What you should keep in mind
 

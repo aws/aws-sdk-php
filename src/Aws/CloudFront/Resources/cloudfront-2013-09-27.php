@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-08-26',
+    'apiVersion' => '2013-09-27',
     'endpointPrefix' => 'cloudfront',
     'serviceFullName' => 'Amazon CloudFront',
     'serviceAbbreviation' => 'CloudFront',
@@ -68,7 +68,7 @@ return array (
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-08-26/origin-access-identity/cloudfront',
+            'uri' => '/2013-09-27/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -76,7 +76,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -121,7 +121,7 @@ return array (
         ),
         'CreateDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-08-26/distribution',
+            'uri' => '/2013-09-27/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateDistributionResult',
             'responseType' => 'model',
@@ -129,7 +129,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -306,6 +306,31 @@ return array (
                             'required' => true,
                             'type' => 'numeric',
                         ),
+                        'AllowedMethods' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Quantity' => array(
+                                    'required' => true,
+                                    'type' => 'numeric',
+                                ),
+                                'Items' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Method',
+                                        'type' => 'string',
+                                        'enum' => array(
+                                            'GET',
+                                            'HEAD',
+                                            'POST',
+                                            'PUT',
+                                            'PATCH',
+                                            'OPTIONS',
+                                            'DELETE',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'CacheBehaviors' => array(
@@ -406,6 +431,31 @@ return array (
                                     'MinTTL' => array(
                                         'required' => true,
                                         'type' => 'numeric',
+                                    ),
+                                    'AllowedMethods' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Quantity' => array(
+                                                'required' => true,
+                                                'type' => 'numeric',
+                                            ),
+                                            'Items' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Method',
+                                                    'type' => 'string',
+                                                    'enum' => array(
+                                                        'GET',
+                                                        'HEAD',
+                                                        'POST',
+                                                        'PUT',
+                                                        'PATCH',
+                                                        'OPTIONS',
+                                                        'DELETE',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -605,7 +655,7 @@ return array (
         ),
         'CreateInvalidation' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-08-26/distribution/{DistributionId}/invalidation',
+            'uri' => '/2013-09-27/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateInvalidationResult',
             'responseType' => 'model',
@@ -613,7 +663,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'InvalidationBatch',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -683,7 +733,7 @@ return array (
         ),
         'CreateStreamingDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-08-26/streaming-distribution',
+            'uri' => '/2013-09-27/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateStreamingDistributionResult',
             'responseType' => 'model',
@@ -691,7 +741,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -853,9 +903,9 @@ return array (
         ),
         'DeleteCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2013-08-26/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2013_08_26Output',
+            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2013_09_27Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -893,9 +943,9 @@ return array (
         ),
         'DeleteDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2013-08-26/distribution/{Id}',
+            'uri' => '/2013-09-27/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteDistribution2013_08_26Output',
+            'responseClass' => 'DeleteDistribution2013_09_27Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -933,9 +983,9 @@ return array (
         ),
         'DeleteStreamingDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2013-08-26/streaming-distribution/{Id}',
+            'uri' => '/2013-09-27/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteStreamingDistribution2013_08_26Output',
+            'responseClass' => 'DeleteStreamingDistribution2013_09_27Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -973,7 +1023,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1001,7 +1051,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentityConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityConfigResult',
             'responseType' => 'model',
@@ -1029,7 +1079,7 @@ return array (
         ),
         'GetDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/distribution/{Id}',
+            'uri' => '/2013-09-27/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionResult',
             'responseType' => 'model',
@@ -1057,7 +1107,7 @@ return array (
         ),
         'GetDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/distribution/{Id}/config',
+            'uri' => '/2013-09-27/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionConfigResult',
             'responseType' => 'model',
@@ -1085,7 +1135,7 @@ return array (
         ),
         'GetInvalidation' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/distribution/{DistributionId}/invalidation/{Id}',
+            'uri' => '/2013-09-27/distribution/{DistributionId}/invalidation/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetInvalidationResult',
             'responseType' => 'model',
@@ -1122,7 +1172,7 @@ return array (
         ),
         'GetStreamingDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/streaming-distribution/{Id}',
+            'uri' => '/2013-09-27/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionResult',
             'responseType' => 'model',
@@ -1150,7 +1200,7 @@ return array (
         ),
         'GetStreamingDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/streaming-distribution/{Id}/config',
+            'uri' => '/2013-09-27/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionConfigResult',
             'responseType' => 'model',
@@ -1178,7 +1228,7 @@ return array (
         ),
         'ListCloudFrontOriginAccessIdentities' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/origin-access-identity/cloudfront',
+            'uri' => '/2013-09-27/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListCloudFrontOriginAccessIdentitiesResult',
             'responseType' => 'model',
@@ -1205,7 +1255,7 @@ return array (
         ),
         'ListDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/distribution',
+            'uri' => '/2013-09-27/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListDistributionsResult',
             'responseType' => 'model',
@@ -1232,7 +1282,7 @@ return array (
         ),
         'ListInvalidations' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/distribution/{DistributionId}/invalidation',
+            'uri' => '/2013-09-27/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListInvalidationsResult',
             'responseType' => 'model',
@@ -1272,7 +1322,7 @@ return array (
         ),
         'ListStreamingDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-08-26/streaming-distribution',
+            'uri' => '/2013-09-27/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListStreamingDistributionsResult',
             'responseType' => 'model',
@@ -1299,7 +1349,7 @@ return array (
         ),
         'UpdateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2013-08-26/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1307,7 +1357,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -1374,7 +1424,7 @@ return array (
         ),
         'UpdateDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2013-08-26/distribution/{Id}/config',
+            'uri' => '/2013-09-27/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateDistributionResult',
             'responseType' => 'model',
@@ -1382,7 +1432,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -1559,6 +1609,31 @@ return array (
                             'required' => true,
                             'type' => 'numeric',
                         ),
+                        'AllowedMethods' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Quantity' => array(
+                                    'required' => true,
+                                    'type' => 'numeric',
+                                ),
+                                'Items' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Method',
+                                        'type' => 'string',
+                                        'enum' => array(
+                                            'GET',
+                                            'HEAD',
+                                            'POST',
+                                            'PUT',
+                                            'PATCH',
+                                            'OPTIONS',
+                                            'DELETE',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'CacheBehaviors' => array(
@@ -1659,6 +1734,31 @@ return array (
                                     'MinTTL' => array(
                                         'required' => true,
                                         'type' => 'numeric',
+                                    ),
+                                    'AllowedMethods' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Quantity' => array(
+                                                'required' => true,
+                                                'type' => 'numeric',
+                                            ),
+                                            'Items' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Method',
+                                                    'type' => 'string',
+                                                    'enum' => array(
+                                                        'GET',
+                                                        'HEAD',
+                                                        'POST',
+                                                        'PUT',
+                                                        'PATCH',
+                                                        'OPTIONS',
+                                                        'DELETE',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -1872,7 +1972,7 @@ return array (
         ),
         'UpdateStreamingDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2013-08-26/streaming-distribution/{Id}/config',
+            'uri' => '/2013-09-27/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateStreamingDistributionResult',
             'responseType' => 'model',
@@ -1880,7 +1980,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-08-26/',
+                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
                     ),
                 ),
             ),
@@ -2295,6 +2395,22 @@ return array (
                                 'MinTTL' => array(
                                     'type' => 'numeric',
                                 ),
+                                'AllowedMethods' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Quantity' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Items' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Method',
+                                                'type' => 'string',
+                                                'sentAs' => 'Method',
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'CacheBehaviors' => array(
@@ -2372,6 +2488,22 @@ return array (
                                             ),
                                             'MinTTL' => array(
                                                 'type' => 'numeric',
+                                            ),
+                                            'AllowedMethods' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Quantity' => array(
+                                                        'type' => 'numeric',
+                                                    ),
+                                                    'Items' => array(
+                                                        'type' => 'array',
+                                                        'items' => array(
+                                                            'name' => 'Method',
+                                                            'type' => 'string',
+                                                            'sentAs' => 'Method',
+                                                        ),
+                                                    ),
+                                                ),
                                             ),
                                         ),
                                     ),
@@ -2665,7 +2797,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteCloudFrontOriginAccessIdentity2013_08_26Output' => array(
+        'DeleteCloudFrontOriginAccessIdentity2013_09_27Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -2675,7 +2807,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteDistribution2013_08_26Output' => array(
+        'DeleteDistribution2013_09_27Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -2685,7 +2817,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteStreamingDistribution2013_08_26Output' => array(
+        'DeleteStreamingDistribution2013_09_27Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -2951,6 +3083,22 @@ return array (
                                 'MinTTL' => array(
                                     'type' => 'numeric',
                                 ),
+                                'AllowedMethods' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Quantity' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Items' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Method',
+                                                'type' => 'string',
+                                                'sentAs' => 'Method',
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'CacheBehaviors' => array(
@@ -3028,6 +3176,22 @@ return array (
                                             ),
                                             'MinTTL' => array(
                                                 'type' => 'numeric',
+                                            ),
+                                            'AllowedMethods' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Quantity' => array(
+                                                        'type' => 'numeric',
+                                                    ),
+                                                    'Items' => array(
+                                                        'type' => 'array',
+                                                        'items' => array(
+                                                            'name' => 'Method',
+                                                            'type' => 'string',
+                                                            'sentAs' => 'Method',
+                                                        ),
+                                                    ),
+                                                ),
                                             ),
                                         ),
                                     ),
@@ -3253,6 +3417,22 @@ return array (
                         'MinTTL' => array(
                             'type' => 'numeric',
                         ),
+                        'AllowedMethods' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Quantity' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Items' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Method',
+                                        'type' => 'string',
+                                        'sentAs' => 'Method',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'CacheBehaviors' => array(
@@ -3331,6 +3511,22 @@ return array (
                                     ),
                                     'MinTTL' => array(
                                         'type' => 'numeric',
+                                    ),
+                                    'AllowedMethods' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Quantity' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'Items' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Method',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'Method',
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
@@ -3929,6 +4125,22 @@ return array (
                                     'MinTTL' => array(
                                         'type' => 'numeric',
                                     ),
+                                    'AllowedMethods' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Quantity' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'Items' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Method',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'Method',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'CacheBehaviors' => array(
@@ -4006,6 +4218,22 @@ return array (
                                                 ),
                                                 'MinTTL' => array(
                                                     'type' => 'numeric',
+                                                ),
+                                                'AllowedMethods' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Quantity' => array(
+                                                            'type' => 'numeric',
+                                                        ),
+                                                        'Items' => array(
+                                                            'type' => 'array',
+                                                            'items' => array(
+                                                                'name' => 'Method',
+                                                                'type' => 'string',
+                                                                'sentAs' => 'Method',
+                                                            ),
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -4463,6 +4691,22 @@ return array (
                                 'MinTTL' => array(
                                     'type' => 'numeric',
                                 ),
+                                'AllowedMethods' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Quantity' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Items' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Method',
+                                                'type' => 'string',
+                                                'sentAs' => 'Method',
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'CacheBehaviors' => array(
@@ -4540,6 +4784,22 @@ return array (
                                             ),
                                             'MinTTL' => array(
                                                 'type' => 'numeric',
+                                            ),
+                                            'AllowedMethods' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Quantity' => array(
+                                                        'type' => 'numeric',
+                                                    ),
+                                                    'Items' => array(
+                                                        'type' => 'array',
+                                                        'items' => array(
+                                                            'name' => 'Method',
+                                                            'type' => 'string',
+                                                            'sentAs' => 'Method',
+                                                        ),
+                                                    ),
+                                                ),
                                             ),
                                         ),
                                     ),

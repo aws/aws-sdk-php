@@ -67,7 +67,7 @@ Without Composer
 Without Composer, you must manage your own project dependencies.
 
 #. Download both of the SDKs (via PEAR, GitHub, or the AWS website) into a location accessible by your project. Make
-   certain to use the pre-packaged ``aws.phar`` file, which includes all of the dependencies for the AWS SDK for PHP 2.
+   certain to use the pre-packaged ``aws.phar`` file, which includes all of the dependencies for the AWS SDK for PHP.
 
 #. In your code's bootstrap process, you need to explicitly require the bootstrap file from Version 1 of the SDK and the
    ``aws.phar`` file containing Version 2 of the SDK:
@@ -87,7 +87,7 @@ How you configure and instantiate the SDKs is determined by whether or not you a
 Instantiating Clients via the Service Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The service builder (``Aws\Common\Aws class``) in the AWS SDK for PHP 2 enables configuring all service clients with the
+The service builder (``Aws\Common\Aws class``) in the AWS SDK for PHP enables configuring all service clients with the
 same credentials. It also accepts additional settings for some or all of the clients. The service builder functionality
 is inherited from the `Guzzle <http://guzzlephp.org>`_ project.
 
@@ -177,7 +177,7 @@ These examples adopt the recommended practices of using Composer and the service
 Example 1 - Dual Amazon S3 Clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This example demonstrates using an Amazon S3 client from the AWS SDK for PHP 2 working side-by-side with an Amazon S3
+This example demonstrates using an Amazon S3 client from the AWS SDK for PHP working side-by-side with an Amazon S3
 client from the first PHP SDK.
 
 .. code-block:: php
@@ -218,9 +218,9 @@ client from the first PHP SDK.
 Example 2 - Amazon DynamoDB and Amazon SNS Clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This example shows how the AWS SDK for PHP 2 DynamoDB client works together with the SNS client from the original SDK.
+This example shows how the AWS SDK for PHP DynamoDB client works together with the SNS client from the original SDK.
 For this example, an ice cream parlor publishes a daily message (via SNS) containing its "flavors of the day" to
-subscribers. First, it retrieves the flavors of the day from its DynamoDB database using the AWS SDK for PHP 2 DynamoDB
+subscribers. First, it retrieves the flavors of the day from its DynamoDB database using the AWS SDK for PHP DynamoDB
 client. It then uses the SNS client from the first SDK to publish a message to its SNS topic.
 
 .. code-block:: php
@@ -268,7 +268,7 @@ client. It then uses the SNS client from the first SDK to publish a message to i
 Final Notes
 -----------
 
-Remember that **instantiating clients from the original SDK using the service builder from AWS SDK for PHP 2 does not
+Remember that **instantiating clients from the original SDK using the service builder from AWS SDK for PHP does not
 change how those clients work**. For example, notice the differences in response handling between SDK versions. For a
 full list of differences between the versions, please see the :doc:`migration-guide`.
 

@@ -14,16 +14,20 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Ec2\Enum;
+namespace Aws\CloudFront\Enum;
 
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable DiskImageFormat values
+ * Contains enumerable Method values
  */
-class DiskImageFormat extends Enum
+class Method extends Enum
 {
-    const VMDK = 'VMDK';
-    const RAW = 'RAW';
-    const VHD = 'VHD';
+    const GET = 'GET';
+    const HEAD = 'HEAD';
+    const POST = 'POST';
+    const PUT = 'PUT';
+    const PATCH = 'PATCH';
+    const OPTIONS = 'OPTIONS';
+    const DELETE = 'DELETE';
 }

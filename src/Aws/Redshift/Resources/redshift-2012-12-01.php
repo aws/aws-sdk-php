@@ -38,6 +38,16 @@ return array (
             'https' => true,
             'hostname' => 'redshift.eu-west-1.amazonaws.com',
         ),
+        'ap-southeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'redshift.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'redshift.ap-southeast-2.amazonaws.com',
+        ),
         'ap-northeast-1' => array(
             'http' => false,
             'https' => true,
