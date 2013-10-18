@@ -5,9 +5,9 @@ Creating tables
 
 You must first create a table that can be used to store items. Even though Amazon DynamoDB tables do not use a fixed
 schema, you do need to create a schema for the table's keys. This is explained in greater detail in Amazon DynamoDB's
-`Data Model documentation <http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/DataModel.html>`_. You
+`Data Model documentation <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DataModel.html>`_. You
 will also need to specify the amount of `provisioned throughput
-<http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_ that should
+<http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html>`_ that should
 be made available to the table.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testCreateTable
@@ -18,13 +18,13 @@ table until it becomes ``ACTIVE``.
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testWaitUntilTableExists
 
 A full list of the parameters available to the ``createTable()`` operation can be found in the `API documentation
-<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_createTable>`_. For more
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_createTable>`_. For more
 information about using Local Secondary Indexes, please see the :ref:`dynamodb-lsi` section of this guide.
 
 Updating a table
 ----------------
 
-You can also update the table after it's been created using the `updateTable() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_updateTable>`_ method. This allows you to do things
+You can also update the table after it's been created using the `updateTable() <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_updateTable>`_ method. This allows you to do things
 like increase or decrease your provisioned throughput capacity.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testUpdateTable
@@ -33,7 +33,7 @@ Describing a table
 ------------------
 
 Now that the table is created, you can use the
-`describeTable() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_describeTable>`_
+`describeTable() <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_describeTable>`_
 method to get information about the table.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testDescribeTable
@@ -45,7 +45,7 @@ Listing tables
 --------------
 
 You can retrieve a list of all of the tables associated with a specific endpoint using the
-`listTables() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_listTables>`_
+`listTables() <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_listTables>`_
 method. Each Amazon DynamoDB endpoint is entirely independent. For example, if you have two tables called "MyTable," one
 in US-EAST-1 and one in US-WEST-2, they are completely independent and do not share any data. The ListTables operation
 returns all of the table names associated with the account making the request, for the endpoint that receives the
@@ -70,7 +70,7 @@ Adding items
 ------------
 
 You can add an item to our *errors* table using the
-`putItem() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_putItem>`_
+`putItem() <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_putItem>`_
 method of the client.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testAddItem
@@ -81,7 +81,7 @@ item. Alternatively, you can provide the item attributes without using the helpe
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testAddItemWithoutHelperMethod
 
 You can also add items in batches of up to 25 items using the `BatchWriteItem()
-<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchWriteItem>`_
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchWriteItem>`_
 method. Please see the example as shown in the :ref:`dynamodb-lsi` section of this guide.
 
 There is also a higher-level abstraction in the SDK over the ``BatchWriteItem`` operation called the
@@ -92,7 +92,7 @@ Retrieving items
 ----------------
 
 You can check if the item was added correctly using the
-`getItem() <http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_getItem>`_
+`getItem() <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_getItem>`_
 method of the client. Because Amazon DynamoDB works under an 'eventual consistency' model, we need to specify that we
 are performing a `consistent read
 <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/APISummary.html#DataReadConsistency>`_ operation.
@@ -100,7 +100,7 @@ are performing a `consistent read
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testGetItem
 
 You can also retrieve items in batches of up to 100 using the `BatchGetItem()
-<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchGetItem>`_ method.
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchGetItem>`_ method.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testBatchGetItem
 
@@ -139,13 +139,13 @@ Deleting items
 --------------
 
 To delete an item you must use the `DeleteItem()
-<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchGetItem>`_ method.
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchGetItem>`_ method.
 The following example scans through a table and deletes every item one by one.
 
 .. example:: DynamoDb/Integration/DynamoDb_20120810_Test.php testDeleteItem
 
 You can also delete items in batches of up to 25 items using the `BatchWriteItem()
-<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchWriteItem>`_ method.
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_batchWriteItem>`_ method.
 
 Deleting a table
 ----------------

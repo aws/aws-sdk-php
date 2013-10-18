@@ -42,8 +42,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeAlarmsForMetricIterator(array $args = array()) The input array uses the parameters of the DescribeAlarmsForMetric operation
  * @method ResourceIteratorInterface getListMetricsIterator(array $args = array()) The input array uses the parameters of the ListMetrics operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudwatch.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudWatch.CloudWatchClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudwatch.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudWatch.CloudWatchClient.html API docs
  */
 class CloudWatchClient extends AbstractClient
 {

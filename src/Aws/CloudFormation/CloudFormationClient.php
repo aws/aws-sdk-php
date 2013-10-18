@@ -44,8 +44,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListStackResourcesIterator(array $args = array()) The input array uses the parameters of the ListStackResources operation
  * @method ResourceIteratorInterface getListStacksIterator(array $args = array()) The input array uses the parameters of the ListStacks operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudformation.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudFormation.CloudFormationClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudformation.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFormation.CloudFormationClient.html API docs
  */
 class CloudFormationClient extends AbstractClient
 {

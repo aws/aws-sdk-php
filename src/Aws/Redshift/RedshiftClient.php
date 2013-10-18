@@ -77,8 +77,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReservedNodeOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodeOfferings operation
  * @method ResourceIteratorInterface getDescribeReservedNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodes operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-redshift.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Redshift.RedshiftClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-redshift.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Redshift.RedshiftClient.html API docs
  */
 class RedshiftClient extends AbstractClient
 {

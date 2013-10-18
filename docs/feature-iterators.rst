@@ -34,7 +34,7 @@ Iterator Objects
 
 The actual object returned by ``getIterator()``, and any ``get[…]Iterator()`` method, is an instance of the
 ``Aws\Common\Iterator\AwsResourceIterator`` class (see the
-`API docs <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Common.Iterator.AwsResourceIterator.html>`_ for
+`API docs <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Common.Iterator.AwsResourceIterator.html>`_ for
 more information about its methods and properties). This class implements PHP's native ``Iterator`` interface, which is
 why it works with ``foreach``, can be used with iterator functions like ``iterator_to_array``, and integrates well with
 `SPL iterators <http://www.php.net/manual/en/spl.iterators.php>`_ like ``LimitIterator``.

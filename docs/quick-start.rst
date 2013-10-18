@@ -46,7 +46,7 @@ You can quickly get up and running by using a web service client's factory metho
 
 **Note:** Instantiating a client without providing credentials causes the client to attempt to retrieve `IAM Instance
 Profile credentials
-<http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
+<http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
 Instance Profile Credentials are not supported by every service. `Please check if the service you are using supports
 temporary credentials <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
 
@@ -58,7 +58,7 @@ of parameters. Service operation methods like Amazon S3's ``createBucket()`` don
 methods are implemented using the ``__call()`` magic method of a client. These magic methods are derived from a Guzzle
 `service description <http://guzzlephp.org/guide/service/service_descriptions.html>`_ present in the
 client's namespace in the ``Resources`` directory. You can use the `API documentation
-<http://docs.amazonwebservices.com/aws-sdk-php-2/latest/>`_ or directly view the service description to see what
+<http://docs.aws.amazon.com/aws-sdk-php/latest/>`_ or directly view the service description to see what
 operations are available, what parameters can be set for an operation, what values are provided in the response model,
 and what exceptions are thrown by calling the operation.
 

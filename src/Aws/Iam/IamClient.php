@@ -112,8 +112,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListUsersIterator(array $args = array()) The input array uses the parameters of the ListUsers operation
  * @method ResourceIteratorInterface getListVirtualMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListVirtualMFADevices operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-iam.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Iam.IamClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-iam.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Iam.IamClient.html API docs
  */
 class IamClient extends AbstractClient
 {

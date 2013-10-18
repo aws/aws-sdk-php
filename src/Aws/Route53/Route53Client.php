@@ -43,8 +43,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListHostedZonesIterator(array $args = array()) The input array uses the parameters of the ListHostedZones operation
  * @method ResourceIteratorInterface getListResourceRecordSetsIterator(array $args = array()) The input array uses the parameters of the ListResourceRecordSets operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-route53.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Route53.Route53Client.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-route53.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Route53.Route53Client.html API docs
  */
 class Route53Client extends AbstractClient
 {
@@ -74,7 +74,7 @@ class Route53Client extends AbstractClient
      * Retrieves the server time from Route53. Can be useful for detecting and/or preventing clock skew.
      *
      * @return \DateTime The server time from Route53
-     * @link http://docs.amazonwebservices.com/Route53/latest/DeveloperGuide/RESTAuthentication.html#FetchingDate
+     * @link http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RESTAuthentication.html#FetchingDate
      */
     public function getServerTime()
     {

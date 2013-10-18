@@ -465,7 +465,7 @@ Here's an example of creating a bucket:
 
 You can pass in stream context options to the ``mkdir()`` method to modify how the bucket is created using the
 parameters available to the
-`CreateBucket <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_createBucket>`_ operation.
+`CreateBucket <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_createBucket>`_ operation.
 
 .. code-block:: php
 
@@ -495,7 +495,7 @@ The `opendir() <http://www.php.net/manual/en/function.opendir.php>`_,
 `rewinddir() <http://www.php.net/manual/en/function.rewinddir.php>`_, and
 `closedir() <http://php.net/manual/en/function.closedir.php>`_ PHP functions can be used with the Amazon S3 stream
 wrapper to traverse the contents of a bucket. You can pass in parameters available to the
-`ListObjects <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_listObjects>`_ operation as
+`ListObjects <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_listObjects>`_ operation as
 custom stream context options to the ``opendir()`` function to modify how objects are listed.
 
 .. code-block:: php
@@ -585,7 +585,7 @@ control the transfer.
 =========== ============================================================================================================
 params      Array of parameters to use with each ``PutObject`` or ``CreateMultipartUpload`` operation performed during
             the transfer. For example, you can specify an ``ACL`` key to change the ACL of each uploaded object.
-            See `PutObject <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_putObject>`_
+            See `PutObject <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_putObject>`_
             for a list of available options.
 base_dir    Base directory to remove from each object key. By default, the ``$directory`` passed into the
             ``uploadDirectory()`` method will be removed from each object key.
@@ -670,7 +670,7 @@ control the transfer.
 
 =============== ============================================================================================================
 params          Array of parameters to use with each ``GetObject`` operation performed during the transfer. See
-                `GetObject <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_getObject>`_
+                `GetObject <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_getObject>`_
                 for a list of available options.
 base_dir        Base directory to remove from each object key when downloading. By default, the entire object key is
                 used to determine the path to the file on the local filesystem.

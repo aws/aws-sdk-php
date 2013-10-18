@@ -11,8 +11,8 @@ operations. Every magic method supported by a client is documented in the docblo
 annotations. Several PHP IDEs, including `PHPStorm <http://www.jetbrains.com/phpstorm/>`_ and
 `Zend Studio <http://www.zend.com/en/products/studio/>`_, are able to autocomplete based on ``@method`` annotations.
 You can find a full list of methods available for a web service client in the
-`API documentation <http://docs.aws.amazon.com/aws-sdk-php-2/latest/index.html>`_ of the client or in the
-`user guide <http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/index.html>`_ for that client.
+`API documentation <http://docs.aws.amazon.com/aws-sdk-php/latest/index.html>`_ of the client or in the
+`user guide <http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html>`_ for that client.
 
 For example, the Amazon S3 client supports the following operations: :ref:`S3_operations`
 

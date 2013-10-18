@@ -38,8 +38,8 @@ use Symfony\Component\EventDispatcher\Event;
  * @method Model getFederationToken(array $args = array()) {@command Sts GetFederationToken}
  * @method Model getSessionToken(array $args = array()) {@command Sts GetSessionToken}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sts.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sts.StsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sts.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Sts.StsClient.html API docs
  */
 class StsClient extends AbstractClient
 {

@@ -99,8 +99,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDownloadDBLogFilePortionIterator(array $args = array()) The input array uses the parameters of the DownloadDBLogFilePortion operation
  * @method ResourceIteratorInterface getListTagsForResourceIterator(array $args = array()) The input array uses the parameters of the ListTagsForResource operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-rds.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Rds.RdsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-rds.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Rds.RdsClient.html API docs
  */
 class RdsClient extends AbstractClient
 {

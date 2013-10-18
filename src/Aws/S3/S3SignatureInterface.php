@@ -22,7 +22,7 @@ use Guzzle\Http\Message\RequestInterface;
 
 /**
  * Amazon S3 signature interface
- * @link http://docs.amazonwebservices.com/AmazonS3/latest/dev/RESTAuthentication.html
+ * @link http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
  */
 interface S3SignatureInterface extends SignatureInterface
 {

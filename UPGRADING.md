@@ -64,7 +64,7 @@ If you are using a config file with `Aws\Common\Aws`, then you can modify your f
 }
 ```
 
-The [SDK user guide](http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/index.html) has a guide and examples for both
+The [SDK user guide](http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html) has a guide and examples for both
 versions of the API.
 
 ### Guzzle 3.4.1

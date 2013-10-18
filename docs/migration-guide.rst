@@ -93,7 +93,7 @@ noticeable change is that all method names are now named using lower camel-case
 Required Regions
 ~~~~~~~~~~~~~~~~
 
-The `region <http://docs.amazonwebservices.com/general/latest/gr/rande.html>`_ must be provided to instantiate a client
+The `region <http://docs.aws.amazon.com/general/latest/gr/rande.html>`_ must be provided to instantiate a client
 (except in the case where the service has a single endpoint like Amazon CloudFront). The AWS region you select may
 affect both your performance and costs.
 

@@ -11,7 +11,7 @@ Working with Model Objects
 --------------------------
 
 Model objects (and Command objects) inherit from the `Guzzle Collection class
-<http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Guzzle.Common.Collection.html>`_ and implement PHP's native
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Common.Collection.html>`_ and implement PHP's native
 ``ArrayAccess``, ``IteratorAggregate``, and ``Countable`` interfaces. This means that they behave like arrays when you
 are accessing keys and iterating over key-value pairs. You can also use the ``toArray()`` method of the Model object to
 get the array form directly.
@@ -98,8 +98,8 @@ be different depending on which operation you've performed.
 
 The SDK's API docs are the best resource for discovering what the model object will contain for a given operation. The
 API docs contain a full specification of the data in the response model under the *Returns* section of the docs for an
-operation (e.g., `S3 GetObject operation <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html#_getObject>`_,
-`EC2 RunInstances operation <http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Ec2.Ec2Client.html#_runInstances>`_).
+operation (e.g., `S3 GetObject operation <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_getObject>`_,
+`EC2 RunInstances operation <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Ec2.Ec2Client.html#_runInstances>`_).
 
 From within your code you can convert the response model directly into an array using the ``toArray()`` method. If you
 are doing some debugging in your code, you could use ``toArray()`` in conjunction with ``print_r()`` to print out a
@@ -135,7 +135,7 @@ given client's namespace directory. For example, here is a snippet from the SQS 
 
 Lastly, if you are familiar with Guzzle and Guzzle's service description classes, you can also get the parameter
 structures from the model object by calling ``$result->getStructure()`` (see the `API docs for the getStructure method
-<http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Guzzle.Service.Resource.Model.html#_getStructure>`_).
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Resource.Model.html#_getStructure>`_).
 
 Getting Response Headers
 ------------------------

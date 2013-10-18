@@ -54,8 +54,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
  * @method ResourceIteratorInterface getListVaultsIterator(array $args = array()) The input array uses the parameters of the ListVaults operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-glacier.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Glacier.GlacierClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-glacier.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Glacier.GlacierClient.html API docs
  */
 class GlacierClient extends AbstractClient
 {

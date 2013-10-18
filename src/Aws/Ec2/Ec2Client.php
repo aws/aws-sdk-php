@@ -230,8 +230,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeVpnConnectionsIterator(array $args = array()) The input array uses the parameters of the DescribeVpnConnections operation
  * @method ResourceIteratorInterface getDescribeVpnGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeVpnGateways operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-ec2.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Ec2.Ec2Client.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-ec2.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Ec2.Ec2Client.html API docs
  */
 class Ec2Client extends AbstractClient
 {

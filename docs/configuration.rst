@@ -139,7 +139,7 @@ Using Instance Profile Credentials
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you do not provide credentials and there are no environment credentials available, the SDK will attempt to retrieve
-`IAM Instance Profile credentials <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
+`IAM Instance Profile credentials <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_.
 These credentials are only available on Amazon EC2 instances configured with an IAM role.
 
 If absolutely no credentials are provided or found, you will receive an

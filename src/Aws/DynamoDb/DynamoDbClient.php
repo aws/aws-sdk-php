@@ -57,8 +57,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getQueryIterator(array $args = array()) The input array uses the parameters of the Query operation
  * @method ResourceIteratorInterface getScanIterator(array $args = array()) The input array uses the parameters of the Scan operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-dynamodb.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DynamoDb.DynamoDbClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html API docs
  */
 class DynamoDbClient extends AbstractClient
 {

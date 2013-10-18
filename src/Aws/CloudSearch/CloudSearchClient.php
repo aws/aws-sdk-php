@@ -50,8 +50,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeIndexFieldsIterator(array $args = array()) The input array uses the parameters of the DescribeIndexFields operation
  * @method ResourceIteratorInterface getDescribeRankExpressionsIterator(array $args = array()) The input array uses the parameters of the DescribeRankExpressions operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudsearch.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudSearch.CloudSearchClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudsearch.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudSearch.CloudSearchClient.html API docs
  */
 class CloudSearchClient extends AbstractClient
 {

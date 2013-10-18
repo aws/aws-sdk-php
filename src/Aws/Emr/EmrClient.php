@@ -37,8 +37,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model terminateJobFlows(array $args = array()) {@command Emr TerminateJobFlows}
  * @method ResourceIteratorInterface getDescribeJobFlowsIterator(array $args = array()) The input array uses the parameters of the DescribeJobFlows operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-emr.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Emr.EmrClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-emr.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Emr.EmrClient.html API docs
  */
 class EmrClient extends AbstractClient
 {

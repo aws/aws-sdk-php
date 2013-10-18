@@ -55,7 +55,7 @@ forums, etc.) Specifically, here are a few things that we would appreciate help 
 [psr-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [php-fig]: http://php-fig.org
 [cs-fixer]: http://cs.sensiolabs.org/
-[user-guide]: http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/index.html
+[user-guide]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html
 [sphinx]: http://sphinx-doc.org/
 [restructuredtext]: http://sphinx-doc.org/rest.html
 [docs-readme]: https://github.com/aws/aws-sdk-php/blob/master/docs/README.md

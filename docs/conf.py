@@ -266,5 +266,5 @@ html_theme_options = {
     "project_nav_name": "AWS SDK for PHP",
     "github_user": "aws",
     "github_repo": "aws-sdk-php",
-    "base_url": "http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/"
+    "base_url": "http://docs.aws.amazon.com/aws-sdk-php/guide/latest/"
 }

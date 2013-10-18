@@ -69,8 +69,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeScheduledActionsIterator(array $args = array()) The input array uses the parameters of the DescribeScheduledActions operation
  * @method ResourceIteratorInterface getDescribeTagsIterator(array $args = array()) The input array uses the parameters of the DescribeTags operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-autoscaling.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.AutoScaling.AutoScalingClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-autoscaling.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.AutoScaling.AutoScalingClient.html API docs
  */
 class AutoScalingClient extends AbstractClient
 {

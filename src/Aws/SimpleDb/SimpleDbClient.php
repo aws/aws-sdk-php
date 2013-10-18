@@ -39,8 +39,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListDomainsIterator(array $args = array()) The input array uses the parameters of the ListDomains operation
  * @method ResourceIteratorInterface getSelectIterator(array $args = array()) The input array uses the parameters of the Select operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-simpledb.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.SimpleDb.SimpleDbClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-simpledb.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.SimpleDb.SimpleDbClient.html API docs
  */
 class SimpleDbClient extends AbstractClient
 {

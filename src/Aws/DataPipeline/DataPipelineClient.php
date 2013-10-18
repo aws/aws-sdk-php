@@ -47,8 +47,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeObjectsIterator(array $args = array()) The input array uses the parameters of the DescribeObjects operation
  * @method ResourceIteratorInterface getQueryObjectsIterator(array $args = array()) The input array uses the parameters of the QueryObjects operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-datapipeline.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DataPipeline.DataPipelineClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-datapipeline.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DataPipeline.DataPipelineClient.html API docs
  */
 class DataPipelineClient extends AbstractClient
 {

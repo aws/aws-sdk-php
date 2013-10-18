@@ -43,8 +43,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
  * @method ResourceIteratorInterface getListQueuesIterator(array $args = array()) The input array uses the parameters of the ListQueues operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sqs.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sqs.SqsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sqs.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Sqs.SqsClient.html API docs
  */
 class SqsClient extends AbstractClient
 {

@@ -57,8 +57,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListSubscriptionsByTopicIterator(array $args = array()) The input array uses the parameters of the ListSubscriptionsByTopic operation
  * @method ResourceIteratorInterface getListTopicsIterator(array $args = array()) The input array uses the parameters of the ListTopics operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-sns.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Sns.SnsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sns.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Sns.SnsClient.html API docs
  */
 class SnsClient extends AbstractClient
 {

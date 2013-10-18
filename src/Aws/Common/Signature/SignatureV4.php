@@ -25,7 +25,7 @@ use Guzzle\Http\Url;
 
 /**
  * Signature Version 4
- * @link http://docs.amazonwebservices.com/general/latest/gr/signature-version-4.html
+ * @link http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
  */
 class SignatureV4 extends AbstractSignature implements EndpointSignatureInterface
 {

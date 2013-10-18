@@ -43,8 +43,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeVirtualGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeVirtualGateways operation
  * @method ResourceIteratorInterface getDescribeVirtualInterfacesIterator(array $args = array()) The input array uses the parameters of the DescribeVirtualInterfaces operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-directconnect.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.DirectConnect.DirectConnectClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-directconnect.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DirectConnect.DirectConnectClient.html API docs
  */
 class DirectConnectClient extends AbstractClient
 {

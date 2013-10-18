@@ -24,7 +24,7 @@ use Guzzle\Http\Url;
 
 /**
  * Default Amazon S3 signature implementation
- * @link http://docs.amazonwebservices.com/AmazonS3/latest/dev/RESTAuthentication.html
+ * @link http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
  */
 class S3Signature implements S3SignatureInterface
 {

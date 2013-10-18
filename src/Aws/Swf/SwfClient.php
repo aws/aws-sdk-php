@@ -66,8 +66,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListWorkflowTypesIterator(array $args = array()) The input array uses the parameters of the ListWorkflowTypes operation
  * @method ResourceIteratorInterface getPollForDecisionTaskIterator(array $args = array()) The input array uses the parameters of the PollForDecisionTask operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-swf.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Swf.SwfClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-swf.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Swf.SwfClient.html API docs
  */
 class SwfClient extends AbstractClient
 {

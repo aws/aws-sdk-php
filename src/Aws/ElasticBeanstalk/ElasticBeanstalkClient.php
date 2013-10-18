@@ -64,8 +64,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
  * @method ResourceIteratorInterface getListAvailableSolutionStacksIterator(array $args = array()) The input array uses the parameters of the ListAvailableSolutionStacks operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticbeanstalk.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticBeanstalk.ElasticBeanstalkClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-elasticbeanstalk.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ElasticBeanstalk.ElasticBeanstalkClient.html API docs
  */
 class ElasticBeanstalkClient extends AbstractClient
 {

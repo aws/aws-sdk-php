@@ -23,7 +23,7 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 
 /**
  * Implementation of Signature Version 3
- * @link http://docs.amazonwebservices.com/amazonswf/latest/developerguide/HMACAuth-swf.html
+ * @link http://docs.aws.amazon.com/amazonswf/latest/developerguide/HMACAuth-swf.html
  */
 class SignatureV3 extends AbstractSignature
 {

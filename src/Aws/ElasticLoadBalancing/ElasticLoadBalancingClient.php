@@ -54,8 +54,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeLoadBalancerPolicyTypesIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBalancerPolicyTypes operation
  * @method ResourceIteratorInterface getDescribeLoadBalancersIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBalancers operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-elasticloadbalancing.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.ElasticLoadBalancing.ElasticLoadBalancingClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-elasticloadbalancing.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ElasticLoadBalancing.ElasticLoadBalancingClient.html API docs
  */
 class ElasticLoadBalancingClient extends AbstractClient
 {

@@ -95,8 +95,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeUserProfilesIterator(array $args = array()) The input array uses the parameters of the DescribeUserProfiles operation
  * @method ResourceIteratorInterface getDescribeVolumesIterator(array $args = array()) The input array uses the parameters of the DescribeVolumes operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-opsworks.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.OpsWorks.OpsWorksClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-opsworks.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.OpsWorks.OpsWorksClient.html API docs
  */
 class OpsWorksClient extends AbstractClient
 {

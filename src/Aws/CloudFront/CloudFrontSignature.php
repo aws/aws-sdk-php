@@ -23,7 +23,7 @@ use Guzzle\Http\Message\RequestInterface;
 
 /**
  * Amazon CloudFront signature implementation
- * @link http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/RESTAuthentication.html
+ * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RESTAuthentication.html
  */
 class CloudFrontSignature implements SignatureInterface
 {

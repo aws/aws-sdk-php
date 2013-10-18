@@ -59,8 +59,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListInvalidationsIterator(array $args = array()) The input array uses the parameters of the ListInvalidations operation
  * @method ResourceIteratorInterface getListStreamingDistributionsIterator(array $args = array()) The input array uses the parameters of the ListStreamingDistributions operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-cloudfront.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.CloudFront.CloudFrontClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudfront.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html API docs
  */
 class CloudFrontClient extends AbstractClient
 {

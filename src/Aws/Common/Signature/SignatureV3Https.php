@@ -22,7 +22,7 @@ use Guzzle\Http\Message\RequestInterface;
 
 /**
  * Implementation of Signature Version 3 HTTPS
- * @link http://docs.amazonwebservices.com/Route53/latest/DeveloperGuide/RESTAuthentication.html
+ * @link http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RESTAuthentication.html
  */
 class SignatureV3Https extends AbstractSignature
 {

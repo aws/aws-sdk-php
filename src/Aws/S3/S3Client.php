@@ -111,8 +111,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListObjectVersionsIterator(array $args = array()) The input array uses the parameters of the ListObjectVersions operation
  * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-s3.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.S3.S3Client.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html API docs
  */
 class S3Client extends AbstractClient
 {

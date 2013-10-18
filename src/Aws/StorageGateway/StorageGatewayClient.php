@@ -69,8 +69,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListVolumeRecoveryPointsIterator(array $args = array()) The input array uses the parameters of the ListVolumeRecoveryPoints operation
  * @method ResourceIteratorInterface getListVolumesIterator(array $args = array()) The input array uses the parameters of the ListVolumes operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-storagegateway.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.StorageGateway.StorageGatewayClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-storagegateway.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.StorageGateway.StorageGatewayClient.html API docs
  */
 class StorageGatewayClient extends AbstractClient
 {

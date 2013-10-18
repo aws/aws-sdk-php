@@ -48,8 +48,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListIdentities operation
  * @method ResourceIteratorInterface getListVerifiedEmailAddressesIterator(array $args = array()) The input array uses the parameters of the ListVerifiedEmailAddresses operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/guide/latest/service-ses.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php-2/latest/class-Aws.Ses.SesClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-ses.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Ses.SesClient.html API docs
  */
 class SesClient extends AbstractClient
 {

@@ -273,5 +273,5 @@ change how those clients work**. For example, notice the differences in response
 full list of differences between the versions, please see the :doc:`migration-guide`.
 
 For more information about using the original version of the SDK, please see the `Version 1 API Documentation
-<http://docs.amazonwebservices.com/AWSSDKforPHP/latest/>`_ and the `Version 1 SDK README
+<http://docs.aws.amazon.com/AWSSDKforPHP/latest/>`_ and the `Version 1 SDK README
 <https://github.com/amazonwebservices/aws-sdk-for-php/blob/master/README.md>`_.

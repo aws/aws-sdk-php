@@ -22,7 +22,7 @@ use Aws\Common\Enum;
  * Contains enumerable region code values. These should be useful in most cases,
  * with Amazon S3 being the most notable exception
  *
- * @link http://docs.amazonwebservices.com/general/latest/gr/rande.html AWS Regions and Endpoints
+ * @link http://docs.aws.amazon.com/general/latest/gr/rande.html AWS Regions and Endpoints
  */
 class Region extends Enum
 {
