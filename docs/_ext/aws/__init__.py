@@ -111,7 +111,7 @@ class ServiceDescription():
         description = matches.groups(0)[0] % (version)
 
         # Strip the filename of the client and determine the description path
-        service_path = "/".join(client_path.split("/")[0:-1])
+        service_path = "/".join(client_path.split(os.sep)[0:-1])
         service_path += "/Resources/" + description + ".php"
 
         return service_path
@@ -129,7 +129,13 @@ class ServiceDescription():
         :param path: Path to the script to load
         """
         path = os.path.abspath(path)
-        sh = 'php -r \'$c = include "' + path + '"; echo json_encode($c);\''
+        
+        # Make command to each environment Linux/Mac and Windows
+        if os.name == 'nt':
+            sh = 'php -r \"$c = include \'' + path + '\'; echo json_encode($c);\"'
+        else:
+            sh = 'php -r \'$c = include "' + path + '"; echo json_encode($c);\''
+        
         loaded = subprocess.check_output(sh, shell=True)
         return json.loads(loaded)
 
