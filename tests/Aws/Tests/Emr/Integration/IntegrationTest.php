@@ -52,7 +52,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Describe the job flows and make sure the job flow is there');
         $found = false;
-        foreach ($this->client->getIterator('DescribeJobFlows') as $jobFlow) {
+        foreach ($this->client->getIterator('DescribeJobFlows', array(
+            'CreatedAfter' => '-10 minutes'
+        )) as $jobFlow) {
             if ($jobFlow['Name'] === $jobFlowName) {
                 $found = true;
                 break;
