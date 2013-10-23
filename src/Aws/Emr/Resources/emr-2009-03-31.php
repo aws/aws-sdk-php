@@ -273,7 +273,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time',
+                    'format' => 'timestamp',
                     'location' => 'json',
                 ),
                 'CreatedBefore' => array(
@@ -282,7 +282,7 @@ return array (
                         'string',
                         'integer',
                     ),
-                    'format' => 'date-time',
+                    'format' => 'timestamp',
                     'location' => 'json',
                 ),
                 'JobFlowIds' => array(
