@@ -46,6 +46,21 @@ forums, etc.) Specifically, here are a few things that we would appreciate help 
    would be be happy to help.
 6. If you have some other ideas, please let us know!
 
+## Running the unit tests
+
+The AWS SDK for PHP is unit tested using PHPUnit. You can run the unit tests of the SDK after copying
+phpunit.xml.dist to phpunit.xml:
+
+    cp phpunit.xml.dist phpunit.xml
+
+Next, you need to install the dependencies of the SDK using Composer:
+
+    composer.phar install
+
+Now you're ready to run the unit tests using PHPUnit:
+
+    vendor/bin/phpunit
+
 [issues]: https://github.com/aws/aws-sdk-php/issues
 [pull-requests]: https://github.com/aws/aws-sdk-php/pulls
 [license]: http://aws.amazon.com/apache2.0/
