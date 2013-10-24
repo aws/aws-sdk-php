@@ -217,3 +217,28 @@ Here's an example of creating an Amazon DynamoDB client that uses a completely c
 If your custom endpoint uses signature version 4 and must be signed with custom signature scoping values, then you can
 specify the signature scoping values using ``signature.service`` (the scoped name of the service) and
 ``signature.region`` (the region that you are contacting). These values are typically not required.
+
+Using a proxy
+~~~~~~~~~~~~~
+
+You can send requests with the AWS SDK for PHP through a proxy using the "request options" of a client. These
+"request options" are applied to each HTTP request sent from the client. One of the option settings that can be
+specified is the `proxy` option.
+
+Request options are passed to a client through the client's factory method:
+
+.. code-block:: php
+
+    use Aws\S3\S3Client;
+
+    $s3 = S3Client::factory(array(
+        'request.options' => array(
+            'proxy' => '127.0.0.1:123'
+        )
+    ));
+
+The above example tells the client that all requests should be proxied through an HTTP proxy located at the
+`127.0.0.1` IP address using port `123`.
+
+You can supply a username and password when specifying your proxy setting if needed, using the format of
+``username:password@host:port``.
