@@ -23,9 +23,12 @@ use Aws\Common\Enum;
  */
 class ConnectionState extends Enum
 {
+    const ORDERING = 'ordering';
     const REQUESTED = 'requested';
     const PENDING = 'pending';
     const AVAILABLE = 'available';
-    const DELETED = 'deleted';
     const DOWN = 'down';
+    const DELETING = 'deleting';
+    const DELETED = 'deleted';
+    const REJECTED = 'rejected';
 }

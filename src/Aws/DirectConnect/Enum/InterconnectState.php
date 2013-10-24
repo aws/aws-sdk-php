@@ -19,15 +19,14 @@ namespace Aws\DirectConnect\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable VirtualInterfaceState values
+ * Contains enumerable InterconnectState values
  */
-class VirtualInterfaceState extends Enum
+class InterconnectState extends Enum
 {
-    const CONFIRMING = 'confirming';
-    const VERIFYING = 'verifying';
+    const REQUESTED = 'requested';
     const PENDING = 'pending';
     const AVAILABLE = 'available';
+    const DOWN = 'down';
     const DELETING = 'deleting';
     const DELETED = 'deleted';
-    const REJECTED = 'rejected';
 }

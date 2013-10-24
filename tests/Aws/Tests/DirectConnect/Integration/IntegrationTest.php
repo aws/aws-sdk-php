@@ -16,8 +16,8 @@
 
 namespace Aws\Tests\DirectConnect\Integration;
 
-use Aws\DirectConnect\DirectConnectClient;
 use Aws\DirectConnect\Enum\ConnectionState;
+use Guzzle\Plugin\Log\LogPlugin;
 
 /**
  * @group integration
@@ -25,49 +25,23 @@ use Aws\DirectConnect\Enum\ConnectionState;
  */
 class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 {
-    /** @var DirectConnectClient */
-    protected $client;
-
-    public function setUp()
-    {
-        $this->client = $this->getServiceBuilder()->get('directconnect', true);
-    }
-
-    /**
-     * DescribeOfferings operation example
-     *
-     * @example Aws\DirectConnect\DirectConnectClient::describeOfferings
-     */
-    public function testDescribesOfferings()
-    {
-        $client = $this->client;
-        self::log('Get an offering ID and region to use.');
-
-        // @begin
-        $result = $client->describeOfferings();
-        $offerings = $result['offerings'];
-        // @end
-
-        return $offerings;
-    }
-
     /**
      * CreateConnection operation example
      *
-     * @depends testDescribesOfferings
      * @example Aws\DirectConnect\DirectConnectClient::createConnection
      */
-    public function testCreatesConnection($offerings)
+    public function testCreatesConnection()
     {
-        $client = $this->client;
-        $offering = $offerings[array_rand($offerings)];
-        $offeringId = $offering['offeringId'];
-        self::log('Create a connection and make sure it is in the requested state: ' . $offeringId);
+        $client = $this->getServiceBuilder()->get('directconnect', true);
+        $client->getEventDispatcher()->addSubscriber(LogPlugin::getDebugPlugin());
+
+        self::log('Create a connection');
 
         // @begin
         $result = $client->createConnection(array(
-            'connectionName' => 'PHP Integ Test Connection',
-            'offeringId'     => $offeringId
+            'bandwidth'      => '1Gbps',
+            'connectionName' => 'PHPTest',
+            'location'       => 'EqDC2'
         ));
 
         $connectionId = $result['connectionId'];
@@ -87,7 +61,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     public function testDescribesConnections($connectionId)
     {
         self::log('Iterate through the connections and make sure the new one is there.');
-        $client = $this->client;
+        $client = $this->getServiceBuilder()->get('directconnect', true);
 
         // @begin
         $iterator = $client->getDescribeConnectionsIterator();
@@ -109,7 +83,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      */
     public function testDeletesConnection($connectionId)
     {
-        $client = $this->client;
+        $client = $this->getServiceBuilder()->get('directconnect', true);
         self::log('Delete the connection and make sure it is in the deleted state.');
 
         // @begin
