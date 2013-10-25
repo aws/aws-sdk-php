@@ -248,9 +248,11 @@ class S3Client extends AbstractClient
      *
      * @param string $bucket The name of the bucket to check.
      *
+     * @param string $region The region, reference: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+     *
      * @return bool TRUE if the bucket name is valid or FALSE if it is invalid.
      */
-    public static function isValidBucketName($bucket)
+    public static function isValidBucketName($bucket, $region='us-east-1')
     {
         $bucketLen = strlen($bucket);
         if (!$bucket || $bucketLen < 3 || $bucketLen > 63
@@ -262,6 +264,16 @@ class S3Client extends AbstractClient
             // Cannot include special characters, must start and end with lower alnum
             || !preg_match('/^[a-z0-9][a-z0-9\-.]*[a-z0-9]?$/', $bucket)) {
             return false;
+        }
+
+        // Only US Standard(us-east-1) allows a bucket name contain upper case characters.
+        else if($region != 'us-east-1')
+        {
+            $pattern ='/[A-Z]/';
+            if(preg_match($pattern, $bucket))
+            {
+                return false;
+            }
         }
 
         return true;
