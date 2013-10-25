@@ -248,6 +248,8 @@ class S3Client extends AbstractClient
      *
      * @param string $bucket The name of the bucket to check.
      *
+     * @param string $region The region, reference: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+     *
      * @return bool TRUE if the bucket name is valid or FALSE if it is invalid.
      */
     public static function isValidBucketName($bucket, $region='us-east-1')
