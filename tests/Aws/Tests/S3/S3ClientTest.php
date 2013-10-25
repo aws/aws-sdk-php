@@ -41,13 +41,15 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             array('.bucket', false),
             array('bucket.', false),
             array('192.168.1.1', false),
+            array('1.1.1.100', false),
             array('test@42!@$5_', false),
             array('ab', false),
             array('12', false),
             array('bucket_name', false),
             array('bucket-name', true),
             array('bucket', true),
-            array('my.bucket.com', true)
+            array('my.bucket.com', true),
+            array('test-fooCaps', false)
         );
     }
 

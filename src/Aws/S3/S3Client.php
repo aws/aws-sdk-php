@@ -244,7 +244,9 @@ class S3Client extends AbstractClient
     }
 
     /**
-     * Find out if a string is a valid name for an Amazon S3 bucket.
+     * Determine if a string is a valid name for a DNS compatible Amazon S3
+     * bucket, meaning the bucket can be used as a subdomain in a URL (e.g.,
+     * "<bucket>.s3.amazonaws.com").
      *
      * @param string $bucket The name of the bucket to check.
      *
@@ -253,14 +255,14 @@ class S3Client extends AbstractClient
     public static function isValidBucketName($bucket)
     {
         $bucketLen = strlen($bucket);
-        if (!$bucket || $bucketLen < 3 || $bucketLen > 63
+        if ($bucketLen < 3 || $bucketLen > 63 ||
             // Cannot start or end with a '.'
-            || $bucket[0] == '.'
-            || $bucket[$bucketLen - 1] == '.'
+            $bucket[0] == '.' || $bucket[$bucketLen - 1] == '.' ||
             // Cannot look like an IP address
-            || preg_match('/^\d+\.\d+\.\d+\.\d+$/', $bucket)
+            preg_match('/(\d+\.){3}\d+$/', $bucket) ||
             // Cannot include special characters, must start and end with lower alnum
-            || !preg_match('/^[a-z0-9][a-z0-9\-.]*[a-z0-9]?$/', $bucket)) {
+            !preg_match('/^[a-z0-9][a-z0-9\-\.]*[a-z0-9]?$/', $bucket)
+        ) {
             return false;
         }
 
