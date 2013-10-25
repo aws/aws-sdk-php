@@ -264,6 +264,16 @@ class S3Client extends AbstractClient
             return false;
         }
 
+        // Only US Standard(us-east-1) allows a bucket name contain upper case characters.
+        if($region != 'us-east-1')
+        {
+            $pattern ='/[A-Z]/';
+            if(preg_match($pattern, $bucket))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 
