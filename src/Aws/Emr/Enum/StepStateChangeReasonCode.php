@@ -19,18 +19,9 @@ namespace Aws\Emr\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable InstanceGroupState values
+ * Contains enumerable StepStateChangeReasonCode values
  */
-class InstanceGroupState extends Enum
+class StepStateChangeReasonCode extends Enum
 {
-    const PROVISIONING = 'PROVISIONING';
-    const BOOTSTRAPPING = 'BOOTSTRAPPING';
-    const RUNNING = 'RUNNING';
-    const RESIZING = 'RESIZING';
-    const SUSPENDED = 'SUSPENDED';
-    const TERMINATING = 'TERMINATING';
-    const TERMINATED = 'TERMINATED';
-    const ARRESTED = 'ARRESTED';
-    const SHUTTING_DOWN = 'SHUTTING_DOWN';
-    const ENDED = 'ENDED';
+    const NONE = 'NONE';
 }

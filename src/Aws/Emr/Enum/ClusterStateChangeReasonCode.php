@@ -19,18 +19,15 @@ namespace Aws\Emr\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable InstanceGroupState values
+ * Contains enumerable ClusterStateChangeReasonCode values
  */
-class InstanceGroupState extends Enum
+class ClusterStateChangeReasonCode extends Enum
 {
-    const PROVISIONING = 'PROVISIONING';
-    const BOOTSTRAPPING = 'BOOTSTRAPPING';
-    const RUNNING = 'RUNNING';
-    const RESIZING = 'RESIZING';
-    const SUSPENDED = 'SUSPENDED';
-    const TERMINATING = 'TERMINATING';
-    const TERMINATED = 'TERMINATED';
-    const ARRESTED = 'ARRESTED';
-    const SHUTTING_DOWN = 'SHUTTING_DOWN';
-    const ENDED = 'ENDED';
+    const INTERNAL_ERROR = 'INTERNAL_ERROR';
+    const VALIDATION_ERROR = 'VALIDATION_ERROR';
+    const INSTANCE_FAILURE = 'INSTANCE_FAILURE';
+    const BOOTSTRAP_FAILURE = 'BOOTSTRAP_FAILURE';
+    const USER_REQUEST = 'USER_REQUEST';
+    const STEP_FAILURE = 'STEP_FAILURE';
+    const ALL_STEPS_COMPLETED = 'ALL_STEPS_COMPLETED';
 }

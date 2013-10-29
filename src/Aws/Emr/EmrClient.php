@@ -29,13 +29,25 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  *
  * @method Model addInstanceGroups(array $args = array()) {@command Emr AddInstanceGroups}
  * @method Model addJobFlowSteps(array $args = array()) {@command Emr AddJobFlowSteps}
+ * @method Model describeCluster(array $args = array()) {@command Emr DescribeCluster}
  * @method Model describeJobFlows(array $args = array()) {@command Emr DescribeJobFlows}
+ * @method Model describeStep(array $args = array()) {@command Emr DescribeStep}
+ * @method Model listBootstrapActions(array $args = array()) {@command Emr ListBootstrapActions}
+ * @method Model listClusters(array $args = array()) {@command Emr ListClusters}
+ * @method Model listInstanceGroups(array $args = array()) {@command Emr ListInstanceGroups}
+ * @method Model listInstances(array $args = array()) {@command Emr ListInstances}
+ * @method Model listSteps(array $args = array()) {@command Emr ListSteps}
  * @method Model modifyInstanceGroups(array $args = array()) {@command Emr ModifyInstanceGroups}
  * @method Model runJobFlow(array $args = array()) {@command Emr RunJobFlow}
  * @method Model setTerminationProtection(array $args = array()) {@command Emr SetTerminationProtection}
  * @method Model setVisibleToAllUsers(array $args = array()) {@command Emr SetVisibleToAllUsers}
  * @method Model terminateJobFlows(array $args = array()) {@command Emr TerminateJobFlows}
  * @method ResourceIteratorInterface getDescribeJobFlowsIterator(array $args = array()) The input array uses the parameters of the DescribeJobFlows operation
+ * @method ResourceIteratorInterface getListBootstrapActionsIterator(array $args = array()) The input array uses the parameters of the ListBootstrapActions operation
+ * @method ResourceIteratorInterface getListClustersIterator(array $args = array()) The input array uses the parameters of the ListClusters operation
+ * @method ResourceIteratorInterface getListInstanceGroupsIterator(array $args = array()) The input array uses the parameters of the ListInstanceGroups operation
+ * @method ResourceIteratorInterface getListInstancesIterator(array $args = array()) The input array uses the parameters of the ListInstances operation
+ * @method ResourceIteratorInterface getListStepsIterator(array $args = array()) The input array uses the parameters of the ListSteps operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-emr.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Emr.EmrClient.html API docs

@@ -23,12 +23,12 @@ use Aws\Common\Enum;
  */
 class JobFlowExecutionState extends Enum
 {
+    const STARTING = 'STARTING';
+    const BOOTSTRAPPING = 'BOOTSTRAPPING';
+    const RUNNING = 'RUNNING';
+    const WAITING = 'WAITING';
+    const SHUTTING_DOWN = 'SHUTTING_DOWN';
+    const TERMINATED = 'TERMINATED';
     const COMPLETED = 'COMPLETED';
     const FAILED = 'FAILED';
-    const TERMINATED = 'TERMINATED';
-    const RUNNING = 'RUNNING';
-    const SHUTTING_DOWN = 'SHUTTING_DOWN';
-    const STARTING = 'STARTING';
-    const WAITING = 'WAITING';
-    const BOOTSTRAPPING = 'BOOTSTRAPPING';
 }

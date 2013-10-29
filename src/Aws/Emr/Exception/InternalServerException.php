@@ -14,23 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Emr\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\Emr\Exception;
 
 /**
- * Contains enumerable InstanceGroupState values
+ * This exception occurs when there is an internal failure in the EMR service.
  */
-class InstanceGroupState extends Enum
-{
-    const PROVISIONING = 'PROVISIONING';
-    const BOOTSTRAPPING = 'BOOTSTRAPPING';
-    const RUNNING = 'RUNNING';
-    const RESIZING = 'RESIZING';
-    const SUSPENDED = 'SUSPENDED';
-    const TERMINATING = 'TERMINATING';
-    const TERMINATED = 'TERMINATED';
-    const ARRESTED = 'ARRESTED';
-    const SHUTTING_DOWN = 'SHUTTING_DOWN';
-    const ENDED = 'ENDED';
-}
+class InternalServerException extends EmrException {}

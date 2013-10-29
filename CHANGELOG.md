@@ -5,6 +5,7 @@ Next Release (TBD)
 ------------------
 
 * Updated the AWS Direct Connect client
+* Updated the Amazon Elastic MapReduce client
 
 2.4.7 (2013-10-17)
 ------------------

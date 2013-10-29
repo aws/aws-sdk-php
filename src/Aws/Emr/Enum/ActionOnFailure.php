@@ -24,6 +24,7 @@ use Aws\Common\Enum;
 class ActionOnFailure extends Enum
 {
     const TERMINATE_JOB_FLOW = 'TERMINATE_JOB_FLOW';
+    const TERMINATE_CLUSTER = 'TERMINATE_CLUSTER';
     const CANCEL_AND_WAIT = 'CANCEL_AND_WAIT';
     const CONTINUE_JOB_FLOW = 'CONTINUE';
 }
