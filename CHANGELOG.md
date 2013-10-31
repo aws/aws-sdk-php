@@ -1,11 +1,12 @@
 CHANGELOG
 =========
 
-Next Release (TBD)
+2.4.8 (2013-10-31)
 ------------------
 
 * Updated the AWS Direct Connect client
-* Updated the Amazon Elastic MapReduce client
+* Updated the Amazon Elastic MapReduce client to add support for new EMR APIs, termination of specific cluster
+  instances, and unlimited EMR steps.
 
 2.4.7 (2013-10-17)
 ------------------
