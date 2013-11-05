@@ -275,6 +275,7 @@ abstract class AbstractSyncBuilder
 
         // Only wrap the source iterator in a changed files iterator if we are not forcing the transfers
         if (!$this->forcing) {
+            $this->sourceIterator->rewind();
             $this->sourceIterator = new ChangedFilesIterator(
                 new \NoRewindIterator($this->sourceIterator),
                 $this->getTargetIterator(),
