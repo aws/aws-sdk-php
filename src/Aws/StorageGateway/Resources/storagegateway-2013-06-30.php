@@ -15,12 +15,12 @@
  */
 
 return array (
-    'apiVersion' => '2012-06-30',
+    'apiVersion' => '2013-06-30',
     'endpointPrefix' => 'storagegateway',
     'serviceFullName' => 'AWS Storage Gateway',
     'serviceType' => 'json',
     'jsonVersion' => '1.1',
-    'targetPrefix' => 'StorageGateway_20120630.',
+    'targetPrefix' => 'StorageGateway_20130630.',
     'signatureVersion' => 'v4',
     'namespace' => 'StorageGateway',
     'regions' => array(
@@ -85,7 +85,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.ActivateGateway',
+                    'default' => 'StorageGateway_20130630.ActivateGateway',
                 ),
                 'ActivationKey' => array(
                     'required' => true,
@@ -105,39 +105,8 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'GMT-12:00',
-                        'GMT-11:00',
-                        'GMT-10:00',
-                        'GMT-9:00',
-                        'GMT-8:00',
-                        'GMT-7:00',
-                        'GMT-6:00',
-                        'GMT-5:00',
-                        'GMT-4:00',
-                        'GMT-3:30',
-                        'GMT-3:00',
-                        'GMT-2:00',
-                        'GMT-1:00',
-                        'GMT',
-                        'GMT+1:00',
-                        'GMT+2:00',
-                        'GMT+3:00',
-                        'GMT+3:30',
-                        'GMT+4:00',
-                        'GMT+4:30',
-                        'GMT+5:00',
-                        'GMT+5:30',
-                        'GMT+5:45',
-                        'GMT+6:00',
-                        'GMT+7:00',
-                        'GMT+8:00',
-                        'GMT+9:00',
-                        'GMT+9:30',
-                        'GMT+10:00',
-                        'GMT+11:00',
-                        'GMT+12:00',
-                    ),
+                    'minLength' => 3,
+                    'maxLength' => 10,
                 ),
                 'GatewayRegion' => array(
                     'required' => true,
@@ -149,19 +118,29 @@ return array (
                 'GatewayType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'STORED',
-                        'CACHED',
-                    ),
+                    'minLength' => 2,
+                    'maxLength' => 20,
+                ),
+                'TapeDriveType' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 2,
+                    'maxLength' => 50,
+                ),
+                'MediumChangerType' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 2,
+                    'maxLength' => 50,
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -185,7 +164,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.AddCache',
+                    'default' => 'StorageGateway_20130630.AddCache',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -208,11 +187,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -236,7 +215,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.AddUploadBuffer',
+                    'default' => 'StorageGateway_20130630.AddUploadBuffer',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -259,11 +238,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -287,7 +266,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.AddWorkingStorage',
+                    'default' => 'StorageGateway_20130630.AddWorkingStorage',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -310,11 +289,105 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'CancelArchival' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'CancelArchivalOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.CancelArchival',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'TapeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'CancelRetrieval' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'CancelRetrievalOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.CancelRetrieval',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'TapeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -338,7 +411,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.CreateCachediSCSIVolume',
+                    'default' => 'StorageGateway_20130630.CreateCachediSCSIVolume',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -378,11 +451,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -406,7 +479,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.CreateSnapshot',
+                    'default' => 'StorageGateway_20130630.CreateSnapshot',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -425,11 +498,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -453,7 +526,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.CreateSnapshotFromVolumeRecoveryPoint',
+                    'default' => 'StorageGateway_20130630.CreateSnapshotFromVolumeRecoveryPoint',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -472,11 +545,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -500,7 +573,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.CreateStorediSCSIVolume',
+                    'default' => 'StorageGateway_20130630.CreateStorediSCSIVolume',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -541,11 +614,79 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'CreateTapes' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'CreateTapesOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.CreateTapes',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'TapeSizeInBytes' => array(
+                    'required' => true,
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 107374182400,
+                    'maximum' => 2748779069440,
+                ),
+                'ClientToken' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 5,
+                    'maxLength' => 100,
+                ),
+                'NumTapesToCreate' => array(
+                    'required' => true,
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 10,
+                ),
+                'TapeBarcodePrefix' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 4,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -569,7 +710,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DeleteBandwidthRateLimit',
+                    'default' => 'StorageGateway_20130630.DeleteBandwidthRateLimit',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -582,20 +723,17 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'UPLOAD',
-                        'DOWNLOAD',
-                        'ALL',
-                    ),
+                    'minLength' => 3,
+                    'maxLength' => 25,
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -619,7 +757,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DeleteChapCredentials',
+                    'default' => 'StorageGateway_20130630.DeleteChapCredentials',
                 ),
                 'TargetARN' => array(
                     'required' => true,
@@ -638,11 +776,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -666,7 +804,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DeleteGateway',
+                    'default' => 'StorageGateway_20130630.DeleteGateway',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -678,11 +816,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -706,7 +844,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DeleteSnapshotSchedule',
+                    'default' => 'StorageGateway_20130630.DeleteSnapshotSchedule',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -718,11 +856,98 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DeleteTape' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DeleteTapeOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DeleteTape',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'TapeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DeleteTapeArchive' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DeleteTapeArchiveOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DeleteTapeArchive',
+                ),
+                'TapeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -746,7 +971,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DeleteVolume',
+                    'default' => 'StorageGateway_20130630.DeleteVolume',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -758,11 +983,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -786,7 +1011,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeBandwidthRateLimit',
+                    'default' => 'StorageGateway_20130630.DescribeBandwidthRateLimit',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -798,11 +1023,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -826,7 +1051,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeCache',
+                    'default' => 'StorageGateway_20130630.DescribeCache',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -838,11 +1063,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -866,7 +1091,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeCachediSCSIVolumes',
+                    'default' => 'StorageGateway_20130630.DescribeCachediSCSIVolumes',
                 ),
                 'VolumeARNs' => array(
                     'required' => true,
@@ -882,11 +1107,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -910,7 +1135,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeChapCredentials',
+                    'default' => 'StorageGateway_20130630.DescribeChapCredentials',
                 ),
                 'TargetARN' => array(
                     'required' => true,
@@ -922,11 +1147,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -950,7 +1175,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeGatewayInformation',
+                    'default' => 'StorageGateway_20130630.DescribeGatewayInformation',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -962,11 +1187,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -990,7 +1215,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeMaintenanceStartTime',
+                    'default' => 'StorageGateway_20130630.DescribeMaintenanceStartTime',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1002,11 +1227,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1030,7 +1255,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeSnapshotSchedule',
+                    'default' => 'StorageGateway_20130630.DescribeSnapshotSchedule',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -1042,11 +1267,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1070,7 +1295,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeStorediSCSIVolumes',
+                    'default' => 'StorageGateway_20130630.DescribeStorediSCSIVolumes',
                 ),
                 'VolumeARNs' => array(
                     'required' => true,
@@ -1086,11 +1311,177 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DescribeTapeArchives' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeTapeArchivesOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DescribeTapeArchives',
+                ),
+                'TapeARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TapeARN',
+                        'type' => 'string',
+                        'minLength' => 50,
+                        'maxLength' => 500,
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1000,
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DescribeTapeRecoveryPoints' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeTapeRecoveryPointsOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DescribeTapeRecoveryPoints',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1000,
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DescribeTapes' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeTapesOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DescribeTapes',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'TapeARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TapeARN',
+                        'type' => 'string',
+                        'minLength' => 50,
+                        'maxLength' => 500,
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1000,
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1114,7 +1505,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeUploadBuffer',
+                    'default' => 'StorageGateway_20130630.DescribeUploadBuffer',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1126,11 +1517,72 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DescribeVTLDevices' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeVTLDevicesOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DescribeVTLDevices',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'VTLDeviceARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'VTLDeviceARN',
+                        'type' => 'string',
+                        'minLength' => 50,
+                        'maxLength' => 500,
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 1000,
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1154,7 +1606,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.DescribeWorkingStorage',
+                    'default' => 'StorageGateway_20130630.DescribeWorkingStorage',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1166,11 +1618,51 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'DisableGateway' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DisableGatewayOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.DisableGateway',
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1194,7 +1686,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.ListGateways',
+                    'default' => 'StorageGateway_20130630.ListGateways',
                 ),
                 'Marker' => array(
                     'type' => 'string',
@@ -1210,11 +1702,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1238,7 +1730,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.ListLocalDisks',
+                    'default' => 'StorageGateway_20130630.ListLocalDisks',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1250,11 +1742,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1278,7 +1770,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.ListVolumeRecoveryPoints',
+                    'default' => 'StorageGateway_20130630.ListVolumeRecoveryPoints',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1290,11 +1782,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1318,7 +1810,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.ListVolumes',
+                    'default' => 'StorageGateway_20130630.ListVolumes',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1341,11 +1833,105 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'RetrieveTapeArchive' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'RetrieveTapeArchiveOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.RetrieveTapeArchive',
+                ),
+                'TapeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
+                    'class' => 'InternalServerErrorException',
+                ),
+            ),
+        ),
+        'RetrieveTapeRecoveryPoint' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'RetrieveTapeRecoveryPointOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'StorageGateway_20130630.RetrieveTapeRecoveryPoint',
+                ),
+                'TapeARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+                'GatewayARN' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 50,
+                    'maxLength' => 500,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'class' => 'InvalidGatewayRequestException',
+                ),
+                array(
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1369,7 +1955,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.ShutdownGateway',
+                    'default' => 'StorageGateway_20130630.ShutdownGateway',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1381,11 +1967,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1409,7 +1995,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.StartGateway',
+                    'default' => 'StorageGateway_20130630.StartGateway',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1421,11 +2007,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1449,7 +2035,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.UpdateBandwidthRateLimit',
+                    'default' => 'StorageGateway_20130630.UpdateBandwidthRateLimit',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1471,11 +2057,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1499,7 +2085,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.UpdateChapCredentials',
+                    'default' => 'StorageGateway_20130630.UpdateChapCredentials',
                 ),
                 'TargetARN' => array(
                     'required' => true,
@@ -1531,11 +2117,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1559,7 +2145,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.UpdateGatewayInformation',
+                    'default' => 'StorageGateway_20130630.UpdateGatewayInformation',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1577,48 +2163,17 @@ return array (
                 'GatewayTimezone' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'GMT-12:00',
-                        'GMT-11:00',
-                        'GMT-10:00',
-                        'GMT-9:00',
-                        'GMT-8:00',
-                        'GMT-7:00',
-                        'GMT-6:00',
-                        'GMT-5:00',
-                        'GMT-4:00',
-                        'GMT-3:30',
-                        'GMT-3:00',
-                        'GMT-2:00',
-                        'GMT-1:00',
-                        'GMT',
-                        'GMT+1:00',
-                        'GMT+2:00',
-                        'GMT+3:00',
-                        'GMT+3:30',
-                        'GMT+4:00',
-                        'GMT+4:30',
-                        'GMT+5:00',
-                        'GMT+5:30',
-                        'GMT+5:45',
-                        'GMT+6:00',
-                        'GMT+7:00',
-                        'GMT+8:00',
-                        'GMT+9:00',
-                        'GMT+9:30',
-                        'GMT+10:00',
-                        'GMT+11:00',
-                        'GMT+12:00',
-                    ),
+                    'minLength' => 3,
+                    'maxLength' => 10,
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1642,7 +2197,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.UpdateGatewaySoftwareNow',
+                    'default' => 'StorageGateway_20130630.UpdateGatewaySoftwareNow',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1654,11 +2209,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1682,7 +2237,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.UpdateMaintenanceStartTime',
+                    'default' => 'StorageGateway_20130630.UpdateMaintenanceStartTime',
                 ),
                 'GatewayARN' => array(
                     'required' => true,
@@ -1712,11 +2267,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1740,7 +2295,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'StorageGateway_20120630.UpdateSnapshotSchedule',
+                    'default' => 'StorageGateway_20130630.UpdateSnapshotSchedule',
                 ),
                 'VolumeARN' => array(
                     'required' => true,
@@ -1771,11 +2326,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.',
+                    'reason' => 'An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.',
                     'class' => 'InvalidGatewayRequestException',
                 ),
                 array(
-                    'reason' => 'An internal server error has occured during the request. See the error and message fields for more information.',
+                    'reason' => 'An internal server error has occurred during the request. See the error and message fields for more information.',
                     'class' => 'InternalServerErrorException',
                 ),
             ),
@@ -1817,6 +2372,26 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'GatewayARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'CancelArchivalOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'CancelRetrievalOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARN' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1886,6 +2461,20 @@ return array (
                 ),
             ),
         ),
+        'CreateTapesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARNs' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TapeARN',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+        ),
         'DeleteBandwidthRateLimitOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1925,6 +2514,26 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'VolumeARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'DeleteTapeOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'DeleteTapeArchiveOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARN' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -2245,6 +2854,118 @@ return array (
                 ),
             ),
         ),
+        'DescribeTapeArchivesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeArchives' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TapeArchive',
+                        'type' => 'object',
+                        'properties' => array(
+                            'TapeARN' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeBarcode' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeSizeInBytes' => array(
+                                'type' => 'numeric',
+                            ),
+                            'CompletionTime' => array(
+                                'type' => 'string',
+                            ),
+                            'RetrievedTo' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeStatus' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'DescribeTapeRecoveryPointsOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'GatewayARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'TapeRecoveryPointInfos' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'TapeRecoveryPointInfo',
+                        'type' => 'object',
+                        'properties' => array(
+                            'TapeARN' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeRecoveryPointTime' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeSizeInBytes' => array(
+                                'type' => 'numeric',
+                            ),
+                            'TapeStatus' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'DescribeTapesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Tapes' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Tape',
+                        'type' => 'object',
+                        'properties' => array(
+                            'TapeARN' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeBarcode' => array(
+                                'type' => 'string',
+                            ),
+                            'TapeSizeInBytes' => array(
+                                'type' => 'numeric',
+                            ),
+                            'TapeStatus' => array(
+                                'type' => 'string',
+                            ),
+                            'VTLDevice' => array(
+                                'type' => 'string',
+                            ),
+                            'Progress' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'DescribeUploadBufferOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2267,6 +2988,59 @@ return array (
                 ),
                 'UploadBufferAllocatedInBytes' => array(
                     'type' => 'numeric',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'DescribeVTLDevicesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'GatewayARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'VTLDevices' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'VTLDevice',
+                        'type' => 'object',
+                        'properties' => array(
+                            'VTLDeviceARN' => array(
+                                'type' => 'string',
+                            ),
+                            'VTLDeviceType' => array(
+                                'type' => 'string',
+                            ),
+                            'VTLDeviceVendor' => array(
+                                'type' => 'string',
+                            ),
+                            'VTLDeviceProductIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'DeviceiSCSIAttributes' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'TargetARN' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'NetworkInterfaceId' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'NetworkInterfacePort' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ChapEnabled' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'Marker' => array(
+                    'type' => 'string',
                     'location' => 'json',
                 ),
             ),
@@ -2297,6 +3071,16 @@ return array (
                 ),
             ),
         ),
+        'DisableGatewayOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'GatewayARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'ListGatewaysOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2309,6 +3093,12 @@ return array (
                         'type' => 'object',
                         'properties' => array(
                             'GatewayARN' => array(
+                                'type' => 'string',
+                            ),
+                            'GatewayType' => array(
+                                'type' => 'string',
+                            ),
+                            'GatewayOperationalState' => array(
                                 'type' => 'string',
                             ),
                         ),
@@ -2420,6 +3210,26 @@ return array (
                 ),
             ),
         ),
+        'RetrieveTapeArchiveOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'RetrieveTapeRecoveryPointOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'TapeARN' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'ShutdownGatewayOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2512,6 +3322,30 @@ return array (
             ),
             'DescribeStorediSCSIVolumes' => array(
                 'result_key' => 'StorediSCSIVolumes',
+            ),
+            'DescribeTapeArchives' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'Limit',
+                'result_key' => 'TapeArchives',
+            ),
+            'DescribeTapeRecoveryPoints' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'Limit',
+                'result_key' => 'TapeRecoveryPointInfos',
+            ),
+            'DescribeTapes' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'Limit',
+                'result_key' => 'Tapes',
+            ),
+            'DescribeVTLDevices' => array(
+                'token_param' => 'Marker',
+                'token_key' => 'Marker',
+                'limit_key' => 'Limit',
+                'result_key' => 'VTLDevices',
             ),
             'ListGateways' => array(
                 'token_param' => 'Marker',

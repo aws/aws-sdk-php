@@ -17,6 +17,6 @@
 namespace Aws\StorageGateway\Exception;
 
 /**
- * An internal server error has occured during the request. See the error and message fields for more information.
+ * An internal server error has occurred during the request. See the error and message fields for more information.
  */
 class InternalServerErrorException extends StorageGatewayException {}

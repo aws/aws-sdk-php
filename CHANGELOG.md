@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Updated the AWS Storage Gateway client to support the Gateway-Virtual Tape Library
+
 2.4.8 (2013-10-31)
 ------------------
 
