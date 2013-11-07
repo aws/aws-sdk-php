@@ -17,6 +17,6 @@
 namespace Aws\CloudFormation\Exception;
 
 /**
- * Resource with the name requested already exists.
+ * Exception that occurs when a AlreadyExistsException error is encountered
  */
 class AlreadyExistsException extends CloudFormationException {}
