@@ -105,7 +105,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -153,7 +153,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -230,7 +230,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
             ),
@@ -270,15 +270,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
-                    'reason' => 'Policy with the same name exists for this LoadBalancer. Please choose another name.',
+                    'reason' => 'Policy with the same name exists for this load balancer. Please choose another name.',
                     'class' => 'DuplicatePolicyNameException',
                 ),
                 array(
-                    'reason' => 'Quota for number of policies for this LoadBalancer has already been reached.',
+                    'reason' => 'Quota for number of policies for this load balancer has already been reached.',
                     'class' => 'TooManyPoliciesException',
                 ),
                 array(
@@ -321,15 +321,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
-                    'reason' => 'Policy with the same name exists for this LoadBalancer. Please choose another name.',
+                    'reason' => 'Policy with the same name exists for this load balancer. Please choose another name.',
                     'class' => 'DuplicatePolicyNameException',
                 ),
                 array(
-                    'reason' => 'Quota for number of policies for this LoadBalancer has already been reached.',
+                    'reason' => 'Quota for number of policies for this load balancer has already been reached.',
                     'class' => 'TooManyPoliciesException',
                 ),
                 array(
@@ -426,11 +426,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'LoadBalancer name already exists for this account. Please choose another name.',
+                    'reason' => 'Load balancer name already exists for this account. Please choose another name.',
                     'class' => 'DuplicateAccessPointNameException',
                 ),
                 array(
-                    'reason' => 'The quota for the number of LoadBalancers has already been reached.',
+                    'reason' => 'The quota for the number of load balancers has already been reached.',
                     'class' => 'TooManyAccessPointsException',
                 ),
                 array(
@@ -516,7 +516,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -585,7 +585,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -593,11 +593,11 @@ return array (
                     'class' => 'PolicyTypeNotFoundException',
                 ),
                 array(
-                    'reason' => 'Policy with the same name exists for this LoadBalancer. Please choose another name.',
+                    'reason' => 'Policy with the same name exists for this load balancer. Please choose another name.',
                     'class' => 'DuplicatePolicyNameException',
                 ),
                 array(
-                    'reason' => 'Quota for number of policies for this LoadBalancer has already been reached.',
+                    'reason' => 'Quota for number of policies for this load balancer has already been reached.',
                     'class' => 'TooManyPoliciesException',
                 ),
                 array(
@@ -665,7 +665,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
             ),
@@ -700,7 +700,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -749,7 +749,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -797,12 +797,46 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
                     'reason' => 'The specified EndPoint is not valid.',
                     'class' => 'InvalidEndPointException',
+                ),
+            ),
+        ),
+        'DescribeLoadBalancerAttributes' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeLoadBalancerAttributesOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeLoadBalancerAttributes',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-06-01',
+                ),
+                'LoadBalancerName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified load balancer could not be found.',
+                    'class' => 'AccessPointNotFoundException',
+                ),
+                array(
+                    'reason' => 'The specified load balancer attribute could not be found.',
+                    'class' => 'LoadBalancerAttributeNotFoundException',
                 ),
             ),
         ),
@@ -839,7 +873,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -915,7 +949,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
             ),
@@ -955,7 +989,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -999,7 +1033,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -1043,8 +1077,63 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
+                ),
+            ),
+        ),
+        'ModifyLoadBalancerAttributes' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'ModifyLoadBalancerAttributes',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2012-06-01',
+                ),
+                'LoadBalancerName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'LoadBalancerAttributes' => array(
+                    'required' => true,
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'CrossZoneLoadBalancing' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'required' => true,
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The specified load balancer could not be found.',
+                    'class' => 'AccessPointNotFoundException',
+                ),
+                array(
+                    'reason' => 'The specified load balancer attribute could not be found.',
+                    'class' => 'LoadBalancerAttributeNotFoundException',
+                ),
+                array(
+                    'reason' => 'Requested configuration change is invalid.',
+                    'class' => 'InvalidConfigurationRequestException',
                 ),
             ),
         ),
@@ -1088,7 +1177,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -1136,11 +1225,11 @@ return array (
                     'class' => 'CertificateNotFoundException',
                 ),
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
-                    'reason' => 'LoadBalancer does not have a listener configured at the given port.',
+                    'reason' => 'Load balancer does not have a listener configured at the given port.',
                     'class' => 'ListenerNotFoundException',
                 ),
                 array(
@@ -1189,7 +1278,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -1242,7 +1331,7 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The specified LoadBalancer could not be found.',
+                    'reason' => 'The specified load balancer could not be found.',
                     'class' => 'AccessPointNotFoundException',
                 ),
                 array(
@@ -1250,7 +1339,7 @@ return array (
                     'class' => 'PolicyNotFoundException',
                 ),
                 array(
-                    'reason' => 'LoadBalancer does not have a listener configured at the given port.',
+                    'reason' => 'Load balancer does not have a listener configured at the given port.',
                     'class' => 'ListenerNotFoundException',
                 ),
                 array(
@@ -1375,6 +1464,26 @@ return array (
                             ),
                             'Description' => array(
                                 'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeLoadBalancerAttributesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'LoadBalancerAttributes' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'CrossZoneLoadBalancing' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
                             ),
                         ),
                     ),

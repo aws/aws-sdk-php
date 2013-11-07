@@ -17,6 +17,6 @@
 namespace Aws\ElasticLoadBalancing\Exception;
 
 /**
- * The specified LoadBalancer could not be found.
+ * The specified load balancer could not be found.
  */
 class AccessPointNotFoundException extends ElasticLoadBalancingException {}

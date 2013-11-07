@@ -17,6 +17,6 @@
 namespace Aws\ElasticLoadBalancing\Exception;
 
 /**
- * Policy with the same name exists for this load balancer. Please choose another name.
+ * The specified load balancer attribute could not be found.
  */
-class DuplicatePolicyNameException extends ElasticLoadBalancingException {}
+class LoadBalancerAttributeNotFoundException extends ElasticLoadBalancingException {}

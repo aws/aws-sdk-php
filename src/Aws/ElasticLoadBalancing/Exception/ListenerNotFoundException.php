@@ -17,6 +17,6 @@
 namespace Aws\ElasticLoadBalancing\Exception;
 
 /**
- * LoadBalancer does not have a listener configured at the given port.
+ * Load balancer does not have a listener configured at the given port.
  */
 class ListenerNotFoundException extends ElasticLoadBalancingException {}
