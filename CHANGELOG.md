@@ -1,10 +1,16 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.4.9 (2013-11-08)
+------------------
 
-* Updated the AWS Storage Gateway client to support the Gateway-Virtual Tape Library
+* Added support for [cross-zone load balancing](http://aws.amazon.com/about-aws/whats-new/2013/11/06/elastic-load-balancing-adds-cross-zone-load-balancing/)
+  to the Elastic Load Balancing client.
+* Added support for a [new gateway configuration](http://aws.amazon.com/about-aws/whats-new/2013/11/05/aws-storage-gateway-announces-gateway-virtual-tape-library/),
+  Gateway-Virtual Tape Library, to the AWS Storage Gateway client.
+* Added support for stack policies to the the AWS CloudFormation client.
+* Fixed issue #176 where attempting to upload a direct to Amazon S3 using the UploadBuilder failed when using a custom
+  iterator that needs to be rewound.
 
 2.4.8 (2013-10-31)
 ------------------
