@@ -217,6 +217,26 @@ return array (
                                 ),
                             ),
                         ),
+                        'Composition' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Clip',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'TimeSpan' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'StartTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Duration' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'Outputs' => array(
@@ -293,6 +313,26 @@ return array (
                                                     'type' => 'string',
                                                 ),
                                                 'AlbumArtFormat' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Composition' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Clip',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'TimeSpan' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'StartTime' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Duration' => array(
                                                     'type' => 'string',
                                                 ),
                                             ),
@@ -1445,6 +1485,26 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'Composition' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Clip',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TimeSpan' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'StartTime' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Duration' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -1529,6 +1589,26 @@ return array (
                                                             'type' => 'string',
                                                         ),
                                                         'AlbumArtFormat' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Composition' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Clip',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TimeSpan' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'StartTime' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Duration' => array(
                                                             'type' => 'string',
                                                         ),
                                                     ),
@@ -1985,6 +2065,26 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'Composition' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Clip',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TimeSpan' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'StartTime' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Duration' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -2069,6 +2169,26 @@ return array (
                                                                 'type' => 'string',
                                                             ),
                                                             'AlbumArtFormat' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'Composition' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Clip',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'TimeSpan' => array(
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'StartTime' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Duration' => array(
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -2248,6 +2368,26 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'Composition' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Clip',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TimeSpan' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'StartTime' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Duration' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -2332,6 +2472,26 @@ return array (
                                                                 'type' => 'string',
                                                             ),
                                                             'AlbumArtFormat' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'Composition' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Clip',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'TimeSpan' => array(
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'StartTime' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Duration' => array(
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -2794,6 +2954,26 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'Composition' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Clip',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'TimeSpan' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'StartTime' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Duration' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -2878,6 +3058,26 @@ return array (
                                                             'type' => 'string',
                                                         ),
                                                         'AlbumArtFormat' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Composition' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'Clip',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'TimeSpan' => array(
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'StartTime' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Duration' => array(
                                                             'type' => 'string',
                                                         ),
                                                     ),
