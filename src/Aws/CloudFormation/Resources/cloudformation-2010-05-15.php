@@ -120,7 +120,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
@@ -186,6 +185,18 @@ return array (
                         'DELETE',
                     ),
                 ),
+                'StackPolicyBody' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16384,
+                ),
+                'StackPolicyURL' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1350,
+                ),
                 'Tags' => array(
                     'type' => 'array',
                     'location' => 'aws.query',
@@ -206,15 +217,12 @@ return array (
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'Quota for the resource has already been reached.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
-                    'reason' => 'Resource with the name requested already exists.',
                     'class' => 'AlreadyExistsException',
                 ),
                 array(
-                    'reason' => 'The template contains resources with capabilities that were not specified in the Capabilities parameter.',
                     'class' => 'InsufficientCapabilitiesException',
                 ),
             ),
@@ -382,7 +390,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
@@ -406,6 +413,30 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'GetStackPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'GetStackPolicyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'GetStackPolicy',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-15',
+                ),
+                'StackName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
                 ),
             ),
         ),
@@ -515,6 +546,42 @@ return array (
                 ),
             ),
         ),
+        'SetStackPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'SetStackPolicy',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2010-05-15',
+                ),
+                'StackName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'StackPolicyBody' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16384,
+                ),
+                'StackPolicyURL' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1350,
+                ),
+            ),
+        ),
         'UpdateStack' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -541,13 +608,24 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 1024,
+                ),
+                'StackPolicyDuringUpdateBody' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16384,
+                ),
+                'StackPolicyDuringUpdateURL' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1350,
                 ),
                 'Parameters' => array(
                     'type' => 'array',
@@ -578,10 +656,21 @@ return array (
                         ),
                     ),
                 ),
+                'StackPolicyBody' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16384,
+                ),
+                'StackPolicyURL' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1350,
+                ),
             ),
             'errorResponses' => array(
                 array(
-                    'reason' => 'The template contains resources with capabilities that were not specified in the Capabilities parameter.',
                     'class' => 'InsufficientCapabilitiesException',
                 ),
             ),
@@ -607,7 +696,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
@@ -890,6 +978,16 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'Url' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'GetStackPolicyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'StackPolicyBody' => array(
                     'type' => 'string',
                     'location' => 'xml',
                 ),

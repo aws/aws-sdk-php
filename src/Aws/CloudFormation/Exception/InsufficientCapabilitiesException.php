@@ -17,6 +17,6 @@
 namespace Aws\CloudFormation\Exception;
 
 /**
- * The template contains resources with capabilities that were not specified in the Capabilities parameter.
+ * Exception that occurs when a InsufficientCapabilitiesException error is encountered
  */
 class InsufficientCapabilitiesException extends CloudFormationException {}
