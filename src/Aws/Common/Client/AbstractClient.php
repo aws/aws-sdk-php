@@ -91,7 +91,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
         }
     }
 
-    public function __call($method, $args)
+    public function __call($method, $args = NULL)
     {
         if (substr($method, 0, 3) === 'get' && substr($method, -8) === 'Iterator') {
             // Allow magic method calls for iterators (e.g. $client->get<CommandName>Iterator($params))
