@@ -34,11 +34,17 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createClusterSecurityGroup(array $args = array()) {@command Redshift CreateClusterSecurityGroup}
  * @method Model createClusterSnapshot(array $args = array()) {@command Redshift CreateClusterSnapshot}
  * @method Model createClusterSubnetGroup(array $args = array()) {@command Redshift CreateClusterSubnetGroup}
+ * @method Model createEventSubscription(array $args = array()) {@command Redshift CreateEventSubscription}
+ * @method Model createHsmClientCertificate(array $args = array()) {@command Redshift CreateHsmClientCertificate}
+ * @method Model createHsmConfiguration(array $args = array()) {@command Redshift CreateHsmConfiguration}
  * @method Model deleteCluster(array $args = array()) {@command Redshift DeleteCluster}
  * @method Model deleteClusterParameterGroup(array $args = array()) {@command Redshift DeleteClusterParameterGroup}
  * @method Model deleteClusterSecurityGroup(array $args = array()) {@command Redshift DeleteClusterSecurityGroup}
  * @method Model deleteClusterSnapshot(array $args = array()) {@command Redshift DeleteClusterSnapshot}
  * @method Model deleteClusterSubnetGroup(array $args = array()) {@command Redshift DeleteClusterSubnetGroup}
+ * @method Model deleteEventSubscription(array $args = array()) {@command Redshift DeleteEventSubscription}
+ * @method Model deleteHsmClientCertificate(array $args = array()) {@command Redshift DeleteHsmClientCertificate}
+ * @method Model deleteHsmConfiguration(array $args = array()) {@command Redshift DeleteHsmConfiguration}
  * @method Model describeClusterParameterGroups(array $args = array()) {@command Redshift DescribeClusterParameterGroups}
  * @method Model describeClusterParameters(array $args = array()) {@command Redshift DescribeClusterParameters}
  * @method Model describeClusterSecurityGroups(array $args = array()) {@command Redshift DescribeClusterSecurityGroups}
@@ -47,20 +53,32 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeClusterVersions(array $args = array()) {@command Redshift DescribeClusterVersions}
  * @method Model describeClusters(array $args = array()) {@command Redshift DescribeClusters}
  * @method Model describeDefaultClusterParameters(array $args = array()) {@command Redshift DescribeDefaultClusterParameters}
+ * @method Model describeEventCategories(array $args = array()) {@command Redshift DescribeEventCategories}
+ * @method Model describeEventSubscriptions(array $args = array()) {@command Redshift DescribeEventSubscriptions}
  * @method Model describeEvents(array $args = array()) {@command Redshift DescribeEvents}
+ * @method Model describeHsmClientCertificates(array $args = array()) {@command Redshift DescribeHsmClientCertificates}
+ * @method Model describeHsmConfigurations(array $args = array()) {@command Redshift DescribeHsmConfigurations}
+ * @method Model describeLoggingStatus(array $args = array()) {@command Redshift DescribeLoggingStatus}
  * @method Model describeOrderableClusterOptions(array $args = array()) {@command Redshift DescribeOrderableClusterOptions}
  * @method Model describeReservedNodeOfferings(array $args = array()) {@command Redshift DescribeReservedNodeOfferings}
  * @method Model describeReservedNodes(array $args = array()) {@command Redshift DescribeReservedNodes}
  * @method Model describeResize(array $args = array()) {@command Redshift DescribeResize}
+ * @method Model disableLogging(array $args = array()) {@command Redshift DisableLogging}
+ * @method Model disableSnapshotCopy(array $args = array()) {@command Redshift DisableSnapshotCopy}
+ * @method Model enableLogging(array $args = array()) {@command Redshift EnableLogging}
+ * @method Model enableSnapshotCopy(array $args = array()) {@command Redshift EnableSnapshotCopy}
  * @method Model modifyCluster(array $args = array()) {@command Redshift ModifyCluster}
  * @method Model modifyClusterParameterGroup(array $args = array()) {@command Redshift ModifyClusterParameterGroup}
  * @method Model modifyClusterSubnetGroup(array $args = array()) {@command Redshift ModifyClusterSubnetGroup}
+ * @method Model modifyEventSubscription(array $args = array()) {@command Redshift ModifyEventSubscription}
+ * @method Model modifySnapshotCopyRetentionPeriod(array $args = array()) {@command Redshift ModifySnapshotCopyRetentionPeriod}
  * @method Model purchaseReservedNodeOffering(array $args = array()) {@command Redshift PurchaseReservedNodeOffering}
  * @method Model rebootCluster(array $args = array()) {@command Redshift RebootCluster}
  * @method Model resetClusterParameterGroup(array $args = array()) {@command Redshift ResetClusterParameterGroup}
  * @method Model restoreFromClusterSnapshot(array $args = array()) {@command Redshift RestoreFromClusterSnapshot}
  * @method Model revokeClusterSecurityGroupIngress(array $args = array()) {@command Redshift RevokeClusterSecurityGroupIngress}
  * @method Model revokeSnapshotAccess(array $args = array()) {@command Redshift RevokeSnapshotAccess}
+ * @method Model rotateEncryptionKey(array $args = array()) {@command Redshift RotateEncryptionKey}
  * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
  * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings
@@ -72,7 +90,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeClusterVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterVersions operation
  * @method ResourceIteratorInterface getDescribeClustersIterator(array $args = array()) The input array uses the parameters of the DescribeClusters operation
  * @method ResourceIteratorInterface getDescribeDefaultClusterParametersIterator(array $args = array()) The input array uses the parameters of the DescribeDefaultClusterParameters operation
+ * @method ResourceIteratorInterface getDescribeEventSubscriptionsIterator(array $args = array()) The input array uses the parameters of the DescribeEventSubscriptions operation
  * @method ResourceIteratorInterface getDescribeEventsIterator(array $args = array()) The input array uses the parameters of the DescribeEvents operation
+ * @method ResourceIteratorInterface getDescribeHsmClientCertificatesIterator(array $args = array()) The input array uses the parameters of the DescribeHsmClientCertificates operation
+ * @method ResourceIteratorInterface getDescribeHsmConfigurationsIterator(array $args = array()) The input array uses the parameters of the DescribeHsmConfigurations operation
  * @method ResourceIteratorInterface getDescribeOrderableClusterOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeOrderableClusterOptions operation
  * @method ResourceIteratorInterface getDescribeReservedNodeOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodeOfferings operation
  * @method ResourceIteratorInterface getDescribeReservedNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedNodes operation

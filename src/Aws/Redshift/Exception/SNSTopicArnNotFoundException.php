@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * An Amazon SNS topic with the specified Amazon Resource Name (ARN) does not exist.
  */
-class InvalidSubnetException extends RedshiftException {}
+class SNSTopicArnNotFoundException extends RedshiftException {}

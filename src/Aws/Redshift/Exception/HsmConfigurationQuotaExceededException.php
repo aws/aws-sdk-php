@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The quota for HSM configurations has been reached. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.
  */
-class InvalidSubnetException extends RedshiftException {}
+class HsmConfigurationQuotaExceededException extends RedshiftException {}

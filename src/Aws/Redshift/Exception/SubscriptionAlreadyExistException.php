@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * There is already an existing event notification subscription with the specified name.
  */
-class InvalidSubnetException extends RedshiftException {}
+class SubscriptionAlreadyExistException extends RedshiftException {}

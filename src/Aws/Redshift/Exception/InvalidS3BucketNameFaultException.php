@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The S3 bucket name is invalid. For more information about naming rules, go to Bucket Restrictions and Limitations in the Amazon Simple Storage Service (S3) Developer Guide.
  */
-class InvalidSubnetException extends RedshiftException {}
+class InvalidS3BucketNameFaultException extends RedshiftException {}

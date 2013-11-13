@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * You do not have permission to publish to the specified Amazon SNS topic.
  */
-class InvalidSubnetException extends RedshiftException {}
+class SNSNoAuthorizationException extends RedshiftException {}

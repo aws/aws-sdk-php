@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * Cross-region snapshot copy was temporarily disabled. Try your request again.
  */
-class InvalidSubnetException extends RedshiftException {}
+class SnapshotCopyDisabledException extends RedshiftException {}

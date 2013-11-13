@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The request would exceed the allowed number of event subscriptions for this account. For information about increasing your quota, go to Limits in Amazon Redshift in the Amazon Redshift Management Guide.
  */
-class InvalidSubnetException extends RedshiftException {}
+class EventSubscriptionQuotaExceededException extends RedshiftException {}

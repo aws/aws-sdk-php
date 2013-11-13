@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The specified Amazon Redshift event source could not be found.
  */
-class InvalidSubnetException extends RedshiftException {}
+class SourceNotFoundException extends RedshiftException {}

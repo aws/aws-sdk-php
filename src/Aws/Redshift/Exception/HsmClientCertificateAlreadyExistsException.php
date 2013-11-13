@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * There is already an existing Amazon Redshift HSM client certificate with the specified identifier.
  */
-class InvalidSubnetException extends RedshiftException {}
+class HsmClientCertificateAlreadyExistsException extends RedshiftException {}

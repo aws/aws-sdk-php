@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The Elastic IP (EIP) is invalid or cannot be found.
  */
-class InvalidSubnetException extends RedshiftException {}
+class InvalidElasticIpException extends RedshiftException {}

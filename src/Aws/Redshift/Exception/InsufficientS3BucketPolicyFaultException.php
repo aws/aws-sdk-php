@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The cluster does not have read bucket or put object permissions on the S3 bucket specified when enabling logging.
  */
-class InvalidSubnetException extends RedshiftException {}
+class InsufficientS3BucketPolicyFaultException extends RedshiftException {}

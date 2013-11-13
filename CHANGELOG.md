@@ -6,6 +6,10 @@ Next Release:
 
 * Added support for identity federation using SAML 2.0 to the AWS STS client
 * Added support for configuring SAML-compliant identity providers to the AWS IAM client
+* Added support for event notifications to the Amazon Redshift client
+* Added support for HSM storage for encryption keys to the Amazon Redshift client
+* Added support for encryption key rotation to the Amazon Redshift client
+* Added support for database audit logging to the Amazon Redshift client
 
 2.4.9 (2013-11-08)
 ------------------

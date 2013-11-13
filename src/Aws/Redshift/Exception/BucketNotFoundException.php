@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * Could not find the specified S3 bucket.
  */
-class InvalidSubnetException extends RedshiftException {}
+class BucketNotFoundException extends RedshiftException {}

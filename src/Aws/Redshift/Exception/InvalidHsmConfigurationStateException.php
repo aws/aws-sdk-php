@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The specified HSM configuration is not in the available state, or it is still in use by one or more Amazon Redshift clusters.
  */
-class InvalidSubnetException extends RedshiftException {}
+class InvalidHsmConfigurationStateException extends RedshiftException {}

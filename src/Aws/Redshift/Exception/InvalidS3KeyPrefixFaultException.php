@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * The string specified for the logging S3 key prefix does not comply with the documented constraints.
  */
-class InvalidSubnetException extends RedshiftException {}
+class InvalidS3KeyPrefixFaultException extends RedshiftException {}

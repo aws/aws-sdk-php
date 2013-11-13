@@ -17,6 +17,6 @@
 namespace Aws\Redshift\Exception;
 
 /**
- * The requested subnet is not valid, or not all of the subnets are in the same VPC.
+ * Amazon SNS has responded that there is a problem with the specified Amazon SNS topic.
  */
-class InvalidSubnetException extends RedshiftException {}
+class SNSInvalidTopicException extends RedshiftException {}
