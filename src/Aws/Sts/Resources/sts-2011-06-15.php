@@ -65,6 +65,11 @@ return array (
             'https' => true,
             'hostname' => 'sts.amazonaws.com',
         ),
+        'us-gov-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'sts.us-gov-west-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'AssumeRole' => array(
@@ -125,6 +130,80 @@ return array (
                 array(
                     'reason' => 'The request was rejected because the policy document was too large. The error message describes how big the policy document is, in packed form, as a percentage of what the API allows.',
                     'class' => 'PackedPolicyTooLargeException',
+                ),
+            ),
+        ),
+        'AssumeRoleWithSAML' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'AssumeRoleWithSAMLResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AssumeRoleWithSAML',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-06-15',
+                ),
+                'RoleArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 2048,
+                ),
+                'PrincipalArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 20,
+                    'maxLength' => 2048,
+                ),
+                'SAMLAssertion' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 4,
+                    'maxLength' => 50000,
+                ),
+                'Policy' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 2048,
+                ),
+                'DurationSeconds' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                    'minimum' => 900,
+                    'maximum' => 129600,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The request was rejected because the policy document was malformed. The error message describes the specific error.',
+                    'class' => 'MalformedPolicyDocumentException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because the policy document was too large. The error message describes how big the policy document is, in packed form, as a percentage of what the API allows.',
+                    'class' => 'PackedPolicyTooLargeException',
+                ),
+                array(
+                    'reason' => 'The identity provider (IdP) reported that authentication failed. This might be because the claim is invalid. If this error is returned for the AssumeRoleWithWebIdentity operation, it can also mean that the claim has expired or has been explicitly revoked.',
+                    'class' => 'IDPRejectedClaimException',
+                ),
+                array(
+                    'reason' => 'The web identity token that was passed could not be validated by AWS. Get a new identity token from the identity provider and then retry the request.',
+                    'class' => 'InvalidIdentityTokenException',
+                ),
+                array(
+                    'reason' => 'The web identity token that was passed is expired or is not valid. Get a new identity token from the identity provider and then retry the request.',
+                    'class' => 'ExpiredTokenException',
                 ),
             ),
         ),
@@ -195,7 +274,7 @@ return array (
                     'class' => 'PackedPolicyTooLargeException',
                 ),
                 array(
-                    'reason' => 'The non-AWS identity provider (IDP) that was asked to verify the incoming identity token rejected the identity claim. This might be because the claim is invalid, has expired, or has been explicitly revoked by the user. The error message contains details about the response from the non-AWS identity provider.',
+                    'reason' => 'The identity provider (IdP) reported that authentication failed. This might be because the claim is invalid. If this error is returned for the AssumeRoleWithWebIdentity operation, it can also mean that the claim has expired or has been explicitly revoked.',
                     'class' => 'IDPRejectedClaimException',
                 ),
                 array(
@@ -207,7 +286,7 @@ return array (
                     'class' => 'InvalidIdentityTokenException',
                 ),
                 array(
-                    'reason' => 'The web identity token that was passed is expired. Get a new identity token from the identity provider and then retry the request.',
+                    'reason' => 'The web identity token that was passed is expired or is not valid. Get a new identity token from the identity provider and then retry the request.',
                     'class' => 'ExpiredTokenException',
                 ),
             ),
@@ -332,6 +411,46 @@ return array (
     ),
     'models' => array(
         'AssumeRoleResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Credentials' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'AccessKeyId' => array(
+                            'type' => 'string',
+                        ),
+                        'SecretAccessKey' => array(
+                            'type' => 'string',
+                        ),
+                        'SessionToken' => array(
+                            'type' => 'string',
+                        ),
+                        'Expiration' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'AssumedRoleUser' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'AssumedRoleId' => array(
+                            'type' => 'string',
+                        ),
+                        'Arn' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'PackedPolicySize' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
+        'AssumeRoleWithSAMLResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(

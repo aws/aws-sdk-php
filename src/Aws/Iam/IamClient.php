@@ -35,6 +35,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createInstanceProfile(array $args = array()) {@command Iam CreateInstanceProfile}
  * @method Model createLoginProfile(array $args = array()) {@command Iam CreateLoginProfile}
  * @method Model createRole(array $args = array()) {@command Iam CreateRole}
+ * @method Model createSAMLProvider(array $args = array()) {@command Iam CreateSAMLProvider}
  * @method Model createUser(array $args = array()) {@command Iam CreateUser}
  * @method Model createVirtualMFADevice(array $args = array()) {@command Iam CreateVirtualMFADevice}
  * @method Model deactivateMFADevice(array $args = array()) {@command Iam DeactivateMFADevice}
@@ -47,6 +48,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteLoginProfile(array $args = array()) {@command Iam DeleteLoginProfile}
  * @method Model deleteRole(array $args = array()) {@command Iam DeleteRole}
  * @method Model deleteRolePolicy(array $args = array()) {@command Iam DeleteRolePolicy}
+ * @method Model deleteSAMLProvider(array $args = array()) {@command Iam DeleteSAMLProvider}
  * @method Model deleteServerCertificate(array $args = array()) {@command Iam DeleteServerCertificate}
  * @method Model deleteSigningCertificate(array $args = array()) {@command Iam DeleteSigningCertificate}
  * @method Model deleteUser(array $args = array()) {@command Iam DeleteUser}
@@ -61,6 +63,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getLoginProfile(array $args = array()) {@command Iam GetLoginProfile}
  * @method Model getRole(array $args = array()) {@command Iam GetRole}
  * @method Model getRolePolicy(array $args = array()) {@command Iam GetRolePolicy}
+ * @method Model getSAMLProvider(array $args = array()) {@command Iam GetSAMLProvider}
  * @method Model getServerCertificate(array $args = array()) {@command Iam GetServerCertificate}
  * @method Model getUser(array $args = array()) {@command Iam GetUser}
  * @method Model getUserPolicy(array $args = array()) {@command Iam GetUserPolicy}
@@ -74,6 +77,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listMFADevices(array $args = array()) {@command Iam ListMFADevices}
  * @method Model listRolePolicies(array $args = array()) {@command Iam ListRolePolicies}
  * @method Model listRoles(array $args = array()) {@command Iam ListRoles}
+ * @method Model listSAMLProviders(array $args = array()) {@command Iam ListSAMLProviders}
  * @method Model listServerCertificates(array $args = array()) {@command Iam ListServerCertificates}
  * @method Model listSigningCertificates(array $args = array()) {@command Iam ListSigningCertificates}
  * @method Model listUserPolicies(array $args = array()) {@command Iam ListUserPolicies}
@@ -90,6 +94,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateAssumeRolePolicy(array $args = array()) {@command Iam UpdateAssumeRolePolicy}
  * @method Model updateGroup(array $args = array()) {@command Iam UpdateGroup}
  * @method Model updateLoginProfile(array $args = array()) {@command Iam UpdateLoginProfile}
+ * @method Model updateSAMLProvider(array $args = array()) {@command Iam UpdateSAMLProvider}
  * @method Model updateServerCertificate(array $args = array()) {@command Iam UpdateServerCertificate}
  * @method Model updateSigningCertificate(array $args = array()) {@command Iam UpdateSigningCertificate}
  * @method Model updateUser(array $args = array()) {@command Iam UpdateUser}
@@ -106,6 +111,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListMFADevicesIterator(array $args = array()) The input array uses the parameters of the ListMFADevices operation
  * @method ResourceIteratorInterface getListRolePoliciesIterator(array $args = array()) The input array uses the parameters of the ListRolePolicies operation
  * @method ResourceIteratorInterface getListRolesIterator(array $args = array()) The input array uses the parameters of the ListRoles operation
+ * @method ResourceIteratorInterface getListSAMLProvidersIterator(array $args = array()) The input array uses the parameters of the ListSAMLProviders operation
  * @method ResourceIteratorInterface getListServerCertificatesIterator(array $args = array()) The input array uses the parameters of the ListServerCertificates operation
  * @method ResourceIteratorInterface getListSigningCertificatesIterator(array $args = array()) The input array uses the parameters of the ListSigningCertificates operation
  * @method ResourceIteratorInterface getListUserPoliciesIterator(array $args = array()) The input array uses the parameters of the ListUserPolicies operation

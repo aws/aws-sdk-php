@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+
+* Added support for identity federation using SAML 2.0 to the AWS STS client
+* Added support for configuring SAML-compliant identity providers to the AWS IAM client
+
 2.4.9 (2013-11-08)
 ------------------
 
@@ -9,7 +15,7 @@ CHANGELOG
 * Added support for a [new gateway configuration](http://aws.amazon.com/about-aws/whats-new/2013/11/05/aws-storage-gateway-announces-gateway-virtual-tape-library/),
   Gateway-Virtual Tape Library, to the AWS Storage Gateway client.
 * Added support for stack policies to the the AWS CloudFormation client.
-* Fixed issue #176 where attempting to upload a direct to Amazon S3 using the UploadBuilder failed when using a custom
+* Fixed issue #176 where attempting to upload a direct to Amazon S3 using the `UploadBuilder` failed when using a custom
   iterator that needs to be rewound.
 
 2.4.8 (2013-10-31)

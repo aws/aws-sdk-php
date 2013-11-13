@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sts\Exception;
+namespace Aws\Iam\Exception;
 
 /**
- * The web identity token that was passed is expired or is not valid. Get a new identity token from the identity provider and then retry the request.
+ * Exception that occurs when a InvalidInputException error is encountered
  */
-class ExpiredTokenException extends StsException {}
+class InvalidInputException extends IamException {}
