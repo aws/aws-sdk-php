@@ -143,3 +143,45 @@ shows how to add an ``X-Foo-Baz`` header to an Amazon S3 PutObject operation.
         )
     ));
 
+Does the SDK follow semantic versioning?
+----------------------------------------
+
+Yes. The SDK follows a semantic versioning scheme similar to – but not the same as – `semver <http://semver.org>`_.
+Instead of the **MAJOR.MINOR.PATCH** scheme specified by semver, the SDK actually follows a scheme that looks like
+**PARADIGM.MAJOR.MINOR** where:
+
+1. The **PARADIGM** version number is incremented when **drastic, breaking changes** are made to the SDK, such that the
+   fundamental way of using the SDK is different. You are probably aware that version 1.x and version 2.x of the AWS SDK
+   for PHP are *very* different.
+2. The **MAJOR** version number is incremented when **breaking changes** are made to the API. These are usually small
+   changes, and only occur when one of the services makes breaking changes changes to their API. Make sure to check the
+   `CHANGELOG <>`_ when these changes occur.
+3. The **MINOR** version number is incremented when any **backwards-compatible** change is made, whether it's a new
+   feature or a bug fix.
+
+The best way to ensure that you are not affected by breaking changes is to set your dependency on the SDK in Composer to
+stay within a particular **PARADIGM.MAJOR** version. This can be done using the wildcard syntax:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "aws/aws-sdk-php": "2.4.*"
+        }
+    }
+
+Or by using the the tilde operator:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "aws/aws-sdk-php": "~2.4.9"
+        }
+    }
+
+See the `Composer documentation <http://getcomposer.org/doc/01-basic-usage.md#package-versions>`_ for more information
+on configuring your dependencies.
+
+The SDK may at some point adopt the semver standard, but this will probably not happen until the next paradigm-type
+change.
