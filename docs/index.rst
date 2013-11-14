@@ -20,6 +20,7 @@ AWS SDK for PHP
     service-cloudformation
     service-cloudfront
     service-cloudsearch
+    service-cloudtrail
     service-cloudwatch
     service-datapipeline
     service-directconnect
@@ -85,6 +86,7 @@ Supported services
 * :doc:`service-cloudformation`
 * :doc:`service-cloudfront`
 * :doc:`service-cloudsearch`
+* :doc:`service-cloudtrail`
 * :doc:`service-cloudwatch`
 * :doc:`service-datapipeline`
 * :doc:`service-directconnect`

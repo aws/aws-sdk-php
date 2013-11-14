@@ -53,6 +53,12 @@ return array(
             'class'   => 'Aws\CloudSearch\CloudSearchClient'
         ),
 
+        'cloudtrail' => array(
+            'alias'   => 'CloudTrail',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudTrail\CloudTrailClient'
+        ),
+
         'cloudwatch' => array(
             'alias'   => 'CloudWatch',
             'extends' => 'default_settings',

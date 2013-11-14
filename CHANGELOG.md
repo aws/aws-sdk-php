@@ -4,6 +4,7 @@ CHANGELOG
 Next Release:
 -------------
 
+* Added support for **AWS CloudTrail**
 * Added support for identity federation using SAML 2.0 to the AWS STS client
 * Added support for configuring SAML-compliant identity providers to the AWS IAM client
 * Added support for event notifications to the Amazon Redshift client
