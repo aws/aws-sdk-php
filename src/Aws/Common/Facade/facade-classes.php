@@ -56,6 +56,14 @@ class CloudSearch extends Facade
     }
 }
 
+class CloudTrail extends Facade
+{
+    public static function getServiceBuilderKey()
+    {
+        return 'cloudtrail';
+    }
+}
+
 class CloudWatch extends Facade
 {
     public static function getServiceBuilderKey()
