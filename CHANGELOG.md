@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.4.10 (2013-11-14)
+-------------------
 
 * Added support for **AWS CloudTrail**
 * Added support for identity federation using SAML 2.0 to the AWS STS client
