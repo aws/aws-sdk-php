@@ -5,7 +5,7 @@ Static Client Facades
 Introduction
 ------------
 
-Version 2.4 of the AWS SDK for PHP adds the ability to enable and use static client facades. These "facades" provide an
+Version 2.4 of the AWS SDK for PHP adds the ability to enable and use static client "facades". These facades provide an
 easy, static interface to service clients available in the service builder. For example, when working with a normal
 client instance, you might have code that looks like the following:
 
@@ -15,14 +15,14 @@ client instance, you might have code that looks like the following:
     $s3 = $aws->get('s3');
 
     // Execute the CreateBucket command using the S3 client
-    $s3->createBucket(array('Bucket' => 'your-new-bucket-name'));
+    $s3->createBucket(array('Bucket' => 'your_new_bucket_name'));
 
 With client facades enabled, this can also be accomplished with the following code:
 
 .. code-block:: php
 
     // Execute the CreateBucket command using the S3 client
-    S3::createBucket(array('Bucket' => 'your-new-bucket-name'));
+    S3::createBucket(array('Bucket' => 'your_new_bucket_name'));
 
 Why Use Client Facades?
 -----------------------
@@ -69,7 +69,7 @@ have more simple and expressive code for interacting with AWS services.
         echo "{$bucket['Name']}\n";
     }
 
-    $args = array('Bucket' => 'your-new-bucket-name');
+    $args = array('Bucket' => 'your_new_bucket_name');
     $file = '/path/to/the/file/to/upload.jpg';
 
     // Create a new bucket and wait until it is available for uploads
