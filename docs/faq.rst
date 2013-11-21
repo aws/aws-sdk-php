@@ -155,7 +155,8 @@ Instead of the **MAJOR.MINOR.PATCH** scheme specified by semver, the SDK actuall
    for PHP are *very* different.
 2. The **MAJOR** version number is incremented when **breaking changes** are made to the API. These are usually small
    changes, and only occur when one of the services makes breaking changes changes to their API. Make sure to check the
-   `CHANGELOG <>`_ when these changes occur.
+   `CHANGELOG <https://github.com/aws/aws-sdk-php/blob/master/CHANGELOG.md>`_ and
+   `UPGRADING <https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md>`_ documents when these changes occur.
 3. The **MINOR** version number is incremented when any **backwards-compatible** change is made, whether it's a new
    feature or a bug fix.
 
@@ -170,7 +171,7 @@ stay within a particular **PARADIGM.MAJOR** version. This can be done using the 
         }
     }
 
-Or by using the the tilde operator:
+...Or by using the the tilde operator. The following statement is equivalent to `>=2.4.9,<2.5`:
 
 .. code-block:: json
 
