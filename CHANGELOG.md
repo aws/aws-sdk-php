@@ -5,6 +5,11 @@ Next Release
 ------------
 
 * Added support for copying DB snapshots from one AWS region to another to the Amazon RDS client
+* Added support for pagination of the `DescribeInstances` and `DescribeTags` operations to the Amazon EC2 client
+* Added support for the new C3 instance types and the g2.2xlarge instance type to the Amazon EC2 client
+* Added support for enabling Single Root I/O Virtualization (SR-IOV) support for the new C3 instance types to the
+  Amazon EC2 client
+  Updated the Amazon EC2 client to use the 2013-10-15 API version
 * Updated the Amazon RDS client to use the 2013-09-09 API version
 * Updated the Amazon CloudWatch client to use Signature Version 4
 
