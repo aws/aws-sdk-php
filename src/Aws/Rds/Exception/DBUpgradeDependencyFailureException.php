@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * Exception that occurs when a DBUpgradeDependencyFailureException error is encountered
+ * The DB upgrade failed because a resource the DB depends on could not be modified.
  */
 class DBUpgradeDependencyFailureException extends RdsException {}

@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-05-15',
+    'apiVersion' => '2013-09-09',
     'endpointPrefix' => 'rds',
     'serviceFullName' => 'Amazon Relational Database Service',
     'serviceAbbreviation' => 'Amazon RDS',
@@ -86,7 +86,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -125,7 +125,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -177,7 +177,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -235,7 +235,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SourceDBSnapshotIdentifier' => array(
                     'required' => true,
@@ -299,7 +299,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBName' => array(
                     'type' => 'string',
@@ -468,6 +468,7 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
@@ -499,7 +500,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -558,6 +559,10 @@ return array (
                         ),
                     ),
                 ),
+                'DBSubnetGroupName' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -601,6 +606,7 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
@@ -614,6 +620,14 @@ return array (
                 array(
                     'reason' => 'The specified option group could not be found.',
                     'class' => 'OptionGroupNotFoundException',
+                ),
+                array(
+                    'reason' => 'Indicates that the DBSubnetGroup should not be specified while creating read replicas that lie in the same region as the source instance.',
+                    'class' => 'DBSubnetGroupNotAllowedException',
+                ),
+                array(
+                    'reason' => 'Indicates the DBSubnetGroup does not belong to the same VPC as that of an existing cross region read replica of the same source instance.',
+                    'class' => 'InvalidDBSubnetGroupException',
                 ),
             ),
         ),
@@ -632,7 +646,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -693,7 +707,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -753,7 +767,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -817,7 +831,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -875,6 +889,7 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -894,7 +909,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -997,7 +1012,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1063,7 +1078,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -1114,7 +1129,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1148,7 +1163,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -1182,7 +1197,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSnapshotIdentifier' => array(
                     'required' => true,
@@ -1216,7 +1231,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -1254,7 +1269,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -1288,7 +1303,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -1322,7 +1337,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'Engine' => array(
                     'type' => 'string',
@@ -1371,7 +1386,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'type' => 'string',
@@ -1432,7 +1447,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -1482,7 +1497,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupName' => array(
                     'type' => 'string',
@@ -1543,7 +1558,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -1585,7 +1600,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSecurityGroupName' => array(
                     'type' => 'string',
@@ -1646,7 +1661,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'type' => 'string',
@@ -1715,7 +1730,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSubnetGroupName' => array(
                     'type' => 'string',
@@ -1776,7 +1791,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupFamily' => array(
                     'required' => true,
@@ -1808,7 +1823,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SourceType' => array(
                     'type' => 'string',
@@ -1831,7 +1846,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SubscriptionName' => array(
                     'type' => 'string',
@@ -1892,7 +1907,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SourceIdentifier' => array(
                     'type' => 'string',
@@ -1964,7 +1979,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'EngineName' => array(
                     'required' => true,
@@ -2000,7 +2015,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'OptionGroupName' => array(
                     'type' => 'string',
@@ -2069,7 +2084,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'Engine' => array(
                     'required' => true,
@@ -2118,7 +2133,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'ReservedDBInstanceId' => array(
                     'type' => 'string',
@@ -2204,7 +2219,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'type' => 'string',
@@ -2262,7 +2277,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2305,7 +2320,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -2339,7 +2354,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2475,6 +2490,7 @@ return array (
                     'class' => 'OptionGroupNotFoundException',
                 ),
                 array(
+                    'reason' => 'The DB upgrade failed because a resource the DB depends on could not be modified.',
                     'class' => 'DBUpgradeDependencyFailureException',
                 ),
             ),
@@ -2494,7 +2510,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -2575,7 +2591,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSubnetGroupName' => array(
                     'required' => true,
@@ -2615,6 +2631,7 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
             ),
@@ -2634,7 +2651,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -2706,7 +2723,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'OptionGroupName' => array(
                     'required' => true,
@@ -2827,7 +2844,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2869,7 +2886,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'ReservedDBInstancesOfferingId' => array(
                     'required' => true,
@@ -2932,7 +2949,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -2971,7 +2988,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SubscriptionName' => array(
                     'required' => true,
@@ -3010,7 +3027,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'ResourceName' => array(
                     'required' => true,
@@ -3054,7 +3071,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBParameterGroupName' => array(
                     'required' => true,
@@ -3139,7 +3156,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBInstanceIdentifier' => array(
                     'required' => true,
@@ -3262,6 +3279,7 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
@@ -3289,7 +3307,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'SourceDBInstanceIdentifier' => array(
                     'required' => true,
@@ -3430,6 +3448,7 @@ return array (
                     'class' => 'DBSubnetGroupDoesNotCoverEnoughAZsException',
                 ),
                 array(
+                    'reason' => 'The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.',
                     'class' => 'InvalidSubnetException',
                 ),
                 array(
@@ -3457,7 +3476,7 @@ return array (
                 'Version' => array(
                     'static' => true,
                     'location' => 'aws.query',
-                    'default' => '2013-05-15',
+                    'default' => '2013-09-09',
                 ),
                 'DBSecurityGroupName' => array(
                     'required' => true,
@@ -3676,6 +3695,12 @@ return array (
                             'type' => 'numeric',
                         ),
                         'OptionGroupName' => array(
+                            'type' => 'string',
+                        ),
+                        'PercentProgress' => array(
+                            'type' => 'numeric',
+                        ),
+                        'SourceRegion' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -4724,6 +4749,12 @@ return array (
                                 'type' => 'numeric',
                             ),
                             'OptionGroupName' => array(
+                                'type' => 'string',
+                            ),
+                            'PercentProgress' => array(
+                                'type' => 'numeric',
+                            ),
+                            'SourceRegion' => array(
                                 'type' => 'string',
                             ),
                         ),

@@ -17,6 +17,6 @@
 namespace Aws\Rds\Exception;
 
 /**
- * The requested subnet is invalid, or multiple subnets were requested that are not all in a common VPC.
+ * Indicates the DBSubnetGroup does not belong to the same VPC as that of an existing cross region read replica of the same source instance.
  */
-class InvalidSubnetException extends RdsException {}
+class InvalidDBSubnetGroupException extends RdsException {}

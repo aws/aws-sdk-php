@@ -104,7 +104,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class RdsClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2013-05-15';
+    const LATEST_API_VERSION = '2013-09-09';
 
     /**
      * Factory method to create a new Amazon Relational Database Service client using an array of configuration options.

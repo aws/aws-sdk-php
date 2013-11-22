@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for copying DB snapshots from one AWS region to another to the Amazon RDS client
+* Updated the Amazon RDS client to use the 2013-09-09 API version
+
 2.4.10 (2013-11-14)
 -------------------
 
