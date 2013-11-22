@@ -6,6 +6,7 @@ Next Release
 
 * Added support for copying DB snapshots from one AWS region to another to the Amazon RDS client
 * Updated the Amazon RDS client to use the 2013-09-09 API version
+* Updated the Amazon CloudWatch client to use Signature Version 4
 
 2.4.10 (2013-11-14)
 -------------------

@@ -31,7 +31,7 @@ class CloudWatchClientTest extends \Guzzle\Tests\GuzzleTestCase
             'region' => 'us-west-2'
         ));
 
-        $this->assertInstanceOf('Aws\Common\Signature\SignatureV2', $client->getSignature());
+        $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://monitoring.us-west-2.amazonaws.com', $client->getBaseUrl());
     }

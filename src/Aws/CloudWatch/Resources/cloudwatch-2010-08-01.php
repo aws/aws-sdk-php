@@ -21,7 +21,7 @@ return array (
     'serviceAbbreviation' => 'CloudWatch',
     'serviceType' => 'query',
     'resultWrapped' => true,
-    'signatureVersion' => 'v2',
+    'signatureVersion' => 'v4',
     'namespace' => 'CloudWatch',
     'regions' => array(
         'us-east-1' => array(
