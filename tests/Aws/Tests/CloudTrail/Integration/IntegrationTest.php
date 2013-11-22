@@ -43,6 +43,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
      * Execute the CreateTrail operation
      *
      * @example Aws\CloudTrail\CloudTrailClient::createTrail
+     * @example Aws\S3\S3Client::putBucketPolicy
+     * @example Aws\S3\S3Client::waitUntilBucketExists
      */
     public function testCreateTrail()
     {
@@ -101,11 +103,49 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Execute the StartLogging operations
+     *
+     * @example Aws\CloudTrail\CloudTrailClient::startLogging
+     * @depends testCreateTrail
+     */
+    public function testStartLogging($bucket)
+    {
+        $client = $this->cloudtrail;
+
+        // @begin
+        $client->startLogging(array(
+            'Name' => 'test-trail'
+        ));
+
+        // @end
+        return $bucket;
+    }
+
+    /**
+     * Execute the StopLogging operations
+     *
+     * @example Aws\CloudTrail\CloudTrailClient::stopLogging
+     * @depends testStartLogging
+     */
+    public function testStopLogging($bucket)
+    {
+        $client = $this->cloudtrail;
+
+        // @begin
+        $client->stopLogging(array(
+            'Name' => 'test-trail'
+        ));
+
+        // @end
+        return $bucket;
+    }
+
+    /**
      * Execute the DescribeTrails and DeleteTrail operations
      *
      * @example Aws\CloudTrail\CloudTrailClient::deleteTrail
      * @example Aws\CloudTrail\CloudTrailClient::getDescribeTrailsIterator
-     * @depends testCreateTrail
+     * @depends testStopLogging
      */
     public function testDeleteTrails($bucket)
     {
