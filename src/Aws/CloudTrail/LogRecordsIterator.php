@@ -7,11 +7,13 @@ use Aws\S3\S3Client;
 use Guzzle\Iterator\FilterIterator;
 use Guzzle\Common\Collection;
 
+/**
+ * Class LogRecordsIterator
+ */
 class LogRecordsIterator implements \Iterator
 {
-    const PREFIX_TEMPLATE = 'prefix/AWSLogs/account/CloudTrail/region/year/month/day/';
+    const PREFIX_TEMPLATE = 'prefix/AWSLogs/account/CloudTrail/region/date/';
     const PREFIX_WILDCARD = '*';
-    const DEFAULT_TRAIL_NAME = 'Default';
 
     const OPT_TRAIL_NAME = 'TrailName';
     const OPT_KEY_PREFIX = 'S3KeyPrefix';
@@ -21,21 +23,21 @@ class LogRecordsIterator implements \Iterator
     const OPT_ACCOUNT_ID = 'AccountID';
     const OPT_LOG_REGION = 'LogRegion';
     const OPT_S3_CLIENT = 'S3Client';
-    const OPT_CT_CLIENT = 'CloudTrailClient';
+    const OPT_CLOUDTRAIL_CLIENT = 'CloudTrailClient';
 
     /**
      * @var array Default options for the LogRecordsIterator
      */
     private static $defaultOptions = array(
-        self::OPT_TRAIL_NAME  => 'Default',
-        self::OPT_KEY_PREFIX  => null,
-        self::OPT_BUCKET_NAME => null,
-        self::OPT_START_DATE  => null,
-        self::OPT_END_DATE    => null,
-        self::OPT_ACCOUNT_ID  => null,
-        self::OPT_LOG_REGION  => null,
-        self::OPT_S3_CLIENT   => null,
-        self::OPT_CT_CLIENT   => null,
+        self::OPT_TRAIL_NAME        => 'Default',
+        self::OPT_KEY_PREFIX        => null,
+        self::OPT_BUCKET_NAME       => null,
+        self::OPT_START_DATE        => null,
+        self::OPT_END_DATE          => null,
+        self::OPT_ACCOUNT_ID        => null,
+        self::OPT_LOG_REGION        => null,
+        self::OPT_S3_CLIENT         => null,
+        self::OPT_CLOUDTRAIL_CLIENT => null,
     );
 
     /**
@@ -63,14 +65,20 @@ class LogRecordsIterator implements \Iterator
      */
     private $logData;
 
+    /**
+     * @param array $options
+     *
+     * @return LogRecordsIterator
+     * @throws \InvalidArgumentException
+     */
     public static function factory(array $options = array())
     {
         // Apply default options
         $options = $options + self::$defaultOptions;
 
         // Get the CloudTrail client if it's set
-        if ($options[self::OPT_CT_CLIENT] instanceof CloudTrailClient) {
-            $cloudTrailClient = $options[self::OPT_CT_CLIENT];
+        if ($options[self::OPT_CLOUDTRAIL_CLIENT] instanceof CloudTrailClient) {
+            $cloudTrailClient = $options[self::OPT_CLOUDTRAIL_CLIENT];
         }
 
         // Get the S3 client if it's set or try to create one using the CloudTrail client's credentials
@@ -95,7 +103,7 @@ class LogRecordsIterator implements \Iterator
                     // Continue on and let the exception in the next if statement be thrown
                 }
             }
-            // If there is _still_ no bucket name, then throw an exception
+            // If there is *still* no bucket name, then throw an exception
             if (!$options[self::OPT_BUCKET_NAME]) {
                 throw new \InvalidArgumentException('You must provide either the log files\' bucket name or the '
                     . 'trail\'s name and a CloudTrailClient, so that the bucket name can be determined.');
@@ -103,7 +111,7 @@ class LogRecordsIterator implements \Iterator
         }
 
         // Remove the clients from the options array
-        unset($options[self::OPT_CT_CLIENT], $options[self::OPT_S3_CLIENT]);
+        unset($options[self::OPT_CLOUDTRAIL_CLIENT], $options[self::OPT_S3_CLIENT]);
 
         return new self($s3Client, $options);
     }
@@ -124,7 +132,11 @@ class LogRecordsIterator implements \Iterator
      */
     public function current()
     {
-        return new Collection($this->logData[$this->recordCursor]);
+        if ($this->valid()) {
+            return new Collection($this->logData[$this->recordCursor]);
+        } else {
+            return false;
+        }
     }
 
     public function next()
@@ -132,21 +144,23 @@ class LogRecordsIterator implements \Iterator
         // Advance the cursor
         $this->recordCursor++;
 
-        // If the log records for the current log file have been exhauseted, advance to the next log file
+        // If the log records for the current log file have been exhausted, advance to the next log file
         if (!isset($this->logData[$this->recordCursor])) {
             $this->objectsIterator->next();
             if ($this->objectsIterator->valid()) {
                 $this->loadRecordsFromObject();
-                $this->recordCursor = 0;
             }
         }
     }
 
     public function key()
     {
-        $object = $this->objectsIterator->current();
 
-        return "{$object['Key']}[{$this->recordCursor}]";
+        if ($object = $this->objectsIterator->current()) {
+            return "{$object['Key']}[{$this->recordCursor}]";
+        } else {
+            return null;
+        }
     }
 
     public function valid()
@@ -158,7 +172,6 @@ class LogRecordsIterator implements \Iterator
     {
         $this->objectsIterator->rewind();
         $this->loadRecordsFromObject();
-        $this->recordCursor = 0;
     }
 
     /**
@@ -171,7 +184,7 @@ class LogRecordsIterator implements \Iterator
         $keyPrefixParts['prefix'] = $this->options[self::OPT_KEY_PREFIX] ?: null;
         $keyPrefixParts['account'] = $this->options[self::OPT_ACCOUNT_ID] ?: self::PREFIX_WILDCARD;
         $keyPrefixParts['region'] = $this->options[self::OPT_LOG_REGION] ?: self::PREFIX_WILDCARD;
-        $keyPrefixParts += $this->fetchDateValues();
+        $keyPrefixParts['date'] = $this->fetchDateValue();
 
         // Determine the longest key prefix that can be used to retrieve all of the relevant log files
         $candidatePrefix = ltrim(strtr(self::PREFIX_TEMPLATE, $keyPrefixParts), '/');
@@ -189,7 +202,6 @@ class LogRecordsIterator implements \Iterator
         // Apply regex and/or date filters if needed and prepare the iterator for use
         $objectsIterator = $this->applyRegexFilter($objectsIterator, $logKeyPrefix, $candidatePrefix);
         $objectsIterator = $this->applyDateFilter($objectsIterator);
-        $objectsIterator->rewind();
 
         $this->objectsIterator = $objectsIterator;
     }
@@ -199,7 +211,7 @@ class LogRecordsIterator implements \Iterator
      *
      * @throws \InvalidArgumentException
      */
-    private function fetchDateValues()
+    private function fetchDateValue()
     {
         // Normalize start and end date options
         foreach(array(self::OPT_START_DATE, self::OPT_END_DATE) as $key) {
@@ -214,20 +226,28 @@ class LogRecordsIterator implements \Iterator
             }
         }
 
-        // Get the year, month, and day prefix parts
-        $dateParts = array_fill(0, 3, self::PREFIX_WILDCARD);
-        if ($this->options[self::OPT_START_DATE] && $this->options[self::OPT_END_DATE]) {
-            $dateParts = array_intersect_assoc(
-                explode('-', date('Y-m-d', $this->options[self::OPT_START_DATE])),
-                explode('-', date('Y-m-d', $this->options[self::OPT_END_DATE]))
-            ) + $dateParts;
-            ksort($dateParts);
+        // Prepare the date value (year, month, and day)
+        $startDate = $this->options[self::OPT_START_DATE];
+        $endDate = $this->options[self::OPT_END_DATE];
+        $dateParts = array_fill_keys(array('Y', 'm', 'd'), self::PREFIX_WILDCARD);
+        if ($startDate && $endDate) {
+            foreach ($dateParts as $key => &$value) {
+                $candidateValue = date($key, $startDate);
+                if ($candidateValue === date($key, $endDate)) {
+                    $value = $candidateValue;
+                } else {
+                    break;
+                }
+            }
+
         }
 
-        return array_combine(array('year', 'month', 'day'), $dateParts);
+        return join('/', $dateParts);
     }
 
     /**
+     * Applies a regex iterator filter that limits the ListObjects result set based on the provided options
+     *
      * @param \Traversable $objectsIterator
      * @param string       $logKeyPrefix
      * @param string       $candidatePrefix
@@ -237,17 +257,20 @@ class LogRecordsIterator implements \Iterator
     private function applyRegexFilter($objectsIterator, $logKeyPrefix, $candidatePrefix)
     {
         if ($logKeyPrefix !== $candidatePrefix) {
-            $regex = strtr($candidatePrefix, array(self::PREFIX_WILDCARD => '[^/]+'));
-            $objectsIterator = new FilterIterator($objectsIterator, function ($object) use ($regex) {
-                return preg_match("#{$regex}#", $object['Key']);
-            });
+            $regex = rtrim($candidatePrefix, '/' . self::PREFIX_WILDCARD) . '/';
+            $regex = strtr($regex, array(self::PREFIX_WILDCARD => '[^/]+'));
+            if ($logKeyPrefix !== $regex) {
+                $objectsIterator = new FilterIterator($objectsIterator, function ($object) use ($regex) {
+                    return preg_match("#{$regex}#", $object['Key']);
+                });
+            }
         }
 
         return $objectsIterator;
     }
 
     /**
-     * Adds an iterator filter to handle date ranges if specified
+     * Applies an iterator filter to restrict the ListObjects result set to the specified date range
      *
      * @param \Traversable $objectsIterator
      *
@@ -277,19 +300,25 @@ class LogRecordsIterator implements \Iterator
      */
     private function loadRecordsFromObject()
     {
-        $object = $this->objectsIterator->current();
-        $command = $this->s3Client->getCommand('GetObject', array(
-            'Bucket'                  => $this->options[self::OPT_BUCKET_NAME],
-            'Key'                     => $object['Key'],
-            'ResponseContentEncoding' => 'x-gzip',
-        ));
-        $command->prepare()->addHeader('Accept-Encoding', 'gzip');
-        $data = $command->getResponse()->json();
+        $this->recordCursor = 0;
 
-        if (isset($data['Records'])) {
-            $this->logData = $data['Records'];
-        } else {
-            $this->logData = array();
+        // Fetch and decode the log file content
+        if ($object = $this->objectsIterator->current()) {
+            $command = $this->s3Client->getCommand('GetObject', array(
+                'Bucket'                  => $this->options[self::OPT_BUCKET_NAME],
+                'Key'                     => $object['Key'],
+                'ResponseContentEncoding' => 'x-gzip',
+            ));
+            $command->prepare()->addHeader('Accept-Encoding', 'gzip');
+            $data = $command->getResponse()->json();
+
+            // Pull the data from the "Records" key of the data
+            if (isset($data['Records'])) {
+                $this->logData = $data['Records'];
+                return;
+            }
         }
+
+        $this->logData = array();
     }
 }
