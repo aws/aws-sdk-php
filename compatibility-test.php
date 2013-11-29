@@ -125,7 +125,7 @@ $c->addRequire(
 );
 
 $c->iniCheck('Ensuring that detect_unicode is disabled', 'detect_unicode', false, true, 'Enabling detect_unicode may cause errors when using phar files. See https://bugs.php.net/bug.php?id=42396');
-$c->iniCheck('Ensuring that session.auto_start is disbaled', 'session.auto_start', false);
+$c->iniCheck('Ensuring that session.auto_start is disabled', 'session.auto_start', false);
 
 if (extension_loaded('suhosin')) {
     $c->addRequire(
