@@ -8,9 +8,9 @@ use Guzzle\Iterator\FilterIterator;
 use Guzzle\Common\Collection;
 
 /**
- * Class LogRecordsIterator
+ * Class LogRecordIterator
  */
-class LogRecordsIterator implements \Iterator
+class LogRecordIterator implements \Iterator
 {
     const PREFIX_TEMPLATE = 'prefix/AWSLogs/account/CloudTrail/region/date/';
     const PREFIX_WILDCARD = '*';
@@ -26,7 +26,7 @@ class LogRecordsIterator implements \Iterator
     const OPT_CLOUDTRAIL_CLIENT = 'CloudTrailClient';
 
     /**
-     * @var array Default options for the LogRecordsIterator
+     * @var array Default options for the LogRecordIterator
      */
     private static $defaultOptions = array(
         self::OPT_TRAIL_NAME        => 'Default',
@@ -68,7 +68,7 @@ class LogRecordsIterator implements \Iterator
     /**
      * @param array $options
      *
-     * @return LogRecordsIterator
+     * @return LogRecordIterator
      * @throws \InvalidArgumentException
      */
     public static function factory(array $options = array())
@@ -129,10 +129,11 @@ class LogRecordsIterator implements \Iterator
 
     /**
      * @return Collection
+     * @see http://docs.aws.amazon.com/awscloudtrail/latest/userguide/eventreference.html
      */
     public function current()
     {
-        if ($this->valid()) {
+        if (isset($this->logData[$this->recordCursor])) {
             return new Collection($this->logData[$this->recordCursor]);
         } else {
             return false;
@@ -145,17 +146,18 @@ class LogRecordsIterator implements \Iterator
         $this->recordCursor++;
 
         // If the log records for the current log file have been exhausted, advance to the next log file
-        if (!isset($this->logData[$this->recordCursor])) {
+        while (!isset($this->logData[$this->recordCursor])) {
             $this->objectsIterator->next();
             if ($this->objectsIterator->valid()) {
                 $this->loadRecordsFromObject();
+            } else {
+                break;
             }
         }
     }
 
     public function key()
     {
-
         if ($object = $this->objectsIterator->current()) {
             return "{$object['Key']}[{$this->recordCursor}]";
         } else {
@@ -219,7 +221,7 @@ class LogRecordsIterator implements \Iterator
                 continue;
             } elseif (is_string($this->options[$key])) {
                 $this->options[$key] = strtotime($this->options[$key]);
-            } elseif ($options[$key] instanceof \DateTime) {
+            } elseif ($this->options[$key] instanceof \DateTime) {
                 $this->options[$key] = $this->options[$key]->format('U');
             } elseif (!is_int($this->options[$key])) {
                 throw new \InvalidArgumentException('Date values must be a string, an int, or a DateTime object.');
@@ -239,7 +241,6 @@ class LogRecordsIterator implements \Iterator
                     break;
                 }
             }
-
         }
 
         return join('/', $dateParts);
@@ -301,6 +302,7 @@ class LogRecordsIterator implements \Iterator
     private function loadRecordsFromObject()
     {
         $this->recordCursor = 0;
+        $this->logData = array();
 
         // Fetch and decode the log file content
         if ($object = $this->objectsIterator->current()) {
@@ -315,10 +317,7 @@ class LogRecordsIterator implements \Iterator
             // Pull the data from the "Records" key of the data
             if (isset($data['Records'])) {
                 $this->logData = $data['Records'];
-                return;
             }
         }
-
-        $this->logData = array();
     }
 }

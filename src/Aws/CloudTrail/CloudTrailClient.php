@@ -65,10 +65,10 @@ class CloudTrailClient extends AbstractClient
     /**
      * @param array $options
      *
-     * @return LogRecordsIterator
+     * @return LogRecordIterator
      */
-    public function getLogRecordsIterator(array $options = array())
+    public function getLogRecordIterator(array $options = array())
     {
-        return LogRecordsIterator::factory($options + array(LogRecordsIterator::OPT_CLOUDTRAIL_CLIENT => $this));
+        return LogRecordIterator::factory($options + array(LogRecordIterator::OPT_CLOUDTRAIL_CLIENT => $this));
     }
 }

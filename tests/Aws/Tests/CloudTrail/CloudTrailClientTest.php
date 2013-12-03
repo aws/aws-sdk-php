@@ -35,4 +35,20 @@ class CloudTrailClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://cloudtrail.us-west-2.amazonaws.com', $client->getBaseUrl());
     }
+
+    /**
+     * @covers Aws\CloudTrail\CloudTrailClient::getLogRecordIterator
+     */
+    public function testGetLogRecordIterator()
+    {
+        $client = CloudTrailClient::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-west-2',
+        ));
+        $iterator = $client->getLogRecordIterator(array(
+            'S3BucketName' => 'foo',
+        ));
+        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $iterator);
+    }
 }
