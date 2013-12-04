@@ -61,11 +61,17 @@ abstract class AbstractLockingStrategy implements LockingStrategyInterface
             )
         );
         if ($isDataChanged) {
-            $attributes['data'] = array(
-                'Value' => array(
-                    'S' => $data
-                )
-            );
+            if ($data != '') {
+                $attributes['data'] = array(
+                    'Value' => array(
+                        'S' => $data
+                    )
+                );
+            } else {
+                $attributes['data'] = array(
+                    'Action' => 'DELETE'
+                );
+            }
         }
         $attributes = array_merge($attributes, $this->getExtraAttributes());
 
