@@ -176,10 +176,6 @@ return array (
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -347,18 +343,10 @@ return array (
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'SIZE',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -418,11 +406,6 @@ return array (
                             'AttributeType' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'enum' => array(
-                                    'S',
-                                    'N',
-                                    'B',
-                                ),
                             ),
                         ),
                     ),
@@ -453,10 +436,6 @@ return array (
                             'KeyType' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'enum' => array(
-                                    'HASH',
-                                    'RANGE',
-                                ),
                             ),
                         ),
                     ),
@@ -492,10 +471,6 @@ return array (
                                         'KeyType' => array(
                                             'required' => true,
                                             'type' => 'string',
-                                            'enum' => array(
-                                                'HASH',
-                                                'RANGE',
-                                            ),
                                         ),
                                     ),
                                 ),
@@ -506,11 +481,6 @@ return array (
                                 'properties' => array(
                                     'ProjectionType' => array(
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'ALL',
-                                            'KEYS_ONLY',
-                                            'INCLUDE',
-                                        ),
                                     ),
                                     'NonKeyAttributes' => array(
                                         'type' => 'array',
@@ -698,29 +668,14 @@ return array (
                 'ReturnValues' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'NONE',
-                        'ALL_OLD',
-                        'UPDATED_OLD',
-                        'ALL_NEW',
-                        'UPDATED_NEW',
-                    ),
                 ),
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'SIZE',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -928,10 +883,6 @@ return array (
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1127,29 +1078,14 @@ return array (
                 'ReturnValues' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'NONE',
-                        'ALL_OLD',
-                        'UPDATED_OLD',
-                        'ALL_NEW',
-                        'UPDATED_NEW',
-                    ),
                 ),
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'SIZE',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1212,12 +1148,6 @@ return array (
                 'Select' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'ALL_ATTRIBUTES',
-                        'ALL_PROJECTED_ATTRIBUTES',
-                        'SPECIFIC_ATTRIBUTES',
-                        'COUNT',
-                    ),
                 ),
                 'AttributesToGet' => array(
                     'type' => 'array',
@@ -1295,21 +1225,6 @@ return array (
                             'ComparisonOperator' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'enum' => array(
-                                    'EQ',
-                                    'NE',
-                                    'IN',
-                                    'LE',
-                                    'LT',
-                                    'GE',
-                                    'GT',
-                                    'BETWEEN',
-                                    'NOT_NULL',
-                                    'NULL',
-                                    'CONTAINS',
-                                    'NOT_CONTAINS',
-                                    'BEGINS_WITH',
-                                ),
                             ),
                         ),
                     ),
@@ -1370,10 +1285,6 @@ return array (
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1436,12 +1347,6 @@ return array (
                 'Select' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'ALL_ATTRIBUTES',
-                        'ALL_PROJECTED_ATTRIBUTES',
-                        'SPECIFIC_ATTRIBUTES',
-                        'COUNT',
-                    ),
                 ),
                 'ScanFilter' => array(
                     'type' => 'object',
@@ -1500,21 +1405,6 @@ return array (
                             'ComparisonOperator' => array(
                                 'required' => true,
                                 'type' => 'string',
-                                'enum' => array(
-                                    'EQ',
-                                    'NE',
-                                    'IN',
-                                    'LE',
-                                    'LT',
-                                    'GE',
-                                    'GT',
-                                    'BETWEEN',
-                                    'NOT_NULL',
-                                    'NULL',
-                                    'CONTAINS',
-                                    'NOT_CONTAINS',
-                                    'BEGINS_WITH',
-                                ),
                             ),
                         ),
                     ),
@@ -1570,10 +1460,6 @@ return array (
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
                 'TotalSegments' => array(
                     'type' => 'numeric',
@@ -1731,11 +1617,6 @@ return array (
                             ),
                             'Action' => array(
                                 'type' => 'string',
-                                'enum' => array(
-                                    'ADD',
-                                    'PUT',
-                                    'DELETE',
-                                ),
                             ),
                         ),
                     ),
@@ -1800,29 +1681,14 @@ return array (
                 'ReturnValues' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'NONE',
-                        'ALL_OLD',
-                        'UPDATED_OLD',
-                        'ALL_NEW',
-                        'UPDATED_NEW',
-                    ),
                 ),
                 'ReturnConsumedCapacity' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'TOTAL',
-                        'NONE',
-                    ),
                 ),
                 'ReturnItemCollectionMetrics' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'SIZE',
-                        'NONE',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1938,6 +1804,9 @@ return array (
                                     ),
                                     'B' => array(
                                         'type' => 'string',
+                                        'filters' => array(
+                                            'base64_decode',
+                                        ),
                                     ),
                                     'SS' => array(
                                         'type' => 'array',
@@ -1958,6 +1827,9 @@ return array (
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
+                                            'filters' => array(
+                                                'base64_decode',
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -1987,6 +1859,9 @@ return array (
                                             ),
                                             'B' => array(
                                                 'type' => 'string',
+                                                'filters' => array(
+                                                    'base64_decode',
+                                                ),
                                             ),
                                             'SS' => array(
                                                 'type' => 'array',
@@ -2007,6 +1882,9 @@ return array (
                                                 'items' => array(
                                                     'name' => 'BinaryAttributeValue',
                                                     'type' => 'string',
+                                                    'filters' => array(
+                                                        'base64_decode',
+                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -2073,6 +1951,9 @@ return array (
                                                     ),
                                                     'B' => array(
                                                         'type' => 'string',
+                                                        'filters' => array(
+                                                            'base64_decode',
+                                                        ),
                                                     ),
                                                     'SS' => array(
                                                         'type' => 'array',
@@ -2093,6 +1974,9 @@ return array (
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
                                                             'type' => 'string',
+                                                            'filters' => array(
+                                                                'base64_decode',
+                                                            ),
                                                         ),
                                                     ),
                                                 ),
@@ -2116,6 +2000,9 @@ return array (
                                                     ),
                                                     'B' => array(
                                                         'type' => 'string',
+                                                        'filters' => array(
+                                                            'base64_decode',
+                                                        ),
                                                     ),
                                                     'SS' => array(
                                                         'type' => 'array',
@@ -2136,6 +2023,9 @@ return array (
                                                         'items' => array(
                                                             'name' => 'BinaryAttributeValue',
                                                             'type' => 'string',
+                                                            'filters' => array(
+                                                                'base64_decode',
+                                                            ),
                                                         ),
                                                     ),
                                                 ),
@@ -2169,6 +2059,9 @@ return array (
                                             ),
                                             'B' => array(
                                                 'type' => 'string',
+                                                'filters' => array(
+                                                    'base64_decode',
+                                                ),
                                             ),
                                             'SS' => array(
                                                 'type' => 'array',
@@ -2189,6 +2082,9 @@ return array (
                                                 'items' => array(
                                                     'name' => 'BinaryAttributeValue',
                                                     'type' => 'string',
+                                                    'filters' => array(
+                                                        'base64_decode',
+                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -2366,6 +2262,9 @@ return array (
                             ),
                             'B' => array(
                                 'type' => 'string',
+                                'filters' => array(
+                                    'base64_decode',
+                                ),
                             ),
                             'SS' => array(
                                 'type' => 'array',
@@ -2386,6 +2285,9 @@ return array (
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                             ),
                         ),
@@ -2420,6 +2322,9 @@ return array (
                                     ),
                                     'B' => array(
                                         'type' => 'string',
+                                        'filters' => array(
+                                            'base64_decode',
+                                        ),
                                     ),
                                     'SS' => array(
                                         'type' => 'array',
@@ -2440,6 +2345,9 @@ return array (
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
+                                            'filters' => array(
+                                                'base64_decode',
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -2724,6 +2632,9 @@ return array (
                             ),
                             'B' => array(
                                 'type' => 'string',
+                                'filters' => array(
+                                    'base64_decode',
+                                ),
                             ),
                             'SS' => array(
                                 'type' => 'array',
@@ -2744,6 +2655,9 @@ return array (
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                             ),
                         ),
@@ -2799,6 +2713,9 @@ return array (
                             ),
                             'B' => array(
                                 'type' => 'string',
+                                'filters' => array(
+                                    'base64_decode',
+                                ),
                             ),
                             'SS' => array(
                                 'type' => 'array',
@@ -2819,6 +2736,9 @@ return array (
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                             ),
                         ),
@@ -2853,6 +2773,9 @@ return array (
                                     ),
                                     'B' => array(
                                         'type' => 'string',
+                                        'filters' => array(
+                                            'base64_decode',
+                                        ),
                                     ),
                                     'SS' => array(
                                         'type' => 'array',
@@ -2873,6 +2796,9 @@ return array (
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
+                                            'filters' => array(
+                                                'base64_decode',
+                                            ),
                                         ),
                                     ),
                                 ),
@@ -2910,6 +2836,9 @@ return array (
                                 ),
                                 'B' => array(
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                                 'SS' => array(
                                     'type' => 'array',
@@ -2930,6 +2859,9 @@ return array (
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
+                                        'filters' => array(
+                                            'base64_decode',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -2954,6 +2886,9 @@ return array (
                             ),
                             'B' => array(
                                 'type' => 'string',
+                                'filters' => array(
+                                    'base64_decode',
+                                ),
                             ),
                             'SS' => array(
                                 'type' => 'array',
@@ -2974,6 +2909,9 @@ return array (
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                             ),
                         ),
@@ -3014,6 +2952,9 @@ return array (
                                 ),
                                 'B' => array(
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                                 'SS' => array(
                                     'type' => 'array',
@@ -3034,6 +2975,9 @@ return array (
                                     'items' => array(
                                         'name' => 'BinaryAttributeValue',
                                         'type' => 'string',
+                                        'filters' => array(
+                                            'base64_decode',
+                                        ),
                                     ),
                                 ),
                             ),
@@ -3062,6 +3006,9 @@ return array (
                             ),
                             'B' => array(
                                 'type' => 'string',
+                                'filters' => array(
+                                    'base64_decode',
+                                ),
                             ),
                             'SS' => array(
                                 'type' => 'array',
@@ -3082,6 +3029,9 @@ return array (
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                             ),
                         ),
@@ -3119,6 +3069,9 @@ return array (
                             ),
                             'B' => array(
                                 'type' => 'string',
+                                'filters' => array(
+                                    'base64_decode',
+                                ),
                             ),
                             'SS' => array(
                                 'type' => 'array',
@@ -3139,6 +3092,9 @@ return array (
                                 'items' => array(
                                     'name' => 'BinaryAttributeValue',
                                     'type' => 'string',
+                                    'filters' => array(
+                                        'base64_decode',
+                                    ),
                                 ),
                             ),
                         ),
@@ -3173,6 +3129,9 @@ return array (
                                     ),
                                     'B' => array(
                                         'type' => 'string',
+                                        'filters' => array(
+                                            'base64_decode',
+                                        ),
                                     ),
                                     'SS' => array(
                                         'type' => 'array',
@@ -3193,6 +3152,9 @@ return array (
                                         'items' => array(
                                             'name' => 'BinaryAttributeValue',
                                             'type' => 'string',
+                                            'filters' => array(
+                                                'base64_decode',
+                                            ),
                                         ),
                                     ),
                                 ),
