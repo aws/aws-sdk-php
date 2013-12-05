@@ -11,121 +11,84 @@ use Guzzle\Http\Message\Response;
 class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::factory
-     */
-    public function testFactoryCloudTrailClientProvided()
-    {
-        $cloudtrail = CloudTrailClient::factory(array(
-            'key'    => 'foo',
-            'secret' => 'bar',
-            'region' => 'us-west-2',
-        ));
-        $records = LogRecordIterator::factory(array(
-            'CloudTrailClient' => $cloudtrail,
-            'S3BucketName'     => 'test',
-        ));
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::factory
-     */
-    public function testFactoryS3ClientProvided()
-    {
-        $s3 = S3Client::factory(array(
-            'key'    => 'foo',
-            'secret' => 'bar',
-        ));
-        $records = LogRecordIterator::factory(array(
-            'S3Client'     => $s3,
-            'S3BucketName' => 'test',
-        ));
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::factory
-     */
-    public function testFactoryErrorsOnMissingClients()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-        LogRecordIterator::factory();
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::factory
+     * @covers Aws\CloudTrail\LogRecordIterator::fromTrail
      */
     public function testFactoryCanGetBucketFromTrail()
     {
-        $cloudtrail = CloudTrailClient::factory(array(
+        $s3Client = $s3Client = $this->getMockS3Client();
+        $cloudTrailClient = CloudTrailClient::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
             'region' => 'us-west-2',
         ));
-        $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"php-17364133299065-cloudtrail"}]}';
-        $cloudtrail->addSubscriber(new MockPlugin(array(new Response(200, null, $json))));
-        $records = LogRecordIterator::factory(array(
-            'CloudTrailClient' => $cloudtrail,
-        ));
+        $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
+        $cloudTrailClient->addSubscriber(new MockPlugin(array(new Response(200, null, $json))));
+        $records = LogRecordIterator::fromTrail($cloudTrailClient, $s3Client);
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
     }
 
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::factory
+     * @covers Aws\CloudTrail\LogRecordIterator::fromTrail
      */
-    public function testFactoryErrorsOnMissingBucket()
+    public function testFactoryErrorsOnUnknownBucket()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $cloudtrail = CloudTrailClient::factory(array(
+        $s3Client = $this->getMockS3Client();
+        $cloudTrailClient = CloudTrailClient::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
             'region' => 'us-west-2',
         ));
-        $cloudtrail->addSubscriber(new MockPlugin(array(new Response(200, null, '{"trailList":[]}'))));
-        LogRecordIterator::factory(array(
-            'CloudTrailClient' => $cloudtrail,
-        ));
+        $cloudTrailClient->addSubscriber(new MockPlugin(array(new Response(200, null, '{"trailList":[]}'))));
+        LogRecordIterator::fromTrail($cloudTrailClient, $s3Client);
     }
 
     /**
      * @covers Aws\CloudTrail\LogRecordIterator::__construct
-     * @covers Aws\CloudTrail\LogRecordIterator::prepareIterator
-     * @covers Aws\CloudTrail\LogRecordIterator::fetchDateValue
-     * @covers Aws\CloudTrail\LogRecordIterator::applyRegexFilter
-     * @covers Aws\CloudTrail\LogRecordIterator::applyDateFilter
+     * @covers Aws\CloudTrail\LogRecordIterator::buildObjectIterator
      */
     public function testConstructorWorksWithMinimumParams()
     {
         $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, array(
-            'S3BucketName' => 'test-bucket',
-        ));
+        $records = new LogRecordIterator($s3Client, 'test-bucket');
 
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
     }
 
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::__construct
-     * @covers Aws\CloudTrail\LogRecordIterator::fetchDateValue
+     * @covers Aws\CloudTrail\LogRecordIterator::normalizeDateValue
+     * @covers Aws\CloudTrail\LogRecordIterator::determineDateForPrefix
      * @covers Aws\CloudTrail\LogRecordIterator::applyDateFilter
      */
     public function testConstructorWorksWithDates()
     {
         $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, array(
-            'S3BucketName' => 'test-bucket',
-            'StartDate'    => new \DateTime('2013-11-01'),
-            'EndDate'      => '2013-12-01',
+        $records = new LogRecordIterator($s3Client, 'test-bucket', array(
+            LogRecordIterator::START_DATE => new \DateTime('2013-11-01'),
+            LogRecordIterator::END_DATE   => '2013-12-01',
         ));
 
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
     }
 
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::__construct
+     * @covers Aws\CloudTrail\LogRecordIterator::normalizeDateValue
+     */
+    public function testConstructorErrorsOnInvalidDate()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $s3Client = $this->getMockS3Client();
+        $records = new LogRecordIterator($s3Client, 'test-bucket', array(
+            LogRecordIterator::START_DATE => true,
+            LogRecordIterator::END_DATE   => false,
+        ));
+    }
+
+    /**
      * @covers Aws\CloudTrail\LogRecordIterator::applyDateFilter
      * @covers Aws\CloudTrail\LogRecordIterator::applyRegexFilter
-     * @covers Aws\CloudTrail\LogRecordIterator::loadRecordsFromObject
+     * @covers Aws\CloudTrail\LogRecordIterator::buildRecordIteratorForCurrentObject
      * @covers Aws\CloudTrail\LogRecordIterator::current
      * @covers Aws\CloudTrail\LogRecordIterator::key
      * @covers Aws\CloudTrail\LogRecordIterator::next
@@ -135,30 +98,13 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCanIterateThroughRecords()
     {
         $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, array(
-            'S3BucketName' => 'test-bucket',
-            'StartDate'    => new \DateTime('2013-11-01'),
-            'EndDate'      => '2013-12-01',
+        $records = new LogRecordIterator($s3Client, 'test-bucket', array(
+            LogRecordIterator::START_DATE => new \DateTime('2013-11-01'),
+            LogRecordIterator::END_DATE   => '2013-12-01',
         ));
 
         $records = iterator_to_array($records);
         $this->assertCount(6, $records);
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::__construct
-     * @covers Aws\CloudTrail\LogRecordIterator::fetchDateValue
-     */
-    public function testConstructorErrorsOnInvalidDate()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-
-        $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, array(
-            'S3BucketName' => 'test-bucket',
-            'StartDate'    => true,
-            'EndDate'      => false,
-        ));
     }
 
     /**
@@ -169,16 +115,14 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     public function testIteratorBehavesCorrectlyBeforeRewind()
     {
         $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, array(
-            'S3BucketName' => 'test-bucket',
-        ));
+        $records = new LogRecordIterator($s3Client, 'test-bucket');
 
         $this->assertNull($records->key());
         $this->assertFalse($records->current());
     }
 
     /**
-     * @return Response
+     * @return S3Client
      */
     private function getMockS3Client()
     {

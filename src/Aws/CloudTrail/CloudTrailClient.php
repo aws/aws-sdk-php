@@ -61,14 +61,4 @@ class CloudTrailClient extends AbstractClient
             ->setExceptionParser(new JsonQueryExceptionParser())
             ->build();
     }
-
-    /**
-     * @param array $options
-     *
-     * @return LogRecordIterator
-     */
-    public function getLogRecordIterator(array $options = array())
-    {
-        return LogRecordIterator::factory($options + array(LogRecordIterator::OPT_CLOUDTRAIL_CLIENT => $this));
-    }
 }
