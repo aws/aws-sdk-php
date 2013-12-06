@@ -125,7 +125,7 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @return S3Client
      */
-    private function getMockS3Client(&$mock)
+    private function getMockS3Client(&$mock = null)
     {
         // Setup ListObjects response
         $json = '{"Records":[{"foo":"1"},{"bar":"2"},{"baz":"3"}]}';
