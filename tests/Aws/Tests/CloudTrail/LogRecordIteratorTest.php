@@ -97,15 +97,19 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testCanIterateThroughRecords()
     {
-        $s3Client = $this->getMockS3Client($mock);
+        $s3Client = $this->getMockS3Client();
         $records = new LogRecordIterator($s3Client, 'test-bucket', array(
             LogRecordIterator::START_DATE => new \DateTime('2013-11-01'),
             LogRecordIterator::END_DATE   => '2013-12-01',
         ));
 
-        $records = iterator_to_array($records);
+        $keys = array();
+        foreach ($records as $key => $record) {
+            $keys[] = $key;
+        }
+
         /** @var $mock MockPlugin */
-        $this->assertCount(7, $records, print_r(array_map('strval', $mock->getReceivedRequests()), true));
+        $this->assertCount(6, $keys, print_r($keys, true));
     }
 
     /**
@@ -125,7 +129,7 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @return S3Client
      */
-    private function getMockS3Client(&$mock = null)
+    private function getMockS3Client()
     {
         // Setup ListObjects response
         $json = '{"Records":[{"foo":"1"},{"bar":"2"},{"baz":"3"}]}';
@@ -152,12 +156,13 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 </ListBucketResult>
 XML;
 
+        $headers = array('Content-Type' => 'application/json');
         $mock = new MockPlugin(array(
             new Response(200, null, $xml),  // ListObjects: 4 log files
-            new Response(200, null, $json), // GetObject: File with 3 log records
-            new Response(200, null, '{}'),  // GetObject: File with 0 log records
-            new Response(200, null, $json), // GetObject: File with 3 log records
-            new Response(200, null, $json), // GetObject: File with 3 log records, but is out of the date range
+            new Response(200, $headers, $json), // GetObject: File with 3 log records
+            new Response(200, $headers, '{}'),  // GetObject: File with 0 log records
+            new Response(200, $headers, $json), // GetObject: File with 3 log records
+            new Response(200, $headers, $json), // GetObject: File with 3 log records, but is out of the date range
         ));
         $client = S3Client::factory(array(
             'key'    => 'foo',
