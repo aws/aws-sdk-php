@@ -118,6 +118,7 @@ class LogRecordIterator implements \Iterator
      */
     public function current()
     {
+        echo __METHOD__ . "\n";
         if ($this->recordIterator->valid()) {
             return new Collection($this->recordIterator->current());
         } else {
@@ -127,6 +128,7 @@ class LogRecordIterator implements \Iterator
 
     public function next()
     {
+        echo __METHOD__ . "\n";
         $this->recordIterator->next();
 
         // If all the records have been exhausted, get more records from the next log file
@@ -144,6 +146,7 @@ class LogRecordIterator implements \Iterator
 
     public function key()
     {
+        echo __METHOD__ . "\n";
         if ($object = $this->objectIterator->current()) {
             return $object['Key'] . '.' . $this->recordIterator->key();
         } else {
@@ -153,11 +156,13 @@ class LogRecordIterator implements \Iterator
 
     public function valid()
     {
+        echo __METHOD__ . "\n";
         return $this->recordIterator->valid();
     }
 
     public function rewind()
     {
+        echo __METHOD__ . "\n";
         $this->objectIterator->rewind();
         $this->recordIterator = $this->buildRecordIteratorForCurrentObject();
     }
