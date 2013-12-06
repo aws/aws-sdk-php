@@ -97,14 +97,15 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testCanIterateThroughRecords()
     {
-        $s3Client = $this->getMockS3Client();
+        $s3Client = $this->getMockS3Client($mock);
         $records = new LogRecordIterator($s3Client, 'test-bucket', array(
             LogRecordIterator::START_DATE => new \DateTime('2013-11-01'),
             LogRecordIterator::END_DATE   => '2013-12-01',
         ));
 
         $records = iterator_to_array($records);
-        $this->assertCount(6, $records);
+        /** @var $mock MockPlugin */
+        $this->assertCount(6, $records, print_r($mock->getReceivedRequests(), true));
     }
 
     /**
@@ -124,7 +125,7 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @return S3Client
      */
-    private function getMockS3Client()
+    private function getMockS3Client(&$mock)
     {
         // Setup ListObjects response
         $json = '{"Records":[{"foo":"1"},{"bar":"2"},{"baz":"3"}]}';
