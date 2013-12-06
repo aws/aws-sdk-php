@@ -103,13 +103,8 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             LogRecordIterator::END_DATE   => '2013-12-01',
         ));
 
-        $keys = array();
-        foreach ($records as $key => $record) {
-            $keys[] = $key;
-        }
-
-        /** @var $mock MockPlugin */
-        $this->assertCount(6, $keys, print_r($keys, true));
+        $records = iterator_to_array($records);
+        $this->assertCount(6, $records, print_r($records, true));
     }
 
     /**
@@ -156,13 +151,12 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 </ListBucketResult>
 XML;
 
-        $headers = array('Content-Type' => 'application/json');
         $mock = new MockPlugin(array(
             new Response(200, null, $xml),  // ListObjects: 4 log files
-            new Response(200, $headers, $json), // GetObject: File with 3 log records
-            new Response(200, $headers, '{}'),  // GetObject: File with 0 log records
-            new Response(200, $headers, $json), // GetObject: File with 3 log records
-            new Response(200, $headers, $json), // GetObject: File with 3 log records, but is out of the date range
+            new Response(200, null, $json), // GetObject: File with 3 log records
+            new Response(200, null, '{"Records":[]}'),  // GetObject: File with 0 log records
+            new Response(200, null, $json), // GetObject: File with 3 log records
+            new Response(200, null, $json), // GetObject: File with 3 log records, but is out of the date range
         ));
         $client = S3Client::factory(array(
             'key'    => 'foo',
