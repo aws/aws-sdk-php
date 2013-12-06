@@ -105,7 +105,7 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 
         $records = iterator_to_array($records);
         /** @var $mock MockPlugin */
-        $this->assertCount(6, $records, print_r($mock->getReceivedRequests(), true));
+        $this->assertCount(7, $records, print_r(array_map('strval', $mock->getReceivedRequests()), true));
     }
 
     /**
