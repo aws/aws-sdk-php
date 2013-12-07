@@ -16,7 +16,7 @@ use Guzzle\Iterator\FilterIterator;
  *
  * @yields Collection A log record containing data about an AWS API call is yielded for each iteration on this object
  */
-class LogRecordIterator implements \Iterator
+class LogRecordIterator implements \OuterIterator
 {
     const DEFAULT_TRAIL_NAME = 'Default';
     const PREFIX_TEMPLATE = 'prefix/AWSLogs/account/CloudTrail/region/date/';
@@ -114,6 +114,11 @@ class LogRecordIterator implements \Iterator
         $this->bucketName = $bucketName;
         $this->objectIterator = $this->buildObjectIterator($options);
         $this->recordIterator = new \ArrayIterator();
+    }
+
+    public function getInnerIterator()
+    {
+        return $this->objectIterator;
     }
 
     /**

@@ -103,6 +103,9 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             LogRecordIterator::END_DATE   => '2013-12-01',
         ));
 
+        $objects = $records->getInnerIterator();
+        $this->assertInstanceOf('Guzzle\Iterator\FilterIterator', $objects);
+
         $records = iterator_to_array($records);
         $this->assertCount(6, $records, print_r($records, true));
     }
