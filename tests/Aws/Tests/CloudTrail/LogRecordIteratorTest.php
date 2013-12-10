@@ -3,6 +3,7 @@
 namespace Aws\Tests\CloudTrail;
 
 use Aws\CloudTrail\CloudTrailClient;
+use Aws\CloudTrail\LogFileReader;
 use Aws\CloudTrail\LogRecordIterator;
 use Aws\S3\S3Client;
 use Guzzle\Plugin\Mock\MockPlugin;
@@ -11,11 +12,14 @@ use Guzzle\Http\Message\Response;
 class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::fromTrail
+     * @covers Aws\CloudTrail\LogRecordIterator::forTrail
      */
-    public function testFactoryCanGetBucketFromTrail()
+    public function testFactoryCanCreateForTrail()
     {
-        $s3Client = $s3Client = $this->getMockS3Client();
+        $s3Client = $s3Client = S3Client::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+        ));
         $cloudTrailClient = CloudTrailClient::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
@@ -23,72 +27,61 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         ));
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
         $cloudTrailClient->addSubscriber(new MockPlugin(array(new Response(200, null, $json))));
-        $records = LogRecordIterator::fromTrail($cloudTrailClient, $s3Client);
+
+        $records = LogRecordIterator::forTrail($s3Client, $cloudTrailClient);
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
     }
 
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::fromTrail
+     * @covers Aws\CloudTrail\LogRecordIterator::forBucket
      */
-    public function testFactoryErrorsOnUnknownBucket()
+    public function testFactoryCanCreateForBucket()
     {
-        $this->setExpectedException('InvalidArgumentException');
-        $s3Client = $this->getMockS3Client();
-        $cloudTrailClient = CloudTrailClient::factory(array(
+        $s3Client = $s3Client = S3Client::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
-            'region' => 'us-west-2',
         ));
-        $cloudTrailClient->addSubscriber(new MockPlugin(array(new Response(200, null, '{"trailList":[]}'))));
-        LogRecordIterator::fromTrail($cloudTrailClient, $s3Client);
+
+        $records = LogRecordIterator::forBucket($s3Client, 'test-bucket');
+        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+    }
+
+    /**
+     * @covers Aws\CloudTrail\LogRecordIterator::forFile
+     */
+    public function testFactoryCanCreateForFile()
+    {
+        $s3Client = $s3Client = S3Client::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+        ));
+
+        $records = LogRecordIterator::forFile($s3Client, 'test-bucket', 'test-key');
+        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
     }
 
     /**
      * @covers Aws\CloudTrail\LogRecordIterator::__construct
-     * @covers Aws\CloudTrail\LogRecordIterator::buildObjectIterator
+     * @covers Aws\CloudTrail\LogRecordIterator::current
+     * @covers Aws\CloudTrail\LogRecordIterator::key
+     * @covers Aws\CloudTrail\LogRecordIterator::valid
+     * @covers Aws\CloudTrail\LogRecordIterator::getInnerIterator
      */
-    public function testConstructorWorksWithMinimumParams()
+    public function testIteratorBehavesCorrectlyBeforeRewind()
     {
-        $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, 'test-bucket');
+        $logFileReader = $this->getMockBuilder('Aws\CloudTrail\LogFileReader')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $logFileIterator = new \ArrayIterator;
 
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
+        $records = new LogRecordIterator($logFileReader, $logFileIterator);
+        $this->assertNull($records->key());
+        $this->assertFalse($records->current());
+        $this->assertInstanceOf('ArrayIterator', $records->getInnerIterator());
     }
 
     /**
-     * @covers Aws\CloudTrail\LogRecordIterator::normalizeDateValue
-     * @covers Aws\CloudTrail\LogRecordIterator::determineDateForPrefix
-     * @covers Aws\CloudTrail\LogRecordIterator::applyDateFilter
-     */
-    public function testConstructorWorksWithDates()
-    {
-        $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, 'test-bucket', array(
-            LogRecordIterator::START_DATE => new \DateTime('2013-11-01'),
-            LogRecordIterator::END_DATE   => '2013-12-01',
-        ));
-
-        $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::normalizeDateValue
-     */
-    public function testConstructorErrorsOnInvalidDate()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-
-        $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, 'test-bucket', array(
-            LogRecordIterator::START_DATE => true,
-            LogRecordIterator::END_DATE   => false,
-        ));
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::applyDateFilter
-     * @covers Aws\CloudTrail\LogRecordIterator::applyRegexFilter
-     * @covers Aws\CloudTrail\LogRecordIterator::buildRecordIteratorForCurrentObject
+     * @covers Aws\CloudTrail\LogRecordIterator::loadRecordsFromCurrentLogFile
      * @covers Aws\CloudTrail\LogRecordIterator::current
      * @covers Aws\CloudTrail\LogRecordIterator::key
      * @covers Aws\CloudTrail\LogRecordIterator::next
@@ -97,31 +90,16 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testCanIterateThroughRecords()
     {
-        $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, 'test-bucket', array(
-            LogRecordIterator::START_DATE => new \DateTime('2013-11-01'),
-            LogRecordIterator::END_DATE   => '2013-12-01',
+        $logFileReader = new LogFileReader($this->getMockS3Client());
+        $logFileIterator = new \ArrayIterator(array(
+            array('Bucket' => 'test-bucket', 'Key' => 'test-key-1'),
+            array('Bucket' => 'test-bucket', 'Key' => 'test-key-2'),
+            array('Bucket' => 'test-bucket', 'Key' => 'test-key-3'),
         ));
 
-        $objects = $records->getInnerIterator();
-        $this->assertInstanceOf('Guzzle\Iterator\FilterIterator', $objects);
-
+        $records = new LogRecordIterator($logFileReader, $logFileIterator);
         $records = iterator_to_array($records);
-        $this->assertCount(6, $records, print_r($records, true));
-    }
-
-    /**
-     * @covers Aws\CloudTrail\LogRecordIterator::current
-     * @covers Aws\CloudTrail\LogRecordIterator::key
-     * @covers Aws\CloudTrail\LogRecordIterator::valid
-     */
-    public function testIteratorBehavesCorrectlyBeforeRewind()
-    {
-        $s3Client = $this->getMockS3Client();
-        $records = new LogRecordIterator($s3Client, 'test-bucket');
-
-        $this->assertNull($records->key());
-        $this->assertFalse($records->current());
+        $this->assertCount(5, $records);
     }
 
     /**
@@ -129,37 +107,10 @@ class LogRecordIteratorTest extends \Guzzle\Tests\GuzzleTestCase
      */
     private function getMockS3Client()
     {
-        // Setup ListObjects response
-        $json = '{"Records":[{"foo":"1"},{"bar":"2"},{"baz":"3"}]}';
-        $xml = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-    <Name>test-bucket</Name>
-    <Prefix/>
-    <Marker/>
-    <MaxKeys>1000</MaxKeys>
-    <IsTruncated>false</IsTruncated>
-    <Contents>
-        <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/11/15/foo-20131115T1453Z-log.json.gz</Key>
-    </Contents>
-    <Contents>
-        <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/11/28/foo-20131128T1822Z-log.json.gz</Key>
-    </Contents>
-    <Contents>
-        <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/12/01/foo-20131129T0311Z-log.json.gz</Key>
-    </Contents>
-    <Contents>
-        <Key>AWSLogs/12345/CloudTrail/us-east-1/2013/12/01/foo-20131225T0000Z-log.json.gz</Key>
-    </Contents>
-</ListBucketResult>
-XML;
-
         $mock = new MockPlugin(array(
-            new Response(200, null, $xml),  // ListObjects: 4 log files
-            new Response(200, null, $json), // GetObject: File with 3 log records
-            new Response(200, null, '{"Records":[]}'),  // GetObject: File with 0 log records
-            new Response(200, null, $json), // GetObject: File with 3 log records
-            new Response(200, null, $json), // GetObject: File with 3 log records, but is out of the date range
+            new Response(200, null, '{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}'),
+            new Response(200, null, '{}'),
+            new Response(200, null, '{"Records":[{"r4":"r4"},{"r5":"r5"}]}'),
         ));
         $client = S3Client::factory(array(
             'key'    => 'foo',
