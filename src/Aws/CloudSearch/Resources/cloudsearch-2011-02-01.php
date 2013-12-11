@@ -85,10 +85,6 @@ return array (
                     'class' => 'InternalException',
                 ),
                 array(
-                    'reason' => 'An internal error occurred while processing the request. If this problem persists, report an issue from the Service Health Dashboard.',
-                    'class' => 'InternalException',
-                ),
-                array(
                     'reason' => 'The request was rejected because a resource limit has already been met.',
                     'class' => 'LimitExceededException',
                 ),
@@ -132,11 +128,6 @@ return array (
                         'IndexFieldType' => array(
                             'required' => true,
                             'type' => 'string',
-                            'enum' => array(
-                                'uint',
-                                'literal',
-                                'text',
-                            ),
                         ),
                         'UIntOptions' => array(
                             'type' => 'object',
@@ -199,11 +190,6 @@ return array (
                                     'SourceDataFunction' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'Copy',
-                                            'TrimTitle',
-                                            'Map',
-                                        ),
                                     ),
                                     'SourceDataCopy' => array(
                                         'type' => 'object',

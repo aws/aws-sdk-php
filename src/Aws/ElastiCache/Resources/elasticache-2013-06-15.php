@@ -20,7 +20,7 @@ return array (
     'serviceFullName' => 'Amazon ElastiCache',
     'serviceType' => 'query',
     'resultWrapped' => true,
-    'signatureVersion' => 'v2',
+    'signatureVersion' => 'v4',
     'namespace' => 'ElastiCache',
     'regions' => array(
         'us-east-1' => array(
@@ -1033,12 +1033,6 @@ return array (
                 'SourceType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'cache-cluster',
-                        'cache-parameter-group',
-                        'cache-security-group',
-                        'cache-subnet-group',
-                    ),
                 ),
                 'StartTime' => array(
                     'type' => array(

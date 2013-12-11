@@ -918,14 +918,6 @@ return array (
                 'Severity' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'TRACE',
-                        'DEBUG',
-                        'INFO',
-                        'WARN',
-                        'ERROR',
-                        'FATAL',
-                    ),
                 ),
                 'StartTime' => array(
                     'type' => array(
@@ -1042,9 +1034,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'tail',
-                    ),
                 ),
             ),
         ),
@@ -1108,9 +1097,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'tail',
-                    ),
                 ),
             ),
         ),

@@ -225,10 +225,6 @@ return array (
                 'IdentityType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'EmailAddress',
-                        'Domain',
-                    ),
                 ),
                 'NextToken' => array(
                     'type' => 'string',
@@ -519,10 +515,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'Bounce',
-                        'Complaint',
-                    ),
                 ),
                 'SnsTopic' => array(
                     'type' => 'string',
