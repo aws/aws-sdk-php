@@ -321,18 +321,44 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 100,
                 ),
-                'VersionLabel' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                    'minLength' => 1,
-                    'maxLength' => 100,
-                ),
                 'EnvironmentName' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 4,
                     'maxLength' => 23,
+                ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'maxLength' => 200,
+                ),
+                'CNAMEPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 4,
+                    'maxLength' => 63,
+                ),
+                'Tier' => array(
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Type' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'VersionLabel' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 100,
                 ),
                 'TemplateName' => array(
                     'type' => 'string',
@@ -344,17 +370,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'maxLength' => 100,
-                ),
-                'CNAMEPrefix' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                    'minLength' => 4,
-                    'maxLength' => 63,
-                ),
-                'Description' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
                     'type' => 'array',
@@ -1356,6 +1371,26 @@ return array (
                     'minLength' => 4,
                     'maxLength' => 23,
                 ),
+                'Description' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'maxLength' => 200,
+                ),
+                'Tier' => array(
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Type' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
                 'VersionLabel' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -1367,11 +1402,6 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 100,
-                ),
-                'Description' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                    'maxLength' => 200,
                 ),
                 'OptionSettings' => array(
                     'type' => 'array',
@@ -1724,6 +1754,21 @@ return array (
                         ),
                     ),
                 ),
+                'Tier' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'Type' => array(
+                            'type' => 'string',
+                        ),
+                        'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
             ),
         ),
         'CreateStorageLocationResultMessage' => array(
@@ -2031,6 +2076,22 @@ return array (
                                 ),
                             ),
                         ),
+                        'Queues' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Queue',
+                                'type' => 'object',
+                                'sentAs' => 'member',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'URL' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -2115,6 +2176,20 @@ return array (
                                                 ),
                                             ),
                                         ),
+                                    ),
+                                ),
+                            ),
+                            'Tier' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Name' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Type' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Version' => array(
+                                        'type' => 'string',
                                     ),
                                 ),
                             ),
