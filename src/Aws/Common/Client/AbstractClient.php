@@ -258,7 +258,8 @@ abstract class AbstractClient extends Client implements AwsClientInterface
                 new WaiterClassFactory(substr($clientClass, 0, strrpos($clientClass, '\\')) . '\\Waiter')
             ));
             if ($this->getDescription()) {
-                $this->waiterFactory->addFactory(new WaiterConfigFactory($this->getDescription()->getData('waiters')));
+                $waiterConfig = $this->getDescription()->getData('waiters') ?: array();
+                $this->waiterFactory->addFactory(new WaiterConfigFactory($waiterConfig));
             }
         }
 
