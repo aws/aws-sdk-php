@@ -168,6 +168,14 @@ class ImportExport extends Facade
     }
 }
 
+class Kinesis extends Facade
+{
+    public static function getServiceBuilderKey()
+    {
+        return 'kinesis';
+    }
+}
+
 class OpsWorks extends Facade
 {
     public static function getServiceBuilderKey()

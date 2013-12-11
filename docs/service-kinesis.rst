@@ -1,5 +1,7 @@
 .. service:: Kinesis
 
+To learn about the Amazon Kinesis API, see the `Amazon Kinesis Developer Guide <http://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-api-java.html>`_.
+
 Creating a stream
 -----------------
 
