@@ -35,6 +35,7 @@ AWS SDK for PHP
     service-glacier
     service-iam
     service-importexport
+    service-kinesis
     service-opsworks
     service-rds
     service-redshift
@@ -101,6 +102,7 @@ Supported services
 * :doc:`service-glacier`
 * :doc:`service-iam`
 * :doc:`service-importexport`
+* :doc:`service-kinesis`
 * :doc:`service-opsworks`
 * :doc:`service-rds`
 * :doc:`service-redshift`

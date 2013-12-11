@@ -132,6 +132,12 @@ return array(
             'class'   => 'Aws\Glacier\GlacierClient'
         ),
 
+        'kinesis' => array(
+            'alias'   => 'Kinesis',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Kinesis\KinesisClient'
+        ),
+
         'iam' => array(
             'alias'   => 'Iam',
             'extends' => 'default_settings',
