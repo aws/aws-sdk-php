@@ -14,25 +14,25 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\ElastiCache;
+namespace Aws\Tests\Kinesis;
 
-use Aws\ElastiCache\ElastiCacheClient;
+use Aws\Kinesis\KinesisClient;
 
-class ElastiCacheClientTest extends \Guzzle\Tests\GuzzleTestCase
+/**
+ * @covers Aws\Kinesis\KinesisClient
+ */
+class KinesisClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    /**
-     * @covers Aws\ElastiCache\ElastiCacheClient::factory
-     */
     public function testFactoryInitializesClient()
     {
-        $client = ElastiCacheClient::factory(array(
+        $client = KinesisClient::factory(array(
             'key'    => 'foo',
             'secret' => 'bar',
-            'region' => 'us-west-2'
+            'region' => 'us-east-1',
         ));
 
         $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
-        $this->assertEquals('https://elasticache.us-west-2.amazonaws.com', $client->getBaseUrl());
+        $this->assertEquals('https://kinesis.us-east-1.amazonaws.com', $client->getBaseUrl());
     }
 }

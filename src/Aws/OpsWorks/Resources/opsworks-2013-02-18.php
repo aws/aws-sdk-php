@@ -258,12 +258,6 @@ return array (
                     'properties' => array(
                         'Type' => array(
                             'type' => 'string',
-                            'enum' => array(
-                                'git',
-                                'svn',
-                                'archive',
-                                's3',
-                            ),
                         ),
                         'Url' => array(
                             'type' => 'string',
@@ -302,10 +296,6 @@ return array (
                 'DefaultRootDeviceType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'ebs',
-                        'instance-store',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -362,13 +352,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'rails',
-                        'php',
-                        'nodejs',
-                        'static',
-                        'other',
-                    ),
                 ),
                 'AppSource' => array(
                     'type' => 'object',
@@ -376,12 +359,6 @@ return array (
                     'properties' => array(
                         'Type' => array(
                             'type' => 'string',
-                            'enum' => array(
-                                'git',
-                                'svn',
-                                'archive',
-                                's3',
-                            ),
                         ),
                         'Url' => array(
                             'type' => 'string',
@@ -498,18 +475,6 @@ return array (
                         'Name' => array(
                             'required' => true,
                             'type' => 'string',
-                            'enum' => array(
-                                'install_dependencies',
-                                'update_dependencies',
-                                'update_custom_cookbooks',
-                                'execute_recipes',
-                                'deploy',
-                                'rollback',
-                                'start',
-                                'stop',
-                                'restart',
-                                'undeploy',
-                            ),
                         ),
                         'Args' => array(
                             'type' => 'object',
@@ -589,10 +554,6 @@ return array (
                 'AutoScalingType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'load',
-                        'timer',
-                    ),
                 ),
                 'Hostname' => array(
                     'type' => 'string',
@@ -621,18 +582,10 @@ return array (
                 'Architecture' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'x86_64',
-                        'i386',
-                    ),
                 ),
                 'RootDeviceType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'ebs',
-                        'instance-store',
-                    ),
                 ),
                 'InstallUpdatesOnBoot' => array(
                     'type' => 'boolean',
@@ -681,17 +634,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'lb',
-                        'web',
-                        'php-app',
-                        'rails-app',
-                        'nodejs-app',
-                        'memcached',
-                        'db-master',
-                        'monitoring-master',
-                        'custom',
-                    ),
                 ),
                 'Name' => array(
                     'required' => true,
@@ -929,12 +871,6 @@ return array (
                     'properties' => array(
                         'Type' => array(
                             'type' => 'string',
-                            'enum' => array(
-                                'git',
-                                'svn',
-                                'archive',
-                                's3',
-                            ),
                         ),
                         'Url' => array(
                             'type' => 'string',
@@ -960,10 +896,6 @@ return array (
                 'DefaultRootDeviceType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'ebs',
-                        'instance-store',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -1005,6 +937,11 @@ return array (
                 ),
                 'SshPublicKey' => array(
                     'type' => 'string',
+                    'location' => 'json',
+                ),
+                'AllowSelfManagement' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
                 ),
             ),
@@ -1664,6 +1601,29 @@ return array (
                 ),
             ),
         ),
+        'DescribeMyUserProfile' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeMyUserProfileResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DescribeMyUserProfile',
+                ),
+            ),
+        ),
         'DescribePermissions' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1686,12 +1646,10 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribePermissions',
                 ),
                 'IamUserArn' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'StackId' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1788,6 +1746,44 @@ return array (
                         'name' => 'String',
                         'type' => 'string',
                     ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'DescribeStackSummary' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeStackSummaryResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DescribeStackSummary',
+                ),
+                'StackId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
@@ -1906,7 +1902,6 @@ return array (
                     'default' => 'OpsWorks_20130218.DescribeUserProfiles',
                 ),
                 'IamUserArns' => array(
-                    'required' => true,
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -2087,6 +2082,10 @@ return array (
                 array(
                     'reason' => 'Indicates that a request was invalid.',
                     'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
                 ),
             ),
         ),
@@ -2351,6 +2350,10 @@ return array (
                 'AllowSudo' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'Level' => array(
+                    'type' => 'string',
                     'location' => 'json',
                 ),
             ),
@@ -2699,13 +2702,6 @@ return array (
                 'Type' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'rails',
-                        'php',
-                        'nodejs',
-                        'static',
-                        'other',
-                    ),
                 ),
                 'AppSource' => array(
                     'type' => 'object',
@@ -2713,12 +2709,6 @@ return array (
                     'properties' => array(
                         'Type' => array(
                             'type' => 'string',
-                            'enum' => array(
-                                'git',
-                                'svn',
-                                'archive',
-                                's3',
-                            ),
                         ),
                         'Url' => array(
                             'type' => 'string',
@@ -2872,10 +2862,6 @@ return array (
                 'AutoScalingType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'load',
-                        'timer',
-                    ),
                 ),
                 'Hostname' => array(
                     'type' => 'string',
@@ -2896,10 +2882,6 @@ return array (
                 'Architecture' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'x86_64',
-                        'i386',
-                    ),
                 ),
                 'InstallUpdatesOnBoot' => array(
                     'type' => 'boolean',
@@ -3080,6 +3062,39 @@ return array (
                 ),
             ),
         ),
+        'UpdateMyUserProfile' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.UpdateMyUserProfile',
+                ),
+                'SshPublicKey' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+            ),
+        ),
         'UpdateStack' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -3171,12 +3186,6 @@ return array (
                     'properties' => array(
                         'Type' => array(
                             'type' => 'string',
-                            'enum' => array(
-                                'git',
-                                'svn',
-                                'archive',
-                                's3',
-                            ),
                         ),
                         'Url' => array(
                             'type' => 'string',
@@ -3202,10 +3211,6 @@ return array (
                 'DefaultRootDeviceType' => array(
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'ebs',
-                        'instance-store',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -3251,6 +3256,11 @@ return array (
                 ),
                 'SshPublicKey' => array(
                     'type' => 'string',
+                    'location' => 'json',
+                ),
+                'AllowSelfManagement' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
                 ),
             ),
@@ -4033,6 +4043,30 @@ return array (
                 ),
             ),
         ),
+        'DescribeMyUserProfileResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'UserProfile' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'IamUserArn' => array(
+                            'type' => 'string',
+                        ),
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'SshUsername' => array(
+                            'type' => 'string',
+                        ),
+                        'SshPublicKey' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'DescribePermissionsResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -4055,6 +4089,9 @@ return array (
                             ),
                             'AllowSudo' => array(
                                 'type' => 'boolean',
+                            ),
+                            'Level' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),
@@ -4135,6 +4172,71 @@ return array (
                             ),
                             'CreatedAt' => array(
                                 'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeStackSummaryResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'StackSummary' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'StackId' => array(
+                            'type' => 'string',
+                        ),
+                        'Name' => array(
+                            'type' => 'string',
+                        ),
+                        'LayersCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'AppsCount' => array(
+                            'type' => 'numeric',
+                        ),
+                        'InstancesCount' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Booting' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'ConnectionLost' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Pending' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Rebooting' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Requested' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'RunningSetup' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'SetupFailed' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'ShuttingDown' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'StartFailed' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Stopped' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Terminated' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Terminating' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                     ),
@@ -4330,6 +4432,9 @@ return array (
                             ),
                             'SshPublicKey' => array(
                                 'type' => 'string',
+                            ),
+                            'AllowSelfManagement' => array(
+                                'type' => 'boolean',
                             ),
                         ),
                     ),

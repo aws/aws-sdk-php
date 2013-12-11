@@ -52,9 +52,11 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeInstances(array $args = array()) {@command OpsWorks DescribeInstances}
  * @method Model describeLayers(array $args = array()) {@command OpsWorks DescribeLayers}
  * @method Model describeLoadBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeLoadBasedAutoScaling}
+ * @method Model describeMyUserProfile(array $args = array()) {@command OpsWorks DescribeMyUserProfile}
  * @method Model describePermissions(array $args = array()) {@command OpsWorks DescribePermissions}
  * @method Model describeRaidArrays(array $args = array()) {@command OpsWorks DescribeRaidArrays}
  * @method Model describeServiceErrors(array $args = array()) {@command OpsWorks DescribeServiceErrors}
+ * @method Model describeStackSummary(array $args = array()) {@command OpsWorks DescribeStackSummary}
  * @method Model describeStacks(array $args = array()) {@command OpsWorks DescribeStacks}
  * @method Model describeTimeBasedAutoScaling(array $args = array()) {@command OpsWorks DescribeTimeBasedAutoScaling}
  * @method Model describeUserProfiles(array $args = array()) {@command OpsWorks DescribeUserProfiles}
@@ -77,6 +79,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateElasticIp(array $args = array()) {@command OpsWorks UpdateElasticIp}
  * @method Model updateInstance(array $args = array()) {@command OpsWorks UpdateInstance}
  * @method Model updateLayer(array $args = array()) {@command OpsWorks UpdateLayer}
+ * @method Model updateMyUserProfile(array $args = array()) {@command OpsWorks UpdateMyUserProfile}
  * @method Model updateStack(array $args = array()) {@command OpsWorks UpdateStack}
  * @method Model updateUserProfile(array $args = array()) {@command OpsWorks UpdateUserProfile}
  * @method Model updateVolume(array $args = array()) {@command OpsWorks UpdateVolume}

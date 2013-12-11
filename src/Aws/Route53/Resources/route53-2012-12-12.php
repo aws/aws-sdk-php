@@ -110,10 +110,6 @@ return array (
                                     'Action' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'CREATE',
-                                            'DELETE',
-                                        ),
                                     ),
                                     'ResourceRecordSet' => array(
                                         'required' => true,
@@ -127,18 +123,6 @@ return array (
                                             'Type' => array(
                                                 'required' => true,
                                                 'type' => 'string',
-                                                'enum' => array(
-                                                    'SOA',
-                                                    'A',
-                                                    'TXT',
-                                                    'NS',
-                                                    'CNAME',
-                                                    'MX',
-                                                    'PTR',
-                                                    'SRV',
-                                                    'SPF',
-                                                    'AAAA',
-                                                ),
                                             ),
                                             'SetIdentifier' => array(
                                                 'type' => 'string',
@@ -153,23 +137,9 @@ return array (
                                                 'type' => 'string',
                                                 'minLength' => 1,
                                                 'maxLength' => 64,
-                                                'enum' => array(
-                                                    'us-east-1',
-                                                    'us-west-1',
-                                                    'us-west-2',
-                                                    'eu-west-1',
-                                                    'ap-southeast-1',
-                                                    'ap-southeast-2',
-                                                    'ap-northeast-1',
-                                                    'sa-east-1',
-                                                ),
                                             ),
                                             'Failover' => array(
                                                 'type' => 'string',
-                                                'enum' => array(
-                                                    'PRIMARY',
-                                                    'SECONDARY',
-                                                ),
                                             ),
                                             'TTL' => array(
                                                 'type' => 'numeric',
@@ -288,10 +258,6 @@ return array (
                         'Type' => array(
                             'required' => true,
                             'type' => 'string',
-                            'enum' => array(
-                                'HTTP',
-                                'TCP',
-                            ),
                         ),
                         'ResourcePath' => array(
                             'type' => 'string',
@@ -633,18 +599,6 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'type',
-                    'enum' => array(
-                        'SOA',
-                        'A',
-                        'TXT',
-                        'NS',
-                        'CNAME',
-                        'MX',
-                        'PTR',
-                        'SRV',
-                        'SPF',
-                        'AAAA',
-                    ),
                 ),
                 'StartRecordIdentifier' => array(
                     'type' => 'string',

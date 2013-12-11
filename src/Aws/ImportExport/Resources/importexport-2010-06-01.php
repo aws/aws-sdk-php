@@ -133,10 +133,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'Import',
-                        'Export',
-                    ),
                 ),
                 'Manifest' => array(
                     'required' => true,
@@ -323,10 +319,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'Import',
-                        'Export',
-                    ),
                 ),
                 'ValidateOnly' => array(
                     'required' => true,

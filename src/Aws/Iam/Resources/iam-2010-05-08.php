@@ -2313,11 +2313,6 @@ return array (
                 'AssignmentStatus' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'Assigned',
-                        'Unassigned',
-                        'Any',
-                    ),
                 ),
                 'Marker' => array(
                     'type' => 'string',
@@ -2676,10 +2671,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'Active',
-                        'Inactive',
-                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -3039,10 +3030,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'Active',
-                        'Inactive',
-                    ),
                 ),
             ),
             'errorResponses' => array(

@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\Kinesis\Exception;
 
 /**
- * The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in docs.aws.amazon.comError Retries and Exponential Backoff .
+ * Exception that occurs when a ResourceNotFoundException error is encountered
  */
-class ProvisionedThroughputExceededException extends DynamoDbException {}
+class ResourceNotFoundException extends KinesisException {}

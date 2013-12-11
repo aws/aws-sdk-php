@@ -1916,12 +1916,6 @@ return array (
                 'SourceType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'db-instance',
-                        'db-parameter-group',
-                        'db-security-group',
-                        'db-snapshot',
-                    ),
                 ),
                 'StartTime' => array(
                     'type' => array(
@@ -2556,10 +2550,6 @@ return array (
                             ),
                             'ApplyMethod' => array(
                                 'type' => 'string',
-                                'enum' => array(
-                                    'immediate',
-                                    'pending-reboot',
-                                ),
                             ),
                         ),
                     ),
@@ -3121,10 +3111,6 @@ return array (
                             ),
                             'ApplyMethod' => array(
                                 'type' => 'string',
-                                'enum' => array(
-                                    'immediate',
-                                    'pending-reboot',
-                                ),
                             ),
                         ),
                     ),
