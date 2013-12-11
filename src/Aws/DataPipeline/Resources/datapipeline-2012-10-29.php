@@ -900,11 +900,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
-                    'enum' => array(
-                        'FINISHED',
-                        'FAILED',
-                        'FALSE',
-                    ),
                 ),
                 'errorId' => array(
                     'type' => 'string',

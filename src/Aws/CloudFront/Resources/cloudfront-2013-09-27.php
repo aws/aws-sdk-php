@@ -209,10 +209,6 @@ return array (
                                             'OriginProtocolPolicy' => array(
                                                 'required' => true,
                                                 'type' => 'string',
-                                                'enum' => array(
-                                                    'http-only',
-                                                    'match-viewer',
-                                                ),
                                             ),
                                         ),
                                     ),
@@ -246,11 +242,6 @@ return array (
                                         'Forward' => array(
                                             'required' => true,
                                             'type' => 'string',
-                                            'enum' => array(
-                                                'none',
-                                                'whitelist',
-                                                'all',
-                                            ),
                                         ),
                                         'WhitelistedNames' => array(
                                             'type' => 'object',
@@ -297,10 +288,6 @@ return array (
                         'ViewerProtocolPolicy' => array(
                             'required' => true,
                             'type' => 'string',
-                            'enum' => array(
-                                'allow-all',
-                                'https-only',
-                            ),
                         ),
                         'MinTTL' => array(
                             'required' => true,
@@ -318,15 +305,6 @@ return array (
                                     'items' => array(
                                         'name' => 'Method',
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'GET',
-                                            'HEAD',
-                                            'POST',
-                                            'PUT',
-                                            'PATCH',
-                                            'OPTIONS',
-                                            'DELETE',
-                                        ),
                                     ),
                                 ),
                             ),
@@ -372,11 +350,6 @@ return array (
                                                     'Forward' => array(
                                                         'required' => true,
                                                         'type' => 'string',
-                                                        'enum' => array(
-                                                            'none',
-                                                            'whitelist',
-                                                            'all',
-                                                        ),
                                                     ),
                                                     'WhitelistedNames' => array(
                                                         'type' => 'object',
@@ -423,10 +396,6 @@ return array (
                                     'ViewerProtocolPolicy' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'allow-all',
-                                            'https-only',
-                                        ),
                                     ),
                                     'MinTTL' => array(
                                         'required' => true,
@@ -444,15 +413,6 @@ return array (
                                                 'items' => array(
                                                     'name' => 'Method',
                                                     'type' => 'string',
-                                                    'enum' => array(
-                                                        'GET',
-                                                        'HEAD',
-                                                        'POST',
-                                                        'PUT',
-                                                        'PATCH',
-                                                        'OPTIONS',
-                                                        'DELETE',
-                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -528,11 +488,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
-                    'enum' => array(
-                        'PriceClass_100',
-                        'PriceClass_200',
-                        'PriceClass_All',
-                    ),
                 ),
                 'Enabled' => array(
                     'required' => true,
@@ -836,11 +791,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
-                    'enum' => array(
-                        'PriceClass_100',
-                        'PriceClass_200',
-                        'PriceClass_All',
-                    ),
                 ),
                 'Enabled' => array(
                     'required' => true,
@@ -1512,10 +1462,6 @@ return array (
                                             'OriginProtocolPolicy' => array(
                                                 'required' => true,
                                                 'type' => 'string',
-                                                'enum' => array(
-                                                    'http-only',
-                                                    'match-viewer',
-                                                ),
                                             ),
                                         ),
                                     ),
@@ -1549,11 +1495,6 @@ return array (
                                         'Forward' => array(
                                             'required' => true,
                                             'type' => 'string',
-                                            'enum' => array(
-                                                'none',
-                                                'whitelist',
-                                                'all',
-                                            ),
                                         ),
                                         'WhitelistedNames' => array(
                                             'type' => 'object',
@@ -1600,10 +1541,6 @@ return array (
                         'ViewerProtocolPolicy' => array(
                             'required' => true,
                             'type' => 'string',
-                            'enum' => array(
-                                'allow-all',
-                                'https-only',
-                            ),
                         ),
                         'MinTTL' => array(
                             'required' => true,
@@ -1621,15 +1558,6 @@ return array (
                                     'items' => array(
                                         'name' => 'Method',
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'GET',
-                                            'HEAD',
-                                            'POST',
-                                            'PUT',
-                                            'PATCH',
-                                            'OPTIONS',
-                                            'DELETE',
-                                        ),
                                     ),
                                 ),
                             ),
@@ -1675,11 +1603,6 @@ return array (
                                                     'Forward' => array(
                                                         'required' => true,
                                                         'type' => 'string',
-                                                        'enum' => array(
-                                                            'none',
-                                                            'whitelist',
-                                                            'all',
-                                                        ),
                                                     ),
                                                     'WhitelistedNames' => array(
                                                         'type' => 'object',
@@ -1726,10 +1649,6 @@ return array (
                                     'ViewerProtocolPolicy' => array(
                                         'required' => true,
                                         'type' => 'string',
-                                        'enum' => array(
-                                            'allow-all',
-                                            'https-only',
-                                        ),
                                     ),
                                     'MinTTL' => array(
                                         'required' => true,
@@ -1747,15 +1666,6 @@ return array (
                                                 'items' => array(
                                                     'name' => 'Method',
                                                     'type' => 'string',
-                                                    'enum' => array(
-                                                        'GET',
-                                                        'HEAD',
-                                                        'POST',
-                                                        'PUT',
-                                                        'PATCH',
-                                                        'OPTIONS',
-                                                        'DELETE',
-                                                    ),
                                                 ),
                                             ),
                                         ),
@@ -1831,11 +1741,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
-                    'enum' => array(
-                        'PriceClass_100',
-                        'PriceClass_200',
-                        'PriceClass_All',
-                    ),
                 ),
                 'Enabled' => array(
                     'required' => true,
@@ -2075,11 +1980,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
-                    'enum' => array(
-                        'PriceClass_100',
-                        'PriceClass_200',
-                        'PriceClass_All',
-                    ),
                 ),
                 'Enabled' => array(
                     'required' => true,

@@ -1476,12 +1476,6 @@ return array (
                 'SourceType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'cluster',
-                        'cluster-parameter-group',
-                        'cluster-security-group',
-                        'cluster-snapshot',
-                    ),
                 ),
                 'StartTime' => array(
                     'type' => array(

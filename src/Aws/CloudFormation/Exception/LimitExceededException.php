@@ -17,6 +17,6 @@
 namespace Aws\CloudFormation\Exception;
 
 /**
- * Exception that occurs when a LimitExceededException error is encountered
+ * Quota for the resource has already been reached.
  */
 class LimitExceededException extends CloudFormationException {}

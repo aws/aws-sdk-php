@@ -53,6 +53,11 @@ return array (
             'https' => true,
             'hostname' => 'sdb.ap-southeast-1.amazonaws.com',
         ),
+        'ap-southeast-2' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'sdb.ap-southeast-2.amazonaws.com',
+        ),
         'sa-east-1' => array(
             'http' => true,
             'https' => true,
