@@ -14,9 +14,17 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb\Enum;
+
+use Aws\Common\Enum;
 
 /**
- * The request rate is too high, or the request is too large, for the available throughput to accommodate. The AWS SDKs automatically retry requests that receive this exception; therefore, your request will eventually succeed, unless the request is too large or your retry queue is too large to finish. Reduce the frequency of requests by using the strategies listed in Error Retries and Exponential Backoff in the Amazon DynamoDB Developer Guide.
+ * Contains enumerable IndexStatus values
  */
-class ProvisionedThroughputExceededException extends DynamoDbException {}
+class IndexStatus extends Enum
+{
+    const CREATING = 'CREATING';
+    const UPDATING = 'UPDATING';
+    const DELETING = 'DELETING';
+    const ACTIVE = 'ACTIVE';
+}

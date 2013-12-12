@@ -498,6 +498,80 @@ return array (
                         ),
                     ),
                 ),
+                'GlobalSecondaryIndexes' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'GlobalSecondaryIndex',
+                        'type' => 'object',
+                        'properties' => array(
+                            'IndexName' => array(
+                                'required' => true,
+                                'type' => 'string',
+                                'minLength' => 3,
+                                'maxLength' => 255,
+                            ),
+                            'KeySchema' => array(
+                                'required' => true,
+                                'type' => 'array',
+                                'minItems' => 1,
+                                'maxItems' => 2,
+                                'items' => array(
+                                    'name' => 'KeySchemaElement',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'AttributeName' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 255,
+                                        ),
+                                        'KeyType' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'Projection' => array(
+                                'required' => true,
+                                'type' => 'object',
+                                'properties' => array(
+                                    'ProjectionType' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'NonKeyAttributes' => array(
+                                        'type' => 'array',
+                                        'minItems' => 1,
+                                        'maxItems' => 20,
+                                        'items' => array(
+                                            'name' => 'NonKeyAttributeName',
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 255,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ProvisionedThroughput' => array(
+                                'required' => true,
+                                'type' => 'object',
+                                'properties' => array(
+                                    'ReadCapacityUnits' => array(
+                                        'required' => true,
+                                        'type' => 'numeric',
+                                        'minimum' => 1,
+                                    ),
+                                    'WriteCapacityUnits' => array(
+                                        'required' => true,
+                                        'type' => 'numeric',
+                                        'minimum' => 1,
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'ProvisionedThroughput' => array(
                     'required' => true,
                     'type' => 'object',
@@ -522,7 +596,7 @@ return array (
                     'class' => 'ResourceInUseException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with a local secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -740,7 +814,7 @@ return array (
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with a local secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -1743,7 +1817,6 @@ return array (
                     'maxLength' => 255,
                 ),
                 'ProvisionedThroughput' => array(
-                    'required' => true,
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -1759,6 +1832,43 @@ return array (
                         ),
                     ),
                 ),
+                'GlobalSecondaryIndexUpdates' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'GlobalSecondaryIndexUpdate',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Update' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'IndexName' => array(
+                                        'required' => true,
+                                        'type' => 'string',
+                                        'minLength' => 3,
+                                        'maxLength' => 255,
+                                    ),
+                                    'ProvisionedThroughput' => array(
+                                        'required' => true,
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'ReadCapacityUnits' => array(
+                                                'required' => true,
+                                                'type' => 'numeric',
+                                                'minimum' => 1,
+                                            ),
+                                            'WriteCapacityUnits' => array(
+                                                'required' => true,
+                                                'type' => 'numeric',
+                                                'minimum' => 1,
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1770,7 +1880,7 @@ return array (
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
-                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with a local secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
+                    'reason' => 'The number of concurrent table requests (cumulative number of tables in the CREATING, DELETING or UPDATING state) exceeds the maximum allowed of 10. Also, for tables with secondary indexes, only one of those tables can be in the CREATING state at any point in time. Do not attempt to create more than one such table simultaneously. The total limit of tables in the ACTIVE state is 250.',
                     'class' => 'LimitExceededException',
                 ),
                 array(
@@ -1916,6 +2026,36 @@ return array (
                             ),
                             'CapacityUnits' => array(
                                 'type' => 'numeric',
+                            ),
+                            'Table' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                            'LocalSecondaryIndexes' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'CapacityUnits' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'GlobalSecondaryIndexes' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'CapacityUnits' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -2114,6 +2254,36 @@ return array (
                             'CapacityUnits' => array(
                                 'type' => 'numeric',
                             ),
+                            'Table' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                            'LocalSecondaryIndexes' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'CapacityUnits' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'GlobalSecondaryIndexes' => array(
+                                'type' => 'object',
+                                'additionalProperties' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'CapacityUnits' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2240,6 +2410,77 @@ return array (
                                 ),
                             ),
                         ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'GlobalSecondaryIndexDescription',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'IndexName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeySchema' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'KeySchemaElement',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'AttributeName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Projection' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'ProjectionType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NonKeyAttributes' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'NonKeyAttributeName',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'ProvisionedThroughput' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'LastIncreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LastDecreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NumberOfDecreasesToday' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'ReadCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'WriteCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexSizeBytes' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ItemCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -2302,6 +2543,36 @@ return array (
                         ),
                         'CapacityUnits' => array(
                             'type' => 'numeric',
+                        ),
+                        'Table' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'CapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'LocalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2485,6 +2756,77 @@ return array (
                                 ),
                             ),
                         ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'GlobalSecondaryIndexDescription',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'IndexName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeySchema' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'KeySchemaElement',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'AttributeName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Projection' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'ProjectionType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NonKeyAttributes' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'NonKeyAttributeName',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'ProvisionedThroughput' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'LastIncreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LastDecreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NumberOfDecreasesToday' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'ReadCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'WriteCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexSizeBytes' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ItemCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -2610,6 +2952,77 @@ return array (
                                 ),
                             ),
                         ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'GlobalSecondaryIndexDescription',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'IndexName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeySchema' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'KeySchemaElement',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'AttributeName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Projection' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'ProjectionType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NonKeyAttributes' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'NonKeyAttributeName',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'ProvisionedThroughput' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'LastIncreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LastDecreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NumberOfDecreasesToday' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'ReadCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'WriteCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexSizeBytes' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ItemCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -2672,6 +3085,36 @@ return array (
                         ),
                         'CapacityUnits' => array(
                             'type' => 'numeric',
+                        ),
+                        'Table' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'CapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'LocalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2753,6 +3196,36 @@ return array (
                         ),
                         'CapacityUnits' => array(
                             'type' => 'numeric',
+                        ),
+                        'Table' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'CapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'LocalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -2927,6 +3400,36 @@ return array (
                         'CapacityUnits' => array(
                             'type' => 'numeric',
                         ),
+                        'Table' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'CapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'LocalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -3047,6 +3550,36 @@ return array (
                         'CapacityUnits' => array(
                             'type' => 'numeric',
                         ),
+                        'Table' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'CapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'LocalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -3109,6 +3642,36 @@ return array (
                         ),
                         'CapacityUnits' => array(
                             'type' => 'numeric',
+                        ),
+                        'Table' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'CapacityUnits' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'LocalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'object',
+                            'additionalProperties' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'CapacityUnits' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -3280,6 +3843,77 @@ return array (
                                                     'name' => 'NonKeyAttributeName',
                                                     'type' => 'string',
                                                 ),
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexSizeBytes' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'ItemCount' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        'GlobalSecondaryIndexes' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'GlobalSecondaryIndexDescription',
+                                'type' => 'object',
+                                'properties' => array(
+                                    'IndexName' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'KeySchema' => array(
+                                        'type' => 'array',
+                                        'items' => array(
+                                            'name' => 'KeySchemaElement',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'AttributeName' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'KeyType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Projection' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'ProjectionType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NonKeyAttributes' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'NonKeyAttributeName',
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'IndexStatus' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'ProvisionedThroughput' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'LastIncreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'LastDecreaseDateTime' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'NumberOfDecreasesToday' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'ReadCapacityUnits' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'WriteCapacityUnits' => array(
+                                                'type' => 'numeric',
                                             ),
                                         ),
                                     ),
