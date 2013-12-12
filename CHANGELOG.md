@@ -11,6 +11,9 @@ Next Release
 * Added support for worker environment tiers to the AWS Elastic Beanstalk client
 * Added support for the new I2 instance types to the Amazon EC2 client
 * Updated the Amazon ElastiCache client to use Signature Version 4
+* Fixed an issue in the waiter factory that caused an error when getting the factory for service clients without any
+  existing waiters
+* Fixed issue #187, where the DynamoDB Session Handler would fail to save the session if all the data is removed
 
 2.4.11 (2013-11-26)
 -------------------
