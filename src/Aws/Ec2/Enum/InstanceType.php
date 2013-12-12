@@ -34,6 +34,10 @@ class InstanceType extends Enum
     const M2_2XLARGE = 'm2.2xlarge';
     const M2_4XLARGE = 'm2.4xlarge';
     const CR1_8XLARGE = 'cr1.8xlarge';
+    const I2_XLARGE = 'i2.xlarge';
+    const I2_2XLARGE = 'i2.2xlarge';
+    const I2_4XLARGE = 'i2.4xlarge';
+    const I2_8XLARGE = 'i2.8xlarge';
     const HI1_4XLARGE = 'hi1.4xlarge';
     const HS1_8XLARGE = 'hs1.8xlarge';
     const C1_MEDIUM = 'c1.medium';
