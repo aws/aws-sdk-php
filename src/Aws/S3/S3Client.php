@@ -30,7 +30,6 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\Model\ClearBucket;
 use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
 use Aws\S3\Model\MultipartUpload\UploadBuilder;
-use Aws\S3\S3Signature;
 use Aws\S3\Sync\DownloadSyncBuilder;
 use Aws\S3\Sync\UploadSyncBuilder;
 use Guzzle\Common\Collection;
