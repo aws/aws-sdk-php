@@ -11,6 +11,7 @@ Next Release
 * Added support for worker environment tiers to the AWS Elastic Beanstalk client
 * Added support for the new I2 instance types to the Amazon EC2 client
 * Added support for resource tagging to the Amazon Elastic MapReduce client
+* Added support for specifying a key encoding type to the Amazon S3 client
 * Updated the Amazon ElastiCache client to use Signature Version 4
 * Fixed an issue in the waiter factory that caused an error when getting the factory for service clients without any
   existing waiters
