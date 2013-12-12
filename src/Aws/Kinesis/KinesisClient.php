@@ -29,7 +29,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model createStream(array $args = array()) {@command Kinesis CreateStream}
  * @method Model deleteStream(array $args = array()) {@command Kinesis DeleteStream}
  * @method Model describeStream(array $args = array()) {@command Kinesis DescribeStream}
- * @method Model getNextRecords(array $args = array()) {@command Kinesis GetNextRecords}
+ * @method Model getRecords(array $args = array()) {@command Kinesis GetRecords}
  * @method Model getShardIterator(array $args = array()) {@command Kinesis GetShardIterator}
  * @method Model listStreams(array $args = array()) {@command Kinesis ListStreams}
  * @method Model mergeShards(array $args = array()) {@command Kinesis MergeShards}
@@ -41,7 +41,7 @@ use Guzzle\Service\Resource\Model;
  */
 class KinesisClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2013-11-04';
+    const LATEST_API_VERSION = '2013-12-02';
 
     /**
      * Factory method to create a new Amazon Kinesis client using an array of configuration options.

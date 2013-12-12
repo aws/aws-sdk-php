@@ -15,13 +15,13 @@
  */
 
 return array (
-    'apiVersion' => '2013-11-04',
+    'apiVersion' => '2013-12-02',
     'endpointPrefix' => 'kinesis',
     'serviceFullName' => 'Amazon Kinesis',
     'serviceAbbreviation' => 'Kinesis',
     'serviceType' => 'json',
     'jsonVersion' => '1.1',
-    'targetPrefix' => 'Kinesis_20131104.',
+    'targetPrefix' => 'Kinesis_20131202.',
     'signatureVersion' => 'v4',
     'namespace' => 'Kinesis',
     'regions' => array(
@@ -51,7 +51,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.CreateStream',
+                    'default' => 'Kinesis_20131202.CreateStream',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -98,7 +98,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.DeleteStream',
+                    'default' => 'Kinesis_20131202.DeleteStream',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -136,7 +136,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.DescribeStream',
+                    'default' => 'Kinesis_20131202.DescribeStream',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -167,11 +167,11 @@ return array (
                 ),
             ),
         ),
-        'GetNextRecords' => array(
+        'GetRecords' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\JsonCommand',
-            'responseClass' => 'GetNextRecordsOutput',
+            'responseClass' => 'GetRecordsOutput',
             'responseType' => 'model',
             'parameters' => array(
                 'Content-Type' => array(
@@ -186,7 +186,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.GetNextRecords',
+                    'default' => 'Kinesis_20131202.GetRecords',
                 ),
                 'ShardIterator' => array(
                     'required' => true,
@@ -236,7 +236,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.GetShardIterator',
+                    'default' => 'Kinesis_20131202.GetShardIterator',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -293,7 +293,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.ListStreams',
+                    'default' => 'Kinesis_20131202.ListStreams',
                 ),
                 'Limit' => array(
                     'type' => 'numeric',
@@ -333,7 +333,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.MergeShards',
+                    'default' => 'Kinesis_20131202.MergeShards',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -391,7 +391,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.PutRecord',
+                    'default' => 'Kinesis_20131202.PutRecord',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -419,7 +419,7 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
-                'ExclusiveMinimumSequenceNumber' => array(
+                'SequenceNumberForOrdering' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -455,7 +455,7 @@ return array (
                 'X-Amz-Target' => array(
                     'static' => true,
                     'location' => 'header',
-                    'default' => 'Kinesis_20131104.SplitShard',
+                    'default' => 'Kinesis_20131202.SplitShard',
                 ),
                 'StreamName' => array(
                     'required' => true,
@@ -555,14 +555,14 @@ return array (
                                 ),
                             ),
                         ),
-                        'IsMoreDataAvailable' => array(
+                        'HasMoreShards' => array(
                             'type' => 'boolean',
                         ),
                     ),
                 ),
             ),
         ),
-        'GetNextRecordsOutput' => array(
+        'GetRecordsOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -616,7 +616,7 @@ return array (
                         'type' => 'string',
                     ),
                 ),
-                'IsMoreDataAvailable' => array(
+                'HasMoreStreams' => array(
                     'type' => 'boolean',
                     'location' => 'json',
                 ),
