@@ -23,6 +23,7 @@ use Aws\Common\Enum;
  */
 class ReturnConsumedCapacity extends Enum
 {
+    const INDEXES = 'INDEXES';
     const TOTAL = 'TOTAL';
     const NONE = 'NONE';
 }
