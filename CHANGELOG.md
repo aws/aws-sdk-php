@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.4.12 (2013-12-12)
+-------------------
 
 * Added support for **Amazon Kinesis**
 * Added the CloudTrail `LogRecordIterator`, `LogFileIterator`, and `LogFileReader` classes for reading log files
