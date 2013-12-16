@@ -111,7 +111,6 @@ return array (
                     'location' => 'json',
                 ),
                 'serviceCode' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -120,7 +119,6 @@ return array (
                     'location' => 'json',
                 ),
                 'categoryCode' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
