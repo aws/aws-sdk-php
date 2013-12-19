@@ -10,6 +10,7 @@ Next Release
   first 50 presets and pipelines with their corresponding list operations
 * Added support for [geo restriction](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithDownloadDistributions.html#georestrictions)
   to the Amazon CloudFront client
+* Updated the Amazon CloudFront client to use the 2013-11-11 API version
 
 2.4.12 (2013-12-12)
 -------------------

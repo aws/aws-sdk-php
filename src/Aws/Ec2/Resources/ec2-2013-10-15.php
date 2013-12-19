@@ -6654,9 +6654,15 @@ return array (
                                 ),
                             ),
                         ),
-                        'MonitoringEnabled' => array(
-                            'type' => 'boolean',
-                            'format' => 'boolean-string',
+                        'Monitoring' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'required' => true,
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                            ),
                         ),
                         'SubnetId' => array(
                             'type' => 'string',
@@ -7638,7 +7644,7 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
-                'VpcAttachement' => array(
+                'VpcAttachment' => array(
                     'type' => 'object',
                     'location' => 'xml',
                     'sentAs' => 'attachment',

@@ -120,7 +120,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
@@ -386,7 +385,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
@@ -587,7 +585,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
@@ -674,7 +671,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
-                    'maxLength' => 51200,
                 ),
                 'TemplateURL' => array(
                     'type' => 'string',
