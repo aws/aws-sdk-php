@@ -51,20 +51,16 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront UpdateCloudFrontOriginAccessIdentity}
  * @method Model updateDistribution(array $args = array()) {@command CloudFront UpdateDistribution}
  * @method Model updateStreamingDistribution(array $args = array()) {@command CloudFront UpdateStreamingDistribution}
- * @method waitUntilStreamingDistributionDeployed(array $input) Wait until a streaming distribution is deployed. The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
- * @method waitUntilDistributionDeployed(array $input) Wait until a distribution is deployed. The input array uses the parameters of the GetDistribution operation and waiter specific settings
- * @method waitUntilInvalidationCompleted(array $input) Wait until an invalidation has completed. The input array uses the parameters of the GetInvalidation operation and waiter specific settings
- * @method ResourceIteratorInterface getListCloudFrontOriginAccessIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListCloudFrontOriginAccessIdentities operation
- * @method ResourceIteratorInterface getListDistributionsIterator(array $args = array()) The input array uses the parameters of the ListDistributions operation
- * @method ResourceIteratorInterface getListInvalidationsIterator(array $args = array()) The input array uses the parameters of the ListInvalidations operation
- * @method ResourceIteratorInterface getListStreamingDistributionsIterator(array $args = array()) The input array uses the parameters of the ListStreamingDistributions operation
+ * @method waitUntilStreamingDistributionDeployed(array $input) Wait using the StreamingDistributionDeployed waiter. The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
+ * @method waitUntilDistributionDeployed(array $input) Wait using the DistributionDeployed waiter. The input array uses the parameters of the GetDistribution operation and waiter specific settings
+ * @method waitUntilInvalidationCompleted(array $input) Wait using the InvalidationCompleted waiter. The input array uses the parameters of the GetInvalidation operation and waiter specific settings
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudfront.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html API docs
  */
 class CloudFrontClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2013-09-27';
+    const LATEST_API_VERSION = '2013-11-11';
 
     /**
      * Factory method to create a new Amazon CloudFront client using an array of configuration options.

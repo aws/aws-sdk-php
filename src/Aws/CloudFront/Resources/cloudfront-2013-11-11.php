@@ -15,7 +15,7 @@
  */
 
 return array (
-    'apiVersion' => '2013-09-27',
+    'apiVersion' => '2013-11-11',
     'endpointPrefix' => 'cloudfront',
     'serviceFullName' => 'Amazon CloudFront',
     'serviceAbbreviation' => 'CloudFront',
@@ -68,7 +68,7 @@ return array (
     'operations' => array(
         'CreateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-09-27/origin-access-identity/cloudfront',
+            'uri' => '/2013-11-11/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -76,7 +76,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -121,7 +121,7 @@ return array (
         ),
         'CreateDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-09-27/distribution',
+            'uri' => '/2013-11-11/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateDistributionResult',
             'responseType' => 'model',
@@ -129,7 +129,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -508,6 +508,33 @@ return array (
                         ),
                     ),
                 ),
+                'Restrictions' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'GeoRestriction' => array(
+                            'required' => true,
+                            'type' => 'object',
+                            'properties' => array(
+                                'RestrictionType' => array(
+                                    'required' => true,
+                                    'type' => 'string',
+                                ),
+                                'Quantity' => array(
+                                    'required' => true,
+                                    'type' => 'numeric',
+                                ),
+                                'Items' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Location',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -606,11 +633,17 @@ return array (
                     'reason' => 'You cannot create anymore custom ssl certificates.',
                     'class' => 'TooManyCertificatesException',
                 ),
+                array(
+                    'class' => 'InvalidLocationCodeException',
+                ),
+                array(
+                    'class' => 'InvalidGeoRestrictionParameterException',
+                ),
             ),
         ),
         'CreateInvalidation' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-09-27/distribution/{DistributionId}/invalidation',
+            'uri' => '/2013-11-11/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateInvalidationResult',
             'responseType' => 'model',
@@ -618,7 +651,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'InvalidationBatch',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -688,7 +721,7 @@ return array (
         ),
         'CreateStreamingDistribution' => array(
             'httpMethod' => 'POST',
-            'uri' => '/2013-09-27/streaming-distribution',
+            'uri' => '/2013-11-11/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'CreateStreamingDistributionResult',
             'responseType' => 'model',
@@ -696,7 +729,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -853,9 +886,9 @@ return array (
         ),
         'DeleteCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2013-11-11/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2013_09_27Output',
+            'responseClass' => 'DeleteCloudFrontOriginAccessIdentity2013_11_11Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -893,9 +926,9 @@ return array (
         ),
         'DeleteDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2013-09-27/distribution/{Id}',
+            'uri' => '/2013-11-11/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteDistribution2013_09_27Output',
+            'responseClass' => 'DeleteDistribution2013_11_11Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -933,9 +966,9 @@ return array (
         ),
         'DeleteStreamingDistribution' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/2013-09-27/streaming-distribution/{Id}',
+            'uri' => '/2013-11-11/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
-            'responseClass' => 'DeleteStreamingDistribution2013_09_27Output',
+            'responseClass' => 'DeleteStreamingDistribution2013_11_11Output',
             'responseType' => 'model',
             'parameters' => array(
                 'Id' => array(
@@ -973,7 +1006,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}',
+            'uri' => '/2013-11-11/origin-access-identity/cloudfront/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1001,7 +1034,7 @@ return array (
         ),
         'GetCloudFrontOriginAccessIdentityConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2013-11-11/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetCloudFrontOriginAccessIdentityConfigResult',
             'responseType' => 'model',
@@ -1029,7 +1062,7 @@ return array (
         ),
         'GetDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/distribution/{Id}',
+            'uri' => '/2013-11-11/distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionResult',
             'responseType' => 'model',
@@ -1057,7 +1090,7 @@ return array (
         ),
         'GetDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/distribution/{Id}/config',
+            'uri' => '/2013-11-11/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetDistributionConfigResult',
             'responseType' => 'model',
@@ -1085,7 +1118,7 @@ return array (
         ),
         'GetInvalidation' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/distribution/{DistributionId}/invalidation/{Id}',
+            'uri' => '/2013-11-11/distribution/{DistributionId}/invalidation/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetInvalidationResult',
             'responseType' => 'model',
@@ -1122,7 +1155,7 @@ return array (
         ),
         'GetStreamingDistribution' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/streaming-distribution/{Id}',
+            'uri' => '/2013-11-11/streaming-distribution/{Id}',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionResult',
             'responseType' => 'model',
@@ -1150,7 +1183,7 @@ return array (
         ),
         'GetStreamingDistributionConfig' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/streaming-distribution/{Id}/config',
+            'uri' => '/2013-11-11/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'GetStreamingDistributionConfigResult',
             'responseType' => 'model',
@@ -1178,7 +1211,7 @@ return array (
         ),
         'ListCloudFrontOriginAccessIdentities' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/origin-access-identity/cloudfront',
+            'uri' => '/2013-11-11/origin-access-identity/cloudfront',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListCloudFrontOriginAccessIdentitiesResult',
             'responseType' => 'model',
@@ -1205,7 +1238,7 @@ return array (
         ),
         'ListDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/distribution',
+            'uri' => '/2013-11-11/distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListDistributionsResult',
             'responseType' => 'model',
@@ -1232,7 +1265,7 @@ return array (
         ),
         'ListInvalidations' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/distribution/{DistributionId}/invalidation',
+            'uri' => '/2013-11-11/distribution/{DistributionId}/invalidation',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListInvalidationsResult',
             'responseType' => 'model',
@@ -1272,7 +1305,7 @@ return array (
         ),
         'ListStreamingDistributions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/2013-09-27/streaming-distribution',
+            'uri' => '/2013-11-11/streaming-distribution',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'ListStreamingDistributionsResult',
             'responseType' => 'model',
@@ -1299,7 +1332,7 @@ return array (
         ),
         'UpdateCloudFrontOriginAccessIdentity' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2013-09-27/origin-access-identity/cloudfront/{Id}/config',
+            'uri' => '/2013-11-11/origin-access-identity/cloudfront/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateCloudFrontOriginAccessIdentityResult',
             'responseType' => 'model',
@@ -1307,7 +1340,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'CloudFrontOriginAccessIdentityConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -1374,7 +1407,7 @@ return array (
         ),
         'UpdateDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2013-09-27/distribution/{Id}/config',
+            'uri' => '/2013-11-11/distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateDistributionResult',
             'responseType' => 'model',
@@ -1382,7 +1415,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'DistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -1761,6 +1794,33 @@ return array (
                         ),
                     ),
                 ),
+                'Restrictions' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'GeoRestriction' => array(
+                            'required' => true,
+                            'type' => 'object',
+                            'properties' => array(
+                                'RestrictionType' => array(
+                                    'required' => true,
+                                    'type' => 'string',
+                                ),
+                                'Quantity' => array(
+                                    'required' => true,
+                                    'type' => 'numeric',
+                                ),
+                                'Items' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Location',
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
                 'Id' => array(
                     'required' => true,
                     'type' => 'string',
@@ -1873,11 +1933,17 @@ return array (
                     'reason' => 'You cannot create anymore custom ssl certificates.',
                     'class' => 'TooManyCertificatesException',
                 ),
+                array(
+                    'class' => 'InvalidLocationCodeException',
+                ),
+                array(
+                    'class' => 'InvalidGeoRestrictionParameterException',
+                ),
             ),
         ),
         'UpdateStreamingDistribution' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/2013-09-27/streaming-distribution/{Id}/config',
+            'uri' => '/2013-11-11/streaming-distribution/{Id}/config',
             'class' => 'Guzzle\\Service\\Command\\OperationCommand',
             'responseClass' => 'UpdateStreamingDistributionResult',
             'responseType' => 'model',
@@ -1885,7 +1951,7 @@ return array (
                 'xmlRoot' => array(
                     'name' => 'StreamingDistributionConfig',
                     'namespaces' => array(
-                        'http://cloudfront.amazonaws.com/doc/2013-09-27/',
+                        'http://cloudfront.amazonaws.com/doc/2013-11-11/',
                     ),
                 ),
             ),
@@ -2477,6 +2543,30 @@ return array (
                                 ),
                             ),
                         ),
+                        'Restrictions' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'GeoRestriction' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'RestrictionType' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Quantity' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Items' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Location',
+                                                'type' => 'string',
+                                                'sentAs' => 'Location',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'Location' => array(
@@ -2697,7 +2787,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteCloudFrontOriginAccessIdentity2013_09_27Output' => array(
+        'DeleteCloudFrontOriginAccessIdentity2013_11_11Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -2707,7 +2797,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteDistribution2013_09_27Output' => array(
+        'DeleteDistribution2013_11_11Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -2717,7 +2807,7 @@ return array (
                 ),
             ),
         ),
-        'DeleteStreamingDistribution2013_09_27Output' => array(
+        'DeleteStreamingDistribution2013_11_11Output' => array(
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
@@ -3165,6 +3255,30 @@ return array (
                                 ),
                             ),
                         ),
+                        'Restrictions' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'GeoRestriction' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'RestrictionType' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Quantity' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Items' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Location',
+                                                'type' => 'string',
+                                                'sentAs' => 'Location',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'ETag' => array(
@@ -3503,6 +3617,31 @@ return array (
                         ),
                         'CloudFrontDefaultCertificate' => array(
                             'type' => 'boolean',
+                        ),
+                    ),
+                ),
+                'Restrictions' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'GeoRestriction' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'RestrictionType' => array(
+                                    'type' => 'string',
+                                ),
+                                'Quantity' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Items' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'name' => 'Location',
+                                        'type' => 'string',
+                                        'sentAs' => 'Location',
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4190,6 +4329,30 @@ return array (
                                     ),
                                 ),
                             ),
+                            'Restrictions' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'GeoRestriction' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'RestrictionType' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Quantity' => array(
+                                                'type' => 'numeric',
+                                            ),
+                                            'Items' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'Location',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'Location',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4770,6 +4933,30 @@ return array (
                                 ),
                                 'CloudFrontDefaultCertificate' => array(
                                     'type' => 'boolean',
+                                ),
+                            ),
+                        ),
+                        'Restrictions' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'GeoRestriction' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'RestrictionType' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Quantity' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'Items' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'Location',
+                                                'type' => 'string',
+                                                'sentAs' => 'Location',
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),

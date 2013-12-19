@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for different audio compression schemes to the Elastic Transcoder client (includes AAC-LC, HE-AAC,
+  and HE-AACv2)
+* Added support for preset and pipeline pagination to the Elastic Transcoder client. You can now view more than the
+  first 50 presets and pipelines with their corresponding list operations
+* Added support for [geo restriction](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithDownloadDistributions.html#georestrictions)
+  to the Amazon CloudFront client
+
 2.4.12 (2013-12-12)
 -------------------
 
