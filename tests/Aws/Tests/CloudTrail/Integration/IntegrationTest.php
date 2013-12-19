@@ -92,10 +92,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // Create a CloudTrail trail and set the bucket to use
         $client->createTrail(array(
-            'trail' => array(
-                'Name'         => 'test-trail',
-                'S3BucketName' => $bucket,
-            )
+            'Name'         => 'test-trail',
+            'S3BucketName' => $bucket,
         ));
 
         // @end

@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a TrailAlreadyExistsException error is encountered
+ * This exception is thrown when the specified trail already exists.
  */
 class TrailAlreadyExistsException extends CloudTrailException {}

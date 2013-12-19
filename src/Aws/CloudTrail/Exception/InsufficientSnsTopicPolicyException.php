@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a InsufficientSnsTopicPolicyException error is encountered
+ * This exception is thrown when the policy on the SNS topic is not sufficient.
  */
 class InsufficientSnsTopicPolicyException extends CloudTrailException {}

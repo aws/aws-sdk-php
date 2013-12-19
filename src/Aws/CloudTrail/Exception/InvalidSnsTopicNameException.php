@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a InvalidSnsTopicNameException error is encountered
+ * This exception is thrown when the provided SNS topic name is not valid.
  */
 class InvalidSnsTopicNameException extends CloudTrailException {}

@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a InvalidTrailNameException error is encountered
+ * This exception is thrown when the provided trail name is not valid.
  */
 class InvalidTrailNameException extends CloudTrailException {}

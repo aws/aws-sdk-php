@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a InvalidS3PrefixException error is encountered
+ * This exception is thrown when the provided S3 prefix is not valid.
  */
 class InvalidS3PrefixException extends CloudTrailException {}

@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a TrailNotProvidedException error is encountered
+ * This exception is thrown when no trail is provided.
  */
 class TrailNotProvidedException extends CloudTrailException {}

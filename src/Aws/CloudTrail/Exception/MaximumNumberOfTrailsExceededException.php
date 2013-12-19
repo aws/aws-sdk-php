@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a MaximumNumberOfTrailsExceededException error is encountered
+ * This exception is thrown when the maximum number of trails is reached.
  */
 class MaximumNumberOfTrailsExceededException extends CloudTrailException {}

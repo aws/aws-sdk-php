@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a S3BucketDoesNotExistException error is encountered
+ * This exception is thrown when the specified S3 bucket does not exist.
  */
 class S3BucketDoesNotExistException extends CloudTrailException {}

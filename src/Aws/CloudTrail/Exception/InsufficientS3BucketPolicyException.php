@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a InsufficientS3BucketPolicyException error is encountered
+ * This exception is thrown when the policy on the S3 bucket is not sufficient.
  */
 class InsufficientS3BucketPolicyException extends CloudTrailException {}

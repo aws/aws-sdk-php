@@ -58,6 +58,27 @@ return array (
                     'location' => 'header',
                     'default' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.CreateTrail',
                 ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3BucketName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3KeyPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'SnsTopicName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'IncludeGlobalServiceEvents' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
                 'trail' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -83,36 +104,43 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'This exception is thrown when the maximum number of trails is reached.',
                     'class' => 'MaximumNumberOfTrailsExceededException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the specified trail already exists.',
                     'class' => 'TrailAlreadyExistsException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the specified S3 bucket does not exist.',
                     'class' => 'S3BucketDoesNotExistException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the policy on the S3 bucket is not sufficient.',
                     'class' => 'InsufficientS3BucketPolicyException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the policy on the SNS topic is not sufficient.',
                     'class' => 'InsufficientSnsTopicPolicyException',
                 ),
                 array(
-                    'class' => 'InternalErrorException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the provided S3 bucket name is not valid.',
                     'class' => 'InvalidS3BucketNameException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the provided S3 prefix is not valid.',
                     'class' => 'InvalidS3PrefixException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the provided SNS topic name is not valid.',
                     'class' => 'InvalidSnsTopicNameException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when no trail is provided.',
                     'class' => 'TrailNotProvidedException',
                 ),
             ),
@@ -139,18 +167,18 @@ return array (
                     'default' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.DeleteTrail',
                 ),
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'This exception is thrown when the trail with the given name is not found.',
                     'class' => 'TrailNotFoundException',
                 ),
                 array(
-                    'class' => 'InternalErrorException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
             ),
@@ -185,11 +213,6 @@ return array (
                     ),
                 ),
             ),
-            'errorResponses' => array(
-                array(
-                    'class' => 'InternalErrorException',
-                ),
-            ),
         ),
         'GetTrailStatus' => array(
             'httpMethod' => 'POST',
@@ -213,18 +236,18 @@ return array (
                     'default' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.GetTrailStatus',
                 ),
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'This exception is thrown when the trail with the given name is not found.',
                     'class' => 'TrailNotFoundException',
                 ),
                 array(
-                    'class' => 'InternalErrorException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
             ),
@@ -251,27 +274,18 @@ return array (
                     'default' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.StartLogging',
                 ),
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
-                    'class' => 'S3BucketDoesNotExistException',
-                ),
-                array(
-                    'class' => 'InsufficientS3BucketPolicyException',
-                ),
-                array(
-                    'class' => 'InsufficientSnsTopicPolicyException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the trail with the given name is not found.',
                     'class' => 'TrailNotFoundException',
                 ),
                 array(
-                    'class' => 'InternalErrorException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
             ),
@@ -298,18 +312,18 @@ return array (
                     'default' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.StopLogging',
                 ),
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'This exception is thrown when the trail with the given name is not found.',
                     'class' => 'TrailNotFoundException',
                 ),
                 array(
-                    'class' => 'InternalErrorException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
             ),
@@ -334,6 +348,27 @@ return array (
                     'static' => true,
                     'location' => 'header',
                     'default' => 'com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.UpdateTrail',
+                ),
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3BucketName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3KeyPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'SnsTopicName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'IncludeGlobalServiceEvents' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
                 ),
                 'trail' => array(
                     'type' => 'object',
@@ -360,33 +395,39 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'This exception is thrown when the specified S3 bucket does not exist.',
                     'class' => 'S3BucketDoesNotExistException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the policy on the S3 bucket is not sufficient.',
                     'class' => 'InsufficientS3BucketPolicyException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the policy on the SNS topic is not sufficient.',
                     'class' => 'InsufficientSnsTopicPolicyException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the trail with the given name is not found.',
                     'class' => 'TrailNotFoundException',
                 ),
                 array(
-                    'class' => 'InternalErrorException',
-                ),
-                array(
+                    'reason' => 'This exception is thrown when the provided S3 bucket name is not valid.',
                     'class' => 'InvalidS3BucketNameException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the provided S3 prefix is not valid.',
                     'class' => 'InvalidS3PrefixException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the provided SNS topic name is not valid.',
                     'class' => 'InvalidSnsTopicNameException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when the provided trail name is not valid.',
                     'class' => 'InvalidTrailNameException',
                 ),
                 array(
+                    'reason' => 'This exception is thrown when no trail is provided.',
                     'class' => 'TrailNotProvidedException',
                 ),
             ),
@@ -397,6 +438,26 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3BucketName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3KeyPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'SnsTopicName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'IncludeGlobalServiceEvents' => array(
+                    'type' => 'boolean',
+                    'location' => 'json',
+                ),
                 'trail' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -471,11 +532,23 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
-                'LatestDeliveryAttemptTime' => array(
+                'LatestDeliveryTime' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
-                'LatestDeliveryAttemptSucceeded' => array(
+                'LatestNotificationTime' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'StartLoggingTime' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'StopLoggingTime' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'LatestDeliveryAttemptTime' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -484,6 +557,10 @@ return array (
                     'location' => 'json',
                 ),
                 'LatestNotificationAttemptSucceeded' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'LatestDeliveryAttemptSucceeded' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -501,6 +578,26 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
             'properties' => array(
+                'Name' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3BucketName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'S3KeyPrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'SnsTopicName' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'IncludeGlobalServiceEvents' => array(
+                    'type' => 'boolean',
+                    'location' => 'json',
+                ),
                 'trail' => array(
                     'type' => 'object',
                     'location' => 'json',

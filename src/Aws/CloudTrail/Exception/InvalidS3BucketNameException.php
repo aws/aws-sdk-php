@@ -17,6 +17,6 @@
 namespace Aws\CloudTrail\Exception;
 
 /**
- * Exception that occurs when a InvalidS3BucketNameException error is encountered
+ * This exception is thrown when the provided S3 bucket name is not valid.
  */
 class InvalidS3BucketNameException extends CloudTrailException {}
