@@ -42,7 +42,7 @@ class SignatureV3Https extends AbstractSignature
         }
 
         // Determine the string to sign
-        $stringToSign = $request->getHeader('Date', true) ?: $request->getHeader('x-amz-date', true);
+        $stringToSign = (string) ($request->getHeader('Date') ?: $request->getHeader('x-amz-date'));
         $request->getParams()->set('aws.string_to_sign', $stringToSign);
 
         // Calculate the signature

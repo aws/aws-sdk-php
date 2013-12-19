@@ -74,7 +74,7 @@ class TreeHashTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testThrowsExceptionForInvalidAlgorithm()
     {
-        $chunkHash = new TreeHash('foobar');
+        $treeHash = new TreeHash('foobar');
     }
 
     /**

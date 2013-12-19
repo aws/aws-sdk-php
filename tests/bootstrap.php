@@ -15,6 +15,7 @@
  */
 
 error_reporting(-1);
+date_default_timezone_set('UTC');
 
 // Ensure that composer has installed all dependencies
 if (!file_exists(dirname(__DIR__) . '/composer.lock')) {
