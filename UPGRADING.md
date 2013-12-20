@@ -1,6 +1,122 @@
 Upgrading Guide
 ===============
 
+Upgrade from 2.4 to 2.5
+-----------------------
+
+### Amazon EC2
+
+A small, backwards-incompatible change has been made to the Amazon EC2 API. The `LaunchConfiguration.MonitoringEnabled`
+parameter of the `RequestSpotInstances` operation has been change to `LaunchConfiguration.Monitoring.Enabled` See [this
+commit](https://github.com/aws/aws-sdk-php/commit/36ae0f68d2a6dcc3bc28222f60ecb318449c4092#diff-bad2f6eac12565bb684f2015364c22bd)
+for the exact change. You are only affected by this change if you are using this specific parameter. To fix your code to
+work with the updated parameter, you will need to change the structure of your request slightly.
+
+```php
+// The OLD way
+$result = $ec2->requestSpotInstances(array(
+    // ...
+    'LaunchSpecification' => array(
+        // ...
+        'MonitoringEnabled' => true,
+        // ...
+    ),
+    // ...
+));
+
+// The NEW way
+$result = $ec2->requestSpotInstances(array(
+    // ...
+    'LaunchSpecification' => array(
+        // ...
+        'Monitoring' => array(
+            'Enabled' => true,
+        ),
+        // ...
+    ),
+    // ...
+));
+```
+
+### AWS CloudTrail
+
+AWS CloudTrail has made changes to their API. If you are not using the CloudTrail service, then you will not be
+affected by this change.
+
+Here is an excerpt (with minor modifications) directly from the [CloudTrail team's
+announcement](https://forums.aws.amazon.com/ann.jspa?annID=2286) regarding this change:
+
+> [...] We have made some minor improvements/fixes to the service API, based on early feedback. The impact of these
+> changes to you depends on how you are currently interacting with the CloudTrail service. [...] If you have code that
+> calls the APIs below, you will need to make minor changes.
+>
+> There are two changes:
+>
+> 1) `CreateTrail` / `UpdateTrail`: These APIs originally took a single parameter, a `Trail` object. [...] We have
+> changed this so that you can now simply pass individual parameters directly to these APIs. The same applies to the
+> responses of these APIs, namely the APIs return individual fields directly [...]
+> 2) `GetTrailStatus`: The actual values of the fields returned and their data types were not all as intended. As such,
+> we are deprecating a set of fields, and adding a new set of replacement fields. The following fields are now
+> deprecated, and should no longer be used:
+>
+> * `LatestDeliveryAttemptTime` (String): Time CloudTrail most recently attempted to deliver a file to S3 configured
+>   bucket.
+> * `LatestNotificationAttemptTime` (String): As above, but for publishing a notification to configured SNS topic.
+> * `LatestDeliveryAttemptSucceeded` (String): This one had a mismatch between implementation and documentation. As
+>   documented: whether or not the latest file delivery was successful. As implemented: Time of most recent successful
+>   file delivery.
+> * `LatestNotificationAttemptSucceeded` (String): As above, but for SNS notifications.
+> * `TimeLoggingStarted` (String): Time `StartLogging` was most recently called. [...]
+> * `TimeLoggingStarted` (String): Time `StopLogging` was most recently called.
+>
+> The following fields are new, and replace the fields above:
+>
+> * `LatestDeliveryTime` (Date): Date/Time that CloudTrail most recently delivered a log file.
+> * `LatestNotificationTime` (Date): As above, for SNS notifications.
+> * `StartLoggingTime` (Date): Same as `TimeLoggingStarted`, but with more consistent naming, and correct data type.
+> * `StopLoggingTime` (Date): Same as `TimeLoggingStopped`, but with more consistent naming, and correct data type.
+>
+> Note that `LatestDeliveryAttemptSucceeded` and `LatestNotificationAttemptSucceeded` have no direct replacement. To
+> query whether everything is configured correctly for log file delivery, it is sufficient to query LatestDeliveryError,
+> and if non-empty that means that there is a configuration problem preventing CloudTrail from being able to deliver
+> logs successfully. Basically either the bucket doesn’t exist, or CloudTrail doesn’t have sufficient permissions to
+> write to the configured path in the bucket. Likewise for `LatestNotificationAttemptSucceeded`.
+>
+> The deprecated fields will be removed in the future, no earlier than February 15. Both set of fields will coexist on
+> the service during this period to give those who are using the deprecated fields time to switch over to the use the
+> new fields. However new SDKs and CLIs will remove the deprecated fields sooner than that. Previous SDK and CLI
+> versions will continue to work until the deprecated fields are removed from the service.
+>
+> We apologize for any inconvenience, and appreciate your understanding as we make these adjustments to improve the
+> long-term usability of the CloudTrail APIs.
+
+We are marking this as a breaking change now, preemptive of the February 15th cutoff, and we encourage everyone to
+update their code now. The changes to how you use `createTrail()` and `updateTrail()` are easy changes:
+
+```php
+// The OLD way
+$cloudTrail->createTrail(array(
+    'trail' => array(
+        'Name'         => 'TRAIL_NAME',
+        'S3BucketName' => 'BUCKET_NAME',
+    )
+));
+
+// The NEW way
+$cloudTrail->createTrail(array(
+    'Name'         => 'TRAIL_NAME',
+    'S3BucketName' => 'BUCKET_NAME',
+));
+```
+
+### China (Beijing) Region / Signatures
+
+This release adds support for the new China (Beijing) Region. This region requires that Signature V4 be used for both
+Amazon S3 and Amazon EC2 requests. We've added support for Signature V4 in both of these services for clients
+configured for this region. While doing this work, we did some refactoring to the signature classes and also removed
+support for Signature V3, as it is no longer needed. Unless you are explicitly referencing Signature V3 or explicitly
+interacting with signature objects, these changes should not affect you.
+
 Upgrade from 2.3 to 2.4
 -----------------------
 

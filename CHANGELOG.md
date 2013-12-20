@@ -1,17 +1,28 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.5.0 (2013-12-20)
+------------------
 
+* Added support for the new **China (Beijing) Region** to various services. This region is currently in limited preview.
+  Please see <http://www.amazonaws.cn> for more information
 * Added support for different audio compression schemes to the Elastic Transcoder client (includes AAC-LC, HE-AAC,
   and HE-AACv2)
 * Added support for preset and pipeline pagination to the Elastic Transcoder client. You can now view more than the
   first 50 presets and pipelines with their corresponding list operations
 * Added support for [geo restriction](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithDownloadDistributions.html#georestrictions)
   to the Amazon CloudFront client
-* Updated the AWS CloudTrail client to use their latest API changes due to early user feedback.
+* [SDK] Added Signature V4 support to the Amazon S3 and Amazon EC2 clients for the new China (Beijing) Region
+* [BC] Updated the AWS CloudTrail client to use their latest API changes due to early user feedback. Some parameters in
+  the `CreateTrail`, `UpdateTrail`, and `GetTrailStatus` have been deprecated and will be completely unavailable as
+  early as February 15th, 2014. Please see [this announcement on the CloudTrail
+  forum](https://forums.aws.amazon.com/ann.jspa?annID=2286). We are calling this out as a breaking change now to
+  encourage you to update your code at this time.
 * Updated the Amazon CloudFront client to use the 2013-11-11 API version
+* [BC] Updated the Amazon EC2 client to use the latest API. This resulted in a small change to a parameter in the
+  `RequestSpotInstances` operation. See [this commit](https://github.com/aws/aws-sdk-php/commit/36ae0f68d2a6dcc3bc28222f60ecb318449c4092#diff-bad2f6eac12565bb684f2015364c22bd)
+  for the change
+* [BC] Removed Signature V3 support (no longer needed) and refactored parts of the signature-related classes
 
 2.4.12 (2013-12-12)
 -------------------
