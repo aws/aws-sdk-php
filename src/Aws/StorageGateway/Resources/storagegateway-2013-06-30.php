@@ -64,6 +64,11 @@ return array (
             'https' => true,
             'hostname' => 'storagegateway.sa-east-1.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'storagegateway.cn-north-1.amazonaws.com.cn',
+        ),
     ),
     'operations' => array(
         'ActivateGateway' => array(

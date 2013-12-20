@@ -52,6 +52,11 @@ return array (
             'https' => true,
             'hostname' => 'glacier.ap-northeast-1.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'glacier.cn-north-1.amazonaws.com.cn',
+        ),
     ),
     'operations' => array(
         'AbortMultipartUpload' => array(

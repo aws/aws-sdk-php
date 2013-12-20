@@ -58,6 +58,11 @@ return array (
             'https' => true,
             'hostname' => 'elasticache.ap-southeast-2.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticache.cn-north-1.amazonaws.com.cn',
+        ),
         'sa-east-1' => array(
             'http' => false,
             'https' => true,

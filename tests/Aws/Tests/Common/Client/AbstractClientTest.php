@@ -138,9 +138,10 @@ class AbstractClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client = $this->getServiceBuilder()->get('dynamodb', true);
         $client->getConfig()->set('scheme', 'https');
         foreach (array_keys($client->getRegions()) as $region) {
+            $suffix = (strpos($region, 'cn-') === 0) ? '.cn' : '';
             $client->setRegion($region);
-            $this->assertEquals("https://dynamodb.{$region}.amazonaws.com", (string) $client->getBaseUrl());
-            $this->assertEquals("https://dynamodb.{$region}.amazonaws.com", $client->getConfig('base_url'));
+            $this->assertEquals("https://dynamodb.{$region}.amazonaws.com{$suffix}", (string) $client->getBaseUrl());
+            $this->assertEquals("https://dynamodb.{$region}.amazonaws.com{$suffix}", $client->getConfig('base_url'));
             $this->assertEquals($region, $client->getRegion());
             $this->assertEquals($region, $this->readAttribute($client->getSignature(), 'regionName'));
         }

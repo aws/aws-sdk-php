@@ -52,6 +52,9 @@ class Region extends Enum
     const SA_EAST_1           = 'sa-east-1';
     const SAO_PAULO           = 'sa-east-1';
 
+    const CN_NORTH_1          = 'cn-north-1';
+    const BEIJING             = 'cn-north-1';
+
     const US_GOV_WEST_1       = 'us-gov-west-1';
     const GOV_CLOUD_US        = 'us-gov-west-1';
 }

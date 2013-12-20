@@ -66,6 +66,11 @@ return array (
             'https' => true,
             'hostname' => 'elasticmapreduce.sa-east-1.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticmapreduce.cn-north-1.amazonaws.com.cn',
+        ),
         'us-gov-west-1' => array(
             'http' => true,
             'https' => true,
