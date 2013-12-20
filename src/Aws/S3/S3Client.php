@@ -23,6 +23,7 @@ use Aws\Common\Client\UploadBodyListener;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
@@ -41,7 +42,6 @@ use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
 use Guzzle\Plugin\Backoff\ExponentialBackoffStrategy;
 use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
 use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
-use Guzzle\Plugin\Md5\CommandContentMd5Plugin;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Command\Factory\AliasFactory;
 use Guzzle\Service\Command\Factory\CompositeFactory;
@@ -167,25 +167,14 @@ class S3Client extends AbstractClient
 
         // Configure the custom exponential backoff plugin for retrying S3 specific errors
         if (!isset($config[Options::BACKOFF])) {
-            $config[Options::BACKOFF] = new BackoffPlugin(
-                new TruncatedBackoffStrategy(3,
-                    new HttpBackoffStrategy(null,
-                        new SocketTimeoutChecker(
-                            new CurlBackoffStrategy(null,
-                                new ExpiredCredentialsChecker($exceptionParser,
-                                    new ExponentialBackoffStrategy()
-                                )
-                            )
-                        )
-                    )
-                )
-            );
+            $config[Options::BACKOFF] = self::createBackoffPlugin($exceptionParser);
         }
+
+        $config[Options::SIGNATURE] = $signature = self::createSignature($config);
 
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
-                Options::SIGNATURE => new S3Signature(),
                 Options::VERSION => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/s3-%s.php'
             ))
@@ -221,12 +210,10 @@ class S3Client extends AbstractClient
 
         // Use virtual hosted buckets when possible
         $client->addSubscriber(new BucketStyleListener());
-
         // Ensure that ACP headers are applied when needed
         $client->addSubscriber(new AcpListener());
-
-        // Validate and add Content-MD5 hashes
-        $client->addSubscriber(new CommandContentMd5Plugin());
+        // Validate and add required Content-MD5 hashes (e.g. DeleteObjects)
+        $client->addSubscriber(new S3Md5Listener($signature));
 
         // Allow for specifying bodies with file paths and file handles
         $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
@@ -240,6 +227,63 @@ class S3Client extends AbstractClient
         $client->setCommandFactory($default);
 
         return $client;
+    }
+
+    /**
+     * Create an Amazon S3 specific backoff plugin
+     *
+     * @param S3ExceptionParser $exceptionParser
+     *
+     * @return BackoffPlugin
+     */
+    private static function createBackoffPlugin(S3ExceptionParser $exceptionParser)
+    {
+        return new BackoffPlugin(
+            new TruncatedBackoffStrategy(3,
+                new HttpBackoffStrategy(null,
+                    new SocketTimeoutChecker(
+                        new CurlBackoffStrategy(null,
+                            new ExpiredCredentialsChecker($exceptionParser,
+                                new ExponentialBackoffStrategy()
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * Create an appropriate signature based on the configuration settings
+     *
+     * @param $config
+     *
+     * @return S3Signature
+     * @throws InvalidArgumentException
+     */
+    private static function createSignature($config)
+    {
+        $currentValue = isset($config[Options::SIGNATURE]) ? $config[Options::SIGNATURE] : null;
+
+        if ($currentValue instanceof S3SignatureInterface) {
+            // A region is require with v4
+            if ($currentValue instanceof SignatureV4 && !isset($config['region'])) {
+                throw new InvalidArgumentException('A region must be specified when using signature version 4');
+            }
+            return $currentValue;
+        } elseif ($currentValue) {
+            throw new InvalidArgumentException(
+                'The provided signature value is not an instance of S3SignatureInterface'
+            );
+        }
+
+        if (isset($config['region']) && substr($config['region'], 0, 3) == 'cn-') {
+            // Force SignatureV4 for specific regions or if specified in the config
+            return new S3SignatureV4('s3', $config['region']);
+        } else {
+            // Use the S3 signature by default
+            return new S3Signature();
+        }
     }
 
     /**
@@ -287,36 +331,7 @@ class S3Client extends AbstractClient
                 . 'request object');
         }
 
-        if ($expires instanceof \DateTime) {
-            $expires = $expires->getTimestamp();
-        } elseif (!is_numeric($expires)) {
-            $expires = strtotime($expires);
-        }
-
-        // Operate on a clone of the request, so the original is not altered
-        $request = clone $request;
-
-        // URL encoding already occurs in the URI template expansion. Undo that and encode using the same encoding as
-        // GET object, PUT object, etc.
-        $path = $this->encodeKey(rawurldecode($request->getPath()));
-        $request->setPath($path);
-
-        // Make sure to handle temporary credentials
-        if ($token = $this->credentials->getSecurityToken()) {
-            $request->setHeader('x-amz-security-token', $token);
-            $request->getQuery()->set('x-amz-security-token', $token);
-        }
-
-        // Set query params required for pre-signed URLs
-        $request->getQuery()
-            ->set('AWSAccessKeyId', $this->credentials->getAccessKeyId())
-            ->set('Expires', $expires)
-            ->set('Signature', $this->signature->signString(
-                $this->signature->createCanonicalizedString($request, $expires),
-                $this->credentials
-            ));
-
-        return $request->getUrl();
+        return $this->signature->createPresignedUrl($request, $this->credentials, $expires);
     }
 
     /**

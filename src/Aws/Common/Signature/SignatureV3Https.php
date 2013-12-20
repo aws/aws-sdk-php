@@ -26,14 +26,11 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class SignatureV3Https extends AbstractSignature
 {
-    /**
-     * {@inheritdoc}
-     */
     public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
     {
         // Add a date header if one is not set
         if (!$request->hasHeader('date') && !$request->hasHeader('x-amz-date')) {
-            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123));
+            $request->setHeader('Date', gmdate(DateFormat::RFC1123, $this->getTimestamp()));
         }
 
         // Add the security token if one is present

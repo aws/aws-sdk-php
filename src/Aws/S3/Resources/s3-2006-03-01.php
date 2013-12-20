@@ -65,6 +65,11 @@ return array (
             'https' => true,
             'hostname' => 's3-sa-east-1.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 's3.cn-north-1.amazonaws.com.cn',
+        ),
         'us-gov-west-1' => array(
             'http' => true,
             'https' => true,
@@ -406,7 +411,7 @@ return array (
         ),
         'CreateMultipartUpload' => array(
             'httpMethod' => 'POST',
-            'uri' => '/{Bucket}{/Key*}',
+            'uri' => '/{Bucket}{/Key*}?uploads',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'CreateMultipartUploadOutput',
             'responseType' => 'model',
@@ -507,13 +512,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-website-redirect-location',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'uploads',
-                    'default' => '_guzzle_blank_',
-                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -541,7 +539,7 @@ return array (
         ),
         'DeleteBucketCors' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?cors',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketCorsOutput',
             'responseType' => 'model',
@@ -552,18 +550,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'cors',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'DeleteBucketLifecycle' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?lifecycle',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketLifecycleOutput',
             'responseType' => 'model',
@@ -574,18 +565,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'lifecycle',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'DeleteBucketPolicy' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?policy',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketPolicyOutput',
             'responseType' => 'model',
@@ -596,18 +580,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'policy',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'DeleteBucketTagging' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?tagging',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketTaggingOutput',
             'responseType' => 'model',
@@ -618,18 +595,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'tagging',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'DeleteBucketWebsite' => array(
             'httpMethod' => 'DELETE',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?website',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteBucketWebsiteOutput',
             'responseType' => 'model',
@@ -639,13 +609,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'website',
-                    'default' => '_guzzle_blank_',
                 ),
             ),
         ),
@@ -684,7 +647,7 @@ return array (
         ),
         'DeleteObjects' => array(
             'httpMethod' => 'POST',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?delete',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'DeleteObjectsOutput',
             'responseType' => 'model',
@@ -696,6 +659,7 @@ return array (
                         'http://s3.amazonaws.com/doc/2006-03-01/',
                     ),
                 ),
+                'contentMd5' => true,
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -734,18 +698,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-mfa',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'delete',
-                    'default' => '_guzzle_blank_',
-                ),
-                'ContentMD5' => array(
-                    'required' => true,
-                    'static' => true,
-                    'default' => true,
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -754,7 +706,7 @@ return array (
         ),
         'GetBucketAcl' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?acl',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketAclOutput',
             'responseType' => 'model',
@@ -765,13 +717,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'acl',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -780,7 +725,7 @@ return array (
         ),
         'GetBucketCors' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?cors',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketCorsOutput',
             'responseType' => 'model',
@@ -791,13 +736,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'cors',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -806,7 +744,7 @@ return array (
         ),
         'GetBucketLifecycle' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?lifecycle',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketLifecycleOutput',
             'responseType' => 'model',
@@ -817,13 +755,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'lifecycle',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -832,7 +763,7 @@ return array (
         ),
         'GetBucketLocation' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?location',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketLocationOutput',
             'responseType' => 'model',
@@ -843,18 +774,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'location',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'GetBucketLogging' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?logging',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketLoggingOutput',
             'responseType' => 'model',
@@ -865,13 +789,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'logging',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -880,7 +797,7 @@ return array (
         ),
         'GetBucketNotification' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?notification',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketNotificationOutput',
             'responseType' => 'model',
@@ -891,13 +808,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'notification',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -906,7 +816,7 @@ return array (
         ),
         'GetBucketPolicy' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?policy',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketPolicyOutput',
             'responseType' => 'model',
@@ -917,18 +827,11 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'policy',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'GetBucketRequestPayment' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?requestPayment',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketRequestPaymentOutput',
             'responseType' => 'model',
@@ -939,13 +842,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'requestPayment',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -954,7 +850,7 @@ return array (
         ),
         'GetBucketTagging' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?tagging',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketTaggingOutput',
             'responseType' => 'model',
@@ -965,13 +861,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'tagging',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -980,7 +869,7 @@ return array (
         ),
         'GetBucketVersioning' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?versioning',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketVersioningOutput',
             'responseType' => 'model',
@@ -991,13 +880,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'versioning',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -1006,7 +888,7 @@ return array (
         ),
         'GetBucketWebsite' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?website',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetBucketWebsiteOutput',
             'responseType' => 'model',
@@ -1016,13 +898,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'website',
-                    'default' => '_guzzle_blank_',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -1138,7 +1013,7 @@ return array (
         ),
         'GetObjectAcl' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}{/Key*}',
+            'uri' => '/{Bucket}{/Key*}?acl',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetObjectAclOutput',
             'responseType' => 'model',
@@ -1162,13 +1037,6 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'versionId',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'acl',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -1183,7 +1051,7 @@ return array (
         ),
         'GetObjectTorrent' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}{/Key*}',
+            'uri' => '/{Bucket}{/Key*}?torrent',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'GetObjectTorrentOutput',
             'responseType' => 'model',
@@ -1201,13 +1069,6 @@ return array (
                     'filters' => array(
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'torrent',
-                    'default' => '_guzzle_blank_',
                 ),
             ),
         ),
@@ -1316,7 +1177,7 @@ return array (
         ),
         'ListMultipartUploads' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?uploads',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListMultipartUploadsOutput',
             'responseType' => 'model',
@@ -1357,13 +1218,6 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'upload-id-marker',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'uploads',
-                    'default' => '_guzzle_blank_',
-                ),
                 'command.expects' => array(
                     'static' => true,
                     'default' => 'application/xml',
@@ -1372,7 +1226,7 @@ return array (
         ),
         'ListObjectVersions' => array(
             'httpMethod' => 'GET',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?versions',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'ListObjectVersionsOutput',
             'responseType' => 'model',
@@ -1412,13 +1266,6 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'version-id-marker',
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'versions',
-                    'default' => '_guzzle_blank_',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -1521,7 +1368,7 @@ return array (
         ),
         'PutBucketAcl' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?acl',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketAclOutput',
             'responseType' => 'model',
@@ -1597,9 +1444,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
                 'GrantFullControl' => array(
                     'type' => 'string',
                     'location' => 'header',
@@ -1625,13 +1469,6 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-grant-write-acp',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'acl',
-                    'default' => '_guzzle_blank_',
-                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -1640,7 +1477,7 @@ return array (
         ),
         'PutBucketCors' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?cors',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketCorsOutput',
             'responseType' => 'model',
@@ -1652,6 +1489,7 @@ return array (
                         'http://s3.amazonaws.com/doc/2006-03-01/',
                     ),
                 ),
+                'contentMd5' => true,
             ),
             'parameters' => array(
                 'Bucket' => array(
@@ -1715,21 +1553,11 @@ return array (
                         ),
                     ),
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'cors',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketLifecycle' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?lifecycle',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketLifecycleOutput',
             'responseType' => 'model',
@@ -1741,15 +1569,13 @@ return array (
                         'http://s3.amazonaws.com/doc/2006-03-01/',
                     ),
                 ),
+                'contentMd5' => true,
             ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'Rules' => array(
                     'required' => true,
@@ -1811,18 +1637,11 @@ return array (
                         ),
                     ),
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'lifecycle',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketLogging' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?logging',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketLoggingOutput',
             'responseType' => 'model',
@@ -1892,21 +1711,11 @@ return array (
                         ),
                     ),
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'logging',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketNotification' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?notification',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketNotificationOutput',
             'responseType' => 'model',
@@ -1925,9 +1734,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
                 'TopicConfiguration' => array(
                     'required' => true,
                     'type' => 'object',
@@ -1941,18 +1747,11 @@ return array (
                         ),
                     ),
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'notification',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketPolicy' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?policy',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketPolicyOutput',
             'responseType' => 'model',
@@ -1963,9 +1762,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
                 'Policy' => array(
                     'required' => true,
                     'type' => array(
@@ -1974,18 +1770,11 @@ return array (
                     ),
                     'location' => 'body',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'policy',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketRequestPayment' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?requestPayment',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketRequestPaymentOutput',
             'responseType' => 'model',
@@ -2004,26 +1793,16 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
                 'Payer' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'xml',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'requestPayment',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketTagging' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?tagging',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketTaggingOutput',
             'responseType' => 'model',
@@ -2035,15 +1814,13 @@ return array (
                         'http://s3.amazonaws.com/doc/2006-03-01/',
                     ),
                 ),
+                'contentMd5' => true,
             ),
             'parameters' => array(
                 'Bucket' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'TagSet' => array(
                     'required' => true,
@@ -2065,18 +1842,11 @@ return array (
                         ),
                     ),
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'tagging',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketVersioning' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?versioning',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketVersioningOutput',
             'responseType' => 'model',
@@ -2095,9 +1865,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
                 'MFA' => array(
                     'type' => 'string',
                     'location' => 'header',
@@ -2111,18 +1878,11 @@ return array (
                     'type' => 'string',
                     'location' => 'xml',
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'versioning',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutBucketWebsite' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}',
+            'uri' => '/{Bucket}?website',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutBucketWebsiteOutput',
             'responseType' => 'model',
@@ -2141,9 +1901,6 @@ return array (
                     'required' => true,
                     'type' => 'string',
                     'location' => 'uri',
-                ),
-                'ContentMD5' => array(
-                    'default' => true,
                 ),
                 'ErrorDocument' => array(
                     'type' => 'object',
@@ -2220,13 +1977,6 @@ return array (
                         ),
                     ),
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'website',
-                    'default' => '_guzzle_blank_',
-                ),
             ),
         ),
         'PutObject' => array(
@@ -2280,7 +2030,12 @@ return array (
                     'sentAs' => 'Content-Length',
                 ),
                 'ContentMD5' => array(
-                    'default' => true,
+                    'type' => array(
+                        'string',
+                        'boolean',
+                    ),
+                    'location' => 'header',
+                    'sentAs' => 'Content-MD5',
                 ),
                 'ContentType' => array(
                     'type' => 'string',
@@ -2355,7 +2110,7 @@ return array (
         ),
         'PutObjectAcl' => array(
             'httpMethod' => 'PUT',
-            'uri' => '/{Bucket}{/Key*}',
+            'uri' => '/{Bucket}{/Key*}?acl',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'PutObjectAclOutput',
             'responseType' => 'model',
@@ -2431,9 +2186,6 @@ return array (
                     'type' => 'string',
                     'location' => 'uri',
                 ),
-                'ContentMD5' => array(
-                    'default' => true,
-                ),
                 'GrantFullControl' => array(
                     'type' => 'string',
                     'location' => 'header',
@@ -2467,13 +2219,6 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'acl',
-                    'default' => '_guzzle_blank_',
-                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -2488,7 +2233,7 @@ return array (
         ),
         'RestoreObject' => array(
             'httpMethod' => 'POST',
-            'uri' => '/{Bucket}{/Key*}',
+            'uri' => '/{Bucket}{/Key*}?restore',
             'class' => 'Aws\\S3\\Command\\S3Command',
             'responseClass' => 'RestoreObjectOutput',
             'responseType' => 'model',
@@ -2519,13 +2264,6 @@ return array (
                     'required' => true,
                     'type' => 'numeric',
                     'location' => 'xml',
-                ),
-                'SubResource' => array(
-                    'required' => true,
-                    'static' => true,
-                    'location' => 'query',
-                    'sentAs' => 'restore',
-                    'default' => '_guzzle_blank_',
                 ),
             ),
             'errorResponses' => array(
@@ -2561,7 +2299,12 @@ return array (
                     'sentAs' => 'Content-Length',
                 ),
                 'ContentMD5' => array(
-                    'default' => true,
+                    'type' => array(
+                        'string',
+                        'boolean',
+                    ),
+                    'location' => 'header',
+                    'sentAs' => 'Content-MD5',
                 ),
                 'Key' => array(
                     'required' => true,
@@ -2582,7 +2325,7 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'uploadId',
-                )
+                ),
             ),
         ),
         'UploadPartCopy' => array(

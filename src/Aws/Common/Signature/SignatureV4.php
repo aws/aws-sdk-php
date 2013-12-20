@@ -29,35 +29,33 @@ use Guzzle\Http\Url;
  */
 class SignatureV4 extends AbstractSignature implements EndpointSignatureInterface
 {
-    /**
-     * @var string Cache of the default empty entity-body payload
-     */
+    /** @var string Cache of the default empty entity-body payload */
     const DEFAULT_PAYLOAD = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
 
-    /**
-     * @var string Explicitly set service name
-     */
+    /** @var string Explicitly set service name */
     protected $serviceName;
 
-    /**
-     * @var string Explicitly set region name
-     */
+    /** @var string Explicitly set region name */
     protected $regionName;
 
-    /**
-     * @var int Maximum number of hashes to cache
-     */
+    /** @var int Maximum number of hashes to cache */
     protected $maxCacheSize = 50;
 
-    /**
-     * @var array Cache of previously signed values
-     */
+    /** @var array Cache of previously signed values */
     protected $hashCache = array();
 
-    /**
-     * @var int Size of the hash cache
-     */
+    /** @var int Size of the hash cache */
     protected $cacheSize = 0;
+
+    /**
+     * @param string $serviceName Bind the signing to a particular service name
+     * @param string $regionName  Bind the signing to a particular region name
+     */
+    public function __construct($serviceName = null, $regionName = null)
+    {
+        $this->serviceName = $serviceName;
+        $this->regionName = $regionName;
+    }
 
     /**
      * Set the service name instead of inferring it from a request URL
@@ -101,26 +99,20 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
     {
-        // Refresh the cached timestamp
-        $this->getTimestamp(true);
+        $timestamp = $this->getTimestamp();
+        $longDate = gmdate(DateFormat::ISO8601, $timestamp);
+        $shortDate = substr($longDate, 0, 8);
 
-        $longDate = $this->getDateTime(DateFormat::ISO8601);
-        $shortDate = $this->getDateTime(DateFormat::SHORT);
-
-        // Remove any previously set Authorization headers so that
-        // exponential backoff works correctly
+        // Remove any previously set Authorization headers so that retries work
         $request->removeHeader('Authorization');
 
         // Requires a x-amz-date header or Date
         if ($request->hasHeader('x-amz-date') || !$request->hasHeader('Date')) {
             $request->setHeader('x-amz-date', $longDate);
         } else {
-            $request->setHeader('Date', $this->getDateTime(DateFormat::RFC1123));
+            $request->setHeader('Date', gmdate(DateFormat::RFC1123, $timestamp));
         }
 
         // Add the security token if one is present
@@ -129,20 +121,33 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         }
 
         // Parse the service and region or use one that is explicitly set
-        $url = null;
-        if (!$this->regionName || !$this->serviceName) {
+        $region = $this->regionName;
+        $service = $this->serviceName;
+        if (!$region || !$service) {
             $url = Url::factory($request->getUrl());
-        }
-        if (!$region = $this->regionName) {
-            $region = HostNameUtils::parseRegionName($url);
-        }
-        if (!$service = $this->serviceName) {
-            $service = HostNameUtils::parseServiceName($url);
+            $region = $region ?: HostNameUtils::parseRegionName($url);
+            $service = $service ?: HostNameUtils::parseServiceName($url);
         }
 
         $credentialScope = "{$shortDate}/{$region}/{$service}/aws4_request";
 
-        $signingContext = $this->createCanonicalRequest($request);
+        // Calculate the request signature payload
+        if ($request->hasHeader('x-amz-content-sha256')) {
+            // Handle streaming operations (e.g. Glacier.UploadArchive)
+            $payload = $request->getHeader('x-amz-content-sha256');
+        } elseif ($request instanceof EntityEnclosingRequestInterface) {
+            $payload = hash(
+                'sha256',
+                $request->getMethod() == 'POST' && count($request->getPostFields())
+                    ? (string) $request->getPostFields()
+                    : (string) $request->getBody()
+            );
+        } else {
+            // Use the default payload if there is no body
+            $payload = self::DEFAULT_PAYLOAD;
+        }
+
+        $signingContext = $this->createSigningContext($request, $payload);
         $signingContext['string_to_sign'] = "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n"
             . hash('sha256', $signingContext['canonical_request']);
 
@@ -162,27 +167,32 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
      * Create the canonical representation of a request
      *
      * @param RequestInterface $request Request to canonicalize
+     * @param string           $payload Request payload (typically the value
+     *                                  of the x-amz-content-sha256 header.
      *
-     * @return array Returns an array of context information
+     * @return array Returns an array of context information including:
+     *               - canonical_request
+     *               - signed_headers
      */
-    private function createCanonicalRequest(RequestInterface $request)
+    protected function createSigningContext(RequestInterface $request, $payload)
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
-        $method = $request->getMethod();
-        $canon = $method . "\n"
-            . '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/') . "\n"
+        $canon = $request->getMethod() . "\n"
+            . $this->normalizePath($request) . "\n"
             . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Create the canonical headers
         $headers = array();
         foreach ($request->getHeaders()->getAll() as $key => $values) {
-            if ($key != 'User-Agent') {
-                $key = strtolower($key);
-                if (!isset($headers[$key])) {
-                    $headers[$key] = array();
-                }
+            $key = strtolower($key);
+            if ($key != 'user-agent') {
+                $headers[$key] = array();
                 foreach ($values as $value) {
                     $headers[$key][] = preg_replace('/\s+/', ' ', trim($value));
+                }
+                // Sort the value if there is more than one
+                if (count($values) > 1) {
+                    sort($headers[$key]);
                 }
             }
         }
@@ -198,26 +208,24 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
 
         // Create the signed headers
         $signedHeaders = implode(';', array_keys($headers));
-        $canon .= "\n{$signedHeaders}\n";
-
-        // Create the payload if this request has an entity body
-        if ($request->hasHeader('x-amz-content-sha256')) {
-            // Handle streaming operations (e.g. Glacier.UploadArchive)
-            $canon .= $request->getHeader('x-amz-content-sha256');
-        } elseif ($request instanceof EntityEnclosingRequestInterface) {
-            $canon .= hash(
-                'sha256',
-                $method == 'POST' && count($request->getPostFields())
-                    ? (string) $request->getPostFields() : (string) $request->getBody()
-            );
-        } else {
-            $canon .= self::DEFAULT_PAYLOAD;
-        }
+        $canon .= "\n{$signedHeaders}\n{$payload}";
 
         return array(
             'canonical_request' => $canon,
             'signed_headers'    => $signedHeaders
         );
+    }
+
+    /**
+     * Get the normalized path of a request
+     *
+     * @param RequestInterface $request Request to normalize
+     *
+     * @return string Returns the normalized path
+     */
+    protected function normalizePath(RequestInterface $request)
+    {
+       return '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/');
     }
 
     /**
@@ -231,7 +239,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
      *
      * @return string
      */
-    private function getSigningKey($shortDate, $region, $service, $secretKey)
+    protected function getSigningKey($shortDate, $region, $service, $secretKey)
     {
         $cacheKey = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
 
@@ -249,5 +257,36 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         }
 
         return $this->hashCache[$cacheKey];
+    }
+
+    /**
+     * Get the canonicalized query string for a request
+     *
+     * @param  RequestInterface $request
+     * @return string
+     */
+    private function getCanonicalizedQueryString(RequestInterface $request)
+    {
+        $queryParams = $request->getQuery()->getAll();
+        unset($queryParams['X-Amz-Signature']);
+        if (empty($queryParams)) {
+            return '';
+        }
+
+        $qs = '';
+        ksort($queryParams);
+        foreach ($queryParams as $key => $values) {
+            if (is_array($values)) {
+                sort($values);
+            } elseif (!$values) {
+                $values = array('');
+            }
+
+            foreach ((array) $values as $value) {
+                $qs .= rawurlencode($key) . '=' . rawurlencode($value) . '&';
+            }
+        }
+
+        return substr($qs, 0, -1);
     }
 }

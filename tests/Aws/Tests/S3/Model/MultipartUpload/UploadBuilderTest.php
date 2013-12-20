@@ -146,7 +146,7 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->build();
         $requests = $mock->getReceivedRequests();
         $this->assertEquals(1, count($requests));
-        $this->assertEquals('/bar?uploads', $requests[0]->getResource());
+        $this->assertEquals('/bar?uploads=', $requests[0]->getResource());
         $this->assertEquals('Bar', (string) $requests[0]->getHeader('Foo'));
         $this->assertEquals($expires, strtotime((string) $requests[0]->getHeader('Expires')));
         $this->assertEquals('text/x-php', (string) $requests[0]->getHeader('Content-Type'));
