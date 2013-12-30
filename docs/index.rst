@@ -51,77 +51,181 @@ AWS SDK for PHP
     service-swf
 
     feature-dynamodb-session-handler
+    feature-s3-stream-wrapper
     feature-waiters
+    feature-iterators
     feature-models
     feature-facades
 
-The **AWS SDK for PHP** enables PHP developers to easily interface with AWS services and build solutions with Amazon
-Simple Storage Service (Amazon S3), Amazon DynamoDB, Amazon Glacier, and more. With the AWS SDK for PHP, developers can
-get started in minutes by using Composer — by requiring the ``aws/aws-sdk-php`` package — or by downloading a single
-`zip <http://pear.amazonwebservices.com/get/aws.zip>`_ or `phar <http://pear.amazonwebservices.com/get/aws.phar>`_ file.
+The **AWS SDK for PHP** enables PHP developers to use `Amazon Web Services <http://aws.amazon.com/>`_ in their PHP code,
+and build robust applications and software using services like Amazon S3, Amazon DynamoDB, Amazon Glacier, etc. You can
+get started in minutes by installing the SDK through Composer — by requiring the ``aws/aws-sdk-php`` package — or by
+downloading the standalone `aws.zip <http://pear.amazonwebservices.com/get/aws.zip>`_ or
+`aws.phar <http://pear.amazonwebservices.com/get/aws.phar>`_ files.
 
-Getting started
+Getting Started
 ---------------
 
 * :doc:`awssignup`
-* :doc:`requirements`
-* :doc:`installation`
-* :doc:`quick-start`
-* :doc:`configuration`
-* :doc:`performance`
+* :doc:`Requirements for Using the SDK <requirements>`
+* :doc:`Installing the SDK <installation>`
+* :doc:`Quick Start Guide <quick-start>`
+* `Getting Started Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
 * :doc:`faq`
+
+Migrating from Version 1 of the SDK?
+
+* :doc:`migration-guide` - Migrating from Version 1 of the SDK to Version 2
+* :doc:`side-by-side` - Using Version 1 and Version 2 of the SDK side-by-side in the same project
+
+Using the SDK
+-------------
+
+* :doc:`Configuring the SDK <configuration>`
+* SDK Features
+
+  * :doc:`feature-iterators`
+  * :doc:`feature-waiters`
+  * :doc:`Modeled Responses <feature-models>`
+  * :doc:`feature-facades`
+
+* :doc:`performance`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
-
-Migrating from SDK 1 to SDK 2
------------------------------
-
-* :doc:`migration-guide`
-* :doc:`side-by-side`
 
 .. _supported-services:
 
-Supported services
-------------------
+Service Documentation
+---------------------
 
-* :doc:`service-autoscaling`
-* :doc:`service-cloudformation`
-* :doc:`service-cloudfront`
-* :doc:`service-cloudsearch`
-* :doc:`service-cloudtrail`
-* :doc:`service-cloudwatch`
-* :doc:`service-datapipeline`
-* :doc:`service-directconnect`
-* :doc:`service-dynamodb`
-* :doc:`service-dynamodb-20111205`
-* :doc:`service-ec2`
-* :doc:`service-elasticache`
-* :doc:`service-elasticbeanstalk`
-* :doc:`service-elasticloadbalancing`
-* :doc:`service-elastictranscoder`
-* :doc:`service-emr`
-* :doc:`service-glacier`
-* :doc:`service-iam`
-* :doc:`service-importexport`
-* :doc:`service-kinesis`
-* :doc:`service-opsworks`
-* :doc:`service-rds`
-* :doc:`service-redshift`
-* :doc:`service-route53`
-* :doc:`service-s3`
-* :doc:`service-ses`
-* :doc:`service-simpledb`
-* :doc:`service-sns`
-* :doc:`service-sqs`
-* :doc:`service-storagegateway`
-* :doc:`service-sts`
-* :doc:`service-support`
-* :doc:`service-swf`
+* Amazon CloudFront
 
-SDK features in detail
-----------------------
+  .. indexlinks:: CloudFront
 
-* :doc:`feature-dynamodb-session-handler`
-* :doc:`feature-iterators`
-* :doc:`feature-waiters`
-* :doc:`feature-models`
-* :doc:`feature-facades`
+* Amazon CloudSearch
+
+  .. indexlinks:: CloudSearch
+
+* Amazon CloudWatch
+
+  .. indexlinks:: CloudWatch
+
+* Amazon DynamoDB
+
+  .. indexlinks:: DynamoDb
+
+  * :doc:`Special Feature: DynamoDB Session Handler <feature-dynamodb-session-handler>`
+  * :doc:`Using the older 2011-12-05 API version <service-dynamodb-20111205>`
+
+* Amazon Elastic Compute Cloud (Amazon EC2)
+
+  .. indexlinks:: Ec2
+
+* Amazon Elastic MapReduce (Amazon EMR)
+
+  .. indexlinks:: Emr
+
+* Amazon Elastic Transcoder
+
+  .. indexlinks:: ElasticTranscoder
+
+* Amazon ElastiCache
+
+  .. indexlinks:: ElastiCache
+
+* Amazon Glacier
+
+  .. indexlinks:: Glacier
+
+* Amazon Kinesis
+
+  .. indexlinks:: Kinesis
+
+* Amazon Redshift
+
+  .. indexlinks:: Redshift
+
+* Amazon Relational Database Service (Amazon RDS)
+
+  .. indexlinks:: Rds
+
+* Amazon Route 53
+
+  .. indexlinks:: Route53
+
+* Amazon Simple Email Service (Amazon SES)
+
+  .. indexlinks:: Ses
+
+* Amazon Simple Notification Service (Amazon SNS)
+
+  .. indexlinks:: Sns
+
+* Amazon Simple Queue Service (Amazon SQS)
+
+  .. indexlinks:: Sqs
+
+* Amazon Simple Storage Service (Amazon S3)
+
+  .. indexlinks:: S3
+
+  * :doc:`Special Feature: Amazon S3 Stream Wrapper <feature-s3-stream-wrapper>`
+
+* Amazon Simple Workflow Service (Amazon SWF)
+
+  .. indexlinks:: Swf
+
+* Amazon SimpleDB
+
+  .. indexlinks:: SimpleDb
+
+* Auto Scaling
+
+  .. indexlinks:: AutoScaling
+
+* AWS CloudFormation
+
+  .. indexlinks:: CloudFormation
+
+* AWS CloudTrail
+
+  .. indexlinks:: CloudTrail
+
+* AWS Data Pipeline
+
+  .. indexlinks:: DataPipeline
+
+* AWS Direct Connect
+
+  .. indexlinks:: DirectConnect
+
+* AWS Elastic Beanstalk
+
+  .. indexlinks:: ElasticBeanstalk
+
+* AWS Identity and Access Management (AWS IAM)
+
+  .. indexlinks:: Iam
+
+* AWS Import/Export
+
+  .. indexlinks:: ImportExport
+
+* AWS OpsWorks
+
+  .. indexlinks:: OpsWorks
+
+* AWS Security Token Service (AWS STS)
+
+  .. indexlinks:: Sts
+
+* AWS Storage Gateway
+
+  .. indexlinks:: StorageGateway
+
+* AWS Support
+
+  .. indexlinks:: Support
+
+* Elastic Load Balancing
+
+  .. indexlinks:: ElasticLoadBalancing

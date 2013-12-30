@@ -21,6 +21,7 @@ def setup(app):
 
     app.add_role('regions', regions_role)
     app.add_directive('service', ServiceIntro)
+    app.add_directive('indexlinks', ServiceIndexLinks)
     app.add_directive('example', ExampleDirective)
 
 
@@ -129,13 +130,13 @@ class ServiceDescription():
         :param path: Path to the script to load
         """
         path = os.path.abspath(path)
-        
+
         # Make command to each environment Linux/Mac and Windows
         if os.name == 'nt':
             sh = 'php -r \"$c = include \'' + path + '\'; echo json_encode($c);\"'
         else:
             sh = 'php -r \'$c = include "' + path + '"; echo json_encode($c);\''
-        
+
         loaded = subprocess.check_output(sh, shell=True)
         return json.loads(loaded)
 
@@ -303,3 +304,50 @@ class ExampleDirective(Directive):
     def generate_rst(self, contents):
         rawtext = ".. code-block:: php\n\n" + contents
         return rawtext
+
+class ServiceIndexLinks(Directive):
+    """
+    Inserts a formatted PHPUnit example into the source
+    """
+
+    # Directive configuration
+    required_arguments = 1
+    optional_arguments = 0
+    final_argument_whitespace = True
+
+    def run(self):
+        service = self.arguments[0].strip()
+        service_description = load_service_description(service)
+
+        rawtext = self.generate_rst(service_description)
+        tab_width = 4
+        include_lines = statemachine.string2lines(
+            rawtext, tab_width, convert_whitespace=1)
+        self.state_machine.insert_input(
+            include_lines, os.path.abspath(__file__))
+        return []
+
+    def generate_rst(self, service_description):
+        d = service_description.description
+
+        service_name = d["serviceFullName"]
+        if "serviceAbbreviation" in d:
+            service_name = d["serviceAbbreviation"]
+
+        rawtext = "* :doc:`Using the " + service_name + " PHP client <service-" + d["namespace"].lower() + ">`\n";
+        rawtext += "* `PHP API reference <" + self.get_api_ref_url(d["namespace"]) + ">`_\n";
+        #rawtext += "* `General service documentation for " + service_name + " <" + self.get_service_doc_url(d["namespace"]) + ">`_\n";
+
+        return rawtext
+
+    def get_service_doc_url(self, namespace):
+        """Determine the documentation link for a service"""
+        namespace = namespace.lower()
+        if namespace == "sts":
+            return "http://aws.amazon.com/documentation/iam/"
+        else:
+            return "http://aws.amazon.com/documentation/" + namespace
+
+    def get_api_ref_url(self, namespace):
+        """Determine the PHP API documentation link for a service"""
+        return "http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws." + namespace + "." + namespace + "Client.html"
