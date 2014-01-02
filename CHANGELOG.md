@@ -4,6 +4,10 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for attaching existing Amazon EC2 instances to an Auto Scaling group to the Auto Scaling client
+* Added support for creating launch configurations from existing Amazon EC2 instances to the Auto Scaling client
+* Added support for describing Auto Scaling account limits to the Auto Scaling client
+* Added better support for block device mappings to the Amazon AutoScaling client when creating launch configurations
 * Fixed a bug where the `KinesisClient::getShardIterator()` method was not working properly
 
 2.5.0 (2013-12-20)

@@ -75,6 +75,43 @@ return array (
         ),
     ),
     'operations' => array(
+        'AttachInstances' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'AttachInstances',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-01-01',
+                ),
+                'InstanceIds' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'InstanceIds.member',
+                    'items' => array(
+                        'name' => 'XmlStringMaxLen16',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 16,
+                    ),
+                ),
+                'AutoScalingGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 1600,
+                ),
+            ),
+        ),
         'CreateAutoScalingGroup' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -100,11 +137,16 @@ return array (
                     'maxLength' => 255,
                 ),
                 'LaunchConfigurationName' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 1600,
+                ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16,
                 ),
                 'MinSize' => array(
                     'required' => true,
@@ -248,7 +290,6 @@ return array (
                     'maxLength' => 255,
                 ),
                 'ImageId' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -274,8 +315,13 @@ return array (
                     'location' => 'aws.query',
                     'maxLength' => 21847,
                 ),
+                'InstanceId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 16,
+                ),
                 'InstanceType' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                     'minLength' => 1,
@@ -325,7 +371,25 @@ return array (
                                         'minimum' => 1,
                                         'maximum' => 1024,
                                     ),
+                                    'VolumeType' => array(
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 255,
+                                    ),
+                                    'DeleteOnTermination' => array(
+                                        'type' => 'boolean',
+                                        'format' => 'boolean-string',
+                                    ),
+                                    'Iops' => array(
+                                        'type' => 'numeric',
+                                        'minimum' => 100,
+                                        'maximum' => 4000,
+                                    ),
                                 ),
+                            ),
+                            'NoDevice' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
                             ),
                         ),
                     ),
@@ -653,6 +717,25 @@ return array (
                             ),
                         ),
                     ),
+                ),
+            ),
+        ),
+        'DescribeAccountLimits' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\QueryCommand',
+            'responseClass' => 'DescribeAccountLimitsAnswer',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Action' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => 'DescribeAccountLimits',
+                ),
+                'Version' => array(
+                    'static' => true,
+                    'location' => 'aws.query',
+                    'default' => '2011-01-01',
                 ),
             ),
         ),
@@ -1783,6 +1866,20 @@ return array (
             'type' => 'object',
             'additionalProperties' => true,
         ),
+        'DescribeAccountLimitsAnswer' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'MaxNumberOfAutoScalingGroups' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'MaxNumberOfLaunchConfigurations' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+            ),
+        ),
         'DescribeAdjustmentTypesAnswer' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -2089,7 +2186,19 @@ return array (
                                                 'VolumeSize' => array(
                                                     'type' => 'numeric',
                                                 ),
+                                                'VolumeType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'DeleteOnTermination' => array(
+                                                    'type' => 'boolean',
+                                                ),
+                                                'Iops' => array(
+                                                    'type' => 'numeric',
+                                                ),
                                             ),
+                                        ),
+                                        'NoDevice' => array(
+                                            'type' => 'boolean',
                                         ),
                                     ),
                                 ),

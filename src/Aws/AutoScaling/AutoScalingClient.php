@@ -26,6 +26,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with Auto Scaling
  *
+ * @method Model attachInstances(array $args = array()) {@command AutoScaling AttachInstances}
  * @method Model createAutoScalingGroup(array $args = array()) {@command AutoScaling CreateAutoScalingGroup}
  * @method Model createLaunchConfiguration(array $args = array()) {@command AutoScaling CreateLaunchConfiguration}
  * @method Model createOrUpdateTags(array $args = array()) {@command AutoScaling CreateOrUpdateTags}
@@ -35,6 +36,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deletePolicy(array $args = array()) {@command AutoScaling DeletePolicy}
  * @method Model deleteScheduledAction(array $args = array()) {@command AutoScaling DeleteScheduledAction}
  * @method Model deleteTags(array $args = array()) {@command AutoScaling DeleteTags}
+ * @method Model describeAccountLimits(array $args = array()) {@command AutoScaling DescribeAccountLimits}
  * @method Model describeAdjustmentTypes(array $args = array()) {@command AutoScaling DescribeAdjustmentTypes}
  * @method Model describeAutoScalingGroups(array $args = array()) {@command AutoScaling DescribeAutoScalingGroups}
  * @method Model describeAutoScalingInstances(array $args = array()) {@command AutoScaling DescribeAutoScalingInstances}
