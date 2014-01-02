@@ -7,5 +7,3 @@ This page is not finished yet, but you can read about providing credentials to t
 * `Using Credentials from AWS Security Token Service <http://blogs.aws.amazon.com/php/post/Tx25ITJRCL1IWT4/Using-Credentials-from-AWS-Security-Token-Service>`_
 
 .. include:: _snippets/incomplete.txt
-
-

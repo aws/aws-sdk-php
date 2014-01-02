@@ -190,12 +190,12 @@ change.
 Why am I seeing a "Cannot redeclare class" error?
 -------------------------------------------------
 
-We have observed this error a few times when using the SDK phar from the CLI with APC enabled. This is due to some kind
-of issue with phars and APC. Luckily there are a few ways to get around this. Please choose the one that makes the most
-sense for your environment and application.
+We have observed this error a few times when using the ``aws.phar`` from the CLI with APC enabled. This is due to some
+kind of issue with phars and APC. Luckily there are a few ways to get around this. Please choose the one that makes the
+most sense for your environment and application.
 
-1. **Disable APC for CLI** - Change the `apc.enable_cli` INI setting to `Off`.
-2. **Tell APC not to cache phars** - Change the `apc.filters` INI setting to include `"^phar://"`.
+1. **Disable APC for CLI** - Change the ``apc.enable_cli`` INI setting to ``Off``.
+2. **Tell APC not to cache phars** - Change the ``apc.filters`` INI setting to include ``"^phar://"``.
 3. **Don't use APC** - PHP 5.5, for example, comes with Zend OpCache built in. This problem has not been observed with
    Zend OpCache.
 4. **Don't use the phar** - You can install the SDK through Composer (recommended) or by using the zip file.

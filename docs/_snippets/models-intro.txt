@@ -1,33 +1,32 @@
-The result of a command is a `Model <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Resource.Model.html>`_
-(``Guzzle\Service\Resource\Model``) object. This object contains the data from a response body and can be used like an
-array (e.g., ``$result['TableName']``). It also has convenience methods like ``get()``, ``getPath()``, and
-``toArray()``. The contents of the response model depend on the command that was executed and are documented in the API
-docs for each operation (e.g., see the *Returns* section in the API docs for the `S3 GetObject operation
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_getObject>`_).
+The result of a performing an operation is what we refer to as a **modeled response**. Instead of returning the raw XML
+or JSON data, the SDK will coerce the data into an associative array and normalize some aspects of the data based on its
+knowledge of the specific service and the underlying response structure.
+
+The actual value returned is a `Model <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Guzzle.Service.Resource.Model.html>`_
+(``Guzzle\Service\Resource\Model``) object. The Model class is a part of the SDK's underlying Guzzle library, but you do
+not need to know anything about Guzzle to use your operation results. The Model object contains the data from the
+response and can be used like an array (e.g., ``$result['Table']``). It also has convenience methods like ``get()``,
+``getPath()``, and ``toArray()``. The contents of the modeled response depend on the operation that was executed and are
+documented in the API docs for each operation (e.g., see the *Returns* section in the API docs for the `DynamoDB
+DescribeTable operation <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_describeTable>`_).
 
 .. code-block:: php
 
-    // Use an instance of S3Client to get an object
-    $result = $client->getObject(array(
-        'Bucket' => 'my-bucket',
-        'Key'    => 'test.txt'
+    $result = $dynamoDbClient->describeTable(array(
+        'TableName' => 'YourTableName',
     ));
 
-    // Introspect the keys
-    var_export($result->getKeys());
-    //> array( 'Body', 'ContentLength', 'DeleteMarker', 'Expiration', ... )
+    // Get a specific value from the result
+    $table = $result['Table'];
+    if ($table && isset($table['TableStatus'])) {
+        echo $table['TableStatus'];
+    }
+    //> ACTIVE
 
-    // Get a value
-    echo $result['ContentLength'];
-    // OR
-    echo $result->get('ContentLength');
-    //> 6
+    // Get nested values from the result easily
+    echo $result->getPath('Table/TableStatus');
+    //> ACTIVE
 
-    // Get a nested value
-    echo $result->getPath('Metadata/CustomValue');
-    //> Testing123
-
-    // Get an array of the data
+    // Convert the Model to a plain array
     var_export($result->toArray());
-    //> array ( 'Body' => 'Hello!' , 'ContentLength' => 6, ... )
-
+    //> array ( 'Table' => array ( 'AttributeDefinitions' => array ( ... ) ... ) ... )

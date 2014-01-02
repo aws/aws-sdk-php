@@ -16,7 +16,7 @@ annotation. The following code uses the ``waitUntil()`` method, but is equivalen
 
 .. code-block:: php
 
-    $client->waitUntil('BucketExists', array('Bucket' => 'my-bucket'));
+    $s3Client->waitUntil('BucketExists', array('Bucket' => 'my-bucket'));
 
 Basic Configuration
 -------------------
@@ -26,7 +26,7 @@ passing optional values prefixed with "waiter.":
 
 .. code-block:: php
 
-    $client->waitUntilBucketExists(array(
+    $s3Client->waitUntilBucketExists(array(
         'Bucket'              => 'my-bucket',
         'waiter.interval'     => 10,
         'waiter.max_attempts' => 3
@@ -40,7 +40,7 @@ to the example in the preceding section.
 
 .. code-block:: php
 
-    $bucketExistsWaiter = $client->getWaiter('BucketExists')
+    $bucketExistsWaiter = $s3Client->getWaiter('BucketExists')
         ->setConfig(array('Bucket' => 'my-bucket'))
         ->setInterval(10)
         ->setMaxAttempts(3);
@@ -65,7 +65,7 @@ the previous one.
 .. code-block:: php
 
     // Get and configure the waiter object
-    $waiter = $client->getWaiter('BucketExists')
+    $waiter = $s3Client->getWaiter('BucketExists')
         ->setConfig(array('Bucket' => 'my-bucket'))
         ->setInterval(10)
         ->setMaxAttempts(3);
@@ -118,12 +118,12 @@ factory such that it can create instances of the custom waiter.
         use Aws\S3\S3Client;
         use Aws\Common\Waiter\WaiterClassFactory;
 
-        $client = S3Client::factory();
+        $s3Client = S3Client::factory();
 
-        $compositeFactory = $client->getWaiterFactory();
+        $compositeFactory = $s3Client->getWaiterFactory();
         $compositeFactory->addFactory(new WaiterClassFactory('MyApp\FakeWaiters'));
 
-        $waiter = $client->waitUntilSleptThreeTimes();
+        $waiter = $s3Client->waitUntilSleptThreeTimes();
     }
 
 The result of this code should look like the following::

@@ -147,109 +147,48 @@ For more information about configuration files, please see :doc:`configuration`.
 Performing service operations
 -----------------------------
 
-To perform a service operation, call the operation name as a method on the client object and provide an associative
-array of parameters. Service operation methods like Amazon S3's ``createBucket()`` don't actually exist on a client.
-These methods are implemented using the ``__call()`` magic method of a client. These magic methods are derived from a
-Guzzle `service description <http://guzzlephp.org/guide/service/service_descriptions.html>`_ present in the client's
-namespace in the ``Resources`` directory. You can use the `API documentation <http://docs.aws.amazon.com/aws-sdk-php/latest/>`_
-or directly view the service description to see what operations are available, what parameters can be set for an
-operation, what values are provided in the response model, and what exceptions are thrown by calling the operation.
+You can perform a service **operation** by calling the method of the same name on the client object. For example, to
+perform the `Amazon DynamoDB DescribeTable operation
+<http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html>`_, you must call the
+``Aws\DynamoDb\DynamoDbClient::describeTable()`` method. Operation methods, like ``describeTable()``, all accept a
+single argument that is an associative array of values representing the parameters to the operation. The structure of
+this array is defined for each operation in the SDK's `API Documentation <http://docs.aws.amazon.com/aws-sdk-php/latest>`_
+(e.g., see the `API docs for describeTable()
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_describeTable>`_).
 
 .. code-block:: php
 
-    $bucket = 'my-bucket';
-
-    $result = $client->createBucket(array(
-        'Bucket' => $bucket
+    $result = $dynamoDbClient->describeTable(array(
+        'TableName' => 'YourTableName',
     ));
 
-    // Wait until the bucket is created
-    $client->waitUntil('BucketExists', array('Bucket' => $bucket));
-
-.. _qs-executing-commands:
-
-Executing commands
-~~~~~~~~~~~~~~~~~~
-
-Commands can be executed in two ways: using the shorthand syntax via the ``__call()`` magic methods (as shown in the
-preceding example) or using the expanded syntax via the ``getCommand()`` method of the client object.
-
-.. code-block:: php
-
-    // The shorthand syntax (via __call())
-    $result = $client->createBucket(array(/* ... */));
-
-    // The expanded syntax (via getCommand())
-    $command = $client->getCommand('CreateBucket', array(/* ... */));
-    $result = $command->getResult();
-
-When using the expanded syntax, a ``Command`` object is returned from ``getCommand()``, which encapsulates the request
-and response of the HTTP request to AWS. From the ``Command`` object, you can call the ``getResult()`` method or the
-``execute()`` method to execute the command and get the parsed result. Additionally, you can call the ``getRequest()``
-and ``getResponse()`` methods (after the command has been executed) to get information about the request and response,
-respectively (e.g., the status code or the raw response, headers sent in the request, etc.).
-
-The ``Command`` object also supports a chainable syntax and can also be useful when you want to manipulate the request
-before execution.
-
-.. code-block:: php
-
-    $result = $client->getCommand('ListObjects')
-        ->set('MaxKeys', 50)
-        ->set('Prefix', 'foo/baz/')
-        ->getResult();
-
-It also allows for executing multiple commands in parallel.
-
-.. code-block:: php
-
-    $ops = array();
-    $ops[] = $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'Bar'));
-    $ops[] = $client->getCommand('GetObject', array('Bucket' => 'foo', 'Key' => 'Baz'));
-    $client->execute($ops);
-
-Modeled responses
-~~~~~~~~~~~~~~~~~
+Working with modeled responses
+------------------------------
 
 .. include:: _snippets/models-intro.txt
 
-To learn more about how to work with models, please read the detailed guide to :doc:`feature-models`.
+To learn more about how to work with modeled responses, read the detailed guide to :doc:`feature-models`.
 
 Detecting and handling errors
 -----------------------------
 
-An exception is thrown when an error is encountered. Be sure to use try/catch blocks when implementing error handling
-logic in your applications. The SDK throws service specific exceptions when a server-side error occurs.
+When you preform an operation, and it succeeds, it will return a modeled response. If there was an error with the
+request, then an exception is thrown. For this reason, you should use ``try``/``catch`` blocks around your operations if
+you need to handle errors in your code. The SDK throws service-specific exceptions when a server-side error occurs.
+
+In the following example, the ``Aws\S3\S3Client`` is used. If there is an error, the exception thrown will be of the
+type: ``Aws\S3\Exception\S3Exception``.
 
 .. code-block:: php
 
-    use Aws\Common\Aws;
-    use Aws\S3\Exception\BucketAlreadyExistsException;
-
-    $aws = Aws::factory('/path/to/my_config.json');
-    $s3 = $aws->get('s3');
-
     try {
-        $s3->createBucket(array('Bucket' => 'my-bucket'));
-    } catch (BucketAlreadyExistsException $e) {
-        echo 'That bucket already exists! ' . $e->getMessage() . "\n";
+        $s3Client->createBucket(array(
+            'Bucket' => 'my-bucket'
+        ));
+    } catch (\Aws\S3\Exception\S3Exception $e) {
+        // The bucket couldn't be created
+        echo $e->getMessage();
     }
-
-The HTTP response to the ``createBucket()`` method will receive a ``409 Conflict`` response with a
-``BucketAlreadyExists`` error code. When the SDK sees the error code it will attempt to throw a named exception that
-matches the name of the HTTP response error code. You can see a full list of supported exceptions for each client by
-looking in the `Exception/` directory of a client namespace. For example, `src/Aws/S3/Exception` contains many different
-exception classes::
-
-    .
-    ├── AccessDeniedException.php
-    ├── AccountProblemException.php
-    ├── AmbiguousGrantByEmailAddressException.php
-    ├── BadDigestException.php
-    ├── BucketAlreadyExistsException.php
-    ├── BucketAlreadyOwnedByYouException.php
-    ├── BucketNotEmptyException.php
-    [...]
 
 Waiters
 -------
