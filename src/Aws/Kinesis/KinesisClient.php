@@ -62,4 +62,15 @@ class KinesisClient extends AbstractClient
             ->setExceptionParser(new JsonQueryExceptionParser)
             ->build();
     }
+
+    public function __call($method, $args)
+    {
+        // Overrides the parent behavior to make sure that the GetShardIterator operation works correctly
+        if ($method === 'getShardIterator') {
+            $params = isset($args[0]) ? $args[0] : array();
+            return $this->getCommand($method, $params)->getResult();
+        } else {
+            return parent::__call($method, $args);
+        }
+    }
 }

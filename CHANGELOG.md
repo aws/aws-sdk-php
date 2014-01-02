@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Fixed a bug where the `KinesisClient::getShardIterator()` method was not working properly
+
 2.5.0 (2013-12-20)
 ------------------
 

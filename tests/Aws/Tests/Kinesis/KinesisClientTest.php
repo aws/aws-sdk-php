@@ -17,6 +17,8 @@
 namespace Aws\Tests\Kinesis;
 
 use Aws\Kinesis\KinesisClient;
+use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Mock\MockPlugin;
 
 /**
  * @covers Aws\Kinesis\KinesisClient
@@ -34,5 +36,22 @@ class KinesisClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertInstanceOf('Aws\Common\Signature\SignatureV4', $client->getSignature());
         $this->assertInstanceOf('Aws\Common\Credentials\Credentials', $client->getCredentials());
         $this->assertEquals('https://kinesis.us-east-1.amazonaws.com', $client->getBaseUrl());
+    }
+
+    public function testTheGetShardIteratorOperationWorksViaMagicCall()
+    {
+        $client = KinesisClient::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-east-1',
+        ));
+        $client->addSubscriber(new MockPlugin(array(new Response(200, null, '{"ShardIterator":"foobar"}'))));
+
+        $result = $client->getShardIterator(array(
+            'StreamName'        => 'test',
+            'ShardId'           => 'test',
+            'ShardIteratorType' => 'AT_SEQUENCE_NUMBER',
+        ));
+        $this->assertEquals('foobar', $result['ShardIterator']);
     }
 }
