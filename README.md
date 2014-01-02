@@ -53,8 +53,8 @@ minutes by [installing the SDK through Composer][docs-installation] or by downlo
    [Installation section of the User Guide][docs-installation] for more detailed information about installing the SDK
    through Composer and other means (e.g., [Phar][install-phar], [Zip][install-zip], [PEAR][install-pear]).
 1. **Using the SDK** – The best way to become familiar with how to use the SDK is to read the [User Guide][docs-guide].
-   The [Quick Start Guide][docs-quickstart] will help you become familiar with the basic concepts, and there are also
-   specific guides for each of the [supported services][docs-services].
+   The [Getting Started Guide][docs-quickstart] will help you become familiar with the basic concepts, and there are
+   also specific guides for each of the [supported services][docs-services].
 
 ## Quick Example
 

@@ -135,9 +135,11 @@ Alternatively, you can combine all three of the preceding statements into one by
 
     pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
 
-Once the SDK has been installed via PEAR, you can include the `phar <http://php.net/manual/en/book.phar.php>`_ into
-your project with:
+Once the SDK has been installed via PEAR, you can include the ``aws.phar`` into your project with:
 
 .. code-block:: php
 
     require 'AWSSDKforPHP/aws.phar';
+
+This assumes that the PEAR directory is in your PHP include path, which it probably is, if PEAR is working correctly.
+If needed, you can determine your PEAR directory by running ``pear config-get php_dir``.

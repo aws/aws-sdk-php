@@ -71,17 +71,18 @@ Getting Started
   * :doc:`Requirements for Using the SDK <requirements>`
   * :doc:`Installing the SDK <installation>`
 
-* :doc:`Quick Start Guide <quick-start>`
-* `Getting Started Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
+* Using the SDK
 
+  * :doc:`quick-start` - Everything you need to know to use the AWS SDK for PHP
+  * `Sample Project <http://aws.amazon.com/developers/getting-started/php/>`_
 
 * Migrating from Version 1 of the SDK?
 
   * :doc:`migration-guide` - Migrating from Version 1 of the SDK to Version 2
   * :doc:`side-by-side` - Using Version 1 and Version 2 of the SDK side-by-side in the same project
 
-Using the SDK
--------------
+In-Depth Guides
+---------------
 
 * :doc:`Configuring the SDK <configuration>`
 * SDK Features
@@ -94,11 +95,12 @@ Using the SDK
 * :doc:`faq`
 * :doc:`performance`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
+* `Guzzle Documentation <http://docs.guzzlephp.org/en/latest/docs.html>`_
 
 .. _supported-services:
 
-Service Documentation
----------------------
+Service-Specific Guides
+-----------------------
 
 * Amazon CloudFront
 
