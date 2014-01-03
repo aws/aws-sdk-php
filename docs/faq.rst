@@ -199,3 +199,22 @@ most sense for your environment and application.
 3. **Don't use APC** - PHP 5.5, for example, comes with Zend OpCache built in. This problem has not been observed with
    Zend OpCache.
 4. **Don't use the phar** - You can install the SDK through Composer (recommended) or by using the zip file.
+
+What is an InstanceProfileCredentialsException?
+-----------------------------------------------
+
+If you are seeing an ``Aws\Common\Exception\InstanceProfileCredentialsException`` while using the SDK, this means that
+the SDK was not provided with any credentials.
+
+If you instantiate a client *without* credentials, on the first time that you perform a service operation, the SDK will
+attempt to find credentials. It first checks in some specific environment variables, then it looks for instance profile
+credentials, which are only available on configured Amazon EC2 instances. If absolutely no credentials are provided or
+found, an ``Aws\Common\Exception\InstanceProfileCredentialsException`` is thrown.
+
+If you are seeing this error and you are intending to use instance profile credentials, then you need to make sure that
+the Amazon EC2 instance that the SDK is running on is configured with an appropriate IAM role.
+
+If you are seeing this error and you are **not** intending to use instance profile credentials, then you need to make
+sure that you are properly providing credentials to the SDK.
+
+For more information, see :doc:`credentials`.

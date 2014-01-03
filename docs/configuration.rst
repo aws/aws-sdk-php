@@ -1,5 +1,8 @@
-Configuration
-=============
+Configuring the SDK
+===================
+
+How configuration files work
+----------------------------
 
 When passing an array of parameters to the first argument of ``Aws\Common\Aws::factory()``, the service builder loads
 the default ``aws-config.php`` file and merges the array of shared parameters into the default configuration.
@@ -9,21 +12,22 @@ Excerpt from ``src/Aws/Common/Resources/aws-config.php``:
 .. code-block:: php
 
     <?php return array(
+        'class' => 'Aws\Common\Aws',
         'services' => array(
             'default_settings' => array(
                 'params' => array()
             ),
-            'dynamodb' => array(
-                'alias'   => 'DynamoDb',
+            'autoscaling' => array(
+                'alias'   => 'AutoScaling',
                 'extends' => 'default_settings',
-                'class'   => 'Aws\DynamoDb\DynamoDbClient'
+                'class'   => 'Aws\AutoScaling\AutoScalingClient'
             ),
-            's3' => array(
-                'alias'   => 'S3',
+            'cloudformation' => array(
+                'alias'   => 'CloudFormation',
                 'extends' => 'default_settings',
-                'class'   => 'Aws\S3\S3Client'
-            )
-        )
+                'class'   => 'Aws\CloudFormation\CloudFormationClient'
+            ),
+        // ...
     );
 
 The ``aws-config.php`` file provides default configuration settings for associating client classes with service names.
@@ -32,6 +36,20 @@ This file tells the ``Aws\Common\Aws`` service builder which class to instantiat
 You can supply your credentials and other configuration settings to the service builder so that each client is
 instantiated with those settings. To do this, pass an array of settings (including your ``key`` and ``secret``) into the
 first argument of ``Aws\Common\Aws::factory()``.
+
+.. code-block:: php
+
+    <?php
+
+    require 'vendor/autoload.php';
+
+    use Aws\Common\Aws;
+
+    $aws = Aws::factory(array(
+        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
+        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
+        'region' => 'us-east-1',
+    ));
 
 Using a Custom Configuration File
 ---------------------------------

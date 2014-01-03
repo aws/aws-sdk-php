@@ -19,7 +19,7 @@ your project. In order to use the SDK with Composer, you must do the following:
            }
        }
 
-   Consider tightening your dependencies to a known version (e.g., ``2.3.*``).
+   Consider tightening your dependencies to a known version (e.g., ``2.5.*``).
 
 #. Download and install Composer.
 
@@ -55,6 +55,11 @@ requirement for the SDK to ``dev-master``.
          "aws/aws-sdk-php": "dev-master"
       }
    }
+
+If you are deploying your application to `AWS Elastic Beanstalk
+<http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.html>`_, and you have a ``composer.json``
+file in the root of your package, then Elastic Beanstalk will automatically perform a Composer ``install`` when you
+deploy your application.
 
 Installing via Phar
 -------------------

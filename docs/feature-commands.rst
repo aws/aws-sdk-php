@@ -1,5 +1,5 @@
-================================
-Using Command Objects in the SDK
-================================
+===============
+Command Objects
+===============
 
 .. include:: _snippets/incomplete.txt

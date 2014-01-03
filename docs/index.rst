@@ -12,7 +12,9 @@ AWS SDK for PHP
     migration-guide
     side-by-side
 
+    credentials
     configuration
+    feature-commands
     feature-waiters
     feature-iterators
     feature-models
@@ -84,12 +86,14 @@ Getting Started
 In-Depth Guides
 ---------------
 
-* :doc:`Configuring the SDK <configuration>`
+* :doc:`credentials`
+* :doc:`configuration`
 * SDK Features
 
+  * :doc:`feature-commands`
   * :doc:`feature-iterators`
   * :doc:`feature-waiters`
-  * :doc:`Modeled Responses <feature-models>`
+  * :doc:`feature-models`
   * :doc:`feature-facades`
 
 * :doc:`faq`
