@@ -116,7 +116,6 @@ return array (
                                             'type' => 'string',
                                         ),
                                         'Value' => array(
-                                            'required' => true,
                                             'type' => 'string',
                                         ),
                                         'AlternateValueEncoding' => array(
@@ -313,7 +312,6 @@ return array (
                                 'type' => 'string',
                             ),
                             'Value' => array(
-                                'required' => true,
                                 'type' => 'string',
                             ),
                             'AlternateValueEncoding' => array(
