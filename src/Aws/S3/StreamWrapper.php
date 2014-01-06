@@ -313,25 +313,30 @@ class StreamWrapper
 
         $parts = $this->getParams($path);
 
-        // Stat a bucket or just s3://
-        if (!$parts['Key'] && (!$parts['Bucket'] || self::$client->doesBucketExist($parts['Bucket']))) {
-            return $this->formatUrlStat($path);
-        }
-
-        // You must pass either a bucket or a bucket + key
         if (!$parts['Key']) {
-            return $this->triggerError("File or directory not found: {$path}", $flags);
+            // Stat "directories": buckets, or "s3://"
+            if (!$parts['Bucket'] || self::$client->doesBucketExist($parts['Bucket'])) {
+                return $this->formatUrlStat($path);
+            } else {
+                return $this->triggerError("File or directory not found: {$path}", $flags);
+            }
         }
 
         try {
             try {
-                // Attempt to stat and cache regular object
-                return $this->formatUrlStat(self::$client->headObject($parts)->toArray());
+                $result = self::$client->headObject($parts)->toArray();
+                if (substr($parts['Key'], -1, 1) == '/' && $result['ContentLength'] == 0) {
+                    // Return as if it is a bucket to account for console bucket objects (e.g., zero-byte object "foo/")
+                    return $this->formatUrlStat($path);
+                } else {
+                    // Attempt to stat and cache regular object
+                    return $this->formatUrlStat($result);
+                }
             } catch (NoSuchKeyException $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix listing of objects to determine.
                 $result = self::$client->listObjects(array(
                     'Bucket'  => $parts['Bucket'],
-                    'Prefix'  => $parts['Key'],
+                    'Prefix'  => rtrim($parts['Key'], '/') . '/',
                     'MaxKeys' => 1
                 ));
                 if (!$result['Contents'] && !$result['CommonPrefixes']) {
