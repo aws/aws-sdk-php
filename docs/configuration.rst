@@ -188,8 +188,9 @@ Options                   Description
 ``base_url``              Allows you to specify a custom endpoint instead of have the SDK build one automatically from
                           the region and scheme.
 
-``signature``             The ``Aws\Common\Signature\SignatureInterface`` object to use for signing requests. Normally,
-                          this is determined for you by the SDK.
+``signature``             Overrides the signature used by the client. Clients will always choose an appropriate default
+                          signature. However, it can be useful to override this with a custom setting. This can be set
+                          to "v4", "v3https", "v2" or an instance of ``Aws\Common\Signature\SignatureInterface``.
 
 ``signature.service``     The signature service scope for Signature V4. See :ref:`custom_endpoint`.
 

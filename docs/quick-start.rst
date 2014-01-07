@@ -148,20 +148,9 @@ For more information about configuration files, please see :doc:`configuration`.
 Performing service operations
 -----------------------------
 
-You can perform a service **operation** by calling the method of the same name on the client object. For example, to
-perform the `Amazon DynamoDB DescribeTable operation
-<http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html>`_, you must call the
-``Aws\DynamoDb\DynamoDbClient::describeTable()`` method. Operation methods, like ``describeTable()``, all accept a
-single argument that is an associative array of values representing the parameters to the operation. The structure of
-this array is defined for each operation in the SDK's `API Documentation <http://docs.aws.amazon.com/aws-sdk-php/latest>`_
-(e.g., see the `API docs for describeTable()
-<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html#_describeTable>`_).
+.. include:: _snippets/performing-operations.txt
 
-.. code-block:: php
-
-    $result = $dynamoDbClient->describeTable(array(
-        'TableName' => 'YourTableName',
-    ));
+To learn about performing operations in more detail, including using command objects, see :doc:`feature-commands`.
 
 Working with modeled responses
 ------------------------------
@@ -190,6 +179,10 @@ type: ``Aws\S3\Exception\S3Exception``.
         // The bucket couldn't be created
         echo $e->getMessage();
     }
+
+Exceptions thrown by the SDK like this all extend the ``ServiceResponseException`` class (`see the API docs
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Common.Exception.ServiceResponseException.html>`_), which has
+some custom methods that might help you discover what went wrong.
 
 Waiters
 -------
