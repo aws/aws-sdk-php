@@ -525,4 +525,54 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         clearstatcache('s3://bucket/prefix');
         stat('s3://bucket/prefix');
     }
+
+    public function fileTypeProvider()
+    {
+        return array(
+            array('s3://', array(), 'dir'),
+            array('s3://t123', array(new Response(200)), 'dir'),
+            array('s3://t123/', array(new Response(200)), 'dir'),
+            array('s3://t123', array(new Response(404)), 'error'),
+            array('s3://t123/', array(new Response(404)), 'error'),
+            array('s3://t123/abc', array(new Response(200)), 'file'),
+            array('s3://t123/abc/', array(new Response(200)), 'dir'),
+            // "s3/list_objects_page_3" contains several keys, so this is a key
+            // prefix which means it is a directory
+            array('s3://t123/abc/', array(
+                new Response(404),
+                $this->getMockResponse('s3/list_objects_page_3')
+            ), 'dir'),
+            // No valid keys were found in the list objects call, so it's not
+            // a file, directory, or key prefix.
+            array('s3://t123/abc/', array(
+                new Response(404),
+                $this->getMockResponse('s3/list_objects_page_4')
+            ), 'error'),
+        );
+    }
+
+    /**
+     * @dataProvider fileTypeProvider
+     */
+    public function testDeterminesIfFileOrDir($uri, $responses, $result)
+    {
+        if ($responses) {
+            $this->setMockResponse($this->client, $responses);
+        }
+
+        clearstatcache();
+        if ($result == 'error') {
+            $err = false;
+            set_error_handler(function ($e) use (&$err) { $err = true; });
+            $actual = filetype($uri);
+            restore_error_handler();
+            $this->assertFalse($actual);
+            $this->assertTrue($err);
+        } else {
+            $actual = filetype($uri);
+            $this->assertSame($actual, $result);
+        }
+
+        $this->assertEquals(count($responses), count($this->getMockedRequests()));
+    }
 }
