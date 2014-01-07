@@ -90,10 +90,10 @@ In-Depth Guides
 * :doc:`configuration`
 * SDK Features
 
-  * :doc:`feature-commands`
   * :doc:`feature-iterators`
   * :doc:`feature-waiters`
   * :doc:`feature-models`
+  * :doc:`feature-commands`
   * :doc:`feature-facades`
 
 * :doc:`faq`

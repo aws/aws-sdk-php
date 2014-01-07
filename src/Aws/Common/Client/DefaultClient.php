@@ -47,7 +47,7 @@ class DefaultClient extends AbstractClient
      *
      * Generic client options:
      *
-     * - ssl.ssl.certificate_authority: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle
+     * - ssl.certificate_authority: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle
      * - curl.options: Associative of CURLOPT_* cURL options to add to each request
      * - client.backoff.logger: `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use 'debug' to emit PHP warnings when a retry is issued.
      * - client.backoff.logger.template: Optional template to use for exponential backoff log messages. See `Guzzle\Plugin\Backoff\BackoffLogger` for formatting information.
