@@ -47,6 +47,7 @@ class DefaultClient extends AbstractClient
      *
      * Generic client options:
      *
+     * - signature: Overrides the signature used by the client. Clients will always choose an appropriate default signature. However, it can be useful to override this with a custom setting. This can be set to "v4", "v3https", "v2" or an instance of Aws\Common\Signature\SignatureInterface.
      * - ssl.certificate_authority: Set to true to use the bundled CA cert or pass the full path to an SSL certificate bundle
      * - curl.options: Associative of CURLOPT_* cURL options to add to each request
      * - client.backoff.logger: `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use 'debug' to emit PHP warnings when a retry is issued.

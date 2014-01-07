@@ -447,8 +447,20 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $sig = $this->getMockBuilder('Aws\S3\S3Signature')
             ->disableOriginalConstructor()
             ->getMock();
-        $s3 = S3Client::factory(array(Options::SIGNATURE => $sig));
+        $s3 = S3Client::factory(array(
+            Options::SIGNATURE => $sig,
+            Options::REGION => 'cn-north-1'
+        ));
         $this->assertSame($sig, $s3->getSignature());
+    }
+
+    public function testCanForceS3SignatureUsingString()
+    {
+        $s3 = S3Client::factory(array(
+            Options::SIGNATURE => 's3',
+            Options::REGION => 'cn-north-1'
+        ));
+        $this->assertInstanceOf('Aws\S3\S3Signature', $s3->getSignature());
     }
 
     public function testCanForceSigV4Signature()
@@ -461,6 +473,22 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             Options::REGION => 'us-east-1'
         ));
         $this->assertSame($sig, $s3->getSignature());
+    }
+
+    /**
+     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedExceptionMessage A region must be specified when using signature version 4
+     */
+    public function testEnsuresRegionIsSetWhenUsingV4()
+    {
+        $s3 = S3Client::factory(array(Options::SIGNATURE => 'v4'));
+        $this->assertInstanceOf('Aws\S3\S3SignatureV4', $s3->getSignature());
+    }
+
+    public function testCanForceS3SignatureV4UsingString()
+    {
+        $s3 = S3Client::factory(array(Options::SIGNATURE => 'v4', 'region' => 'us-west-2'));
+        $this->assertInstanceOf('Aws\S3\S3SignatureV4', $s3->getSignature());
     }
 
     public function testUsesSigV4SignatureInSpecificRegions()
