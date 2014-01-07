@@ -135,7 +135,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage does not specify a valid signatureVersion
+     * @expectedExceptionMessage The provided signature is not a signature version string or an instance of Aws\Common\Signature\SignatureInterface
      */
     public function testEnsuresSignatureIsProvided()
     {
@@ -149,6 +149,41 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
                 )
             ))
             ->build();
+    }
+
+    public function signatureVersionProvider()
+    {
+        return array(
+            array('v4', 'Aws\\Common\\Signature\\SignatureV4'),
+            array('v2', 'Aws\\Common\\Signature\\SignatureV2'),
+            array('v3https', 'Aws\\Common\\Signature\\SignatureV3Https'),
+            array('foo', false)
+        );
+    }
+
+    /**
+     * @dataProvider signatureVersionProvider
+     */
+    public function testCanCreateSignaturesBasedOnSignatureStringIdentifier($str, $type)
+    {
+        try {
+            $client = ClientBuilder::factory()
+                ->setConfig(array(
+                    'service' => 'foo',
+                    'region' => 'us-east-1',
+                    'signature' => $str,
+                    'service.description' => array(
+                        'signatureVersion' => 'v2',
+                        'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'baz'))
+                    )
+                ))
+                ->build();
+            $this->assertInstanceOf($type, $client->getSignature());
+        } catch (\InvalidArgumentException $e) {
+            if ($type !== false) {
+                throw $e;
+            }
+        }
     }
 
     /**

@@ -265,25 +265,29 @@ class S3Client extends AbstractClient
     {
         $currentValue = isset($config[Options::SIGNATURE]) ? $config[Options::SIGNATURE] : null;
 
+        // Use the Amazon S3 signature V4 when the value is set to "v4" or when
+        // the value is not set and the region starts with "cn-".
+        if ($currentValue == 'v4' ||
+            (!$currentValue && isset($config['region']) && substr($config['region'], 0, 3) == 'cn-')
+        ) {
+            // Force SignatureV4 for specific regions or if specified in the config
+            $currentValue = new S3SignatureV4('s3');
+        } elseif (!$currentValue || $currentValue == 's3') {
+            // Use the Amazon S3 signature by default
+            $currentValue = new S3Signature();
+        }
+
         if ($currentValue instanceof S3SignatureInterface) {
             // A region is require with v4
             if ($currentValue instanceof SignatureV4 && !isset($config['region'])) {
-                throw new InvalidArgumentException('A region must be specified when using signature version 4');
+                throw new InvalidArgumentException('A region must be specified '
+                    . 'when using signature version 4');
             }
             return $currentValue;
-        } elseif ($currentValue) {
-            throw new InvalidArgumentException(
-                'The provided signature value is not an instance of S3SignatureInterface'
-            );
         }
 
-        if (isset($config['region']) && substr($config['region'], 0, 3) == 'cn-') {
-            // Force SignatureV4 for specific regions or if specified in the config
-            return new S3SignatureV4('s3', $config['region']);
-        } else {
-            // Use the S3 signature by default
-            return new S3Signature();
-        }
+        throw new InvalidArgumentException('The provided signature value is '
+            . 'not an instance of S3SignatureInterface');
     }
 
     /**
