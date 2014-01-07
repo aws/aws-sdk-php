@@ -8,6 +8,8 @@ Next Release
 * Added support for creating launch configurations from existing Amazon EC2 instances to the Auto Scaling client
 * Added support for describing Auto Scaling account limits to the Auto Scaling client
 * Added better support for block device mappings to the Amazon AutoScaling client when creating launch configurations
+* Added support for [ranged inventory retrieval](http://docs.aws.amazon.com/amazonglacier/latest/dev/api-initiate-job-post.html#api-initiate-job-post-vault-inventory-list-filtering)
+  to the Amazon Glacier client
 * [Docs] Updated and added a lot of content in the [User Guide](http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html)
 * Fixed a bug where the `KinesisClient::getShardIterator()` method was not working properly
 

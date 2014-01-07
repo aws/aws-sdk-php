@@ -513,6 +513,24 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'InventoryRetrievalParameters' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'StartDate' => array(
+                            'type' => 'string',
+                        ),
+                        'EndDate' => array(
+                            'type' => 'string',
+                        ),
+                        'Limit' => array(
+                            'type' => 'string',
+                        ),
+                        'Marker' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1050,6 +1068,27 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'InventoryRetrievalParameters' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'Format' => array(
+                            'type' => 'string',
+                        ),
+                        'StartDate' => array(
+                            'type' => 'string',
+                        ),
+                        'EndDate' => array(
+                            'type' => 'string',
+                        ),
+                        'Limit' => array(
+                            'type' => 'string',
+                        ),
+                        'Marker' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
             ),
         ),
         'DescribeVaultOutput' => array(
@@ -1230,6 +1269,26 @@ return array (
                             ),
                             'RetrievalByteRange' => array(
                                 'type' => 'string',
+                            ),
+                            'InventoryRetrievalParameters' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'Format' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'StartDate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'EndDate' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Limit' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Marker' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                         ),
                     ),
