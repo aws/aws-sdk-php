@@ -69,9 +69,9 @@ Getting Started
 
 * Before you use the SDK
 
-  * :doc:`awssignup`
-  * :doc:`Requirements for Using the SDK <requirements>`
-  * :doc:`Installing the SDK <installation>`
+  * `Sign up for AWS and get your AWS access keys <http://aws.amazon.com/developers/access-keys/>`_
+  * :doc:`Verify that your system meets the minimum requirements for the SDK <requirements>`
+  * :doc:`Install the AWS SDK for PHP <installation>`
 
 * Using the SDK
 

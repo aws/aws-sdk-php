@@ -2,6 +2,8 @@
 Signing Up for AWS
 ==================
 
+.. important:: This page is obsolete. Please see `About Access Keys <http://aws.amazon.com/developers/access-keys/>`_.
+
 Creating an AWS account
 -----------------------
 
