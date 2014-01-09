@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.5.1 (2014-01-08)
+2.5.1 (2014-01-09)
 ------------------
 
 * Added support for attaching existing Amazon EC2 instances to an Auto Scaling group to the Auto Scaling client
