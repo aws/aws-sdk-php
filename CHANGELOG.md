@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.5.1 (2014-01-08)
+------------------
 
 * Added support for attaching existing Amazon EC2 instances to an Auto Scaling group to the Auto Scaling client
 * Added support for creating launch configurations from existing Amazon EC2 instances to the Auto Scaling client
@@ -12,6 +12,9 @@ Next Release
   to the Amazon Glacier client
 * [Docs] Updated and added a lot of content in the [User Guide](http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html)
 * Fixed a bug where the `KinesisClient::getShardIterator()` method was not working properly
+* Fixed an issue with Amazon SimpleDB where the 'Value' attribute was marked as required on DeleteAttribute and BatchDeleteAttributes
+* Fixed an issue with the Amazon S3 stream wrapper where empty place holder keys were being marked as files instead of directories
+* Added the ability to specify a custom signature implementation using a string identifier (e.g., 'v4', 'v2', etc)
 
 2.5.0 (2013-12-20)
 ------------------
