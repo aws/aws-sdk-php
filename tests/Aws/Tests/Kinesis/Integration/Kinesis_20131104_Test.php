@@ -41,7 +41,7 @@ class Kinesis_20131104_Test extends \Aws\Tests\IntegrationTestCase
     {
         $client = $this->client;
 
-        //@begin
+        // @begin
         $client->createStream(array(
             'StreamName' => 'php-test-stream',
             'ShardCount' => 1,
@@ -57,7 +57,7 @@ class Kinesis_20131104_Test extends \Aws\Tests\IntegrationTestCase
     {
         $client = $this->client;
 
-        //@begin
+        // @begin
         $client->deleteStream(array(
             'StreamName' => 'php-test-stream',
         ));
