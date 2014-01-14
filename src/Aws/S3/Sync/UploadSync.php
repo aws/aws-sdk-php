@@ -69,7 +69,7 @@ class UploadSync extends AbstractSync
 
             $this->dispatch(
                 self::BEFORE_MULTIPART_BUILD,
-                array('builder' => $builder,'file' => $file)
+                array('builder' => $builder, 'file' => $file)
             );
 
             return $builder->build();
