@@ -21,6 +21,7 @@ def setup(app):
 
     app.add_role('regions', regions_role)
     app.add_directive('service', ServiceIntro)
+    app.add_directive('apiref', ServiceApiRef)
     app.add_directive('indexlinks', ServiceIndexLinks)
     app.add_directive('example', ExampleDirective)
 
@@ -151,9 +152,9 @@ def load_service_description(name):
     return description_cache[name]
 
 
-class ServiceIntro(Directive):
+class ServiceDescriptionDirective(Directive):
     """
-    Creates a service introduction to inject into a document
+    Base class for directives that use information from service descriptions
     """
 
     required_arguments = 1
@@ -166,8 +167,9 @@ class ServiceIntro(Directive):
         else:
             api_version = ""
         service_name = self.arguments[0].strip()
-        d = load_service_description(service_name)
-        rawtext = self.generate_rst(d, api_version)
+        service_description = load_service_description(service_name)
+
+        rawtext = self.generate_rst(service_description, api_version)
         tab_width = 4
         include_lines = statemachine.string2lines(
             rawtext, tab_width, convert_whitespace=1)
@@ -175,16 +177,64 @@ class ServiceIntro(Directive):
             include_lines, os.path.abspath(__file__))
         return []
 
-    def get_doc_link(self, name, namespace):
-        """Determine the documentation link for an endpoint"""
-        if name == "sts":
+    def get_service_doc_url(self, namespace):
+        """Determine the documentation link for a service"""
+        namespace = namespace.lower()
+        if namespace == "sts":
             return "http://aws.amazon.com/documentation/iam/"
         else:
-            return "http://aws.amazon.com/documentation/" + namespace.lower()
+            return "http://aws.amazon.com/documentation/" + namespace
+
+    def get_api_ref_url(self, namespace):
+        """Determine the PHP API documentation link for a service"""
+        return "http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws." + namespace + "." + namespace + "Client.html"
 
     def get_locator_name(self, name):
         """Determine the service locator name for an endpoint"""
         return name
+
+
+class ServiceIntro(ServiceDescriptionDirective):
+    """
+    Creates a service introduction to inject into a document
+    """
+
+    def generate_rst(self, d, api_version):
+        rawtext = ""
+        scalar = {}
+
+        # Grab all of the simple strings from the description
+        for key in d.description:
+            if isinstance(d[key], str) or isinstance(d[key], unicode):
+                scalar[key] = d[key]
+                # Add substitutions for top-level data in a service description
+                rawtext += ".. |%s| replace:: %s\n\n" % (key, scalar[key])
+
+        # Determine the doc URL
+        docs = self.get_service_doc_url(d["namespace"])
+
+        # Determine the "namespace" used for linking to API docs
+        if api_version:
+            apiVersionSuffix = "_" + api_version.replace("-", "_")
+        else:
+            apiVersionSuffix = ""
+
+        env = Environment(loader=PackageLoader('aws', 'templates'))
+        template = env.get_template("client_intro")
+        rawtext += template.render(
+            scalar,
+            regions=get_regions(d["namespace"]),
+            doc_url=docs,
+            specifiedApiVersion=api_version,
+            apiVersionSuffix=apiVersionSuffix)
+
+        return rawtext
+
+
+class ServiceApiRef(ServiceDescriptionDirective):
+    """
+    Inserts a formatted PHPUnit example into the source
+    """
 
     def generate_rst(self, d, api_version):
         rawtext = ""
@@ -206,10 +256,6 @@ class ServiceIntro(Directive):
         # Set the ordered dict of operations on the description
         d.description['operations'] = operations
 
-        # Determine the service locator name and doc URL
-        locator_name = self.get_locator_name(d["namespace"])
-        docs = self.get_doc_link(locator_name, d["namespace"])
-
         # Determine the "namespace" used for linking to API docs
         if api_version:
             apiVersionSuffix = "_" + api_version.replace("-", "_")
@@ -217,15 +263,31 @@ class ServiceIntro(Directive):
             apiVersionSuffix = ""
 
         env = Environment(loader=PackageLoader('aws', 'templates'))
-        template = env.get_template("client_intro")
+        template = env.get_template("api_reference")
         rawtext += template.render(
             scalar,
             description=d.description,
             regions=get_regions(d["namespace"]),
-            locator_name=locator_name,
-            doc_url=docs,
-            specifiedApiVersion=api_version,
             apiVersionSuffix=apiVersionSuffix)
+
+        return rawtext
+
+
+class ServiceIndexLinks(ServiceDescriptionDirective):
+    """
+    Inserts a formatted PHPUnit example into the source
+    """
+
+    def generate_rst(self, service_description, api_version):
+        d = service_description.description
+
+        service_name = d["serviceFullName"]
+        if "serviceAbbreviation" in d:
+            service_name = d["serviceAbbreviation"]
+
+        rawtext = "* :doc:`Using the " + service_name + " PHP client <service-" + d["namespace"].lower() + ">`\n";
+        rawtext += "* `PHP API reference <" + self.get_api_ref_url(d["namespace"]) + ">`_\n";
+        #rawtext += "* `General service documentation for " + service_name + " <" + self.get_service_doc_url(d["namespace"]) + ">`_\n";
 
         return rawtext
 
@@ -304,50 +366,3 @@ class ExampleDirective(Directive):
     def generate_rst(self, contents):
         rawtext = ".. code-block:: php\n\n" + contents
         return rawtext
-
-class ServiceIndexLinks(Directive):
-    """
-    Inserts a formatted PHPUnit example into the source
-    """
-
-    # Directive configuration
-    required_arguments = 1
-    optional_arguments = 0
-    final_argument_whitespace = True
-
-    def run(self):
-        service = self.arguments[0].strip()
-        service_description = load_service_description(service)
-
-        rawtext = self.generate_rst(service_description)
-        tab_width = 4
-        include_lines = statemachine.string2lines(
-            rawtext, tab_width, convert_whitespace=1)
-        self.state_machine.insert_input(
-            include_lines, os.path.abspath(__file__))
-        return []
-
-    def generate_rst(self, service_description):
-        d = service_description.description
-
-        service_name = d["serviceFullName"]
-        if "serviceAbbreviation" in d:
-            service_name = d["serviceAbbreviation"]
-
-        rawtext = "* :doc:`Using the " + service_name + " PHP client <service-" + d["namespace"].lower() + ">`\n";
-        rawtext += "* `PHP API reference <" + self.get_api_ref_url(d["namespace"]) + ">`_\n";
-        #rawtext += "* `General service documentation for " + service_name + " <" + self.get_service_doc_url(d["namespace"]) + ">`_\n";
-
-        return rawtext
-
-    def get_service_doc_url(self, namespace):
-        """Determine the documentation link for a service"""
-        namespace = namespace.lower()
-        if namespace == "sts":
-            return "http://aws.amazon.com/documentation/iam/"
-        else:
-            return "http://aws.amazon.com/documentation/" + namespace
-
-    def get_api_ref_url(self, namespace):
-        """Determine the PHP API documentation link for a service"""
-        return "http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws." + namespace + "." + namespace + "Client.html"

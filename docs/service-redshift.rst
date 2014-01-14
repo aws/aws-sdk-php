@@ -74,3 +74,5 @@ object.
     foreach ($events as $event) {
         echo "{$event['Date']}: {$event['Message']}\n";
     }
+
+.. apiref:: Redshift

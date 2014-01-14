@@ -446,3 +446,5 @@ Cleaning up
 Now that we've taken a tour of how you can use the Amazon S3 client, let's clean up any resources we may have created.
 
 .. example:: S3/Integration/S3_20060301_Test.php testCleanUpBucket
+
+.. apiref:: S3
