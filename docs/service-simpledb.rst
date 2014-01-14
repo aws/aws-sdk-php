@@ -162,3 +162,4 @@ DeleteDomain operation might take 10 or more seconds to complete.
 
     $client->deleteDomain(array('DomainName' => 'mydomain'));
 
+.. apiref:: SimpleDb

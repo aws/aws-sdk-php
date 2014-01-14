@@ -210,3 +210,5 @@ You can also use the ``WriteRequestBatch`` object to delete items in batches.
 
 The ``WriteRequestBatch``, ``PutRequest``, and ``DeleteRequest`` classes are all a part of the
 ``Aws\DynamoDb\Model\BatchRequest`` namespace.
+
+.. apiref:: DynamoDb

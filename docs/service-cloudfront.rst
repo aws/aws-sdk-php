@@ -130,3 +130,5 @@ The following is an example of how you could use the signed URL to construct a w
     </html>
 
 .. include:: _snippets/incomplete.txt
+
+.. apiref:: CloudFront

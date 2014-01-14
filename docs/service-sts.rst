@@ -88,3 +88,5 @@ You can also use the same technique when setting credentials on an existing clie
     $s3->setCredentials($credentials);
 
 .. include:: _snippets/incomplete.txt
+
+.. apiref:: Sts

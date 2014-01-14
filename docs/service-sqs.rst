@@ -99,3 +99,5 @@ in the queue. To configure this behavior, you must use the ``WaitTimeSeconds`` p
 
 .. note:: You can also configure long-polling at the queue level by setting the ``ReceiveMessageWaitTimeSeconds`` queue
           attribute.
+
+.. apiref:: Sqs
