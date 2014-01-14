@@ -28,4 +28,10 @@ class KeyConverterTest extends \Guzzle\Tests\GuzzleTestCase
         $c = new KeyConverter('/test/123', '/foo', '|');
         $this->assertEquals('/foo|abc|123', $c->convert('/test/123/abc/123'));
     }
+
+    public function testDoesNotStripLeadingSlash()
+    {
+        $c = new KeyConverter('/test', '../foo/');
+        $this->assertEquals('../foo/123/abc', $c->convert('/test/123/abc'));
+    }
 }
