@@ -86,7 +86,7 @@ class UploadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertNotNull($put->getHeader('Content-MD5'));
 
         rewind($out);
-        $this->assertContains('Uploading ' . __FILE__ . ' -> UploadSyncBuilderTest.php (', stream_get_contents($out));
+        $this->assertContains('Uploading ' . __FILE__ . ' -> /UploadSyncBuilderTest.php (', stream_get_contents($out));
     }
 
     public function testCanSetAcpOnMultipartUploadsAndEmitsDebug()
@@ -124,7 +124,7 @@ class UploadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         rewind($out);
         $contents = stream_get_contents($out);
         $this->assertContains(
-            'Beginning multipart upload: ' . __FILE__ . ' -> UploadSyncBuilderTest.php (',
+            'Beginning multipart upload: ' . __FILE__ . ' -> /UploadSyncBuilderTest.php (',
             $contents
         );
         $this->assertContains('- Part 1 (', $contents);

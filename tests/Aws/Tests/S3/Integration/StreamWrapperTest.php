@@ -138,6 +138,21 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testUploadsDir
      */
+    public function testUploadsRelativeDir()
+    {
+        $dir = getcwd();
+        chdir(__DIR__);
+        self::log('Uploading test directory under a prefix using a relative dir');
+        $client = self::getServiceBuilder()->get('s3', true);
+        $client->uploadDirectory('../Exception', $this->bucket, 'rel-foo', array('debug' => true));
+        $path = 's3://' . $this->bucket . '/rel-foo';
+        $this->assertContains('Parser', scandir($path));
+        chdir($dir);
+    }
+
+    /**
+     * @depends testUploadsDir
+     */
     public function testNoTrailingSlashes($path)
     {
         $results = scandir($path);
@@ -176,6 +191,26 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
             $this->assertContains($expected[$i], $file);
             unlink('/tmp/swtest' . $file);
         }
+    }
+
+    /**
+     * @depends testCanRecursivelyListFiles
+     */
+    public function testCanDownloadToRelativeDir()
+    {
+        $dir = getcwd();
+        chdir(__DIR__);
+        self::log('Downloading test directory under a prefix');
+        $client = self::getServiceBuilder()->get('s3', true);
+        $client->downloadBucket('../streamtest', $this->bucket, 'foo/Exception/', array('debug' => true));
+        $expected = $this->getTestFiles(dirname(__DIR__) . '/Exception');
+        foreach ($testFiles = $this->getTestFiles('../streamtest') as $i => $file) {
+            $this->assertStringStartsWith('/foo/', $file);
+            $this->assertContains($expected[$i], $file);
+            $this->assertFileExists(realpath('../streamtest' . $file));
+            unlink('../streamtest' . $file);
+        }
+        chdir($dir);
     }
 
     private function getS3Files($prefix)

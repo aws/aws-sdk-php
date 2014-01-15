@@ -17,6 +17,7 @@
 namespace Aws\Tests\S3\Sync;
 
 use Aws\S3\Sync\DownloadSync;
+use Aws\S3\Sync\KeyConverter;
 
 /**
  * @covers Aws\S3\Sync\DownloadSync
@@ -70,6 +71,56 @@ class DownloadSyncTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('foo', $command['Bucket']);
         $this->assertEquals('baz', $command['Key']);
         $this->assertEquals('/foo/bar', $command['SaveAs']);
+    }
+
+    public function keyConverterProvider()
+    {
+        return array(
+            // base dir           prefix  given key         result
+            array('C:/foo/bar',   '',     's3://foo/baz',   's3://foo/baz'),
+            array('C:\\foo\\bar', '',     's3://foo/baz',   's3://foo/baz'),
+            array('/foo/bar',     '',     's3://foo/baz',   's3://foo/baz'),
+            array('',             '',     's3://foo/baz',   's3://foo/baz'),
+            array('',             '',     's3://foo//baz',  's3://foo/baz'),
+            array('',             'foo/', '../../tmp/test', 'foo/../../tmp/test'),
+            array('../',          'foo/', '../../tmp/test', 'foo/../tmp/test'),
+            array('',             'a',    '//foo/baz',       'a/foo/baz'),
+        );
+    }
+
+    /**
+     * @dataProvider keyConverterProvider
+     */
+    public function testDoesNotAddLeadingSlash($base, $prefix, $path, $result)
+    {
+        $converter = new KeyConverter($base, $prefix);
+        $sync = $this->getMockBuilder('Aws\S3\Sync\DownloadSync')
+            ->setConstructorArgs(array(
+                array(
+                    'client' => $this->getServiceBuilder()->get('s3', true),
+                    'bucket' => 'foo',
+                    'iterator' => null,
+                    'source_converter' => $converter
+                )
+            ))
+            ->setMethods(array('createDirectory'))
+            ->getMock();
+
+        $sync->expects($this->any())
+            ->method('createDirectory')
+            ->will($this->returnCallback(function() {
+                throw new \Exception(func_get_arg(0));
+            }));
+
+        $ref = new \ReflectionMethod($sync, 'createTransferAction');
+        $ref->setAccessible(true);
+
+        try {
+            $ref->invoke($sync, $this->getSplFile($path));
+            $this->fail('Did not throw');
+        } catch (\Exception $e) {
+            $this->assertEquals($result, $e->getMessage());
+        }
     }
 
     public function testCreatesResumableDownloadWhenFileExists()
