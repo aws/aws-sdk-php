@@ -26,6 +26,8 @@ use Guzzle\Http\EntityBody;
  */
 class UploadSync extends AbstractSync
 {
+    const BEFORE_MULTIPART_BUILD = 's3.sync.before_multipart_build';
+
     protected function init()
     {
         if (null == $this->options['multipart_upload_size']) {
@@ -56,15 +58,21 @@ class UploadSync extends AbstractSync
 
         // Use a multi-part upload if the file is larger than the cutoff size and is a regular file
         if ($body->getWrapper() == 'plainfile' && $file->getSize() >= $this->options['multipart_upload_size']) {
-            return UploadBuilder::newInstance()
+            $builder = UploadBuilder::newInstance()
                 ->setBucket($this->options['bucket'])
                 ->setKey($key)
                 ->setMinPartSize($this->options['multipart_upload_size'])
                 ->setOption($aclType, $acl)
                 ->setClient($this->options['client'])
                 ->setSource($body)
-                ->setConcurrency($this->options['concurrency'])
-                ->build();
+                ->setConcurrency($this->options['concurrency']);
+
+            $this->dispatch(
+                self::BEFORE_MULTIPART_BUILD,
+                array('builder' => $builder, 'file' => $file)
+            );
+
+            return $builder->build();
         }
 
         return $this->options['client']->getCommand('PutObject', array(
