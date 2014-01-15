@@ -177,6 +177,14 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue(fclose($s));
     }
 
+    public function testAttemptsToGuessTheContentType()
+    {
+        $this->setMockResponse($this->client, array(new Response(200)));
+        file_put_contents('s3://foo/bar.txt', 'test');
+        $requests = $this->getMockedRequests();
+        $this->assertEquals('text/plain', $requests[0]->getHeader('Content-Type'));
+    }
+
     public function testCanOpenWriteOnlyStreams()
     {
         $this->setMockResponse($this->client, array(new Response(204)));

@@ -22,6 +22,7 @@ use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\Iterator\ListObjectsIterator;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\CachingEntityBody;
+use Guzzle\Http\Mimetypes;
 use Guzzle\Stream\PhpStreamRequestFactory;
 use Guzzle\Service\Command\CommandInterface;
 
@@ -208,6 +209,14 @@ class StreamWrapper
         $this->body->rewind();
         $params = $this->params;
         $params['Body'] = $this->body;
+
+        // Attempt to guess the ContentType of the upload based on the
+        // file extension of the key
+        if (!isset($params['ContentType']) &&
+            ($type = Mimetypes::getInstance()->fromFilename($params['Key']))
+        ) {
+            $params['ContentType'] = $type;
+        }
 
         try {
             self::$client->putObject($params);
