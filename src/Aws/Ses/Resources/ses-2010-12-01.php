@@ -29,6 +29,11 @@ return array (
             'https' => true,
             'hostname' => 'email.us-east-1.amazonaws.com',
         ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'email.eu-west-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'DeleteIdentity' => array(
