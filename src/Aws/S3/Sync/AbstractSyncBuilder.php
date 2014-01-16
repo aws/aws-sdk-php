@@ -392,11 +392,6 @@ abstract class AbstractSyncBuilder
             function (Event $e) use ($params) {
                 if ($e['command'] instanceof CommandInterface) {
                     $e['command']->overwriteWith($params);
-                } elseif ($e['command'] instanceof TransferInterface) {
-                    // Multipart upload transfer object
-                    foreach ($params as $k => $v) {
-                        $e['command']->setOption($k, $v);
-                    }
                 }
             }
         );
