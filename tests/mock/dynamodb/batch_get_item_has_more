@@ -2,36 +2,25 @@ HTTP/1.1 200 OK
 x-amzn-RequestId: 8966d095-71e9-11e0-a498-71d736f27375
 content-type: application/x-amz-json-1.0
 
-{"Responses":
-    {"Table1":
-        {"Items":
-        [{"AttributeName1": {"S":"AttributeValue"},
-        "AttributeName2": {"N":"11"},
-        "AttributeName3": {"SS":["AttributeValue", "AttributeValue", "AttributeValue"]}
-        },
-        {"AttributeName1": {"S": "AttributeValue"},
-        "AttributeName2": {"S": "AttributeValue"},
-        "AttributeName3": {"NS": ["11", "12", "13"]}
-        }],
-    "ConsumedCapacityUnits":1},
-    "Table2":
-        {"Items":
-        [{"AttributeName1": {"S":"AttributeValue"},
-        "AttributeName2": {"N":"21"},
-        "AttributeName3": {"SS":["AttributeValue", "AttributeValue", "AttributeValue"]}
-        },
-        {"AttributeName1": {"S": "AttributeValue"},
-        "AttributeName2": {"S": "AttributeValue"},
-        "AttributeName3": {"NS": ["21", "22","23"]}
-        }],
-    "ConsumedCapacityUnits":1}
+{
+    "Responses": {
+        "Table1": [
+            {"AttributeName1": {"S":"AttributeValue"}, "AttributeName2": {"N":"11"}, "AttributeName3": {"SS":["AttributeValue", "AttributeValue", "AttributeValue"]}},
+            {"AttributeName1": {"S": "AttributeValue"}, "AttributeName2": {"S": "AttributeValue"}, "AttributeName3": {"NS": ["11", "12", "13"]}}
+        ],
+        "Table2": [
+            {"AttributeName1": {"S":"AttributeValue"}, "AttributeName2": {"N":"21"}, "AttributeName3": {"SS":["AttributeValue", "AttributeValue", "AttributeValue"]}},
+            {"AttributeName1": {"S": "AttributeValue"}, "AttributeName2": {"S": "AttributeValue"}, "AttributeName3": {"NS": ["21", "22","23"]}}
+        ]
     },
-    "UnprocessedKeys":
-        {"Table3":
-        {"Keys":
-            [{"AttributeName1": {"S":"KeyValue1"}, "AttributeName2":{"N":"2"}},
-            {"AttributeName1": {"S":"KeyValue3"}, "AttributeName2":{"N":"4"}},
-            {"AttributeName1": {"S":"KeyValue5"}, "AttributeName2":{"N":"6"}}],
-        "AttributesToGet":["AttributeName1", "AttributeName2", "AttributeName3"]}
+    "UnprocessedKeys": {
+        "Table3": {
+            "Keys": [
+                {"AttributeName1": {"S":"KeyValue1"}, "AttributeName2":{"N":"2"}},
+                {"AttributeName1": {"S":"KeyValue3"}, "AttributeName2":{"N":"4"}},
+                {"AttributeName1": {"S":"KeyValue5"}, "AttributeName2":{"N":"6"}}
+            ],
+            "AttributesToGet": ["AttributeName1", "AttributeName2", "AttributeName3"]
         }
+    }
 }

@@ -1430,6 +1430,32 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'ListJobs' => array(
+            'input_token' => 'marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'limit',
+            'result_key' => 'JobList',
+        ),
+        'ListMultipartUploads' => array(
+            'input_token' => 'marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'limit',
+            'result_key' => 'UploadsList',
+        ),
+        'ListParts' => array(
+            'input_token' => 'marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'limit',
+            'result_key' => 'Parts',
+        ),
+        'ListVaults' => array(
+            'input_token' => 'marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'limit',
+            'result_key' => 'VaultList',
+        ),
+    ),
     'waiters' => array(
         '__default__' => array(
             'interval' => 3,

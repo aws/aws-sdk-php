@@ -17,6 +17,6 @@
 namespace Aws\Support\Exception;
 
 /**
- * Returned when the CaseId requested could not be located.
+ * The requested CaseId could not be located.
  */
 class CaseIdNotFoundException extends SupportException {}

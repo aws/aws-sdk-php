@@ -17,6 +17,6 @@
 namespace Aws\Support\Exception;
 
 /**
- * Returns HTTP error 500.
+ * An internal server error occurred.
  */
 class InternalServerErrorException extends SupportException {}

@@ -2340,28 +2340,26 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeApplicationVersions' => array(
-                'result_key' => 'ApplicationVersions',
-            ),
-            'DescribeApplications' => array(
-                'result_key' => 'Applications',
-            ),
-            'DescribeConfigurationOptions' => array(
-                'result_key' => 'Options',
-            ),
-            'DescribeEnvironments' => array(
-                'result_key' => 'Environments',
-            ),
-            'DescribeEvents' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'Events',
-            ),
-            'ListAvailableSolutionStacks' => array(
-                'result_key' => 'SolutionStacks',
-            ),
+        'DescribeApplicationVersions' => array(
+            'result_key' => 'ApplicationVersions',
+        ),
+        'DescribeApplications' => array(
+            'result_key' => 'Applications',
+        ),
+        'DescribeConfigurationOptions' => array(
+            'result_key' => 'Options',
+        ),
+        'DescribeEnvironments' => array(
+            'result_key' => 'Environments',
+        ),
+        'DescribeEvents' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'Events',
+        ),
+        'ListAvailableSolutionStacks' => array(
+            'result_key' => 'SolutionStacks',
         ),
     ),
     'waiters' => array(

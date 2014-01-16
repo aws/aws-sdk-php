@@ -1149,13 +1149,8 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'ListDeadLetterSourceQueues' => array(
-                'result_key' => 'queueUrls',
-            ),
-            'ListQueues' => array(
-                'result_key' => 'QueueUrls',
-            ),
+        'ListQueues' => array(
+            'result_key' => 'QueueUrls',
         ),
     ),
 );

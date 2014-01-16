@@ -91,6 +91,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeInstancesIterator(array $args = array()) The input array uses the parameters of the DescribeInstances operation
  * @method ResourceIteratorInterface getDescribeLayersIterator(array $args = array()) The input array uses the parameters of the DescribeLayers operation
  * @method ResourceIteratorInterface getDescribeLoadBasedAutoScalingIterator(array $args = array()) The input array uses the parameters of the DescribeLoadBasedAutoScaling operation
+ * @method ResourceIteratorInterface getDescribePermissionsIterator(array $args = array()) The input array uses the parameters of the DescribePermissions operation
  * @method ResourceIteratorInterface getDescribeRaidArraysIterator(array $args = array()) The input array uses the parameters of the DescribeRaidArrays operation
  * @method ResourceIteratorInterface getDescribeServiceErrorsIterator(array $args = array()) The input array uses the parameters of the DescribeServiceErrors operation
  * @method ResourceIteratorInterface getDescribeStacksIterator(array $args = array()) The input array uses the parameters of the DescribeStacks operation
@@ -111,7 +112,7 @@ class OpsWorksClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

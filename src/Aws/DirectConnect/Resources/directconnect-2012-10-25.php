@@ -1371,4 +1371,24 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'DescribeConnections' => array(
+            'result_key' => 'connections',
+        ),
+        'DescribeConnectionsOnInterconnect' => array(
+            'result_key' => 'connections',
+        ),
+        'DescribeInterconnects' => array(
+            'result_key' => 'interconnects',
+        ),
+        'DescribeLocations' => array(
+            'result_key' => 'locations',
+        ),
+        'DescribeVirtualGateways' => array(
+            'result_key' => 'virtualGateways',
+        ),
+        'DescribeVirtualInterfaces' => array(
+            'result_key' => 'virtualInterfaces',
+        ),
+    ),
 );

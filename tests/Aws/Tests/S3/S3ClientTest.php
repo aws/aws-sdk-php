@@ -419,7 +419,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testEnsuresSigV4HasRegion()
     {
@@ -431,7 +431,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      */
     public function testEnsuresSignatureImplementsS3Signature()
     {
@@ -475,7 +475,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage A region must be specified when using signature version 4
      */
     public function testEnsuresRegionIsSetWhenUsingV4()

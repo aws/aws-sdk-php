@@ -1147,35 +1147,33 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'ListHealthChecks' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'more_key' => 'IsTruncated',
-                'limit_key' => 'MaxItems',
-                'result_key' => 'HealthChecks',
+        'ListHealthChecks' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'HealthChecks',
+        ),
+        'ListHostedZones' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'HostedZones',
+        ),
+        'ListResourceRecordSets' => array(
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'ResourceRecordSets',
+            'input_token' => array(
+                'StartRecordName',
+                'StartRecordType',
+                'StartRecordIdentifier',
             ),
-            'ListHostedZones' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'more_key' => 'IsTruncated',
-                'limit_key' => 'MaxItems',
-                'result_key' => 'HostedZones',
-            ),
-            'ListResourceRecordSets' => array(
-                'more_key' => 'IsTruncated',
-                'limit_key' => 'MaxItems',
-                'result_key' => 'ResourceRecordSets',
-                'token_param' => array(
-                    'StartRecordName',
-                    'StartRecordType',
-                    'StartRecordIdentifier',
-                ),
-                'token_key' => array(
-                    'NextRecordName',
-                    'NextRecordType',
-                    'NextRecordIdentifier',
-                ),
+            'output_token' => array(
+                'NextRecordName',
+                'NextRecordType',
+                'NextRecordIdentifier',
             ),
         ),
     ),

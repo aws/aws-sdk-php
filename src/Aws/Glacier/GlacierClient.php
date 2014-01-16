@@ -47,8 +47,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model setVaultNotifications(array $args = array()) {@command Glacier SetVaultNotifications}
  * @method Model uploadArchive(array $args = array()) {@command Glacier UploadArchive}
  * @method Model uploadMultipartPart(array $args = array()) {@command Glacier UploadMultipartPart}
- * @method waitUntilVaultExists(array $input) Wait until a vault can be accessed. The input array uses the parameters of the DescribeVault operation and waiter specific settings
- * @method waitUntilVaultNotExists(array $input) Wait until a vault is deleted. The input array uses the parameters of the DescribeVault operation and waiter specific settings
+ * @method waitUntilVaultExists(array $input) The input array uses the parameters of the DescribeVault operation and waiter specific settings
+ * @method waitUntilVaultNotExists(array $input) The input array uses the parameters of the DescribeVault operation and waiter specific settings
  * @method ResourceIteratorInterface getListJobsIterator(array $args = array()) The input array uses the parameters of the ListJobs operation
  * @method ResourceIteratorInterface getListMultipartUploadsIterator(array $args = array()) The input array uses the parameters of the ListMultipartUploads operation
  * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
@@ -67,7 +67,7 @@ class GlacierClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
@@ -84,25 +84,6 @@ class GlacierClient extends AbstractClient
                 )
             ))
             ->setExceptionParser(new JsonRestExceptionParser())
-            ->setIteratorsConfig(array(
-                'limit_param' => 'limit',
-                'token_param' => 'marker',
-                'token_key'   => 'Marker',
-                'operations'  => array(
-                    'ListJobs' => array(
-                        'result_key' => 'JobList'
-                    ),
-                    'ListMultipartUploads' => array(
-                        'result_key' => 'UploadsList'
-                    ),
-                    'ListParts' => array(
-                        'result_key' => 'Parts'
-                    ),
-                    'ListVaults' => array(
-                        'result_key' => 'VaultList'
-                    )
-                )
-            ))
             ->build();
 
         // Add the Glacier version header required for all operations

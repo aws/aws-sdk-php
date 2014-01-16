@@ -32,7 +32,8 @@ class ListObjectsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
             'names_only'      => true,
             'return_prefixes' => true,
             'sort_results'    => true,
-            'token_key'       => 'NextMarker'
+            'input_token'     => 'Marker',
+            'output_token'    => 'NextMarker',
         ));
         $model = new Model(array(
             'Contents' => array(
@@ -52,7 +53,7 @@ class ListObjectsIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         $items = $method->invoke($iterator, $model);
 
         // We should get the names of all objects and prefixes in a sorted array
-        $this->assertSame(array('Bar', 'Baz', 'Buzz', 'Fizz', 'Foo'), $items);
+        $this->assertSame(array('Bar', 'Baz', 'Buzz', 'Fizz', 'Foo'), $items, print_r($items, true));
 
         // The last key should be set as the NextMarker in the result
         $this->assertEquals('Baz', $model->get('NextMarker'));

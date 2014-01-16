@@ -555,13 +555,12 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'ListJobs' => array(
-                'token_param' => 'Marker',
-                'more_key' => 'IsTruncated',
-                'limit_key' => 'MaxJobs',
-                'result_key' => 'Jobs',
-            ),
+        'ListJobs' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Jobs/#/JobId',
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxJobs',
+            'result_key' => 'Jobs',
         ),
     ),
 );

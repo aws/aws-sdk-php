@@ -55,8 +55,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateConfigurationTemplate(array $args = array()) {@command ElasticBeanstalk UpdateConfigurationTemplate}
  * @method Model updateEnvironment(array $args = array()) {@command ElasticBeanstalk UpdateEnvironment}
  * @method Model validateConfigurationSettings(array $args = array()) {@command ElasticBeanstalk ValidateConfigurationSettings}
- * @method waitUntilEnvironmentReady(array $input) Wait using the EnvironmentReady waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
- * @method waitUntilEnvironmentTerminated(array $input) Wait using the EnvironmentTerminated waiter. The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
+ * @method waitUntilEnvironmentReady(array $input) The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
+ * @method waitUntilEnvironmentTerminated(array $input) The input array uses the parameters of the DescribeEnvironments operation and waiter specific settings
  * @method ResourceIteratorInterface getDescribeApplicationVersionsIterator(array $args = array()) The input array uses the parameters of the DescribeApplicationVersions operation
  * @method ResourceIteratorInterface getDescribeApplicationsIterator(array $args = array()) The input array uses the parameters of the DescribeApplications operation
  * @method ResourceIteratorInterface getDescribeConfigurationOptionsIterator(array $args = array()) The input array uses the parameters of the DescribeConfigurationOptions operation
@@ -77,7 +77,7 @@ class ElasticBeanstalkClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

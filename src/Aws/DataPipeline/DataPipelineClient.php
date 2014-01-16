@@ -45,6 +45,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model validatePipelineDefinition(array $args = array()) {@command DataPipeline ValidatePipelineDefinition}
  * @method ResourceIteratorInterface getListPipelinesIterator(array $args = array()) The input array uses the parameters of the ListPipelines operation
  * @method ResourceIteratorInterface getDescribeObjectsIterator(array $args = array()) The input array uses the parameters of the DescribeObjects operation
+ * @method ResourceIteratorInterface getDescribePipelinesIterator(array $args = array()) The input array uses the parameters of the DescribePipelines operation
  * @method ResourceIteratorInterface getQueryObjectsIterator(array $args = array()) The input array uses the parameters of the QueryObjects operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-datapipeline.html User guide
@@ -60,7 +61,7 @@ class DataPipelineClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
@@ -72,23 +73,6 @@ class DataPipelineClient extends AbstractClient
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/datapipeline-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
-            ->setIteratorsConfig(array(
-                'limit_key'   => 'limit',
-                'more_key'    => 'hasMoreResults',
-                'token_param' => 'marker',
-                'token_key'   => 'marker',
-                'operations'  => array(
-                    'ListPipelines' => array(
-                        'result_key'  => 'pipelineIdList',
-                    ),
-                    'DescribeObjects' => array(
-                        'result_key'  => 'pipelineObjects',
-                    ),
-                    'QueryObjects' => array(
-                        'result_key'  => 'ids',
-                    ),
-                )
-            ))
             ->build();
 
         return $client;

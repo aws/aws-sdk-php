@@ -75,40 +75,6 @@ return array (
         ),
     ),
     'operations' => array(
-        'ActivateLicense' => array(
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'EmptyOutput',
-            'responseType' => 'model',
-            'parameters' => array(
-                'Action' => array(
-                    'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'ActivateLicense',
-                ),
-                'Version' => array(
-                    'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2013-10-15',
-                ),
-                'DryRun' => array(
-                    'type' => 'boolean',
-                    'format' => 'boolean-string',
-                    'location' => 'aws.query',
-                ),
-                'LicenseId' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'Capacity' => array(
-                    'required' => true,
-                    'type' => 'numeric',
-                    'location' => 'aws.query',
-                ),
-            ),
-        ),
         'AllocateAddress' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1969,40 +1935,6 @@ return array (
                 ),
             ),
         ),
-        'DeactivateLicense' => array(
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'EmptyOutput',
-            'responseType' => 'model',
-            'parameters' => array(
-                'Action' => array(
-                    'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DeactivateLicense',
-                ),
-                'Version' => array(
-                    'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2013-10-15',
-                ),
-                'DryRun' => array(
-                    'type' => 'boolean',
-                    'format' => 'boolean-string',
-                    'location' => 'aws.query',
-                ),
-                'LicenseId' => array(
-                    'required' => true,
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'Capacity' => array(
-                    'required' => true,
-                    'type' => 'numeric',
-                    'location' => 'aws.query',
-                ),
-            ),
-        ),
         'DeleteCustomerGateway' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -3403,61 +3335,6 @@ return array (
                     'sentAs' => 'KeyName',
                     'items' => array(
                         'name' => 'KeyName',
-                        'type' => 'string',
-                    ),
-                ),
-                'Filters' => array(
-                    'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'Filter',
-                    'items' => array(
-                        'name' => 'Filter',
-                        'type' => 'object',
-                        'properties' => array(
-                            'Name' => array(
-                                'type' => 'string',
-                            ),
-                            'Values' => array(
-                                'type' => 'array',
-                                'sentAs' => 'Value',
-                                'items' => array(
-                                    'name' => 'Value',
-                                    'type' => 'string',
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'DescribeLicenses' => array(
-            'httpMethod' => 'POST',
-            'uri' => '/',
-            'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'DescribeLicensesResult',
-            'responseType' => 'model',
-            'parameters' => array(
-                'Action' => array(
-                    'static' => true,
-                    'location' => 'aws.query',
-                    'default' => 'DescribeLicenses',
-                ),
-                'Version' => array(
-                    'static' => true,
-                    'location' => 'aws.query',
-                    'default' => '2013-10-15',
-                ),
-                'DryRun' => array(
-                    'type' => 'boolean',
-                    'format' => 'boolean-string',
-                    'location' => 'aws.query',
-                ),
-                'LicenseIds' => array(
-                    'type' => 'array',
-                    'location' => 'aws.query',
-                    'sentAs' => 'LicenseId',
-                    'items' => array(
-                        'name' => 'LicenseId',
                         'type' => 'string',
                     ),
                 ),
@@ -7267,15 +7144,6 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'License' => array(
-                    'type' => 'object',
-                    'location' => 'aws.query',
-                    'properties' => array(
-                        'Pool' => array(
-                            'type' => 'string',
-                        ),
-                    ),
-                ),
                 'PrivateIpAddress' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -7325,9 +7193,8 @@ return array (
                             ),
                             'PrivateIpAddresses' => array(
                                 'type' => 'array',
-                                'sentAs' => 'PrivateIpAddressesSet',
                                 'items' => array(
-                                    'name' => 'PrivateIpAddressesSet',
+                                    'name' => 'PrivateIpAddressSpecification',
                                     'type' => 'object',
                                     'properties' => array(
                                         'PrivateIpAddress' => array(
@@ -7551,10 +7418,6 @@ return array (
         ),
     ),
     'models' => array(
-        'EmptyOutput' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-        ),
         'AllocateAddressResult' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -7575,6 +7438,10 @@ return array (
                     'sentAs' => 'allocationId',
                 ),
             ),
+        ),
+        'EmptyOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
         ),
         'AssociateAddressResult' => array(
             'type' => 'object',
@@ -8751,6 +8618,10 @@ return array (
                                     'State' => array(
                                         'type' => 'string',
                                         'sentAs' => 'state',
+                                    ),
+                                    'Origin' => array(
+                                        'type' => 'string',
+                                        'sentAs' => 'origin',
                                     ),
                                 ),
                             ),
@@ -10850,16 +10721,6 @@ return array (
                                             'type' => 'string',
                                             'sentAs' => 'spotInstanceRequestId',
                                         ),
-                                        'License' => array(
-                                            'type' => 'object',
-                                            'sentAs' => 'license',
-                                            'properties' => array(
-                                                'Pool' => array(
-                                                    'type' => 'string',
-                                                    'sentAs' => 'pool',
-                                                ),
-                                            ),
-                                        ),
                                         'ClientToken' => array(
                                             'type' => 'string',
                                             'sentAs' => 'clientToken',
@@ -11176,82 +11037,6 @@ return array (
                             'KeyFingerprint' => array(
                                 'type' => 'string',
                                 'sentAs' => 'keyFingerprint',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'DescribeLicensesResult' => array(
-            'type' => 'object',
-            'additionalProperties' => true,
-            'properties' => array(
-                'Licenses' => array(
-                    'type' => 'array',
-                    'location' => 'xml',
-                    'sentAs' => 'licenseSet',
-                    'items' => array(
-                        'name' => 'item',
-                        'type' => 'object',
-                        'sentAs' => 'item',
-                        'properties' => array(
-                            'LicenseId' => array(
-                                'type' => 'string',
-                                'sentAs' => 'licenseId',
-                            ),
-                            'Type' => array(
-                                'type' => 'string',
-                                'sentAs' => 'type',
-                            ),
-                            'Pool' => array(
-                                'type' => 'string',
-                                'sentAs' => 'pool',
-                            ),
-                            'Capacities' => array(
-                                'type' => 'array',
-                                'sentAs' => 'capacitySet',
-                                'items' => array(
-                                    'name' => 'item',
-                                    'type' => 'object',
-                                    'sentAs' => 'item',
-                                    'properties' => array(
-                                        'Capacity' => array(
-                                            'type' => 'numeric',
-                                            'sentAs' => 'capacity',
-                                        ),
-                                        'InstanceCapacity' => array(
-                                            'type' => 'numeric',
-                                            'sentAs' => 'instanceCapacity',
-                                        ),
-                                        'State' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'state',
-                                        ),
-                                        'EarliestAllowedDeactivationTime' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'earliestAllowedDeactivationTime',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            'Tags' => array(
-                                'type' => 'array',
-                                'sentAs' => 'tagSet',
-                                'items' => array(
-                                    'name' => 'item',
-                                    'type' => 'object',
-                                    'sentAs' => 'item',
-                                    'properties' => array(
-                                        'Key' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'key',
-                                        ),
-                                        'Value' => array(
-                                            'type' => 'string',
-                                            'sentAs' => 'value',
-                                        ),
-                                    ),
-                                ),
                             ),
                         ),
                     ),
@@ -12225,6 +12010,10 @@ return array (
                                         'State' => array(
                                             'type' => 'string',
                                             'sentAs' => 'state',
+                                        ),
+                                        'Origin' => array(
+                                            'type' => 'string',
+                                            'sentAs' => 'origin',
                                         ),
                                     ),
                                 ),
@@ -14774,16 +14563,6 @@ return array (
                                 'type' => 'string',
                                 'sentAs' => 'spotInstanceRequestId',
                             ),
-                            'License' => array(
-                                'type' => 'object',
-                                'sentAs' => 'license',
-                                'properties' => array(
-                                    'Pool' => array(
-                                        'type' => 'string',
-                                        'sentAs' => 'pool',
-                                    ),
-                                ),
-                            ),
                             'ClientToken' => array(
                                 'type' => 'string',
                                 'sentAs' => 'clientToken',
@@ -15196,129 +14975,124 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeAccountAttributes' => array(
-                'result_key' => 'AccountAttributes',
-            ),
-            'DescribeAddresses' => array(
-                'result_key' => 'Addresses',
-            ),
-            'DescribeAvailabilityZones' => array(
-                'result_key' => 'AvailabilityZones',
-            ),
-            'DescribeBundleTasks' => array(
-                'result_key' => 'BundleTasks',
-            ),
-            'DescribeConversionTasks' => array(
-                'result_key' => 'ConversionTasks',
-            ),
-            'DescribeCustomerGateways' => array(
-                'result_key' => 'CustomerGateways',
-            ),
-            'DescribeDhcpOptions' => array(
-                'result_key' => 'DhcpOptions',
-            ),
-            'DescribeExportTasks' => array(
-                'result_key' => 'ExportTasks',
-            ),
-            'DescribeImages' => array(
-                'result_key' => 'Images',
-            ),
-            'DescribeInstanceStatus' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxResults',
-                'result_key' => 'InstanceStatuses',
-            ),
-            'DescribeInstances' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxResults',
-                'result_key' => 'Reservations',
-            ),
-            'DescribeInternetGateways' => array(
-                'result_key' => 'InternetGateways',
-            ),
-            'DescribeKeyPairs' => array(
-                'result_key' => 'KeyPairs',
-            ),
-            'DescribeLicenses' => array(
-                'result_key' => 'Licenses',
-            ),
-            'DescribeNetworkAcls' => array(
-                'result_key' => 'NetworkAcls',
-            ),
-            'DescribeNetworkInterfaces' => array(
-                'result_key' => 'NetworkInterfaces',
-            ),
-            'DescribePlacementGroups' => array(
-                'result_key' => 'PlacementGroups',
-            ),
-            'DescribeRegions' => array(
-                'result_key' => 'Regions',
-            ),
-            'DescribeReservedInstances' => array(
-                'result_key' => 'ReservedInstances',
-            ),
-            'DescribeReservedInstancesListings' => array(
-                'result_key' => 'ReservedInstancesListings',
-            ),
-            'DescribeReservedInstancesModifications' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'ReservedInstancesModifications',
-            ),
-            'DescribeReservedInstancesOfferings' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxResults',
-                'result_key' => 'ReservedInstancesOfferings',
-            ),
-            'DescribeRouteTables' => array(
-                'result_key' => 'RouteTables',
-            ),
-            'DescribeSecurityGroups' => array(
-                'result_key' => 'SecurityGroups',
-            ),
-            'DescribeSnapshots' => array(
-                'result_key' => 'Snapshots',
-            ),
-            'DescribeSpotInstanceRequests' => array(
-                'result_key' => 'SpotInstanceRequests',
-            ),
-            'DescribeSpotPriceHistory' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxResults',
-                'result_key' => 'SpotPriceHistory',
-            ),
-            'DescribeSubnets' => array(
-                'result_key' => 'Subnets',
-            ),
-            'DescribeTags' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxResults',
-                'result_key' => 'Tags',
-            ),
-            'DescribeVolumeStatus' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxResults',
-                'result_key' => 'VolumeStatuses',
-            ),
-            'DescribeVolumes' => array(
-                'result_key' => 'Volumes',
-            ),
-            'DescribeVpcs' => array(
-                'result_key' => 'Vpcs',
-            ),
-            'DescribeVpnConnections' => array(
-                'result_key' => 'VpnConnections',
-            ),
-            'DescribeVpnGateways' => array(
-                'result_key' => 'VpnGateways',
-            ),
+        'DescribeAccountAttributes' => array(
+            'result_key' => 'AccountAttributes',
+        ),
+        'DescribeAddresses' => array(
+            'result_key' => 'Addresses',
+        ),
+        'DescribeAvailabilityZones' => array(
+            'result_key' => 'AvailabilityZones',
+        ),
+        'DescribeBundleTasks' => array(
+            'result_key' => 'BundleTasks',
+        ),
+        'DescribeConversionTasks' => array(
+            'result_key' => 'ConversionTasks',
+        ),
+        'DescribeCustomerGateways' => array(
+            'result_key' => 'CustomerGateways',
+        ),
+        'DescribeDhcpOptions' => array(
+            'result_key' => 'DhcpOptions',
+        ),
+        'DescribeExportTasks' => array(
+            'result_key' => 'ExportTasks',
+        ),
+        'DescribeImages' => array(
+            'result_key' => 'Images',
+        ),
+        'DescribeInstanceStatus' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'InstanceStatuses',
+        ),
+        'DescribeInstances' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'Reservations',
+        ),
+        'DescribeInternetGateways' => array(
+            'result_key' => 'InternetGateways',
+        ),
+        'DescribeKeyPairs' => array(
+            'result_key' => 'KeyPairs',
+        ),
+        'DescribeNetworkAcls' => array(
+            'result_key' => 'NetworkAcls',
+        ),
+        'DescribeNetworkInterfaces' => array(
+            'result_key' => 'NetworkInterfaces',
+        ),
+        'DescribePlacementGroups' => array(
+            'result_key' => 'PlacementGroups',
+        ),
+        'DescribeRegions' => array(
+            'result_key' => 'Regions',
+        ),
+        'DescribeReservedInstances' => array(
+            'result_key' => 'ReservedInstances',
+        ),
+        'DescribeReservedInstancesListings' => array(
+            'result_key' => 'ReservedInstancesListings',
+        ),
+        'DescribeReservedInstancesModifications' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'ReservedInstancesModifications',
+        ),
+        'DescribeReservedInstancesOfferings' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'ReservedInstancesOfferings',
+        ),
+        'DescribeRouteTables' => array(
+            'result_key' => 'RouteTables',
+        ),
+        'DescribeSecurityGroups' => array(
+            'result_key' => 'SecurityGroups',
+        ),
+        'DescribeSnapshots' => array(
+            'result_key' => 'Snapshots',
+        ),
+        'DescribeSpotInstanceRequests' => array(
+            'result_key' => 'SpotInstanceRequests',
+        ),
+        'DescribeSpotPriceHistory' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'SpotPriceHistory',
+        ),
+        'DescribeSubnets' => array(
+            'result_key' => 'Subnets',
+        ),
+        'DescribeTags' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'Tags',
+        ),
+        'DescribeVolumeStatus' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxResults',
+            'result_key' => 'VolumeStatuses',
+        ),
+        'DescribeVolumes' => array(
+            'result_key' => 'Volumes',
+        ),
+        'DescribeVpcs' => array(
+            'result_key' => 'Vpcs',
+        ),
+        'DescribeVpnConnections' => array(
+            'result_key' => 'VpnConnections',
+        ),
+        'DescribeVpnGateways' => array(
+            'result_key' => 'VpnGateways',
         ),
     ),
     'waiters' => array(

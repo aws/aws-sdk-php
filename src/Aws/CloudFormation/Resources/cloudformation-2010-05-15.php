@@ -1125,27 +1125,28 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeStackEvents' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'StackEvents',
-            ),
-            'DescribeStacks' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'Stacks',
-            ),
-            'ListStackResources' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'StackResourceSummaries',
-            ),
-            'ListStacks' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'StackSummaries',
-            ),
+        'DescribeStackEvents' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'StackEvents',
+        ),
+        'DescribeStackResources' => array(
+            'result_key' => 'StackResources',
+        ),
+        'DescribeStacks' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'Stacks',
+        ),
+        'ListStackResources' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'StackResourceSummaries',
+        ),
+        'ListStacks' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'StackSummaries',
         ),
     ),
 );

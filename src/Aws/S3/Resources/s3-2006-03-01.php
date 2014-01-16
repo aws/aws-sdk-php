@@ -4101,6 +4101,61 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'ListBuckets' => array(
+            'result_key' => 'Buckets',
+        ),
+        'ListMultipartUploads' => array(
+            'limit_key' => 'MaxUploads',
+            'more_results' => 'IsTruncated',
+            'output_token' => array(
+                'NextKeyMarker',
+                'NextUploadIdMarker',
+            ),
+            'input_token' => array(
+                'KeyMarker',
+                'UploadIdMarker',
+            ),
+            'result_key' => array(
+                'Uploads',
+                'CommonPrefixes',
+            ),
+        ),
+        'ListObjectVersions' => array(
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxKeys',
+            'output_token' => array(
+                'NextKeyMarker',
+                'NextVersionIdMarker',
+            ),
+            'input_token' => array(
+                'KeyMarker',
+                'VersionIdMarker',
+            ),
+            'result_key' => array(
+                'Versions',
+                'DeleteMarkers',
+                'CommonPrefixes',
+            ),
+        ),
+        'ListObjects' => array(
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxKeys',
+            'output_token' => 'NextMarker',
+            'input_token' => 'Marker',
+            'result_key' => array(
+                'Contents',
+                'CommonPrefixes',
+            ),
+        ),
+        'ListParts' => array(
+            'more_results' => 'IsTruncated',
+            'limit_key' => 'MaxParts',
+            'output_token' => 'NextPartNumberMarker',
+            'input_token' => 'PartNumberMarker',
+            'result_key' => 'Parts',
+        ),
+    ),
     'waiters' => array(
         '__default__' => array(
             'interval' => 5,

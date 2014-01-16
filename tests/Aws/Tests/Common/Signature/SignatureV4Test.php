@@ -135,7 +135,8 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Signature\SignatureV4::signRequest
-     * @covers Aws\Common\Signature\SignatureV4::createCanonicalRequest
+     * @covers Aws\Common\Signature\SignatureV4::createSigningContext
+     * @covers Aws\Common\Signature\SignatureV4::getSigningKey
      */
     public function testSignsRequestsWithContentHashCorrectly()
     {
@@ -251,7 +252,7 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Common\Signature\AbstractSignature::getCanonicalizedQueryString
+     * @covers Aws\Common\Signature\SignatureV4::getCanonicalizedQueryString
      * @dataProvider queryStringProvider
      */
     public function testCreatesCanonicalizedQueryString($headers, $string)

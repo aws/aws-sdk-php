@@ -50,8 +50,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model scan(array $args = array()) {@command DynamoDb Scan}
  * @method Model updateItem(array $args = array()) {@command DynamoDb UpdateItem}
  * @method Model updateTable(array $args = array()) {@command DynamoDb UpdateTable}
- * @method waitUntilTableExists(array $input) Wait until a table exists and can be accessed The input array uses the parameters of the DescribeTable operation and waiter specific settings
- * @method waitUntilTableNotExists(array $input) Wait until a table is deleted The input array uses the parameters of the DescribeTable operation and waiter specific settings
+ * @method waitUntilTableExists(array $input) The input array uses the parameters of the DescribeTable operation and waiter specific settings
+ * @method waitUntilTableNotExists(array $input) The input array uses the parameters of the DescribeTable operation and waiter specific settings
  * @method ResourceIteratorInterface getBatchGetItemIterator(array $args = array()) The input array uses the parameters of the BatchGetItem operation
  * @method ResourceIteratorInterface getListTablesIterator(array $args = array()) The input array uses the parameters of the ListTables operation
  * @method ResourceIteratorInterface getQueryIterator(array $args = array()) The input array uses the parameters of the Query operation
@@ -70,34 +70,14 @@ class DynamoDbClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
         // Configure the custom exponential backoff plugin for DynamoDB throttling
         $exceptionParser = new JsonQueryExceptionParser();
         if (!isset($config[Options::BACKOFF])) {
-            $config[Options::BACKOFF] = new BackoffPlugin(
-                // Retry requests (even if successful) if the CRC32 header is does not match the CRC32 of the response
-                new Crc32ErrorChecker(
-                    // Retry failed requests up to 11 times instead of the normal 3
-                    new TruncatedBackoffStrategy(11,
-                        // Retry failed requests with 400-level responses due to throttling
-                        new ThrottlingErrorChecker($exceptionParser,
-                            // Retry failed requests with 500-level responses
-                            new HttpBackoffStrategy(null,
-                                // Retry failed requests due to transient network or cURL problems
-                                new CurlBackoffStrategy(null,
-                                    new ExpiredCredentialsChecker($exceptionParser,
-                                         // Use the custom retry delay method instead of default exponential backoff
-                                         new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            );
+            $config[Options::BACKOFF] = self::createBackoffPlugin($exceptionParser);
         }
 
         // Construct the DynamoDB client with the client builder
@@ -112,26 +92,39 @@ class DynamoDbClient extends AbstractClient
                 self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)
             ))
             ->setExceptionParser($exceptionParser)
-            ->setIteratorsConfig(array(
-                'result_key'  => 'Items',
-                'token_param' => 'ExclusiveStartKey',
-                'token_key'   => 'LastEvaluatedKey',
-                'operations'  => array(
-                    'BatchGetItem' => array(
-                        'token_param' => 'RequestItems',
-                        'token_key'   => 'UnprocessedKeys',
-                        'result_key'  => 'Responses/*',
-                    ),
-                    'ListTables' => array(
-                        'result_key'  => 'TableNames',
-                        'token_param' => 'ExclusiveStartTableName',
-                        'token_key'   => 'LastEvaluatedTableName',
-                    ),
-                    'Query',
-                    'Scan',
-                )
-            ))
             ->build();
+    }
+
+    /**
+     * Create an Amazon DynamoDB specific backoff plugin
+     *
+     * @param JsonQueryExceptionParser $exceptionParser
+     *
+     * @return BackoffPlugin
+     */
+    private static function createBackoffPlugin(JsonQueryExceptionParser $exceptionParser)
+    {
+        return new BackoffPlugin(
+            // Retry requests (even if successful) if the CRC32 header is does not match the CRC32 of the response
+            new Crc32ErrorChecker(
+                // Retry failed requests up to 11 times instead of the normal 3
+                new TruncatedBackoffStrategy(11,
+                    // Retry failed requests with 400-level responses due to throttling
+                    new ThrottlingErrorChecker($exceptionParser,
+                        // Retry failed requests with 500-level responses
+                        new HttpBackoffStrategy(null,
+                            // Retry failed requests due to transient network or cURL problems
+                            new CurlBackoffStrategy(null,
+                                new ExpiredCredentialsChecker($exceptionParser,
+                                     // Use the custom retry delay method instead of default exponential backoff
+                                     new CallbackBackoffStrategy(__CLASS__ . '::calculateRetryDelay', false)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
     }
 
     /**

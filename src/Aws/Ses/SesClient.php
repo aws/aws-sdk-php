@@ -44,7 +44,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model verifyDomainIdentity(array $args = array()) {@command Ses VerifyDomainIdentity}
  * @method Model verifyEmailAddress(array $args = array()) {@command Ses VerifyEmailAddress}
  * @method Model verifyEmailIdentity(array $args = array()) {@command Ses VerifyEmailIdentity}
- * @method waitUntilIdentityExists(array $input) Wait using the IdentityExists waiter. The input array uses the parameters of the GetIdentityVerificationAttributes operation and waiter specific settings
+ * @method waitUntilIdentityExists(array $input) The input array uses the parameters of the GetIdentityVerificationAttributes operation and waiter specific settings
  * @method ResourceIteratorInterface getListIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListIdentities operation
  * @method ResourceIteratorInterface getListVerifiedEmailAddressesIterator(array $args = array()) The input array uses the parameters of the ListVerifiedEmailAddresses operation
  *
@@ -61,7 +61,7 @@ class SesClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

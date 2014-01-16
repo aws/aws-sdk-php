@@ -30,17 +30,14 @@ use Guzzle\Service\Resource\Model;
  */
 class ListObjectsIterator extends AwsResourceIterator
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function handleResults(Model $result)
     {
         // Get the list of objects and record the last key
         $objects = $result->get('Contents') ?: array();
         $numObjects = count($objects);
         $lastKey = $numObjects ? $objects[$numObjects - 1]['Key'] : false;
-        if ($lastKey && !$result->hasKey($this->get('token_key'))) {
-            $result->set($this->get('token_key'), $lastKey);
+        if ($lastKey && !$result->hasKey($this->get('output_token'))) {
+            $result->set($this->get('output_token'), $lastKey);
         }
 
         // Closure for getting the name of an object or prefix

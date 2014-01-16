@@ -17,6 +17,6 @@
 namespace Aws\StorageGateway\Exception;
 
 /**
- * An exception occured because an invalid gateway request was issued to the service. See the error and message fields for more information.
+ * An exception occurred because an invalid gateway request was issued to the service. See the error and message fields for more information.
  */
 class InvalidGatewayRequestException extends StorageGatewayException {}
