@@ -18,8 +18,8 @@ namespace Aws\S3;
 
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Signature\SignatureV4;
+use Aws\S3\Exception\InvalidArgumentException;
 use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 
@@ -93,7 +93,16 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
             $expires = strtotime($expires);
         }
 
-        return $expires - time();
+        $duration = $expires - time();
+
+        // Ensure that the duration of the signature is not longer than a week
+        if ($duration > 604800) {
+            throw new InvalidArgumentException('The expiration date of an '
+                . 'Amazon S3 presigned URL using signature version 4 must be '
+                . 'less than one week.');
+        }
+
+        return $duration;
     }
 
     private function moveHeadersToQuery(RequestInterface $request)

@@ -19,7 +19,7 @@ namespace Aws\S3
 {
     function time()
     {
-        return $_SERVER['override_s3_time'] ? strtotime('December 5, 2013') : \time();
+        return $_SERVER['override_s3_time'] ? strtotime('December 5, 2013 00:00:00 UTC') : \time();
     }
 }
 
@@ -83,30 +83,40 @@ namespace Aws\Tests\S3
         public function testCreatesPresignedDatesFromDateTime()
         {
             list($request, $credentials, $signature) = $this->getFixtures();
-            $url = $signature->createPresignedUrl($request, $credentials, new \DateTime('December 31, 2013'));
-            $this->assertContains('X-Amz-Expires=2246400', $url);
+            $url = $signature->createPresignedUrl($request, $credentials, new \DateTime('December 11, 2013 00:00:00 UTC'));
+            $this->assertContains('X-Amz-Expires=518400', $url);
         }
 
         public function testCreatesPresignedDatesFromUnixTimestamp()
         {
             list($request, $credentials, $signature) = $this->getFixtures();
-            $url = $signature->createPresignedUrl($request, $credentials, 1388448000);
-            $this->assertContains('X-Amz-Expires=2246400', $url);
+            $url = $signature->createPresignedUrl($request, $credentials, 1386720000);
+            $this->assertContains('X-Amz-Expires=518400', $url);
         }
 
         public function testCreatesPresignedDateFromStrtotime()
         {
             list($request, $credentials, $signature) = $this->getFixtures();
-            $url = $signature->createPresignedUrl($request, $credentials, 'December 31, 2013');
-            $this->assertContains('X-Amz-Expires=2246400', $url);
+            $url = $signature->createPresignedUrl($request, $credentials, 'December 11, 2013 00:00:00 UTC');
+            $this->assertContains('X-Amz-Expires=518400', $url);
         }
 
         public function testAddsSecurityTokenIfPresent()
         {
             list($request, $credentials, $signature) = $this->getFixtures();
             $credentials->setSecurityToken('123');
-            $url = $signature->createPresignedUrl($request, $credentials, 1388476800);
+            $url = $signature->createPresignedUrl($request, $credentials, 1386720000);
             $this->assertContains('X-Amz-Security-Token=123', $url);
+            $this->assertContains('X-Amz-Expires=518400', $url);
+        }
+
+        /**
+         * @expectedException \Aws\S3\Exception\S3Exception
+         */
+        public function testEnsuresSigV4DurationIsLessThanOneWeek()
+        {
+            list($request, $credentials, $signature) = $this->getFixtures();
+            $signature->createPresignedUrl($request, $credentials, 'December 31, 2013 00:00:00 UTC');
         }
     }
 }
