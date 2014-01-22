@@ -4,6 +4,7 @@ namespace Aws\CloudTrail;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\S3\S3Client;
+use Aws\CloudTrail\Exception\CloudTrailException;
 use Guzzle\Iterator\FilterIterator;
 
 /**
@@ -40,7 +41,7 @@ class LogFileIterator extends \IteratorIterator
     private $s3BucketName;
 
     /**
-     * Contructs a LogRecordIterator. This factory method is used if the name of the S3 bucket containing your logs is
+     * Constructs a LogRecordIterator. This factory method is used if the name of the S3 bucket containing your logs is
      * not known. This factory method uses a CloudTrail client and the trail name (or "Default") to find the
      * information about the trail necessary for constructing the LogRecordIterator
      *
@@ -78,12 +79,12 @@ class LogFileIterator extends \IteratorIterator
     }
 
     /**
-     * Contructs a LogFileIterator using the specified options:
+     * Constructs a LogFileIterator using the specified options:
      *
      * - trail_name: The name of the trail that is generating our logs. If none is provided, then "Default" will be
      *               used, since that is the name of the trail created in the AWS Management Console.
      * - key_prefix: The S3 key prefix of your log files. This value will be overwritten when using the `fromTrail()`
-     *               method. However, if you are using the contructor, then this value will be used.
+     *               method. However, if you are using the constructor, then this value will be used.
      * - start_date: The timestamp of the beginning of date range of the log records you want to read. You can pass this
      *               in as a `DateTime` object, integer (unix timestamp), or a string compatible with `strtotime()`.
      * - end_date:   The timestamp of the end of date range of the log records you want to read. You can pass this in as
@@ -125,6 +126,8 @@ class LogFileIterator extends \IteratorIterator
      * Constructs an S3 ListObjects iterator, optionally decorated with FilterIterators, based on the provided options
      *
      * @param array $options
+     *
+     * @return \Iterator
      */
     private function buildListObjectsIterator(array $options)
     {
@@ -165,7 +168,8 @@ class LogFileIterator extends \IteratorIterator
      *
      * @param string|\DateTime|int $date
      *
-     * @throws InvalidArgumentException if the value cannot be converted to a timestamp
+     * @return int
+     * @throws \InvalidArgumentException if the value cannot be converted to a timestamp
      */
     private function normalizeDateValue($date)
     {
@@ -237,6 +241,8 @@ class LogFileIterator extends \IteratorIterator
      * Applies an iterator filter to restrict the ListObjects result set to the specified date range
      *
      * @param \Iterator $objectsIterator
+     * @param int       $startDate
+     * @param int       $endDate
      *
      * @return \Iterator
      */
