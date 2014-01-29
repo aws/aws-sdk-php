@@ -36,4 +36,5 @@ class QueueAttribute extends Enum
     const APPROXIMATE_NUMBER_OF_MESSAGES_DELAYED = 'ApproximateNumberOfMessagesDelayed';
     const DELAY_SECONDS = 'DelaySeconds';
     const RECEIVE_MESSAGE_WAIT_TIME_SECONDS = 'ReceiveMessageWaitTimeSeconds';
+    const REDRIVE_POLICY = 'RedrivePolicy';
 }

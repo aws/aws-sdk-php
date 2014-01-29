@@ -35,12 +35,14 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteQueue(array $args = array()) {@command Sqs DeleteQueue}
  * @method Model getQueueAttributes(array $args = array()) {@command Sqs GetQueueAttributes}
  * @method Model getQueueUrl(array $args = array()) {@command Sqs GetQueueUrl}
+ * @method Model listDeadLetterSourceQueues(array $args = array()) {@command Sqs ListDeadLetterSourceQueues}
  * @method Model listQueues(array $args = array()) {@command Sqs ListQueues}
  * @method Model receiveMessage(array $args = array()) {@command Sqs ReceiveMessage}
  * @method Model removePermission(array $args = array()) {@command Sqs RemovePermission}
  * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}
  * @method Model sendMessageBatch(array $args = array()) {@command Sqs SendMessageBatch}
  * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
+ * @method ResourceIteratorInterface getListDeadLetterSourceQueuesIterator(array $args = array()) The input array uses the parameters of the ListDeadLetterSourceQueues operation
  * @method ResourceIteratorInterface getListQueuesIterator(array $args = array()) The input array uses the parameters of the ListQueues operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sqs.html User guide
