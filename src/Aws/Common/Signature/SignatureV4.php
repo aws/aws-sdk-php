@@ -21,6 +21,7 @@ use Aws\Common\Enum\DateFormat;
 use Aws\Common\HostNameUtils;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Http\QueryString;
 use Guzzle\Http\Url;
 
 /**
@@ -283,6 +284,9 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
             }
 
             foreach ((array) $values as $value) {
+                if ($value === QueryString::BLANK) {
+                    $value = '';
+                }
                 $qs .= rawurlencode($key) . '=' . rawurlencode($value) . '&';
             }
         }
