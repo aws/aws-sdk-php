@@ -19,7 +19,6 @@ namespace Aws\Tests\S3;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Credentials\Credentials;
 use Aws\S3\S3Client;
-use Aws\S3\Sync\UploadSyncBuilder;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Url;
 use Guzzle\Http\Message\Request;
@@ -81,7 +80,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesPresignedUrls()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $request = $client->get('/foobar');
         $original = (string) $request;
         $url = $client->createPresignedUrl($request, 1342138769);
@@ -97,7 +96,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesPresignedUrlsWithSpecialCharacters()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $request = $client->get('/foobar test: abc/+%.a');
         $url = $client->createPresignedUrl($request, 1342138769);
         $this->assertContains('https://s3.amazonaws.com/foobar%20test%3A%20abc/%2B%25.a?AWSAccessKeyId=', $url);
@@ -106,7 +105,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesPresignedUrlsWithStrtotime()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), '10 minutes'));
         $this->assertTrue(time() < $url->getQuery()->get('Expires'));
     }
@@ -114,7 +113,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesPresignedUrlsWithDateTime()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), new \DateTime('+10 minutes')));
         $this->assertTrue(time() < $url->getQuery()->get('Expires'));
     }
@@ -122,7 +121,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCreatesPresignedUrlsWithSessionToken()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $client->setCredentials(new Credentials('foo', 'bar', 'baz'));
         $url = Url::factory($client->createPresignedUrl($client->get('/foobar'), '10 minutes'));
         $this->assertEquals('baz', $url->getQuery()->get('x-amz-security-token'));
@@ -134,14 +133,14 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testValidatesRequestObjectWhenCreatingPreSignedUrl()
     {
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $client->createPresignedUrl(new Request('GET', 'http://foo.com'), '+10 minutes');
     }
 
     public function testDoesBucketExistReturnsCorrectBooleanValue()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array(
             's3/head_success',
             's3/head_access_denied',
@@ -156,7 +155,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testDoesObjectExistReturnsCorrectBooleanValue()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array(
             's3/head_success',
             's3/head_access_denied',
@@ -171,7 +170,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testDoesBucketPolicyExistReturnsCorrectBooleanValue()
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, array(
             's3/get_bucket_policy_success',
             's3/get_bucket_policy_failure'
@@ -183,7 +182,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testClearsBucketHelperAndUsesSubResources()
     {
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $mock = $this->setMockResponse($client, array(
             's3/get_bucket_object_versions_page_2',
             's3/delete_multiple_objects'
@@ -201,7 +200,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testProperlyEncodesPrefixKeys()
     {
         $this->assertEquals('/foo/baz%20/bar%21', S3Client::encodeKey('/foo/baz /bar!'));
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $command = $client->getCommand('PutObject', array(
             'Key'    => 'foo/baz /bar!',
             'Bucket' => 'test',
@@ -239,7 +238,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
     public function testCanCreateObjectUrls($expires, array $args, $expectedUrl)
     {
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
+        $client = $this->getServiceBuilder()->get('s3', true);
         $actualUrl = $client->getObjectUrl('foo', 'bar', $expires, $args);
         if (strpos($expectedUrl, '#^') === 0) {
             $this->assertRegExp($expectedUrl, $actualUrl);
