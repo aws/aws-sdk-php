@@ -283,7 +283,7 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(2, $result);
         $this->assertEquals(6, count($history));
         $this->assertEquals('POST', $history->getLastRequest()->getMethod());
-        $this->assertEquals('/?delete=', $history->getLastRequest()->getResource());
+        $this->assertEquals('/?delete', $history->getLastRequest()->getResource());
         $this->assertContains('<Key>c</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertContains('<Key>f</Key>', (string) $history->getLastRequest()->getBody());
         $this->assertNotContains('<Key>e</Key>', (string) $history->getLastRequest()->getBody());

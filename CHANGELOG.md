@@ -11,7 +11,7 @@ CHANGELOG
 * Added an event to the Amazon S3 multipart upload helpers to allow granular customization of multipart uploads during
   a sync (see #209)
 * Updated Signature V4 logic for Amazon S3 to throw an exception if you attempt to create a presigned URL that expires
-  later than a week, since these links will not actually work
+  later than a week (see #215)
 * Fixed the `downloadBucket` and `uploadDirectory` methods to support relative paths and better support
   Windows (see #207)
 * Fixed issue #195 in the Amazon S3 multipart upload helpers to properly support additional parameters (see #211)
