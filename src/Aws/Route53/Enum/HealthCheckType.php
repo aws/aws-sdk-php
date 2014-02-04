@@ -24,5 +24,8 @@ use Aws\Common\Enum;
 class HealthCheckType extends Enum
 {
     const HTTP = 'HTTP';
+    const HTTPS = 'HTTPS';
+    const HTTP_STR_MATCH = 'HTTP_STR_MATCH';
+    const HTTPS_STR_MATCH = 'HTTPS_STR_MATCH';
     const TCP = 'TCP';
 }

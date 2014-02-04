@@ -14,16 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Route53\Enum;
-
-use Aws\Common\Enum;
+namespace Aws\Route53\Exception;
 
 /**
- * Contains enumerable Action values
+ * The resource you are trying to access is unsupported on this Route 53 endpoint. Please consider using a newer endpoint or a tool that does so.
  */
-class Action extends Enum
-{
-    const CREATE = 'CREATE';
-    const DELETE = 'DELETE';
-    const UPSERT = 'UPSERT';
-}
+class IncompatibleVersionException extends Route53Exception {}

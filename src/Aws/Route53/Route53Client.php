@@ -48,7 +48,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class Route53Client extends AbstractClient
 {
-    const LATEST_API_VERSION = '2012-12-12';
+    const LATEST_API_VERSION = '2013-04-01';
 
     /**
      * Factory method to create a new Amazon Glacier client using an array of configuration options.

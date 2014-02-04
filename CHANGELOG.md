@@ -4,11 +4,14 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for HTTP and HTTPS string-match health checks and HTTPS health checks to the Amazon Route 53 client
+* Added support for the UPSERT action for the Amazon Route 53 ChangeResourceRecordSets operation
 * Added iterators to the Amazon Kinesis client
 * Updated iterator configurations for all services to match our new iterator config spec (care was taken to continue
   supporting manually-specified configurations in the old format to prevent BC)
 * Updated the Amazon EC2 model to include the latest updates and documentation. Removed deprecated license-related
   operations (this is not considered a BC since we have confirmed that these operations are not used by customers)
+* Updated the Amazon Route 53 client to use the 2013-04-01 API version
 * Fixed several iterator configurations for various services to better support existing operations and parameters
 
 2.5.2 (2014-01-29)
