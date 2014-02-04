@@ -909,16 +909,14 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'ListIdentities' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxItems',
-                'result_key' => 'Identities',
-            ),
-            'ListVerifiedEmailAddresses' => array(
-                'result_key' => 'VerifiedEmailAddresses',
-            ),
+        'ListIdentities' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxItems',
+            'result_key' => 'Identities',
+        ),
+        'ListVerifiedEmailAddresses' => array(
+            'result_key' => 'VerifiedEmailAddresses',
         ),
     ),
     'waiters' => array(

@@ -3321,55 +3321,53 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeCachediSCSIVolumes' => array(
-                'result_key' => 'CachediSCSIVolumes',
-            ),
-            'DescribeStorediSCSIVolumes' => array(
-                'result_key' => 'StorediSCSIVolumes',
-            ),
-            'DescribeTapeArchives' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'Limit',
-                'result_key' => 'TapeArchives',
-            ),
-            'DescribeTapeRecoveryPoints' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'Limit',
-                'result_key' => 'TapeRecoveryPointInfos',
-            ),
-            'DescribeTapes' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'Limit',
-                'result_key' => 'Tapes',
-            ),
-            'DescribeVTLDevices' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'Limit',
-                'result_key' => 'VTLDevices',
-            ),
-            'ListGateways' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'Limit',
-                'result_key' => 'Gateways',
-            ),
-            'ListLocalDisks' => array(
-                'result_key' => 'Disks',
-            ),
-            'ListVolumeRecoveryPoints' => array(
-                'result_key' => 'VolumeRecoveryPointInfos',
-            ),
-            'ListVolumes' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'Limit',
-                'result_key' => 'VolumeInfos',
-            ),
+        'DescribeCachediSCSIVolumes' => array(
+            'result_key' => 'CachediSCSIVolumes',
+        ),
+        'DescribeStorediSCSIVolumes' => array(
+            'result_key' => 'StorediSCSIVolumes',
+        ),
+        'DescribeTapeArchives' => array(
+            'input_token' => 'Marker',
+            'limit_key' => 'Limit',
+            'output_token' => 'Marker',
+            'result_key' => 'TapeArchives',
+        ),
+        'DescribeTapeRecoveryPoints' => array(
+            'input_token' => 'Marker',
+            'limit_key' => 'Limit',
+            'output_token' => 'Marker',
+            'result_key' => 'TapeRecoveryPointInfos',
+        ),
+        'DescribeTapes' => array(
+            'input_token' => 'Marker',
+            'limit_key' => 'Limit',
+            'output_token' => 'Marker',
+            'result_key' => 'Tapes',
+        ),
+        'DescribeVTLDevices' => array(
+            'input_token' => 'Marker',
+            'limit_key' => 'Limit',
+            'output_token' => 'Marker',
+            'result_key' => 'VTLDevices',
+        ),
+        'ListGateways' => array(
+            'input_token' => 'Marker',
+            'limit_key' => 'Limit',
+            'output_token' => 'Marker',
+            'result_key' => 'Gateways',
+        ),
+        'ListLocalDisks' => array(
+            'result_key' => 'Disks',
+        ),
+        'ListVolumeRecoveryPoints' => array(
+            'result_key' => 'VolumeRecoveryPointInfos',
+        ),
+        'ListVolumes' => array(
+            'input_token' => 'Marker',
+            'limit_key' => 'Limit',
+            'output_token' => 'Marker',
+            'result_key' => 'VolumeInfos',
         ),
     ),
 );

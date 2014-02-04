@@ -1680,32 +1680,30 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'ListEndpointsByPlatformApplication' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'Endpoints',
-            ),
-            'ListPlatformApplications' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'PlatformApplications',
-            ),
-            'ListSubscriptions' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'Subscriptions',
-            ),
-            'ListSubscriptionsByTopic' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'Subscriptions',
-            ),
-            'ListTopics' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'Topics/*/TopicArn',
-            ),
+        'ListEndpointsByPlatformApplication' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'Endpoints',
+        ),
+        'ListPlatformApplications' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'PlatformApplications',
+        ),
+        'ListSubscriptions' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'Subscriptions',
+        ),
+        'ListSubscriptionsByTopic' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'Subscriptions',
+        ),
+        'ListTopics' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'Topics/*/TopicArn',
         ),
     ),
 );

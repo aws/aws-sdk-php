@@ -42,6 +42,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateStack(array $args = array()) {@command CloudFormation UpdateStack}
  * @method Model validateTemplate(array $args = array()) {@command CloudFormation ValidateTemplate}
  * @method ResourceIteratorInterface getDescribeStackEventsIterator(array $args = array()) The input array uses the parameters of the DescribeStackEvents operation
+ * @method ResourceIteratorInterface getDescribeStackResourcesIterator(array $args = array()) The input array uses the parameters of the DescribeStackResources operation
  * @method ResourceIteratorInterface getDescribeStacksIterator(array $args = array()) The input array uses the parameters of the DescribeStacks operation
  * @method ResourceIteratorInterface getListStackResourcesIterator(array $args = array()) The input array uses the parameters of the ListStackResources operation
  * @method ResourceIteratorInterface getListStacksIterator(array $args = array()) The input array uses the parameters of the ListStacks operation
@@ -59,7 +60,7 @@ class CloudFormationClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

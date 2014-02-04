@@ -637,4 +637,26 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'DescribeStream' => array(
+            'input_token' => 'ExclusiveStartShardId',
+            'limit_key' => 'Limit',
+            'more_results' => 'StreamDescription/HasMoreShards',
+            'output_token' => 'StreamDescription/Shards/#/ShardId',
+            'result_key' => 'StreamDescription/Shards',
+        ),
+        'GetRecords' => array(
+            'input_token' => 'ShardIterator',
+            'limit_key' => 'Limit',
+            'output_token' => 'NextShardIterator',
+            'result_key' => 'Records',
+        ),
+        'ListStreams' => array(
+            'input_token' => 'ExclusiveStartStreamName',
+            'limit_key' => 'Limit',
+            'more_results' => 'HasMoreStreams',
+            'output_token' => 'StreamNames/#',
+            'result_key' => 'StreamNames',
+        ),
+    ),
 );

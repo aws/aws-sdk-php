@@ -5122,6 +5122,36 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'ListCloudFrontOriginAccessIdentities' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'limit_key' => 'MaxItems',
+            'more_results' => 'IsTruncated',
+            'result_key' => 'Items',
+        ),
+        'ListDistributions' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'limit_key' => 'MaxItems',
+            'more_results' => 'IsTruncated',
+            'result_key' => 'Items',
+        ),
+        'ListInvalidations' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'limit_key' => 'MaxItems',
+            'more_results' => 'IsTruncated',
+            'result_key' => 'Items',
+        ),
+        'ListStreamingDistributions' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'limit_key' => 'MaxItems',
+            'more_results' => 'IsTruncated',
+            'result_key' => 'Items',
+        ),
+    ),
     'waiters' => array(
         '__default__' => array(
             'success.type' => 'output',

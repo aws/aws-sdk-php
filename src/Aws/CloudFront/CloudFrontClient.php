@@ -51,9 +51,13 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront UpdateCloudFrontOriginAccessIdentity}
  * @method Model updateDistribution(array $args = array()) {@command CloudFront UpdateDistribution}
  * @method Model updateStreamingDistribution(array $args = array()) {@command CloudFront UpdateStreamingDistribution}
- * @method waitUntilStreamingDistributionDeployed(array $input) Wait using the StreamingDistributionDeployed waiter. The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
- * @method waitUntilDistributionDeployed(array $input) Wait using the DistributionDeployed waiter. The input array uses the parameters of the GetDistribution operation and waiter specific settings
- * @method waitUntilInvalidationCompleted(array $input) Wait using the InvalidationCompleted waiter. The input array uses the parameters of the GetInvalidation operation and waiter specific settings
+ * @method waitUntilStreamingDistributionDeployed(array $input) The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
+ * @method waitUntilDistributionDeployed(array $input) The input array uses the parameters of the GetDistribution operation and waiter specific settings
+ * @method waitUntilInvalidationCompleted(array $input) The input array uses the parameters of the GetInvalidation operation and waiter specific settings
+ * @method ResourceIteratorInterface getListCloudFrontOriginAccessIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListCloudFrontOriginAccessIdentities operation
+ * @method ResourceIteratorInterface getListDistributionsIterator(array $args = array()) The input array uses the parameters of the ListDistributions operation
+ * @method ResourceIteratorInterface getListInvalidationsIterator(array $args = array()) The input array uses the parameters of the ListInvalidations operation
+ * @method ResourceIteratorInterface getListStreamingDistributionsIterator(array $args = array()) The input array uses the parameters of the ListStreamingDistributions operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudfront.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html API docs
@@ -72,7 +76,7 @@ class CloudFrontClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of other available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
@@ -89,18 +93,6 @@ class CloudFrontClient extends AbstractClient
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/cloudfront-%s.php',
             ))
             ->setExceptionParser(new DefaultXmlExceptionParser())
-            ->setIteratorsConfig(array(
-                'token_param' => 'Marker',
-                'token_key'   => 'NextMarker',
-                'more_key'    => 'IsTruncated',
-                'result_key'  => 'Items',
-                'operations'  => array(
-                    'ListCloudFrontOriginAccessIdentities',
-                    'ListDistributions',
-                    'ListInvalidations',
-                    'ListStreamingDistributions'
-                )
-            ))
             ->build();
     }
 

@@ -52,7 +52,7 @@ class SimpleDbClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
@@ -61,19 +61,6 @@ class SimpleDbClient extends AbstractClient
             ->setConfigDefaults(array(
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/simpledb-%s.php'
-            ))
-            ->setIteratorsConfig(array(
-                'token_key' => 'NextToken',
-                'token_param' => 'NextToken',
-                'operations' => array(
-                    'ListDomains' => array(
-                        'result_key' => 'DomainNames',
-                        'limit_key' => 'MaxNumberOfDomains'
-                    ),
-                    'Select' => array(
-                        'result_key' => 'Items'
-                    )
-                )
             ))
             ->build();
     }

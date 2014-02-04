@@ -51,7 +51,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with Amazon Simple Storage Service
  *
- * @method \Aws\S3\S3SignatureInterface getSignature()
+ * @method S3SignatureInterface getSignature() Returns the signature implementation used with the client
  * @method Model abortMultipartUpload(array $args = array()) {@command S3 AbortMultipartUpload}
  * @method Model completeMultipartUpload(array $args = array()) {@command S3 CompleteMultipartUpload}
  * @method Model copyObject(array $args = array()) {@command S3 CopyObject}
@@ -101,13 +101,13 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model restoreObject(array $args = array()) {@command S3 RestoreObject}
  * @method Model uploadPart(array $args = array()) {@command S3 UploadPart}
  * @method Model uploadPartCopy(array $args = array()) {@command S3 UploadPartCopy}
- * @method waitUntilBucketExists(array $input) Wait until a bucket exists. The input array uses the parameters of the HeadBucket operation and waiter specific settings
- * @method waitUntilBucketNotExists(array $input) Wait until a bucket does not exist. The input array uses the parameters of the HeadBucket operation and waiter specific settings
- * @method waitUntilObjectExists(array $input) Wait until an object exists. The input array uses the parameters of the HeadObject operation and waiter specific settings
+ * @method waitUntilBucketExists(array $input) The input array uses the parameters of the HeadBucket operation and waiter specific settings
+ * @method waitUntilBucketNotExists(array $input) The input array uses the parameters of the HeadBucket operation and waiter specific settings
+ * @method waitUntilObjectExists(array $input) The input array uses the parameters of the HeadObject operation and waiter specific settings
  * @method ResourceIteratorInterface getListBucketsIterator(array $args = array()) The input array uses the parameters of the ListBuckets operation
  * @method ResourceIteratorInterface getListMultipartUploadsIterator(array $args = array()) The input array uses the parameters of the ListMultipartUploads operation
- * @method ResourceIteratorInterface getListObjectsIterator(array $args = array()) The input array uses the parameters of the ListObjects operation
  * @method ResourceIteratorInterface getListObjectVersionsIterator(array $args = array()) The input array uses the parameters of the ListObjectVersions operation
+ * @method ResourceIteratorInterface getListObjectsIterator(array $args = array()) The input array uses the parameters of the ListObjects operation
  * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-s3.html User guide
@@ -148,9 +148,6 @@ class S3Client extends AbstractClient
         'DeleteObjectExpirationConfig'  => 'DeleteBucketLifecycle',
     );
 
-    /**
-     * @inheritdoc
-     */
     protected $directory = __DIR__;
 
     /**
@@ -159,7 +156,7 @@ class S3Client extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

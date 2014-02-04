@@ -2584,55 +2584,53 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeAutoScalingGroups' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'AutoScalingGroups',
-            ),
-            'DescribeAutoScalingInstances' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'AutoScalingInstances',
-            ),
-            'DescribeLaunchConfigurations' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'LaunchConfigurations',
-            ),
-            'DescribeNotificationConfigurations' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'NotificationConfigurations',
-            ),
-            'DescribePolicies' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'ScalingPolicies',
-            ),
-            'DescribeScalingActivities' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'Activities',
-            ),
-            'DescribeScheduledActions' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'ScheduledUpdateGroupActions',
-            ),
-            'DescribeTags' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'Tags',
-            ),
+        'DescribeAutoScalingGroups' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'AutoScalingGroups',
+        ),
+        'DescribeAutoScalingInstances' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'AutoScalingInstances',
+        ),
+        'DescribeLaunchConfigurations' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'LaunchConfigurations',
+        ),
+        'DescribeNotificationConfigurations' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'NotificationConfigurations',
+        ),
+        'DescribePolicies' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'ScalingPolicies',
+        ),
+        'DescribeScalingActivities' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'Activities',
+        ),
+        'DescribeScheduledActions' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'ScheduledUpdateGroupActions',
+        ),
+        'DescribeTags' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'Tags',
         ),
     ),
 );

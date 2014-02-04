@@ -1863,21 +1863,19 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeInstanceHealth' => array(
-                'result_key' => 'InstanceStates',
-            ),
-            'DescribeLoadBalancerPolicies' => array(
-                'result_key' => 'PolicyDescriptions',
-            ),
-            'DescribeLoadBalancerPolicyTypes' => array(
-                'result_key' => 'PolicyTypeDescriptions',
-            ),
-            'DescribeLoadBalancers' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'NextMarker',
-                'result_key' => 'LoadBalancerDescriptions',
-            ),
+        'DescribeInstanceHealth' => array(
+            'result_key' => 'InstanceStates',
+        ),
+        'DescribeLoadBalancerPolicies' => array(
+            'result_key' => 'PolicyDescriptions',
+        ),
+        'DescribeLoadBalancerPolicyTypes' => array(
+            'result_key' => 'PolicyTypeDescriptions',
+        ),
+        'DescribeLoadBalancers' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'result_key' => 'LoadBalancerDescriptions',
         ),
     ),
 );

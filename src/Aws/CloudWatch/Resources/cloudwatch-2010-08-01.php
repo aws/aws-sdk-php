@@ -1227,27 +1227,25 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeAlarmHistory' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'AlarmHistoryItems',
-            ),
-            'DescribeAlarms' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'MetricAlarms',
-            ),
-            'DescribeAlarmsForMetric' => array(
-                'result_key' => 'MetricAlarms',
-            ),
-            'ListMetrics' => array(
-                'token_param' => 'NextToken',
-                'token_key' => 'NextToken',
-                'result_key' => 'Metrics',
-            ),
+        'DescribeAlarmHistory' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'AlarmHistoryItems',
+        ),
+        'DescribeAlarms' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'MetricAlarms',
+        ),
+        'DescribeAlarmsForMetric' => array(
+            'result_key' => 'MetricAlarms',
+        ),
+        'ListMetrics' => array(
+            'input_token' => 'NextToken',
+            'output_token' => 'NextToken',
+            'result_key' => 'Metrics',
         ),
     ),
 );

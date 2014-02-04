@@ -52,16 +52,6 @@ return array (
             'https' => true,
             'hostname' => 'elastictranscoder.ap-southeast-1.amazonaws.com',
         ),
-        'ap-southeast-2' => array(
-            'http' => false,
-            'https' => true,
-            'hostname' => 'elastictranscoder.ap-southeast-2.amazonaws.com',
-        ),
-        'sa-east-1' => array(
-            'http' => false,
-            'https' => true,
-            'hostname' => 'elastictranscoder.sa-east-1.amazonaws.com',
-        ),
     ),
     'operations' => array(
         'CancelJob' => array(
@@ -3849,27 +3839,25 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'ListJobsByPipeline' => array(
-                'token_param' => 'PageToken',
-                'token_key' => 'NextPageToken',
-                'result_key' => 'Jobs',
-            ),
-            'ListJobsByStatus' => array(
-                'token_param' => 'PageToken',
-                'token_key' => 'NextPageToken',
-                'result_key' => 'Jobs',
-            ),
-            'ListPipelines' => array(
-                'token_param' => 'PageToken',
-                'token_key' => 'NextPageToken',
-                'result_key' => 'Pipelines',
-            ),
-            'ListPresets' => array(
-                'token_param' => 'PageToken',
-                'token_key' => 'NextPageToken',
-                'result_key' => 'Presets',
-            ),
+        'ListJobsByPipeline' => array(
+            'input_token' => 'PageToken',
+            'output_token' => 'NextPageToken',
+            'result_key' => 'Jobs',
+        ),
+        'ListJobsByStatus' => array(
+            'input_token' => 'PageToken',
+            'output_token' => 'NextPageToken',
+            'result_key' => 'Jobs',
+        ),
+        'ListPipelines' => array(
+            'input_token' => 'PageToken',
+            'output_token' => 'NextPageToken',
+            'result_key' => 'Pipelines',
+        ),
+        'ListPresets' => array(
+            'input_token' => 'PageToken',
+            'output_token' => 'NextPageToken',
+            'result_key' => 'Presets',
         ),
     ),
 );

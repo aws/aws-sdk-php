@@ -35,6 +35,9 @@ use Guzzle\Service\Resource\Model;
  * @method Model mergeShards(array $args = array()) {@command Kinesis MergeShards}
  * @method Model putRecord(array $args = array()) {@command Kinesis PutRecord}
  * @method Model splitShard(array $args = array()) {@command Kinesis SplitShard}
+ * @method ResourceIteratorInterface getDescribeStreamIterator(array $args = array()) The input array uses the parameters of the DescribeStream operation
+ * @method ResourceIteratorInterface getGetRecordsIterator(array $args = array()) The input array uses the parameters of the GetRecords operation
+ * @method ResourceIteratorInterface getListStreamsIterator(array $args = array()) The input array uses the parameters of the ListStreams operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-kinesis.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Kinesis.KinesisClient.html API docs
@@ -49,7 +52,7 @@ class KinesisClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

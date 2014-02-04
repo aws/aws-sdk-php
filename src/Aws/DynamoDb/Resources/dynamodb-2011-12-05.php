@@ -3496,6 +3496,28 @@ return array (
             ),
         ),
     ),
+    'iterators' => array(
+        'BatchGetItem' => array(
+            'input_token' => 'RequestItems',
+            'output_token' => 'UnprocessedKeys',
+            'result_key' => 'Responses/*',
+        ),
+        'ListTables' => array(
+            'input_token' => 'ExclusiveStartTableName',
+            'output_token' => 'LastEvaluatedTableName',
+            'result_key' => 'TableNames',
+        ),
+        'Query' => array(
+            'input_token' => 'ExclusiveStartKey',
+            'output_token' => 'LastEvaluatedKey',
+            'result_key' => 'Items',
+        ),
+        'Scan' => array(
+            'input_token' => 'ExclusiveStartKey',
+            'output_token' => 'LastEvaluatedKey',
+            'result_key' => 'Items',
+        ),
+    ),
     'waiters' => array(
         '__default__' => array(
             'interval' => 20,

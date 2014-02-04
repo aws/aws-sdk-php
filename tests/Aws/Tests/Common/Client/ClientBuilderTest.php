@@ -20,6 +20,7 @@ use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
 use Aws\Common\Credentials\Credentials;
+use Aws\Common\Iterator\AwsResourceIterator;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
@@ -36,7 +37,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function setUp()
     {
-        $this->dynamoDbDescription = __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-2011-12-05.php';
+        $this->dynamoDbDescription = __DIR__ . '/../../../../../src/Aws/DynamoDb/Resources/dynamodb-2012-08-10.php';
         $this->stsDescription = __DIR__ . '/../../../../../src/Aws/Sts/Resources/sts-2011-06-15.php';
     }
 
@@ -52,7 +53,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ))
             ->setConfigRequirements(array('scheme'))
             ->setExceptionParser(new JsonQueryExceptionParser())
-            ->setIteratorsConfig(array('token_param' => 'foo'))
+            ->setIteratorsConfig(array('input_token' => 'foo'))
             ->build();
 
         $this->assertInstanceOf('Aws\DynamoDb\DynamoDbClient', $client);

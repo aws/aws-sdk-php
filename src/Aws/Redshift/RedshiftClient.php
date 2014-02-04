@@ -79,9 +79,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model revokeClusterSecurityGroupIngress(array $args = array()) {@command Redshift RevokeClusterSecurityGroupIngress}
  * @method Model revokeSnapshotAccess(array $args = array()) {@command Redshift RevokeSnapshotAccess}
  * @method Model rotateEncryptionKey(array $args = array()) {@command Redshift RotateEncryptionKey}
- * @method waitUntilClusterAvailable(array $input) Wait using the ClusterAvailable waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
- * @method waitUntilClusterDeleted(array $input) Wait using the ClusterDeleted waiter. The input array uses the parameters of the DescribeClusters operation and waiter specific settings
- * @method waitUntilSnapshotAvailable(array $input) Wait using the SnapshotAvailable waiter. The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings
+ * @method waitUntilClusterAvailable(array $input) The input array uses the parameters of the DescribeClusters operation and waiter specific settings
+ * @method waitUntilClusterDeleted(array $input) The input array uses the parameters of the DescribeClusters operation and waiter specific settings
+ * @method waitUntilSnapshotAvailable(array $input) The input array uses the parameters of the DescribeClusterSnapshots operation and waiter specific settings
  * @method ResourceIteratorInterface getDescribeClusterParameterGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterParameterGroups operation
  * @method ResourceIteratorInterface getDescribeClusterParametersIterator(array $args = array()) The input array uses the parameters of the DescribeClusterParameters operation
  * @method ResourceIteratorInterface getDescribeClusterSecurityGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeClusterSecurityGroups operation
@@ -111,7 +111,7 @@ class RedshiftClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

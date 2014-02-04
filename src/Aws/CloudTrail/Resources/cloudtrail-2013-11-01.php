@@ -623,10 +623,8 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeTrails' => array(
-                'result_key' => 'trailList',
-            ),
+        'DescribeTrails' => array(
+            'result_key' => 'trailList',
         ),
     ),
 );

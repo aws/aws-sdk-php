@@ -4526,49 +4526,50 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeApps' => array(
-                'result_key' => 'Apps',
-            ),
-            'DescribeCommands' => array(
-                'result_key' => 'Commands',
-            ),
-            'DescribeDeployments' => array(
-                'result_key' => 'Deployments',
-            ),
-            'DescribeElasticIps' => array(
-                'result_key' => 'ElasticIps',
-            ),
-            'DescribeElasticLoadBalancers' => array(
-                'result_key' => 'ElasticLoadBalancers',
-            ),
-            'DescribeInstances' => array(
-                'result_key' => 'Instances',
-            ),
-            'DescribeLayers' => array(
-                'result_key' => 'Layers',
-            ),
-            'DescribeLoadBasedAutoScaling' => array(
-                'result_key' => 'LoadBasedAutoScalingConfigurations',
-            ),
-            'DescribeRaidArrays' => array(
-                'result_key' => 'RaidArrays',
-            ),
-            'DescribeServiceErrors' => array(
-                'result_key' => 'ServiceErrors',
-            ),
-            'DescribeStacks' => array(
-                'result_key' => 'Stacks',
-            ),
-            'DescribeTimeBasedAutoScaling' => array(
-                'result_key' => 'TimeBasedAutoScalingConfigurations',
-            ),
-            'DescribeUserProfiles' => array(
-                'result_key' => 'UserProfiles',
-            ),
-            'DescribeVolumes' => array(
-                'result_key' => 'Volumes',
-            ),
+        'DescribeApps' => array(
+            'result_key' => 'Apps',
+        ),
+        'DescribeCommands' => array(
+            'result_key' => 'Commands',
+        ),
+        'DescribeDeployments' => array(
+            'result_key' => 'Deployments',
+        ),
+        'DescribeElasticIps' => array(
+            'result_key' => 'ElasticIps',
+        ),
+        'DescribeElasticLoadBalancers' => array(
+            'result_key' => 'ElasticLoadBalancers',
+        ),
+        'DescribeInstances' => array(
+            'result_key' => 'Instances',
+        ),
+        'DescribeLayers' => array(
+            'result_key' => 'Layers',
+        ),
+        'DescribeLoadBasedAutoScaling' => array(
+            'result_key' => 'LoadBasedAutoScalingConfigurations',
+        ),
+        'DescribePermissions' => array(
+            'result_key' => 'Permissions',
+        ),
+        'DescribeRaidArrays' => array(
+            'result_key' => 'RaidArrays',
+        ),
+        'DescribeServiceErrors' => array(
+            'result_key' => 'ServiceErrors',
+        ),
+        'DescribeStacks' => array(
+            'result_key' => 'Stacks',
+        ),
+        'DescribeTimeBasedAutoScaling' => array(
+            'result_key' => 'TimeBasedAutoScalingConfigurations',
+        ),
+        'DescribeUserProfiles' => array(
+            'result_key' => 'UserProfiles',
+        ),
+        'DescribeVolumes' => array(
+            'result_key' => 'Volumes',
         ),
     ),
 );

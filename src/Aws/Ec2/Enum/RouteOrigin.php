@@ -14,27 +14,16 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ImportExport\Iterator;
+namespace Aws\Ec2\Enum;
 
-use Aws\Common\Iterator\AwsResourceIterator;
-use Guzzle\Service\Resource\Model;
+use Aws\Common\Enum;
 
 /**
- * Iterator for an ImportExport ListJobs command
+ * Contains enumerable RouteOrigin values
  */
-class ListJobsIterator extends AwsResourceIterator
+class RouteOrigin extends Enum
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function determineNextToken(Model $result)
-    {
-        $this->nextToken = null;
-
-        if ($result->get($this->get('more_key'))) {
-            $jobs = $result->get($this->get('result_key')) ?: array();
-            $numJobs = count($jobs);
-            $this->nextToken = $numJobs ? $jobs[$numJobs - 1]['JobId'] : null;
-        }
-    }
+    const CREATE_ROUTE_TABLE = 'CreateRouteTable';
+    const CREATE_ROUTE = 'CreateRoute';
+    const ENABLE_VGW_ROUTE_PROPAGATION = 'EnableVgwRoutePropagation';
 }

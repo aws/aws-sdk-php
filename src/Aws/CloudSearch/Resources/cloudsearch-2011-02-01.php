@@ -2333,16 +2333,14 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeDomains' => array(
-                'result_key' => 'DomainStatusList',
-            ),
-            'DescribeIndexFields' => array(
-                'result_key' => 'IndexFields',
-            ),
-            'DescribeRankExpressions' => array(
-                'result_key' => 'RankExpressions',
-            ),
+        'DescribeDomains' => array(
+            'result_key' => 'DomainStatusList',
+        ),
+        'DescribeIndexFields' => array(
+            'result_key' => 'IndexFields',
+        ),
+        'DescribeRankExpressions' => array(
+            'result_key' => 'RankExpressions',
         ),
     ),
 );

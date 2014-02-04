@@ -47,7 +47,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeVirtualGateways(array $args = array()) {@command DirectConnect DescribeVirtualGateways}
  * @method Model describeVirtualInterfaces(array $args = array()) {@command DirectConnect DescribeVirtualInterfaces}
  * @method ResourceIteratorInterface getDescribeConnectionsIterator(array $args = array()) The input array uses the parameters of the DescribeConnections operation
- * @method ResourceIteratorInterface getDescribeOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeOfferings operation
+ * @method ResourceIteratorInterface getDescribeConnectionsOnInterconnectIterator(array $args = array()) The input array uses the parameters of the DescribeConnectionsOnInterconnect operation
+ * @method ResourceIteratorInterface getDescribeInterconnectsIterator(array $args = array()) The input array uses the parameters of the DescribeInterconnects operation
+ * @method ResourceIteratorInterface getDescribeLocationsIterator(array $args = array()) The input array uses the parameters of the DescribeLocations operation
  * @method ResourceIteratorInterface getDescribeVirtualGatewaysIterator(array $args = array()) The input array uses the parameters of the DescribeVirtualGateways operation
  * @method ResourceIteratorInterface getDescribeVirtualInterfacesIterator(array $args = array()) The input array uses the parameters of the DescribeVirtualInterfaces operation
  *
@@ -64,7 +66,7 @@ class DirectConnectClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @see \Aws\Common\Client\DefaultClient for a list of available configuration options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {
@@ -75,22 +77,6 @@ class DirectConnectClient extends AbstractClient
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/directconnect-%s.php'
             ))
             ->setExceptionParser(new JsonQueryExceptionParser())
-            ->setIteratorsConfig(array(
-                'operations'  => array(
-                    'DescribeConnections' => array(
-                        'result_key' => 'connections',
-                    ),
-                    'DescribeOfferings' => array(
-                        'result_key' => 'offerings',
-                    ),
-                    'DescribeVirtualGateways' => array(
-                        'result_key' => 'virtualGateways',
-                    ),
-                    'DescribeVirtualInterfaces' => array(
-                        'result_key' => 'virtualInterfaces',
-                    ),
-                )
-            ))
             ->build();
     }
 }

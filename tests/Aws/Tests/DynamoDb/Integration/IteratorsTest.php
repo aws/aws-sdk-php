@@ -21,6 +21,16 @@ namespace Aws\Tests\DynamoDB\Integration;
  */
 class IteratorsTest extends \Aws\Tests\IntegrationTestCase
 {
+    public static function setUpBeforeClass()
+    {
+        \Guzzle\Common\Version::$emitWarnings = false;
+    }
+
+    public static function tearDownAfterClass()
+    {
+        \Guzzle\Common\Version::$emitWarnings = true;
+    }
+
     public function testIteratesBatchGetItemCommand()
     {
         $client = $this->getServiceBuilder()->get('dynamodb');
