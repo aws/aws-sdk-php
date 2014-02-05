@@ -18,7 +18,7 @@ namespace Aws\Tests\Rds\Waiter;
 
 class DBAvailableTest extends \Guzzle\Tests\GuzzleTestCase
 {
-	/**
+    /**
      * @var RdsClient
      */
     public $client;
@@ -28,8 +28,8 @@ class DBAvailableTest extends \Guzzle\Tests\GuzzleTestCase
         $this->client = $this->getServiceBuilder()->get('rds', true);
         $this->setMockResponse($this->client, 'rds/describe_db_instances');
         $this->client->waitUntil('__DBInstanceState', array(
-        	'DBInstanceIdentifier' => 'foo',
-        	'waiter.success.value' => "available",
-        	'waiter.interval'      => 0));
+            'DBInstanceIdentifier' => 'foo',
+            'waiter.success.value' => "available",
+            'waiter.interval'      => 0));
     }
 }
