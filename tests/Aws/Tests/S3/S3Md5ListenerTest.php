@@ -116,17 +116,14 @@ class S3Md5ListenerTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('abcd', $request->getHeader('Content-MD5'));
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Unable to add a MD5 checksum
-     */
-    public function testThrowsExceptionWhenMd5CannotBeAdded()
+    public function testDoesNotAddWhenMd5CannotBeAdded()
     {
         list($command, $request) = $this->getCommand(true, false, true, false);
         $event = new Event(array('command' => $command));
         $signature = new S3SignatureV4();
         $listener = new S3Md5Listener($signature);
         $listener->onCommandAfterPrepare($event);
+        $this->assertNull($request->getHeader('Content-MD5'));
     }
 
     public function testAddsContentMd5WhenSetToTrue()

@@ -64,10 +64,9 @@ class S3Md5Listener implements EventSubscriberInterface
     {
         $request = $command->getRequest();
         if ($body = $request->getBody()) {
-            if (false === ($md5 = $body->getContentMd5(true, true))) {
-                throw new RuntimeException('Unable to add a MD5 checksum');
+            if (false !== ($md5 = $body->getContentMd5(true, true))) {
+                $request->setHeader('Content-MD5', $md5);
             }
-            $request->setHeader('Content-MD5', $md5);
         }
     }
 }
