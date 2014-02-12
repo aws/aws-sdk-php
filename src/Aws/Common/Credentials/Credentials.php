@@ -32,6 +32,24 @@ class Credentials implements CredentialsInterface, FromConfigInterface
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_KEY';
+    const ENV_CRED_FILE = 'AWS_CREDENTIAL_FILE';
+
+    /**
+     * @var array Common patterns for AWS Access Key ID
+     */
+    protected static $key_patterns = array(
+        self::ENV_KEY,
+        'AWSAccessKeyID',
+    );
+
+    /**
+     * @var array Common patterns for AWS Secret Key ID
+     */
+    protected static $secret_patterns = array(
+        self::ENV_SECRET,
+        'AWSSecretKey',
+        'aws_secret_access_key', // boto
+    );
 
     /**
      * @var string AWS Access key ID
@@ -72,6 +90,82 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     }
 
     /**
+     * Extract credential from given filename
+     * 
+     * To solve the ambiguity on `AWS` and `ID` letter cases, strings are 
+     * strtolower() before strncmp().
+     *
+     * @param string $filename file to be parsed for credential info
+     *
+     * @return array
+     */
+    protected static function extractCredentialFromFile($filename) {
+        $extracted = array();
+
+        // perform strtolower() and append '='
+        $cb_lower_equal = function ($n) {return strtolower($n) . '=';} ;
+
+        // domains and patterns to be compared with
+        $my_hooks = array(
+            'key' => array_map($cb_lower_equal, self::$key_patterns),
+            'secret' => array_map($cb_lower_equal, self::$secret_patterns),
+        );
+
+        $fp = @fopen($filename, "r");
+        if (!is_resource($fp)) {
+            return array();
+        }
+        
+        while($line = fgets($fp)) {
+            // trim spaces off
+            $line = preg_replace('/\s/', "",$line);
+
+            if (!$line)
+                continue;
+            
+            $line_lowered = strtolower($line);
+
+            foreach($my_hooks as $domain => $patterns) {
+                if (isset($extracted[$domain])) {
+                    continue;
+                }
+
+                foreach($patterns as $pattern) {
+                    if (strncmp($pattern, $line_lowered, strlen($pattern)) == 0) {
+                        $extracted[$domain] = substr($line, strlen($pattern));
+                        break;
+                    }
+                }
+            }
+
+            if (count($extracted) == count($my_hooks)) {
+                fclose($fp);
+                return $extracted;
+            }
+        }
+        
+        fclose($fp);
+        return array();
+    }
+
+    /**
+     * Extract credentials from env `AWS_CREDENTIAL_FILE`. 
+     * Takes CamelCase, snake_case and boto format.
+     *
+     * @return array array('key'=>'KEY', 'secret'=>'SECRET') if found, array() otherwise.
+     */
+    protected static function getCredentialFromEnvFile() {
+        $filename = isset($_SERVER[self::ENV_CRED_FILE]) ? 
+            $_SERVER[self::ENV_CRED_FILE] : getenv(self::ENV_CRED_FILE);
+        
+        if ($filename) {
+            return self::extractCredentialFromFile($filename);
+        }
+
+        return array();
+    }
+
+    /**
      * Factory method for creating new credentials.  This factory method will
      * create the appropriate credentials object with appropriate decorators
      * based on the passed configuration options.
@@ -102,6 +196,9 @@ class Credentials implements CredentialsInterface, FromConfigInterface
             if ($envKey && $envSecret) {
                 // Use credentials set in the environment variables
                 $credentials = new static($envKey, $envSecret);
+            } elseif ($extracted = self::getCredentialFromEnvFile()) {
+                // Use credentials set in the configured credential file
+                $credentials = new static($extracted['key'], $extracted['secret']);
             } else {
                 // Use instance profile credentials (available on EC2 instances)
                 $credentials = new RefreshableInstanceProfileCredentials(
