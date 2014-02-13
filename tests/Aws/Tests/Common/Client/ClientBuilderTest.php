@@ -222,6 +222,10 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertSame($creds, $client1->getCredentials());
         unset($config['credentials']);
 
+        // Stop Credentials from fetching credentials from ENV / files
+        $_cred_opt_ignore_external = Credentials::$OPT_IGNORE_EXTERNAL;
+        Credentials::$OPT_IGNORE_EXTERNAL = true;
+
         // Ensure that the instance metadata service is called when no credentials are supplied
         $client2 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         try {
@@ -230,6 +234,8 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         } catch (\Exception $e) {
             $this->assertInstanceOf('Aws\Common\Exception\InstanceProfileCredentialsException', $e);
         }
+        
+        Credentials::$OPT_IGNORE_EXTERNAL = $_cred_opt_ignore_external;
 
         // Ensure that environment credentials are picked up if supplied via putenv
         $_SERVER[Credentials::ENV_KEY] = 'server-key';
