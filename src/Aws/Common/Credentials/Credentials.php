@@ -95,8 +95,7 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         $dict = array(
             'aws-cli' => array(
                 'src' => array(
-                    'file' => array(),
-                    'env' => array(self::ENV_CRED_FILE),
+                    'env' => array(self::ENV_CONF_FILE),
                 ),
                 'entries' => array(
                     array(
@@ -104,6 +103,19 @@ class Credentials implements CredentialsInterface, FromConfigInterface
                         'keys' => array(
                             'key' => 'aws_access_key_id',
                             'secret' => 'aws_secret_access_key',
+                        ),
+                    ),
+                ),
+            ),
+             'aws-credential' => array(
+                'src' => array(
+                    'env' => array(self::ENV_CRED_FILE),
+                ),
+                'entries' => array(
+                    array(
+                        'keys' => array(
+                            'key' => 'AWSAccessKeyId',
+                            'secret' => 'AWSSecretKey',
                         ),
                     ),
                 ),
@@ -135,13 +147,14 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     /**
      * Extract credentials from config files 
      *
-     * Take extra caution if you have different credentials supplied from
+     * Take extra caution if you have multiple credentials supplied from
      * each of those config files. Consider using env for better portability, 
-     * or supply them from `Options` or `factory()`
+     * pass via `Options` or `factory()`.
      *
      * Supported formats:
      *  - aws-cli
      *  - boto 
+     *  - aws-credential
      *
      * @return array array('key'=>'KEY', 'secret'=>'SECRET') if found, array() otherwise.
      */
@@ -165,20 +178,27 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         }
 
         foreach (self::getCredentialFileFormats() as $format) {
-            // Assigned by copy, safe for primitives, array, and string.
-            // Preserves credentials from env; drop those from other formats.
+            // Assigned by copy, it's safe for primitives, array, and string.
+            // We keep (partial) credentials from env, drop those from other formats, 
+            // and mimic boto's behavior.
             $extracted = $extracted_env;
+            $src =& $format['src'];
 
-            foreach ((array) $format['src']['env'] as $env) {
-                if ($filename = self::getVarFromEnv($env)) {
-                    if (self::extractCredentialsFromFile($filename, $format, $extracted)) {
-                        return $extracted;
+            if (isset($src['env']) && is_array($src['env'])) {
+                foreach ($src['env'] as $env) {
+                    if ($filename = self::getVarFromEnv($env)) {
+                        if (self::extractCredentialsFromFile($filename, $format, $extracted)) {
+                            return $extracted;
+                        }
                     }
                 }
             }
-            foreach ((array) $format['src']['file'] as $filename) {
-                if (self::extractCredentialsFromFile($filename, $format, $extracted)) {
-                    return $extracted;
+
+            if (isset($src['file']) && is_array($src['file'])) {
+                foreach ($src['file'] as $filename) {
+                    if (self::extractCredentialsFromFile($filename, $format, $extracted)) {
+                        return $extracted;
+                    }
                 }
             }
         }
@@ -202,20 +222,21 @@ class Credentials implements CredentialsInterface, FromConfigInterface
      *
      */
     public static function extractCredentialsFromFile($filename, $format, &$extracted) {
+        if (!is_file($filename)) {
+            return false;
+        }
+
+        $need_section = isset($format['section']);
+
         try {
-            $ini = parse_ini_file($filename, true);
+            $ini = parse_ini_file($filename, $need_section);
+            $section = $need_section ? $ini[$format['section']] : $ini;
         } catch(Exception $e) {
             return false;
         }
 
         $ret = false;
         foreach((array)$format['entries'] as $entry) {
-            if (!isset($ini[$entry['section']])) {
-                // section not found in ini
-                continue;
-            }
-            $section = $ini[$entry['section']] ;
-            
             foreach((array)$entry['keys'] as $key_extract => $key_ini) {
                 if (!isset($extracted[$key_extract]) && isset($section[$key_ini])) {
                     $extracted[$key_extract] = $section[$key_ini];

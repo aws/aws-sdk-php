@@ -148,12 +148,14 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
             $this->assertInternalType('array', $format['src']);
             $this->assertInternalType('array', $format['entries']);
 
+            $src =& $format['src'];
             $src_cnt = 0;
-            if (is_array($format['src']['file'])) {
-                $src_cnt += count($format['src']['file']);
+
+            if (isset($src['file']) && is_array($src['file'])) {
+                $src_cnt += count($src['file']);
             }
-            if (is_array($format['src']['env'])) {
-                $src_cnt += count($format['src']['env']);
+            if (isset($src['env']) && is_array($src['env'])) {
+                $src_cnt += count($src['env']);
             }
 
             $this->assertGreaterThan(0, $src_cnt);
@@ -200,9 +202,8 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
             $fn = sprintf("%s/mock/%s.ini", __DIR__, escapeshellcmd($fname));
             $credentials = array();
 
-            // expose the error if mock ini doesn't exist           
+            // raise the error if mock ini doesn't exist           
             Credentials::extractCredentialsFromFile($fn, $format, $credentials);
-
             $this->assertEquals($credentials['key'], $fname.'access');
             $this->assertEquals($credentials['secret'], $fname.'.secret');
         }
