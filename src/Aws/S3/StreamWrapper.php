@@ -375,8 +375,12 @@ class StreamWrapper
         $params = $this->getParams($path);
         $this->clearStatInfo($path);
 
-        if (!$params['Bucket'] || $params['Key']) {
+        if (!$params['Bucket']) {
             return false;
+        }
+
+        if ($params['Key']) {
+            return true;
         }
 
         try {
