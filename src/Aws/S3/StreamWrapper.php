@@ -132,7 +132,7 @@ class StreamWrapper
             stream_wrapper_unregister('s3');
         }
 
-        stream_wrapper_register('s3', __CLASS__, STREAM_IS_URL);
+        stream_wrapper_register('s3', get_called_class(), STREAM_IS_URL);
         self::$client = $client;
     }
 
