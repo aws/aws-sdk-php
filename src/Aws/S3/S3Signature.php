@@ -210,8 +210,12 @@ class S3Signature implements S3SignatureInterface
                 $buffer .= $first ? '?' : '&';
                 $first = false;
                 $buffer .= $key;
-                // Don't add values for sub-resources
-                if ($value !== '' && $value !== QueryString::BLANK) {
+                // Don't add values for empty sub-resources
+                if ($value !== '' &&
+                    $value !== false &&
+                    $value !== null &&
+                    $value !== QueryString::BLANK
+                ) {
                     $buffer .= "={$value}";
                 }
             }
