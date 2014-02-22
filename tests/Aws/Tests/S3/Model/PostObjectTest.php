@@ -43,11 +43,7 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
             ->will($this->returnValue('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
 
         /** @var $client S3Client */
-        $client = $this->getServiceBuilder()->get('s3');
-        $class = new \ReflectionObject($client);
-        $property = $class->getProperty('credentials');
-        $property->setAccessible(true);
-        $property->setValue($client, $credentials);
+        $client = $this->getServiceBuilder()->get('s3', array('credentials' => $credentials));
 
         $this->client = $client;
     }
@@ -141,5 +137,14 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertSame($client2, $postObject->getClient());
         $this->assertSame('bar', $postObject->getBucket());
+    }
+
+    public function testCanHandleDomainsWithDots()
+    {
+        $postObject = new PostObject($this->client, 'foo.bar');
+        $postObject->prepareData();
+
+        $formAttrs = $postObject->getFormAttributes();
+        $this->assertEquals('https://s3.amazonaws.com/foo.bar', $formAttrs['action']);
     }
 }
