@@ -180,6 +180,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model terminateInstances(array $args = array()) {@command Ec2 TerminateInstances}
  * @method Model unassignPrivateIpAddresses(array $args = array()) {@command Ec2 UnassignPrivateIpAddresses}
  * @method Model unmonitorInstances(array $args = array()) {@command Ec2 UnmonitorInstances}
+ * @method waitUntilSpotInstanceRequestFulfilled(array $input) The input array uses the parameters of the DescribeSpotInstanceRequests operation and waiter specific settings
  * @method waitUntilInstanceRunning(array $input) The input array uses the parameters of the DescribeInstances operation and waiter specific settings
  * @method waitUntilInstanceStopped(array $input) The input array uses the parameters of the DescribeInstances operation and waiter specific settings
  * @method waitUntilInstanceTerminated(array $input) The input array uses the parameters of the DescribeInstances operation and waiter specific settings

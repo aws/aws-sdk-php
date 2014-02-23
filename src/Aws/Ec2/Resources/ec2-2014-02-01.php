@@ -15592,6 +15592,20 @@ return array (
             'max_attempts' => 40,
             'acceptor.type' => 'output',
         ),
+        '__SpotInstanceRequestState' => array(
+            'operation' => 'DescribeSpotInstanceRequests',
+            'acceptor.path' => 'SpotInstanceRequests/*/Status/Code',
+        ),
+        'SpotInstanceRequestFulfilled' => array(
+            'extends' => '__SpotInstanceRequestState',
+            'success.value' => 'fulfilled',
+            'failure.value' => array(
+                'schedule-expired',
+                'canceled-before-fulfillment',
+                'bad-parameters',
+                'system-error',
+            )
+        ),
         '__InstanceState' => array(
             'operation' => 'DescribeInstances',
             'acceptor.path' => 'Reservations/*/Instances/*/State/Name',
