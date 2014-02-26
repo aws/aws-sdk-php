@@ -121,7 +121,13 @@ class PostObject extends Collection
 
         // Configure the endpoint/action
         $url = Url::factory($this->client->getBaseUrl());
-        $url->setHost($this->bucket . '.' . $url->getHost());
+        if ($url->getScheme() === 'https' && strpos($this->bucket, '.') !== false) {
+            // Use path-style URLs
+            $url->setPath($this->bucket);
+        } else {
+            // Use virtual-style URLs
+            $url->setHost($this->bucket . '.' . $url->getHost());
+        }
 
         // Setup basic form
         $this->formAttributes = array(
