@@ -1,11 +1,15 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.5.3 (2014-02-27)
+------------------
 
 * Added support for HTTP and HTTPS string-match health checks and HTTPS health checks to the Amazon Route 53 client
 * Added support for the UPSERT action for the Amazon Route 53 ChangeResourceRecordSets operation
+* Added support for SerialNumber and TokenCode to the AssumeRole operation of the IAM Security Token Service (STS).
+* Added support for RequestInterval and FailureThreshold to the Amazon Route53 client.
+* Added support for smooth streaming to the Amazon CloudFront client.
+* Added the us-west-2, eu-west-1, ap-southeast-2, and ap-northeast-1 regions to the AWS Data Pipeline client.
 * Added iterators to the Amazon Kinesis client
 * Updated iterator configurations for all services to match our new iterator config spec (care was taken to continue
   supporting manually-specified configurations in the old format to prevent BC)
@@ -16,10 +20,6 @@ Next Release
 * Fixed an issue with the Amazon S3 client where an exception was thrown when trying to add a default Content-MD5
   header to a request that uses a non-rewindable stream.
 * Updated the Amazon S3 PostObject class to work with CNAME style buckets.
-* Added the us-west-2, eu-west-1, ap-southeast-2, and ap-northeast-1 regions to the AWS Data Pipeline client.
-* Added support for SerialNumber and TokenCode to the AssumeRole operation of the IAM Security Token Service (STS).
-* Added support for RequestInterval and FailureThreshold to the Amazon Route53 client.
-* Added support for smooth streaming to the Amazon CloudFront client.
 
 2.5.2 (2014-01-29)
 ------------------
