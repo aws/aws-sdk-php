@@ -271,6 +271,16 @@ return array (
                             'type' => 'string',
                             'maxLength' => 255,
                         ),
+                        'RequestInterval' => array(
+                            'type' => 'numeric',
+                            'minimum' => 10,
+                            'maximum' => 30,
+                        ),
+                        'FailureThreshold' => array(
+                            'type' => 'numeric',
+                            'minimum' => 1,
+                            'maximum' => 10,
+                        ),
                     ),
                 ),
                 'command.expects' => array(
@@ -704,6 +714,12 @@ return array (
                                 'SearchString' => array(
                                     'type' => 'string',
                                 ),
+                                'RequestInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FailureThreshold' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                     ),
@@ -891,6 +907,12 @@ return array (
                                 'SearchString' => array(
                                     'type' => 'string',
                                 ),
+                                'RequestInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FailureThreshold' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                     ),
@@ -989,6 +1011,12 @@ return array (
                                     ),
                                     'SearchString' => array(
                                         'type' => 'string',
+                                    ),
+                                    'RequestInterval' => array(
+                                        'type' => 'numeric',
+                                    ),
+                                    'FailureThreshold' => array(
+                                        'type' => 'numeric',
                                     ),
                                 ),
                             ),
