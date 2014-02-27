@@ -23,6 +23,27 @@ use Doctrine\Common\Cache\ArrayCache;
 class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 {
     /**
+     *
+     */
+    protected function stripCredentialEnv() {
+        $stripped = array();
+        $keys = array(Credentials::ENV_KEY, Credentials::ENV_SECRET,
+                    Credentials::ENV_CRED_FILE, Credentials::ENV_CONF_FILE);
+
+        foreach($keys as $key) {
+            if (isset($_SERVER[$key])) {
+                $stripped[$key] = $_SERVER[$key];
+                unset($_SERVER[$key]);
+            }
+        }
+        return $stripped;
+    }
+
+    protected function restoreCredentialEnv($stripped) {
+        $_SERVER = array_merge($stripped, $_SERVER);
+    }
+
+    /**
      * @covers Aws\Common\Credentials\Credentials::__construct
      * @covers Aws\Common\Credentials\Credentials::getAccessKeyId
      * @covers Aws\Common\Credentials\Credentials::getSecretKey
@@ -98,6 +119,99 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
+     * @covers Aws\Common\Credentials\Credentials::getVarFromEnv
+     */
+    public function testGetVarFromEnv()
+    {
+        $test_env_name = "__testGetVarFromEnv__";
+
+        $_SERVER[$test_env_name] = $test_env_name;
+        $this->assertEquals($test_env_name, Credentials::getVarFromEnv($test_env_name));
+
+        unset($_SERVER[$test_env_name]);
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::getCredentialFileFormats
+     */
+    public function testCredentialsFileFormats()
+    {
+        $formats = Credentials::getCredentialFileFormats();
+        $this->assertInternalType('array', $formats);
+
+        if (count($formats) < 1) {
+            $this->markTestSkipped('No credential format is defined');
+            return;
+        }
+        
+        foreach($formats as $format) {
+            $this->assertInternalType('array', $format['src']);
+            $this->assertInternalType('array', $format['entries']);
+
+            $src =& $format['src'];
+            $src_cnt = 0;
+
+            if (isset($src['file']) && is_array($src['file'])) {
+                $src_cnt += count($src['file']);
+            }
+            if (isset($src['env']) && is_array($src['env'])) {
+                $src_cnt += count($src['env']);
+            }
+
+            $this->assertGreaterThan(0, $src_cnt);
+
+            foreach($format['entries'] as $entry) {
+                $this->assertArrayHasKey('key', $entry['keys']);
+                $this->assertArrayHasKey('secret', $entry['keys']);
+            }
+        }
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::getCredentialsFromEnv
+     *
+     * @depends testGetVarFromEnv
+     */
+    public function testGetCredentialsFromEnv() {
+        $stripped = $this->stripCredentialEnv();
+        
+        $env_access = Credentials::ENV_KEY;
+        $env_secret = Credentials::ENV_SECRET;
+
+        $_SERVER[$env_access] = $env_secret;
+        $_SERVER[$env_secret] = $env_access;
+
+        $credentials = Credentials::getCredentialsFromEnv();
+
+        $this->assertEquals($credentials['key'], $env_secret);
+        $this->assertEquals($credentials['secret'], $env_access);
+
+        $this->restoreCredentialEnv($stripped);
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::extractCredentialsFromFile
+     *
+     * @depends testCredentialsFileFormats
+     */
+    public function testEstractCredentialsFromFile()
+    {
+        $stripped = $this->stripCredentialEnv();
+
+        foreach(Credentials::getCredentialFileFormats() as $fname => $format) {
+            $fn = sprintf("%s/mock/%s.ini", __DIR__, escapeshellcmd($fname));
+            $credentials = array();
+
+            // raise the error if mock ini doesn't exist           
+            Credentials::extractCredentialsFromFile($fn, $format, $credentials);
+            $this->assertEquals($credentials['key'], $fname.'access');
+            $this->assertEquals($credentials['secret'], $fname.'.secret');
+        }
+
+        $this->restoreCredentialEnv($stripped);
+    }
+
+    /**
      * @covers Aws\Common\Credentials\Credentials::getConfigDefaults
      */
     public function testProvidesListOfCredentialsOptions()
@@ -129,8 +243,13 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFactoryCreatesInstanceProfileWhenNoKeysAreProvided()
     {
+        $old_value = Credentials::$OPT_IGNORE_EXTERNAL;
+        Credentials::$OPT_IGNORE_EXTERNAL = true;
+
         $credentials = Credentials::factory();
         $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $credentials);
+
+        Credentials::$OPT_IGNORE_EXTERNAL = $old_value;
     }
 
     /**

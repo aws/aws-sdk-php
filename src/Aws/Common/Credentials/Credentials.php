@@ -32,6 +32,13 @@ class Credentials implements CredentialsInterface, FromConfigInterface
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_KEY';
+    const ENV_CRED_FILE = 'AWS_CREDENTIAL_FILE';
+    const ENV_CONF_FILE = 'AWS_CONFIG_FILE';
+
+    /**
+     * @var boolean If true, extract credentials from external sources if not specified 
+     */
+    public static $OPT_IGNORE_EXTERNAL = false;
 
     /**
      * @var string AWS Access key ID
@@ -72,6 +79,176 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     }
 
     /**
+     * Get variable from $_SERVER or getenv()
+     *
+     * @param string $key variable name for lookup
+     * @return string
+     */
+    public static function getVarFromEnv($key) {
+        return isset($_SERVER[$key]) ? $_SERVER[$key] : getenv($key);
+    }
+
+    /**
+     * @var array definitions for various config file formats
+     */
+    public static function getCredentialFileFormats() {
+        $dict = array(
+            'aws-cli' => array(
+                'src' => array(
+                    'env' => array(self::ENV_CONF_FILE),
+                ),
+                'entries' => array(
+                    array(
+                        'section' => 'default',
+                        'keys' => array(
+                            'key' => 'aws_access_key_id',
+                            'secret' => 'aws_secret_access_key',
+                        ),
+                    ),
+                ),
+            ),
+             'aws-credential' => array(
+                'src' => array(
+                    'env' => array(self::ENV_CRED_FILE),
+                ),
+                'entries' => array(
+                    array(
+                        'keys' => array(
+                            'key' => 'AWSAccessKeyId',
+                            'secret' => 'AWSSecretKey',
+                        ),
+                    ),
+                ),
+            ),
+            'boto' => array(
+                'src' => array(
+                    'file' => array(
+                        self::getVarFromEnv('HOME').'/.boto',
+                        '/etc/boto.cfg', 
+                    ),
+                    'env' => array(
+                        self::getVarFromEnv(self::ENV_CRED_FILE),
+                    ),
+                ),
+                'entries' => array(
+                    array(
+                        'section' => 'Credentials',
+                        'keys' => array(
+                            'key' => 'aws_access_key_id',
+                            'secret' => 'aws_secret_access_key',
+                        ),
+                    ),
+                ),
+            ),
+        );
+        return $dict;
+    }
+
+    /**
+     * Extract credentials from config files 
+     *
+     * Take extra caution if you have multiple credentials supplied from
+     * each of those config files. Consider using env for better portability, 
+     * pass via `Options` or `factory()`.
+     *
+     * Supported formats:
+     *  - aws-cli
+     *  - boto 
+     *  - aws-credential
+     *
+     * @return array array('key'=>'KEY', 'secret'=>'SECRET') if found, array() otherwise.
+     */
+    public static function getCredentialsFromEnv() {
+        if (self::$OPT_IGNORE_EXTERNAL) {
+            return array();
+        }
+
+        $extracted_env = array();
+
+        if ($envKey = self::getVarFromEnv(self::ENV_KEY)) {
+            $extracted_env['key'] = $envKey;
+        }
+        if ($envSecret = self::getVarFromEnv(self::ENV_SECRET)) {
+            $extracted_env['secret'] = $envSecret;
+        }
+
+        if (count($extracted_env) == 2) {
+            // found key and secret
+            return $extracted_env;
+        }
+
+        foreach (self::getCredentialFileFormats() as $format) {
+            // Assigned by copy, it's safe for primitives, array, and string.
+            // We keep (partial) credentials from env, drop those from other formats, 
+            // and mimic boto's behavior.
+            $extracted = $extracted_env;
+            $src =& $format['src'];
+
+            if (isset($src['env']) && is_array($src['env'])) {
+                foreach ($src['env'] as $env) {
+                    if ($filename = self::getVarFromEnv($env)) {
+                        if (self::extractCredentialsFromFile($filename, $format, $extracted)) {
+                            return $extracted;
+                        }
+                    }
+                }
+            }
+
+            if (isset($src['file']) && is_array($src['file'])) {
+                foreach ($src['file'] as $filename) {
+                    if (self::extractCredentialsFromFile($filename, $format, $extracted)) {
+                        return $extracted;
+                    }
+                }
+            }
+        }
+        
+        return array();
+    }
+
+    
+    /**
+     * Extracts credentials from config file
+     *
+     * Notes:
+     *  - values extracted are appended to $extracted
+     *  - does not override existing $extracted entries
+     *
+     * @param string $filename File to be parsed
+     * @param string $format @see @CONFIG_FORMATS
+     * @param array $extracted holds credentials
+     *
+     * @return bool true if all keys were set, false otherwise
+     *
+     */
+    public static function extractCredentialsFromFile($filename, $format, &$extracted) {
+        if (!is_file($filename)) {
+            return false;
+        }
+
+        $need_section = isset($format['section']);
+
+        try {
+            $ini = parse_ini_file($filename, $need_section);
+            $section = $need_section ? $ini[$format['section']] : $ini;
+        } catch(Exception $e) {
+            return false;
+        }
+
+        $ret = false;
+        foreach((array)$format['entries'] as $entry) {
+            foreach((array)$entry['keys'] as $key_extract => $key_ini) {
+                if (!isset($extracted[$key_extract]) && isset($section[$key_ini])) {
+                    $extracted[$key_extract] = $section[$key_ini];
+                    $ret = true;
+                }
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
      * Factory method for creating new credentials.  This factory method will
      * create the appropriate credentials object with appropriate decorators
      * based on the passed configuration options.
@@ -96,12 +273,9 @@ class Credentials implements CredentialsInterface, FromConfigInterface
 
         // Create the credentials object
         if (!$config[Options::KEY] || !$config[Options::SECRET]) {
-            // No keys were provided, so attempt to retrieve some from the environment
-            $envKey = isset($_SERVER[self::ENV_KEY]) ? $_SERVER[self::ENV_KEY] : getenv(self::ENV_KEY);
-            $envSecret = isset($_SERVER[self::ENV_SECRET]) ? $_SERVER[self::ENV_SECRET] : getenv(self::ENV_SECRET);
-            if ($envKey && $envSecret) {
-                // Use credentials set in the environment variables
-                $credentials = new static($envKey, $envSecret);
+            if ($extracted = self::getCredentialsFromEnv()) {
+                // Use credentials set in the configured credential file
+                $credentials = new static($extracted['key'], $extracted['secret']);
             } else {
                 // Use instance profile credentials (available on EC2 instances)
                 $credentials = new RefreshableInstanceProfileCredentials(
