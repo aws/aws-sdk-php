@@ -19,6 +19,7 @@ Next Release
 * Added the us-west-2, eu-west-1, ap-southeast-2, and ap-northeast-1 regions to the AWS Data Pipeline client.
 * Added support for SerialNumber and TokenCode to the AssumeRole operation of the IAM Security Token Service (STS).
 * Added support for RequestInterval and FailureThreshold to the Amazon Route53 client.
+* Added support for smooth streaming to the Amazon CloudFront client.
 
 2.5.2 (2014-01-29)
 ------------------
