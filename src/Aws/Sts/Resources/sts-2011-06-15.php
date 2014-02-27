@@ -126,6 +126,18 @@ return array (
                     'minLength' => 2,
                     'maxLength' => 96,
                 ),
+                'SerialNumber' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 9,
+                    'maxLength' => 256,
+                ),
+                'TokenCode' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 6,
+                    'maxLength' => 6,
+                ),
             ),
             'errorResponses' => array(
                 array(

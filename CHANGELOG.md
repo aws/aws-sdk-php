@@ -17,6 +17,7 @@ Next Release
   header to a request that uses a non-rewindable stream.
 * Updated the Amazon S3 PostObject class to work with CNAME style buckets.
 * Added the us-west-2, eu-west-1, ap-southeast-2, and ap-northeast-1 regions to the AWS Data Pipeline client.
+* Added support for SerialNumber and TokenCode to the AssumeRole operation of the IAM Security Token Service (STS).
 
 2.5.2 (2014-01-29)
 ------------------
