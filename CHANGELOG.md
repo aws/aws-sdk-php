@@ -13,6 +13,9 @@ Next Release
   operations (this is not considered a BC since we have confirmed that these operations are not used by customers)
 * Updated the Amazon Route 53 client to use the 2013-04-01 API version
 * Fixed several iterator configurations for various services to better support existing operations and parameters
+* Fixed an issue with the Amazon S3 client where an exception was thrown when trying to add a default Content-MD5
+  header to a request that uses a non-rewindable stream.
+* Updated the Amazon S3 PostObject class to work with CNAME style buckets.
 
 2.5.2 (2014-01-29)
 ------------------
