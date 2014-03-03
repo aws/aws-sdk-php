@@ -45,8 +45,7 @@ if (!isset($_SERVER['CONFIG'])) {
     $serviceConfig = $_SERVER['CONFIG'] = dirname(__DIR__) . '/test_services.json';
     $_SERVER['CONFIG'] = $serviceConfig;
     if (!file_exists($serviceConfig)) {
-        die("test_services.json does not exist.\n"
-            . "Please run phing test-init or copy test_services.json.dist to test_services.json\n\n");
+        copy($serviceConfig . '.dist', $serviceConfig);
     }
 }
 
