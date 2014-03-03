@@ -23,6 +23,7 @@ use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\FromConfigInterface;
 use Guzzle\Cache\CacheAdapterInterface;
 use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Common\Collection;
 
 /**
  * Basic implementation of the AWSCredentials interface that allows callers to
@@ -32,25 +33,18 @@ class Credentials implements CredentialsInterface, FromConfigInterface
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET = 'AWS_SECRET_KEY';
+    const ENV_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY';
 
-    /**
-     * @var string AWS Access key ID
-     */
+    /** @var string AWS Access key ID */
     protected $key;
 
-    /**
-     * @var string AWS Secret access key
-     */
+    /** @var string AWS Secret access key */
     protected $secret;
 
-    /**
-     * @var string Security token
-     */
+    /** @var string Security token */
     protected $token;
 
-    /**
-     * @var int Time to die of token
-     */
+    /** @var int Time to die of token */
     protected $ttd;
 
     /**
@@ -96,19 +90,7 @@ class Credentials implements CredentialsInterface, FromConfigInterface
 
         // Create the credentials object
         if (!$config[Options::KEY] || !$config[Options::SECRET]) {
-            // No keys were provided, so attempt to retrieve some from the environment
-            $envKey = isset($_SERVER[self::ENV_KEY]) ? $_SERVER[self::ENV_KEY] : getenv(self::ENV_KEY);
-            $envSecret = isset($_SERVER[self::ENV_SECRET]) ? $_SERVER[self::ENV_SECRET] : getenv(self::ENV_SECRET);
-            if ($envKey && $envSecret) {
-                // Use credentials set in the environment variables
-                $credentials = new static($envKey, $envSecret);
-            } else {
-                // Use instance profile credentials (available on EC2 instances)
-                $credentials = new RefreshableInstanceProfileCredentials(
-                    new static('', '', '', 1),
-                    $config[Options::CREDENTIALS_CLIENT]
-                );
-            }
+            $credentials = self::createFromEnvironment($config);
             // If no cache key was set, use the crc32 hostname of the server
             $cacheKey = $cacheKey ?: 'credentials_' . crc32(gethostname());
         } else {
@@ -126,26 +108,7 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         // Check if the credentials are refreshable, and if so, configure caching
         $cache = $config[Options::CREDENTIALS_CACHE];
         if ($cacheKey && $cache) {
-            if ($cache === 'true' || $cache === true) {
-                // If no cache adapter was provided, then create one for the user
-                // @codeCoverageIgnoreStart
-                if (!extension_loaded('apc')) {
-                    throw new RequiredExtensionNotLoadedException('PHP has not been compiled with APC. Unable to cache '
-                        . 'the credentials.');
-                } elseif (!class_exists('Doctrine\Common\Cache\ApcCache')) {
-                    throw new RuntimeException(
-                        'Cannot set ' . Options::CREDENTIALS_CACHE . ' to true because the Doctrine cache component is '
-                        . 'not installed. Either install doctrine/cache or pass in an instantiated '
-                        . 'Guzzle\Cache\CacheAdapterInterface object'
-                    );
-                }
-                // @codeCoverageIgnoreEnd
-                $cache = new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache());
-            } elseif (!($cache instanceof CacheAdapterInterface)) {
-                throw new InvalidArgumentException('Unable to utilize caching with the specified options');
-            }
-            // Decorate the credentials with a cache
-            $credentials = new CacheableCredentials($credentials, $cache, $cacheKey);
+            $credentials = self::createCache($credentials, $cache, $cacheKey);
         }
 
         return $credentials;
@@ -168,9 +131,6 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         $this->ttd = $expiration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize()
     {
         return json_encode(array(
@@ -181,9 +141,6 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize($serialized)
     {
         $data = json_decode($serialized, true);
@@ -193,49 +150,31 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         $this->ttd    = $data[Options::TOKEN_TTD];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAccessKeyId()
     {
         return $this->key;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSecretKey()
     {
         return $this->secret;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSecurityToken()
     {
         return $this->token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExpiration()
     {
         return $this->ttd;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isExpired()
     {
         return $this->ttd !== null && time() >= $this->ttd;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAccessKeyId($key)
     {
         $this->key = $key;
@@ -243,9 +182,6 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSecretKey($secret)
     {
         $this->secret = $secret;
@@ -253,9 +189,6 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSecurityToken($token)
     {
         $this->token = $token;
@@ -263,13 +196,74 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setExpiration($timestamp)
     {
         $this->ttd = $timestamp;
 
         return $this;
+    }
+
+    /**
+     * When no keys are provided, attempt to create them based on the
+     * environment or instance profile credentials.
+     *
+     * @param array|Collection $config
+     *
+     * @return CredentialsInterface
+     */
+    private static function createFromEnvironment($config)
+    {
+        $envKey = isset($_SERVER[self::ENV_KEY])
+            ? $_SERVER[self::ENV_KEY]
+            : getenv(self::ENV_KEY);
+
+        $envSecret = isset($_SERVER[self::ENV_SECRET])
+            ? $_SERVER[self::ENV_SECRET]
+            : getenv(self::ENV_SECRET);
+
+        // Use AWS_SECRET_ACCESS_KEY if AWS_SECRET_KEY was not set.
+        if (!$envSecret) {
+            $envSecret = isset($_SERVER[self::ENV_SECRET_ACCESS_KEY])
+                ? $_SERVER[self::ENV_SECRET_ACCESS_KEY]
+                : getenv(self::ENV_SECRET_ACCESS_KEY);
+        }
+
+        if ($envKey && $envSecret) {
+            // Use credentials set in the environment variables
+            $credentials = new static($envKey, $envSecret);
+        } else {
+            // Use instance profile credentials (available on EC2 instances)
+            $credentials = new RefreshableInstanceProfileCredentials(
+                new static('', '', '', 1),
+                $config[Options::CREDENTIALS_CLIENT]
+            );
+        }
+
+        return $credentials;
+    }
+
+    private static function createCache(CredentialsInterface $credentials, $cache, $cacheKey)
+    {
+        if ($cache === 'true' || $cache === true) {
+            // If no cache adapter was provided, then create one for the user
+            // @codeCoverageIgnoreStart
+            if (!extension_loaded('apc')) {
+                throw new RequiredExtensionNotLoadedException('PHP has not been compiled with APC. Unable to cache '
+                    . 'the credentials.');
+            } elseif (!class_exists('Doctrine\Common\Cache\ApcCache')) {
+                throw new RuntimeException(
+                    'Cannot set ' . Options::CREDENTIALS_CACHE . ' to true because the Doctrine cache component is '
+                    . 'not installed. Either install doctrine/cache or pass in an instantiated '
+                    . 'Guzzle\Cache\CacheAdapterInterface object'
+                );
+            }
+            // @codeCoverageIgnoreEnd
+            $cache = new DoctrineCacheAdapter(new \Doctrine\Common\Cache\ApcCache());
+        } elseif (!($cache instanceof CacheAdapterInterface)) {
+            throw new InvalidArgumentException('Unable to utilize caching with the specified options');
+        }
+
+        // Decorate the credentials with a cache
+        return new CacheableCredentials($credentials, $cache, $cacheKey);
     }
 }
