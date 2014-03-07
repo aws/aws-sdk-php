@@ -19,11 +19,10 @@ namespace Aws\CloudFront\Enum;
 use Aws\Common\Enum;
 
 /**
- * Contains enumerable ViewerProtocolPolicy values
+ * Contains enumerable SSLSupportMethod values
  */
-class ViewerProtocolPolicy extends Enum
+class SSLSupportMethod extends Enum
 {
-    const ALLOW_ALL = 'allow-all';
-    const HTTPS_ONLY = 'https-only';
-    const REDIRECT_TO_HTTPS = 'redirect-to-https';
+    const SNI_ONLY = 'sni-only';
+    const VIP = 'vip';
 }

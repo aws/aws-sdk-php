@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Updated the Amazon CloudFront client to use the 2014-01-31 API version
+
 2.5.3 (2014-02-27)
 ------------------
 
