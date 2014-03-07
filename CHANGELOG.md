@@ -4,7 +4,11 @@ CHANGELOG
 Next Release
 ------------
 
-* Updated the Amazon CloudFront client to use the 2014-01-31 API version
+* Added support for [access logs](http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/access-log-collection.html)
+  to the Elastic Load Balancing client
+* Added support for the `AWS_SECRET_ACCESS_KEY` environment variables and cleaned up some credentials logic
+* Updated the Amazon CloudFront client to use the 2014-01-31 API version. See [their release
+  notes](http://aws.amazon.com/releasenotes/1900016175520505)
 
 2.5.3 (2014-02-27)
 ------------------

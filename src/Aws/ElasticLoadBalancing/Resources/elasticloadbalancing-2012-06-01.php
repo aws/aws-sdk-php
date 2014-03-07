@@ -1091,7 +1091,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'ModifyLoadBalancerAttributesOutput',
             'responseType' => 'model',
             'parameters' => array(
                 'Action' => array(
@@ -1121,6 +1121,25 @@ return array (
                                     'required' => true,
                                     'type' => 'boolean',
                                     'format' => 'boolean-string',
+                                ),
+                            ),
+                        ),
+                        'AccessLog' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'required' => true,
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                                'S3BucketName' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmitInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'S3BucketPrefix' => array(
+                                    'type' => 'string',
                                 ),
                             ),
                         ),
@@ -1491,6 +1510,23 @@ return array (
                                 ),
                             ),
                         ),
+                        'AccessLog' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'S3BucketName' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmitInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'S3BucketPrefix' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1837,6 +1873,47 @@ return array (
                         'name' => 'AvailabilityZone',
                         'type' => 'string',
                         'sentAs' => 'member',
+                    ),
+                ),
+            ),
+        ),
+        'ModifyLoadBalancerAttributesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'LoadBalancerName' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'LoadBalancerAttributes' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'CrossZoneLoadBalancing' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                            ),
+                        ),
+                        'AccessLog' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'S3BucketName' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmitInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'S3BucketPrefix' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
