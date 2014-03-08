@@ -17,6 +17,7 @@
 namespace Aws\S3;
 
 use Aws\Common\Exception\RuntimeException;
+use Aws\S3\Exception\BucketAlreadyExistsException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\Iterator\ListObjectsIterator;
@@ -365,7 +366,7 @@ class StreamWrapper
      * @param string $path    Directory which should be created.
      * @param int    $mode    Permissions. 700-range permissions map to ACL_PUBLIC. 600-range permissions map to
      *                        ACL_AUTH_READ. All other permissions map to ACL_PRIVATE. Expects octal form.
-     * @param int    $options A bitwise mask of values, such as STREAM_MKDIR_RECURSIVE. (unused)
+     * @param int    $options A bitwise mask of values, such as STREAM_MKDIR_RECURSIVE.
      *
      * @return bool
      * @link http://www.php.net/manual/en/streamwrapper.mkdir.php
@@ -375,10 +376,34 @@ class StreamWrapper
         $params = $this->getParams($path);
         $this->clearStatInfo($path);
 
-        if (!$params['Bucket'] || $params['Key']) {
+        if (!$params['Bucket']) {
             return false;
         }
 
+        if ($params['Key'] && 0 !== strrpos($params['Key'], '/')) {
+            $params['Key'] .= '/';
+            $path .= '/';
+        }
+
+        if (is_dir($path)) {
+            return $this->triggerError("Directory already exists: {$path}", $options);
+        }
+
+        return $this->createDir($params, $mode, $options);
+    }
+
+    /**
+     * Does create a directory, all the neccessary checks happened before
+     *
+     * @param array $params  A result of StreamWrapper::getParams()
+     * @param int   $mode    Permissions. 700-range permissions map to ACL_PUBLIC. 600-range permissions map to
+     *                       ACL_AUTH_READ. All other permissions map to ACL_PRIVATE. Expects octal form.
+     * @param int   $options A bitwise mask of values, such as STREAM_MKDIR_RECURSIVE.
+     *
+     * @return bool
+     */
+    protected function createDir(array $params, $mode, $options)
+    {
         try {
             if (!isset($params['ACL'])) {
                 $mode = decoct($mode);
@@ -390,10 +415,23 @@ class StreamWrapper
                     $params['ACL'] = 'private';
                 }
             }
-            self::$client->createBucket($params);
+
+            $bucketParams = $params;
+            unset($bucketParams['Key']);
+
+            try {
+                self::$client->createBucket($bucketParams);
+            } catch (BucketAlreadyExistsException $e) {
+            }
+
+            if (isset($params['Key'])) {
+                $params['Body'] = '';
+                self::$client->putObject($params);
+            }
+
             return true;
         } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
+            return $this->triggerError($e->getMessage(), $options);
         }
     }
 
