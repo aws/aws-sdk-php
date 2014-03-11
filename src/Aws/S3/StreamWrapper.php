@@ -373,16 +373,15 @@ class StreamWrapper
      */
     public function mkdir($path, $mode, $options)
     {
+        if (0 !== strrpos($path, '/')) {
+            $path .= '/';
+        }
+
         $params = $this->getParams($path);
         $this->clearStatInfo($path);
 
         if (!$params['Bucket']) {
             return false;
-        }
-
-        if ($params['Key'] && 0 !== strrpos($params['Key'], '/')) {
-            $params['Key'] .= '/';
-            $path .= '/';
         }
 
         if (is_dir($path)) {
@@ -422,9 +421,12 @@ class StreamWrapper
             try {
                 self::$client->createBucket($bucketParams);
             } catch (BucketAlreadyExistsException $e) {
+                if (!$params['Key']) {
+                    throw $e;
+                }
             }
 
-            if (isset($params['Key'])) {
+            if ($params['Key']) {
                 $params['Body'] = '';
                 self::$client->putObject($params);
             }
