@@ -66,7 +66,7 @@ class DownloadSyncBuilderTest extends \Guzzle\Tests\GuzzleTestCase
             ->setClient($this->getServiceBuilder()->get('s3', true))
             ->setBucket('Foo')
             ->setDirectory(__DIR__)
-            ->setSourceIterator(new \ArrayIterator(array(__FILE__)))
+            ->setSourceIterator(new \ArrayIterator(array(new \SplFileInfo(__FILE__))))
             ->build();
 
         return array($sync, $out);

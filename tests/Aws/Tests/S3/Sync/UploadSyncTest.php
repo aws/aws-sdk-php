@@ -18,7 +18,6 @@ namespace Aws\Tests\S3\Sync;
 
 use Aws\S3\Sync\KeyConverter;
 use Aws\S3\Sync\UploadSync;
-use Aws\S3\Sync\UploadSyncBuilder;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -27,6 +26,20 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    private $tmpFile;
+
+    public function setUp()
+    {
+        $this->tmpFile = null;
+    }
+
+    public function tearDown()
+    {
+        if ($this->tmpFile) {
+            unlink($this->tmpFile);
+        }
+    }
+
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage failed to open stream
@@ -83,11 +96,11 @@ class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
     protected function getSplFile($filename, $size = 4)
     {
         $file = $this->getMockBuilder('SplFileInfo')
-            ->setMethods(array('getPathName', 'getSize'))
+            ->setMethods(array('getPathName', 'getRealPath', 'getSize'))
             ->disableOriginalConstructor()
             ->getMock();
         $file->expects($this->once())
-            ->method('getPathName')
+            ->method('getRealPath')
             ->will($this->returnValue($filename));
         $file->expects($this->any())
             ->method('getSize')
@@ -114,7 +127,7 @@ class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
         $ref = new \ReflectionMethod($sync, 'createTransferAction');
         $ref->setAccessible(true);
         $result = $ref->invoke($sync, $this->getSplFile($path));
-        unlink($path);
+        $this->tmpFile = $path;
 
         return $result;
     }

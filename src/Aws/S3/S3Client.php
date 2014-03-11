@@ -549,7 +549,13 @@ class S3Client extends AbstractClient
      */
     public function uploadDirectory($directory, $bucket, $keyPrefix = null, array $options = array())
     {
-        $options = Collection::fromConfig($options, array('base_dir' => $directory));
+        $options = Collection::fromConfig(
+            $options,
+            array(
+                'base_dir' => realpath($directory) ?: $directory
+            )
+        );
+
         $builder = $options['builder'] ?: UploadSyncBuilder::getInstance();
         $builder->uploadFromDirectory($directory)
             ->setClient($this)
