@@ -17,6 +17,7 @@
 namespace Aws\Tests\S3;
 
 use Aws\S3\S3Signature;
+use Guzzle\Http\Message\Request;
 
 /**
  * @covers Aws\S3\S3Signature
@@ -267,5 +268,27 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
         } else {
             $this->assertFalse($request->hasHeader('x-amz-security-token'));
         }
+    }
+
+    public function testCreatesPreSignedUrlWithXAmzHeaders()
+    {
+        $signature = new S3Signature();
+        $request = new Request('GET', 'https://s3.amazonaws.com', array(
+            'X-Amz-Acl' => 'public-read'
+        ));
+        $c = $this->getServiceBuilder()->get('s3');
+        $request->setClient($c);
+        $this->assertContains(
+            'x-amz-acl:public-read',
+            $signature->createCanonicalizedString($request, time())
+        );
+        $this->assertContains(
+            '&x-amz-acl=public-read',
+            $signature->createPresignedUrl(
+                $request,
+                $c->getCredentials(),
+                time()
+            )
+        );
     }
 }

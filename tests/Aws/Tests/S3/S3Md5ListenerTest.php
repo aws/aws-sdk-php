@@ -19,7 +19,6 @@ namespace Aws\Tests\S3;
 use Aws\S3\S3Md5Listener;
 use Aws\S3\S3Signature;
 use Aws\S3\S3SignatureV4;
-use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Common\Event;
 
 /**
@@ -36,9 +35,17 @@ class S3Md5ListenerTest extends \Guzzle\Tests\GuzzleTestCase
      * @param bool   $useBody        Set to true to add a body to the request.
      * @param string $md5            Set to a string that the MD5 will be
      *                               calculated as.
+     * @param int    $bodySize       What size to return for the body
+     *
+     * @return array
      */
-    private function getCommand($contentMd5Data, $md5Param, $useBody, $md5)
-    {
+    private function getCommand(
+        $contentMd5Data,
+        $md5Param,
+        $useBody,
+        $md5,
+        $bodySize = 1
+    ) {
         $operation = $this->getMockBuilder('Guzzle\Service\Description\Operation')
             ->disableOriginalConstructor()
             ->setMethods(array('getData', 'hasParam'))
@@ -61,37 +68,36 @@ class S3Md5ListenerTest extends \Guzzle\Tests\GuzzleTestCase
             ->setMethods(array('getBody'))
             ->getMock();
 
+        $body = null;
         if ($useBody) {
+            $stream = fopen('php://temp', 'r+');
+            fwrite($stream, 'f');
+            rewind($stream);
             $body = $this->getMockBuilder('Guzzle\Http\EntityBody')
-                ->disableOriginalConstructor()
+                ->setConstructorArgs(array($stream, $bodySize))
                 ->setMethods(array('getContentMd5'))
                 ->getMock();
             $body->expects($this->any())
                 ->method('getContentMd5')
                 ->with(true, true)
                 ->will($this->returnValue($md5));
-            $request->expects($this->any())
-                ->method('getBody')
-                ->will($this->returnValue($body));
-        } else {
-            $request->expects($this->any())
-                ->method('getBody')
-                ->will($this->returnValue(null));
         }
 
+        $request->expects($this->any())
+            ->method('getBody')
+            ->will($this->returnValue($body));
+
+        $data = array();
         if ($md5Param) {
             if ($md5Param === 1) {
-                $value = true;
+                $data = array('ContentMD5' => true);
             } elseif ($md5Param === 2) {
-                $value = null;
+                $data = array('ContentMD5' => null);
             } elseif ($md5Param === 3) {
-                $value = false;
+                $data = array('ContentMD5' => false);
             } else {
                 $this->fail('Invalid md5Param value');
             }
-            $data = array('ContentMD5' => $value);
-        } else {
-            $data = array();
         }
 
         $command = $this->getMockBuilder('Guzzle\Service\Command\AbstractCommand')
@@ -169,6 +175,16 @@ class S3Md5ListenerTest extends \Guzzle\Tests\GuzzleTestCase
     public function testDoesNotAddContentMd5WhenNoBodyIsSet()
     {
         list($command, $request) = $this->getCommand(false, 1, false, 'abcd');
+        $event = new Event(array('command' => $command));
+        $signature = new S3Signature();
+        $listener = new S3Md5Listener($signature);
+        $listener->onCommandAfterPrepare($event);
+        $this->assertNull($request->getHeader('Content-MD5'));
+    }
+
+    public function testDoesNotAddContentMd5WhenBodyIsZeroLength()
+    {
+        list($command, $request) = $this->getCommand(false, 1, true, null, 0);
         $event = new Event(array('command' => $command));
         $signature = new S3Signature();
         $listener = new S3Md5Listener($signature);

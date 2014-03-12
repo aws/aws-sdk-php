@@ -593,6 +593,37 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * Create a presigned URL with a command object that has x-amz-* headers.
+     *
+     * @depends testGetObjectWithSaveAs
+     */
+    public function testCreatePresignedUrlWithAcl()
+    {
+        $this->client->waitUntilBucketExists(array('Bucket' => $this->bucket));
+        $client = $this->client;
+        $bucket = $this->bucket;
+
+        $command = $client->getCommand('PutObject', array(
+            'Bucket'       => $bucket,
+            'Key'          => 'preput',
+            'ACL'          => 'public-read',
+            'Content-Type' => 'plain/text',
+            'Body'         => ''
+        ));
+
+        $signedUrl = $command->createPresignedUrl('+10 minutes');
+
+        $ch = curl_init($signedUrl);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: plain/text'
+        ));
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'abc123');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_exec($ch);
+    }
+
+    /**
      * Clear the contents and delete a bucket
      *
      * @depends testGetObjectUrlWithSessionCredentials
