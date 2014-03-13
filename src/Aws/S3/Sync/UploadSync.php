@@ -38,10 +38,11 @@ class UploadSync extends AbstractSync
     protected function createTransferAction(\SplFileInfo $file)
     {
         // Open the file for reading
-        $filename = $file->getPathName();
+        $filename = $file->getRealPath();
+
         if (!($resource = fopen($filename, 'r'))) {
             // @codeCoverageIgnoreStart
-            throw new RuntimeException("Could not open {$filename} for reading");
+            throw new RuntimeException('Could not open ' . $file->getPathname() . ' for reading');
             // @codeCoverageIgnoreEnd
         }
 

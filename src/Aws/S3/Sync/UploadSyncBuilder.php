@@ -40,7 +40,7 @@ class UploadSyncBuilder extends AbstractSyncBuilder
      */
     public function uploadFromDirectory($path)
     {
-        $this->baseDir = $path;
+        $this->baseDir = realpath($path);
         $this->sourceIterator = $this->filterIterator(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(
             $path,
             FI::SKIP_DOTS | FI::UNIX_PATHS | FI::FOLLOW_SYMLINKS
