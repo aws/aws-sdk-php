@@ -275,63 +275,56 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertFalse(mkdir('s3://'));
     }
 
-    public function testCreatingAlreadyExistingBucketReturnsFalse()
+    /**
+     * @expectedExceptionMessage Directory already exists: s3://already-existing-bucket
+     * @expectedException \PHPUnit_Framework_Error_Warning
+     */
+    public function testCreatingAlreadyExistingBucketRaisesError()
     {
         $this->setMockResponse($this->client, new Response(200));
-        $this->assertFalse(@mkdir('s3://already-existing-bucket'));
+        mkdir('s3://already-existing-bucket');
     }
 
     /**
-     * @dataProvider provideExistingBuckets
-     * @expectedException PHPUnit_Framework_Error_Warning
-     * @expectedExceptionMessage Directory already exists
+     * @expectedExceptionMessage Directory already exists: s3://already-existing-bucket/key
+     * @expectedException \PHPUnit_Framework_Error_Warning
      */
-    public function testCreatingAlreadyExistingBucketRaisesError($path)
+    public function testCreatingAlreadyExistingBucketForKeyRaisesError()
     {
-        $this->setMockResponse($this->client, new Response(200));
-        $this->assertFalse(mkdir($path));
-    }
-
-    public function provideExistingBuckets()
-    {
-        return array(
-            array('s3://already-existing-bucket'),
-            array('s3://already-existing-bucket/existing/key'),
-            array('s3://already-existing-bucket/existing/key/'),
-        );
+        $this->setMockResponse($this->client, array(
+            new Response(200),        // HEAD object response
+        ));
+        mkdir('s3://already-existing-bucket/key');
     }
 
     public function testCreatingBucketWithKeyReturnsTrue()
     {
         $this->setMockResponse($this->client, array(
-            // headObject
-            new Response(404),
-            // listObjects
-            new Response(200),
-            // createBucket
-            new Response(200),
-            // putObject
-            new Response(200)
+            new Response(404), // headObject
+            new Response(200)  // putObject
         ));
         $this->assertTrue(mkdir('s3://foo/bar'));
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage 403 Forbidden
      */
     public function testCreatingBucketWithExceptionRaisesError()
     {
-        $this->setMockResponse($this->client, array(new Response(404), new Response(403)));
-        $this->assertFalse(mkdir('s3://bucket'));
+        $this->setMockResponse($this->client, array(
+            new Response(404),
+            new Response(403))
+        );
+        mkdir('s3://bucket');
     }
 
     public function testCreatingBucketsSetsAclBasedOnPermissions()
     {
         $this->setMockResponse($this->client, array(
-            new Response(404), new Response(204),
-            new Response(404), new Response(204),
-            new Response(404), new Response(204),
+            new Response(404), new Response(204), // mkdir #1
+            new Response(404), new Response(204), // mkdir #2
+            new Response(404), new Response(204), // mkdir #3
         ));
         $this->assertTrue(mkdir('s3://bucket', 0777));
         $this->assertTrue(mkdir('s3://bucket', 0601));

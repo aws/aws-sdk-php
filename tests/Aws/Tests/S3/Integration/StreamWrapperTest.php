@@ -70,6 +70,15 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
         $this->assertFalse(is_file('s3://wefwefwe' . $this->bucket . '/wefweewegr'));
     }
 
+    public function testMkdirs()
+    {
+        $path = 's3://' . $this->bucket . '/subdir';
+        $this->assertTrue(mkdir($path));
+        sleep(1);
+        $this->assertTrue(is_dir($path));
+        unlink($path);
+    }
+
     /**
      * @depends testChecksIfThingsExist
      */

@@ -17,7 +17,6 @@
 namespace Aws\S3;
 
 use Aws\Common\Exception\RuntimeException;
-use Aws\S3\Exception\BucketAlreadyExistsException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Exception\NoSuchKeyException;
 use Aws\S3\Iterator\ListObjectsIterator;
@@ -374,68 +373,18 @@ class StreamWrapper
      */
     public function mkdir($path, $mode, $options)
     {
-        if (0 !== strrpos($path, '/')) {
-            $path .= '/';
-        }
-
         $params = $this->getParams($path);
-        $this->clearStatInfo($path);
-
         if (!$params['Bucket']) {
             return false;
         }
 
-        if (is_dir($path)) {
-            return $this->triggerError("Directory already exists: {$path}", $options);
+        if (!isset($params['ACL'])) {
+            $params['ACL'] = $this->determineAcl($mode);
         }
 
-        return $this->createDir($params, $mode, $options);
-    }
-
-    /**
-     * Does create a directory, all the neccessary checks happened before
-     *
-     * @param array $params  A result of StreamWrapper::getParams()
-     * @param int   $mode    Permissions. 700-range permissions map to ACL_PUBLIC. 600-range permissions map to
-     *                       ACL_AUTH_READ. All other permissions map to ACL_PRIVATE. Expects octal form.
-     * @param int   $options A bitwise mask of values, such as STREAM_MKDIR_RECURSIVE.
-     *
-     * @return bool
-     */
-    protected function createDir(array $params, $mode, $options)
-    {
-        try {
-            if (!isset($params['ACL'])) {
-                $mode = decoct($mode);
-                if ($mode >= 700 and $mode <= 799) {
-                    $params['ACL'] = 'public-read';
-                } elseif ($mode >= 600 && $mode <= 699) {
-                    $params['ACL'] = 'authenticated-read';
-                } else {
-                    $params['ACL'] = 'private';
-                }
-            }
-
-            $bucketParams = $params;
-            unset($bucketParams['Key']);
-
-            try {
-                self::$client->createBucket($bucketParams);
-            } catch (BucketAlreadyExistsException $e) {
-                if (!$params['Key']) {
-                    throw $e;
-                }
-            }
-
-            if ($params['Key']) {
-                $params['Body'] = '';
-                self::$client->putObject($params);
-            }
-
-            return true;
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage(), $options);
-        }
+        return !isset($params['Key']) || $params['Key'] === '/'
+            ? $this->createBucket($path, $params)
+            : $this->createPseudoDirectory($path, $params);
     }
 
     /**
@@ -830,5 +779,78 @@ class StreamWrapper
         if ($path) {
             clearstatcache(true, $path);
         }
+    }
+
+    /**
+     * Creates a bucket for the given parameters.
+     *
+     * @param string $path   Stream wrapper path
+     * @param array  $params A result of StreamWrapper::getParams()
+     *
+     * @return bool Returns true on success or false on failure
+     */
+    private function createBucket($path, array $params)
+    {
+        if (self::$client->doesBucketExist($params['Bucket'])) {
+            return $this->triggerError("Directory already exists: {$path}");
+        }
+
+        try {
+            self::$client->createBucket($params);
+            $this->clearStatInfo($path);
+            return true;
+        } catch (\Exception $e) {
+            return $this->triggerError($e->getMessage());
+        }
+    }
+
+    /**
+     * Creates a pseudo-folder by creating an empty "/" suffixed key
+     *
+     * @param string $path   Stream wrapper path
+     * @param array  $params A result of StreamWrapper::getParams()
+     *
+     * @return bool
+     */
+    private function createPseudoDirectory($path, array $params)
+    {
+        // Ensure the path ends in "/" and the body is empty.
+        $params['Key'] = rtrim($params['Key'], '/') . '/';
+        $params['Body'] = '';
+
+        // Fail if this pseudo directory key already exists
+        if (self::$client->doesObjectExist($params['Bucket'], $params['Key'])) {
+            return $this->triggerError("Directory already exists: {$path}");
+        }
+
+        try {
+            self::$client->putObject($params);
+            $this->clearStatInfo($path);
+            return true;
+        } catch (\Exception $e) {
+            return $this->triggerError($e->getMessage());
+        }
+    }
+
+    /**
+     * Determine the most appropriate ACL based on a file mode.
+     *
+     * @param int $mode File mode
+     *
+     * @return string
+     */
+    private function determineAcl($mode)
+    {
+        $mode = decoct($mode);
+
+        if ($mode >= 700 && $mode <= 799) {
+            return 'public-read';
+        }
+
+        if ($mode >= 600 && $mode <= 699) {
+            return 'authenticated-read';
+        }
+
+        return 'private';
     }
 }
