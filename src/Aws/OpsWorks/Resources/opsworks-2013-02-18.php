@@ -252,6 +252,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
+                'UseOpsworksSecurityGroups' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
                 'CustomCookbooksSource' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -592,6 +597,11 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'json',
                 ),
+                'EbsOptimized' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -697,6 +707,12 @@ return array (
                                 'required' => true,
                                 'type' => 'numeric',
                             ),
+                            'VolumeType' => array(
+                                'type' => 'string',
+                            ),
+                            'Iops' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -757,6 +773,11 @@ return array (
                     ),
                 ),
                 'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'UseEbsOptimizedInstances' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -861,6 +882,11 @@ return array (
                     ),
                 ),
                 'UseCustomCookbooks' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'UseOpsworksSecurityGroups' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -2986,6 +3012,12 @@ return array (
                                 'required' => true,
                                 'type' => 'numeric',
                             ),
+                            'VolumeType' => array(
+                                'type' => 'string',
+                            ),
+                            'Iops' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -3046,6 +3078,11 @@ return array (
                     ),
                 ),
                 'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'UseEbsOptimizedInstances' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -3210,6 +3247,11 @@ return array (
                 ),
                 'DefaultRootDeviceType' => array(
                     'type' => 'string',
+                    'location' => 'json',
+                ),
+                'UseOpsworksSecurityGroups' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
                     'location' => 'json',
                 ),
             ),
@@ -3793,6 +3835,9 @@ return array (
                             'InstallUpdatesOnBoot' => array(
                                 'type' => 'boolean',
                             ),
+                            'EbsOptimized' => array(
+                                'type' => 'boolean',
+                            ),
                         ),
                     ),
                 ),
@@ -3870,6 +3915,12 @@ return array (
                                             'type' => 'numeric',
                                         ),
                                         'Size' => array(
+                                            'type' => 'numeric',
+                                        ),
+                                        'VolumeType' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Iops' => array(
                                             'type' => 'numeric',
                                         ),
                                     ),
@@ -3968,6 +4019,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'InstallUpdatesOnBoot' => array(
+                                'type' => 'boolean',
+                            ),
+                            'UseEbsOptimizedInstances' => array(
                                 'type' => 'boolean',
                             ),
                         ),
@@ -4139,6 +4193,12 @@ return array (
                             'CreatedAt' => array(
                                 'type' => 'string',
                             ),
+                            'VolumeType' => array(
+                                'type' => 'string',
+                            ),
+                            'Iops' => array(
+                                'type' => 'numeric',
+                            ),
                         ),
                     ),
                 ),
@@ -4192,6 +4252,9 @@ return array (
                         'Name' => array(
                             'type' => 'string',
                         ),
+                        'Arn' => array(
+                            'type' => 'string',
+                        ),
                         'LayersCount' => array(
                             'type' => 'numeric',
                         ),
@@ -4205,6 +4268,9 @@ return array (
                                     'type' => 'numeric',
                                 ),
                                 'ConnectionLost' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Online' => array(
                                     'type' => 'numeric',
                                 ),
                                 'Pending' => array(
@@ -4229,6 +4295,9 @@ return array (
                                     'type' => 'numeric',
                                 ),
                                 'Stopped' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Stopping' => array(
                                     'type' => 'numeric',
                                 ),
                                 'Terminated' => array(
@@ -4258,6 +4327,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'Name' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
                                 'type' => 'string',
                             ),
                             'Region' => array(
@@ -4305,6 +4377,9 @@ return array (
                                 ),
                             ),
                             'UseCustomCookbooks' => array(
+                                'type' => 'boolean',
+                            ),
+                            'UseOpsworksSecurityGroups' => array(
                                 'type' => 'boolean',
                             ),
                             'CustomCookbooksSource' => array(
@@ -4484,6 +4559,12 @@ return array (
                             ),
                             'AvailabilityZone' => array(
                                 'type' => 'string',
+                            ),
+                            'VolumeType' => array(
+                                'type' => 'string',
+                            ),
+                            'Iops' => array(
+                                'type' => 'numeric',
                             ),
                         ),
                     ),

@@ -1,14 +1,16 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.5.4 (2014-03-20)
+------------------
 
 * Added support for [access logs](http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/access-log-collection.html)
   to the Elastic Load Balancing client.
+* Updated the Elastic Load Balancing client to the latest API version.
 * Added support for the `AWS_SECRET_ACCESS_KEY` environment variables.
 * Updated the Amazon CloudFront client to use the 2014-01-31 API version. See [their release
   notes](http://aws.amazon.com/releasenotes/1900016175520505).
+* Updates the AWS OpsWorks client to the latest API version.
 * Amazon S3 Stream Wrapper now works correctly with pseudo folder keys created by the AWS Management Console.
 * Amazon S3 Stream Wrapper now implements `mkdir()` for nested folders similar to the AWS Management Console.
 * Addressed an issue with Amazon S3 presigned-URLs where X-Amz-* headers were not being added to the query string.

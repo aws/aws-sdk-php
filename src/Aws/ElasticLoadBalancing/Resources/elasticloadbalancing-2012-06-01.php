@@ -1143,6 +1143,19 @@ return array (
                                 ),
                             ),
                         ),
+                        'ConnectionDraining' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'required' => true,
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                                'Timeout' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1524,6 +1537,17 @@ return array (
                                 ),
                                 'S3BucketPrefix' => array(
                                     'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ConnectionDraining' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'Timeout' => array(
+                                    'type' => 'numeric',
                                 ),
                             ),
                         ),
@@ -1911,6 +1935,17 @@ return array (
                                 ),
                                 'S3BucketPrefix' => array(
                                     'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ConnectionDraining' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'Timeout' => array(
+                                    'type' => 'numeric',
                                 ),
                             ),
                         ),
