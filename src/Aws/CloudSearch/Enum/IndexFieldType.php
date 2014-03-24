@@ -24,6 +24,15 @@ use Aws\Common\Enum;
 class IndexFieldType extends Enum
 {
     const UINT = 'uint';
+    const INT = 'int';
+    const DOUBLE = 'double';
     const LITERAL = 'literal';
     const TEXT = 'text';
+    const DATE = 'date';
+    const LATLON = 'latlon';
+    const INT_ARRAY = 'int-array';
+    const DOUBLE_ARRAY = 'double-array';
+    const LITERAL_ARRAY = 'literal-array';
+    const TEXT_ARRAY = 'text-array';
+    const DATE_ARRAY = 'date-array';
 }
