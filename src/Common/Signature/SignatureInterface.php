@@ -17,7 +17,7 @@
 namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
-use Guzzle\Http\Message\RequestInterface;
+use GuzzleHttp\Message\RequestInterface;
 
 /**
  * Interface used to provide interchangeable strategies for signing requests
@@ -30,8 +30,11 @@ interface SignatureInterface
      * provided AWS account credentials and adding the required headers to the
      * request.
      *
-     * @param RequestInterface     $request     Request to add a signature to
+     * @param RequestInterface     $request     Request to sign
      * @param CredentialsInterface $credentials Signing credentials
      */
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials);
+    public function signRequest(
+        RequestInterface $request,
+        CredentialsInterface $credentials
+    );
 }

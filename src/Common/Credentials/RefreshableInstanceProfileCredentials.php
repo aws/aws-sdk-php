@@ -25,9 +25,7 @@ use Aws\Common\Exception\InstanceProfileCredentialsException;
  */
 class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentials
 {
-    /**
-     * @var InstanceMetadataClient
-     */
+    /** @var InstanceMetadataClient */
     protected $client;
 
     /**
@@ -36,8 +34,10 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
      * @param CredentialsInterface   $credentials Credentials to adapt
      * @param InstanceMetadataClient $client      Client used to get new credentials
      */
-    public function __construct(CredentialsInterface $credentials, InstanceMetadataClient $client = null)
-    {
+    public function __construct(
+        CredentialsInterface $credentials,
+        InstanceMetadataClient $client = null
+    ) {
         $this->credentials = $credentials;
         $this->client = $client ?: InstanceMetadataClient::factory();
     }

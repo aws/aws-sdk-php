@@ -16,22 +16,16 @@
 
 namespace Aws\Common\Credentials;
 
-use Guzzle\Cache\CacheAdapterInterface;
-
 /**
  * Credentials decorator used to implement caching credentials
  */
 class CacheableCredentials extends AbstractRefreshableCredentials
 {
-    /**
-     * @var CacheAdapterInterface Cache adapter used to store credentials
-     */
-    protected $cache;
+    /** @var CacheAdapterInterface Cache adapter used to store credentials */
+    private $cache;
 
-    /**
-     * @var string Cache key used to store the credentials
-     */
-    protected $cacheKey;
+    /** @var string Cache key used to store the credentials */
+    private $cacheKey;
 
     /**
      * CacheableCredentials is a decorator that decorates other credentials
@@ -40,8 +34,11 @@ class CacheableCredentials extends AbstractRefreshableCredentials
      * @param CacheAdapterInterface $cache       Cache to use to store credentials
      * @param string                $cacheKey    Cache key of the credentials
      */
-    public function __construct(CredentialsInterface $credentials, CacheAdapterInterface $cache, $cacheKey)
-    {
+    public function __construct(
+        CredentialsInterface $credentials,
+        CacheAdapterInterface $cache,
+        $cacheKey
+    ) {
         $this->credentials = $credentials;
         $this->cache = $cache;
         $this->cacheKey = $cacheKey;

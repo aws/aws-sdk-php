@@ -16,12 +16,14 @@
 
 namespace Aws\Common\Credentials;
 
+use GuzzleHttp\ToArrayInterface;
+
 /**
  * Provides access to the AWS credentials used for accessing AWS services: AWS
  * access key ID, secret access key, and security token. These credentials are
  * used to securely sign requests to AWS services.
  */
-interface CredentialsInterface extends \Serializable
+interface CredentialsInterface extends ToArrayInterface
 {
     /**
      * Returns the AWS access key ID for this credentials object.
@@ -50,42 +52,6 @@ interface CredentialsInterface extends \Serializable
      * @return int|null
      */
     public function getExpiration();
-
-    /**
-     * Set the AWS access key ID for this credentials object.
-     *
-     * @param string $key AWS access key ID
-     *
-     * @return self
-     */
-    public function setAccessKeyId($key);
-
-    /**
-     * Set the AWS secret access key for this credentials object.
-     *
-     * @param string $secret AWS secret access key
-     *
-     * @return CredentialsInterface
-     */
-    public function setSecretKey($secret);
-
-    /**
-     * Set the security token to use with this credentials object
-     *
-     * @param string $token Security token
-     *
-     * @return self
-     */
-    public function setSecurityToken($token);
-
-    /**
-     * Set the UNIX timestamp in which the credentials will expire
-     *
-     * @param int $timestamp UNIX timestamp expiration
-     *
-     * @return self
-     */
-    public function setExpiration($timestamp);
 
     /**
      * Check if the credentials are expired

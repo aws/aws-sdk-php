@@ -17,60 +17,51 @@
 namespace Aws\Common\Credentials;
 
 /**
- * Abstract decorator to provide a foundation for refreshable credentials
+ * Abstract credentials decorator
  */
-abstract class AbstractRefreshableCredentials extends AbstractCredentialsDecorator
+class AbstractCredentialsDecorator implements CredentialsInterface
 {
+    /** @var CredentialsInterface Wrapped credentials object */
+    protected $credentials;
+
     /**
-     * {@inheritdoc}
+     * Constructs a new BasicAWSCredentials object, with the specified AWS
+     * access key and AWS secret key
+     *
+     * @param CredentialsInterface $credentials
      */
+    public function __construct(CredentialsInterface $credentials)
+    {
+        $this->credentials = $credentials;
+    }
+
+    public function toArray()
+    {
+        return $this->credentials->toArray();
+    }
+
     public function getAccessKeyId()
     {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
-
         return $this->credentials->getAccessKeyId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSecretKey()
     {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
-
         return $this->credentials->getSecretKey();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSecurityToken()
     {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
-
         return $this->credentials->getSecurityToken();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
+    public function getExpiration()
     {
-        if ($this->credentials->isExpired()) {
-            $this->refresh();
-        }
-
-        return $this->credentials->serialize();
+        return $this->credentials->getExpiration();
     }
 
-    /**
-     * Attempt to get new credentials
-     */
-    abstract protected function refresh();
+    public function isExpired()
+    {
+        return $this->credentials->isExpired();
+    }
 }
