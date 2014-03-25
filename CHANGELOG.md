@@ -1,14 +1,14 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.6.0 (2014-03-25)
+------------------
 
 * [BC] Updated the Amazon CloudSearch client to use the new 2013-01-01 API version (see [their release
   notes](http://aws.amazon.com/releasenotes/6125075708216342)). This API version of CloudSearch is significantly
   different than the previous one, and is not backwards compatible. See the
   [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md) for more details.
-* Added support VPC peering features to the Amazon EC2 client.
+* Added support for the VPC peering features to the Amazon EC2 client.
 * Updated the Amazon EC2 client to use the new 2014-02-01 API version.
 * Added support for [resize progress data and the Cluster Revision Number
   parameter](http://aws.amazon.com/releasenotes/0485739709714318) to the Amazon Redshift client.
