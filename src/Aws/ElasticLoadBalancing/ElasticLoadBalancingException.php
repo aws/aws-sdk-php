@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElasticLoadBalancing\Exception;
+namespace Aws\ElasticLoadBalancing;
 
 use Aws\Common\Exception\ServiceResponseException;
 

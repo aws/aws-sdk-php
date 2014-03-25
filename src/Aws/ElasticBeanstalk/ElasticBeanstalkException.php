@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElasticBeanstalk\Exception;
+namespace Aws\ElasticBeanstalk;
 
 use Aws\Common\Exception\ServiceResponseException;
 

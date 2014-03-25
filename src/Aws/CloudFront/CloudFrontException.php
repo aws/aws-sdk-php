@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudFront\Exception;
+namespace Aws\CloudFront;
 
 use Aws\Common\Exception\ServiceResponseException;
 

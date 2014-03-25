@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\AutoScaling\Exception;
+namespace Aws\AutoScaling;
 
 use Aws\Common\Exception\ServiceResponseException;
 

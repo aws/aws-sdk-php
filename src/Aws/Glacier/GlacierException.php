@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Glacier\Exception;
+namespace Aws\Glacier;
 
 use Aws\Common\Exception\ServiceResponseException;
 

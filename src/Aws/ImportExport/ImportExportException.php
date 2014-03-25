@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ImportExport\Exception;
+namespace Aws\ImportExport;
 
 use Aws\Common\Exception\ServiceResponseException;
 

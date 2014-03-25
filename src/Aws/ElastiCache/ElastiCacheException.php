@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElastiCache\Exception;
+namespace Aws\ElastiCache;
 
 use Aws\Common\Exception\ServiceResponseException;
 

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Kinesis\Exception;
+namespace Aws\Kinesis;
 
 use Aws\Common\Exception\ServiceResponseException;
 

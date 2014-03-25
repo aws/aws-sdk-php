@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DataPipeline\Exception;
+namespace Aws\DataPipeline;
 
 use Aws\Common\Exception\ServiceResponseException;
 

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudFormation\Exception;
+namespace Aws\CloudFormation;
 
 use Aws\Common\Exception\ServiceResponseException;
 

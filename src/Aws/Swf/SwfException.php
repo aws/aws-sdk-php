@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Swf\Exception;
+namespace Aws\Swf;
 
 use Aws\Common\Exception\ServiceResponseException;
 

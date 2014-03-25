@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Redshift\Exception;
+namespace Aws\Redshift;
 
 use Aws\Common\Exception\ServiceResponseException;
 

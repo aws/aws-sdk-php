@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudSearch\Exception;
+namespace Aws\CloudSearch;
 
 use Aws\Common\Exception\ServiceResponseException;
 

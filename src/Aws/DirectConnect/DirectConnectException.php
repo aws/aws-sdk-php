@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DirectConnect\Exception;
+namespace Aws\DirectConnect;
 
 use Aws\Common\Exception\ServiceResponseException;
 

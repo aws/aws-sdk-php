@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\StorageGateway\Exception;
+namespace Aws\StorageGateway;
 
 use Aws\Common\Exception\ServiceResponseException;
 

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\ElasticTranscoder\Exception;
+namespace Aws\ElasticTranscoder;
 
 use Aws\Common\Exception\ServiceResponseException;
 

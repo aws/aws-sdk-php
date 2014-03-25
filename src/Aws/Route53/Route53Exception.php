@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Route53\Exception;
+namespace Aws\Route53;
 
 use Aws\Common\Exception\ServiceResponseException;
 

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3\Exception;
+namespace Aws\S3;
 
 use Aws\Common\Exception\ServiceResponseException;
 

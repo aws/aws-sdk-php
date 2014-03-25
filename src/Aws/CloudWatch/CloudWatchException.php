@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudWatch\Exception;
+namespace Aws\CloudWatch;
 
 use Aws\Common\Exception\ServiceResponseException;
 

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sqs\Exception;
+namespace Aws\Sqs;
 
 use Aws\Common\Exception\ServiceResponseException;
 

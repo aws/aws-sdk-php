@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\SimpleDb\Exception;
+namespace Aws\SimpleDb;
 
 use Aws\Common\Exception\ServiceResponseException;
 

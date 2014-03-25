@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\OpsWorks\Exception;
+namespace Aws\OpsWorks;
 
 use Aws\Common\Exception\ServiceResponseException;
 

@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Exception;
+namespace Aws\DynamoDb;
 
 use Aws\Common\Exception\ServiceResponseException;
 

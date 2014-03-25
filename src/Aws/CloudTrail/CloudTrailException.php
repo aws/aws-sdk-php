@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\CloudTrail\Exception;
+namespace Aws\CloudTrail;
 
 use Aws\Common\Exception\ServiceResponseException;
 

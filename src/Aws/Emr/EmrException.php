@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Emr\Exception;
+namespace Aws\Emr;
 
 use Aws\Common\Exception\ServiceResponseException;
 
