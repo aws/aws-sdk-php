@@ -57,6 +57,10 @@ clients so that you only have to specify your settings once.
     $aws = Aws::factory('/path/to/my_config.json');
 
     // Get the client from the builder by namespace
+    {% if specifiedApiVersion -%}
+    $client = $aws->get('{{ namespace|lower() }}_{{ apiVersionSuffix|replace("_", "") }}');
+    {% else -%}
     $client = $aws->get('{{ namespace }}');
+    {% endif %}
 
 .. _{{ namespace }}{{ apiVersionSuffix }}_operations:

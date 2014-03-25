@@ -53,6 +53,13 @@ return array(
             'class'   => 'Aws\CloudSearch\CloudSearchClient'
         ),
 
+        'cloudsearch_20110201' => array(
+            'extends' => 'cloudsearch',
+            'params' => array(
+                'version' => '2011-02-01'
+            )
+        ),
+
         'cloudtrail' => array(
             'alias'   => 'CloudTrail',
             'extends' => 'default_settings',

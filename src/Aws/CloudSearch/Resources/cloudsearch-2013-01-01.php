@@ -43,10 +43,25 @@ return array (
             'https' => true,
             'hostname' => 'cloudsearch.eu-west-1.amazonaws.com',
         ),
+        'ap-northeast-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.ap-northeast-1.amazonaws.com',
+        ),
         'ap-southeast-1' => array(
             'http' => false,
             'https' => true,
             'hostname' => 'cloudsearch.ap-southeast-1.amazonaws.com',
+        ),
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.ap-southeast-2.amazonaws.com',
+        ),
+        'sa-east-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudsearch.sa-east-1.amazonaws.com',
         ),
     ),
     'operations' => array(

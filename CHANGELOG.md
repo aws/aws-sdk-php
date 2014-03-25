@@ -4,8 +4,13 @@ CHANGELOG
 Next Release
 ------------
 
+* [BC] Updated the Amazon CloudSearch client to use the new 2013-01-01 API version (see [their release
+  notes](http://aws.amazon.com/releasenotes/6125075708216342)). This API version of CloudSearch is significantly
+  different than the previous one, and is not backwards compatible. See the
+  [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md) for more details.
 * Added support for [resize progress data and the Cluster Revision Number
   parameter](http://aws.amazon.com/releasenotes/0485739709714318) to the Amazon Redshift client.
+* Added the `ap-northeast-1`, `ap-southeast-2`, and `sa-east-1` regions to the Amazon CloudSearch client.
 
 2.5.4 (2014-03-20)
 ------------------

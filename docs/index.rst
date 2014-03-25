@@ -118,6 +118,8 @@ Service-Specific Guides
 
   .. indexlinks:: CloudSearch
 
+  * :doc:`Using the older 2011-02-01 API version <service-cloudsearch-20110201>`
+
 * Amazon CloudWatch
 
   .. indexlinks:: CloudWatch
