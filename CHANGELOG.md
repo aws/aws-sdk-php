@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for [resize progress data and the Cluster Revision Number
+  parameter](http://aws.amazon.com/releasenotes/0485739709714318) to the Amazon Redshift client.
+
 2.5.4 (2014-03-20)
 ------------------
 

@@ -1819,6 +1819,10 @@ return array (
                     'class' => 'SnapshotCopyAlreadyDisabledException',
                 ),
                 array(
+                    'reason' => 'The specified cluster is not in the available state.',
+                    'class' => 'InvalidClusterStateException',
+                ),
+                array(
                     'reason' => 'Your account is not authorized to perform the requested operation.',
                     'class' => 'UnauthorizedOperationException',
                 ),
@@ -2339,6 +2343,10 @@ return array (
                 array(
                     'reason' => 'Your account is not authorized to perform the requested operation.',
                     'class' => 'UnauthorizedOperationException',
+                ),
+                array(
+                    'reason' => 'The specified cluster is not in the available state.',
+                    'class' => 'InvalidClusterStateException',
                 ),
             ),
         ),
@@ -3148,6 +3156,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'ClusterRevisionNumber' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -3894,6 +3905,9 @@ return array (
                                     ),
                                 ),
                             ),
+                            'ClusterRevisionNumber' => array(
+                                'type' => 'string',
+                            ),
                         ),
                     ),
                 ),
@@ -4416,6 +4430,26 @@ return array (
                         'type' => 'string',
                         'sentAs' => 'member',
                     ),
+                ),
+                'AvgResizeRateInMegaBytesPerSecond' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'TotalResizeDataInMegaBytes' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'ProgressInMegaBytes' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'ElapsedTimeInSeconds' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'EstimatedTimeToCompletionInSeconds' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
                 ),
             ),
         ),
