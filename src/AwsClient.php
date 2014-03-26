@@ -2,6 +2,12 @@
 
 namespace Aws;
 
+use Aws\Api\Model;
+use Aws\Api\Serializer\JsonRpc;
+use Aws\Api\Serializer\Query;
+use Aws\Api\Serializer\RestJson;
+use Aws\Common\Signature\SignatureV2;
+use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
@@ -24,18 +30,22 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var string */
     private $region;
 
-    /** @var Api */
+    /** @var Model */
     private $api;
+
+    /** @var string */
+    private $endpoint;
 
     /**
      * The AwsClient constructor accepts the following constructor option:
      *
      * - api: (required) The Api object used to interact with a web service
-     * - signature: (required) SignatureInterface object used to sign requests
+     * - endpoint: (required) String representing the service endpoint
      * - credentials: (required) CredentialsInterface object used when signing
      *   requests.
      * - region: Region used to interact with the service
      * - client: {@see GuzzleHttp\Client} used to send requests.
+     * - signature: string representing the signature version to use
      *
      * @param array $config Configuration options
      * @throws \InvalidArgumentException if any required options are missing
@@ -50,16 +60,19 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             'aws-sdk-php/' . self::VERSION . ' ' . Client::getDefaultUserAgent()
         );
 
-        foreach (['credentials', 'signature', 'api'] as $required) {
+        foreach (['credentials', 'api', 'endpoint'] as $required) {
             if (!isset($config[$required])) {
                 throw new \InvalidArgumentException($required . ' is required');
             }
         }
 
+        $this->endpoint = $config['endpoint'];
         $this->api = $config['api'];
         $this->credentials = $config['credentials'];
-        $this->signature = $config['signature'];
         $this->region = isset($config['region']) ? $config['region'] : null;
+        $this->signature = $this->createSignature(isset($config['signature'])
+            ? $config['signature']
+            : $this->api->getMetadata('signatureVersion'));
 
         // Remove settings from the config collection
         unset($config['api'], $config['credentials'], $config['signature'],
@@ -69,11 +82,27 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->getHttpClient()->getEmitter()->attach(
             new SignatureListener($this->credentials, $this->signature)
         );
+
+        $this->addProtocol();
     }
 
     public function getCommand($name, array $args = [])
     {
+        $command = null;
+        if (isset($this->api['operations'][$name])) {
+            $command = $this->api['operations'][$name];
+        } else {
+            $name = ucfirst($name);
+            if (isset($this->api['operations'][$name])) {
+                $command = $this->api['operations'][$name];
+            }
+        }
 
+        if (!$command) {
+            throw new \InvalidArgumentException("Operation not found: $name");
+        }
+
+        return new AwsCommand($name, $args, $this->api, clone $this->getEmitter());
     }
 
     public function __call($name, array $arguments)
@@ -111,5 +140,48 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function getApi()
     {
         return $this->api;
+    }
+
+    /**
+     * Applies the appropriate request serializers and response parsers.
+     */
+    private function addProtocol()
+    {
+        switch ($this->api['metadata']['type']) {
+            case 'json':
+                $this->getEmitter()->attach(
+                    new JsonRpc($this->endpoint, $this->api)
+                );
+                break;
+            case 'query':
+                $this->getEmitter()->attach(
+                    new Query($this->endpoint, $this->api)
+                );
+                break;
+            case 'rest-json':
+                $this->getEmitter()->attach(
+                    new RestJson($this->endpoint, $this->api)
+                );
+                break;
+        }
+    }
+
+    /**
+     * Applies the appropriate request signer to the request.
+     */
+    private function createSignature($version)
+    {
+        switch ($version) {
+            case 'v4':
+                return new SignatureV4(
+                    $this->api->getMetadata('signingName')
+                        ?: $this->api->getMetadata('endpointPrefix'),
+                    $this->region
+                );
+            case 'v2':
+                return new SignatureV2();
+        }
+
+        throw new \InvalidArgumentException("Unknown signature {$version}");
     }
 }

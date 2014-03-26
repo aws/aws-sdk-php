@@ -3,22 +3,20 @@
 namespace Aws;
 
 use GuzzleHttp\Command\ServiceClientInterface;
-use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Signature\SignatureInterface;
 
 interface AwsClientInterface extends ServiceClientInterface
 {
     /**
      * Returns the AWS credentials associated with the client
      *
-     * @return CredentialsInterface
+     * @return \Aws\Common\Credentials\CredentialsInterface
      */
     public function getCredentials();
 
     /**
      * Returns the signature implementation used with the client
      *
-     * @return SignatureInterface
+     * @return \Aws\Common\Signature\SignatureInterface
      */
     public function getSignature();
 
@@ -32,7 +30,7 @@ interface AwsClientInterface extends ServiceClientInterface
     /**
      * Get the service description associated with the client
      *
-     * @return Api
+     * @return \Aws\Api\Model
      */
     public function getApi();
 }
