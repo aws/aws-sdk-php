@@ -6,11 +6,11 @@ use Aws\Api\Model;
 use Aws\Api\Serializer\JsonRpc;
 use Aws\Api\Serializer\Query;
 use Aws\Api\Serializer\RestJson;
-use Aws\Common\Signature\SignatureV2;
-use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Signature\SignatureInterface;
-use Aws\Common\Signature\SignatureListener;
+use Aws\Credentials\CredentialsInterface;
+use Aws\Signature\SignatureV2;
+use Aws\Signature\SignatureV4;
+use Aws\Signature\SignatureInterface;
+use Aws\Subscriber\Signature;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\AbstractClient;
 
@@ -80,7 +80,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
         parent::__construct($client, $config);
         $this->getHttpClient()->getEmitter()->attach(
-            new SignatureListener($this->credentials, $this->signature)
+            new Signature($this->credentials, $this->signature)
         );
 
         $this->addProtocol();

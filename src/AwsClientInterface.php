@@ -9,14 +9,14 @@ interface AwsClientInterface extends ServiceClientInterface
     /**
      * Returns the AWS credentials associated with the client
      *
-     * @return \Aws\Common\Credentials\CredentialsInterface
+     * @return \Aws\Credentials\CredentialsInterface
      */
     public function getCredentials();
 
     /**
      * Returns the signature implementation used with the client
      *
-     * @return \Aws\Common\Signature\SignatureInterface
+     * @return \Aws\Signature\SignatureInterface
      */
     public function getSignature();
 
