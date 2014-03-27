@@ -14,37 +14,25 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3;
+namespace Aws\Signature;
 
-use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Signature\SignatureV4;
-use Aws\S3\Exception\InvalidArgumentException;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Http\Message\EntityEnclosingRequestInterface;
+use Aws\Credentials\CredentialsInterface;
+use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Stream;
 
 /**
- * Amazon S3 signature version 4
+ * Amazon S3 signature version 4 support.
  */
-class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
+class S3SignatureV4 extends SignatureV4 implements PresignedUrlInterface
 {
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
-        if ($request instanceof EntityEnclosingRequestInterface && $request->getBody()) {
-            $request->setHeader('X-Amz-Content-Sha256', EntityBody::getHash($request->getBody(), 'sha256'));
-        } else {
-            $request->setHeader('X-Amz-Content-Sha256', hash('sha256', ''));
-        }
-
-        parent::signRequest($request, $credentials);
-    }
-
     public function createPresignedUrl(
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
     ) {
         $request = clone $request;
+        $region = $this->getRegionName();
+        $service = $this->getServiceName();
 
         // Make sure to handle temporary credentials
         if ($token = $credentials->getSecurityToken()) {
@@ -55,19 +43,26 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
         $this->moveHeadersToQuery($request);
         $httpDate = $request->getQuery()->get('X-Amz-Date');
         $scopeDate = substr($httpDate, 0, 8);
-        $scope = "{$scopeDate}/{$this->regionName}/s3/aws4_request";
+        $scope = "{$scopeDate}/{$region}/s3/aws4_request";
         $credential = $credentials->getAccessKeyId() . '/' . $scope;
-        $this->addQueryStringValues($request, $credential, $this->convertExpires($expires));
+
+        $this->addQueryStringValues(
+            $request,
+            $credential,
+            $this->convertExpires($expires)
+        );
+
         $context = $this->createSigningContext($request, 'UNSIGNED-PAYLOAD');
 
         $signingKey = $this->getSigningKey(
             $scopeDate,
-            $this->regionName,
-            $this->serviceName,
+            $region,
+            $service,
             $credentials->getSecretKey()
         );
 
-        $stringToSign = "AWS4-HMAC-SHA256\n{$httpDate}\n{$scope}\n" . hash('sha256', $context['canonical_request']);
+        $stringToSign = "AWS4-HMAC-SHA256\n{$httpDate}\n{$scope}\n"
+            . hash('sha256', $context['canonical_request']);
 
         $request->getQuery()->set(
             'X-Amz-Signature',
@@ -97,7 +92,7 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
 
         // Ensure that the duration of the signature is not longer than a week
         if ($duration > 604800) {
-            throw new InvalidArgumentException('The expiration date of an '
+            throw new \InvalidArgumentException('The expiration date of an '
                 . 'Amazon S3 presigned URL using signature version 4 must be '
                 . 'less than one week.');
         }
@@ -107,11 +102,11 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
 
     private function moveHeadersToQuery(RequestInterface $request)
     {
-        $query = array('X-Amz-Date' => gmdate('Ymd\THis\Z', $this->getTimestamp()));
+        $query = array('X-Amz-Date' => gmdate('Ymd\THis\Z', time()));
 
         foreach ($request->getHeaders() as $name => $header) {
             if (substr($name, 0, 5) == 'x-amz') {
-                $query[$header->getName()] = (string) $header;
+                $query[$name] = (string) $header;
             }
             if ($name != 'host') {
                 $request->removeHeader($name);

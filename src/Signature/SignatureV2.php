@@ -26,8 +26,10 @@ use GuzzleHttp\Post\PostBodyInterface;
  */
 class SignatureV2 implements SignatureInterface
 {
-    public function signRequest(RequestInterface $request, CredentialsInterface $credentials)
-    {
+    public function signRequest(
+        RequestInterface $request,
+        CredentialsInterface $credentials
+    ) {
         /** @var PostBodyInterface $body */
         $body = $request->getBody();
         $body->setField('Timestamp', gmdate('c', time()));

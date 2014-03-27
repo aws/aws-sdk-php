@@ -14,25 +14,25 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\S3;
+namespace Aws\Signature;
 
-use Aws\Common\Signature\SignatureInterface;
-use Aws\Common\Credentials\CredentialsInterface;
-use Guzzle\Http\Message\RequestInterface;
+use Aws\Credentials\CredentialsInterface;
+use GuzzleHttp\Message\RequestInterface;
 
 /**
- * Amazon S3 signature interface
- * @link http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+ * Interface that allows pre-signed URLs
  */
-interface S3SignatureInterface extends SignatureInterface
+interface PresignedUrlInterface extends SignatureInterface
 {
     /**
      * Create a pre-signed URL
      *
      * @param RequestInterface     $request Request to sign
      * @param CredentialsInterface $credentials Credentials used to sign
-     * @param int|string|\DateTime $expires The time at which the URL should expire. This can be a Unix timestamp, a
-     *                                      PHP DateTime object, or a string that can be evaluated by strtotime
+     * @param int|string|\DateTime $expires The time at which the URL should
+     *     expire. This can be a Unix timestamp, a PHP DateTime object, or a
+     *     string that can be evaluated by strtotime.
+     *
      * @return string
      */
     public function createPresignedUrl(

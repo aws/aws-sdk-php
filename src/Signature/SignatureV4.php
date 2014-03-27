@@ -107,6 +107,16 @@ class SignatureV4 implements SignatureInterface
         $request->getConfig()['aws.signature'] = $context;
     }
 
+    protected function getRegionName()
+    {
+        return $this->region;
+    }
+
+    protected function getServiceName()
+    {
+        return $this->service;
+    }
+
     /**
      * Get the normalized path of a request
      *
@@ -123,7 +133,7 @@ class SignatureV4 implements SignatureInterface
     }
 
     /**
-     * Create the canonical representation of a request
+     * @internal Create the canonical representation of a request
      *
      * @param RequestInterface $request Request to canonicalize
      * @param string           $payload Request payload (typically the value
@@ -133,7 +143,7 @@ class SignatureV4 implements SignatureInterface
      *     - canonical_request
      *     - signed_headers
      */
-    private function createSigningContext(RequestInterface $request, $payload)
+    protected function createSigningContext(RequestInterface $request, $payload)
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
         $canon = $request->getMethod() . "\n"
@@ -168,8 +178,7 @@ class SignatureV4 implements SignatureInterface
     }
 
     /**
-     * Get a hash for a specific key and value.  If the hash was previously
-     * cached, return it
+     * @internal Get a signing key hash for a specific key and value.
      *
      * @param string $shortDate Short date
      * @param string $region    Region name
@@ -178,7 +187,7 @@ class SignatureV4 implements SignatureInterface
      *
      * @return string
      */
-    private function getSigningKey($shortDate, $region, $service, $secretKey)
+    protected function getSigningKey($shortDate, $region, $service, $secretKey)
     {
         $k = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
 
