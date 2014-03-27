@@ -3,9 +3,10 @@
 namespace Aws;
 
 use Aws\Api\Model;
-use Aws\Api\Serializer\JsonRpc;
-use Aws\Api\Serializer\Query;
-use Aws\Api\Serializer\RestJson;
+use Aws\Api\Serializer\JsonRpcSerializer;
+use Aws\Api\Serializer\QuerySerializer;
+use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\Api\Parser\JsonRpcParser;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureV2;
 use Aws\Signature\SignatureV4;
@@ -147,27 +148,23 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      */
     private function addProtocol()
     {
-        switch ($this->api['metadata']['type']) {
-            case 'json':
-                $this->getEmitter()->attach(
-                    new JsonRpc($this->endpoint, $this->api)
-                );
-                break;
-            case 'query':
-                $this->getEmitter()->attach(
-                    new Query($this->endpoint, $this->api)
-                );
-                break;
-            case 'rest-json':
-                $this->getEmitter()->attach(
-                    new RestJson($this->endpoint, $this->api)
-                );
-                break;
-            case 'rest-xml':
-                break;
-            default:
-                throw new \UnexpectedValueException('Unknown protocol '
-                    . $this->api['metadata']['type']);
+        $type = $this->api['metadata']['type'];
+        $em = $this->getEmitter();
+
+        if ($type == 'json') {
+            $em->attach(new JsonRpcSerializer($this->endpoint, $this->api));
+            $em->attach(new JsonRpcParser($this->api));
+        } elseif ($type == 'query') {
+            $em->attach(new QuerySerializer($this->endpoint, $this->api));
+            // $em->attach(new XmlParser($this->api));
+        } elseif ($type = 'rest-json') {
+            $em->attach(new RestJsonSerializer($this->endpoint, $this->api));
+            // $em->attach(new RestJsonParser($this->api));
+        } elseif ($type == 'rest-xml') {
+            // $em->attach(new RestXmlSerializer($this->endpoint, $this->api));
+            // $em->attach(new RestXmlParser($this->api));
+        } else {
+            throw new \UnexpectedValueException('Unknown protocol ' . $type);
         }
     }
 

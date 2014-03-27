@@ -8,7 +8,7 @@ use GuzzleHttp\Event\SubscriberInterface;
 /**
  * @internal
  */
-abstract class Rest implements SubscriberInterface
+abstract class RestParser implements SubscriberInterface
 {
     public function getEvents()
     {

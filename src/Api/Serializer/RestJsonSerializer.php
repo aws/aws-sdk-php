@@ -10,7 +10,7 @@ use Aws\Api\StructureShape;
  * Serializes requests for the REST-JSON protocol.
  * @internal
  */
-class RestJson extends Rest
+class RestJsonSerializer extends RestSerializer
 {
     /** @var JsonBody */
     private $jsonFormatter;
@@ -45,6 +45,9 @@ class RestJson extends Rest
         Operation $operation,
         array $bodyMembers
     ) {
-        return $this->jsonFormatter->build($operation['input'], $bodyMembers);
+        return $this->jsonFormatter->build(
+            $operation->getInput(),
+            $bodyMembers
+        );
     }
 }

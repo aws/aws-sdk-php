@@ -11,7 +11,7 @@ use GuzzleHttp\Url;
  * Prepares a JSON-RPC request for transfer.
  * @internal
  */
-class JsonRpc implements SubscriberInterface
+class JsonRpcSerializer implements SubscriberInterface
 {
     /** @var JsonBody */
     private $jsonFormatter;
@@ -61,7 +61,7 @@ class JsonRpc implements SubscriberInterface
                         . number_format($api->getMetadata('jsonVersion'), 1)
                 ],
                 'body' => $this->jsonFormatter->build(
-                    $operation['input'],
+                    $operation->getInput(),
                     $command->toArray()
                 ),
                 'config' => ['command' => $command]

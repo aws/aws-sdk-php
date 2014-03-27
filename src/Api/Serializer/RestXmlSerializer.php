@@ -5,7 +5,7 @@ namespace Aws\Api\Serializer;
 /**
  * @internal
  */
-class RestXml extends Rest
+class RestXmlSerializer extends RestSerializer
 {
 
 }

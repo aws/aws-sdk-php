@@ -15,7 +15,7 @@ use GuzzleHttp\Event\SubscriberInterface;
  * Serializes a query protocol request.
  * @internal
  */
-class Query implements SubscriberInterface
+class QuerySerializer implements SubscriberInterface
 {
     private $endpoint;
     private $api;
@@ -45,9 +45,8 @@ class Query implements SubscriberInterface
             'Version' => $api->getMetadata('apiVersion')
         ];
 
-        $params = $command->toArray();
-        if ($params && ($input = $operation['input'])) {
-            $this->format($input, $params, '', $body);
+        if ($params = $command->toArray()) {
+            $this->format($operation->getInput(), $params, '', $body);
         }
 
         $request = $event->getClient()->getHttpClient()->createRequest(

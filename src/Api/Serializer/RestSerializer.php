@@ -16,7 +16,7 @@ use GuzzleHttp\Stream;
  * Serializes HTTP locations like header, uri, payload, etc...
  * @internal
  */
-abstract class Rest implements SubscriberInterface
+abstract class RestSerializer implements SubscriberInterface
 {
     /** @var Model */
     private $api;
@@ -92,17 +92,15 @@ abstract class Rest implements SubscriberInterface
         Operation $operation,
         array $args
     ) {
-        if (!($input = $operation['input'])) {
-            return;
-        }
-
         $body = [];
-        foreach ($input->getMembers() as $name => $member) {
+        foreach ($operation->getInput()->getMembers() as $name => $member) {
             $location = $member['location'];
             if (!$location) {
                 if (!$member['payload']) {
                     $body[$name] = $member;
-                } elseif ($member['streaming'] || $member['type'] == 'string') {
+                } elseif ($member['streaming'] ||
+                    ($member['type'] == 'string' || $member['type'] == 'blob')
+                ) {
                     // Streaming bodies or payloads that are strings are
                     // always just a stream of data.
                     if (isset($args[$name])) {
@@ -166,12 +164,10 @@ abstract class Rest implements SubscriberInterface
         $uri = $this->endpoint->combine($operation['http']['requestUri']);
         $varspecs = [];
 
-        if ($input = $operation['input']) {
-            foreach ($input->getMembers() as $name => $member) {
-                if ($member['location'] == 'uri') {
-                    $varspecs[$member['locationName'] ?: $name] =
-                        isset($args[$name]) ? $args[$name] : null;
-                }
+        foreach ($operation->getInput()->getMembers() as $name => $member) {
+            if ($member['location'] == 'uri') {
+                $varspecs[$member['locationName'] ?: $name] =
+                    isset($args[$name]) ? $args[$name] : null;
             }
         }
 

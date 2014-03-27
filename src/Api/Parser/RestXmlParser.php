@@ -5,7 +5,7 @@ namespace Aws\Description\Parser;
 /**
  * @internal
  */
-class RestXml extends Rest
+class RestXmlParser extends RestParser
 {
 
 }
