@@ -9,16 +9,11 @@ use GuzzleHttp\Message\ResponseInterface;
  */
 class XmlParser
 {
-    public function __invoke(
-        $serviceName,
-        $operationName,
-        ResponseInterface $response
-    ) {
+    public function __invoke(ResponseInterface $response)
+    {
         $code = (string) $response->getStatusCode();
 
         $data = [
-            'operation'   => $operationName,
-            'service'     => $serviceName,
             'status_code' => $code,
             'type'        => $code[0] == '4' ? 'client' : 'server',
             'request_id'  => null,

@@ -9,16 +9,11 @@ use GuzzleHttp\Message\ResponseInterface;
  */
 trait JsonParserTrait
 {
-    private function genericHandler(
-        $serviceName,
-        $operationName,
-        ResponseInterface $response
-    ) {
+    private function genericHandler(ResponseInterface $response)
+    {
         $code = (string) $response->getStatusCode();
 
         return [
-            'operation'   => $operationName,
-            'service'     => $serviceName,
             'status_code' => $code,
             'request_id'  => (string) $response->getHeader('x-amzn-RequestId'),
             'code'        => null,

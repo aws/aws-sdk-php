@@ -12,12 +12,9 @@ class JsonRpcParser
 {
     use JsonParserTrait;
 
-    public function __invoke(
-        $serviceName,
-        $operationName,
-        ResponseInterface $response
-    ) {
-        $data = $this->genericHandler($serviceName, $operationName, $response);
+    public function __invoke(ResponseInterface $response)
+    {
+        $data = $this->genericHandler($response);
 
         if (isset($data['parsed']['__type'])) {
             $parts = explode('#', $data['parsed']['__type']);
