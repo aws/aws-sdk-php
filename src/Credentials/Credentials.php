@@ -26,6 +26,7 @@ class Credentials implements CredentialsInterface
 {
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
     const ENV_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY';
+    const ENV_PROFILE = 'AWS_PROFILE';
 
     /** @var string AWS Access key ID */
     private $key;
@@ -134,10 +135,59 @@ class Credentials implements CredentialsInterface
             );
         }
 
+        // Get credentials from the ini file in ~ directory if available.
+        $home = self::getHomeDir();
+        if ($home && file_exists($home . '/.aws/credentials')) {
+            return self::fromIniFile($home . '/.aws/credentials');
+        }
+
         // Use instance profile credentials (available on EC2 instances)
         return new InstanceProfileCredentials(
             new self('', '', '', 1),
             new InstanceMetadataClient()
+        );
+    }
+
+    private static function getHomeDir()
+    {
+        if (isset($_SERVER['HOME'])) {
+            return $_SERVER['HOME'];
+        } elseif (isset($_SERVER['HOMEDRIVE']) &&
+            isset($_SERVER['HOMEPATH'])
+        ) {
+            return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'];
+        }
+
+        return null;
+    }
+
+    private static function fromIniFile($filename)
+    {
+        if (!($data = parse_ini_file($filename, true))) {
+            throw new \RuntimeException('Invalid AWS credentials file: '
+                . $filename);
+        }
+
+        var_export($data);
+
+        $profile = isset($_SERVER[self::ENV_PROFILE])
+            ? $_SERVER[self::ENV_PROFILE]
+            : 'default';
+
+        if (empty($data[$profile])) {
+            throw new \RuntimeException(sprintf(
+                'Invalid AWS credentials profile %s in %s',
+                $profile,
+                $filename
+            ));
+        }
+
+        return new self(
+            $data[$profile]['aws_access_key_id'],
+            $data[$profile]['aws_secret_access_key'],
+            isset($data[$profile]['aws_security_token'])
+                ? $data[$profile]['aws_security_token']
+                : null
         );
     }
 }
