@@ -16,41 +16,33 @@
 
 namespace Aws\Credentials;
 
-use Aws\Common\InstanceMetadata\InstanceMetadataClient;
+use Aws\Service\InstanceMetadataClient;
 
 /**
  * Credentials decorator used to implement retrieving credentials from the
  * EC2 metadata server
  */
-class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentials
+class InstanceProfileCredentials extends AbstractRefreshableCredentials
 {
     /** @var InstanceMetadataClient */
-    protected $client;
+    private $client;
 
     /**
      * Constructs a new instance profile credentials decorator
      *
      * @param CredentialsInterface   $credentials Credentials to adapt
-     * @param InstanceMetadataClient $client      Client used to get new credentials
+     * @param InstanceMetadataClient $client      Client to use
      */
     public function __construct(
         CredentialsInterface $credentials,
-        InstanceMetadataClient $client = null
+        InstanceMetadataClient $client
     ) {
         $this->credentials = $credentials;
-        $this->client = $client ?: InstanceMetadataClient::factory();
+        $this->client = $client;
     }
 
-    /**
-     * Attempt to get new credentials from the instance profile
-     */
-    protected function refresh()
+    public function refresh()
     {
-        $credentials = $this->client->getInstanceProfileCredentials();
-        // Expire the token 1 minute before it actually expires to pre-fetch before expiring
-        $this->credentials->setAccessKeyId($credentials->getAccessKeyId())
-            ->setSecretKey($credentials->getSecretKey())
-            ->setSecurityToken($credentials->getSecurityToken())
-            ->setExpiration($credentials->getExpiration());
+        $this->credentials = $this->client->getInstanceProfileCredentials();
     }
 }

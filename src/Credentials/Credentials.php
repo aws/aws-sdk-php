@@ -16,8 +16,7 @@
 
 namespace Aws\Credentials;
 
-use Aws\Common\Enum\ClientOptions as Options;
-use GuzzleHttp\Collection;
+use Aws\Service\InstanceMetadataClient;
 
 /**
  * Basic implementation of the AWSCredentials interface that allows callers to
@@ -38,22 +37,7 @@ class Credentials implements CredentialsInterface
     private $token;
 
     /** @var int Time to die of token */
-    private $ttd;
-
-    /**
-     * Get the available keys for the factory method
-     *
-     * @return array
-     */
-    public static function getConfigDefaults()
-    {
-        return [
-            Options::KEY       => null,
-            Options::SECRET    => null,
-            Options::TOKEN     => null,
-            Options::TOKEN_TTD => null
-        ];
-    }
+    private $expires;
 
     /**
      * Factory method for creating new credentials.  This factory method will
@@ -66,56 +50,43 @@ class Credentials implements CredentialsInterface
      */
     public static function factory($config = [])
     {
-        // Add default key values
-        foreach (self::getConfigDefaults() as $key => $value) {
-            if (!isset($config[$key])) {
-                $config[$key] = $value;
-            }
-        }
-
         // Create the credentials object
-        if (!$config['key'] || !$config['secret']) {
-            $credentials = self::createFromEnvironment($config);
-        } else {
-            $credentials = new static(
-                $config['key'],
-                $config['secret'],
-                $config['token'],
-                $config['token.ttd']
-            );
+        if (!isset($config['key']) || !isset($config['secret'])) {
+            return self::createFromEnvironment();
         }
 
-        return $credentials;
+        return new static(
+            $config['key'],
+            $config['secret'],
+            isset($config['token']) ? $config['token'] : null,
+            isset($config['expires']) ? $config['expires'] : null
+        );
     }
 
     /**
      * Constructs a new BasicAWSCredentials object, with the specified AWS
      * access key and AWS secret key
      *
-     * @param string $key        AWS access key ID
-     * @param string $secret     AWS secret access key
-     * @param string $token      Security token to use
-     * @param int    $expiration UNIX timestamp for when credentials expire
+     * @param string $key     AWS access key ID
+     * @param string $secret  AWS secret access key
+     * @param string $token   Security token to use
+     * @param int    $expires UNIX timestamp for when credentials expire
      */
-    public function __construct(
-        $key,
-        $secret,
-        $token = null,
-        $expiration = null
-    ) {
+    public function __construct($key, $secret, $token = null, $expires = null)
+    {
         $this->key = trim($key);
         $this->secret = trim($secret);
         $this->token = $token;
-        $this->ttd = $expiration;
+        $this->expires = $expires;
     }
 
     public function toArray()
     {
         return [
-            'key'       => $this->key,
-            'secret'    => $this->secret,
-            'token'     => $this->token,
-            'token.ttd' => $this->ttd
+            'key'     => $this->key,
+            'secret'  => $this->secret,
+            'token'   => $this->token,
+            'expires' => $this->expires
         ];
     }
 
@@ -136,43 +107,37 @@ class Credentials implements CredentialsInterface
 
     public function getExpiration()
     {
-        return $this->ttd;
+        return $this->expires;
     }
 
     public function isExpired()
     {
-        return $this->ttd !== null && time() >= $this->ttd;
+        return $this->expires !== null && time() >= $this->expires;
     }
 
     /**
      * When no keys are provided, attempt to create them based on the
      * environment or instance profile credentials.
      *
-     * @param array|Collection $config
-     *
      * @return CredentialsInterface
      */
-    private static function createFromEnvironment($config)
+    private static function createFromEnvironment()
     {
-        $envKey = isset($_SERVER[self::ENV_KEY])
-            ? $_SERVER[self::ENV_KEY]
-            : getenv(self::ENV_KEY);
-
-        $envSecret = isset($_SERVER[self::ENV_SECRET_ACCESS_KEY])
-            ? $_SERVER[self::ENV_SECRET_ACCESS_KEY]
-            : getenv(self::ENV_SECRET_ACCESS_KEY);
-
-        if ($envKey && $envSecret) {
+        // Check for environment variable credentials.
+        if (isset($_SERVER[self::ENV_KEY]) &&
+            isset($_SERVER[self::ENV_SECRET_ACCESS_KEY])
+        ) {
             // Use credentials set in the environment variables
-            $credentials = new static($envKey, $envSecret);
-        } else {
-            // Use instance profile credentials (available on EC2 instances)
-            $credentials = new RefreshableInstanceProfileCredentials(
-                new static('', '', '', 1),
-                $config[Options::CREDENTIALS_CLIENT]
+            return new static(
+                $_SERVER[self::ENV_KEY],
+                $_SERVER[self::ENV_SECRET_ACCESS_KEY]
             );
         }
 
-        return $credentials;
+        // Use instance profile credentials (available on EC2 instances)
+        return new InstanceProfileCredentials(
+            new self('', '', '', 1),
+            new InstanceMetadataClient()
+        );
     }
 }

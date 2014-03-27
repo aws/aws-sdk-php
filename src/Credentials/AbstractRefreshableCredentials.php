@@ -17,10 +17,22 @@
 namespace Aws\Credentials;
 
 /**
- * Abstract decorator to provide a foundation for refreshable credentials
+ * Abstract decorator to provide a foundation for refreshable credentials.
  */
-abstract class AbstractRefreshableCredentials extends AbstractCredentialsDecorator
+abstract class AbstractRefreshableCredentials implements
+    RefreshableCredentialsInterface
 {
+    /** @var CredentialsInterface Wrapped credentials object */
+    protected $credentials;
+
+    /**
+     * @param CredentialsInterface $credentials
+     */
+    public function __construct(CredentialsInterface $credentials)
+    {
+        $this->credentials = $credentials;
+    }
+
     public function getAccessKeyId()
     {
         if ($this->credentials->isExpired()) {
@@ -57,8 +69,13 @@ abstract class AbstractRefreshableCredentials extends AbstractCredentialsDecorat
         return $this->credentials->toArray();
     }
 
-    /**
-     * Attempt to get new credentials
-     */
-    abstract protected function refresh();
+    public function getExpiration()
+    {
+        return $this->credentials->getExpiration();
+    }
+
+    public function isExpired()
+    {
+        return $this->credentials->isExpired();
+    }
 }
