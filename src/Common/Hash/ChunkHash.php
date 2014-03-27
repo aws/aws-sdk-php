@@ -16,44 +16,30 @@
 
 namespace Aws\Common\Hash;
 
-use Aws\Common\Exception\LogicException;
-
 /**
  * Encapsulates the creation of a hash from streamed chunks of data
  */
 class ChunkHash implements ChunkHashInterface
 {
-    /**
-     * @var resource The hash context as created by `hash_init()`
-     */
-    protected $context;
+    /** @var resource The hash context as created by `hash_init()` */
+    private $context;
 
-    /**
-     * @var string The resulting hash in hex form
-     */
-    protected $hash;
+    /** @var string The resulting hash in hex form */
+    private $hash;
 
-    /**
-     * @var string The resulting hash in binary form
-     */
-    protected $hashRaw;
+    /** @var string The resulting hash in binary form */
+    private $hashRaw;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct($algorithm = self::DEFAULT_ALGORITHM)
+    public function __construct($algorithm = 'sha256')
     {
-        HashUtils::validateAlgorithm($algorithm);
         $this->context = hash_init($algorithm);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addData($data)
     {
         if (!$this->context) {
-            throw new LogicException('You may not add more data to a finalized chunk hash.');
+            throw new \LogicException('You may not add more data to a '
+                . 'finalized chunk hash.');
         }
 
         hash_update($this->context, $data);
@@ -61,23 +47,17 @@ class ChunkHash implements ChunkHashInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHash($returnBinaryForm = false)
     {
         if (!$this->hash) {
             $this->hashRaw = hash_final($this->context, true);
-            $this->hash = HashUtils::binToHex($this->hashRaw);
+            $this->hash = bin2hex($this->hashRaw);
             $this->context = null;
         }
 
         return $returnBinaryForm ? $this->hashRaw : $this->hash;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __clone()
     {
         if ($this->context) {
