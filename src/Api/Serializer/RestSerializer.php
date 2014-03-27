@@ -130,7 +130,7 @@ abstract class RestSerializer implements SubscriberInterface
         array $args
     ) {
         if (isset($args[$memberName])) {
-            $request->getQuery()->set(
+            $request->setHeader(
                 $member['locationName'] ?: $memberName,
                 $args[$memberName]
             );
@@ -144,7 +144,7 @@ abstract class RestSerializer implements SubscriberInterface
         array $args
     ) {
         if (isset($args[$memberName])) {
-            $request->setHeader(
+            $request->getQuery()->set(
                 $member['locationName'] ?: $memberName,
                 $args[$memberName]
             );

@@ -45,7 +45,7 @@ class InstanceMetadataClient
      *
      * @param int $maxWait Maximum number of seconds to wait
      */
-    public function waitUntilRunnint($maxWait = 120)
+    public function waitUntilRunning($maxWait = 120)
     {
         // @todo: Implement
     }
