@@ -168,8 +168,6 @@ class Credentials implements CredentialsInterface
                 . $filename);
         }
 
-        var_export($data);
-
         $profile = isset($_SERVER[self::ENV_PROFILE])
             ? $_SERVER[self::ENV_PROFILE]
             : 'default';

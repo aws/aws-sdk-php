@@ -7,6 +7,7 @@ use Aws\Api\Serializer\JsonRpcSerializer;
 use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Api\Parser\JsonRpcParser;
+use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureV2;
 use Aws\Signature\SignatureV4;
@@ -42,8 +43,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * - api: (required) The Api object used to interact with a web service
      * - endpoint: (required) String representing the service endpoint
-     * - credentials: (required) CredentialsInterface object used when signing
-     *   requests.
+     * - credentials: CredentialsInterface object used when signing. If none is
+     *   specified, credentials will be created based on the environment.
      * - region: Region used to interact with the service
      * - client: {@see GuzzleHttp\Client} used to send requests.
      * - signature: string representing the signature version to use
@@ -61,19 +62,17 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             'aws-sdk-php/' . self::VERSION . ' ' . Client::getDefaultUserAgent()
         );
 
-        foreach (['credentials', 'api', 'endpoint'] as $required) {
+        foreach (['api', 'endpoint'] as $required) {
             if (!isset($config[$required])) {
                 throw new \InvalidArgumentException($required . ' is required');
             }
         }
 
-        $this->endpoint = $config['endpoint'];
         $this->api = $config['api'];
-        $this->credentials = $config['credentials'];
+        $this->endpoint = $config['endpoint'];
         $this->region = isset($config['region']) ? $config['region'] : null;
-        $this->signature = $this->createSignature(isset($config['signature'])
-            ? $config['signature']
-            : $this->api->getMetadata('signatureVersion'));
+        $this->addCredentials($config);
+        $this->addSignature($config);
 
         // Remove settings from the config collection
         unset($config['api'], $config['credentials'], $config['signature'],
@@ -169,21 +168,43 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     }
 
     /**
-     * Applies the appropriate request signer to the request.
+     * Applies the appropriate credentials to the client.
      */
-    private function createSignature($version)
+    private function addCredentials(array $config)
     {
+        if (!isset($config['credentials'])) {
+            $this->credentials = Credentials::factory();
+        } elseif (!($config['credentials'] instanceof CredentialsInterface)) {
+            throw new \InvalidArgumentException('The credentials setting must '
+                . ' implement Aws\Credentials\CredentialsInterface');
+        } else {
+            $this->credentials = $config['credentials'];
+        }
+    }
+
+    /**
+     * Applies the appropriate signature to the client.
+     */
+    private function addSignature(array $config)
+    {
+        $version = isset($config['signature'])
+            ? $config['signature']
+            : $this->api->getMetadata('signatureVersion');
+
         switch ($version) {
             case 'v4':
-                return new SignatureV4(
+                $this->signature =  new SignatureV4(
                     $this->api->getMetadata('signingName')
                         ?: $this->api->getMetadata('endpointPrefix'),
                     $this->region
                 );
+                break;
             case 'v2':
-                return new SignatureV2();
+                $this->signature =  new SignatureV2();
+                break;
+            default:
+                throw new \InvalidArgumentException("Unknown signature"
+                    . " version {$version}");
         }
-
-        throw new \InvalidArgumentException("Unknown signature {$version}");
     }
 }
