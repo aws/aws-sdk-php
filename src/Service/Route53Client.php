@@ -16,15 +16,6 @@
 
 namespace Aws\Route53;
 
-use Aws\Common\Client\AbstractClient;
-use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Enum\DateFormat;
-use Aws\Common\Exception\ServiceResponseException;
-use Guzzle\Common\Collection;
-use Guzzle\Service\Resource\Model;
-use Guzzle\Service\Resource\ResourceIteratorInterface;
-
 /**
  * Client to interact with Amazon Route 53
  *
@@ -46,10 +37,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-route53.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Route53.Route53Client.html API docs
  */
-class Route53Client extends AbstractClient
+class Route53Factory extends AbstractFactory
 {
-    const LATEST_API_VERSION = '2013-04-01';
-
     /**
      * Factory method to create a new Amazon Glacier client using an array of configuration options.
      *
@@ -68,26 +57,6 @@ class Route53Client extends AbstractClient
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/route53-%s.php'
             ))
             ->build();
-    }
-
-    /**
-     * Retrieves the server time from Route53. Can be useful for detecting and/or preventing clock skew.
-     *
-     * @return \DateTime The server time from Route53
-     * @link http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RESTAuthentication.html#FetchingDate
-     */
-    public function getServerTime()
-    {
-        try {
-            $response = $this->get('https://route53.amazonaws.com/date')->send();
-        } catch (ServiceResponseException $e) {
-            $response = $e->getResponse();
-        }
-
-        $serverTime = trim($response->getHeader('Date', true));
-        $serverTime = \DateTime::createFromFormat(DateFormat::RFC1123, $serverTime);
-
-        return $serverTime;
     }
 
     /**

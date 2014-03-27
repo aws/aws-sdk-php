@@ -16,13 +16,6 @@
 
 namespace Aws\Sqs;
 
-use Aws\Common\Client\AbstractClient;
-use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Enum\ClientOptions as Options;
-use Guzzle\Common\Collection;
-use Guzzle\Service\Resource\Model;
-use Guzzle\Service\Resource\ResourceIteratorInterface;
-
 /**
  * Client to interact with Amazon Simple Queue Service
  *
@@ -48,10 +41,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sqs.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Sqs.SqsClient.html API docs
  */
-class SqsClient extends AbstractClient
+class SqsFactory extends AbstractFactory
 {
-    const LATEST_API_VERSION = '2012-11-05';
-
     /**
      * Factory method to create a new Amazon Simple Queue Service client using an array of configuration options.
      *

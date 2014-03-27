@@ -16,24 +16,6 @@
 
 namespace Aws\DynamoDb;
 
-use Aws\Common\Client\AbstractClient;
-use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Client\ExpiredCredentialsChecker;
-use Aws\Common\Client\ThrottlingErrorChecker;
-use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Exception\Parser\JsonQueryExceptionParser;
-use Aws\DynamoDb\Model\Attribute;
-use Aws\DynamoDb\Session\SessionHandler;
-use Guzzle\Common\Collection;
-use Guzzle\Plugin\Backoff\BackoffPlugin;
-use Guzzle\Plugin\Backoff\CallbackBackoffStrategy;
-use Guzzle\Plugin\Backoff\CurlBackoffStrategy;
-use Guzzle\Plugin\Backoff\HttpBackoffStrategy;
-use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
-use Guzzle\Service\Command\AbstractCommand as Cmd;
-use Guzzle\Service\Resource\Model;
-use Guzzle\Service\Resource\ResourceIteratorInterface;
-
 /**
  * Client to interact with Amazon DynamoDB
  *
@@ -60,10 +42,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html API docs
  */
-class DynamoDbClient extends AbstractClient
+class DynamoDbFactory extends AbstractFactory
 {
-    const LATEST_API_VERSION = '2012-08-10';
-
     /**
      * Factory method to create a new Amazon DynamoDB client using an array of configuration options.
      *

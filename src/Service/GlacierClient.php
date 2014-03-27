@@ -16,15 +16,6 @@
 
 namespace Aws\Glacier;
 
-use Aws\Common\Client\AbstractClient;
-use Aws\Common\Client\ClientBuilder;
-use Aws\Common\Client\UploadBodyListener;
-use Aws\Common\Enum\ClientOptions as Options;
-use Aws\Common\Exception\Parser\JsonRestExceptionParser;
-use Guzzle\Common\Collection;
-use Guzzle\Service\Resource\Model;
-use Guzzle\Service\Resource\ResourceIteratorInterface;
-
 /**
  * Client to interact with Amazon Glacier
  *
@@ -57,10 +48,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-glacier.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Glacier.GlacierClient.html API docs
  */
-class GlacierClient extends AbstractClient
+class GlacierFactory extends AbstractFactory
 {
-    const LATEST_API_VERSION = '2012-06-01';
-
     /**
      * Factory method to create a new Amazon Glacier client using an array of configuration options.
      *
