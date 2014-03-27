@@ -4,6 +4,9 @@ namespace Aws;
 
 use GuzzleHttp\Command\ServiceClientInterface;
 
+/**
+ * Represents an AWS client.
+ */
 interface AwsClientInterface extends ServiceClientInterface
 {
     /**

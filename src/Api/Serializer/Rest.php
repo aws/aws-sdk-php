@@ -49,7 +49,8 @@ abstract class Rest implements SubscriberInterface
 
         $request = $event->getClient()->getHttpClient()->createRequest(
             $operation['http']['method'],
-            $this->buildEndpoint($operation, $args)
+            $this->buildEndpoint($operation, $args),
+            ['config' => ['command' => $command]]
         );
 
         $this->serialize($request, $operation, $args);

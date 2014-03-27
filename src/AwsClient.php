@@ -163,6 +163,11 @@ class AwsClient extends AbstractClient implements AwsClientInterface
                     new RestJson($this->endpoint, $this->api)
                 );
                 break;
+            case 'rest-xml':
+                break;
+            default:
+                throw new \UnexpectedValueException('Unknown protocol '
+                    . $this->api['metadata']['type']);
         }
     }
 

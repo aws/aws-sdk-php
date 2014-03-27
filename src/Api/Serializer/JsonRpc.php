@@ -63,7 +63,8 @@ class JsonRpc implements SubscriberInterface
                 'body' => $this->jsonFormatter->build(
                     $operation['input'],
                     $command->toArray()
-                )
+                ),
+                'config' => ['command' => $command]
             ]
         ));
     }

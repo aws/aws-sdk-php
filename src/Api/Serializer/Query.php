@@ -53,7 +53,10 @@ class Query implements SubscriberInterface
         $request = $event->getClient()->getHttpClient()->createRequest(
             'POST',
             $this->endpoint,
-            ['body' => $body]
+            [
+                'body'   => $body,
+                'config' => ['command' => $command]
+            ]
         );
 
         $event->setRequest($request);
