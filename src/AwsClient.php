@@ -7,7 +7,6 @@ use Aws\Api\Serializer\JsonRpcSerializer;
 use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Api\Parser\JsonRpcParser;
-use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Signature\SignatureV2;
 use Aws\Signature\SignatureV4;
@@ -43,26 +42,17 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * - api: (required) The Api object used to interact with a web service
      * - endpoint: (required) String representing the service endpoint
-     * - credentials: CredentialsInterface object used when signing. If none is
-     *   specified, credentials will be created based on the environment.
+     * - credentials: (required) CredentialsInterface object used when signing.
      * - region: Region used to interact with the service
-     * - client: {@see GuzzleHttp\Client} used to send requests.
-     * - signature: string representing the signature version to use
+     * - client: Optional {@see GuzzleHttp\Client} used to send requests.
+     * - signature: string representing the signature version to use (e.g., v4)
      *
      * @param array $config Configuration options
      * @throws \InvalidArgumentException if any required options are missing
      */
     public function __construct(array $config)
     {
-        $client = isset($config['client']) ? $config['client'] : new Client();
-
-        // Make sure the user agent is prefixed by the SDK version
-        $client->setDefaultOption(
-            'headers/User-Agent',
-            'aws-sdk-php/' . self::VERSION . ' ' . Client::getDefaultUserAgent()
-        );
-
-        foreach (['api', 'endpoint'] as $required) {
+        foreach (['api', 'endpoint', 'credentials'] as $required) {
             if (!isset($config[$required])) {
                 throw new \InvalidArgumentException($required . ' is required');
             }
@@ -70,15 +60,16 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
         $this->api = $config['api'];
         $this->endpoint = $config['endpoint'];
+        $this->credentials = $config['credentials'];
         $this->region = isset($config['region']) ? $config['region'] : null;
-        $this->addCredentials($config);
         $this->addSignature($config);
 
         // Remove settings from the config collection
         unset($config['api'], $config['credentials'], $config['signature'],
             $config['client']);
 
-        parent::__construct($client, $config);
+        parent::__construct($this->createClient($config), $config);
+
         $this->getHttpClient()->getEmitter()->attach(
             new Signature($this->credentials, $this->signature)
         );
@@ -168,21 +159,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     }
 
     /**
-     * Applies the appropriate credentials to the client.
-     */
-    private function addCredentials(array $config)
-    {
-        if (!isset($config['credentials'])) {
-            $this->credentials = Credentials::factory();
-        } elseif (!($config['credentials'] instanceof CredentialsInterface)) {
-            throw new \InvalidArgumentException('The credentials setting must '
-                . ' implement Aws\Credentials\CredentialsInterface');
-        } else {
-            $this->credentials = $config['credentials'];
-        }
-    }
-
-    /**
      * Applies the appropriate signature to the client.
      */
     private function addSignature(array $config)
@@ -206,5 +182,18 @@ class AwsClient extends AbstractClient implements AwsClientInterface
                 throw new \InvalidArgumentException("Unknown signature"
                     . " version {$version}");
         }
+    }
+
+    private function createClient(array $config)
+    {
+        $client = isset($config['client']) ? $config['client'] : new Client();
+
+        // Make sure the user agent is prefixed by the SDK version
+        $client->setDefaultOption(
+            'headers/User-Agent',
+            'aws-sdk-php/' . self::VERSION . ' ' . Client::getDefaultUserAgent()
+        );
+
+        return $client;
     }
 }

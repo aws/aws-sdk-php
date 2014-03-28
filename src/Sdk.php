@@ -86,10 +86,6 @@ class Sdk
             );
         }
 
-        if (!isset($args['scheme'])) {
-            $args['scheme'] = 'https';
-        }
-
         $this->args = $args;
     }
 

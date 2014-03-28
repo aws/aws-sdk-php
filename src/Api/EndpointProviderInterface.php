@@ -13,7 +13,9 @@ interface EndpointProviderInterface
      * @param string $service Name of the service
      * @param array  $args    Array of arguments used when constructing
      *
-     * @return string
+     * @return array Returns an array containing a 'uri' key and a 'properties'
+     *               key containing an associative array of endpoint specific
+     *               properties.
      */
     public function getEndpoint($service, array $args = []);
 }

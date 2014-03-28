@@ -21,6 +21,9 @@ class RulesEndpointProvider implements EndpointProviderInterface
     public function getEndpoint($service, array $args = [])
     {
         $args['service'] = $service;
+        if (!isset($args['scheme'])) {
+            $args['scheme'] = 'https';
+        }
 
         if (isset($this->rules[$service])) {
             foreach ($this->rules[$service] as $rule) {
@@ -42,6 +45,12 @@ class RulesEndpointProvider implements EndpointProviderInterface
         throw new \RuntimeException('Unable to resolve an endpoint');
     }
 
+    /**
+     * Prepends a rule to the given service name.
+     *
+     * @param string $service Service name or __default__ to apply to all.
+     * @param array  $rule    Rule to prepend
+     */
     public function prependRule($service, array $rule)
     {
         if (!isset($this->rules[$service])) {
@@ -51,6 +60,12 @@ class RulesEndpointProvider implements EndpointProviderInterface
         array_unshift($this->rules[$service], $rule);
     }
 
+    /**
+     * Appends a rule to the given service name.
+     *
+     * @param string $service Service name or __default__ to apply to all.
+     * @param array  $rule    Rule to append
+     */
     public function appendRule($service, array $rule)
     {
         $this->rules[$service][] = $rule;
@@ -60,21 +75,21 @@ class RulesEndpointProvider implements EndpointProviderInterface
     {
         // Check each rule constraint against the provided region
         if (isset($rule['constraints'])) {
-            foreach ($rule['constraints'] as $name => $constraint) {
-                $value = isset($args[$name]) ? $args[$name] : null;
-                $type = $constraint[0];
-                $assertion = $constraint[1];
-
-                if ($type == 'startsWith') {
-                    if (strpos($value, $assertion) !== 0) {
-                        return null;
-                    }
-                } elseif ($type == 'oneOf') {
-                    if (!$value || !in_array($value, $assertion, true)) {
-                        return null;
-                    }
-                } else {
-                    return null;
+            foreach ($rule['constraints'] as $cons) {
+                $value = isset($args[$cons[0]]) ? $args[$cons[0]] : null;
+                switch ($cons[1]) {
+                    case 'startsWith':
+                        if (strpos($value, $cons[2]) !== 0) {
+                            return null;
+                        }
+                        break;
+                    case 'oneOf':
+                        if (!$value || !in_array($value, $cons[2], true)) {
+                            return null;
+                        }
+                        break;
+                    default:
+                        continue;
                 }
             }
         }

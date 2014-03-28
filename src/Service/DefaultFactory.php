@@ -58,6 +58,11 @@ class DefaultFactory
             }
         }
 
+        // Create a default credentials object based on the environment
+        if (!isset($arg['credentials'])) {
+            $args['credentials'] = Credentials::factory();
+        }
+
         unset($args['endpoint_provider'], $args['service'], $args['version']);
 
         return $this->createClient($args);
