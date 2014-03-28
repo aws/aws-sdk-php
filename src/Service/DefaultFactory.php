@@ -140,6 +140,10 @@ class DefaultFactory
         );
 
         $args['endpoint'] = $result['uri'];
+
+        if (isset($result['properties']['signatureVersion'])) {
+            $args['signature'] = $result['properties']['signatureVersion'];
+        }
     }
 
     private function handle_service($value, array &$args)
