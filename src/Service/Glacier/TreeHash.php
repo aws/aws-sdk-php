@@ -14,32 +14,30 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Common\Hash;
+namespace Aws\Service\Glacier;
 
 use GuzzleHttp\Stream;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashInterface;
 
 /**
- * Encapsulates the creation of a tree hash from streamed chunks of data
+ * Encapsulates the creation of a tree hash from streamed data
  */
 class TreeHash implements HashInterface
 {
-    /** @var string The algorithm used for hashing */
+    /** @var string Algorithm used for hashing */
     private $algorithm;
 
     /** @var array Binary checksums from which the tree hash is derived */
     private $checksums = [];
 
-    /** @var string The resulting hash in binary form */
+    /** @var string Resulting hash in binary form */
     private $hash;
-
 
     /**
      * Create a tree hash from an array of existing tree hash checksums
      *
      * @param array  $checksums    Set of checksums
-     * @param bool   $inBinaryForm Whether or not the checksums are already in
-     *                             binary form
+     * @param bool   $inBinaryForm TRUE if checksums are in binary form
      * @param string $algorithm    A valid hash algorithm name
      *
      * @return TreeHash
@@ -105,7 +103,7 @@ class TreeHash implements HashInterface
     ) {
         $treeHash = self::fromContent($content, $algorithm);
 
-        return ($checksum === $treeHash->getHash());
+        return ($checksum === bin2hex($treeHash->complete()));
     }
 
     public function __construct($algorithm = 'sha256')
@@ -129,7 +127,7 @@ class TreeHash implements HashInterface
         // Make sure that only 1MB chunks or smaller get passed in
         if (strlen($data) > 1048576) {
             throw new \InvalidArgumentException('You may only update a tree '
-				. 'hash with chunks of data that are 1MB or less.');
+                . 'hash with chunks of data that are 1MB or less.');
         }
 
         // Store the raw hash of this data segment
@@ -142,8 +140,7 @@ class TreeHash implements HashInterface
      * Add a checksum to the tree hash directly
      *
      * @param string $checksum   The checksum to add
-     * @param bool $inBinaryForm Whether or not the checksum is already in
-     *                           binary form.
+     * @param bool $inBinaryForm TRUE if checksum is in binary form
      *
      * @return self
      * @throws \LogicException if the root tree hash is already calculated

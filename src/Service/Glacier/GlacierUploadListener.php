@@ -16,47 +16,40 @@
 
 namespace Aws\Glacier;
 
-use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
-use Guzzle\Common\Event;
-use Guzzle\Http\Message\EntityEnclosingRequest;
-use Guzzle\Service\Command\AbstractCommand;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Aws\Service\Glacier\Multipart\UploadPartGenerator;
+use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Event\SubscriberInterface;
+use GuzzleHttp\Stream;
 
 /**
  * Adds the content sha256 and tree hash to Glacier upload requests if not set
  */
-class GlacierUploadListener implements EventSubscriberInterface
+class GlacierUploadListener implements SubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public function getEvents()
     {
-        return array(
-            'command.before_send' => array('onCommandBeforeSend'),
-        );
+        return ['prepare' => ['onPrepare']];
     }
 
     /**
-     * Retrieve bodies passed in as UploadPartContext objects and set the real hash, length, etc. values on the command
+     * Retrieve bodies passed in as UploadPartContext objects and set the real
+     * hash, length, etc. values on the command
      *
-     * @param Event $event Event emitted
+     * @param PrepareEvent $event Event emitted
      */
-    public function onCommandBeforeSend(Event $event)
+    public function onPrepare(PrepareEvent $event)
     {
-        /** @var $command AbstractCommand */
-        $command = $event['command'];
-        $contentHash = $command->get('ContentSHA256');
+        $command = $event->getCommand();
+        $contentHash = $command['ContentSHA256'];
         if ($contentHash === true) {
-            /** @var $request EntityEnclosingRequest */
-            $request = $command->getRequest();
+            $request = $event->getRequest();
             $upload = UploadPartGenerator::createSingleUploadPart($request->getBody());
             $request->addHeader('x-amz-content-sha256', $upload->getContentHash());
-            if (!$command->get('checksum')) {
+            if (!$command['checksum']) {
                 $request->addHeader('x-amz-sha256-tree-hash', $upload->getChecksum());
             }
         } elseif (is_string($contentHash)) {
-            $request = $command->getRequest();
+            $request = $event->getRequest();
             $request->addHeader('x-amz-content-sha256', $contentHash);
         }
     }
