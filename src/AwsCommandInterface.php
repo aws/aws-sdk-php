@@ -10,7 +10,7 @@ use GuzzleHttp\Command\CommandInterface;
 interface AwsCommandInterface extends CommandInterface
 {
     /**
-     * @return \Aws\Api\Model
+     * @return \Aws\Api\Service
      */
     public function getApi();
 }

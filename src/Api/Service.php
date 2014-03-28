@@ -5,7 +5,7 @@ namespace Aws\Api;
 /**
  * Represents a web service API model.
  */
-class Model extends AbstractModel
+class Service extends AbstractModel
 {
     /** @var Operation[] */
     private $operations = [];

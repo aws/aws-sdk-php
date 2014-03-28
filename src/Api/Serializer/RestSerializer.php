@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Serializer;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use Aws\Api\Operation;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
@@ -18,7 +18,7 @@ use GuzzleHttp\Stream;
  */
 abstract class RestSerializer implements SubscriberInterface
 {
-    /** @var Model */
+    /** @var Service */
     private $api;
 
     /** @var Url */
@@ -26,9 +26,9 @@ abstract class RestSerializer implements SubscriberInterface
 
     /**
      * @param string $endpoint Endpoint to connect to
-     * @param Model  $api      Service API description
+     * @param Service  $api      Service API description
      */
-    public function __construct($endpoint, Model $api)
+    public function __construct($endpoint, Service $api)
     {
         $this->api = $api;
         $this->endpoint = Url::fromString($endpoint);

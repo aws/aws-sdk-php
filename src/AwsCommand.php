@@ -2,7 +2,7 @@
 
 namespace Aws;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Event\EmitterInterface;
 
@@ -11,19 +11,19 @@ use GuzzleHttp\Event\EmitterInterface;
  */
 class AwsCommand extends Command implements AwsCommandInterface
 {
-    /** @var Model */
+    /** @var Service */
     private $api;
 
     /**
      * @param string           $name    Name of the command
      * @param array            $args    Arguments of the command
-     * @param Model            $api     Service description
+     * @param Service          $api     Service description
      * @param EmitterInterface $emitter Optional event emitter to use
      */
     public function __construct(
         $name,
         array $args = [],
-        Model $api,
+        Service $api,
         EmitterInterface $emitter = null
     ) {
         $this->api = $api;

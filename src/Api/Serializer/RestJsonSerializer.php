@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Serializer;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use Aws\Api\Operation;
 use Aws\Api\StructureShape;
 
@@ -17,12 +17,12 @@ class RestJsonSerializer extends RestSerializer
 
     /**
      * @param string   $endpoint      Endpoint to connect to
-     * @param Model    $api           Service API description
+     * @param Service    $api           Service API description
      * @param JsonBody $jsonFormatter Optional JSON formatter to use
      */
     public function __construct(
         $endpoint,
-        Model $api,
+        Service $api,
         JsonBody $jsonFormatter = null
     ) {
         parent::__construct($endpoint, $api);

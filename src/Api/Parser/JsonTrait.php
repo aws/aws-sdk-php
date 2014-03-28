@@ -4,7 +4,7 @@ namespace Aws\Api\Parser;
 
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
-use Aws\Api\Model;
+use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 
@@ -16,9 +16,9 @@ trait JsonTrait
     private $model;
 
     /**
-     * @param Model $api Service description
+     * @param Service $api Service description
      */
-    public function __construct(Model $api)
+    public function __construct(Service $api)
     {
         $this->api = $api;
     }

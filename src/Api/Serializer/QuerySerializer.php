@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Serializer;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
@@ -22,7 +22,7 @@ class QuerySerializer implements SubscriberInterface
 
     public function __construct(
         $endpoint,
-        Model $api
+        Service $api
     ) {
         $this->endpoint = $endpoint;
         $this->api = $api;

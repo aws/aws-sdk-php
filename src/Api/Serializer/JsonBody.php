@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Serializer;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Api\ListShape;
@@ -17,7 +17,7 @@ class JsonBody
 {
     private $api;
 
-    public function __construct(Model $api)
+    public function __construct(Service $api)
     {
         $this->api = $api;
     }

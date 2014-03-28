@@ -7,9 +7,9 @@ namespace Aws;
  *
  * @param array $args Associative array of arguments provided to the builder.
  *
- * @return Builder
+ * @return Sdk
  */
 function init(array $args = [])
 {
-    return new Builder($args);
+    return new Sdk($args);
 }

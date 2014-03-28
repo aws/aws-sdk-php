@@ -2,7 +2,7 @@
 
 namespace Aws;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use Aws\Api\Serializer\JsonRpcSerializer;
 use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Serializer\RestJsonSerializer;
@@ -32,7 +32,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var string */
     private $region;
 
-    /** @var Model */
+    /** @var Service */
     private $api;
 
     /** @var string */

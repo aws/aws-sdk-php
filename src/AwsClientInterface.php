@@ -33,7 +33,7 @@ interface AwsClientInterface extends ServiceClientInterface
     /**
      * Get the service description associated with the client
      *
-     * @return \Aws\Api\Model
+     * @return \Aws\Api\Service
      */
     public function getApi();
 }

@@ -2,7 +2,7 @@
 
 namespace Aws\Api\Serializer;
 
-use Aws\Api\Model;
+use Aws\Api\Service;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Url;
@@ -19,17 +19,17 @@ class JsonRpcSerializer implements SubscriberInterface
     /** @var Url */
     private $endpoint;
 
-    /** @var Model */
+    /** @var Service */
     private $api;
 
     /**
      * @param string   $endpoint      Endpoint to connect to
-     * @param Model    $api           Service description
+     * @param Service    $api           Service description
      * @param JsonBody $jsonFormatter Optional JSON formatter to use
      */
     public function __construct(
         $endpoint,
-        Model $api,
+        Service $api,
         JsonBody $jsonFormatter = null
     ) {
         $this->endpoint = Url::fromString($endpoint);
