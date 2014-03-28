@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Glacier\Model\MultipartUpload;
+namespace Aws\Service\Glacier\Multipart;
 
 use Aws\Common\Exception\RuntimeException;
 use Guzzle\Iterator\ChunkedIterator;

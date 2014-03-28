@@ -14,11 +14,10 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Glacier\Model\MultipartUpload;
+namespace Aws\Service\Glacier\Multipart;
 
-use Aws\Common\Hash\ChunkHash;
-use Aws\Common\Hash\TreeHash;
-use Aws\Common\Exception\LogicException;
+use Aws\Service\Glacier\TreeHash;
+use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
 
 /**
  * An object that encapsulates the data for a Glacier upload operation
@@ -31,9 +30,9 @@ class UploadPartContext
     protected $treeHash;
 
     /**
-     * @var ChunkHash Chunk hash context of the data
+     * @var PhpHash Linear hash context of the data
      */
-    protected $chunkHash;
+    protected $linearHash;
 
     /**
      * @var int The size (or content-length) in bytes of the upload body
@@ -66,38 +65,35 @@ class UploadPartContext
         $this->size    = 0;
 
         $this->treeHash  = new TreeHash();
-        $this->chunkHash = new ChunkHash();
+        $this->linearHash = new PhpHash('sha256');
     }
 
     /**
-     * Adds data to the context. This adds data to both the tree and chunk hashes and increases the size
+     * Adds data to the context, including the tree and linear hashes
      *
      * @param string $data Data to add to the context
      *
      * @return self
-     * @throws LogicException when the context is already finalized
+     * @throws \LogicException if you add too much data
      */
     public function addData($data)
     {
         $size = strlen($data);
 
         if ($this->size + $size > $this->maxSize) {
-            throw new LogicException('You cannot add data that will exceed the maximum size of this upload.');
+            throw new \LogicException('You cannot add data that will exceed '
+				. 'the maximum size of this upload.');
         }
 
-        try {
-            $this->treeHash->addData($data);
-            $this->chunkHash->addData($data);
-            $this->size += $size;
-        } catch (LogicException $e) {
-            throw new LogicException('You cannot add data to a finalized UploadPartContext.', 0, $e);
-        }
+        $this->treeHash->update($data);
+        $this->linearHash->update($data);
+        $this->size += $size;
 
         return $this;
     }
 
     /**
-     * Finalizes the context by calculating the final hashes and generates an upload part object
+     * Finalizes the context and generates an upload part object
      *
      * @return UploadPart
      */
@@ -106,8 +102,8 @@ class UploadPartContext
         if (!$this->uploadPart) {
             $this->uploadPart = UploadPart::fromArray(array(
                 'partNumber'  => (int) ($this->offset / $this->maxSize + 1),
-                'checksum'    => $this->treeHash->getHash(),
-                'contentHash' => $this->chunkHash->getHash(),
+                'checksum'    => bin2hex($this->treeHash->complete()),
+                'contentHash' => bin2hex($this->linearHash->complete()),
                 'size'        => $this->size,
                 'offset'      => $this->offset
             ));
