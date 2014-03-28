@@ -96,23 +96,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         return new AwsCommand($name, $args, $this->api, clone $this->getEmitter());
     }
 
-    public function __call($name, array $arguments)
-    {
-        if (substr($name, 0, 3) === 'get' && substr($name, -8) === 'Iterator') {
-            // Allow magic method calls for iterators.
-            // (e.g. $client->get<CommandName>Iterator($params))
-            $commandOptions = isset($arguments[0]) ? $arguments[0] : null;
-            $iteratorOptions = isset($arguments[1]) ? $arguments[1] : [];
-            // @todo: Add iterators
-        } elseif (substr($name, 0, 9) == 'waitUntil') {
-            // Allow magic method calls for waiters.
-            // (e.g. $client->waitUntil<WaiterName>($params))
-            // @todo: Add waiters
-        }
-
-        return parent::__call($name, $arguments);
-    }
-
     public function getCredentials()
     {
         return $this->credentials;
