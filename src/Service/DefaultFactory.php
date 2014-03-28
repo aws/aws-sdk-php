@@ -2,31 +2,50 @@
 
 namespace Aws\Service;
 
-use Aws\Api\EndpointProviderInterface;
-use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\AwsClientInterface;
 use Aws\Api\ApiProviderInterface;
+use Aws\Api\EndpointProviderInterface;
+use Aws\Api\ErrorParser\JsonRestErrorParser;
+use Aws\Api\ErrorParser\XmlErrorParser;
+use Aws\Api\ErrorParser\JsonRpcErrorParser;
+use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Retry\ThrottlingFilter;
 use GuzzleHttp\Client;
+use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
  * Default factory class used to create clients.
  */
 class DefaultFactory
 {
-    /** @var array Values that are `1` have a handle_<key> function handler */
+    /**
+     * Represents how provided key value pairs are processed.
+     *
+     * - true: The value is passed through to the underlying client unchanged.
+     * - 1: There is a handle_<key> function that handles this specific key
+     *   before the client is constructed. The handler receives the value of
+     *   the key and the provided arguments by reference.
+     * - 2: There is a handle_<key> function that handles this specific key
+     *   after the client is constructed. The handler function receives the
+     *   value of the key, the provided arguments by reference, and the client.
+     *
+     * @var array
+     */
     protected $validArguments = [
+        'endpoint'          => true,
         'region'            => true,
         'signature'         => true,
+        'service'           => true,
         'version'           => true,
         'scheme'            => true,
-        'api'               => 1,
         'credentials'       => 1,
         'api_provider'      => 1,
         'client_defaults'   => 1,
-        'service'           => 1,
-        'endpoint_provider' => 1
+        'endpoint_provider' => 1,
+        'retries'           => 2
     ];
 
     /**
@@ -41,7 +60,7 @@ class DefaultFactory
     public function create(array $args = [])
     {
         static $required = ['version', 'api_provider', 'endpoint_provider',
-            'service'];
+            'service', 'retries'];
 
         foreach ($required as $r) {
             if (!isset($args[$r])) {
@@ -49,23 +68,33 @@ class DefaultFactory
             }
         }
 
+        $deferred = [];
         foreach ($args as $key => $value) {
             if (!isset($this->validArguments[$key])) {
                 throw new \InvalidArgumentException('Unknown argument ' . $key);
-            }
-            if ($this->validArguments[$key] === 1) {
+            } elseif ($this->validArguments[$key] === 1) {
                 $this->{"handle_{$key}"}($value, $args);
+            } elseif ($this->validArguments[$key] === 2) {
+                $deferred[$key] = $value;
             }
         }
 
         // Create a default credentials object based on the environment
-        if (!isset($arg['credentials'])) {
+        if (!isset($args['credentials'])) {
             $args['credentials'] = Credentials::factory();
         }
 
-        unset($args['endpoint_provider'], $args['service'], $args['version']);
+        // Cleanup the configuration data array
+        unset($args['endpoint_provider'], $args['service'], $args['version'],
+            $args['retries']);
 
-        return $this->createClient($args);
+        $client = $this->createClient($args);
+
+        foreach ($deferred as $key => $value) {
+            $this->{"handle_{$key}"}($value, $args, $client);
+        }
+
+        return $client;
     }
 
     /**
@@ -75,13 +104,74 @@ class DefaultFactory
      *
      * @param array $args Arguments to provide to the client.
      *
-     * @return AwsClient
+     * @return AwsClientInterface
      */
     protected function createClient(array $args)
     {
         $client = new AwsClient($args);
 
         return $client;
+    }
+
+    /**
+     * Applies the appropriate retry subscriber.
+     *
+     * This may be extended in subclasses.
+     *
+     * @param int|bool           $value  User-provided value (must be validated)
+     * @param array              $args   Provided arguments reference
+     * @param AwsClientInterface $client Client to modify
+     *
+     * @throws \InvalidArgumentException if the value provided is invalid.
+     */
+    protected function handle_retries(
+        $value,
+        array &$args,
+        AwsClientInterface $client
+    ) {
+        if ($value === false || $value === 0) {
+            return;
+        } elseif ($value === true) {
+            $value = 3;
+        } elseif (!is_integer($value)) {
+            throw new \InvalidArgumentException('retries must be a boolean or'
+                . ' an integer');
+        }
+
+        $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
+            'max' => $value,
+            'filter' => RetrySubscriber::createChainFilter([
+                new ThrottlingFilter($args['error_parser']),
+                RetrySubscriber::createStatusFilter(),
+                RetrySubscriber::createCurlFilter()
+            ])
+        ]));
+    }
+
+    /**
+     * Creates an appropriate error parser for the given API.
+     *
+     * This may be extended in subclasses.
+     *
+     * @param Service $api API to parse
+     *
+     * @return JsonRestErrorParser|JsonRpcErrorParser|XmlErrorParser
+     * @throws \InvalidArgumentException if the service type is unknown
+     */
+    protected function createErrorParser(Service $api)
+    {
+        switch ($api->getMetadata('type')) {
+            case 'json':
+                return new JsonRpcErrorParser();
+            case 'rest-json':
+                return new JsonRestErrorParser($api);
+            case 'rest-xml':
+            case 'query':
+                return new XmlErrorParser($api);
+        }
+
+        throw new \InvalidArgumentException('Unknown service type '
+            . $api->getMetadata('type'));
     }
 
     private function handle_credentials($value, array &$args)
@@ -111,20 +201,23 @@ class DefaultFactory
         unset($args['client_defaults']);
     }
 
-    private function handle_api($value, array &$args)
-    {
-        if (!($value instanceof Service)) {
-            throw new \InvalidArgumentException('api must be an instance of'
-                . 'Aws\Api\Service');
-        }
-    }
-
     private function handle_api_provider($value, array &$args)
     {
         if (!($value instanceof ApiProviderInterface)) {
             throw new \InvalidArgumentException('api_provider must be an '
                 . 'instance of Aws\Api\ApiProviderInterface');
         }
+
+        $version = isset($args['version']) ? $args['version'] : 'latest';
+        $api = $args['api_provider']->getService($args['service'], $version);
+
+        if (!$api) {
+            throw new \InvalidArgumentException('Unknown service version: '
+                . $args['service'] . ' at ' . $version);
+        }
+
+        $args['error_parser'] = $this->createErrorParser($api);
+        $args['api'] = $api;
     }
 
     private function handle_endpoint_provider($value, array &$args)
@@ -134,28 +227,15 @@ class DefaultFactory
                 . 'instance of Aws\Api\EndpointProviderInterface');
         }
 
-        $result = $args['endpoint_provider']->getEndpoint(
-            $args['service'],
-            $args
-        );
-
-        $args['endpoint'] = $result['uri'];
-
-        if (isset($result['properties']['signatureVersion'])) {
-            $args['signature'] = $result['properties']['signatureVersion'];
+        if (!isset($args['endpoint'])) {
+            $result = $args['endpoint_provider']->getEndpoint(
+                $args['service'],
+                $args
+            );
+            $args['endpoint'] = $result['uri'];
+            if (isset($result['properties']['signatureVersion'])) {
+                $args['signature'] = $result['properties']['signatureVersion'];
+            }
         }
-    }
-
-    private function handle_service($value, array &$args)
-    {
-        $version = isset($args['version']) ? $args['version'] : 'latest';
-        $api = $args['api_provider']->getService($value, $version);
-
-        if (!$api) {
-            throw new \InvalidArgumentException('Unknown service version: '
-                . $value . ' at ' . $version);
-        }
-
-        $args['api'] = $api;
     }
 }

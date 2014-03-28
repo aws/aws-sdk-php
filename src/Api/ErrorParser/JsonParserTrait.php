@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\Api\Error;
+namespace Aws\Api\ErrorParser;
 
 use GuzzleHttp\Message\ResponseInterface;
 

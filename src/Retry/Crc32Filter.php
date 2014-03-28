@@ -25,7 +25,7 @@ use GuzzleHttp\Stream;
  */
 class Crc32Filter
 {
-    public function __invoke(AbstractTransferEvent $event)
+    public function __invoke($retries, AbstractTransferEvent $event)
     {
         if (!($response = $event->getResponse())) {
             return RetrySubscriber::DEFER;

@@ -2,13 +2,12 @@
 
 namespace Aws\Api\ErrorParser;
 
-use Aws\Api\Error\JsonParserTrait;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * Parsers JSON-RPC errors.
  */
-class JsonRpcParser
+class JsonRpcErrorParser
 {
     use JsonParserTrait;
 

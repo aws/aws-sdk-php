@@ -33,7 +33,7 @@ class S3TimeoutFilter
 {
     const ERR = 'Your socket connection to the server was not read from or written to within the timeout period';
 
-    public function __invoke(AbstractTransferEvent $event)
+    public function __invoke($retries, AbstractTransferEvent $event)
     {
         // Don't mess with networking errors.
         if (!($response = $event->getResponse())) {

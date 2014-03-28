@@ -67,6 +67,9 @@ class Sdk
      * - client_defaults: Optional default client options to use with each client.
      * - endpoint_provider: Optional endpoint provider used when creating
      *   service endpoints.
+     * - retries: Configures retries for clients. The value can be true (the
+     *   default setting which enables retry behavior), false to disable
+     *   retries, or a number representing the maximum number of retries.
      *
      * @param array $args
      *
@@ -84,6 +87,10 @@ class Sdk
             $args['endpoint_provider'] = new RulesEndpointProvider(
                 json_decode(file_get_contents($path), true)
             );
+        }
+
+        if (!isset($args['retries'])) {
+            $args['retries'] = true;
         }
 
         $this->args = $args;

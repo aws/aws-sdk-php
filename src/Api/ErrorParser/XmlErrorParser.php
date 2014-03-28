@@ -7,7 +7,7 @@ use GuzzleHttp\Message\ResponseInterface;
 /**
  * Parses XML errors.
  */
-class XmlParser
+class XmlErrorParser
 {
     public function __invoke(ResponseInterface $response)
     {

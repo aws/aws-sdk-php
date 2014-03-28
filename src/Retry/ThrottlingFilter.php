@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Subscriber;
+namespace Aws\Retry;
 
 use GuzzleHttp\Event\AbstractTransferEvent;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
@@ -44,7 +44,7 @@ class ThrottlingFilter
         $this->exceptionParser = $exceptionParser;
     }
 
-    public function __invoke(AbstractTransferEvent $event)
+    public function __invoke($retries, AbstractTransferEvent $event)
     {
         // Doesn't mess with networking errors.
         if (!($response = $event->getResponse())) {

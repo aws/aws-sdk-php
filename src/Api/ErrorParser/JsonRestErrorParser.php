@@ -2,13 +2,12 @@
 
 namespace Aws\Api\ErrorParser;
 
-use Aws\Api\Error\JsonParserTrait;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * Parses JSON-REST errors.
  */
-class JsonRestParser
+class JsonRestErrorParser
 {
     use JsonParserTrait;
 
