@@ -25,23 +25,13 @@ class RulesEndpointProvider implements EndpointProviderInterface
             $args['scheme'] = 'https';
         }
 
-        if (isset($this->rules[$service])) {
-            foreach ($this->rules[$service] as $rule) {
-                if ($endpoint = $this->checkRule($rule, $args)) {
-                    return $endpoint;
-                }
-            }
+        // Use the __default__ section if no rule is found by the given name.
+        $service = isset($this->rules[$service]) ? $service : '__default__';
+
+        if ($result = $this->checkSection($service, $args)) {
+            return $result;
         }
 
-        if (isset($this->rules['__defaults__'])) {
-            foreach ($this->rules['__defaults__'] as $rule) {
-                if ($endpoint = $this->checkRule($rule, $args)) {
-                    return $endpoint;
-                }
-            }
-        }
-
-        // Note: throwing an exception is implementation specific
         throw new \RuntimeException('Unable to resolve an endpoint');
     }
 
@@ -71,8 +61,33 @@ class RulesEndpointProvider implements EndpointProviderInterface
         $this->rules[$service][] = $rule;
     }
 
+    /**
+     * Checks the provided arguments against the rules of a service/section.
+     *
+     * @param string $name Service name
+     * @param array  $args Arguments used to resolve rules.
+     *
+     * @return array|null
+     */
+    private function checkSection($name, array $args)
+    {
+        if (isset($this->rules[$name])) {
+            foreach ($this->rules[$name] as $rule) {
+                if ($endpoint = $this->checkRule($rule, $args)) {
+                    return $endpoint;
+                }
+            }
+        }
+
+        return null;
+    }
+
     private function checkRule(array $rule, array $args)
     {
+        if (isset($rule['use'])) {
+            return $this->checkSection($rule['use'], $args);
+        }
+
         // Check each rule constraint against the provided region
         if (isset($rule['constraints'])) {
             foreach ($rule['constraints'] as $cons) {
@@ -85,6 +100,11 @@ class RulesEndpointProvider implements EndpointProviderInterface
                         break;
                     case 'oneOf':
                         if (!$value || !in_array($value, $cons[2], true)) {
+                            return null;
+                        }
+                        break;
+                    case 'equals':
+                        if (!$value === $cons[2]) {
                             return null;
                         }
                         break;
