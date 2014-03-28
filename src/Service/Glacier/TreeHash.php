@@ -17,23 +17,22 @@
 namespace Aws\Common\Hash;
 
 use GuzzleHttp\Stream;
+use GuzzleHttp\Subscriber\MessageIntegrity\HashInterface;
 
 /**
  * Encapsulates the creation of a tree hash from streamed chunks of data
  */
-class TreeHash implements ChunkHashInterface
+class TreeHash implements HashInterface
 {
     /** @var string The algorithm used for hashing */
     private $algorithm;
 
-    /** @var array Ninary checksums from which the tree hash is derived */
+    /** @var array Binary checksums from which the tree hash is derived */
     private $checksums = [];
 
-    /** @var string The resulting hash in hex form */
+    /** @var string The resulting hash in binary form */
     private $hash;
 
-    /** @var string The resulting hash in binary form */
-    private $hashRaw;
 
     /**
      * Create a tree hash from an array of existing tree hash checksums
@@ -59,7 +58,7 @@ class TreeHash implements ChunkHashInterface
             : array_map('hex2bin', $checksums);
 
         // Pre-calculate hash
-        $treeHash->getHash();
+        $treeHash->complete();
 
         return $treeHash;
     }
@@ -74,18 +73,18 @@ class TreeHash implements ChunkHashInterface
      */
     public static function fromContent(
         $content,
-        $algorithm = self::DEFAULT_ALGORITHM
+        $algorithm = 'sha256'
     ) {
         $treeHash = new self($algorithm);
 
         // Read the data in 1MB chunks and add to tree hash
         $content = Stream\create($content);
         while ($data = $content->read(1048576)) {
-            $treeHash->addData($data);
+            $treeHash->update($data);
         }
 
         // Pre-calculate hash
-        $treeHash->getHash();
+        $treeHash->complete();
 
         return $treeHash;
     }
@@ -102,14 +101,14 @@ class TreeHash implements ChunkHashInterface
     public static function validateChecksum(
         $content,
         $checksum,
-        $algorithm = self::DEFAULT_ALGORITHM
+        $algorithm = 'sha256'
     ) {
         $treeHash = self::fromContent($content, $algorithm);
 
         return ($checksum === $treeHash->getHash());
     }
 
-    public function __construct($algorithm = self::DEFAULT_ALGORITHM)
+    public function __construct($algorithm = 'sha256')
     {
         $this->algorithm = $algorithm;
     }
@@ -119,18 +118,18 @@ class TreeHash implements ChunkHashInterface
      * @throws \LogicException if the root tree hash is already calculated
      * @throws \InvalidArgumentException if the data is larger than 1MB
      */
-    public function addData($data)
+    public function update($data)
     {
         // Error if hash is already calculated
         if ($this->hash) {
             throw new \LogicException('You may not add more data to a '
-                . 'finalized tree hash.');
+                . 'complete tree hash.');
         }
 
         // Make sure that only 1MB chunks or smaller get passed in
         if (strlen($data) > 1048576) {
-            throw new \InvalidArgumentException('The chunk of data added is '
-                . 'too large for tree hashing.');
+            throw new \InvalidArgumentException('You may only update a tree '
+				. 'hash with chunks of data that are 1MB or less.');
         }
 
         // Store the raw hash of this data segment
@@ -154,16 +153,16 @@ class TreeHash implements ChunkHashInterface
         // Error if hash is already calculated
         if ($this->hash) {
             throw new \LogicException('You may not add more checksums to a '
-                . 'finalized tree hash.');
+                . 'complete tree hash.');
         }
 
         // Convert the checksum to binary form if necessary
-        $this->checksums[] = $inBinaryForm ? $checksum : bin2hex($checksum);
+        $this->checksums[] = $inBinaryForm ? $checksum : hex2bin($checksum);
 
         return $this;
     }
 
-    public function getHash($returnBinaryForm = false)
+    public function complete()
     {
         if (!$this->hash) {
             // Perform hashes up the tree to arrive at the root checksum of the
@@ -179,11 +178,10 @@ class TreeHash implements ChunkHashInterface
                 }
             }
 
-            $this->hashRaw = $hashes[0];
-            $this->hash = bin2hex($this->hashRaw);
+            $this->hash = $hashes[0];
         }
 
-        return $returnBinaryForm ? $this->hashRaw : $this->hash;
+        return $this->hash;
     }
 
     /**

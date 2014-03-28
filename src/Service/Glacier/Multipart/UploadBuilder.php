@@ -14,14 +14,13 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Glacier\Model\MultipartUpload;
+namespace Aws\Service\Glacier\Multipart;
 
 use Aws\Common\Enum\Size;
 use Aws\Common\Enum\UaString as Ua;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Model\MultipartUpload\AbstractUploadBuilder;
 use Aws\Common\Model\MultipartUpload\TransferStateInterface as State;
-use Aws\Glacier\Model\MultipartUpload\UploadPartGenerator;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
