@@ -40,8 +40,8 @@ class DefaultFactory
      */
     public function create(array $args = [])
     {
-        static $required = ['scheme', 'version', 'api_provider',
-            'endpoint_provider', 'service'];
+        static $required = ['version', 'api_provider', 'endpoint_provider',
+            'service'];
 
         foreach ($required as $r) {
             if (!isset($args[$r])) {
