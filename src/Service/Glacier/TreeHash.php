@@ -136,6 +136,28 @@ class TreeHash implements HashInterface
         return $this;
     }
 
+    public function complete()
+    {
+        if (!$this->hash) {
+            // Perform hashes up the tree to arrive at the root checksum of the
+            // tree hash.
+            $hashes = $this->checksums;
+            while (count($hashes) > 1) {
+                $sets = array_chunk($hashes, 2);
+                $hashes = array();
+                foreach ($sets as $set) {
+                    $hashes[] = (count($set) === 1)
+                        ? $set[0]
+                        : hash($this->algorithm, $set[0] . $set[1], true);
+                }
+            }
+
+            $this->hash = $hashes[0];
+        }
+
+        return $this->hash;
+    }
+
     /**
      * Add a checksum to the tree hash directly
      *
@@ -157,28 +179,6 @@ class TreeHash implements HashInterface
         $this->checksums[] = $inBinaryForm ? $checksum : hex2bin($checksum);
 
         return $this;
-    }
-
-    public function complete()
-    {
-        if (!$this->hash) {
-            // Perform hashes up the tree to arrive at the root checksum of the
-            // tree hash.
-            $hashes = $this->checksums;
-            while (count($hashes) > 1) {
-                $sets = array_chunk($hashes, 2);
-                $hashes = array();
-                foreach ($sets as $set) {
-                    $hashes[] = (count($set) === 1)
-                        ? $set[0]
-                        : hash($this->algorithm, $set[0] . $set[1], true);
-                }
-            }
-
-            $this->hash = $hashes[0];
-        }
-
-        return $this->hash;
     }
 
     /**

@@ -14,55 +14,20 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sqs;
+namespace Aws\Service;
 
-/**
- * Client to interact with Amazon Simple Queue Service
- *
- * @method Model addPermission(array $args = array()) {@command Sqs AddPermission}
- * @method Model changeMessageVisibility(array $args = array()) {@command Sqs ChangeMessageVisibility}
- * @method Model changeMessageVisibilityBatch(array $args = array()) {@command Sqs ChangeMessageVisibilityBatch}
- * @method Model createQueue(array $args = array()) {@command Sqs CreateQueue}
- * @method Model deleteMessage(array $args = array()) {@command Sqs DeleteMessage}
- * @method Model deleteMessageBatch(array $args = array()) {@command Sqs DeleteMessageBatch}
- * @method Model deleteQueue(array $args = array()) {@command Sqs DeleteQueue}
- * @method Model getQueueAttributes(array $args = array()) {@command Sqs GetQueueAttributes}
- * @method Model getQueueUrl(array $args = array()) {@command Sqs GetQueueUrl}
- * @method Model listDeadLetterSourceQueues(array $args = array()) {@command Sqs ListDeadLetterSourceQueues}
- * @method Model listQueues(array $args = array()) {@command Sqs ListQueues}
- * @method Model receiveMessage(array $args = array()) {@command Sqs ReceiveMessage}
- * @method Model removePermission(array $args = array()) {@command Sqs RemovePermission}
- * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}
- * @method Model sendMessageBatch(array $args = array()) {@command Sqs SendMessageBatch}
- * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
- * @method ResourceIteratorInterface getListDeadLetterSourceQueuesIterator(array $args = array()) The input array uses the parameters of the ListDeadLetterSourceQueues operation
- * @method ResourceIteratorInterface getListQueuesIterator(array $args = array()) The input array uses the parameters of the ListQueues operation
- *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-sqs.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Sqs.SqsClient.html API docs
- */
-class SqsFactory extends AbstractFactory
+use Aws\Service\Sqs\QueueUrlListener;
+use Aws\Service\Sqs\Md5ValidatorListener;
+
+class SqsFactory extends DefaultFactory
 {
-    /**
-     * Factory method to create a new Amazon Simple Queue Service client using an array of configuration options.
-     *
-     * @param array|Collection $config Client configuration data
-     *
-     * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
-     */
-    public static function factory($config = array())
+    protected function createClient(array $args)
     {
-        $client = ClientBuilder::factory(__NAMESPACE__)
-            ->setConfig($config)
-            ->setConfigDefaults(array(
-                Options::VERSION             => self::LATEST_API_VERSION,
-                Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/sqs-%s.php'
-            ))
-            ->build();
+        $client = parent::createClient($args);
 
-        $client->addSubscriber(new QueueUrlListener());
-        $client->addSubscriber(new Md5ValidatorListener());
+        $emitter = $client->getEmitter();
+        $emitter->attach(new QueueUrlListener());
+        $emitter->attach(new Md5ValidatorListener());
 
         return $client;
     }
@@ -70,9 +35,11 @@ class SqsFactory extends AbstractFactory
     /**
      * Converts a queue URL into a queue ARN.
      *
-     * @param string $queueUrl The queue URL to perform the action on. Retrieved when the queue is first created.
+     * @param string $queueUrl The queue URL to perform the action on.
+     *                         Retrieved when the queue is first created.
      *
      * @return string An ARN representation of the queue URL.
+     * @todo: Move function
      */
     public function getQueueArn($queueUrl)
     {

@@ -14,39 +14,40 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sqs;
+namespace Aws\Service\Sqs;
 
-use Aws\Sqs\Exception\SqsException;
-use Guzzle\Common\Event;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Aws\Service\Exception\SqsException;
+use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Event\RequestEvents;
+use GuzzleHttp\Event\SubscriberInterface;
 
 /**
- * Listener used to validate the MD5 of the ReceiveMessage body
+ * Listener used to validate the MD5 of the ReceiveMessage body.
  */
-class Md5ValidatorListener implements EventSubscriberInterface
+class Md5ValidatorListener implements SubscriberInterface
 {
-    public static function getSubscribedEvents()
+    public function getEvents()
     {
-        return array('command.after_send' => array('onCommandBeforeSend', -255));
+        return ['process' => ['onProcess', RequestEvents::LATE]];
     }
 
-    /**
-     * Validates the MD5OfBody attribute against the body
-     *
-     * @param Event $event Event emitted
-     * @throws SqsException when an MD5 mismatch occurs
-     */
-    public function onCommandBeforeSend(Event $event)
+    public function onProcess(ProcessEvent $event)
     {
-        if ($event['command']->getName() != 'ReceiveMessage') {
+        if ($event->getCommand()->getName() !== 'ReceiveMessage') {
             return;
         }
 
-        $result = $event['command']->getResult();
+        $result = $event->getResult();
         if (isset($result['Messages'])) {
             foreach ($result['Messages'] as $message) {
                 if ($message['MD5OfBody'] != md5($message['Body'])) {
-                    throw new SqsException('Body MD5 mismatch for ' . var_export($message, true));
+                    throw new SqsException(
+                        'Body MD5 mismatch for ' . var_export($message, true),
+                        $event->getClient(),
+                        $event->getCommand(),
+                        $event->getRequest(),
+                        $event->getResponse()
+                    );
                 }
             }
         }

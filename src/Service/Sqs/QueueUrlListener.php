@@ -14,39 +14,30 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sqs;
+namespace Aws\Service\Sqs;
 
-use Guzzle\Common\Event;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Guzzle\Service\Command\AbstractCommand;
+use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Event\RequestEvents;
+use GuzzleHttp\Event\SubscriberInterface;
+use GuzzleHttp\Url;
 
 /**
  * Listener used to change the endpoint to the queue URL
  */
-class QueueUrlListener implements EventSubscriberInterface
+class QueueUrlListener implements SubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public function getEvents()
     {
-        return array('command.before_send' => array('onCommandBeforeSend', -255));
+        return ['prepare' => ['onPrepare', RequestEvents::EARLY]];
     }
 
-    /**
-     * Updates the request URL to use the Queue URL
-     *
-     * @param Event $event Event emitted
-     */
-    public function onCommandBeforeSend(Event $event)
+    public function onPrepare(PrepareEvent $event)
     {
-        /** @var $command AbstractCommand */
-        $command = $event['command'];
-        if ($command->hasKey('QueueUrl')) {
-            $request = $command->getRequest();
-            $requestUrl = $request->getUrl(true);
-            $request->setUrl($requestUrl->combine($command->get('QueueUrl')));
-            $request->getParams()->remove('QueueUrl');
+        $command = $event->getCommand();
+        if ($queueUrl = $command['QueueUrl']) {
+            $request = $event->getRequest();
+            $url = Url::fromString($request->getUrl())->combine($queueUrl);
+            $request->setUrl($url);
         }
     }
 }

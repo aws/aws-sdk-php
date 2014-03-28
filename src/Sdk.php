@@ -47,11 +47,22 @@ class Sdk
     /** @var array */
     private $args;
 
-    /** @var array Map of service names to factory classes */
-    private $customFactories = [];
-
+    /**
+     * Map of custom lowercase names to service endpoint names of model files.
+     *
+     * @var array
+     */
     private $serviceNames = [
-        'DynamoDb' => 'dynamodb'
+        'cloudwatch' => 'monitoring',
+        'simpledb'   => 'sdb',
+        'ses'        => 'email'
+    ];
+
+    /** @var array Map of service endpoint names to factory class names */
+    private $customFactories = [
+        'dynamodb' => 'Aws\Service\DynamoDbFactory',
+        'glacier'  => 'Aws\Service\GlacierFactory',
+        'sqs'      => 'Aws\Service\SqsFactory'
     ];
 
     /**
@@ -119,6 +130,8 @@ class Sdk
      */
     public function getClient($name, array $args = [])
     {
+        $name = strtolower($name);
+
         if (isset($this->serviceNames[$name])) {
             $name = $this->serviceNames[$name];
         }

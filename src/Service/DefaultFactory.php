@@ -17,7 +17,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
- * Default factory class used to create clients.
+ * @internal Default factory class used to create clients.
  */
 class DefaultFactory
 {
@@ -129,14 +129,7 @@ class DefaultFactory
         array &$args,
         AwsClientInterface $client
     ) {
-        if ($value === false || $value === 0) {
-            return;
-        } elseif ($value === true) {
-            $value = 3;
-        } elseif (!is_integer($value)) {
-            throw new \InvalidArgumentException('retries must be a boolean or'
-                . ' an integer');
-        }
+        $value = $this->validateRetries($value);
 
         $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
             'max' => $value,
@@ -172,6 +165,28 @@ class DefaultFactory
 
         throw new \InvalidArgumentException('Unknown service type '
             . $api->getMetadata('type'));
+    }
+
+    /**
+     * Validates the provided "retries" key and returns a number.
+     *
+     * @param mixed $value Value to validate and coerce
+     *
+     * @return bool|int Returns false to disable, or a number of retries.
+     * @throws \InvalidArgumentException if the setting is invalid.
+     */
+    protected function validateRetries($value)
+    {
+        if ($value === true) {
+            $value = 3;
+        } elseif ($value === false || $value === 0) {
+            return false;
+        } elseif (!is_integer($value)) {
+            throw new \InvalidArgumentException('retries must be a boolean or'
+                . ' an integer');
+        }
+
+        return $value;
     }
 
     private function handle_credentials($value, array &$args)

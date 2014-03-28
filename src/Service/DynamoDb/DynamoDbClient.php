@@ -42,7 +42,7 @@ namespace Aws\DynamoDb;
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.DynamoDb.DynamoDbClient.html API docs
  */
-class DynamoDbFactory extends AbstractFactory
+class DynamoDbClient extends AbstractFactory
 {
     /**
      * Factory method to create a new Amazon DynamoDB client using an array of configuration options.
