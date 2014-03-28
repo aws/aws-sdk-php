@@ -25,8 +25,8 @@ class RulesEndpointProvider implements EndpointProviderInterface
             $args['scheme'] = 'https';
         }
 
-        // Use the __default__ section if no rule is found by the given name.
-        $service = isset($this->rules[$service]) ? $service : '__default__';
+        // Use the _default section if no rule is found by the given name.
+        $service = isset($this->rules[$service]) ? $service : '_default';
 
         if ($result = $this->checkSection($service, $args)) {
             return $result;
@@ -38,7 +38,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
     /**
      * Prepends a rule to the given service name.
      *
-     * @param string $service Service name or __default__ to apply to all.
+     * @param string $service Service name or _default to apply to all.
      * @param array  $rule    Rule to prepend
      */
     public function prependRule($service, array $rule)
@@ -53,7 +53,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
     /**
      * Appends a rule to the given service name.
      *
-     * @param string $service Service name or __default__ to apply to all.
+     * @param string $service Service name or _default to apply to all.
      * @param array  $rule    Rule to append
      */
     public function appendRule($service, array $rule)
