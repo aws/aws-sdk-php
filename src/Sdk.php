@@ -75,12 +75,12 @@ class Sdk
     public function __construct(array $args = [])
     {
         if (!isset($args['api_provider'])) {
-            $path = '/Users/dowling/projects/RubyAwsCore/apis/source';
-            $args['api_provider'] = new FilesystemApiProvider($path);
+            $path = '/Users/dowling/.aws/models/';
+            $args['api_provider'] = new FilesystemApiProvider($path, true);
         }
 
         if (!isset($args['endpoint_provider'])) {
-            $path = __DIR__ . '/../build/artifacts/endpoint-rules.json';
+            $path = '/Users/dowling/.aws/models/endpoint-rules.json';
             $args['endpoint_provider'] = new RulesEndpointProvider(
                 json_decode(file_get_contents($path), true)
             );

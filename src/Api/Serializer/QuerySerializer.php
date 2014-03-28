@@ -87,7 +87,7 @@ class QuerySerializer implements SubscriberInterface
     ) {
         foreach ($value as $k => $v) {
             $member = $shape->getMember($k);
-            $memberPrefix = $member->getMetadata('xmlName') ?: $k;
+            $memberPrefix = $member['xmlName'] ?: $k;
             if ($prefix) {
                 $memberPrefix = $prefix . '.' . $memberPrefix;
             }
@@ -103,9 +103,9 @@ class QuerySerializer implements SubscriberInterface
     ) {
         $items = $shape->getMember();
 
-        if (!$shape->getMetadata('flattened')) {
+        if (!$shape['flattened']) {
             $prefix .= '.member';
-        } elseif ($locationName = $items->getMetadata('xmlName')) {
+        } elseif ($locationName = $items['xmlName']) {
             $parts = explode('.', $prefix);
             array_pop($parts);
             $parts[] = $locationName;
@@ -126,7 +126,7 @@ class QuerySerializer implements SubscriberInterface
         $vals = $shape->getValue();
         $keys = $shape->getKey();
 
-        if (!$shape->getMetadata('flattened')) {
+        if (!$shape['flattened']) {
             $prefix .= '.entry';
         }
 

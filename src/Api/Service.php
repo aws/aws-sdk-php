@@ -83,4 +83,26 @@ class Service extends AbstractModel
 
         return $result;
     }
+
+    /**
+     * Get all of the service metadata or a specific metadata key value.
+     *
+     * @param string|null $key Key to retrieve or null to retrieve all metadata
+     *
+     * @return mixed Returns the result or null if the key is not found
+     */
+    public function getMetadata($key = null)
+    {
+        if (!isset($this->definition['metadata'])) {
+            $this->definition['metadata'] = [];
+        }
+
+        if (!$key) {
+            return $this['metadata'];
+        } elseif (isset($this->definition['metadata'][$key])) {
+            return $this->definition['metadata'][$key];
+        }
+
+        return null;
+    }
 }

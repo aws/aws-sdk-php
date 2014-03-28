@@ -10,12 +10,17 @@ class FilesystemApiProvider implements ApiProviderInterface
     /** @var string */
     private $path;
 
+    /** @var string */
+    private $apiSuffix;
+
     /**
-     * @param string $path Path to the service descriptions on disk.
+     * @param string $path Path to the service descriptions on disk
+     * @param bool   $min  Set to true to load minified models
      */
-    public function __construct($path)
+    public function __construct($path, $min = false)
     {
         $this->path = rtrim($path, '/\\');
+        $this->apiSuffix = $min ? '.normal.min.json' : '.normal.json';
     }
 
     public function getService($service, $version)
@@ -27,7 +32,7 @@ class FilesystemApiProvider implements ApiProviderInterface
             }
         }
 
-        $path = $this->getPath($service, $version, '.normal.json');
+        $path = $this->getPath($service, $version, $this->apiSuffix);
 
         return file_exists($path)
             ? new Service($this->parseJson(file_get_contents($path)))
@@ -36,8 +41,8 @@ class FilesystemApiProvider implements ApiProviderInterface
 
     public function getServiceNames()
     {
-        $files = $this->getServiceFiles('.normal.json');
-        $search = [$this->path, '.normal.json'];
+        $files = $this->getServiceFiles($this->apiSuffix);
+        $search = [$this->path, $this->apiSuffix];
         $results = [];
 
         foreach ($files as $f) {
@@ -49,8 +54,8 @@ class FilesystemApiProvider implements ApiProviderInterface
 
     public function getServiceVersions($service)
     {
-        $files = $this->getServiceFiles('.normal.json');
-        $search = [$this->path, '.normal.json'];
+        $files = $this->getServiceFiles($this->apiSuffix);
+        $search = [$this->path, $this->apiSuffix];
         $results = [];
 
         foreach ($files as $f) {

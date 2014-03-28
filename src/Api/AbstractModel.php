@@ -21,10 +21,6 @@ abstract class AbstractModel implements ToArrayInterface, \ArrayAccess
      */
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
-        if (!isset($definition['metadata'])) {
-            $definition['metadata'] = [];
-        }
-
         $this->definition = $definition;
         $this->shapeMap = $shapeMap;
     }
@@ -32,17 +28,6 @@ abstract class AbstractModel implements ToArrayInterface, \ArrayAccess
     public function toArray()
     {
         return $this->definition;
-    }
-
-    public function getMetadata($key = null)
-    {
-        if (!$key) {
-            return $this['metadata'];
-        } elseif (isset($this->definition['metadata'][$key])) {
-            return $this->definition['metadata'][$key];
-        }
-
-        return null;
     }
 
     public function offsetGet($offset)

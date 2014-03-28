@@ -10,6 +10,9 @@ class ShapeMap
     /** @var array */
     private $definitions;
 
+    /** @var Shape[] */
+    private $simple;
+
     /**
      * @param array $shapeModels Associative array of shape definitions.
      */
@@ -44,22 +47,20 @@ class ShapeMap
             throw new \InvalidArgumentException('Shape not found: ' . $shape);
         }
 
-        $definition = $this->definitions[$shape];
-
-        if ($shapeRef) {
-            $definition = $shapeRef + $definition;
-            if (isset($shapeRef['metadata'])) {
-                if (!isset($this->definitions[$shape]['metadata'])) {
-                    $definition['metadata'] = $shapeRef['metadata'];
-                } else {
-                    $definition['metadata'] = $shapeRef['metadata']
-                        + $this->definitions[$shape]['metadata'];
-                }
-            }
+        $isSimple = count($shapeRef) == 1;
+        if ($isSimple && isset($this->simple[$shape])) {
+            return $this->simple[$shape];
         }
 
+        $definition = $shapeRef + $this->definitions[$shape];
         unset($definition['shape']);
 
-        return Shape::create($definition, $this);
+        $result = Shape::create($definition, $this);
+
+        if ($isSimple) {
+            $this->simple[$shape] = $result;
+        }
+
+        return $result;
     }
 }
