@@ -21,6 +21,9 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
  */
 class DefaultFactory
 {
+    /** @var int Default maximum number of retries for failed requests. */
+    const DEFAULT_MAX_RETRIES = 3;
+
     /**
      * Represents how provided key value pairs are processed.
      *
@@ -178,8 +181,8 @@ class DefaultFactory
     protected function validateRetries($value)
     {
         if ($value === true) {
-            $value = 3;
-        } elseif ($value === false || $value === 0) {
+            $value = self::DEFAULT_MAX_RETRIES;
+        } elseif (!$value) {
             return false;
         } elseif (!is_integer($value)) {
             throw new \InvalidArgumentException('retries must be a boolean or'
@@ -198,10 +201,10 @@ class DefaultFactory
         ) {
             $args['credentials'] = Credentials::factory($value);
         } else {
-            throw new \InvalidArgumentException('credentials must be an '
+            throw new \InvalidArgumentException('Credentials must be an '
                 . 'instance of Aws\Credentials\CredentialsInterface or an '
                 . 'associative array that contains "key", "secret", and '
-                . 'an optional "token" key value pairs.');
+                . 'an optional "token" key-value pairs.');
         }
     }
 

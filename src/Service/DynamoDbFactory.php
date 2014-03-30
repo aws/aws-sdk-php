@@ -26,9 +26,13 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
  */
 class DynamoDbFactory extends DefaultFactory
 {
+    // Higher max due to smaller delays and faster response times.
+    const DEFAULT_MAX_RETRIES = 11;
+
     protected function createClient(array $args)
     {
         $client = parent::createClient($args);
+
         // DynamoDB does not redirect, so there's no need to add the subscriber.
         $client->getHttpClient()->setDefaultOption('allow_redirects', false);
 
