@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Service\Glacier;
+namespace Aws\Test\Service\Glacier;
 
 use Aws\Service\Glacier\TreeHash;
 
@@ -22,7 +22,7 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
 {
     public function getTestData()
     {
-        $completeedChunks = function ($chunks, $useBinaryForm) {
+        $completedChunks = function ($chunks, $useBinaryForm) {
             return array_map(function ($chunk) use ($useBinaryForm) {
                 return hash('sha256', $chunk, $useBinaryForm);
             }, $chunks);
@@ -31,8 +31,8 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
         $data = new \stdClass;
         $data->chunks = array(str_repeat('x', 1048576), 'foobar');
         $data->content = join('', $data->chunks);
-        $data->binHashes = $completeedChunks($data->chunks, true);
-        $data->hexHashes = $completeedChunks($data->chunks, false);
+        $data->binHashes = $completedChunks($data->chunks, true);
+        $data->hexHashes = $completedChunks($data->chunks, false);
         $data->checksum = hash('sha256', join('', $data->binHashes), true);
 
         return $data;

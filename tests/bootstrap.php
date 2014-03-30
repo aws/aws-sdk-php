@@ -19,57 +19,9 @@ date_default_timezone_set('UTC');
 
 // Ensure that composer has installed all dependencies
 if (!file_exists(dirname(__DIR__) . '/composer.lock')) {
-    die("Dependencies must be installed using composer:\n\nphp composer.phar install\n\n"
-        . "See http://getcomposer.org for help with installing composer\n");
-}
-
-// Include the phar files if testing against the phars
-if (get_cfg_var('aws_phar')) {
-    require dirname(__DIR__) . '/build/' . get_cfg_var('aws_phar');
+    die("Install dependencies using Composer before running tests.\n");
 }
 
 // Include the composer autoloader
-$loader = require dirname(__DIR__) . '/vendor/autoload.php';
-$loader->add('Aws\\Test', __DIR__);
-
-// Register services with the GuzzleTestCase
-Guzzle\Tests\GuzzleTestCase::setMockBasePath(__DIR__ . '/mock');
-
-// Allow command line overrides
-if (get_cfg_var('CONFIG')) {
-    $_SERVER['CONFIG'] = get_cfg_var('CONFIG');
-}
-
-// Set the service configuration file if it was not provided from the CLI
-if (!isset($_SERVER['CONFIG'])) {
-    $serviceConfig = $_SERVER['CONFIG'] = dirname(__DIR__) . '/test_services.json';
-    $_SERVER['CONFIG'] = $serviceConfig;
-    if (!file_exists($serviceConfig)) {
-        copy($serviceConfig . '.dist', $serviceConfig);
-    }
-}
-
-if (!is_readable($_SERVER['CONFIG'])) {
-    die("Unable to read service configuration from '{$_SERVER['CONFIG']}'\n");
-}
-
-// If the global prefix is hostname, then use the crc32() of gethostname()
-if (!isset($_SERVER['PREFIX']) || $_SERVER['PREFIX'] == 'hostname') {
-    $_SERVER['PREFIX'] = crc32(gethostname());
-}
-
-// Instantiate the service builder
-$aws = Aws\Common\Aws::factory($_SERVER['CONFIG']);
-
-// Turn on wire logging if configured
-$aws->getEventDispatcher()->addListener('service_builder.create_client', function (\Guzzle\Common\Event $event) {
-    if (isset($_SERVER['WIRE_LOGGING']) && $_SERVER['WIRE_LOGGING']) {
-        $event['client']->addSubscriber(Guzzle\Plugin\Log\LogPlugin::getDebugPlugin());
-    }
-});
-
-// Configure the tests to ise the instantiated AWS service builder
-Guzzle\Tests\GuzzleTestCase::setServiceBuilder($aws);
-
-// Emit deprecation warnings
-Guzzle\Common\Version::$emitWarnings = true;
+$loader = require __DIR__ . '/../vendor/autoload.php';
+$loader->addPsr4('Aws\\Test\\', __DIR__ . '/Test');
