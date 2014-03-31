@@ -44,6 +44,8 @@ use Aws\Service\DefaultFactory;
  */
 class Sdk
 {
+    const VERSION = '3.0.0-beta.1';
+
     /** @var array */
     private $args;
 

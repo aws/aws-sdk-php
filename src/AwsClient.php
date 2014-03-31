@@ -20,8 +20,6 @@ use GuzzleHttp\Command\AbstractClient;
  */
 class AwsClient extends AbstractClient implements AwsClientInterface
 {
-    const VERSION = '3.0.0-beta.1';
-
     /** @var CredentialsInterface AWS credentials */
     private $credentials;
 
@@ -174,7 +172,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         // Make sure the user agent is prefixed by the SDK version
         $client->setDefaultOption(
             'headers/User-Agent',
-            'aws-sdk-php/' . self::VERSION . ' ' . Client::getDefaultUserAgent()
+            'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
         );
 
         return $client;
