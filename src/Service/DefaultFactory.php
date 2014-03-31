@@ -181,7 +181,7 @@ class DefaultFactory
     protected function validateRetries($value)
     {
         if ($value === true) {
-            $value = self::DEFAULT_MAX_RETRIES;
+            $value = static::DEFAULT_MAX_RETRIES;
         } elseif (!$value) {
             return false;
         } elseif (!is_integer($value)) {
