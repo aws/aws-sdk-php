@@ -79,15 +79,15 @@ class RulesEndpointProvider implements EndpointProviderInterface
             }
         }
 
+        if ($name !== '_default') {
+            return $this->checkSection('_default', $args);
+        }
+
         return null;
     }
 
     private function checkRule(array $rule, array $args)
     {
-        if (isset($rule['use'])) {
-            return $this->checkSection($rule['use'], $args);
-        }
-
         // Check each rule constraint against the provided region
         if (isset($rule['constraints'])) {
             foreach ($rule['constraints'] as $cons) {
