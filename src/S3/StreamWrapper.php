@@ -404,7 +404,15 @@ class StreamWrapper
 
         try {
             if ($params['Key']) {
-                return $this->unlink($path);
+                $result = self::$client->listObjects(array(
+                    'Bucket'  => $params['Bucket'],
+                    'Prefix'  => $path,
+                    'MaxKeys' => 1
+                ));
+                if (!$result['Contents'] && !$result['CommonPrefixes']) {
+                    return $this->unlink($path);
+                }
+                return $this->triggerError('Pseudo directory is not empty');
             } else {
                 self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
             }
