@@ -85,13 +85,13 @@ class ClientFactory
         $this->addDefaultArgs($args);
 
         $deferred = [];
-        foreach ($args as $key => $value) {
-            if (!isset($this->validArguments[$key])) {
-                throw new \InvalidArgumentException("Unknown client option $key");
-            } elseif ($this->validArguments[$key] === 1) {
-                $this->{"handle_{$key}"}($value, $args);
-            } elseif ($this->validArguments[$key] === 2) {
-                $deferred[$key] = $value;
+        foreach ($this->validArguments as $key => $type) {
+            if (isset($args[$key])) {
+                if ($type === 1) {
+                    $this->{"handle_{$key}"}($args[$key], $args);
+                } elseif ($type === 2) {
+                    $deferred[$key] = $args[$key];
+                }
             }
         }
 
@@ -132,8 +132,12 @@ class ClientFactory
             $args['region'] = null;
         }
 
+        if (!isset($args['scheme'])) {
+            $args['scheme'] = 'https';
+        }
+
         if (!isset($args['signature'])) {
-            $args['signature'] = null;
+            $args['signature'] = false;
         }
 
         if (!isset($args['client'])) {
@@ -255,8 +259,6 @@ class ClientFactory
                 . 'GuzzleHttp\ClientInterface');
         }
 
-        $args['client'] = $value;
-
         // Make sure the user agent is prefixed by the SDK version
         $args['client']->setDefaultOption(
             'headers/User-Agent',
@@ -315,22 +317,20 @@ class ClientFactory
 
     private function handle_signature($value, array &$args)
     {
-        if ($value instanceof SignatureInterface) {
-            $args['signature'] = $value;
-        } elseif ($value === null) {
+        if ($value === false) {
             $args['signature'] = $this->createSignature(
                 $args['api']->getMetadata('signatureVersion'),
                 $args['api'],
                 $args['region']
             );
-        }
-
-        if (is_string($value)) {
+        } elseif (is_string($value)) {
             $args['signature'] = $this->createSignature(
                 $value,
                 $args['api'],
                 isset($args['region']) ? $args['region'] : 'us-east-1'
             );
+        } elseif (!($value instanceof SignatureInterface)) {
+            throw new \InvalidArgumentException('Invalid signature option');
         }
     }
 
