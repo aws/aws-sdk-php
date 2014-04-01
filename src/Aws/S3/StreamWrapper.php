@@ -400,12 +400,14 @@ class StreamWrapper
         $params = $this->getParams($path);
         if (!$params['Bucket']) {
             return $this->triggerError('You cannot delete s3://. Please specify a bucket.');
-        } elseif ($params['Key']) {
-            return $this->triggerError('rmdir() only supports bucket deletion');
         }
 
         try {
-            self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
+            if ($params['Key']) {
+                return $this->unlink($path);
+            } else {
+                self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
+            }
             $this->clearStatInfo($path);
             return true;
         } catch (\Exception $e) {
