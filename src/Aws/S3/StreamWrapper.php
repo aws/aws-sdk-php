@@ -316,6 +316,22 @@ class StreamWrapper
      */
     public function url_stat($path, $flags)
     {
+        $errorDefaults = array(
+            'dev'     => 0,
+            'ino'     => 0,
+            'mode'    => 0,
+            'nlink'   => 0,
+            'uid'     => 0,
+            'gid'     => 0,
+            'rdev'    => 0,
+            'size'    => 0,
+            'atime'   => 0,
+            'mtime'   => 0,
+            'ctime'   => 0,
+            'blksize' => 0,
+            'blocks'  => 0,
+        );
+
         // Check if this path is in the url_stat cache
         if (isset(self::$nextStat[$path])) {
             return self::$nextStat[$path];
@@ -328,7 +344,7 @@ class StreamWrapper
             if (!$parts['Bucket'] || self::$client->doesBucketExist($parts['Bucket'])) {
                 return $this->formatUrlStat($path);
             } else {
-                return $this->triggerError("File or directory not found: {$path}", $flags);
+                return $errorDefaults;
             }
         }
 
@@ -350,13 +366,13 @@ class StreamWrapper
                     'MaxKeys' => 1
                 ));
                 if (!$result['Contents'] && !$result['CommonPrefixes']) {
-                    return $this->triggerError("File or directory not found: {$path}", $flags);
+                    return $errorDefaults;
                 }
                 // This is a directory prefix
                 return $this->formatUrlStat($path);
             }
         } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage(), $flags);
+            return $errorDefaults;
         }
     }
 
