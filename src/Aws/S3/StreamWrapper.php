@@ -414,6 +414,17 @@ class StreamWrapper
     }
 
     /**
+     * Object at s3 always is not a link
+     *
+     * @param  string  $path
+     * @return boolean
+     */
+    public function is_link($path)
+    {
+        return false;
+    }
+
+    /**
      * Support for opendir().
      *
      * @param string $path    The path to the directory (e.g. "s3://dir[</prefix>]")
