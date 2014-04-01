@@ -119,6 +119,11 @@ class Sdk
      *   use with each client OR an associative array of 'key', 'secret', and
      *   'token' key value pairs. If no credentials are provided, the SDK will
      *   attempt to load them from the environment.
+     * - profile: Allows you to specify which profile to use when credentials
+     *   are created from the AWS credentials file in your home directory. This
+     *   setting overrides the AWS_PROFILE environment variable. "profile" and
+     *   "credentials" are conflicting keys for this method and cannot both be
+     *   specified.
      * - scheme: The scheme to use when interacting with a service (https or
      *   http). Defaults to https.
      * - endpoint: An optional custom endpoint to use when interacting with a
