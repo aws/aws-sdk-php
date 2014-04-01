@@ -69,24 +69,12 @@ class Sdk
 
     /**
      * Constructs a new SDK object with an associative array of default
-     * client settings:
-     *
-     * - region: The default region name to use when creating clients
-     * - signature: A custom signature implementation to use with all clients
-     * - credentials: An {@see Aws\Credentials\CredentialsInterface} object to
-     *   use with each client OR an associative array of 'key', 'secret', and
-     *  'token' key value pairs.
-     * - api_provider: Optional service description provider
-     * - client_defaults: Optional default client options to use with each client.
-     * - endpoint_provider: Optional endpoint provider used when creating
-     *   service endpoints.
-     * - retries: Configures retries for clients. The value can be true (the
-     *   default setting which enables retry behavior), false to disable
-     *   retries, or a number representing the maximum number of retries.
+     * client settings.
      *
      * @param array $args
      *
      * @throws \InvalidArgumentException
+     * @see Aws\Sdk::getClient() for a list of available options.
      */
     public function __construct(array $args = [])
     {
@@ -122,7 +110,32 @@ class Sdk
     }
 
     /**
-     * Get a client by name.
+     * Get a client by name using an array of constructor options.
+     *
+     * - region: The region to use of the service
+     * - version: Optional API version of the service. If not specified, the
+     *   latest version of the API will be used.
+     * - credentials: An {@see Aws\Credentials\CredentialsInterface} object to
+     *   use with each client OR an associative array of 'key', 'secret', and
+     *   'token' key value pairs. If no credentials are provided, the SDK will
+     *   attempt to load them from the environment.
+     * - scheme: The scheme to use when interacting with a service (https or
+     *   http). Defaults to https.
+     * - endpoint: An optional custom endpoint to use when interacting with a
+     *   service.
+     * - signature: A string representing a custom signature version to use
+     *   with a service or a {@see Aws\Signture\SignatureInterface} object.
+     * - retries: Configures retries for clients. The value can be true (the
+     *   default setting which enables retry behavior), false to disable
+     *   retries, or a number representing the maximum number of retries.
+     * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
+     *   requests over the wire. You can specify either "client" or
+     *   "client_defaults", but not both.
+     * - client_defaults: Optional default client options which allows you to
+     *   specify things like timeouts, proxies, etc...
+     * - api_provider: Optional service description provider.
+     * - endpoint_provider: Optional endpoint provider used when creating
+     *   service endpoints.
      *
      * @param string $name Client name
      * @param array  $args Custom arguments to provide to the client.

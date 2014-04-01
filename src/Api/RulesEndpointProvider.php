@@ -32,7 +32,19 @@ class RulesEndpointProvider implements EndpointProviderInterface
             return $result;
         }
 
-        throw new \RuntimeException('Unable to resolve an endpoint');
+        $message = sprintf(
+            'Unable to resolve an endpoint for the %s service based on the'
+            . ' provided configuration values: %s',
+            $args['service'],
+            str_replace('&', ', ', http_build_query($args))
+        );
+
+        if (!isset($args['region'])) {
+            $message .= '. Perhaps you need to provide a "region" option to '
+                . 'use this service.';
+        }
+
+        throw new \RuntimeException($message);
     }
 
     /**
@@ -104,7 +116,12 @@ class RulesEndpointProvider implements EndpointProviderInterface
                         }
                         break;
                     case 'equals':
-                        if (!$value === $cons[2]) {
+                        if ($value !== $cons[2]) {
+                            return null;
+                        }
+                        break;
+                    case 'notEquals':
+                        if ($value === $cons[2]) {
                             return null;
                         }
                         break;

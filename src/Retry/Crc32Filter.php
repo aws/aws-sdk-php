@@ -37,7 +37,7 @@ class Crc32Filter
 
         $hash = hexdec(Stream\hash($response->getBody(), 'crc32b'));
 
-        return $response->getHeader('x-amz-crc32') !== $hash
+        return (int) $response->getHeader('x-amz-crc32') !== $hash
             ? RetrySubscriber::RETRY
             : RetrySubscriber::DEFER;
     }

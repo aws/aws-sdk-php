@@ -41,9 +41,9 @@ class Credentials implements CredentialsInterface
     private $expires;
 
     /**
-     * Factory method for creating new credentials.  This factory method will
-     * create the appropriate credentials object with appropriate decorators
-     * based on the passed configuration options.
+     * Factory method for creating new credentials. This factory method will
+     * create the appropriate credentials object based on the passed
+     * configuration options.
      *
      * @param array $config Options to use when instantiating the credentials
      *
@@ -117,6 +117,57 @@ class Credentials implements CredentialsInterface
     }
 
     /**
+     * Create credentials from the credentials ini file in the HOME directory.
+     *
+     * @param string|null $profile  Pass a specific profile to use. If no
+     *                              profile is specified we will attempt to use
+     *                              the value specified in the AWS_PROFILE
+     *                              environment variable. If AWS_PROFILE is not
+     *                              set, the "default" profile is used.
+     * @param string|null $filename Pass a string to specify the location of the
+     *                              credentials files. If null is passed, the
+     *                              SDK will attempt to find the configuration
+     *                              file at in your HOME directory at
+     *                              ~/.aws/credentials.
+     * @return Credentials
+     * @throws \RuntimeException if the file cannot be found, if the file is
+     *                           invalid, or if the profile is invalid.
+     */
+    public static function fromIni($profile = null, $filename = null)
+    {
+        if (!$filename) {
+            $filename = self::getHomeDir() . '/.aws/credentials';
+        }
+
+        if (!$profile) {
+            $profile = isset($_SERVER[self::ENV_PROFILE])
+                ? $_SERVER[self::ENV_PROFILE]
+                : 'default';
+        }
+
+        if (!($data = parse_ini_file($filename, true))) {
+            throw new \RuntimeException('Invalid AWS credentials file: '
+                . $filename);
+        }
+
+        if (empty($data[$profile])) {
+            throw new \RuntimeException(sprintf(
+                'Invalid AWS credentials profile %s in %s',
+                $profile,
+                $filename
+            ));
+        }
+
+        return new self(
+            $data[$profile]['aws_access_key_id'],
+            $data[$profile]['aws_secret_access_key'],
+            isset($data[$profile]['aws_security_token'])
+                ? $data[$profile]['aws_security_token']
+                : null
+        );
+    }
+
+    /**
      * When no keys are provided, attempt to create them based on the
      * environment or instance profile credentials.
      *
@@ -137,8 +188,8 @@ class Credentials implements CredentialsInterface
 
         // Get credentials from the ini file in ~ directory if available.
         $home = self::getHomeDir();
-        if ($home && file_exists($home . '/.aws/credentials')) {
-            return self::fromIniFile($home . '/.aws/credentials');
+        if ($home && file_exists("$home/.aws/credentials")) {
+            return self::fromIni(null, "$home/.aws/credentials");
         }
 
         // Use instance profile credentials (available on EC2 instances)
@@ -159,33 +210,5 @@ class Credentials implements CredentialsInterface
         }
 
         return null;
-    }
-
-    private static function fromIniFile($filename)
-    {
-        if (!($data = parse_ini_file($filename, true))) {
-            throw new \RuntimeException('Invalid AWS credentials file: '
-                . $filename);
-        }
-
-        $profile = isset($_SERVER[self::ENV_PROFILE])
-            ? $_SERVER[self::ENV_PROFILE]
-            : 'default';
-
-        if (empty($data[$profile])) {
-            throw new \RuntimeException(sprintf(
-                'Invalid AWS credentials profile %s in %s',
-                $profile,
-                $filename
-            ));
-        }
-
-        return new self(
-            $data[$profile]['aws_access_key_id'],
-            $data[$profile]['aws_secret_access_key'],
-            isset($data[$profile]['aws_security_token'])
-                ? $data[$profile]['aws_security_token']
-                : null
-        );
     }
 }

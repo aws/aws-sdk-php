@@ -2,6 +2,7 @@
 
 namespace Aws\Service;
 
+use Aws\Sdk;
 use Aws\AwsClient;
 use Aws\AwsClientInterface;
 use Aws\Api\ApiProviderInterface;
@@ -10,10 +11,19 @@ use Aws\Api\ErrorParser\JsonRestErrorParser;
 use Aws\Api\ErrorParser\XmlErrorParser;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Api\Service;
+use Aws\Api\Serializer\JsonRpcSerializer;
+use Aws\Api\Parser\JsonRpcParser;
+use Aws\Api\Serializer\QuerySerializer;
+use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Retry\ThrottlingFilter;
+use Aws\Signature\SignatureInterface;
+use Aws\Signature\SignatureV2;
+use Aws\Signature\SignatureV4;
+use Aws\Subscriber\Signature;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
@@ -38,16 +48,17 @@ class DefaultFactory
      * @var array
      */
     protected $validArguments = [
-        'endpoint'          => true,
-        'region'            => true,
-        'signature'         => true,
-        'service'           => true,
-        'version'           => true,
         'scheme'            => true,
-        'credentials'       => 1,
-        'api_provider'      => 1,
-        'client_defaults'   => 1,
+        'region'            => true,
+        'service'           => true,
+        'endpoint'          => true,
+        'version'           => true,
         'endpoint_provider' => 1,
+        'api_provider'      => 1,
+        'credentials'       => 1,
+        'signature'         => 1,
+        'client_defaults'   => 1,
+        'client'            => 1,
         'retries'           => 2
     ];
 
@@ -58,7 +69,7 @@ class DefaultFactory
      *
      * @return \Aws\AwsClientInterface
      * @throws \InvalidArgumentException
-     * @see Aws\Sdk for a list of available options.
+     * @see Aws\Sdk::getClient() for a list of available options.
      */
     public function create(array $args = [])
     {
@@ -71,10 +82,12 @@ class DefaultFactory
             }
         }
 
+        $this->addDefaultArgs($args);
+
         $deferred = [];
         foreach ($args as $key => $value) {
             if (!isset($this->validArguments[$key])) {
-                throw new \InvalidArgumentException('Unknown argument ' . $key);
+                throw new \InvalidArgumentException("Unknown client option $key");
             } elseif ($this->validArguments[$key] === 1) {
                 $this->{"handle_{$key}"}($value, $args);
             } elseif ($this->validArguments[$key] === 2) {
@@ -82,20 +95,12 @@ class DefaultFactory
             }
         }
 
-        // Create a default credentials object based on the environment
-        if (!isset($args['credentials'])) {
-            $args['credentials'] = Credentials::factory();
-        }
-
-        // Cleanup the configuration data array
-        unset($args['endpoint_provider'], $args['service'], $args['version'],
-            $args['retries']);
-
         $client = $this->createClient($args);
-
         foreach ($deferred as $key => $value) {
             $this->{"handle_{$key}"}($value, $args, $client);
         }
+
+        $this->postCreate($client, $args);
 
         return $client;
     }
@@ -114,6 +119,41 @@ class DefaultFactory
         $client = new AwsClient($args);
 
         return $client;
+    }
+
+    /**
+     * Apply default option arguments.
+     *
+     * @param array $args Arguments passed by reference
+     */
+    protected function addDefaultArgs(&$args)
+    {
+        if (!isset($args['region'])) {
+            $args['region'] = null;
+        }
+
+        if (!isset($args['signature'])) {
+            $args['signature'] = null;
+        }
+
+        if (!isset($args['client'])) {
+            $args['client'] = new Client(
+                isset($args['client_defaults'])
+                    ? ['defaults' => $args['client_defaults']]
+                    : []
+            );
+            unset($args['client_defaults']);
+        }
+
+        // Create a default credentials object based on the environment
+        if (!isset($args['credentials'])) {
+            if (isset($args['profile'])) {
+                $args['credentials'] = Credentials::fromIni($args['profile']);
+                unset($args['profile']);
+            } else {
+                $args['credentials'] = Credentials::factory();
+            }
+        }
     }
 
     /**
@@ -208,15 +248,27 @@ class DefaultFactory
         }
     }
 
-    private function handle_client_defaults($value, array &$args)
+    private function handle_client($value, array &$args)
     {
-        if (!is_array($value)) {
-            throw new \InvalidArgumentException('The "client_defaults" option'
-                . ' must be an array');
+        if (!($value instanceof ClientInterface)) {
+            throw new \InvalidArgumentException('client must be an instance of'
+                . 'GuzzleHttp\ClientInterface');
         }
 
-        $args['client'] = new Client(['defaults' => $value]);
-        unset($args['client_defaults']);
+        $args['client'] = $value;
+
+        // Make sure the user agent is prefixed by the SDK version
+        $args['client']->setDefaultOption(
+            'headers/User-Agent',
+            'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
+        );
+    }
+
+    private function handle_client_defaults($value, array &$args)
+    {
+        throw new \InvalidArgumentException('"client_defaults" cannot be'
+            . ' specified if the "client" option is provided. You can use one'
+            . ' or the other.');
     }
 
     private function handle_api_provider($value, array &$args)
@@ -248,12 +300,95 @@ class DefaultFactory
         if (!isset($args['endpoint'])) {
             $result = $args['endpoint_provider']->getEndpoint(
                 $args['service'],
-                $args
+                [
+                    'service' => $args['service'],
+                    'region'  => $args['region'],
+                    'scheme'  => $args['scheme']
+                ]
             );
             $args['endpoint'] = $result['uri'];
             if (isset($result['properties']['signatureVersion'])) {
                 $args['signature'] = $result['properties']['signatureVersion'];
             }
+        }
+    }
+
+    private function handle_signature($value, array &$args)
+    {
+        if ($value instanceof SignatureInterface) {
+            $args['signature'] = $value;
+        } elseif ($value === null) {
+            $args['signature'] = $this->createSignature(
+                $args['api']->getMetadata('signatureVersion'),
+                $args['api'],
+                $args['region']
+            );
+        }
+
+        if (is_string($value)) {
+            $args['signature'] = $this->createSignature(
+                $value,
+                $args['api'],
+                isset($args['region']) ? $args['region'] : 'us-east-1'
+            );
+        }
+    }
+
+    private function createSignature($version, Service $api, $region)
+    {
+        switch ($version) {
+            case 'v4':
+                return new SignatureV4(
+                    $api->getMetadata('signingName') ?:
+                        $api->getMetadata('endpointPrefix'),
+                    $region
+                );
+            case 'v2':
+                return new SignatureV2();
+            default:
+                throw new \InvalidArgumentException("Unknown signature"
+                    . " version {$version}");
+        }
+    }
+
+    protected function postCreate(AwsClientInterface $client, array $args)
+    {
+        $this->applyProtocol($client, $args);
+
+        // Attach a signer to the client.
+        $client->getHttpClient()->getEmitter()->attach(
+            new Signature($client->getCredentials(), $client->getSignature())
+        );
+    }
+
+    /**
+     * Attaches the appropriate protocol serializers and parsers to a client.
+     *
+     * @param AwsClientInterface $client Client to modify
+     * @param array              $args   Arguments passed to the factory
+     *
+     * @throws \UnexpectedValueException when an unknown protocol is found
+     */
+    protected function applyProtocol(AwsClientInterface $client, array $args)
+    {
+        $api = $client->getApi();
+        $type = $api->getMetadata('type');
+        $em = $client->getEmitter();
+
+        if ($type == 'json') {
+            $em->attach(new JsonRpcSerializer($args['endpoint'], $api));
+            $em->attach(new JsonRpcParser($api));
+        } elseif ($type == 'query') {
+            $em->attach(new QuerySerializer($args['endpoint'], $api));
+            // $em->attach(new XmlParser($api));
+        } elseif ($type = 'rest-json') {
+            $em->attach(new RestJsonSerializer($args['endpoint'], $api));
+            // $em->attach(new RestJsonParser($api));
+        } elseif ($type == 'rest-xml') {
+            // $em->attach(new RestXmlSerializer($args['endpoint'], $api));
+            // $em->attach(new RestXmlParser($api));
+        } else {
+            throw new \UnexpectedValueException('Unknown protocol ' . $type);
         }
     }
 }
