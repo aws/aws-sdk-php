@@ -24,7 +24,7 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 /**
  * @internal
  */
-class DynamoDbFactory extends DefaultFactory
+class DynamoDbFactory extends ClientFactory
 {
     // Higher max due to smaller delays and faster response times.
     const DEFAULT_MAX_RETRIES = 11;

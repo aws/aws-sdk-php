@@ -29,7 +29,7 @@ use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 /**
  * @internal Default factory class used to create clients.
  */
-class DefaultFactory
+class ClientFactory
 {
     /** @var int Default maximum number of retries for failed requests. */
     const DEFAULT_MAX_RETRIES = 3;

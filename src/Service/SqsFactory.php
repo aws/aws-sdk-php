@@ -19,7 +19,7 @@ namespace Aws\Service;
 use Aws\Service\Sqs\QueueUrlListener;
 use Aws\Service\Sqs\Md5ValidatorListener;
 
-class SqsFactory extends DefaultFactory
+class SqsFactory extends ClientFactory
 {
     protected function createClient(array $args)
     {

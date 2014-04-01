@@ -4,7 +4,7 @@ namespace Aws;
 
 use Aws\Api\RulesEndpointProvider;
 use Aws\Api\FilesystemApiProvider;
-use Aws\Service\DefaultFactory;
+use Aws\Service\ClientFactory;
 
 /**
  * Builds AWS clients based on configuration settings.
@@ -165,7 +165,7 @@ class Sdk
 
         $factory = isset($this->customFactories[$name])
             ? new $this->customFactories[$name]()
-            : new DefaultFactory();
+            : new ClientFactory();
 
         return $factory->create($args);
     }

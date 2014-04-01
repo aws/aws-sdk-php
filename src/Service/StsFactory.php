@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Sts;
+namespace Aws\Service;
 
 /**
  * Client to interact with AWS Security Token Service
@@ -26,7 +26,7 @@ namespace Aws\Sts;
  * @method Model getFederationToken(array $args = array()) {@command Sts GetFederationToken}
  * @method Model getSessionToken(array $args = array()) {@command Sts GetSessionToken}
  */
-class StsFactory extends AbstractFactory
+class StsFactory extends ClientFactory
 {
     /**
      * Factory method to create a new Amazon STS client using an array of configuration options:

@@ -22,7 +22,7 @@ use Aws\Subscriber\UploadBody;
 /**
  * @internal
  */
-class GlacierFactory extends DefaultFactory
+class GlacierFactory extends ClientFactory
 {
     protected function createClient(array $args)
     {
