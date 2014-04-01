@@ -29,8 +29,8 @@ minutes by [installing the SDK through Composer][docs-installation] or by downlo
 * Is built for PHP 5.3.3+ and is compliant with [PSR-0][], [PSR-1][], and [PSR-2][].
 * Is easy to install through [Composer][install-packagist], [PEAR][install-pear], or single download ([zip][install-zip]
   or [phar][install-phar]).
-* Is built on [Guzzle][], and utilizes many of its features including persistent connections, parallel requests, events
-  and plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
+* Is built on [Guzzle v3][guzzle], and utilizes many of its features including persistent connections, parallel requests, 
+  events and plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
   logging][docs-wire-logging], caching, flexible batching, and request retrying with truncated exponential backoff.
 * Provides convenience features including easy response pagination via [Iterators][docs-iterators], resource
   [Waiters][docs-waiters], and simple [modelled responses][docs-models].
@@ -112,7 +112,7 @@ try {
 * [AWS Service Provider for Laravel][mod-laravel]
 * [AWS SDK ZF2 Module][mod-zf2]
 * [AWS Service Provider for Silex][mod-silex]
-* [Guzzle][] – PHP HTTP client and framework
+* [Guzzle v3][] – PHP HTTP client and framework
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
@@ -152,7 +152,7 @@ try {
 [aws]: http://aws.amazon.com/
 [aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances
 [aws-tools]: http://aws.amazon.com/tools/
-[guzzle]: http://guzzlephp.org
+[guzzle]: https://github.com/guzzle/guzzle3
 [composer]: http://getcomposer.org
 [packagist]: http://packagist.org
 [psr-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
