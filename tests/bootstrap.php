@@ -17,11 +17,6 @@
 error_reporting(-1);
 date_default_timezone_set('UTC');
 
-// Ensure that composer has installed all dependencies
-if (!file_exists(dirname(__DIR__) . '/composer.lock')) {
-    die("Install dependencies using Composer before running tests.\n");
-}
-
 // Include the composer autoloader
 $loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->addPsr4('Aws\\Test\\', __DIR__ . '/Test');
+$loader->addPsr4('Aws\\Test\\', __DIR__);
