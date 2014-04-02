@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws;
 
 use GuzzleHttp\Command\ServiceClientInterface;
