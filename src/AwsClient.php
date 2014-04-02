@@ -28,17 +28,16 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * - api: The Api object used to interact with a web service
      * - credentials: CredentialsInterface object used when signing.
-     * - region: Region used to interact with the service
      * - client: {@see GuzzleHttp\Client} used to send requests.
      * - signature: string representing the signature version to use (e.g., v4)
+     * - region: (optional) Region used to interact with the service
      *
      * @param array $config Configuration options
      * @throws \InvalidArgumentException if any required options are missing
      */
     public function __construct(array $config)
     {
-        static $required = ['api', 'credentials', 'region', 'client',
-            'signature'];
+        static $required = ['api', 'credentials', 'client', 'signature'];
 
         foreach ($required as $r) {
             if (!isset($config[$r])) {
