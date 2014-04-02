@@ -30,6 +30,11 @@ class AwsCommand extends Command implements AwsCommandInterface
         parent::__construct($name, $args, $emitter);
     }
 
+    public function getOperation()
+    {
+        return $this->api->getOperation($this->getName());
+    }
+
     public function getApi()
     {
         return $this->api;
