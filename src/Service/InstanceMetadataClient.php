@@ -1,19 +1,4 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
 namespace Aws\Service;
 
 use Aws\Credentials\Credentials;
@@ -74,7 +59,7 @@ class InstanceMetadataClient
             $result = $this->get(
                 "meta-data/iam/security-credentials/"
                 . $this->get('meta-data/iam/security-credentials/')
-            );
+            )->json();
         } catch (\Exception $e) {
             $message = sprintf('Error retrieving credentials from the instance'
                 . ' profile metadata server. When you are not running inside of'
