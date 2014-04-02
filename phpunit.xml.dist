@@ -2,11 +2,14 @@
 <phpunit bootstrap="./tests/bootstrap.php"
          colors="true"
          forceCoversAnnotation="true">
-
     <testsuites>
         <testsuite name="Aws">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
 </phpunit>

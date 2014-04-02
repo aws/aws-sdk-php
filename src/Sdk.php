@@ -79,12 +79,12 @@ class Sdk
     public function __construct(array $args = [])
     {
         if (!isset($args['api_provider'])) {
-            $path = '/Users/dowling/.aws/models/';
+            $path = __DIR__ . '/../vendor/aws/aws-models';
             $args['api_provider'] = new FilesystemApiProvider($path, true);
         }
 
         if (!isset($args['endpoint_provider'])) {
-            $path = '/Users/dowling/.aws/models/endpoint-rules.json';
+            $path = __DIR__ . '/../vendor/aws/aws-models/endpoint-rules.json';
             $args['endpoint_provider'] = new RulesEndpointProvider(
                 json_decode(file_get_contents($path), true)
             );

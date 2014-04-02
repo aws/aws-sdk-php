@@ -1,6 +1,7 @@
 <?php
-
 namespace Aws\Api;
+
+use Aws\Exception\UnresolvedEndpointException;
 
 /**
  * Provides endpoints for services based on a rules engine.
@@ -44,7 +45,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
                 . 'use this service.';
         }
 
-        throw new \RuntimeException($message);
+        throw new UnresolvedEndpointException($message);
     }
 
     /**
