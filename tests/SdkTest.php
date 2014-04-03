@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests;
+namespace Aws\Test;
 
 use Aws\Sdk;
 
