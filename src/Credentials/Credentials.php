@@ -130,6 +130,10 @@ class Credentials implements CredentialsInterface
                 : 'default';
         }
 
+        if (!file_exists($filename)) {
+            throw new \RuntimeException("Credentials file not found: $filename");
+        }
+
         if (!($data = parse_ini_file($filename, true))) {
             throw new \RuntimeException('Invalid AWS credentials file: '
                 . $filename);

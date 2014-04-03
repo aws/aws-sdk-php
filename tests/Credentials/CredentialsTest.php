@@ -106,6 +106,18 @@ EOT;
 
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessage Credentials file not found:
+     */
+    public function testEnsuresIniFileExists()
+    {
+        unset($_SERVER[Credentials::ENV_KEY],
+            $_SERVER[Credentials::ENV_SECRET]);
+        $_SERVER['HOME'] = '/does/not/exist';
+        Credentials::fromIni();
+    }
+
+    /**
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Invalid AWS credentials profile foo in
      */
     public function testEnsuresProfileIsNotEmpty()
