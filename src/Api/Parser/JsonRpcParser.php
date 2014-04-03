@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Api\Parser;
 
-use GuzzleHttp\Command\Model;
+use Aws\Result;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
@@ -21,7 +21,7 @@ class JsonRpcParser implements SubscriberInterface
     {
         $operation = $this->api->getOperation($event->getCommand()->getName());
         $event->setResult(
-            new Model($this->parseJson(
+            new Result($this->parseJson(
                 $operation->getOutput(),
                 $event->getResponse()->json()
             ))

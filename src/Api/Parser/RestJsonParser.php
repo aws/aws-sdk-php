@@ -1,9 +1,9 @@
 <?php
 namespace Aws\Api\Parser;
 
+use Aws\Result;
 use Aws\Description\Parser\RestParser;
 use GuzzleHttp\Command\Event\ProcessEvent;
-use GuzzleHttp\Command\Model;
 
 /**
  * @internal
@@ -22,6 +22,6 @@ class RestJsonParser extends RestParser
         $command = $event->getCommand();
         $name = $command->getName();
         $operation = $this->api->getOperation($name);
-        $event->setResult(new Model([]));
+        $event->setResult(new Result([]));
     }
 }
