@@ -22,6 +22,13 @@ use Doctrine\Common\Cache\ArrayCache;
 
 class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    public function setUp()
+    {
+        $_SERVER['HOME'] = null;
+        $_SERVER['HOMEDRIVE'] = null;
+        $_SERVER['HOMEPATH'] = null;
+    }
+
     /**
      * @covers Aws\Common\Credentials\Credentials::__construct
      * @covers Aws\Common\Credentials\Credentials::getAccessKeyId
@@ -37,7 +44,6 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @covers Aws\Common\Credentials\Credentials::factory
      * @covers Aws\Common\Credentials\Credentials::__construct
      * @covers Aws\Common\Credentials\Credentials::getExpiration
      */
@@ -107,6 +113,7 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createFromEnvironment
      */
     public function testFactoryCreatesBasicCredentials()
     {
@@ -126,6 +133,7 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createFromEnvironment
      */
     public function testFactoryCreatesInstanceProfileWhenNoKeysAreProvided()
     {
@@ -135,6 +143,22 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createFromEnvironment
+     */
+    public function testFactoryCreatesCredentialsFromEnvCredentials()
+    {
+        $_SERVER[Credentials::ENV_KEY] = 'foo';
+        $_SERVER[Credentials::ENV_SECRET] = 'bar';
+        $credentials = Credentials::factory();
+        $this->assertEquals('foo', $credentials->getAccessKeyId());
+        $this->assertEquals('bar', $credentials->getSecretKey());
+        unset($_SERVER[Credentials::ENV_KEY]);
+        unset($_SERVER[Credentials::ENV_SECRET]);
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createCache
      */
     public function testFactoryCreatesCacheWhenSetToTrue()
     {
@@ -155,6 +179,7 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
+     * @covers Aws\Common\Credentials\Credentials::createCache
      */
     public function testFactoryUsesExplicitlyProvidedCache()
     {
@@ -168,11 +193,48 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @covers Aws\Common\Credentials\Credentials::factory
-     * @expectedException Aws\Common\Exception\InvalidArgumentException
+     * @covers Aws\Common\Credentials\Credentials::createCache
+     * @expectedException \Aws\Common\Exception\InvalidArgumentException
      * @expectedExceptionMessage Unable to utilize caching with the specified options
      */
     public function testFactoryBailsWhenCacheCannotBeDetermined()
     {
         Credentials::factory(array('credentials.cache' => 'foo'));
+    }
+
+    /**
+     * @covers Aws\Common\Credentials\Credentials::fromIni
+     * @covers Aws\Common\Credentials\Credentials::getHomeDir
+     * @dataProvider getDataForCredentialFileTest
+     */
+    public function testFactoryCreatesCredentialsFromCredentialFile(
+        array $envVars = array(),
+        $expKey = null,
+        $expSecret = null,
+        $profile = null
+    ) {
+        foreach ($envVars as $key => $value) {
+            $_SERVER[$key] = $value;
+        }
+
+        if (!$expKey && !$expSecret) {
+            $this->setExpectedException('RuntimeException');
+        }
+        $credentials = Credentials::fromIni($profile);
+
+        $this->assertEquals($expKey, $credentials->getAccessKeyId());
+        $this->assertEquals($expSecret, $credentials->getSecretKey());
+    }
+
+    public function getDataForCredentialFileTest()
+    {
+        return array(
+            array(array('HOME' => __DIR__), 'foo', 'bar'),
+            array(array('HOMEDRIVE' => '', 'HOMEPATH' => __DIR__), 'foo', 'bar'),
+            array(),
+            array(array('HOME' => __DIR__), null, null, 'invalid'),
+            array(array('HOME' => __DIR__), 'fizz', 'buzz', 'test'),
+            array(array('HOME' => __DIR__, Credentials::ENV_PROFILE => 'test'), 'fizz', 'buzz'),
+        );
     }
 }
