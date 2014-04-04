@@ -13,7 +13,6 @@ class XmlErrorParser
         $code = (string) $response->getStatusCode();
 
         $data = [
-            'status_code' => $code,
             'type'        => $code[0] == '4' ? 'client' : 'server',
             'request_id'  => null,
             'code'        => null,

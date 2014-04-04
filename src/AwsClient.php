@@ -3,8 +3,11 @@ namespace Aws;
 
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Exception\AwsException;
 use Aws\Signature\SignatureInterface;
 use GuzzleHttp\Command\AbstractClient;
+use GuzzleHttp\Command\CommandInterface;
+use GuzzleHttp\Command\Exception\CommandException;
 
 /**
  * Default AWS client implementation
@@ -90,5 +93,22 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function getApi()
     {
         return $this->api;
+    }
+
+    /**
+     * Executes an AWS command.
+     *
+     * @param CommandInterface $command Command to execute
+     *
+     * @return mixed Returns the result of the command
+     * @throws AwsException when an error occurs during transfer
+     */
+    public function execute(CommandInterface $command)
+    {
+        try {
+            return parent::execute($command);
+        } catch (CommandException $e) {
+            throw new AwsException($e);
+        }
     }
 }
