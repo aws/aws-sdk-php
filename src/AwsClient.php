@@ -26,6 +26,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var Service */
     private $api;
 
+    /** @var string */
+    private $commandException;
+
     /**
      * The AwsClient constructor requires the following constructor options:
      *
@@ -34,6 +37,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - client: {@see GuzzleHttp\Client} used to send requests.
      * - signature: string representing the signature version to use (e.g., v4)
      * - region: (optional) Region used to interact with the service
+     * - exception_class: (optional) A specific exception class to throw that
+     *   extends from {@see Aws\Exception\AwsException}.
      *
      * @param array $config Configuration options
      * @throws \InvalidArgumentException if any required options are missing
@@ -53,6 +58,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->signature = $config['signature'];
         $this->region = $config['region'];
         $this->signature = $config['signature'];
+        $this->commandException = isset($config['exception_class'])
+            ? $config['exception_class'] : 'Aws\Exception\AwsException';
         parent::__construct($config['client']);
     }
 
@@ -108,7 +115,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         try {
             return parent::execute($command);
         } catch (CommandException $e) {
-            throw new AwsException($e);
+            throw new $this->commandException($e);
         }
     }
 }
