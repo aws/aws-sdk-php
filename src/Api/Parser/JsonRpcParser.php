@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Api\Parser;
 
 use GuzzleHttp\Command\Model;

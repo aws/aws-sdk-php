@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Route53;
 
 // @todo: Move function

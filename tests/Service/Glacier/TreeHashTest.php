@@ -1,19 +1,4 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
 namespace Aws\Test\Service\Glacier;
 
 use Aws\Service\Glacier\TreeHash;
@@ -44,8 +29,14 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
     public function testTreeHashingChecksumsWorksCorrectly()
     {
         $d = $this->getTestData();
-        $this->assertEquals($d->checksum, TreeHash::fromChecksums($d->binHashes, true)->complete());
-        $this->assertEquals($d->checksum, TreeHash::fromChecksums($d->hexHashes)->complete());
+        $this->assertEquals(
+            $d->checksum,
+            TreeHash::fromChecksums($d->binHashes, true)->complete()
+        );
+        $this->assertEquals(
+            $d->checksum,
+            TreeHash::fromChecksums($d->hexHashes)->complete()
+        );
     }
 
     /**
@@ -54,7 +45,10 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
     public function testTreeHashingContentWorksCorrectly()
     {
         $d = $this->getTestData();
-        $this->assertEquals($d->checksum, TreeHash::fromContent($d->content)->complete());
+        $this->assertEquals(
+            $d->checksum,
+            TreeHash::fromContent($d->content)->complete()
+        );
     }
 
     /**
@@ -63,7 +57,9 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
     public function testValidatingChecksumWorksCorrectly()
     {
         $d = $this->getTestData();
-        $this->assertTrue(TreeHash::validateChecksum($d->content, bin2hex($d->checksum)));
+        $this->assertTrue(
+            TreeHash::validateChecksum($d->content, bin2hex($d->checksum))
+        );
     }
 
     /**

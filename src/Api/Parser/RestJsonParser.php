@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Api\Parser;
 
 use Aws\Description\Parser\RestParser;

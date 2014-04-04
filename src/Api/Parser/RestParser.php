@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Description\Parser;
 
 use GuzzleHttp\Command\Event\ProcessEvent;
