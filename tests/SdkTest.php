@@ -27,7 +27,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \BadMethodCallException
      */
-    public function testEnsuresMissingMethoThrowsException()
+    public function testEnsuresMissingMethodThrowsException()
     {
         (new Sdk())->foo();
     }
@@ -57,5 +57,22 @@ class SdkTest extends \PHPUnit_Framework_TestCase
             'Aws\AwsClientInterface',
             (new Sdk())->getCloudWatch(['region' => 'us-east-1'])
         );
+    }
+
+    public function testMergesInstanceArgsWithStoredArgs()
+    {
+        $sdk = new Sdk(['foo' => 1]);
+
+        $customFactories = (new \ReflectionObject($sdk))
+            ->getProperty('customFactories');
+        $customFactories->setAccessible(true);
+
+        eval('class FooFactory {function create($args) {return $args;}}');
+        $customFactories->setValue($sdk, ['foo' => 'FooFactory']);
+
+        $args = $sdk->getFoo(['bar' => 2]);
+
+        $this->assertArrayHasKey('foo', $args);
+        $this->assertArrayHasKey('bar', $args);
     }
 }
