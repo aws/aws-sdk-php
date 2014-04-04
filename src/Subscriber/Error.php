@@ -36,6 +36,7 @@ class Error implements SubscriberInterface
             return;
         }
 
-        $event['error'] = call_user_func($this->parser, $response);
+        $parser = $this->parser;
+        $event['aws_error'] = $parser($response);
     }
 }

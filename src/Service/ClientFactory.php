@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Service;
 
 use Aws\Sdk;
@@ -21,6 +20,7 @@ use Aws\Retry\ThrottlingFilter;
 use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureV2;
 use Aws\Signature\SignatureV4;
+use Aws\Subscriber\Error;
 use Aws\Subscriber\Signature;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -354,7 +354,8 @@ class ClientFactory
     protected function postCreate(AwsClientInterface $client, array $args)
     {
         $this->applyProtocol($client, $args);
-
+        // Attach an error parser
+        $client->getEmitter()->attach(new Error($args['error_parser']));
         // Attach a signer to the client.
         $client->getHttpClient()->getEmitter()->attach(
             new Signature($client->getCredentials(), $client->getSignature())
