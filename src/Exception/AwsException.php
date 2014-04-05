@@ -8,22 +8,22 @@ use GuzzleHttp\Command\Exception\CommandException;
  */
 class AwsException extends CommandException
 {
-    /** @var array */
-    private $error;
-
     /**
      * @param CommandException $previous The wrapped command exception
      */
     public function __construct(CommandException $previous)
     {
-        $this->error = $previous['aws_error'];
+        $message = 'AWS Error: ' . $previous->getContext('aws_error/message')
+            . $previous->getMessage();
+
         parent::__construct(
-            "AWS Error: {$this->error['message']}: " . $previous->getMessage(),
+            $message,
             $previous->getClient(),
             $previous->getCommand(),
             $previous->getRequest(),
             $previous->getResponse(),
-            $previous
+            $previous,
+            $previous->getContext()
         );
     }
 
@@ -52,30 +52,30 @@ class AwsException extends CommandException
      * response was received and is not present in the event of a networking
      * error.
      *
-     * @return string|null
+     * @return string|null Returns null if no response was received
      */
     public function getAwsRequestId()
     {
-        return $this->error['request_id'];
+        return $this->getContext('aws_error/request_id');
     }
 
     /**
      * Get the AWS error type.
      *
-     * @return string
+     * @return string|null Returns null if no response was received
      */
     public function getAwsErrorType()
     {
-        return $this->error['type'];
+        return $this->getContext('aws_error/type');
     }
 
     /**
      * Get the AWS error code.
      *
-     * @return string
+     * @return string|null Returns null if no response was received
      */
     public function getAwsErrorCode()
     {
-        return $this->error['code'];
+        return $this->getContext('aws_error/code');
     }
 }

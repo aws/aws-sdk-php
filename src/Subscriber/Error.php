@@ -2,6 +2,7 @@
 namespace Aws\Subscriber;
 
 use GuzzleHttp\Command\Event\CommandErrorEvent;
+use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
@@ -24,7 +25,7 @@ class Error implements SubscriberInterface
 
     public function getEvents()
     {
-        return ['error' => ['onError']];
+        return ['error' => ['onError', RequestEvents::EARLY]];
     }
 
     public function onError(CommandErrorEvent $event)
