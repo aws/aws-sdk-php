@@ -43,7 +43,7 @@ forums, etc.) Specifically, here are a few things that we would appreciate help 
    message verification, S3 stream wrapper, etc.)? Contributions in this area would be greatly appreciated.
 5. **Third-party modules** – We have modules published for [Silex](mod-silex), [Laravel 4](mod-laravel), and [Zend
    Framework 2][mod-zf2]. Please let us know if you are interested in creating integrations with other frameworks. We
-   would be be happy to help.
+   would be happy to help.
 6. If you have some other ideas, please let us know!
 
 ## Running the unit tests
