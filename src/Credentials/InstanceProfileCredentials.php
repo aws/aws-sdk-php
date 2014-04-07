@@ -23,8 +23,10 @@ class InstanceProfileCredentials extends AbstractRefreshableCredentials
         CredentialsInterface $credentials = null
     ) {
         $this->client = $client;
-        $this->credentials = $credentials
-            ?: $client->getInstanceProfileCredentials();
+        $this->credentials = $credentials;
+        if (!$credentials) {
+            $this->refresh();
+        }
     }
 
     public function refresh()

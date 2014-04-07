@@ -13,7 +13,6 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         $sdk = new Sdk(['foo' => 'bar']);
         $args = $this->readAttribute($sdk, 'args');
         $this->assertEquals('bar', $args['foo']);
-        $this->assertTrue($args['retries']);
         $this->assertInstanceOf(
             'Aws\Api\ApiProviderInterface',
             $args['api_provider']

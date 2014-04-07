@@ -84,7 +84,7 @@ EOT;
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Invalid AWS credentials file
+     * @expectedExceptionMessage Invalid credentials file:
      */
     public function testEnsuresIniFileIsValid()
     {
@@ -118,7 +118,7 @@ EOT;
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Invalid AWS credentials profile foo in
+     * @expectedExceptionMessage Invalid AWS credentials profile "foo" in
      */
     public function testEnsuresProfileIsNotEmpty()
     {

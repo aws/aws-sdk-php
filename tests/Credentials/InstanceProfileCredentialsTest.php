@@ -3,22 +3,29 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\Credentials;
 use Aws\Credentials\InstanceProfileCredentials;
+use SebastianBergmann\Exporter\Exception;
 
 /**
  * @covers Aws\Credentials\InstanceProfileCredentials
  */
 class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
 {
+    private function getCredentialArray(
+        $key, $secret, $token = null, $time = null, $success = true
+    ) {
+        return [
+            'Code'            => $success ? 'Success' : 'Failed',
+            'AccessKeyId'     => $key,
+            'SecretAccessKey' => $secret,
+            'Token'           => $token,
+            'Expiration'      => $time
+        ];
+    }
+
     public function testSeedsInitialCredentials()
     {
         $t = time() + 1000;
-        $creds = [
-            'Code' => 'Success',
-            'AccessKeyId' => 'foo',
-            'SecretAccessKey' => 'baz',
-            'Token' => null,
-            'Expiration' => $t
-        ];
+        $creds = $this->getCredentialArray('foo', 'baz', null, "@{$t}");
 
         $client = $this->getMockBuilder('Aws\Service\InstanceMetadataClient')
             ->setMethods(['getInstanceProfileCredentials'])
@@ -44,7 +51,7 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
         $creds1->expects($this->once())
             ->method('isExpired')
             ->will($this->returnValue(true));
-        $creds2 = new Credentials('foo2', 'baz2', 't2', $t);
+        $creds2 = $this->getCredentialArray('foo2', 'baz2', 't2', "@{$t}");
 
         $client = $this->getMockBuilder('Aws\Service\InstanceMetadataClient')
             ->setMethods(['getInstanceProfileCredentials'])
@@ -58,5 +65,38 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('baz2', $c->getSecretKey());
         $this->assertEquals('t2', $c->getSecurityToken());
         $this->assertEquals($t, $c->getExpiration());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Error retrieving credentials from the instance
+     */
+    public function testThrowsExceptionIfCredentialsNotAvailable()
+    {
+        $client = $this->getMockBuilder('Aws\Service\InstanceMetadataClient')
+            ->setMethods(['getInstanceProfileCredentials'])
+            ->getMock();
+        $client->expects($this->once())
+            ->method('getInstanceProfileCredentials')
+            ->will($this->throwException(new Exception));
+
+        $c = new InstanceProfileCredentials($client);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected instance profile response
+     */
+    public function testThrowsExceptionOnInvalidMetadata()
+    {
+        $creds = $this->getCredentialArray('foo', 'baz', null, null, false);
+        $client = $this->getMockBuilder('Aws\Service\InstanceMetadataClient')
+            ->setMethods(['getInstanceProfileCredentials'])
+            ->getMock();
+        $client->expects($this->once())
+            ->method('getInstanceProfileCredentials')
+            ->will($this->returnValue($creds));
+
+        $c = new InstanceProfileCredentials($client);
     }
 }
