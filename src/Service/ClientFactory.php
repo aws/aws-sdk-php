@@ -176,16 +176,16 @@ class ClientFactory
         array &$args,
         AwsClientInterface $client
     ) {
-        $value = $this->validateRetries($value);
-
-        $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
-            'max' => $value,
-            'filter' => RetrySubscriber::createChainFilter([
-                new ThrottlingFilter($args['error_parser']),
-                RetrySubscriber::createStatusFilter(),
-                RetrySubscriber::createCurlFilter()
-            ])
-        ]));
+        if ($value = $this->validateRetries($value)) {
+            $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
+                'max' => $value,
+                'filter' => RetrySubscriber::createChainFilter([
+                    new ThrottlingFilter($args['error_parser']),
+                    RetrySubscriber::createStatusFilter(),
+                    RetrySubscriber::createCurlFilter()
+                ])
+            ]));
+        }
     }
 
     /**

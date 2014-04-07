@@ -36,7 +36,7 @@ interface ApiProviderInterface
     /**
      * Get paginator configs for a service name and version.
      *
-     * @param string $service Service name (e.g., "ec2", "s3", "sns"0
+     * @param string $service Service name (e.g., "ec2", "s3", "sns")
      * @param string $version Version identifier (e.g., "2010-05-08")
      *
      * @return array
@@ -46,7 +46,7 @@ interface ApiProviderInterface
     /**
      * Get waiter configs for a service name and version.
      *
-     * @param string $service Service name (e.g., "ec2", "s3", "sns"0
+     * @param string $service Service name (e.g., "ec2", "s3", "sns")
      * @param string $version Version identifier (e.g., "2010-05-08")
      *
      * @return array

@@ -156,7 +156,8 @@ class Sdk
         }
 
         $args['service'] = $name;
-        $args += $this->args;
+        $serviceArgs = isset($this->args[$name]) ? $this->args[$name] : [];
+        $args += $serviceArgs + $this->args;
 
         if (!isset($args['version'])) {
             $args['version'] = 'latest';

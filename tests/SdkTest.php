@@ -61,7 +61,12 @@ class SdkTest extends \PHPUnit_Framework_TestCase
 
     public function testMergesInstanceArgsWithStoredArgs()
     {
-        $sdk = new Sdk(['foo' => 1]);
+        $sdk = new Sdk([
+            'a' => 'a1',
+            'b' => 'b1',
+            'c' => 'c1',
+            'foo' => ['b' => 'b2']
+        ]);
 
         $customFactories = (new \ReflectionObject($sdk))
             ->getProperty('customFactories');
@@ -70,9 +75,11 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         eval('class FooFactory {function create($args) {return $args;}}');
         $customFactories->setValue($sdk, ['foo' => 'FooFactory']);
 
-        $args = $sdk->getFoo(['bar' => 2]);
+        $args = $sdk->getFoo(['c' => 'c2', 'd' => 'd1']);
 
-        $this->assertArrayHasKey('foo', $args);
-        $this->assertArrayHasKey('bar', $args);
+        $this->assertEquals('a1', $args['a']);
+        $this->assertEquals('b2', $args['b']);
+        $this->assertEquals('c2', $args['c']);
+        $this->assertEquals('d1', $args['d']);
     }
 }

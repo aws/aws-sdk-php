@@ -57,7 +57,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->credentials = $config['credentials'];
         $this->signature = $config['signature'];
         $this->region = $config['region'];
-        $this->signature = $config['signature'];
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class'] : 'Aws\Exception\AwsException';
         parent::__construct($config['client']);
@@ -115,7 +114,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         try {
             return parent::execute($command);
         } catch (CommandException $e) {
-            throw new $this->commandException($e);
+            throw new $this->commandException;
         }
     }
 }
