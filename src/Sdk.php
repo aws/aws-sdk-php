@@ -89,10 +89,6 @@ class Sdk
             );
         }
 
-        if (!isset($args['retries'])) {
-            $args['retries'] = true;
-        }
-
         $this->args = $args;
     }
 
@@ -120,9 +116,8 @@ class Sdk
      *   attempt to load them from the environment.
      * - profile: Allows you to specify which profile to use when credentials
      *   are created from the AWS credentials file in your home directory. This
-     *   setting overrides the AWS_PROFILE environment variable. "profile" and
-     *   "credentials" are conflicting keys for this method and cannot both be
-     *   specified.
+     *   setting overrides the AWS_PROFILE environment variable. Specifying
+     *   "profile" will cause the "credentials" key to be ignored.
      * - scheme: The scheme to use when interacting with a service (https or
      *   http). Defaults to https.
      * - endpoint: An optional custom endpoint to use when interacting with a
@@ -149,27 +144,25 @@ class Sdk
      */
     public function getClient($name, array $args = [])
     {
+        // Normalize service name to lower case
         $name = strtolower($name);
 
+        // Resolve service aliases
         if (isset($this->serviceNames[$name])) {
             $name = $this->serviceNames[$name];
         }
 
+        // Merge provided args with stored args
         $args['service'] = $name;
-
         if (isset($this->args[$name])) {
             $args += $this->args[$name];
         }
-
         $args += $this->args;
 
-        if (!isset($args['version'])) {
-            $args['version'] = 'latest';
-        }
-
+        // Get the client factory needed to create a client for the service
         $factory = isset($this->customFactories[$name])
-            ? new $this->customFactories[$name]()
-            : new ClientFactory();
+            ? new $this->customFactories[$name]
+            : new ClientFactory;
 
         return $factory->create($args);
     }

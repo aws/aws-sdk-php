@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Service;
 
-use Aws\Credentials\Credentials;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 
@@ -44,44 +43,32 @@ class InstanceMetadataClient
      */
     public function get($path)
     {
-        return $this->client->get($path)->json();
+        return $this->client->get($path);
     }
 
     /**
-     * Get instance profile credentials
+     * Retrieves the name of the IAM Instance Profile.
      *
-     * @return Credentials
-     * @throws \RuntimeException
+     * @return string
      */
-    public function getInstanceProfileCredentials()
+    public function getInstanceProfile()
     {
-        try {
-            $result = $this->get(
-                "meta-data/iam/security-credentials/"
-                . $this->get('meta-data/iam/security-credentials/')
-            )->json();
-        } catch (\Exception $e) {
-            $message = sprintf('Error retrieving credentials from the instance'
-                . ' profile metadata server. When you are not running inside of'
-                . ' Amazon EC2, you must provide your AWS access key ID and '
-                . ' secret access key in the "key" and "secret" options when '
-                . ' creating a client or provide an instantiated '
-                . ' Aws\\Common\\Credentials\\CredentialsInterface object.'
-                . ' (%s)', $e->getMessage());
-            throw new \RuntimeException($message, $e->getCode());
-        }
+        $path = 'meta-data/iam/security-credentials/';
+        return (string) $this->client->get($path)->getBody();
+    }
 
-        // Ensure that the status code was successful
-        if ($result['Code'] !== 'Success') {
-            throw new \RuntimeException('Unexpected instance profile response '
-                . 'code: ' . $result['Code']);
-        }
-
-        return new Credentials(
-            $result['AccessKeyId'],
-            $result['SecretAccessKey'],
-            $result['Token'],
-            strtotime($result['Expiration'])
-        );
+    /**
+     * Retrieves the IAM Instance Profile credentials which are associated with
+     * the IAM role of the EC2 instance.
+     *
+     * @param string|null $profile The profile name
+     *
+     * @return array
+     */
+    public function getInstanceProfileCredentials($profile = null)
+    {
+        $profile = $profile ?: $this->getInstanceProfile();
+        $path = "meta-data/iam/security-credentials/{$profile}";
+        return $this->client->get($path . $profile)->json();
     }
 }

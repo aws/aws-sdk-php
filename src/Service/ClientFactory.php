@@ -16,6 +16,7 @@ use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Credentials\NullCredentials;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureV2;
@@ -73,8 +74,15 @@ class ClientFactory
      */
     public function create(array $args = [])
     {
-        static $required = ['version', 'api_provider', 'endpoint_provider',
-            'service', 'retries'];
+        static $required = ['api_provider', 'endpoint_provider', 'service'];
+        static $defaultArgs = [
+            'credentials' => [],
+            'region'      => null,
+            'retries'     => true,
+            'scheme'      => 'https',
+            'signature'   => false,
+            'version'     => 'latest',
+        ];
 
         foreach ($required as $r) {
             if (!isset($args[$r])) {
@@ -82,6 +90,7 @@ class ClientFactory
             }
         }
 
+        $args += $defaultArgs;
         $this->addDefaultArgs($args);
 
         $deferred = [];
@@ -128,18 +137,6 @@ class ClientFactory
      */
     protected function addDefaultArgs(&$args)
     {
-        if (!isset($args['region'])) {
-            $args['region'] = null;
-        }
-
-        if (!isset($args['scheme'])) {
-            $args['scheme'] = 'https';
-        }
-
-        if (!isset($args['signature'])) {
-            $args['signature'] = false;
-        }
-
         if (!isset($args['client'])) {
             $args['client'] = new Client(
                 isset($args['client_defaults'])
@@ -147,16 +144,6 @@ class ClientFactory
                     : []
             );
             unset($args['client_defaults']);
-        }
-
-        // Create a default credentials object based on the environment
-        if (!isset($args['credentials'])) {
-            if (isset($args['profile'])) {
-                $args['credentials'] = Credentials::fromIni($args['profile']);
-                unset($args['profile']);
-            } else {
-                $args['credentials'] = Credentials::factory();
-            }
         }
     }
 
@@ -238,17 +225,20 @@ class ClientFactory
 
     private function handle_credentials($value, array &$args)
     {
-        if ($value instanceof CredentialsInterface) {
-
-        } elseif (is_array($value) && isset($value['key']) &&
-            isset($value['secret'])
-        ) {
+        if (isset($args['profile'])) {
+            $args['credentials'] = Credentials::fromIni($args['profile']);
+            unset($args['profile']);
+        } elseif ($value instanceof CredentialsInterface) {
+            return;
+        } elseif (is_array($value)) {
             $args['credentials'] = Credentials::factory($value);
+        } elseif ($value === false) {
+            $args['credentials'] = new NullCredentials();
         } else {
             throw new \InvalidArgumentException('Credentials must be an '
-                . 'instance of Aws\Credentials\CredentialsInterface or an '
+                . 'instance of Aws\Credentials\CredentialsInterface, an '
                 . 'associative array that contains "key", "secret", and '
-                . 'an optional "token" key-value pairs.');
+                . 'an optional "token" key-value pairs, or false.');
         }
     }
 

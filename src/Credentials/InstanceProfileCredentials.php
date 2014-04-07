@@ -29,6 +29,30 @@ class InstanceProfileCredentials extends AbstractRefreshableCredentials
 
     public function refresh()
     {
-        $this->credentials = $this->client->getInstanceProfileCredentials();
+        try {
+            $result = $this->client->getInstanceProfileCredentials();
+        } catch (\Exception $e) {
+            $message = sprintf('Error retrieving credentials from the instance'
+                . ' profile metadata server. When you are not running inside of'
+                . ' Amazon EC2, you must provide your AWS Access Key ID and '
+                . ' Secret Access Key in the "key" and "secret" options when '
+                . ' creating a client or provide an instantiated '
+                . ' Aws\\Common\\Credentials\\CredentialsInterface object.'
+                . ' (%s)', $e->getMessage());
+            throw new \RuntimeException($message, $e->getCode());
+        }
+
+        // Ensure that the status code was successful
+        if ($result['Code'] !== 'Success') {
+            throw new \RuntimeException('Unexpected instance profile response '
+                . 'code: ' . $result['Code']);
+        }
+
+        $this->credentials = new Credentials(
+            $result['AccessKeyId'],
+            $result['SecretAccessKey'],
+            $result['Token'],
+            strtotime($result['Expiration'])
+        );
     }
 }

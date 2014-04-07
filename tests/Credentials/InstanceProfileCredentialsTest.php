@@ -12,7 +12,13 @@ class InstanceProfileCredentialsTest extends \PHPUnit_Framework_TestCase
     public function testSeedsInitialCredentials()
     {
         $t = time() + 1000;
-        $creds = new Credentials('foo', 'baz', null, $t);
+        $creds = [
+            'Code' => 'Success',
+            'AccessKeyId' => 'foo',
+            'SecretAccessKey' => 'baz',
+            'Token' => null,
+            'Expiration' => $t
+        ];
 
         $client = $this->getMockBuilder('Aws\Service\InstanceMetadataClient')
             ->setMethods(['getInstanceProfileCredentials'])
