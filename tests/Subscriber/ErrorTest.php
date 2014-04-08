@@ -15,7 +15,7 @@ use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
 
 /**
- * @covers Aws\Subscriber\Signature
+ * @covers Aws\Subscriber\Error
  */
 class ErrorTest extends \PHPUnit_Framework_TestCase
 {
