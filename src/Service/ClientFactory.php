@@ -56,6 +56,7 @@ class ClientFactory
         'version'           => true,
         'endpoint_provider' => 1,
         'api_provider'      => 1,
+        'exception_class'   => 1,
         'credentials'       => 1,
         'signature'         => 1,
         'client_defaults'   => 1,
@@ -76,12 +77,13 @@ class ClientFactory
     {
         static $required = ['api_provider', 'endpoint_provider', 'service'];
         static $defaultArgs = [
-            'credentials' => [],
-            'region'      => null,
-            'retries'     => true,
-            'scheme'      => 'https',
-            'signature'   => false,
-            'version'     => 'latest',
+            'credentials'     => [],
+            'region'          => null,
+            'retries'         => true,
+            'scheme'          => 'https',
+            'signature'       => false,
+            'version'         => 'latest',
+            'exception_class' => true
         ];
 
         foreach ($required as $r) {
@@ -221,6 +223,50 @@ class ClientFactory
         }
 
         return $value;
+    }
+
+    private function handle_exception_class($value, array &$args)
+    {
+        if ($value !== true) {
+            // An explicitly provided exception must be found.
+            if (!class_exists($value)) {
+                throw new \RuntimeException("Exception not found: $value");
+            }
+            return;
+        }
+
+        static $search = ['Amazon ', 'AWS ', ' (Beta)', ' '];
+        static $map = ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
+            'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i',
+            'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n',
+            'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's',
+            'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x',
+            'Y' => 'y', 'Z' => 'z'];
+
+        // Convert to a strict PascalCase
+        $value = str_replace(
+            $search,
+            '',
+            $args['api']->getMetadata('serviceFullName')
+        );
+
+        $i = -1;
+        while (isset($value[++$i])) {
+            if (isset($map[$value[$i]])) {
+                while (isset($value[++$i]) && isset($map[$value[$i]])) {
+                    $value[$i] = $map[$value[$i]];
+                }
+            }
+        }
+
+        $value = 'Aws\\Service\\Exception\\' . $value . 'Exception';
+        // If the dynamically created exception cannot be found, then use the
+        // default exception class.
+        if (!class_exists($value)) {
+            $value = 'Aws\Exception\AwsException';
+        }
+
+        $args['exception_class'] = $value;
     }
 
     private function handle_credentials($value, array &$args)
