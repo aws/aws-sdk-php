@@ -11,14 +11,14 @@ class AwsException extends CommandException
 {
     /**
      * @param CommandException $previous The wrapped command exception
-     * @throws \RuntimeException if the wrapped exception is invalid.
+     * @throws \InvalidArgumentException if the wrapped exception is invalid.
      */
     public function __construct(CommandException $previous)
     {
         $message = 'AWS Error: ' . $previous->getContext('aws_error/message');
         if (!($previous->getClient() instanceof AwsClientInterface)) {
-            throw new \RuntimeException('The wrapped exception must use an '
-                . 'AwsClientInterface');
+            throw new \InvalidArgumentException('The wrapped exception must use'
+                . ' an AwsClientInterface');
         }
 
         parent::__construct(
@@ -39,7 +39,7 @@ class AwsException extends CommandException
      */
     public function getServiceName()
     {
-        return $this->getClient()->getApi()->getName();
+        return $this->getClient()->getApi()->getMetadata('endpointPrefix');
     }
 
     /**
