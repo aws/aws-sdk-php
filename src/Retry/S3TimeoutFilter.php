@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3;
+namespace Aws\Retry;
 
 use GuzzleHttp\Event\AbstractTransferEvent;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
@@ -26,7 +26,7 @@ class S3TimeoutFilter
         }
 
         // Only retry 400 errors that contain the targeted exception message.
-        if ($response->getStatusCode() !== 400 ||
+        if ($response->getStatusCode() != 400 ||
             strpos($response->getBody(), self::ERR) === false
         ) {
             return RetrySubscriber::DEFER;
