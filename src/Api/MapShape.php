@@ -12,15 +12,27 @@ class MapShape extends Shape
     /** @var Shape */
     private $key;
 
+    public function __construct(array $definition, ShapeMap $shapeMap)
+    {
+        $definition['type'] = 'map';
+        parent::__construct($definition, $shapeMap);
+    }
+
     /**
      * @return Shape
+     * @throws \RuntimeException if no value is specified
      */
     public function getValue()
     {
         if (!$this->value) {
-            $this->value = isset($this->definition['value'])
-                ? Shape::create($this->definition['value'], $this->shapeMap)
-                : new Shape([], $this->shapeMap);
+            if (!isset($this->definition['value'])) {
+                throw new \RuntimeException('No value specified');
+            }
+
+            $this->value = Shape::create(
+                $this->definition['value'],
+                $this->shapeMap
+            );
         }
 
         return $this->value;
@@ -34,7 +46,7 @@ class MapShape extends Shape
         if (!$this->key) {
             $this->key = isset($this->definition['key'])
                 ? Shape::create($this->definition['key'], $this->shapeMap)
-                : new Shape([], $this->shapeMap);
+                : new Shape(['type' => 'string'], $this->shapeMap);
         }
 
         return $this->key;

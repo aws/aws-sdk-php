@@ -6,6 +6,12 @@ namespace Aws\Api;
  */
 class TimestampShape extends Shape
 {
+    public function __construct(array $definition, ShapeMap $shapeMap)
+    {
+        $definition['type'] = 'timestamp';
+        parent::__construct($definition, $shapeMap);
+    }
+
     /**
      * Formats a timestamp value for a service.
      *

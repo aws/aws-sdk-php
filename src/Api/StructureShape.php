@@ -8,6 +8,8 @@ class StructureShape extends Shape
 {
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
+        $definition['type'] = 'structure';
+
         if (!isset($definition['members'])) {
             $definition['members'] = [];
         }

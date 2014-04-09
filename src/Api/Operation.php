@@ -12,6 +12,8 @@ class Operation extends AbstractModel
 
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
+        $definition['type'] = 'structure';
+
         if (!isset($definition['http']['method'])) {
             $definition['http']['method'] = 'POST';
         }
@@ -24,6 +26,21 @@ class Operation extends AbstractModel
     }
 
     /**
+     * Returns an associative array of the HTTP attribute of the operation:
+     *
+     * - method: HTTP method of the operation
+     * - requestUri: URI of the request (can include URI template placeholders)
+     *
+     * @return array
+     */
+    public function getHttp()
+    {
+        return $this->definition['http'];
+    }
+
+    /**
+     * Get the input shape of the operation.
+     *
      * @return StructureShape
      */
     public function getInput()
@@ -40,6 +57,8 @@ class Operation extends AbstractModel
     }
 
     /**
+     * Get the output shape of the operation.
+     *
      * @return StructureShape
      */
     public function getOutput()
@@ -56,6 +75,8 @@ class Operation extends AbstractModel
     }
 
     /**
+     * Get an array of operation error shapes.
+     *
      * @return Shape[]
      */
     public function getErrors()

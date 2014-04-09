@@ -8,15 +8,26 @@ class ListShape extends Shape
 {
     private $member;
 
+    public function __construct(array $definition, ShapeMap $shapeMap)
+    {
+        $definition['type'] = 'list';
+        parent::__construct($definition, $shapeMap);
+    }
+
     /**
      * @return Shape
+     * @throws \RuntimeException if no member is specified
      */
     public function getMember()
     {
         if (!$this->member) {
-            $this->member = isset($this->definition['member'])
-                ? Shape::create($this->definition['member'], $this->shapeMap)
-                : new Shape([], $this->shapeMap);
+            if (!isset($this->definition['member'])) {
+                throw new \RuntimeException('No member attribute specified');
+            }
+            $this->member = Shape::create(
+                $this->definition['member'],
+                $this->shapeMap
+            );
         }
 
         return $this->member;
