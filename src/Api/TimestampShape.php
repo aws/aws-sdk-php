@@ -16,7 +16,7 @@ class TimestampShape extends Shape
      * @throws \UnexpectedValueException if the format is unknown.
      * @throws \InvalidArgumentException if the value is an unsupported type.
      */
-    public function format($value, $defaultFormat)
+    public function format($value, $defaultFormat = null)
     {
         $format = $this['timestampFormat'] ?: $defaultFormat ?: 'iso8601';
 

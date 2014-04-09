@@ -42,4 +42,22 @@ class TimestampShapeTest extends \PHPUnit_Framework_TestCase
         unset($s['timestampFormat']);
         $this->assertEquals($result, $s->format($value, $format));
     }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     */
+    public function testValidatesTimestampFormat()
+    {
+        $s = new TimestampShape(['timestampFormat' => 'foo'], new ShapeMap([]));
+        $s->format('now');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testValidatesTimestampValue()
+    {
+        $s = new TimestampShape(['timestampFormat' => 'foo'], new ShapeMap([]));
+        $s->format(true);
+    }
 }
