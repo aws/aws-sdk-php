@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests\Common\Credentials;
+namespace Aws\Test\Credentials;
 
 use Aws\Credentials\NullCredentials;
 
