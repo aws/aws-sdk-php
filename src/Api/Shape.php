@@ -45,4 +45,14 @@ class Shape extends AbstractModel
 
         return new $type($definition, $shapeMap);
     }
+
+    /**
+     * Get the type of the shape
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->definition['type'];
+    }
 }

@@ -31,7 +31,7 @@ class TimestampShape extends Shape
 
         switch ($format) {
             case 'iso8601':
-                return gmdate('Ymd\THis\Z', $value);
+                return gmdate('Y-m-d\TH:i:s\Z', $value);
             case 'rfc822':
                 return gmdate('D, d M Y H:i:s \G\M\T', $value);
             case 'unixTimestamp':

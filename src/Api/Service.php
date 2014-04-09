@@ -27,8 +27,37 @@ class Service extends AbstractModel
             $options['shape_map'] = new ShapeMap($definition['shapes']);
         }
 
-        $this->operationNames = array_keys($definition['operations']);
         parent::__construct($definition, $options['shape_map']);
+    }
+
+    /**
+     * Get the full name of the service
+     *
+     * @return string
+     */
+    public function getServiceFullName()
+    {
+        return $this->getMetadata('serviceFullName');
+    }
+
+    /**
+     * Get the API version of the service
+     *
+     * @return string
+     */
+    public function getApiVersion()
+    {
+        return $this->getMetadata('apiVersion');
+    }
+
+    /**
+     * Get the API version of the service
+     *
+     * @return string
+     */
+    public function getEndpointPrefix()
+    {
+        return $this->getMetadata('endpointPrefix');
     }
 
     /**
@@ -92,13 +121,14 @@ class Service extends AbstractModel
      */
     public function getMetadata($key = null)
     {
-        if (!isset($this->definition['metadata'])) {
-            $this->definition['metadata'] = [];
+        if (!$key) {
+            if (!isset($this->definition['metadata'])) {
+                $this->definition['metadata'] = [];
+            }
+            return $this['metadata'];
         }
 
-        if (!$key) {
-            return $this['metadata'];
-        } elseif (isset($this->definition['metadata'][$key])) {
+        if (isset($this->definition['metadata'][$key])) {
             return $this->definition['metadata'][$key];
         }
 
