@@ -27,25 +27,19 @@ class RulesEndpointProvider implements EndpointProviderInterface
         }
 
         // Use the _default section if no rule is found by the given name.
-        $service = isset($this->rules[$service]) ? $service : '_default';
+        if (!isset($this->rules[$service])) {
+            // Fall back to _default, and if it is not set, throw an exception.
+            if (!isset($this->rules['_default'])) {
+                throw new UnresolvedEndpointException('No service found');
+            }
+            $service = '_default';
+        }
 
         if ($result = $this->checkSection($service, $args)) {
             return $result;
         }
 
-        $message = sprintf(
-            'Unable to resolve an endpoint for the %s service based on the'
-            . ' provided configuration values: %s',
-            $args['service'],
-            str_replace('&', ', ', http_build_query($args))
-        );
-
-        if (!isset($args['region'])) {
-            $message .= '. Perhaps you need to provide a "region" option to '
-                . 'use this service.';
-        }
-
-        throw new UnresolvedEndpointException($message);
+        throw $this->getUnresolvedException($service, $args);
     }
 
     /**
@@ -127,7 +121,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
                         }
                         break;
                     default:
-                        continue;
+                        return null;
                 }
             }
         }
@@ -137,5 +131,31 @@ class RulesEndpointProvider implements EndpointProviderInterface
             'properties' => isset($rule['properties'])
                     ? $rule['properties'] : []
         ];
+    }
+
+    /**
+     * Creates an unresolved endpoint exception and attempts to format a useful
+     * error message based on the constrains of the matching service.
+     */
+    private function getUnresolvedException($service, array $args)
+    {
+        $message = sprintf(
+            'Unable to resolve an endpoint for the %s service based on the'
+            . ' provided configuration values: %s',
+            $args['service'],
+            str_replace('&', ', ', http_build_query($args))
+        );
+
+        // Provide a better error message for the common case of omitting region
+        if (!isset($args['region'])) {
+            try {
+                $this->getEndpoint($service, $args + ['region' => 'us-west-2']);
+                $message .= '. This endpoint requires a valid "region" option.';
+            } catch (UnresolvedEndpointException $e) {
+                $message .= '. Perhaps this service requires a region option.';
+            }
+        }
+
+        return new UnresolvedEndpointException($message);
     }
 }
