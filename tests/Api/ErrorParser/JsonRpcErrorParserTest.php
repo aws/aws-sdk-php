@@ -6,6 +6,7 @@ use GuzzleHttp\Message\MessageFactory;
 
 /**
  * @covers Aws\Api\ErrorParser\JsonRpcErrorParser
+ * @covers Aws\Api\ErrorParser\JsonParserTrait
  */
 class JsonRpcErrorParserTest extends \PHPUnit_Framework_TestCase
 {

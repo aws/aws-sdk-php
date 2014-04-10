@@ -42,7 +42,7 @@ class ThrottlingFilterTest extends \PHPUnit_Framework_TestCase
     public function testDefersWhenNotThrottled()
     {
         $ate = $this->getTrans();
-        $ate->intercept(new Response(401, [], Stream\create('"Foo :("')));
+        $ate->intercept(new Response(401, [], Stream\create('{}')));
         $f = new ThrottlingFilter(new JsonRpcErrorParser());
         $this->assertEquals(RetrySubscriber::DEFER, $f(2, $ate));
     }
