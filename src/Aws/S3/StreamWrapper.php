@@ -403,21 +403,24 @@ class StreamWrapper
         }
 
         try {
-            if ($params['Key']) {
-                $result = self::$client->listObjects(array(
-                    'Bucket'  => $params['Bucket'],
-                    'Prefix'  => $path,
-                    'MaxKeys' => 1
-                ));
-                if (!$result['Contents'] && !$result['CommonPrefixes']) {
-                    return $this->unlink($path);
-                }
-                return $this->triggerError('Pseudo directory is not empty');
-            } else {
+
+            if (!$params['Key']) {
                 self::$client->deleteBucket(array('Bucket' => $params['Bucket']));
+                $this->clearStatInfo($path);
+                return true;
             }
-            $this->clearStatInfo($path);
-            return true;
+
+            $result = self::$client->listObjects(array(
+                'Bucket'  => $params['Bucket'],
+                // Use a key that adds a trailing slash if needed.
+                'Prefix'  => rtrim($params['Key'], '/') . '/',
+                'MaxKeys' => 1
+            ));
+
+            return $result['Contents'] || $result['CommonPrefixes']
+                ? $this->triggerError('Pseudo directory is not empty')
+                : $this->unlink(rtrim($path, '/') . '/');
+
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
         }

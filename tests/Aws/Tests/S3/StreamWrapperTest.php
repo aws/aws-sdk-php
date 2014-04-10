@@ -374,15 +374,27 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('bucket.s3.amazonaws.com', $requests[0]->getHost());
     }
 
-    public function testCanDeleteObjectWithRmDir()
+    public function rmdirProvider()
+    {
+        return array(
+            array('s3://bucket/object/'),
+            array('s3://bucket/object'),
+        );
+    }
+
+    /**
+     * @dataProvider rmdirProvider
+     */
+    public function testCanDeleteObjectWithRmDir($path)
     {
         $this->setMockResponse($this->client, array(new Response(200), new Response(204)));
-        $this->assertTrue(rmdir('s3://bucket/object/'));
+        $this->assertTrue(rmdir($path));
         $requests = $this->getMockedRequests();
         $this->assertEquals(2, count($requests));
         $this->assertEquals('GET', $requests[0]->getMethod());
         $this->assertEquals('DELETE', $requests[1]->getMethod());
         $this->assertEquals('/object/', $requests[1]->getResource());
+        $this->assertEquals('object/', $requests[0]->getQuery()->get('prefix'));
         $this->assertEquals('bucket.s3.amazonaws.com', $requests[1]->getHost());
     }
 
