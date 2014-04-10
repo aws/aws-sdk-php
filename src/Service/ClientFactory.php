@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Service;
 
+use Aws\Paginator\PaginatorFactory;
 use Aws\Sdk;
 use Aws\AwsClient;
 use Aws\AwsClientInterface;
@@ -61,6 +62,7 @@ class ClientFactory
         'exception_class'   => 1,
         'credentials'       => 1,
         'signature'         => 1,
+        'paginator_factory' => 1,
         'client_defaults'   => 1,
         'client'            => 1,
         'retries'           => 2
@@ -79,13 +81,14 @@ class ClientFactory
     {
         static $required = ['api_provider', 'endpoint_provider', 'service'];
         static $defaultArgs = [
-            'credentials'     => [],
-            'region'          => null,
-            'retries'         => true,
-            'scheme'          => 'https',
-            'signature'       => false,
-            'version'         => 'latest',
-            'exception_class' => true
+            'credentials'       => [],
+            'region'            => null,
+            'retries'           => true,
+            'scheme'            => 'https',
+            'signature'         => false,
+            'version'           => 'latest',
+            'exception_class'   => true,
+            'paginator_factory' => false,
         ];
 
         foreach ($required as $r) {
@@ -349,6 +352,22 @@ class ClientFactory
             if (isset($result['properties']['signatureVersion'])) {
                 $args['signature'] = $result['properties']['signatureVersion'];
             }
+        }
+    }
+
+    private function handle_paginator_factory($value, array &$args)
+    {
+        if ($value === false) {
+            $args['paginator_factory'] = new PaginatorFactory(
+                $args['api_provider'],
+                $args['service'],
+                $args['api']->getMetadata('apiVersion')
+            );
+        }
+
+        if (!($args['paginator_factory'] instanceof PaginatorFactory)) {
+            throw new \InvalidArgumentException('paginator_factory must be an '
+                . 'instance of PaginatorFactory.');
         }
     }
 

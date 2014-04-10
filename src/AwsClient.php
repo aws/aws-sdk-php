@@ -4,8 +4,7 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
-use Aws\Service\ResourceIterator;
-use Aws\Service\ResultPaginator;
+use Aws\Paginator\PaginatorFactory;
 use Aws\Signature\SignatureInterface;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
@@ -30,6 +29,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     /** @var string */
     private $commandException;
+
+    /** @var PaginatorFactory|null */
+    private $paginatorFactory;
 
     /**
      * The AwsClient constructor requires the following constructor options:
@@ -60,7 +62,12 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->signature = $config['signature'];
         $this->region = $config['region'];
         $this->commandException = isset($config['exception_class'])
-            ? $config['exception_class'] : 'Aws\Exception\AwsException';
+            ? $config['exception_class']
+            : 'Aws\Exception\AwsException';
+        $this->paginatorFactory = isset($config['paginator_factory'])
+            ? $config['paginator_factory']
+            : null;
+
         parent::__construct($config['client']);
     }
 
@@ -121,6 +128,20 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             return parent::execute($command);
         } catch (CommandException $e) {
             throw new $this->commandException($e);
+        }
+    }
+
+    public function getIterator($name, array $args = [], array $config = [])
+    {
+        if ($this->paginatorFactory instanceof PaginatorFactory) {
+            return $this->paginatorFactory->createIterator($this, $name, $args, $config);
+        }
+    }
+
+    public function getPaginator($name, array $args = [], array $config = [])
+    {
+        if ($this->paginatorFactory instanceof PaginatorFactory) {
+            return $this->paginatorFactory->createPaginator($this, $name, $args, $config);
         }
     }
 }

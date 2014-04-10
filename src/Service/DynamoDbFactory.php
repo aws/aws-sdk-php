@@ -33,16 +33,16 @@ class DynamoDbFactory extends ClientFactory
             $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
                 'max' => $value,
                 'delay' => function ($retries) {
-                        return $retries === 0
-                            ? 0
-                            : (50 * (int) pow(2, $retries - 1)) / 1000;
-                    },
+                    return $retries === 0
+                        ? 0
+                        : (50 * (int) pow(2, $retries - 1)) / 1000;
+                },
                 'filter' => RetrySubscriber::createChainFilter([
-                        new ThrottlingFilter($args['error_parser']),
-                        new Crc32Filter($args['error_parser']),
-                        RetrySubscriber::createStatusFilter(),
-                        RetrySubscriber::createCurlFilter()
-                    ])
+                    new ThrottlingFilter($args['error_parser']),
+                    new Crc32Filter($args['error_parser']),
+                    RetrySubscriber::createStatusFilter(),
+                    RetrySubscriber::createCurlFilter()
+                ])
             ]));
         }
     }
