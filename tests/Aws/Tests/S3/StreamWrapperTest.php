@@ -355,15 +355,6 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
 
     /**
      * @expectedException PHPUnit_Framework_Error_Warning
-     * @expectedExceptionMessage rmdir() only supports bucket deletion
-     */
-    public function testCannotDeleteKeyPrefix()
-    {
-        rmdir('s3://bucket/key');
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage 403 Forbidden
      */
     public function testRmDirWithExceptionTriggersError()
@@ -381,6 +372,18 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('DELETE', $requests[0]->getMethod());
         $this->assertEquals('/', $requests[0]->getResource());
         $this->assertEquals('bucket.s3.amazonaws.com', $requests[0]->getHost());
+    }
+
+    public function testCanDeleteObjectWithRmDir()
+    {
+        $this->setMockResponse($this->client, array(new Response(200), new Response(204)));
+        $this->assertTrue(rmdir('s3://bucket/object/'));
+        $requests = $this->getMockedRequests();
+        $this->assertEquals(2, count($requests));
+        $this->assertEquals('GET', $requests[0]->getMethod());
+        $this->assertEquals('DELETE', $requests[1]->getMethod());
+        $this->assertEquals('/object/', $requests[1]->getResource());
+        $this->assertEquals('bucket.s3.amazonaws.com', $requests[1]->getHost());
     }
 
     /**
