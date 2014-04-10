@@ -13,8 +13,8 @@ class GlacierFactory extends ClientFactory
     {
         $client = parent::createClient($args);
 
-        // Set the default accountId to "~" for all operations.
-        $client->setConfig('defaults/accountId', '~');
+        // Set the default accountId to "-" for all operations.
+        $client->setConfig('defaults/accountId', '-');
 
         // Add the Glacier version header required for all operations.
         $client->getHttpClient()->setDefaultOption(

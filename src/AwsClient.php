@@ -4,6 +4,8 @@ namespace Aws;
 use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
+use Aws\Service\ResourceIterator;
+use Aws\Service\ResultPaginator;
 use Aws\Signature\SignatureInterface;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
@@ -72,6 +74,10 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             if (isset($this->api['operations'][$name])) {
                 $command = $this->api['operations'][$name];
             }
+        }
+
+        if ($defaults = $this->getConfig('defaults')) {
+            $args += $defaults;
         }
 
         if (!$command) {

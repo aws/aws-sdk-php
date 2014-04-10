@@ -12,6 +12,9 @@ class FilesystemApiProvider implements ApiProviderInterface
     /** @var string */
     private $apiSuffix;
 
+    /** @var array */
+    private $latestVersions = [];
+
     /**
      * @param string $path Path to the service descriptions on disk
      * @param bool   $min  Set to true to load minified models
@@ -25,17 +28,12 @@ class FilesystemApiProvider implements ApiProviderInterface
     public function getService($service, $version)
     {
         if ($version == 'latest') {
-            if ($versions = $this->getServiceVersions($service)) {
-                sort($versions);
-                $version = $versions[0];
-            }
+            $version = $this->determineLatestVersion($service);
         }
 
         $path = $this->getPath($service, $version, $this->apiSuffix);
 
-        return file_exists($path)
-            ? new Service($this->parseJson(file_get_contents($path)))
-            : null;
+        return $this->parseJsonFile($path);
     }
 
     public function getServiceNames()
@@ -68,20 +66,24 @@ class FilesystemApiProvider implements ApiProviderInterface
 
     public function getServicePaginatorConfig($service, $version)
     {
+        if ($version == 'latest') {
+            $version = $this->determineLatestVersion($service);
+        }
+
         $path = $this->getPath($service, $version, '.paginators.json');
 
-        return file_exists($path)
-            ? $this->parseJson(file_get_contents($path))
-            : [];
+        $this->parseJsonFile($path);
     }
 
     public function getServiceWaiterConfig($service, $version)
     {
+        if ($version == 'latest') {
+            $version = $this->determineLatestVersion($service);
+        }
+
         $path = $this->getPath($service, $version, '.waiters.json');
 
-        return file_exists($path)
-            ? $this->parseJson(file_get_contents($path))
-            : [];
+        return $this->parseJsonFile($path);
     }
 
     private function getPath($service, $version, $extension)
@@ -103,13 +105,32 @@ class FilesystemApiProvider implements ApiProviderInterface
         return $services;
     }
 
-    private function parseJson($json)
+    private function parseJsonFile($path)
     {
-        $data = json_decode($json, true);
+        if (!file_exists($path)) {
+            return [];
+        }
+
+        $data = json_decode(file_get_contents($path), true);
         if (!json_last_error()) {
             return $data;
         }
 
         throw new \RuntimeException('Error parsing JSON: ' . json_last_error());
+    }
+
+    private function determineLatestVersion($service)
+    {
+        if (!isset($this->latestVersions[$service])) {
+            if ($versions = $this->getServiceVersions($service)) {
+                sort($versions);
+                $this->latestVersions[$service] = $versions[0];
+            } else {
+                throw new \RuntimeException('There were no versions of the '
+                    . $service . ' service available.');
+            }
+        }
+
+        return $this->latestVersions[$service];
     }
 }

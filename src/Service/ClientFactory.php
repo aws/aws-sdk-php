@@ -316,14 +316,13 @@ class ClientFactory
                 . 'instance of Aws\Api\ApiProviderInterface');
         }
 
-        $version = isset($args['version']) ? $args['version'] : 'latest';
-        $api = $args['api_provider']->getService($args['service'], $version);
-
+        $api = $value->getService($args['service'], $args['version']);
         if (!$api) {
             throw new \InvalidArgumentException('Unknown service version: '
-                . $args['service'] . ' at ' . $version);
+                . $args['service'] . ' at ' . $args['version']);
         }
 
+        $api = new Service($api);
         $args['error_parser'] = $this->createErrorParser($api);
         $args['api'] = $api;
     }
@@ -336,7 +335,7 @@ class ClientFactory
         }
 
         if (!isset($args['endpoint'])) {
-            $result = $args['endpoint_provider']->getEndpoint(
+            $result = $value->getEndpoint(
                 $args['service'],
                 [
                     'service' => $args['service'],

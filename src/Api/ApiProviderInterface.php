@@ -7,13 +7,13 @@ namespace Aws\Api;
 interface ApiProviderInterface
 {
     /**
-     * Get an API model for a specific service by name and version.
+     * Get the service definition for a service name and version.
      *
      * @param string $service Service name (e.g., "ec2", "s3", "sns"). You can
      *                        specify "latest" to retrieve the latest version.
      * @param string $version Version identifier (e.g., "2010-05-08")
      *
-     * @return Service|null
+     * @return array
      */
     public function getService($service, $version);
 
