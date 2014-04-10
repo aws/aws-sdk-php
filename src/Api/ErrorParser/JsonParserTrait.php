@@ -13,7 +13,7 @@ trait JsonParserTrait
         $code = (string) $response->getStatusCode();
 
         return [
-            'request_id'  => (string) $response->getHeader('x-amzn-RequestId'),
+            'request_id'  => (string) $response->getHeader('x-amzn-requestid'),
             'code'        => null,
             'message'     => null,
             'type'        => $code[0] == '4' ? 'client' : 'server',
