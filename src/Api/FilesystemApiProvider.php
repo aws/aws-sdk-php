@@ -72,7 +72,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, '.paginators.json');
 
-        $this->parseJsonFile($path);
+        return $this->parseJsonFile($path);
     }
 
     public function getServiceWaiterConfig($service, $version)
@@ -123,7 +123,7 @@ class FilesystemApiProvider implements ApiProviderInterface
     {
         if (!isset($this->latestVersions[$service])) {
             if ($versions = $this->getServiceVersions($service)) {
-                sort($versions);
+                rsort($versions);
                 $this->latestVersions[$service] = $versions[0];
             } else {
                 throw new \RuntimeException('There were no versions of the '
