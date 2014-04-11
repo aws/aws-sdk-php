@@ -37,7 +37,7 @@ class S3SignatureV4 extends SignatureV4 implements PresignedUrlInterface
             $this->convertExpires($expires)
         );
 
-        $context = $this->createSigningContext($request, 'UNSIGNED-PAYLOAD');
+        $context = $this->createContext($request, 'UNSIGNED-PAYLOAD');
 
         $signingKey = $this->getSigningKey(
             $scopeDate,
@@ -55,14 +55,6 @@ class S3SignatureV4 extends SignatureV4 implements PresignedUrlInterface
         );
 
         return $request->getUrl();
-    }
-
-    /**
-     * Overrides the parent class to prevent the removal of dot-segments
-     */
-    protected function normalizePath(RequestInterface $request)
-    {
-        return '/' . ltrim($request->getPath(), '/');
     }
 
     private function convertExpires($expires)

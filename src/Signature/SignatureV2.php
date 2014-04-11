@@ -17,7 +17,7 @@ class SignatureV2 implements SignatureInterface
     ) {
         /** @var PostBodyInterface $body */
         $body = $request->getBody();
-        $body->setField('Timestamp', gmdate('c', time()));
+        $body->setField('Timestamp', gmdate('c'));
         $body->setField('SignatureVersion', '2');
         $body->setField('SignatureMethod', 'HmacSHA256');
         $body->setField('AWSAccessKeyId', $credentials->getAccessKeyId());
@@ -31,6 +31,8 @@ class SignatureV2 implements SignatureInterface
             . $request->getHost() . "\n"
             . '/' . "\n"
             . $this->getCanonicalizedParameterString($body);
+
+        $request->getConfig()->set('aws.signature', $sign);
 
         $body->setField('Signature', base64_encode(
             hash_hmac(
