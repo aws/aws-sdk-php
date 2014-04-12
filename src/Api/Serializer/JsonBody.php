@@ -29,11 +29,11 @@ class JsonBody
      *
      * @return string
      */
-    public function build(Shape $shape = null, array $args)
+    public function build(Shape $shape, array $args)
     {
-        return $shape
-            ? json_encode($this->format($shape, $args), JSON_FORCE_OBJECT)
-            : '{}';
+        $result = json_encode($this->format($shape, $args));
+
+        return $result == '[]' ? '{}' : $result;
     }
 
     private function format(Shape $shape, $value)
@@ -58,13 +58,12 @@ class JsonBody
     {
         $data = [];
         foreach ($value as $k => $v) {
-            if ($v === null || !$shape->hasMember($k)) {
-                continue;
+            if ($v !== null && $shape->hasMember($k)) {
+                $data[$shape['locationName'] ?: $k] = $this->format(
+                    $shape->getMember($k),
+                    $v
+                );
             }
-            $data[$shape['locationName'] ?: $k] = $this->format(
-                $shape->getMember($k),
-                $v
-            );
         }
 
         return $data;
