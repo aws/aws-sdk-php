@@ -132,6 +132,20 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testOpensStreams
      */
+    public function testDoesNotRaiseErrorForMissingFile()
+    {
+        self::log('Testing invalid file');
+        $this->assertFalse(is_file('s3://ewfwefwfeweff/' . uniqid('foo')));
+        $this->assertFalse(is_link('s3://ewfwefwfeweff/' . uniqid('foo')));
+        try {
+            lstat('s3://ewfwefwfeweff/' . uniqid('foo'));
+            $this->fail('Did not trigger a warning');
+        } catch (\PHPUnit_Framework_Error_Warning $e) {}
+    }
+
+    /**
+     * @depends testOpensStreams
+     */
     public function testUploadsDir()
     {
         self::log('Uploading test directory under a prefix');

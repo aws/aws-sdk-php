@@ -95,8 +95,8 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage simultaneous reading and writing
+     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage The Amazon S3 stream wrapper does not allow simultaneous reading and writing.
      */
     public function testCanThrowExceptionsInsteadOfErrors()
     {
