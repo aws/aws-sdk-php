@@ -72,7 +72,6 @@ use Guzzle\Service\Command\CommandInterface;
  * Stream context options:
  *
  * - "seekable": Set to true to create a seekable "r" (read only) stream by using a php://temp stream buffer
- * - "throw_exceptions": Set to true to throw exceptions instead of trigger_errors
  * - For "unlink" only: Any option that can be passed to the DeleteObject operation
  */
 class StreamWrapper
@@ -632,7 +631,6 @@ class StreamWrapper
 
         $params = $this->getOptions();
         unset($params['seekable']);
-        unset($params['throw_exceptions']);
 
         return array(
             'Bucket' => $parts[0],
@@ -725,13 +723,16 @@ class StreamWrapper
      */
     protected function triggerError($errors, $flags = null)
     {
-        if ($flags != STREAM_URL_STAT_QUIET) {
-            if ($this->getOption('throw_exceptions')) {
-                throw new RuntimeException(implode("\n", (array) $errors));
-            } else {
-                trigger_error(implode("\n", (array) $errors), E_USER_WARNING);
-            }
+        if ($flags === STREAM_URL_STAT_QUIET) {
+            // This is triggered with things like file_exists()
+            return false;
+        } elseif ($flags === (STREAM_URL_STAT_QUIET | STREAM_URL_STAT_LINK)) {
+            // This is triggered for things like is_link()
+            return $this->formatUrlStat(false);
         }
+
+        // This is triggered when doing things like lstat() or stat()
+        trigger_error(implode("\n", (array) $errors), E_USER_WARNING);
 
         return false;
     }
@@ -765,7 +766,7 @@ class StreamWrapper
         $type = gettype($result);
 
         // Determine what type of data is being cached
-        if (!$result || $type == 'string') {
+        if ($type == 'NULL' || $type == 'string') {
             // Directory with 0777 access - see "man 2 stat".
             $stat['mode'] = $stat[2] = 0040777;
         } elseif ($type == 'array' && isset($result['LastModified'])) {
@@ -773,8 +774,6 @@ class StreamWrapper
             $stat['mtime'] = $stat[9] = $stat['ctime'] = $stat[10] = strtotime($result['LastModified']);
             $stat['size'] = $stat[7] = (isset($result['ContentLength']) ? $result['ContentLength'] : $result['Size']);
             // Regular file with 0777 access - see "man 2 stat".
-            $stat['mode'] = $stat[2] = 0100777;
-        } else {
             $stat['mode'] = $stat[2] = 0100777;
         }
 
