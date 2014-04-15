@@ -12,7 +12,7 @@ use GuzzleHttp\Event\SubscriberInterface;
 abstract class AbstractParser implements SubscriberInterface
 {
     /** @var \Aws\Api\Service Representation of the service API*/
-    protected $api;
+    private $api;
 
     /**
      * @param Service $api Service description
@@ -30,21 +30,22 @@ abstract class AbstractParser implements SubscriberInterface
     public function onProcess(ProcessEvent $event)
     {
         // Guard against intercepted or injected results that need no parsing.
-        if ($event->getResult()) {
+        if ($event->getResult() !== null) {
             return;
         } elseif (!$event->getResponse()) {
             throw new \RuntimeException('The response cannot be parsed.');
-        } else {
-            $event->setResult($this->createResult($event));
         }
+
+        $event->setResult($this->createResult($this->api, $event));
     }
 
     /**
      * Creates an Aws\Result object based on the response data
      *
+     * @param Service      $api
      * @param ProcessEvent $event
      *
      * @return Result
      */
-    abstract protected function createResult(ProcessEvent $event);
+    abstract protected function createResult(Service $api, ProcessEvent $event);
 }

@@ -3,7 +3,6 @@ namespace Aws\Api\Parser;
 
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
-use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 

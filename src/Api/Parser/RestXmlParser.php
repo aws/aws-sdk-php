@@ -2,6 +2,7 @@
 namespace Aws\Api\Parser;
 
 use Aws\Result;
+use Aws\Api\Service;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -9,7 +10,7 @@ use GuzzleHttp\Command\Event\ProcessEvent;
  */
 class RestXmlParser extends RestParser
 {
-    public function createResult(ProcessEvent $event)
+    public function createResult(Service $api, ProcessEvent $event)
     {
         return new Result([]);
     }
