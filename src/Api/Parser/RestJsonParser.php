@@ -19,6 +19,11 @@ class RestJsonParser extends RestParser
 
     public function onProcess(ProcessEvent $event)
     {
+        // Guard against intercepted or injected results that need no parsing.
+        if (!$response = $event->getResponse()) {
+            return;
+        }
+
         $command = $event->getCommand();
         $name = $command->getName();
         $operation = $this->api->getOperation($name);
