@@ -18,6 +18,8 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
 use Aws\Retry\ThrottlingFilter;
+use Aws\Signature\S3Signature;
+use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureV2;
 use Aws\Signature\SignatureV4;
@@ -380,6 +382,13 @@ class ClientFactory
                 );
             case 'v2':
                 return new SignatureV2();
+            case 's3':
+                return new S3Signature();
+            case 's3v4':
+                return new S3SignatureV4(
+                    $api->getMetadata('signingName') ?:
+                        $api->getMetadata('endpointPrefix'),
+                    $region);
             default:
                 throw new \InvalidArgumentException("Unknown signature"
                     . " version {$version}");

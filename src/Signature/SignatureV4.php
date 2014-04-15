@@ -4,7 +4,6 @@ namespace Aws\Signature;
 use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Stream;
-use GuzzleHttp\Url;
 
 /**
  * Signature Version 4
@@ -107,11 +106,6 @@ class SignatureV4 implements SignatureInterface
             : self::EMPTY_PAYLOAD;
     }
 
-    protected function normalizePath(RequestInterface $request)
-    {
-        return Url::fromString($request->getUrl())->removeDotSegments()->getPath();
-    }
-
     /**
      * @internal Create the canonical representation of a request
      * @param RequestInterface $request Request to canonicalize
@@ -122,12 +116,12 @@ class SignatureV4 implements SignatureInterface
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
         $canon = $request->getMethod() . "\n"
-            . $this->normalizePath($request) . "\n"
+            . $request->getPath() . "\n"
             . $this->getCanonicalizedQuery($request) . "\n";
 
         // Create the canonical headers
         $headers = array_change_key_case($request->getHeaders());
-        unset($headers['user-agent'], $headers['x-amz-content-sha-256']);
+        unset($headers['user-agent']);
         ksort($headers);
 
         foreach ($headers as $key => $values) {

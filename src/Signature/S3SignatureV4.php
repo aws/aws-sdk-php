@@ -47,7 +47,7 @@ class S3SignatureV4 extends SignatureV4 implements PresignedUrlInterface
         );
 
         $stringToSign = "AWS4-HMAC-SHA256\n{$httpDate}\n{$scope}\n"
-            . hash('sha256', $context['canonical_request']);
+            . hash('sha256', $context['creq']);
 
         $request->getQuery()->set(
             'X-Amz-Signature',
@@ -79,13 +79,13 @@ class S3SignatureV4 extends SignatureV4 implements PresignedUrlInterface
 
     private function moveHeadersToQuery(RequestInterface $request)
     {
-        $query = array('X-Amz-Date' => gmdate('Ymd\THis\Z', time()));
+        $query = ['X-Amz-Date' => gmdate('Ymd\THis\Z', time())];
 
         foreach ($request->getHeaders() as $name => $header) {
-            if (substr($name, 0, 5) == 'x-amz') {
-                $query[$name] = (string) $header;
+            if (strcasecmp(substr($name, 0, 5), 'x-amz')) {
+                $query[$name] = implode(',' , $header);
             }
-            if ($name != 'host') {
+            if (strcasecmp($name, 'host')) {
                 $request->removeHeader($name);
             }
         }
