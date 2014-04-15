@@ -8,28 +8,16 @@ use GuzzleHttp\Event\SubscriberInterface;
 /**
  * @internal
  */
-class JsonRpcParser implements SubscriberInterface
+class JsonRpcParser extends AbstractParser
 {
     use JsonTrait;
 
-    public function getEvents()
+    public function createResult(ProcessEvent $event)
     {
-        return ['process' => ['onProcess']];
-    }
-
-    public function onProcess(ProcessEvent $event)
-    {
-        // Guard against intercepted or injected results that need no parsing.
-        if (!$response = $event->getResponse()) {
-            return;
-        }
-
         $operation = $this->api->getOperation($event->getCommand()->getName());
-        $event->setResult(
-            new Result($this->parseJson(
-                $operation->getOutput(),
-                $response->json()
-            ))
-        );
+        return new Result($this->parseJson(
+            $operation->getOutput(),
+            $event->getResponse()->json()
+        ));
     }
 }

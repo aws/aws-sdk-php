@@ -12,16 +12,6 @@ use Aws\Api\StructureShape;
  */
 trait JsonTrait
 {
-    private $model;
-
-    /**
-     * @param Service $api Service description
-     */
-    public function __construct(Service $api)
-    {
-        $this->api = $api;
-    }
-
     private function parseJson(Shape $shape, $value)
     {
         static $methods = [
