@@ -12,13 +12,15 @@ use GuzzleHttp\Message\RequestInterface;
 class S3Signature implements PresignedUrlInterface
 {
     /** @var array Query string values that must be signed */
-    protected $signableQueryString = ['acl', 'cors', 'delete', 'lifecycle',
-        'location', 'logging', 'notification', 'partNumber', 'policy',
-        'requestPayment', 'response-cache-control', 'response-content-disposition',
+    private $signableQueryString = [
+        'acl', 'cors', 'delete', 'lifecycle', 'location', 'logging',
+        'notification', 'partNumber', 'policy', 'requestPayment',
+        'response-cache-control', 'response-content-disposition',
         'response-content-encoding', 'response-content-language',
         'response-content-type', 'response-expires', 'restore', 'tagging',
         'torrent', 'uploadId', 'uploads', 'versionId', 'versioning',
-        'versions', 'website'];
+        'versions', 'website'
+    ];
 
     /** @var array Sorted headers that must be signed */
     private $signableHeaders = ['Content-MD5', 'Content-Type'];
