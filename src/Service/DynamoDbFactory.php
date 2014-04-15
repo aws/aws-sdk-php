@@ -29,19 +29,21 @@ class DynamoDbFactory extends ClientFactory
         array &$args,
         AwsClientInterface $client
     ) {
-        $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
-            'max' => $this->validateRetries($value),
-            'delay' => function ($retries) {
-                return $retries === 0
-                    ? 0
-                    : (50 * (int) pow(2, $retries - 1)) / 1000;
-            },
-            'filter' => RetrySubscriber::createChainFilter([
-                new ThrottlingFilter($args['error_parser']),
-                new Crc32Filter($args['error_parser']),
-                RetrySubscriber::createStatusFilter(),
-                RetrySubscriber::createCurlFilter()
-            ])
-        ]));
+        if ($value = $this->validateRetries($value)) {
+            $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
+                'max' => $value,
+                'delay' => function ($retries) {
+                        return $retries === 0
+                            ? 0
+                            : (50 * (int) pow(2, $retries - 1)) / 1000;
+                    },
+                'filter' => RetrySubscriber::createChainFilter([
+                        new ThrottlingFilter($args['error_parser']),
+                        new Crc32Filter($args['error_parser']),
+                        RetrySubscriber::createStatusFilter(),
+                        RetrySubscriber::createCurlFilter()
+                    ])
+            ]));
+        }
     }
 }
