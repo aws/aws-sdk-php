@@ -51,7 +51,7 @@ class SignatureV4 implements SignatureInterface
             $request->setHeader('x-amz-security-token', $token);
         }
 
-        $payload = $request->getHeader('x-amz-content-sha-256');
+        $payload = $request->getHeader('x-amz-content-sha256');
         if (!$payload) {
             $payload = $this->getPayloadHash($request);
         }

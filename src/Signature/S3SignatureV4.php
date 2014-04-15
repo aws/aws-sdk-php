@@ -57,6 +57,16 @@ class S3SignatureV4 extends SignatureV4 implements PresignedUrlInterface
         return $request->getUrl();
     }
 
+    protected function getPayloadHash(RequestInterface $request)
+    {
+        $hash = $request->getBody()
+            ? Stream\hash($request->getBody(), 'sha256')
+            : self::EMPTY_PAYLOAD;
+        $request->setHeader('X-Amz-Content-Sha256', $hash);
+
+        return $hash;
+    }
+
     private function convertExpires($expires)
     {
         if ($expires instanceof \DateTime) {
