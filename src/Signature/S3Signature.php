@@ -2,6 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
+use Aws\Service\S3\S3UriParser;
 use GuzzleHttp\Message\RequestInterface;
 
 /**
@@ -22,6 +23,14 @@ class S3Signature implements PresignedUrlInterface
     /** @var array Sorted headers that must be signed */
     private $signableHeaders = ['Content-MD5', 'Content-Type'];
 
+    /** @var \Aws\Service\S3\S3UriParser S3 URI parser */
+    private $parser;
+
+    public function __construct()
+    {
+        $this->parser = new S3UriParser();
+    }
+
     public function signRequest(
         RequestInterface $request,
         CredentialsInterface $credentials
@@ -31,18 +40,14 @@ class S3Signature implements PresignedUrlInterface
 
         // Add the security token header if one is being used by the credentials
         if ($token = $credentials->getSecurityToken()) {
-            $request->setHeader('x-amz-security-token', $token);
+            $request->setHeader('X-Amz-Security-Token', $token);
         }
 
         // Add a date header if one is not set
-        if (!$request->hasHeader('date') &&
-            !$request->hasHeader('x-amz-date')
-        ) {
-            $request->setHeader('Date', gmdate(\DateTime::RFC2822));
-        }
-
+        $request->removeHeader('X-Amz-Date');
+        $request->setHeader('Date', gmdate(\DateTime::RFC2822));
         $stringToSign = $this->createCanonicalizedString($request);
-        $request->getConfig()['aws.string_to_sign'] = $stringToSign;
+        $request->getConfig()['aws.signature'] = $stringToSign;
 
         $request->setHeader(
             'Authorization',
@@ -56,19 +61,19 @@ class S3Signature implements PresignedUrlInterface
         CredentialsInterface $credentials,
         $expires
     ) {
-        if ($expires instanceof \DateTime) {
-            $expires = $expires->getTimestamp();
-        } elseif (!is_numeric($expires)) {
-            $expires = strtotime($expires);
-        }
-
         // Operate on a clone of the request, so the original is not altered.
         $request = clone $request;
 
         // Make sure to handle temporary credentials
         if ($token = $credentials->getSecurityToken()) {
-            $request->setHeader('x-amz-security-token', $token);
-            $request->getQuery()->set('x-amz-security-token', $token);
+            $request->setHeader('X-Amz-Security-Token', $token);
+            $request->getQuery()->set('X-Amz-Security-Token', $token);
+        }
+
+        if ($expires instanceof \DateTime) {
+            $expires = $expires->getTimestamp();
+        } elseif (!is_numeric($expires)) {
+            $expires = strtotime($expires);
         }
 
         // Set query params required for pre-signed URLs
@@ -84,7 +89,7 @@ class S3Signature implements PresignedUrlInterface
         foreach ($request->getHeaders() as $name => $header) {
             $name = strtolower($name);
             if (strpos($name, 'x-amz-') === 0) {
-                $request->getQuery()->set($name, (string) $header);
+                $request->getQuery()->set($name, implode(',', $header));
                 $request->removeHeader($name);
             }
         }
@@ -92,14 +97,14 @@ class S3Signature implements PresignedUrlInterface
         return $request->getUrl();
     }
 
-    public function signString($string, CredentialsInterface $credentials)
+    private function signString($string, CredentialsInterface $credentials)
     {
         return base64_encode(
             hash_hmac('sha1', $string, $credentials->getSecretKey(), true)
         );
     }
 
-    public function createCanonicalizedString(
+    private function createCanonicalizedString(
         RequestInterface $request,
         $expires = null
     ) {
@@ -142,17 +147,30 @@ class S3Signature implements PresignedUrlInterface
         return implode("\n", $headers) . "\n";
     }
 
-    private function createCanonicalizedResource(RequestInterface $request)
+    /**
+     * Returns a hash of the "bucket", "key", "region", and "path_style"
+     */
+    private function parseUri(RequestInterface $request)
     {
-        if (!($command = $request->getConfig()->get('command'))) {
-            throw new \RuntimeException('A command must be set in order to '
-                . 'sign S3 requests');
+        $command = $request->getConfig()->get('command');
+
+        if (!$command) {
+            return $this->parser->parse($request->getUrl());
         }
 
-        $buffer = $command['Bucket'];
+        return [
+            'bucket' => $command['Bucket'],
+            'key'    => $command['Key']
+        ];
+    }
 
-        if ($command['Key']) {
-            $buffer .= '/' . $command['Key'];
+    private function createCanonicalizedResource(RequestInterface $request)
+    {
+        $data = $this->parseUri($request);
+        $buffer = $data['Bucket'];
+
+        if ($data['key']) {
+            $buffer .= '/' . $data['key'];
         }
 
         // Add sub resource parameters
@@ -165,7 +183,7 @@ class S3Signature implements PresignedUrlInterface
                 $first = false;
                 $buffer .= $key;
                 // Don't add values for empty sub-resources
-                if ($value !== '' && $value !== false && $value !== null) {
+                if (strlen($value)) {
                     $buffer .= "={$value}";
                 }
             }
