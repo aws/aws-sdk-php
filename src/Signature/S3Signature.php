@@ -114,12 +114,10 @@ class S3Signature implements PresignedUrlInterface
 
         // Add the interesting headers
         foreach ($this->signableHeaders as $header) {
-            $buffer .= (string) $request->getHeader($header) . "\n";
+            $buffer .= $request->getHeader($header) . "\n";
         }
 
-        // Choose dates from left to right based on what's set
-        $date = $expires ?: (string) $request->getHeader('date');
-
+        $date = $expires ?: $request->getHeader('date');
         $buffer .= "{$date}\n"
             . $this->createCanonicalizedAmzHeaders($request)
             . $this->createCanonicalizedResource($request);
@@ -129,12 +127,12 @@ class S3Signature implements PresignedUrlInterface
 
     private function createCanonicalizedAmzHeaders(RequestInterface $request)
     {
-        $headers = array();
+        $headers = [];
         foreach ($request->getHeaders() as $name => $header) {
             $name = strtolower($name);
             if (strpos($name, 'x-amz-') === 0) {
-                $value = trim((string) $header);
-                if ($value || $value === '0') {
+                $value = implode(',', $header);
+                if (strlen($value) > 0) {
                     $headers[$name] = $name . ':' . $value;
                 }
             }
@@ -149,30 +147,13 @@ class S3Signature implements PresignedUrlInterface
         return implode("\n", $headers) . "\n";
     }
 
-    /**
-     * Returns a hash of the "bucket", "key", "region", and "path_style"
-     */
-    private function parseUri(RequestInterface $request)
-    {
-        $command = $request->getConfig()->get('command');
-
-        if (!$command) {
-            return $this->parser->parse($request->getUrl());
-        }
-
-        return [
-            'bucket' => $command['Bucket'],
-            'key'    => $command['Key']
-        ];
-    }
-
     private function createCanonicalizedResource(RequestInterface $request)
     {
-        $data = $this->parseUri($request);
-        $buffer = $data['Bucket'];
+        $data = $this->parser->parse($request->getUrl());
+        $buffer = '/';
 
-        if ($data['key']) {
-            $buffer .= '/' . $data['key'];
+        if ($data['bucket']) {
+            $buffer .= $data['bucket'] . '/' . $data['key'];
         }
 
         // Add sub resource parameters
