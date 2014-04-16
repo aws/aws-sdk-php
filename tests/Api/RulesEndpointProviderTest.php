@@ -11,7 +11,7 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \Aws\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage Unable to resolve an endpoint for the foo service based on the provided configuration values: foo=baz, bam=boo, service=foo, scheme=https. Perhaps this service requires a region option
+     * @expectedExceptionMessage Unable to resolve an endpoint for the foo service based on the provided configuration values: foo=baz, bam=boo, service=foo, scheme=https
      */
     public function testThrowsWhenEndpointIsNotResolved()
     {
@@ -44,7 +44,7 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
             $this->fail('Did not throw');
         } catch (UnresolvedEndpointException $e) {
             $this->assertContains(
-                'This endpoint requires a valid "region"',
+                'Try specifying a valid \'region\' argument',
                 $e->getMessage()
             );
         }

@@ -146,14 +146,21 @@ class RulesEndpointProvider implements EndpointProviderInterface
             str_replace('&', ', ', http_build_query($args))
         );
 
-        // Provide a better error message for the common case of omitting region
-        if (!isset($args['region'])) {
-            try {
-                $this->getEndpoint($service, $args + ['region' => 'us-west-2']);
-                $message .= '. This endpoint requires a valid "region" option.';
-            } catch (UnresolvedEndpointException $e) {
-                $message .= '. Perhaps this service requires a region option.';
+        // Give a hint that a region should be set if one is present in rules.
+        if (!empty($this->rules[$service])) {
+            if (!isset($args['region']) && \JmesPath\search(
+                '[*].constraints[?[0]==`region`]',
+                $this->rules[$service]
+            )) {
+                $message .= "\nTry specifying a valid 'region' argument.";
             }
+
+            // Show the rules to the user in the exception message.
+            $message .= "\n\nThis endpoint has the following rules: \n\n" .
+                '    ' . str_replace("\n", "\n    ", json_encode(
+                    $this->rules[$service],
+                    JSON_PRETTY_PRINT
+                ));
         }
 
         return new UnresolvedEndpointException($message);
