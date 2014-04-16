@@ -5,6 +5,7 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
+use Aws\Service\Exception\Ec2Exception;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\Error;
 use GuzzleHttp\Client;
@@ -65,11 +66,31 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testThrowsAwsExceptions()
+    public function errorProvider()
     {
-        $client = $this->createClient(['operations' => ['foo' => [
+        return [
+            [null, 'Aws\Exception\AwsException'],
+            ['Aws\Service\Exception\Ec2Exception', 'Aws\Service\Exception\Ec2Exception']
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testThrowsSpecificErrors($value, $type)
+    {
+        $service = new Service(['operations' => ['foo' => [
             'http' => ['method' => 'POST']
         ]]]);
+
+        $client = new AwsClient([
+            'client'          => new Client(),
+            'credentials'     => new Credentials('foo', 'bar'),
+            'signature'       => new SignatureV4('foo', 'bar'),
+            'region'          => 'foo',
+            'exception_class' => $value,
+            'api'             => $service
+        ]);
 
         $client->getHttpClient()->getEmitter()->attach(new Mock([
             new Response(404)
@@ -95,6 +116,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             $client->foo();
             $this->fail('Did not throw an exception');
         } catch (AwsException $e) {
+            $this->assertInstanceOf($type, $e);
             $this->assertEquals([
                 'aws_error' => [
                     'code' => 'foo',
@@ -120,9 +142,19 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    private function createClient(array $service)
+    public function testCanSpecifyDefaultCommandOptions()
     {
-        return new AwsClient([
+        $client = $this->createClient(['operations' => ['foo' => [
+            'http' => ['method' => 'POST']
+        ]]], ['defaults' => ['baz' => 'bam']]);
+
+        $c = $client->getCommand('foo');
+        $this->assertEquals('bam', $c['baz']);
+    }
+
+    private function createClient(array $service, array $conf = [])
+    {
+        return new AwsClient($conf + [
             'client'      => new Client(),
             'credentials' => new Credentials('foo', 'bar'),
             'signature'   => new SignatureV4('foo', 'bar'),

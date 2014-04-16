@@ -21,6 +21,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var SignatureInterface Signature implementation of the service */
     private $signature;
 
+    /** @var array Default command options */
+    private $defaults;
+
     /** @var string */
     private $region;
 
@@ -67,6 +70,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->paginatorFactory = isset($config['paginator_factory'])
             ? $config['paginator_factory']
             : null;
+        $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
 
         parent::__construct($config['client']);
     }
@@ -83,9 +87,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             }
         }
 
-        if ($defaults = $this->getConfig('defaults')) {
-            $args += $defaults;
-        }
+        $args += $this->defaults;
 
         if (!$command) {
             throw new \InvalidArgumentException("Operation not found: $name");
