@@ -4,7 +4,6 @@ namespace Aws\Api\Serializer;
 use Aws\Api\Service;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
-use GuzzleHttp\Url;
 
 /**
  * Prepares a JSON-RPC request for transfer.
@@ -15,7 +14,7 @@ class JsonRpcSerializer implements SubscriberInterface
     /** @var JsonBody */
     private $jsonFormatter;
 
-    /** @var Url */
+    /** @var string */
     private $endpoint;
 
     /** @var Service */
@@ -31,7 +30,7 @@ class JsonRpcSerializer implements SubscriberInterface
         Service $api,
         JsonBody $jsonFormatter = null
     ) {
-        $this->endpoint = Url::fromString($endpoint);
+        $this->endpoint = $endpoint;
         $this->api = $api;
         $this->jsonFormatter = $jsonFormatter ?: new JsonBody($this->api);
     }
@@ -46,18 +45,20 @@ class JsonRpcSerializer implements SubscriberInterface
         /** @var \Aws\AwsCommandInterface $command */
         $command = $event->getCommand();
         $name = $command->getName();
-        $api = $command->getApi();
-        $operation = $api->getOperation($name);
+        $operation = $this->api->getOperation($name);
 
         $event->setRequest($event->getClient()->getHttpClient()->createRequest(
             $operation['http']['method'],
-            $this->endpoint->combine($operation['http']['requestUri']),
+            $this->endpoint,
             [
                 'headers' => [
-                    'X-Amz-Target' => $api->getMetadata('targetPrefix')
+                    'X-Amz-Target' => $this->api->getMetadata('targetPrefix')
                         . '.' . $name,
                     'Content-Type' => 'application/x-amz-json-'
-                        . number_format($api->getMetadata('jsonVersion'), 1)
+                        . number_format(
+                            $this->api->getMetadata('jsonVersion'),
+                            1
+                        )
                 ],
                 'body' => $this->jsonFormatter->build(
                     $operation->getInput(),
