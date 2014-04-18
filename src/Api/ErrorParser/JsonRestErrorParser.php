@@ -26,7 +26,8 @@ class JsonRestErrorParser
 
         // Retrieve the error code from services like Amazon Elastic Transcoder
         if ($code = $response->getHeader('x-amzn-errortype')) {
-            $data['code'] = substr($code, 0, strpos($code, ':'));
+            $colon = strpos($code, ':');
+            $data['code'] = $colon ? substr($code, 0, $colon) : $code;
         }
 
         return $data;

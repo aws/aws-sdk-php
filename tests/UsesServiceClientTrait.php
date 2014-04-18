@@ -5,6 +5,7 @@ use Aws\AwsClientInterface;
 use Aws\Result;
 use Aws\Sdk;
 use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
 
@@ -51,8 +52,11 @@ trait UsesServiceClientTrait
     {
         $client->getEmitter()->on('prepare',
             function (PrepareEvent $event) use (&$results) {
-                if ($result = array_shift($results)) {
+                $result = array_shift($results);
+                if ($result instanceof Result) {
                     $event->setResult($result);
+                } elseif ($result instanceof CommandException) {
+                    throw $result;
                 } else {
                     throw new \Exception('There are no more mock results left. '
                         . 'This client executed more commands than expected.');
@@ -78,5 +82,25 @@ trait UsesServiceClientTrait
         $client->getHttpClient()->getEmitter()->attach(new Mock($responses));
 
         return $client;
+    }
+
+    /**
+     * Creates a mock CommandException with a given error code
+     *
+     * @param string $code
+     *
+     * @return CommandException
+     */
+    private function createMockCommandException($code)
+    {
+        return new CommandException(
+            'Test error',
+            $this->getMock('Aws\AwsClientInterface'),
+            $this->getMock('Aws\AwsCommandInterface'),
+            null,
+            null,
+            null,
+            ['aws_error' => ['message' => 'Test error', 'code' => $code]]
+        );
     }
 }

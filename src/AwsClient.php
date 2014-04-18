@@ -6,6 +6,8 @@ use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
 use Aws\Paginator\PaginatorFactory;
 use Aws\Signature\SignatureInterface;
+use Aws\Waiter\ResourceWaiterFactory;
+use Aws\Waiter\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Exception\CommandException;
@@ -35,6 +37,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     /** @var PaginatorFactory|null */
     private $paginatorFactory;
+
+    /** @var ResourceWaiterFactory|null */
+    private $waiterFactory;
 
     /**
      * The AwsClient constructor requires the following constructor options:
@@ -69,6 +74,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             : 'Aws\Exception\AwsException';
         $this->paginatorFactory = isset($config['paginator_factory'])
             ? $config['paginator_factory']
+            : null;
+        $this->waiterFactory = isset($config['waiter_factory'])
+            ? $config['waiter_factory']
             : null;
         $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
 
@@ -138,6 +146,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         if ($this->paginatorFactory instanceof PaginatorFactory) {
             return $this->paginatorFactory->createIterator($this, $name, $args, $config);
         }
+
+        throw new \RuntimeException('A paginator_factory must be provided to '
+            . 'the client in order to use the ' . __METHOD__ . ' method.');
     }
 
     public function getPaginator($name, array $args = [], array $config = [])
@@ -145,5 +156,23 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         if ($this->paginatorFactory instanceof PaginatorFactory) {
             return $this->paginatorFactory->createPaginator($this, $name, $args, $config);
         }
+
+        throw new \RuntimeException('A paginator_factory must be provided to '
+            . 'the client in order to use the ' . __METHOD__ . ' method.');
+    }
+
+    public function waitUntil($name, array $args = [], array $config = [])
+    {
+        if ($this->waiterFactory instanceof ResourceWaiterFactory) {
+            $waiter = $this->waiterFactory->createWaiter($this, $name, $args, $config);
+        } elseif (is_callable($name)) {
+            $config = $config ? $config + ['args' => $args] : $args;
+            $waiter = new Waiter($name, $config);
+        } else {
+            throw new \RuntimeException('A waiter_factory must be provided to '
+                . 'the client in order to use the ' . __METHOD__ . ' method.');
+        }
+
+        $waiter->wait();
     }
 }
