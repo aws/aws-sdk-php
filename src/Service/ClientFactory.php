@@ -26,6 +26,7 @@ use Aws\Signature\SignatureV2;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\Error;
 use Aws\Subscriber\Signature;
+use Aws\Waiter\ResourceWaiterFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
@@ -63,6 +64,7 @@ class ClientFactory
         'credentials'       => 1,
         'signature'         => 1,
         'paginator_factory' => 1,
+        'waiter_factory'    => 1,
         'client_defaults'   => 1,
         'client'            => 1,
         'retries'           => 2
@@ -89,6 +91,7 @@ class ClientFactory
             'version'           => 'latest',
             'exception_class'   => true,
             'paginator_factory' => false,
+            'waiter_factory'    => false,
         ];
 
         foreach ($required as $r) {
@@ -368,6 +371,22 @@ class ClientFactory
         if (!($args['paginator_factory'] instanceof PaginatorFactory)) {
             throw new \InvalidArgumentException('paginator_factory must be an '
                 . 'instance of PaginatorFactory.');
+        }
+    }
+
+    private function handle_waiter_factory($value, array &$args)
+    {
+        if ($value === false) {
+            $args['waiter_factory'] = new ResourceWaiterFactory(
+                $args['api_provider'],
+                $args['service'],
+                $args['api']->getMetadata('apiVersion')
+            );
+        }
+
+        if (!($args['waiter_factory'] instanceof ResourceWaiterFactory)) {
+            throw new \InvalidArgumentException('waiter_factory must be an '
+                . 'instance of ResourceWaiterFactory.');
         }
     }
 
