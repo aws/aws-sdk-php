@@ -12,9 +12,6 @@ class WaitEvent extends AbstractEvent
     /** @var int Number of attempts the Waiter has made */
     private $attempts;
 
-    /** @var bool Whether or not the config has be updated */
-    private $updated = false;
-
     /**
      * @param array $config
      * @param int   $attempts
@@ -25,31 +22,19 @@ class WaitEvent extends AbstractEvent
         $this->attempts = (int) $attempts;
     }
 
+    /**
+     * @return array
+     */
     public function getConfig()
     {
         return $this->config;
     }
 
+    /**
+     * @return int
+     */
     public function getAttempts()
     {
         return $this->attempts;
-    }
-
-    public function setConfig($key, $value = null)
-    {
-        if (is_array($key)) {
-            $this->config = $key;
-        } else {
-            $this->config[$key] = $value;
-        }
-
-        $this->updated = true;
-
-        return $this;
-    }
-
-    public function isConfigUpdated()
-    {
-        return $this->updated;
     }
 }

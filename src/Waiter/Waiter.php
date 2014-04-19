@@ -62,11 +62,6 @@ class Waiter implements HasEmitterInterface
             $event = new WaitEvent($this->config, $attempts);
             $this->getEmitter()->emit('wait', $event);
 
-            // Update the waiter's config based on the results of the event
-            if ($event->isConfigUpdated()) {
-                $this->config = $event->getConfig();
-            }
-
             // Wait the specified interval
             if ($this->config['interval']) {
                 usleep($this->config['interval'] * 1000000);
