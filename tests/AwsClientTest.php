@@ -152,6 +152,124 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bam', $c['baz']);
     }
 
+    public function testCanGetIterator()
+    {
+        $iterator = $this->getMockBuilder('Aws\Paginator\ResourceIterator')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $factory = $this->getMockBuilder('Aws\Paginator\PaginatorFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(['createIterator'])
+            ->getMock();
+        $factory->expects($this->once())
+            ->method('createIterator')
+            ->with(
+                $this->isInstanceOf('Aws\AwsClientInterface'),
+                $this->equalTo('ListObjects'),
+                $this->equalTo(['Bucket' => 'foobar'])
+            )
+            ->will($this->returnValue($iterator));
+
+        $client = $this->createClient([], ['paginator_factory' => $factory]);
+
+        $this->assertInstanceOf(
+            'Aws\Paginator\ResourceIterator',
+            $client->getIterator('ListObjects', ['Bucket' => 'foobar'])
+        );
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGetIteratorRequiresPaginatorFactory()
+    {
+        $client = $this->createClient([]);
+        $client->getIterator('ListObjects');
+    }
+
+    public function testCanGetPaginator()
+    {
+        $paginator = $this->getMockBuilder('Aws\Paginator\ResultPaginator')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $factory = $this->getMockBuilder('Aws\Paginator\PaginatorFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(['createPaginator'])
+            ->getMock();
+        $factory->expects($this->once())
+            ->method('createPaginator')
+            ->with(
+                $this->isInstanceOf('Aws\AwsClientInterface'),
+                $this->equalTo('ListObjects'),
+                $this->equalTo(['Bucket' => 'foobar'])
+            )
+            ->will($this->returnValue($paginator));
+
+        $client = $this->createClient([], ['paginator_factory' => $factory]);
+
+        $this->assertInstanceOf(
+            'Aws\Paginator\ResultPaginator',
+            $client->getPaginator('ListObjects', ['Bucket' => 'foobar'])
+        );
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGetPaginatorRequiresPaginatorFactory()
+    {
+        $client = $this->createClient([]);
+        $client->getPaginator('ListObjects');
+    }
+
+    public function testCansUseServiceWaiter()
+    {
+        $flag = false;
+        $waiter = $this->getMockBuilder('Aws\Waiter\Waiter')
+            ->disableOriginalConstructor()
+            ->setMethods(['wait'])
+            ->getMock();
+        $waiter->expects($this->once())
+            ->method('wait')
+            ->willReturnCallback(function() use(&$flag) {$flag = true;});
+        $factory = $this->getMockBuilder('Aws\Waiter\ResourceWaiterFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(['createWaiter'])
+            ->getMock();
+        $factory->expects($this->once())
+            ->method('createWaiter')
+            ->with(
+                $this->isInstanceOf('Aws\AwsClientInterface'),
+                $this->equalTo('BucketExists'),
+                $this->equalTo(['Bucket' => 'foobar'])
+            )
+            ->will($this->returnValue($waiter));
+
+        $client = $this->createClient([], ['waiter_factory' => $factory]);
+
+        $client->waitUntil('BucketExists', ['Bucket' => 'foobar']);
+        $this->assertTrue($flag);
+    }
+
+    public function testCansUseCustomWaiter()
+    {
+        $flag = false;
+        $client = $this->createClient([]);
+        $client->waitUntil(function () use (&$flag) {
+            return $flag = true;
+        }, ['interval' => 0, 'delay' => 0]);
+        $this->assertTrue($flag);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGetWaiterRequiresWaiterFactory()
+    {
+        $client = $this->createClient([]);
+        $client->waitUntil('ListObjects');
+    }
+
     private function createClient(array $service, array $conf = [])
     {
         return new AwsClient($conf + [
