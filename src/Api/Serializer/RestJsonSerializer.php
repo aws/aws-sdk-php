@@ -28,16 +28,9 @@ class RestJsonSerializer extends RestSerializer
         $this->jsonFormatter = $jsonFormatter ?: new JsonBody($api);
     }
 
-    protected function payload(
-        Operation $operation,
-        $memberName,
-        StructureShape $member,
-        array $args
-    ) {
-        return $this->jsonFormatter->build(
-            $member,
-            isset($args[$memberName]) ? $args[$memberName] : []
-        );
+    protected function payload(StructureShape $member, array $value)
+    {
+        return $this->jsonFormatter->build($member, $value);
     }
 
     protected function structBody(

@@ -1,6 +1,17 @@
 <?php
 namespace Aws\Api;
 
+use Aws\Api\Parser\JsonRpcParser;
+use Aws\Api\Serializer\JsonRpcSerializer;
+use Aws\Api\Serializer\QuerySerializer;
+use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\AwsClientInterface;
+use Aws\Signature\S3Signature;
+use Aws\Signature\S3SignatureV4;
+use Aws\Signature\SignatureInterface;
+use Aws\Signature\SignatureV2;
+use Aws\Signature\SignatureV4;
+
 /**
  * Represents a web service API model.
  */
@@ -133,5 +144,82 @@ class Service extends AbstractModel
         }
 
         return null;
+    }
+
+    /**
+     * Creates a signature object based on the service description.
+     *
+     * @param string $region Region to use when the signature requires a region.
+     * @param string $version Optional signature version override.
+     *
+     * @return SignatureInterface
+     * @throws \InvalidArgumentException if the signature cannot be created
+     */
+    public function createSignature($region, $version = null)
+    {
+        if (!$version) {
+            if (!isset($this->definition['metadata']['signatureVersion'])) {
+                throw new \InvalidArgumentException('Unable to determine '
+                    . 'signatureVersion');
+            }
+            $version = $this->definition['metadata']['signatureVersion'];
+        }
+
+        switch ($version) {
+            case 'v4':
+                return new SignatureV4(
+                    $this->getMetadata('signingName') ?:
+                        $this->getMetadata('endpointPrefix'),
+                    $region
+                );
+            case 'v2':
+                return new SignatureV2();
+            case 's3':
+                return new S3Signature();
+            case 's3v4':
+                return new S3SignatureV4(
+                    $this->getMetadata('signingName') ?:
+                        $this->getMetadata('endpointPrefix'),
+                    $region);
+            default:
+                throw new \InvalidArgumentException('Unknown signature version '
+                    . $this->definition['metadata']['signatureVersion']);
+        }
+    }
+
+    /**
+     * Creates and attaches serializers and parsers to the given client based
+     * on the protocol of the description.
+     *
+     * @param AwsClientInterface $client   AWS client to update
+     * @param string             $endpoint Service endpoint to connect to.
+     *
+     * @throws \RuntimeException if the serializer subscriber cannot be created.
+     */
+    public function applyProtocol(AwsClientInterface $client, $endpoint)
+    {
+        $em = $client->getEmitter();
+
+        switch ($this->getMetadata('type')) {
+            case 'json':
+                $em->attach(new JsonRpcSerializer($endpoint, $this));
+                $em->attach(new JsonRpcParser($this));
+                break;
+            case 'query':
+                $em->attach(new QuerySerializer($endpoint, $this));
+                // $em->attach(new XmlParser($this));
+                break;
+            case 'rest-json':
+                $em->attach(new RestJsonSerializer($endpoint, $this));
+                // $em->attach(new RestJsonParser($this));
+                break;
+            case 'rest-xml':
+                // $em->attach(new RestXmlSerializer($endpoint, $this));
+                // $em->attach(new RestXmlParser($this));
+                break;
+            default:
+                throw new \UnexpectedValueException('Unknown protocol: '
+                    . $this->getMetadata('type'));
+        }
     }
 }

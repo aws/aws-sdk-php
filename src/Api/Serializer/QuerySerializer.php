@@ -131,9 +131,10 @@ class QuerySerializer implements SubscriberInterface
 
         $kp = isset($keys['xmlName']) ? $keys['xmlName'] : 'key';
         $vp = isset($vals['xmlName']) ? $vals['xmlName'] : 'value';
+        $i = 0;
 
         foreach ($value as $k => $v) {
-            $lead = $prefix . '.' . ($k + 1) . '.';
+            $lead = $prefix . '.' . (++$i) . '.';
             $this->format($keys, $k, $lead . $kp, $query);
             $this->format($vals, $v, $lead . $vp, $query);
         }

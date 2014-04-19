@@ -59,19 +59,12 @@ abstract class RestSerializer implements SubscriberInterface
     /**
      * Creates payload body for a request.
      *
-     * @param Operation      $operation  Operation
-     * @param string         $memberName Member name
-     * @param StructureShape $member     Member
-     * @param array          $args       Command arguments
+     * @param StructureShape $member Member to serialize
+     * @param array          $value  Value to serialize
      *
      * @return \GuzzleHttp\Stream\StreamInterface
      */
-    abstract protected function payload(
-        Operation $operation,
-        $memberName,
-        StructureShape $member,
-        array $args
-    );
+    abstract protected function payload(StructureShape $member, array $value);
 
     /**
      * Creates a body for the request using an associative array of members.
@@ -91,35 +84,54 @@ abstract class RestSerializer implements SubscriberInterface
         Operation $operation,
         array $args
     ) {
-        $body = [];
-        foreach ($operation->getInput()->getMembers() as $name => $member) {
-            $location = $member['location'];
-            if (!$location) {
-                if (!$member['payload']) {
-                    $body[$name] = $member;
-                } elseif ($member['streaming'] ||
-                    ($member['type'] == 'string' || $member['type'] == 'blob')
-                ) {
-                    // Streaming bodies or payloads that are strings are
-                    // always just a stream of data.
-                    if (isset($args[$name])) {
-                        $request->setBody(Stream\create($args[$name]));
-                    }
-                } else {
-                    $request->setBody(Stream\create(
-                        $this->payload($operation, $name, $member, $args)
-                    ));
+        $input = $operation->getInput();
+
+        // Apply the payload trait if present
+        if ($payload = $input['payload']) {
+            $this->applyPayload($request, $input, $payload, $args);
+        }
+
+        foreach ($args as $name => $value) {
+            if ($member = $input->getMember($name)) {
+                $location = $member['location'];
+                if (!$payload && !$location) {
+                    $bodyMembers[$name] = $value;
+                } elseif ($location == 'header') {
+                    $this->applyHeader($request, $name, $member, $args);
+                } elseif ($location == 'querystring') {
+                    $this->applyQuery($request, $name, $member, $args);
                 }
-            } elseif ($location == 'header') {
-                $this->applyHeader($request, $name, $member, $args);
-            } elseif ($location == 'query') {
-                $this->applyQuery($request, $name, $member, $args);
             }
         }
 
-        $body && $request->setBody(Stream\create(
-            $this->structBody($request, $operation, $body)
-        ));
+        if (isset($bodyMembers)) {
+            $request->setBody(Stream\create(
+                $this->structBody($operation, $bodyMembers)
+            ));
+        }
+    }
+
+    private function applyPayload(
+        RequestInterface $request,
+        StructureShape $input,
+        $name,
+        array $args
+    ) {
+        if (!isset($args[$name])) {
+            return;
+        }
+
+        $m = $input->getMember($name);
+
+        if ($m['streaming'] ||
+           ($m['type'] == 'string' || $m['type'] == 'blob')
+        ) {
+            // Streaming bodies or payloads that are strings are
+            // always just a stream of data.
+            $request->setBody(Stream\create($args[$name]));
+        } else {
+            $request->setBody(Stream\create($this->payload($m, $args[$name])));
+        }
     }
 
     private function applyHeader(

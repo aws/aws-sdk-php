@@ -1,0 +1,558 @@
+[
+  {
+    "description": "Basic XML serialization",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Name": {
+            "shape": "StringType"
+          },
+          "Description": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Name": "foo",
+          "Description": "bar"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><Name>foo</Name><Description>bar</Description></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "PUT",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Name": "foo",
+          "Description": "bar"
+        },
+        "serialized": {
+          "method": "PUT",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><Name>foo</Name><Description>bar</Description></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Serialize other scalar types",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "First": {
+            "shape": "BoolType"
+          },
+          "Second": {
+            "shape": "BoolType"
+          },
+          "Third": {
+            "shape": "FloatType"
+          },
+          "Fourth": {
+            "shape": "IntegerType"
+          }
+        }
+      },
+      "BoolType": {
+        "type": "boolean"
+      },
+      "FloatType": {
+        "type": "float"
+      },
+      "IntegerType": {
+        "type": "integer"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "First": true,
+          "Second": false,
+          "Third": 1.2,
+          "Fourth": 3
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><First>true</First><Second>false</Second><Third>1.2</Third><Fourth>3</Fourth></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Nested structures",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "SubStructure": {
+            "shape": "SubStructure"
+          },
+          "Description": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "SubStructure": {
+        "type": "structure",
+        "members": {
+          "Foo": {
+            "shape": "StringType"
+          },
+          "Bar": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "SubStructure": {
+            "Foo": "a",
+            "Bar": "b"
+          },
+          "Description": "baz"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><SubStructure><Foo>a</Foo><Bar>b</Bar></SubStructure><Description>baz</Description></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Nested structures",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "SubStructure": {
+            "shape": "SubStructure"
+          },
+          "Description": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "SubStructure": {
+        "type": "structure",
+        "members": {
+          "Foo": {
+            "shape": "StringType"
+          },
+          "Bar": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "SubStructure": {},
+          "Description": "baz"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><SubStructure /><Description>baz</Description></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Non flattened lists",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "ListParam": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "shape": "StringType"
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "ListParam": [
+            "one",
+            "two",
+            "three"
+          ]
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><ListParam><member>one</member><member>two</member><member>three</member></ListParam></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Non flattened lists",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "ListParam": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "shape": "StringType",
+          "xmlName": "NotMember"
+        },
+        "xmlName": "AlternateName"
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "ListParam": [
+            "one",
+            "two",
+            "three"
+          ]
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><AlternateName><NotMember>one</NotMember><NotMember>two</NotMember><NotMember>three</NotMember></AlternateName></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Flattened lists",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "ListParam": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "shape": "StringType"
+        },
+        "flattened": true
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "ListParam": [
+            "one",
+            "two",
+            "three"
+          ]
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><ListParam>one</ListParam><ListParam>two</ListParam><ListParam>three</ListParam></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "Flattened lists",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "ListParam": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "shape": "StringType"
+        },
+        "flattened": true,
+        "xmlName": "item"
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "ListParam": [
+            "one",
+            "two",
+            "three"
+          ]
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><item>one</item><item>two</item><item>three</item></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
+    "description": "List of structures",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "ListParam": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "shape": "SingleFieldStruct"
+        },
+        "flattened": true,
+        "xmlName": "item"
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "SingleFieldStruct": {
+        "type": "structure",
+        "members": {
+          "Element": {
+            "shape": "StringType",
+            "xmlName": "value"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "ListParam": [
+            {
+              "Element": "one"
+            },
+            {
+              "Element": "two"
+            },
+            {
+              "Element": "three"
+            }
+          ]
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><item><value>one</value></item><item><value>two</value></item><item><value>three</value></item></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
+  }
+]

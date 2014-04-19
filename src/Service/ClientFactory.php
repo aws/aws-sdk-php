@@ -392,86 +392,26 @@ class ClientFactory
 
     private function handle_signature($value, array &$args)
     {
+        $region = isset($args['region']) ? $args['region'] : 'us-east-1';
+
         if ($value === false) {
-            $args['signature'] = $this->createSignature(
-                $args['api']->getMetadata('signatureVersion'),
-                $args['api'],
-                $args['region']
-            );
+            $args['signature'] = $args['api']->createSignature($region);
         } elseif (is_string($value)) {
-            $args['signature'] = $this->createSignature(
-                $value,
-                $args['api'],
-                isset($args['region']) ? $args['region'] : 'us-east-1'
-            );
+            $args['signature'] = $args['api']->createSignature($region, $value);
         } elseif (!($value instanceof SignatureInterface)) {
             throw new \InvalidArgumentException('Invalid signature option');
         }
     }
 
-    private function createSignature($version, Service $api, $region)
-    {
-        switch ($version) {
-            case 'v4':
-                return new SignatureV4(
-                    $api->getMetadata('signingName') ?:
-                        $api->getMetadata('endpointPrefix'),
-                    $region
-                );
-            case 'v2':
-                return new SignatureV2();
-            case 's3':
-                return new S3Signature();
-            case 's3v4':
-                return new S3SignatureV4(
-                    $api->getMetadata('signingName') ?:
-                        $api->getMetadata('endpointPrefix'),
-                    $region);
-            default:
-                throw new \InvalidArgumentException("Unknown signature"
-                    . " version {$version}");
-        }
-    }
-
     protected function postCreate(AwsClientInterface $client, array $args)
     {
-        $this->applyProtocol($client, $args);
+        // Apply the protocol of the service description to the client.
+        $client->getApi()->applyProtocol($client, $args['endpoint']);
         // Attach an error parser
         $client->getEmitter()->attach(new Error($args['error_parser']));
         // Attach a signer to the client.
         $client->getHttpClient()->getEmitter()->attach(
             new Signature($client->getCredentials(), $client->getSignature())
         );
-    }
-
-    /**
-     * Attaches the appropriate protocol serializers and parsers to a client.
-     *
-     * @param AwsClientInterface $client Client to modify
-     * @param array              $args   Arguments passed to the factory
-     *
-     * @throws \UnexpectedValueException when an unknown protocol is found
-     */
-    protected function applyProtocol(AwsClientInterface $client, array $args)
-    {
-        $api = $client->getApi();
-        $type = $api->getMetadata('type');
-        $em = $client->getEmitter();
-
-        if ($type == 'json') {
-            $em->attach(new JsonRpcSerializer($args['endpoint'], $api));
-            $em->attach(new JsonRpcParser($api));
-        } elseif ($type == 'query') {
-            $em->attach(new QuerySerializer($args['endpoint'], $api));
-            // $em->attach(new XmlParser($api));
-        } elseif ($type = 'rest-json') {
-            $em->attach(new RestJsonSerializer($args['endpoint'], $api));
-            // $em->attach(new RestJsonParser($api));
-        } elseif ($type == 'rest-xml') {
-            // $em->attach(new RestXmlSerializer($args['endpoint'], $api));
-            // $em->attach(new RestXmlParser($api));
-        } else {
-            throw new \UnexpectedValueException('Unknown protocol ' . $type);
-        }
     }
 }
