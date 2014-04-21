@@ -70,6 +70,6 @@ class Waiter implements HasEmitterInterface
             $attempts++;
         }
 
-        throw new \RuntimeException("Waiter failed after {$attempts} attempts.");
+        throw new \RuntimeException("Waiter failed after {$attempts} attempts");
     }
 }

@@ -7,7 +7,7 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 
 /**
- * @internal Factory used to create Waiter objects service waiter configurations
+ * @internal Factory used to create Waiter objects.
  */
 class ResourceWaiterFactory
 {
@@ -27,7 +27,7 @@ class ResourceWaiterFactory
         'failure_value' => null,
     ];
 
-    /** @var ApiProviderInterface Used to load waiter config data for service */
+    /** @var ApiProviderInterface Loads waiter config data for service */
     private $apiProvider;
 
     /** @var string Name of the service */
@@ -52,12 +52,13 @@ class ResourceWaiterFactory
     }
 
     /**
-     * Factory method for a Waiter object using a service's waiter configuration
+     * Factory method used to create waiter objects based on a service's waiter
+     * configuration.
      *
      * @param AwsClientInterface $client Client used to execute commands
      * @param string             $name   Waiter name
      * @param array              $args   Arguments for command
-     * @param array              $config Waiter config tha overrides defaults
+     * @param array              $config Waiter config that overrides defaults
      *
      * @return Waiter
      */
@@ -168,7 +169,7 @@ class ResourceWaiterFactory
     }
 
     /**
-     * Check if an exception satisfies a success or failure acceptor
+     * Check if an exception satisfies a success or failure acceptor.
      *
      * @param AwsException $e
      * @param array $config
@@ -189,7 +190,7 @@ class ResourceWaiterFactory
     }
 
     /**
-     * Check to see if the result satisfies a success or failure state
+     * Check to see if the result satisfies a success or failure state.
      *
      * @param Result $result
      * @param array $config
@@ -230,7 +231,7 @@ class ResourceWaiterFactory
     }
 
     /**
-     * Check to see if the path of the output key is satisfied by the value
+     * Check to see if the path of the output key is satisfied by the value.
      *
      * @param Result       $result Result model
      * @param string       $key    Key to check
@@ -240,8 +241,12 @@ class ResourceWaiterFactory
      *
      * @return bool
      */
-    private function checkPath(Result $result, $key = null, $checks = [], $all = true)
-    {
+    private function checkPath(
+        Result $result,
+        $key = null,
+        $checks = [],
+        $all = true
+    ) {
         // If no key is set, then just assume true because the request succeeded
         if (!$key) {
             return true;

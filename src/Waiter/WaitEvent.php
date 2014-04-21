@@ -4,6 +4,9 @@ namespace Aws\Waiter;
 
 use GuzzleHttp\Event\AbstractEvent;
 
+/**
+ * Event emitted by Waiter objects after each wait and before sleeping.
+ */
 class WaitEvent extends AbstractEvent
 {
     /** @var array Waiter configuration options */
