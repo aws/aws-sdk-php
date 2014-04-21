@@ -63,13 +63,12 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $mockResponse->expects($this->any())
-            ->method('getRequest')
-            ->will($this->returnValue($mockRequest));
-        $mockResponse->expects($this->any())
             ->method('getStatusCode')
             ->will($this->returnValue(413));
+
         $tooBigException = new DynamoDbException();
         $tooBigException->setResponse($mockResponse);
+        $tooBigException->setRequest($mockRequest);
         $exceptionCollection = new ExceptionCollection();
         $exceptionCollection->add($tooBigException);
 
@@ -77,14 +76,27 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $exceptionCollectionWithDummy = new ExceptionCollection();
         $exceptionCollectionWithDummy->add(new \RuntimeException);
 
+        // Provisioned throughput exceeded use case (#6)
+        $throughputExceededException = new DynamoDbException();
+        $throughputExceededException->setExceptionCode('ProvisionedThroughputExceededException');
+        $mockRequestPTE = $this->getMockBuilder('Guzzle\Http\Message\EntityEnclosingRequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockRequestPTE->expects($this->any())
+            ->method('getBody')
+            ->will($this->returnValue(
+                '{"RequestItems":{"foo":[{"PutRequest":{}},{"PutRequest":{}}]}}'
+            ));
+        $throughputExceededException->setRequest($mockRequestPTE);
+        $exceptionCollectionThroughput = new ExceptionCollection();
+        $exceptionCollectionThroughput->add($throughputExceededException);
+
         return array(
-            // No unprocessed items
             array(
                 array('UnprocessedItems' => array()),
                 null,
                 'all-items-transferred'
             ),
-            // Some unprocessed items
             array(
                 array('UnprocessedItems' => array('foo' => array(array('foo')))),
                 null,
@@ -99,6 +111,16 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
                 array('UnprocessedItems' => array()),
                 $this->throwException($exceptionCollectionWithDummy),
                 'exceptions-thrown'
+            ),
+            array(
+                array('UnprocessedItems' => array()),
+                $this->throwException($exceptionCollectionWithDummy),
+                'exceptions-thrown'
+            ),
+            array(
+                array('UnprocessedItems' => array()),
+                $this->throwException($exceptionCollectionThroughput),
+                'some-unprocessed-items'
             ),
         );
     }
