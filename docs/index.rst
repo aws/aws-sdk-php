@@ -96,12 +96,11 @@ In-Depth Guides
   * :doc:`feature-commands`
   * :ref:`Parallel Commands <parallel_commands>`
   * :doc:`feature-models`
-  * :doc:`feature-facades`
 
 * :doc:`faq`
 * :doc:`performance`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
-* `Guzzle Documentation <http://docs.guzzlephp.org/en/latest/docs.html>`_
+* `Guzzle V3 Documentation <http://guzzle3.readthedocs.org/docs.html>`_
 
 .. _supported-services:
 
@@ -261,7 +260,9 @@ Articles from the Blog
 * `Sending requests through a proxy <http://blogs.aws.amazon.com/php/post/Tx9FZ2MY1XP7X6/Sending-requests-through-a-proxy>`_
 * `Wire Logging in the AWS SDK for PHP <http://blogs.aws.amazon.com/php/post/Tx1W2JMJBQHBNRS/Wire-Logging-in-the-AWS-SDK-for-PHP>`_
 * `Streaming Amazon S3 Objects From a Web Server <http://blogs.aws.amazon.com/php/post/Tx2C4WJBMSMW68A/Streaming-Amazon-S3-Objects-From-a-Web-Server>`_
-* `Static Service Client Facades <http://blogs.aws.amazon.com/php/post/Tx21B65ULGUTGBP/Static-Service-Client-Facades>`_
+* `Using New Regions and Endpoints <http://blogs.aws.amazon.com/php/post/Tx39XJNNO5OOX3U/Using-New-Regions-and-Endpoints>`_
+* `Receiving Amazon SNS Messages in PHP <http://blogs.aws.amazon.com/php/post/Tx2G9D94IE6KPAY/Receiving-Amazon-SNS-Messages-in-PHP>`_
+* `Testing Webhooks Locally for Amazon SNS <http://blogs.aws.amazon.com/php/post/Tx2CO24DVG9CAK0/Testing-Webhooks-Locally-for-Amazon-SNS>`_
 
 Presentations
 -------------

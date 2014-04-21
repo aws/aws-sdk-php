@@ -112,7 +112,7 @@ try {
 * [AWS Service Provider for Laravel][mod-laravel]
 * [AWS SDK ZF2 Module][mod-zf2]
 * [AWS Service Provider for Silex][mod-silex]
-* [Guzzle v3][] – PHP HTTP client and framework
+* [Guzzle v3][https://guzzle3.readthedocs.org/] – PHP HTTP client and framework
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
