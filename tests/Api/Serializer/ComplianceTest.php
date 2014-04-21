@@ -16,7 +16,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
     {
         $cases = [];
 
-        $files = glob(__DIR__ . '/../test_cases/protocols/serialize/*.json');
+        $files = glob(__DIR__ . '/../test_cases/protocols/input/*.json');
         foreach ($files as $file) {
             $data = json_decode(file_get_contents($file), true);
             foreach ($data as $suite) {
