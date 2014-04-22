@@ -86,7 +86,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         // @begin
 
         // Wait until the table is created and active
-        $client->waitUntilTableExists(array(
+        $client->waitUntil('TableExists', array(
             'TableName' => 'errors'
         ));
     }
@@ -112,7 +112,7 @@ class DynamoDb_20111205_Test extends \Aws\Tests\IntegrationTestCase
         ));
 
         // Wait until the table is active again after updating
-        $client->waitUntilTableExists(array(
+        $client->waitUntil('TableExists', array(
             'TableName' => 'errors'
         ));
     }

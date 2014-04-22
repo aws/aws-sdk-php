@@ -26,6 +26,7 @@ use Guzzle\Http\EntityBody;
  */
 class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
 {
+    /** @var \Aws\S3\S3Client */
     protected $client;
     protected $bucket;
 
@@ -124,7 +125,7 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
 
         // @begin
         // Poll the bucket until it is accessible
-        $client->waitUntilBucketExists(array('Bucket' => $bucket));
+        $client->waitUntil('BucketExists', array('Bucket' => $bucket));
     }
 
     /**
@@ -191,7 +192,7 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
         ));
 
         // We can poll the object until it is accessible
-        $client->waitUntilObjectExists(array(
+        $client->waitUntil('ObjectExists', array(
             'Bucket' => $this->bucket,
             'Key'    => 'data_from_file.txt'
         ));

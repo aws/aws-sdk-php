@@ -7,20 +7,6 @@ Introduction
 
 .. include:: _snippets/iterators-intro.txt
 
-
-The "``get[…]Iterator``" methods are all implemented via the ``__call`` magic method, and are a more discoverable
-shortcut to using the concrete ``getIterator()`` method, since many IDEs can auto-complete methods defined using the
-``@method`` annotation. The following code uses the ``getIterator()`` method, but is equivalent to the previous code
-sample.
-
-.. code-block:: php
-
-    $iterator = $client->getIterator('ListObjects', array('Bucket' => 'my-bucket'));
-
-    foreach ($iterator as $object) {
-        echo $object['Key'] . "\n";
-    }
-
 The ``getIterator()`` method also accepts a command object for the first argument. If you have a command object already
 instantiated, you can create an iterator directly from the command object.
 
@@ -32,12 +18,11 @@ instantiated, you can create an iterator directly from the command object.
 Iterator Objects
 ----------------
 
-The actual object returned by ``getIterator()``, and any ``get[…]Iterator()`` method, is an instance of the
-``Aws\Common\Iterator\AwsResourceIterator`` class (see the
-`API docs <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Common.Iterator.AwsResourceIterator.html>`_ for
-more information about its methods and properties). This class implements PHP's native ``Iterator`` interface, which is
-why it works with ``foreach``, can be used with iterator functions like ``iterator_to_array``, and integrates well with
-`SPL iterators <http://www.php.net/manual/en/spl.iterators.php>`_ like ``LimitIterator``.
+The actual object returned by ``getIterator()`` is an instance of the ``Aws\Common\Iterator\AwsResourceIterator`` class
+(see the `API docs <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Common.Iterator.AwsResourceIterator.html>`_
+for more information about its methods and properties). This class implements PHP's native ``Iterator`` interface, which
+is why it works with ``foreach``, can be used with iterator functions like ``iterator_to_array``, and integrates well
+with `SPL iterators <http://www.php.net/manual/en/spl.iterators.php>`_ like ``LimitIterator``.
 
 Iterator objects only store one "page" of results at a time and only make as many requests as they need based on the
 current iteration. The S3 ``ListObjects`` operation only returns up to 1000 objects at a time. If your bucket has ~10000
@@ -52,14 +37,14 @@ Basic Configuration
 Iterators accept an extra set of parameters that are not passed into the commands. You can set a limit on the number of
 results you want with the ``limit`` parameter, and you can control how many results you want to get back per request
 using the ``page_size`` parameter. If no ``limit`` is specified, then all results are retrieved. If no ``page_size`` is
-specified, then the iterator will use the maximum page size allowed by the operation being executed.
+specified, then the Iterator will use the maximum page size allowed by the operation being executed.
 
 The following example will make 10 Amazon S3 ``ListObjects`` requests (assuming there are more than 1000 objects in the
 specified bucket) that each return up to 100 objects. The ``foreach`` loop will yield up to 999 objects.
 
 .. code-block:: php
 
-    $iterator = $client->getListObjectsIterator(array(
+    $iterator = $client->getIterator('ListObjects', array(
         'Bucket' => 'my-bucket'
     ), array(
         'limit'     => 999,
@@ -71,8 +56,8 @@ specified bucket) that each return up to 100 objects. The ``foreach`` loop will 
     }
 
 There are some limitations to the ``limit`` and ``page_size`` parameters though. Not all operations support specifying
-a page size or limit, so the iterator will do its best with what you provide. For example, if an operation always
-returns 1000 results, and you specify a limit of 100, the iterator will only yield 100 results, even though the actual
+a page size or limit, so the Iterator will do its best with what you provide. For example, if an operation always
+returns 1000 results, and you specify a limit of 100, the Iterator will only yield 100 results, even though the actual
 request sent to the service yielded 1000.
 
 Iterator Events
@@ -89,7 +74,7 @@ right before and after a request is executed by the iterator.
 
 .. code-block:: php
 
-    $iterator = $client->getListObjectsIterator(array(
+    $iterator = $client->getIterator('ListObjects', array(
         'Bucket' => 'my-bucket'
     ));
 
