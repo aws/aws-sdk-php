@@ -13,6 +13,7 @@ There are many ways to provide credentials:
 
 #. :ref:`environment_credentials`
 #. :ref:`instance_profile_credentials`
+#. :ref:`credential_profiles`
 #. :ref:`configuration_credentials`
 #. :ref:`factory_credentials`
 #. :ref:`set_credentials`
@@ -151,6 +152,56 @@ A credentials cache can also be used in a service builder configuration:
 
 If you were to use the above configuration file with a service builder, then all of the clients created through the
 service builder would utilize a shared credentials cache object.
+
+.. _credential_profiles:
+
+Using the AWS credentials file and credential profiles
+------------------------------------------------------
+
+Starting with the AWS SDK for PHP version 2.6.1, you can use an AWS credentials file to specify your credentials. This
+is a special, INI-formatted file stored under your HOME directory, and is a good way to manage credentials for your
+development environment. The file should be placed at ``~/.aws/credentials``, where ``~`` represents your HOME
+directory.
+
+Using an AWS credentials file offers a few benefits:
+
+1. Your projects' credentials are stored outside of your projects, so there is no chance of accidentally committing
+   them into version control.
+2. You can define and name multiple sets of credentials in one place.
+3. You easily reuse the same credentials between projects.
+4. Other AWS SDKs and tools support, or will soon support, this same credentials file. This allows you to reuse your
+   credentials with other tools.
+
+The format of the AWS credentials file should look something like the following:
+
+.. code-block:: ini
+
+    [default]
+    aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
+    aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
+
+    [project1]
+    aws_access_key_id = ANOTHER_AWS_ACCESS_KEY_ID
+    aws_secret_access_key = ANOTHER_AWS_SECRET_ACCESS_KEY
+
+Each section (e.g., ``[default]``, ``[project1]``), represents a separate credential **profile**. Profiles can be
+referenced from an SDK configuration file, or when you are instantiating a client, using the ``profile`` option:
+
+.. code-block:: php
+
+    <?php
+
+    use Aws\DynamoDb\DynamoDbClient;
+
+    // Instantiate a client with the credentials from the project1 profile
+    $dynamoDbClient = DynamoDbClient::factory(array(
+        'profile' => 'project1',
+        'region'  => 'us-west-2',
+    ));
+
+If no credentials or profiles were explicitly provided to the SDK and no credentials were defined in environment
+variables, but a credentials file is defined, the SDK will use the "default" profile. You can change the default
+profile by specifying an alternate profile name in the ``AWS_PROFILE`` environment variable.
 
 Setting credentials explicitly in your code
 -------------------------------------------

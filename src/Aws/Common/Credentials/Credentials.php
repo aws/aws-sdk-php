@@ -320,12 +320,20 @@ class Credentials implements CredentialsInterface, FromConfigInterface
 
     private static function getHomeDir()
     {
+        // On Linux/Unix-like systems, use the HOME environment variable
         if (isset($_SERVER['HOME'])) {
             return $_SERVER['HOME'];
-        } elseif (isset($_SERVER['HOMEDRIVE']) && isset($_SERVER['HOMEPATH'])) {
-            return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'];
         }
 
-        return null;
+        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
+        // Note: getenv() is a fallback for case-insensitive keys on Windows
+        $homeDrive = isset($_SERVER['HOMEDRIVE'])
+            ? $_SERVER['HOMEDRIVE']
+            : getenv('HOMEDRIVE');
+        $homePath = isset($_SERVER['HOMEPATH'])
+            ? $_SERVER['HOMEPATH']
+            : getenv('HOMEPATH');
+
+        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
     }
 }
