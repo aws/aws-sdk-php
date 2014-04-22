@@ -21,7 +21,6 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             $data = json_decode(file_get_contents($file), true);
             foreach ($data as $suite) {
                 $suite['metadata']['type'] = $suite['metadata']['protocol'];
-                if ($suite['metadata']['type'] == 'rest-xml') continue;
                 foreach ($suite['cases'] as $case) {
                     $description = new Service([
                         'metadata' => $suite['metadata'],
@@ -72,9 +71,21 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         $request = $event->getRequest();
         $this->assertEquals($serialized['uri'], $request->getResource());
 
-        // Normalize the JSON data
-        $body = str_replace(':', ': ', $request->getBody());
-        $body = str_replace(',', ', ', $body);
+        $body = (string) $request->getBody();
+        switch ($service->getMetadata('type')) {
+            case 'json':
+            case 'rest-json':
+                // Normalize the JSON data.
+                $body = str_replace(':', ': ', $request->getBody());
+                $body = str_replace(',', ', ', $body);
+                break;
+            case 'rest-xml':
+                // Normalize XML data.
+                $serialized['body'] = '<?xml version="1.0" encoding="UTF-8"?>'
+                    . "\n" . $serialized['body'] . "\n";
+                $serialized['body'] = str_replace(' />', '/>', $serialized['body']);
+                break;
+        }
 
         $this->assertEquals($serialized['body'], $body);
 

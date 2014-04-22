@@ -5,6 +5,7 @@ use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Serializer\JsonRpcSerializer;
 use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\Api\Serializer\RestXmlSerializer;
 use Aws\AwsClientInterface;
 use Aws\Signature\S3Signature;
 use Aws\Signature\S3SignatureV4;
@@ -214,7 +215,7 @@ class Service extends AbstractModel
                 // $em->attach(new RestJsonParser($this));
                 break;
             case 'rest-xml':
-                // $em->attach(new RestXmlSerializer($endpoint, $this));
+                $em->attach(new RestXmlSerializer($endpoint, $this));
                 // $em->attach(new RestXmlParser($this));
                 break;
             default:
