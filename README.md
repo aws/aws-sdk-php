@@ -112,7 +112,7 @@ try {
 * [AWS Service Provider for Laravel][mod-laravel]
 * [AWS SDK ZF2 Module][mod-zf2]
 * [AWS Service Provider for Silex][mod-silex]
-* [Guzzle v3][https://guzzle3.readthedocs.org/] – PHP HTTP client and framework
+* [Guzzle v3][guzzle-docs] – PHP HTTP client and framework
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
@@ -153,6 +153,7 @@ try {
 [aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances
 [aws-tools]: http://aws.amazon.com/tools
 [guzzle]: https://github.com/guzzle/guzzle3
+[guzzle-docs]: https://guzzle3.readthedocs.org
 [composer]: http://getcomposer.org
 [packagist]: http://packagist.org
 [psr-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
