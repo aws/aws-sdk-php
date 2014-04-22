@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added `ChefConfiguration` parameter to a few operations on the AWS OpsWorks Client.
+
 2.6.0 (2014-03-25)
 ------------------
 

@@ -247,6 +247,19 @@ return array (
                         ),
                     ),
                 ),
+                'ChefConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'ManageBerkshelf' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'BerkshelfVersion' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
                 'UseCustomCookbooks' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
@@ -877,6 +890,19 @@ return array (
                             'type' => 'string',
                         ),
                         'Version' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'ChefConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'ManageBerkshelf' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'BerkshelfVersion' => array(
                             'type' => 'string',
                         ),
                     ),
@@ -3212,6 +3238,19 @@ return array (
                         ),
                     ),
                 ),
+                'ChefConfiguration' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'ManageBerkshelf' => array(
+                            'type' => 'boolean',
+                            'format' => 'boolean-string',
+                        ),
+                        'BerkshelfVersion' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
                 'UseCustomCookbooks' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
@@ -4372,6 +4411,17 @@ return array (
                                         'type' => 'string',
                                     ),
                                     'Version' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                            'ChefConfiguration' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'ManageBerkshelf' => array(
+                                        'type' => 'boolean',
+                                    ),
+                                    'BerkshelfVersion' => array(
                                         'type' => 'string',
                                     ),
                                 ),
