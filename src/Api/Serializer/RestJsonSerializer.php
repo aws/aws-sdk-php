@@ -2,8 +2,9 @@
 namespace Aws\Api\Serializer;
 
 use Aws\Api\Service;
-use Aws\Api\Operation;
 use Aws\Api\StructureShape;
+use GuzzleHttp\Stream;
+use GuzzleHttp\Message\RequestInterface;
 
 /**
  * Serializes requests for the REST-JSON protocol.
@@ -28,18 +29,14 @@ class RestJsonSerializer extends RestSerializer
         $this->jsonFormatter = $jsonFormatter ?: new JsonBody($api);
     }
 
-    protected function payload(StructureShape $member, array $value)
-    {
-        return $this->jsonFormatter->build($member, $value);
-    }
-
-    protected function structBody(
-        Operation $operation,
-        array $bodyMembers
+    protected function payload(
+        RequestInterface $request,
+        StructureShape $member,
+        array $value
     ) {
-        return $this->jsonFormatter->build(
-            $operation->getInput(),
-            $bodyMembers
-        );
+        $request->setHeader('Content-Type', 'application/json');
+        $request->setBody(Stream\create(
+            $this->jsonFormatter->build($member, $value)
+        ));
     }
 }

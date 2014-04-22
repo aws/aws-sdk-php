@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Serializer;
 
+use Aws\Api\MapShape;
 use Aws\Api\Service;
 use Aws\Api\Operation;
 use Aws\Api\Shape;
@@ -52,31 +53,22 @@ abstract class RestSerializer implements SubscriberInterface
             ['config' => ['command' => $command]]
         );
 
-        $this->serialize($request, $operation, $args);
-        $event->setRequest($request);
+        $event->setRequest($this->serialize($request, $operation, $args));
     }
 
     /**
-     * Creates payload body for a request.
+     * Applies a payload body to a request.
      *
-     * @param StructureShape $member Member to serialize
-     * @param array          $value  Value to serialize
-     *
-     * @return \GuzzleHttp\Stream\StreamInterface
-     */
-    abstract protected function payload(StructureShape $member, array $value);
-
-    /**
-     * Creates a body for the request using an associative array of members.
-     *
-     * @param Operation $operation
-     * @param array     $bodyMembers
+     * @param RequestInterface $request Request to apply.
+     * @param StructureShape   $member  Member to serialize
+     * @param array            $value   Value to serialize
      *
      * @return \GuzzleHttp\Stream\StreamInterface
      */
-    abstract protected function structBody(
-        Operation $operation,
-        array $bodyMembers
+    abstract protected function payload(
+        RequestInterface $request,
+        StructureShape $member,
+        array $value
     );
 
     private function serialize(
@@ -97,18 +89,18 @@ abstract class RestSerializer implements SubscriberInterface
                 if (!$payload && !$location) {
                     $bodyMembers[$name] = $value;
                 } elseif ($location == 'header') {
-                    $this->applyHeader($request, $name, $member, $args);
+                    $this->applyHeader($request, $name, $member, $value);
                 } elseif ($location == 'querystring') {
-                    $this->applyQuery($request, $name, $member, $args);
+                    $this->applyQuery($request, $name, $member, $value);
                 }
             }
         }
 
         if (isset($bodyMembers)) {
-            $request->setBody(Stream\create(
-                $this->structBody($operation, $bodyMembers)
-            ));
+            $this->payload($request, $operation->getInput(), $bodyMembers);
         }
+
+        return $request;
     }
 
     private function applyPayload(
@@ -130,36 +122,49 @@ abstract class RestSerializer implements SubscriberInterface
             // always just a stream of data.
             $request->setBody(Stream\create($args[$name]));
         } else {
-            $request->setBody(Stream\create($this->payload($m, $args[$name])));
+            $this->payload($request, $m, $args[$name]);
         }
     }
 
     private function applyHeader(
         RequestInterface $request,
-        $memberName,
+        $name,
         Shape $member,
-        array $args
+        $value
     ) {
-        if (isset($args[$memberName])) {
-            $request->setHeader(
-                $member['locationName'] ?: $memberName,
-                $args[$memberName]
-            );
+        if ($member instanceof MapShape) {
+            $this->applyHeaderMap($request, $name, $member, $value);
+        } else {
+            $request->setHeader($member['locationName'] ?: $name, $value);
+        }
+    }
+
+    /**
+     * Note: This is currently only present in the Amazon S3 model.
+     */
+    private function applyHeaderMap(
+        RequestInterface $request,
+        $name,
+        Shape $member,
+        $value
+    ) {
+        if (!is_array($value)) {
+            throw new \InvalidArgumentException("$name must be an array.");
+        }
+
+        $prefix = $member['locationName'];
+        foreach ($value as $k => $v) {
+            $request->setHeader($prefix . $k, $v);
         }
     }
 
     private function applyQuery(
         RequestInterface $request,
-        $memberName,
+        $name,
         Shape $member,
-        array $args
+        $value
     ) {
-        if (isset($args[$memberName])) {
-            $request->getQuery()->set(
-                $member['locationName'] ?: $memberName,
-                $args[$memberName]
-            );
-        }
+        $request->getQuery()->set($member['locationName'] ?: $name, $value);
     }
 
     /**
