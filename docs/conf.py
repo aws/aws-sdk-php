@@ -254,7 +254,6 @@ texinfo_documents = [
 # -- HTML theme settings ------------------------------------------------
 import guzzle_sphinx_theme
 extensions.append("guzzle_sphinx_theme")
-pygments_style = 'guzzle_sphinx_theme.GuzzleStyle'
 html_translator_class = 'guzzle_sphinx_theme.HTMLTranslator'
 html_theme_path = guzzle_sphinx_theme.html_theme_path()
 html_theme = 'guzzle_sphinx_theme'

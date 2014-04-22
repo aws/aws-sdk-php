@@ -230,7 +230,7 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
     {
         return array(
             array(array('HOME' => __DIR__), 'foo', 'bar'),
-            array(array('HOMEDRIVE' => '', 'HOMEPATH' => __DIR__), 'foo', 'bar'),
+            array(array('HOMEDRIVE' => '/', 'HOMEPATH' => __DIR__), 'foo', 'bar'),
             array(),
             array(array('HOME' => __DIR__), null, null, 'invalid'),
             array(array('HOME' => __DIR__), 'fizz', 'buzz', 'test'),

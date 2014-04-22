@@ -20,7 +20,8 @@ Factory method
 ~~~~~~~~~~~~~~
 
 The easiest way to get up and running quickly is to use the ``Aws\{{namespace}}\{{namespace}}Client::factory()`` method
-and provide your credentials (``key`` and ``secret``).
+and provide your credential profile (via the ``profile`` option), which identifies the set of credentials you want to
+use from your ``~/.aws/credentials`` file (see :ref:`credential_profiles`).
 
 {% if not globalEndpoint -%}
 A ``region`` parameter is also required and must be set to one of the following values: ``{{ regions|join("``, ``") }}``
@@ -31,16 +32,21 @@ A ``region`` parameter is also required and must be set to one of the following 
     use Aws\{{namespace}}\{{namespace}}Client;
 
     $client = {{namespace}}Client::factory(array(
-        'key'    {% if specifiedApiVersion %} {% endif %}=> '<aws access key>',
-        'secret' {% if specifiedApiVersion %} {% endif %}=> '<aws secret key>'{% if not globalEndpoint -%},
-        'region' {% if specifiedApiVersion %} {% endif %}=> '<region name>'{% endif %}{% if specifiedApiVersion -%},
+        'profile' => '<profile in your aws credentials file>'{% if not globalEndpoint -%},
+        'region'  => '<region name>'{% endif %}{% if specifiedApiVersion -%},
         'version' => '{{specifiedApiVersion}}'{% endif %}
     ));
 
-You can provide your access keys like in the preceding example, or you can choose to omit them if you are using `AWS
-Identity and Access Management (IAM) roles for EC2 instances
-<http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_ or credentials
-sourced from the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables.
+You can provide your credential profile like in the preceding example, specify your access keys directly (via ``key``
+and ``secret``), or you can choose to omit any credential information if you are using `AWS Identity and Access
+Management (IAM) roles for EC2 instances <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances>`_
+or credentials sourced from the ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables.
+
+.. note::
+
+    The ``profile`` option and AWS credential file support is only available for version 2.6.1 of the SDK and higher.
+    We recommend that all users update their copies of the SDK to take advantage of this feature, which is a safer way
+    to specify credentials than explicitly providing ``key`` and ``secret``.
 
 Service builder
 ~~~~~~~~~~~~~~~
