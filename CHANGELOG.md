@@ -4,8 +4,15 @@ CHANGELOG
 Next Release
 ------------
 
+* Added support for the `~/.aws/credentials` INI file and credential profiles (via the `profile` option) as a safer
+  alternative to using explicit credentials with the `key` and `secret` options.
 * Added support for the `ChefConfiguration` parameter to a few operations on the AWS OpsWorks Client.
 * Added support for the new R3 instance types to the Amazon EC2 client.
+* Added the `SpotInstanceRequestFulfilled` waiter to the Amazon EC2 client (see #241).
+* Improved the S3 Stream Wrapper by adding support for deleting pseudo directories (#264), updating error handling
+  (#276), and fixing `is_link()` for non-existent keys (#268).
+* Fixed #252 and updated the DynamoDB `WriteRequestBatch` abstraction to handle batches that were completely rejected
+  due to exceeding provisioned throughput.
 
 2.6.0 (2014-03-25)
 ------------------
