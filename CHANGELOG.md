@@ -4,7 +4,8 @@ CHANGELOG
 Next Release
 ------------
 
-* Added `ChefConfiguration` parameter to a few operations on the AWS OpsWorks Client.
+* Added support for the `ChefConfiguration` parameter to a few operations on the AWS OpsWorks Client.
+* Added support for the new R3 instance types to the Amazon EC2 client.
 
 2.6.0 (2014-03-25)
 ------------------
