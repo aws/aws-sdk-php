@@ -426,6 +426,12 @@ return array (
                     'format' => 'boolean-string',
                     'location' => 'aws.query',
                 ),
+                'PlacementTenancy' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 1,
+                    'maxLength' => 64,
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -793,8 +799,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -835,8 +839,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
                 'NextToken' => array(
                     'type' => 'string',
@@ -904,8 +906,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -969,8 +969,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -1021,8 +1019,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -1067,8 +1063,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
                 'NextToken' => array(
                     'type' => 'string',
@@ -1160,8 +1154,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -1217,8 +1209,6 @@ return array (
                 'MaxRecords' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
-                    'minimum' => 1,
-                    'maximum' => 50,
                 ),
             ),
             'errorResponses' => array(
@@ -2225,6 +2215,9 @@ return array (
                             ),
                             'AssociatePublicIpAddress' => array(
                                 'type' => 'boolean',
+                            ),
+                            'PlacementTenancy' => array(
+                                'type' => 'string',
                             ),
                         ),
                     ),
