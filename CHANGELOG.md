@@ -8,6 +8,7 @@ Next Release
   alternative to using explicit credentials with the `key` and `secret` options.
 * Added support for query filters and improved conditional expressions to the Amazon DynamoDB client.
 * Added support for the `ChefConfiguration` parameter to a few operations on the AWS OpsWorks Client.
+* Added support for Redis cache cluster snapshots to the Amazon ElastiCache client.
 * Added support for the `PlacementTenancy` parameter to the `CreateLaunchConfiguration` operation of the Auto Scaling
   client.
 * Added support for the new R3 instance types to the Amazon EC2 client.

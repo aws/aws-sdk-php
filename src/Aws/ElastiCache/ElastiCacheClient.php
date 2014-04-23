@@ -27,16 +27,19 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * Client to interact with Amazon ElastiCache
  *
  * @method Model authorizeCacheSecurityGroupIngress(array $args = array()) {@command ElastiCache AuthorizeCacheSecurityGroupIngress}
+ * @method Model copySnapshot(array $args = array()) {@command ElastiCache CopySnapshot}
  * @method Model createCacheCluster(array $args = array()) {@command ElastiCache CreateCacheCluster}
  * @method Model createCacheParameterGroup(array $args = array()) {@command ElastiCache CreateCacheParameterGroup}
  * @method Model createCacheSecurityGroup(array $args = array()) {@command ElastiCache CreateCacheSecurityGroup}
  * @method Model createCacheSubnetGroup(array $args = array()) {@command ElastiCache CreateCacheSubnetGroup}
  * @method Model createReplicationGroup(array $args = array()) {@command ElastiCache CreateReplicationGroup}
+ * @method Model createSnapshot(array $args = array()) {@command ElastiCache CreateSnapshot}
  * @method Model deleteCacheCluster(array $args = array()) {@command ElastiCache DeleteCacheCluster}
  * @method Model deleteCacheParameterGroup(array $args = array()) {@command ElastiCache DeleteCacheParameterGroup}
  * @method Model deleteCacheSecurityGroup(array $args = array()) {@command ElastiCache DeleteCacheSecurityGroup}
  * @method Model deleteCacheSubnetGroup(array $args = array()) {@command ElastiCache DeleteCacheSubnetGroup}
  * @method Model deleteReplicationGroup(array $args = array()) {@command ElastiCache DeleteReplicationGroup}
+ * @method Model deleteSnapshot(array $args = array()) {@command ElastiCache DeleteSnapshot}
  * @method Model describeCacheClusters(array $args = array()) {@command ElastiCache DescribeCacheClusters}
  * @method Model describeCacheEngineVersions(array $args = array()) {@command ElastiCache DescribeCacheEngineVersions}
  * @method Model describeCacheParameterGroups(array $args = array()) {@command ElastiCache DescribeCacheParameterGroups}
@@ -48,6 +51,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeReplicationGroups(array $args = array()) {@command ElastiCache DescribeReplicationGroups}
  * @method Model describeReservedCacheNodes(array $args = array()) {@command ElastiCache DescribeReservedCacheNodes}
  * @method Model describeReservedCacheNodesOfferings(array $args = array()) {@command ElastiCache DescribeReservedCacheNodesOfferings}
+ * @method Model describeSnapshots(array $args = array()) {@command ElastiCache DescribeSnapshots}
  * @method Model modifyCacheCluster(array $args = array()) {@command ElastiCache ModifyCacheCluster}
  * @method Model modifyCacheParameterGroup(array $args = array()) {@command ElastiCache ModifyCacheParameterGroup}
  * @method Model modifyCacheSubnetGroup(array $args = array()) {@command ElastiCache ModifyCacheSubnetGroup}
@@ -67,13 +71,14 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReservedCacheNodesIterator(array $args = array()) The input array uses the parameters of the DescribeReservedCacheNodes operation
  * @method ResourceIteratorInterface getDescribeReservedCacheNodesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedCacheNodesOfferings operation
  * @method ResourceIteratorInterface getDescribeReplicationGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeReplicationGroups operation
+ * @method ResourceIteratorInterface getDescribeSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeSnapshots operation
  *
  * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-elasticache.html User guide
  * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ElastiCache.ElastiCacheClient.html API docs
  */
 class ElastiCacheClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2013-06-15';
+    const LATEST_API_VERSION = '2014-03-24';
 
     /**
      * Factory method to create a new Amazon ElastiCache client using an array of configuration options.
