@@ -73,6 +73,17 @@ class Service extends AbstractModel
     }
 
     /**
+     * Get the signing name used by the service.
+     *
+     * @return string
+     */
+    public function getSigningName()
+    {
+        return $this->getMetadata('signingName')
+            ?: $this->getMetadata('endpointPrefix');
+    }
+
+    /**
      * Check if the description has a specific operation by name.
      *
      * @param string $name Operation to check by name
@@ -150,8 +161,8 @@ class Service extends AbstractModel
     /**
      * Creates a signature object based on the service description.
      *
-     * @param string $region Region to use when the signature requires a region.
-     * @param string $version Optional signature version override.
+     * @param string $region  Region to use when the signature requires a region
+     * @param string $version Optional signature version override
      *
      * @return SignatureInterface
      * @throws \InvalidArgumentException if the signature cannot be created
@@ -159,32 +170,24 @@ class Service extends AbstractModel
     public function createSignature($region, $version = null)
     {
         if (!$version) {
-            if (!isset($this->definition['metadata']['signatureVersion'])) {
+            if (!($version = $this->getMetadata('signatureVersion'))) {
                 throw new \InvalidArgumentException('Unable to determine '
                     . 'signatureVersion');
             }
-            $version = $this->definition['metadata']['signatureVersion'];
         }
 
         switch ($version) {
             case 'v4':
-                return new SignatureV4(
-                    $this->getMetadata('signingName') ?:
-                        $this->getMetadata('endpointPrefix'),
-                    $region
-                );
+                return $this->getEndpointPrefix() == 's3'
+                    ? new S3SignatureV4($this->getSigningName(), $region)
+                    : new SignatureV4($this->getSigningName(), $region);
             case 'v2':
                 return new SignatureV2();
             case 's3':
                 return new S3Signature();
-            case 's3v4':
-                return new S3SignatureV4(
-                    $this->getMetadata('signingName') ?:
-                        $this->getMetadata('endpointPrefix'),
-                    $region);
             default:
                 throw new \InvalidArgumentException('Unknown signature version '
-                    . $this->definition['metadata']['signatureVersion']);
+                    . $version);
         }
     }
 

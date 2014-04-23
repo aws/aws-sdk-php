@@ -8,7 +8,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
- * @covers Aws\Api\Serializer
+ * @covers Aws\Api\Serializer\QuerySerializer
+ * @covers Aws\Api\Serializer\JsonRpcSerializer
+ * @covers Aws\Api\Serializer\RestSerializer
+ * @covers Aws\Api\Serializer\RestJsonSerializer
+ * @covers Aws\Api\Serializer\RestXmlSerializer
+ * @covers Aws\Api\Serializer\JsonBody
+ * @covers Aws\Api\Serializer\XmlBody
  */
 class ComplianceTest extends \PHPUnit_Framework_TestCase
 {

@@ -68,7 +68,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->api = $config['api'];
         $this->credentials = $config['credentials'];
         $this->signature = $config['signature'];
-        $this->region = $config['region'];
+        $this->region = isset($config['region']) ? $config['region'] : null;
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class']
             : 'Aws\Exception\AwsException';
