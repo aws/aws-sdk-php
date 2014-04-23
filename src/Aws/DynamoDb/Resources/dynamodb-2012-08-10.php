@@ -169,6 +169,7 @@ return array (
                                 'items' => array(
                                     'name' => 'AttributeName',
                                     'type' => 'string',
+                                    'maxLength' => 65535,
                                 ),
                             ),
                             'ConsistentRead' => array(
@@ -741,8 +742,60 @@ return array (
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
+                            'ComparisonOperator' => array(
+                                'type' => 'string',
+                            ),
+                            'AttributeValueList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttributeValue',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'S' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'N' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'B' => array(
+                                            'type' => 'string',
+                                            'filters' => array(
+                                                'base64_encode',
+                                            ),
+                                        ),
+                                        'SS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'StringAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'NS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'NumberAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'BS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'BinaryAttributeValue',
+                                                'type' => 'string',
+                                                'filters' => array(
+                                                    'base64_encode',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
+                ),
+                'ConditionalOperator' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
                 'ReturnValues' => array(
                     'type' => 'string',
@@ -952,6 +1005,7 @@ return array (
                     'items' => array(
                         'name' => 'AttributeName',
                         'type' => 'string',
+                        'maxLength' => 65535,
                     ),
                 ),
                 'ConsistentRead' => array(
@@ -1151,6 +1205,54 @@ return array (
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
+                            'ComparisonOperator' => array(
+                                'type' => 'string',
+                            ),
+                            'AttributeValueList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttributeValue',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'S' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'N' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'B' => array(
+                                            'type' => 'string',
+                                            'filters' => array(
+                                                'base64_encode',
+                                            ),
+                                        ),
+                                        'SS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'StringAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'NS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'NumberAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'BS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'BinaryAttributeValue',
+                                                'type' => 'string',
+                                                'filters' => array(
+                                                    'base64_encode',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -1163,6 +1265,10 @@ return array (
                     'location' => 'json',
                 ),
                 'ReturnItemCollectionMetrics' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'ConditionalOperator' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1235,6 +1341,7 @@ return array (
                     'items' => array(
                         'name' => 'AttributeName',
                         'type' => 'string',
+                        'maxLength' => 65535,
                     ),
                 ),
                 'Limit' => array(
@@ -1307,6 +1414,71 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'QueryFilter' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'AttributeName',
+                        ),
+                        'properties' => array(
+                            'AttributeValueList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttributeValue',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'S' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'N' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'B' => array(
+                                            'type' => 'string',
+                                            'filters' => array(
+                                                'base64_encode',
+                                            ),
+                                        ),
+                                        'SS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'StringAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'NS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'NumberAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'BS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'BinaryAttributeValue',
+                                                'type' => 'string',
+                                                'filters' => array(
+                                                    'base64_encode',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'ComparisonOperator' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'ConditionalOperator' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
                 'ScanIndexForward' => array(
                     'type' => 'boolean',
@@ -1416,6 +1588,7 @@ return array (
                     'items' => array(
                         'name' => 'AttributeName',
                         'type' => 'string',
+                        'maxLength' => 65535,
                     ),
                 ),
                 'Limit' => array(
@@ -1488,6 +1661,10 @@ return array (
                         ),
                     ),
                 ),
+                'ConditionalOperator' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'ExclusiveStartKey' => array(
                     'type' => 'object',
                     'location' => 'json',
@@ -1544,12 +1721,12 @@ return array (
                     'type' => 'numeric',
                     'location' => 'json',
                     'minimum' => 1,
-                    'maximum' => 4096,
+                    'maximum' => 1000000,
                 ),
                 'Segment' => array(
                     'type' => 'numeric',
                     'location' => 'json',
-                    'maximum' => 4095,
+                    'maximum' => 999999,
                 ),
             ),
             'errorResponses' => array(
@@ -1754,8 +1931,60 @@ return array (
                                 'type' => 'boolean',
                                 'format' => 'boolean-string',
                             ),
+                            'ComparisonOperator' => array(
+                                'type' => 'string',
+                            ),
+                            'AttributeValueList' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'AttributeValue',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'S' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'N' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'B' => array(
+                                            'type' => 'string',
+                                            'filters' => array(
+                                                'base64_encode',
+                                            ),
+                                        ),
+                                        'SS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'StringAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'NS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'NumberAttributeValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'BS' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'BinaryAttributeValue',
+                                                'type' => 'string',
+                                                'filters' => array(
+                                                    'base64_encode',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
+                ),
+                'ConditionalOperator' => array(
+                    'type' => 'string',
+                    'location' => 'json',
                 ),
                 'ReturnValues' => array(
                     'type' => 'string',
@@ -3347,6 +3576,10 @@ return array (
                     ),
                 ),
                 'Count' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'ScannedCount' => array(
                     'type' => 'numeric',
                     'location' => 'json',
                 ),
