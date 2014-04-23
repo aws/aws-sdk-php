@@ -14,12 +14,12 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Model\BatchRequest;
+namespace Aws\Service\DynamoDb\Model\BatchRequest;
 
 use Aws\Common\Client\AwsClientInterface;
 use Aws\Common\Enum\UaString as Ua;
-use Aws\DynamoDb\Exception\DynamoDbException;
-use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
+use Aws\Service\DynamoDb\Exception\DynamoDbException;
+use Aws\Service\DynamoDb\Exception\UnprocessedWriteRequestsException;
 use Guzzle\Batch\BatchTransferInterface;
 use Guzzle\Common\Exception\ExceptionCollection;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;

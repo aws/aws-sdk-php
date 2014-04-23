@@ -1,21 +1,7 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
+namespace Aws\Service\CloudFront;
 
-namespace Aws\CloudFront;
-
+use Aws\AwsClient;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
@@ -28,44 +14,12 @@ use Guzzle\Service\Resource\Model;
 use Guzzle\Service\Resource\ResourceIteratorInterface;
 
 /**
- * Client to interact with Amazon CloudFront
+ * Client used to interact with the Amazon CloudFront service.
  *
- * @method Model createCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront CreateCloudFrontOriginAccessIdentity}
- * @method Model createDistribution(array $args = array()) {@command CloudFront CreateDistribution}
- * @method Model createInvalidation(array $args = array()) {@command CloudFront CreateInvalidation}
- * @method Model createStreamingDistribution(array $args = array()) {@command CloudFront CreateStreamingDistribution}
- * @method Model deleteCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront DeleteCloudFrontOriginAccessIdentity}
- * @method Model deleteDistribution(array $args = array()) {@command CloudFront DeleteDistribution}
- * @method Model deleteStreamingDistribution(array $args = array()) {@command CloudFront DeleteStreamingDistribution}
- * @method Model getCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront GetCloudFrontOriginAccessIdentity}
- * @method Model getCloudFrontOriginAccessIdentityConfig(array $args = array()) {@command CloudFront GetCloudFrontOriginAccessIdentityConfig}
- * @method Model getDistribution(array $args = array()) {@command CloudFront GetDistribution}
- * @method Model getDistributionConfig(array $args = array()) {@command CloudFront GetDistributionConfig}
- * @method Model getInvalidation(array $args = array()) {@command CloudFront GetInvalidation}
- * @method Model getStreamingDistribution(array $args = array()) {@command CloudFront GetStreamingDistribution}
- * @method Model getStreamingDistributionConfig(array $args = array()) {@command CloudFront GetStreamingDistributionConfig}
- * @method Model listCloudFrontOriginAccessIdentities(array $args = array()) {@command CloudFront ListCloudFrontOriginAccessIdentities}
- * @method Model listDistributions(array $args = array()) {@command CloudFront ListDistributions}
- * @method Model listInvalidations(array $args = array()) {@command CloudFront ListInvalidations}
- * @method Model listStreamingDistributions(array $args = array()) {@command CloudFront ListStreamingDistributions}
- * @method Model updateCloudFrontOriginAccessIdentity(array $args = array()) {@command CloudFront UpdateCloudFrontOriginAccessIdentity}
- * @method Model updateDistribution(array $args = array()) {@command CloudFront UpdateDistribution}
- * @method Model updateStreamingDistribution(array $args = array()) {@command CloudFront UpdateStreamingDistribution}
- * @method waitUntilStreamingDistributionDeployed(array $input) The input array uses the parameters of the GetStreamingDistribution operation and waiter specific settings
- * @method waitUntilDistributionDeployed(array $input) The input array uses the parameters of the GetDistribution operation and waiter specific settings
- * @method waitUntilInvalidationCompleted(array $input) The input array uses the parameters of the GetInvalidation operation and waiter specific settings
- * @method ResourceIteratorInterface getListCloudFrontOriginAccessIdentitiesIterator(array $args = array()) The input array uses the parameters of the ListCloudFrontOriginAccessIdentities operation
- * @method ResourceIteratorInterface getListDistributionsIterator(array $args = array()) The input array uses the parameters of the ListDistributions operation
- * @method ResourceIteratorInterface getListInvalidationsIterator(array $args = array()) The input array uses the parameters of the ListInvalidations operation
- * @method ResourceIteratorInterface getListStreamingDistributionsIterator(array $args = array()) The input array uses the parameters of the ListStreamingDistributions operation
- *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudfront.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html API docs
+ * @todo this client needs updating
  */
-class CloudFrontClient extends AbstractClient
+class CloudFrontClient extends AwsClient
 {
-    const LATEST_API_VERSION = '2014-01-31';
-
     /**
      * Factory method to create a new Amazon CloudFront client using an array of configuration options.
      *

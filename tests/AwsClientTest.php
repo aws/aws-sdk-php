@@ -5,7 +5,7 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
-use Aws\Service\Exception\Ec2Exception;
+use Aws\Service\Ec2\Ec2Exception;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\Error;
 use GuzzleHttp\Client;
@@ -70,7 +70,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null, 'Aws\Exception\AwsException'],
-            ['Aws\Service\Exception\Ec2Exception', 'Aws\Service\Exception\Ec2Exception']
+            ['Aws\Service\Ec2\Ec2Exception', 'Aws\Service\Ec2\Ec2Exception']
         ];
     }
 

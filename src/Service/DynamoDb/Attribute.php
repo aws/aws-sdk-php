@@ -14,10 +14,10 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Model;
+namespace Aws\Service\DynamoDb\Model;
 
 use Aws\Common\Exception\InvalidArgumentException;
-use Aws\DynamoDb\Enum\Type;
+use Aws\Service\DynamoDb\Enum\Type;
 use Guzzle\Common\ToArrayInterface;
 
 /**

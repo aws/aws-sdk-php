@@ -68,7 +68,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $customFactories = (new \ReflectionObject($sdk))
-            ->getProperty('customFactories');
+            ->getProperty('factories');
         $customFactories->setAccessible(true);
 
         eval('class FooFactory {function create($args) {return $args;}}');

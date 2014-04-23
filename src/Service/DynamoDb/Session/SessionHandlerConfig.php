@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Session;
+namespace Aws\Service\DynamoDb\Session;
 
-use Aws\DynamoDb\DynamoDbClient;
+use Aws\Service\DynamoDb\DynamoDbClient;
 use Aws\Common\Exception\InvalidArgumentException;
 
 /**

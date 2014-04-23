@@ -45,26 +45,67 @@ class Sdk
 {
     const VERSION = '3.0.0-beta.1';
 
-    /** @var array */
-    private $args;
-
     /**
      * Map of custom lowercase names to service endpoint names of model files.
      *
      * @var array
      */
-    private $serviceNames = [
+    private static $aliases = [
         'cloudwatch' => 'monitoring',
+        'elb'        => 'elasticloadbalancing',
+        'emr'        => 'elasticmapreduce',
         'simpledb'   => 'sdb',
-        'ses'        => 'email'
+        'ses'        => 'email',
     ];
 
-    /** @var array Map of service endpoint names to factory class names */
-    private $customFactories = [
-        'dynamodb' => 'Aws\Service\DynamoDbFactory',
-        'glacier'  => 'Aws\Service\GlacierFactory',
-        'sqs'      => 'Aws\Service\SqsFactory'
+    /**
+     * Map of service lowercase names to service class names.
+     *
+     * @var array
+     */
+    private static $services = [
+        'autoscaling'          => 'AutoScaling',
+        'cloudformation'       => 'CloudFormation',
+        'cloudfront'           => 'CloudFront',
+        'cloudsearch'          => 'CloudSearch',
+        'cloudtrail'           => 'CloudTrail',
+        'datapipeline'         => 'DataPipeline',
+        'directconnect'        => 'DirectConnect',
+        'dynamodb'             => 'DynamoDb',
+        'ec2'                  => 'Ec2',
+        'elasticache'          => 'ElastiCache',
+        'elasticbeanstalk'     => 'ElasticBeanstalk',
+        'elasticloadbalancing' => 'ElasticLoadBalancing',
+        'elastictranscoder'    => 'ElasticTranscoder',
+        'email'                => 'Ses',
+        'elasticmapreduce'     => 'Emr',
+        'glacier'              => 'Glacier',
+        'iam'                  => 'Iam',
+        'importexport'         => 'ImportExport',
+        'kinesis'              => 'Kinesis',
+        'monitoring'           => 'CloudWatch',
+        'opsworks'             => 'OpsWorks',
+        'rds'                  => 'Rds',
+        'redshift'             => 'Redshift',
+        'route53'              => 'Route53',
+        's3'                   => 'S3',
+        'sdb'                  => 'SimpleDb',
+        'sns'                  => 'Sns',
+        'sqs'                  => 'Sqs',
+        'storagegateway'       => 'StorageGateway',
+        'sts'                  => 'Sts',
+        'support'              => 'Support',
+        'swf'                  => 'Swf',
     ];
+
+    private static $factories = [
+        'dynamodb' => 'Aws\Service\DynamoDb\DynamoDbFactory',
+        'glacier'  => 'Aws\Service\Glacier\GlacierFactory',
+        'sqs'      => 'Aws\Service\Sqs\SqsFactory',
+    ];
+
+    /** @var array Arguments for creating clients */
+    private $args;
 
     /**
      * Constructs a new SDK object with an associative array of default
@@ -74,6 +115,7 @@ class Sdk
      *
      * @throws \InvalidArgumentException
      * @see Aws\Sdk::getClient() for a list of available options.
+     * @todo create other ways to load models
      */
     public function __construct(array $args = [])
     {
@@ -148,20 +190,26 @@ class Sdk
         $name = strtolower($name);
 
         // Resolve service aliases
-        if (isset($this->serviceNames[$name])) {
-            $name = $this->serviceNames[$name];
+        if (isset(self::$aliases[$name])) {
+            $name = self::$aliases[$name];
         }
 
         // Merge provided args with stored args
-        $args['service'] = $name;
         if (isset($this->args[$name])) {
             $args += $this->args[$name];
         }
         $args += $this->args;
 
-        // Get the client factory needed to create a client for the service
-        $factory = isset($this->customFactories[$name])
-            ? new $this->customFactories[$name]
+        // Set the service name and determine if it is linked to a known class
+        $args['service'] = $name;
+        $args['class_name'] = false;
+        if (isset(self::$services[$name])) {
+            $args['class_name'] = self::$services[$name];
+        }
+
+        // Get the client factory for the service
+        $factory = isset(self::$factories[$name])
+            ? new self::$factories[$name]
             : new ClientFactory;
 
         return $factory->create($args);

@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Session\LockingStrategy;
+namespace Aws\Service\DynamoDb\Session\LockingStrategy;
 
-use Aws\DynamoDb\Session\SessionHandlerConfig;
+use Aws\Service\DynamoDb\Session\SessionHandlerConfig;
 
 /**
  * Interface for locking strategy factories. Useful for those who are creating

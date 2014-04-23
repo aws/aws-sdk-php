@@ -52,6 +52,7 @@ class ClientFactory
         'version'           => true,
         'endpoint_provider' => 1,
         'api_provider'      => 1,
+        'class_name'        => 1,
         'exception_class'   => 1,
         'credentials'       => 1,
         'signature'         => 1,
@@ -95,6 +96,7 @@ class ClientFactory
         $args += $defaultArgs;
         $this->addDefaultArgs($args);
 
+        // Process each argument and keep track of deferred ones
         $deferred = [];
         foreach ($this->validArguments as $key => $type) {
             if (isset($args[$key])) {
@@ -106,11 +108,11 @@ class ClientFactory
             }
         }
 
+        // Create the client and then handle deferred and post-create logic
         $client = $this->createClient($args);
         foreach ($deferred as $key => $value) {
             $this->{"handle_{$key}"}($value, $args, $client);
         }
-
         $this->postCreate($client, $args);
 
         return $client;
@@ -127,9 +129,7 @@ class ClientFactory
      */
     protected function createClient(array $args)
     {
-        $client = new AwsClient($args);
-
-        return $client;
+        return new $args['client_class']($args);
     }
 
     /**
@@ -225,12 +225,13 @@ class ClientFactory
         return $value;
     }
 
-    private function handle_exception_class($value, array &$args)
+    private function handle_class_name($value, array &$args)
     {
-        if ($value !== true) {
-            // An explicitly provided exception must be found.
-            if (!class_exists($value)) {
-                throw new \RuntimeException("Exception not found: $value");
+        if ($value !== false) {
+            // An explicitly provided class_name must be found.
+            $args['client_class'] = "Aws\\Service\\{$value}\\{$value}Client";
+            if (!class_exists($args['client_class'])) {
+                throw new \RuntimeException("Client not found for: $value");
             }
             return;
         }
@@ -259,7 +260,27 @@ class ClientFactory
             }
         }
 
-        $value = 'Aws\\Service\\Exception\\' . $value . 'Exception';
+        // If the dynamically created exception cannot be found, then use the
+        // default client class.
+        $args['client_class'] = "Aws\\Service\\{$value}\\{$value}Client";
+        if (!class_exists($args['client_class'])) {
+            $args['client_class'] = 'Aws\AwsClient';
+        }
+
+        $args['class_name'] = $value;
+    }
+
+    private function handle_exception_class($value, array &$args)
+    {
+        if ($value !== true) {
+            // An explicitly provided exception must be found.
+            if (!class_exists($value)) {
+                throw new \RuntimeException("Exception not found: $value");
+            }
+            return;
+        }
+
+        $value = "Aws\\Service\\{$args['class_name']}\\{$args['class_name']}Exception";
         // If the dynamically created exception cannot be found, then use the
         // default exception class.
         if (!class_exists($value)) {
@@ -402,8 +423,11 @@ class ClientFactory
         // Attach an error parser
         $client->getEmitter()->attach(new Error($args['error_parser']));
         // Attach a signer to the client.
-        $client->getHttpClient()->getEmitter()->attach(
-            new Signature($client->getCredentials(), $client->getSignature())
-        );
+        $credentials = $client->getCredentials();
+        if (!($credentials instanceof NullCredentials)) {
+            $client->getHttpClient()->getEmitter()->attach(
+                new Signature($credentials, $client->getSignature())
+            );
+        }
     }
 }

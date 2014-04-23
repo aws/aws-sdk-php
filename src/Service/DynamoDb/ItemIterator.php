@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Iterator;
+namespace Aws\Service\DynamoDb\Iterator;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Collection;

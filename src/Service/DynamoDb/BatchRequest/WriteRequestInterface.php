@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Model\BatchRequest;
+namespace Aws\Service\DynamoDb\Model\BatchRequest;
 
 use Guzzle\Common\ToArrayInterface;
 

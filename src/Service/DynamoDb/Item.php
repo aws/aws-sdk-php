@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Model;
+namespace Aws\Service\DynamoDb\Model;
 
 use Guzzle\Common\ToArrayInterface;
 

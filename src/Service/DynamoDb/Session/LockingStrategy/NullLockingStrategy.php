@@ -14,10 +14,10 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Session\LockingStrategy;
+namespace Aws\Service\DynamoDb\Session\LockingStrategy;
 
 use Aws\Common\Enum\UaString as Ua;
-use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\Service\DynamoDb\Exception\DynamoDbException;
 
 /**
  * The NULL locking strategy is the default strategy that does NOT do session

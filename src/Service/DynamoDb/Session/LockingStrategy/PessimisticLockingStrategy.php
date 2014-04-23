@@ -14,13 +14,13 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Session\LockingStrategy;
+namespace Aws\Service\DynamoDb\Session\LockingStrategy;
 
 use Aws\Common\Enum\UaString as Ua;
-use Aws\DynamoDb\DynamoDbClient;
-use Aws\DynamoDb\Session\SessionHandlerConfig;
-use Aws\DynamoDb\Exception\DynamoDbException;
-use Aws\DynamoDb\Exception\ConditionalCheckFailedException;
+use Aws\Service\DynamoDb\DynamoDbClient;
+use Aws\Service\DynamoDb\Session\SessionHandlerConfig;
+use Aws\Service\DynamoDb\Exception\DynamoDbException;
+use Aws\Service\DynamoDb\Exception\ConditionalCheckFailedException;
 
 /**
  * This locking strategy uses pessimistic locking (similar to how the native

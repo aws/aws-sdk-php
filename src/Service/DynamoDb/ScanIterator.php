@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Iterator;
+namespace Aws\Service\DynamoDb\Iterator;
 
 use Aws\Common\Iterator\AwsResourceIterator;
 use Guzzle\Common\Version;

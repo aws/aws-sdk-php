@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Session\LockingStrategy;
+namespace Aws\Service\DynamoDb\Session\LockingStrategy;
 
 /**
  * An interface describing how a locking strategy should be defined

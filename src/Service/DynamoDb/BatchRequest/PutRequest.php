@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Model\BatchRequest;
+namespace Aws\Service\DynamoDb\Model\BatchRequest;
 
-use Aws\DynamoDb\Model\Item;
+use Aws\Service\DynamoDb\Model\Item;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Service\Command\AbstractCommand;
 

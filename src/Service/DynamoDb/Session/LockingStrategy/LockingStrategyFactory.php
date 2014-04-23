@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\DynamoDb\Session\LockingStrategy;
+namespace Aws\Service\DynamoDb\Session\LockingStrategy;
 
-use Aws\DynamoDb\Session\SessionHandlerConfig;
+use Aws\Service\DynamoDb\Session\SessionHandlerConfig;
 use Aws\Common\Exception\InvalidArgumentException;
 use Guzzle\Inflection\Inflector;
 use Guzzle\Inflection\InflectorInterface;
