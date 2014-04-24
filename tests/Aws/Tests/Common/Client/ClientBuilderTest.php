@@ -206,6 +206,8 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testAddsDefaultCredentials()
     {
+        $_SERVER['HOME'] = '/tmp';
+
         $creds = Credentials::factory(array('key' => 'foo', 'secret' => 'bar'));
         $config = array(
             'service' => 'dynamodb',
