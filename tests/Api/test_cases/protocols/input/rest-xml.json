@@ -554,5 +554,62 @@
         }
       }
     ]
+  },
+  {
+    "description": "Blob and timestamp shapes",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "StructureParam": {
+            "shape": "StructureShape"
+          }
+        }
+      },
+      "StructureShape": {
+        "type": "structure",
+        "members": {
+          "t": {
+            "type": "timestamp",
+            "timestampFormat": "iso8601"
+          },
+          "b": {
+            "type": "blob"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "StructureParam": {
+            "t": 1422172800,
+            "b": "foo"
+          }
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><StructureParam><t>2015-01-25T08:00:00Z</t><b>Zm9v</b></StructureParam></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      }
+    ]
   }
 ]

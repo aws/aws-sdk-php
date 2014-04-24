@@ -88,8 +88,9 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             case 'rest-xml':
                 // Normalize XML data.
                 $serialized['body'] = '<?xml version="1.0" encoding="UTF-8"?>'
-                    . "\n" . $serialized['body'] . "\n";
+                    . "\n" . $serialized['body'];
                 $serialized['body'] = str_replace(' />', '/>', $serialized['body']);
+                $body = trim($body);
                 break;
         }
 
