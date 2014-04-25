@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release
-------------
+2.6.1 (2014-04-25)
+------------------
 
 * Added support for the `~/.aws/credentials` INI file and credential profiles (via the `profile` option) as a safer
   alternative to using explicit credentials with the `key` and `secret` options.
@@ -17,6 +17,7 @@ Next Release
   (#276), and fixing `is_link()` for non-existent keys (#268).
 * Fixed #252 and updated the DynamoDB `WriteRequestBatch` abstraction to handle batches that were completely rejected
   due to exceeding provisioned throughput.
+* Updated the SDK to support Guzzle 3.9.x
 
 2.6.0 (2014-03-25)
 ------------------
