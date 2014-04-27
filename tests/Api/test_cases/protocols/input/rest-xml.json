@@ -611,5 +611,205 @@
         }
       }
     ]
+  },
+  {
+    "description": "Header maps",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "type": "map",
+            "location": "header",
+            "locationName": "x-foo-",
+            "values": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "xmlName": "OperationRequest",
+            "xmlNamespace": "https://foo/"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": {
+            "a": "b",
+            "c": "d"
+          }
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "",
+          "uri": "/",
+          "headers": {
+            "x-foo-a": "b",
+            "x-foo-c": "d"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "description": "String payload",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": "bar"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "bar",
+          "uri": "/"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Blob payload",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "type": "blob"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": "bar"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "bar",
+          "uri": "/"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Structure payload",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "xmlName": "foo",
+            "type": "structure",
+            "members": {
+              "baz": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": {
+            "baz": "bar"
+          }
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<foo><baz>bar</baz></foo>",
+          "uri": "/"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {},
+        "serialized": {
+          "method": "POST",
+          "body": "",
+          "uri": "/"
+        }
+      }
+    ]
   }
 ]
