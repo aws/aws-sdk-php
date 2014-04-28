@@ -19,6 +19,18 @@ Phar::mapPhar('aws.phar');
 define('AWS_PHAR', true);
 define('AWS_FILE_PREFIX', 'phar://aws.phar');
 
+// Copy the cacert.pem file from the phar if it is not in the temp folder.
+$from = 'phar://aws.phar/Guzzle/Http/Resources/cacert.pem';
+$certFile = sys_get_temp_dir() . '/guzzle-cacert.pem';
+
+// Only copy when the file size is different
+if (!file_exists($certFile) || filesize($certFile) != filesize($from)) {
+    if (!copy($from, $certFile)) {
+        throw new RuntimeException("Could not copy {$from} to {$certFile}: "
+            . var_export(error_get_last(), true));
+    }
+}
+
 return (require 'phar://aws.phar/aws-autoloader.php');
 
 __HALT_COMPILER();
