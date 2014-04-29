@@ -20,10 +20,6 @@ trait JsonTrait
             'parse_blob'      => true
         ];
 
-        if ($value === null) {
-            return null;
-        }
-
         $type = 'parse_' . $shape['type'];
         if (isset($methods[$type])) {
             return $this->{$type}($shape, $value);
