@@ -6,7 +6,7 @@ use Aws\Api\StructureShape;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
- * @internal Implements REST-JSON parsing (e.g., Glacier)
+ * @internal Implements REST-JSON parsing (e.g., Glacier, Elastic Transcoder)
  */
 class RestJsonParser extends AbstractRestParser
 {
@@ -17,10 +17,10 @@ class RestJsonParser extends AbstractRestParser
      * @param Service  $api    Service description
      * @param JsonBody $parser JSON body builder
      */
-    public function __construct(Service $api, JsonBody $parser)
+    public function __construct(Service $api, JsonBody $parser = null)
     {
         parent::__construct($api);
-        $this->parser = $parser;
+        $this->parser = $parser ?: new JsonBody();
     }
 
     protected function payload(
