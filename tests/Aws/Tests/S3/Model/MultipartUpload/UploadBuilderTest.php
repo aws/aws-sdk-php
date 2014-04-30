@@ -172,4 +172,36 @@ class UploadBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $b->setConcurrency(2);
         $this->assertInstanceOf('Aws\S3\Model\MultipartUpload\ParallelTransfer', $b->build());
     }
+
+    public function testDoesNotClobberContentTypeParam()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $mock = $this->setMockResponse($client, array('s3/initiate_multipart_upload'));
+        $transfer = UploadBuilder::newInstance()
+            ->setBucket('foo')
+            ->setKey('bar')
+            ->setClient($client)
+            ->setSource(__FILE__)
+            ->setOption('ContentType', 'x-foo')
+            ->build();
+        $requests = $mock->getReceivedRequests();
+        $this->assertEquals(1, count($requests));
+        $this->assertEquals('x-foo', (string) $requests[0]->getHeader('Content-Type'));
+    }
+
+    public function testDoesNotClobberContentTypeHeader()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $mock = $this->setMockResponse($client, array('s3/initiate_multipart_upload'));
+        $transfer = UploadBuilder::newInstance()
+            ->setBucket('foo')
+            ->setKey('bar')
+            ->setClient($client)
+            ->setSource(__FILE__)
+            ->setHeaders(array('Content-Type' => 'x-foo'))
+            ->build();
+        $requests = $mock->getReceivedRequests();
+        $this->assertEquals(1, count($requests));
+        $this->assertEquals('x-foo', (string) $requests[0]->getHeader('Content-Type'));
+    }
 }
