@@ -9,7 +9,7 @@ use Aws\Api\StructureShape;
 /**
  * @internal Implements standard JSON parsing.
  */
-class JsonBody
+class JsonParser
 {
     public function parse(Shape $shape, $value)
     {
