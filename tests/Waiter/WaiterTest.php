@@ -17,7 +17,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         $returns = [false, false, true];
         $attempts = 0;
         $waiter = new Waiter(
-            function() use(&$returns, &$attempts) {
+            function () use (&$returns, &$attempts) {
                 $attempts++;
                 return array_shift($returns);
             },
@@ -33,13 +33,11 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(9000000, \Aws\Waiter\usleep(0));
     }
 
-    public function testErrorWhenWaiterExceedsMaxAttempts()
+    public function testWaiterOptions()
     {
         $returns = [false, false, false];
-        $attempts = 0;
         $waiter = new Waiter(
-            function() use(&$returns, &$attempts) {
-                $attempts++;
+            function () use (&$returns) {
                 return array_shift($returns);
             },
             [
@@ -49,5 +47,26 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('RuntimeException');
         $waiter->wait();
+    }
+
+    public function testCanUseCallbackForInterval()
+    {
+        \Aws\Waiter\usleep(0);
+        $intervals = [3, 6, 9];
+        $returns = [false, false, false, true];
+        $waiter = new Waiter(
+            function () use (&$returns) {
+                return array_shift($returns);
+            },
+            [
+                'max_attempts' => 4,
+                'interval'     => function () use (&$intervals) {
+                    return array_shift($intervals);
+                },
+            ]
+        );
+
+        $waiter->wait();
+        $this->assertEquals(18000000, \Aws\Waiter\usleep(0));
     }
 }

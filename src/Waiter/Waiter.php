@@ -63,8 +63,11 @@ class Waiter implements HasEmitterInterface
             $this->getEmitter()->emit('wait', $event);
 
             // Wait the specified interval
-            if ($this->config['interval']) {
-                usleep($this->config['interval'] * 1000000);
+            if ($interval = $this->config['interval']) {
+                if (is_callable($interval)) {
+                    $interval = $interval();
+                }
+                usleep($interval * 1000000);
             }
 
             $attempts++;
