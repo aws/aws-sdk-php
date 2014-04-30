@@ -1,33 +1,39 @@
 <?php
 namespace Aws\Api\Parser;
 
-use Aws\Result;
 use Aws\Api\Service;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Api\StructureShape;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
- * @internal
+ * @internal Implements REST-JSON parsing (e.g., Glacier)
  */
-class RestJsonParser extends RestParser
+class RestJsonParser extends AbstractRestParser
 {
     /** @var JsonBody */
-    private $builder;
+    private $parser;
 
     /**
-     * @param Service  $api     Service description
-     * @param JsonBody $builder JSON body builder
+     * @param Service  $api    Service description
+     * @param JsonBody $parser JSON body builder
      */
-    public function __construct(Service $api, JsonBody $builder)
+    public function __construct(Service $api, JsonBody $parser)
     {
         parent::__construct($api);
-        $this->builder = $builder;
+        $this->parser = $parser;
     }
 
-    public function createResult(Service $api, ProcessEvent $event)
-    {
-        $command = $event->getCommand();
-        $name = $command->getName();
-        $operation = $api->getOperation($name);
-        return new Result([]);
+    protected function payload(
+        ResponseInterface $response,
+        StructureShape $member,
+        array &$result
+    ) {
+        $data = (string) $response->getBody();
+
+        if (!$data) {
+            return;
+        }
+
+        $result += $this->parser->parse($member, $response->json());
     }
 }

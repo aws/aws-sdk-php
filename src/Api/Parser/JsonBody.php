@@ -7,11 +7,11 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 
 /**
- * Implements standard JSON parsing.
+ * @internal Implements standard JSON parsing.
  */
 class JsonBody
 {
-    public function build(Shape $shape, $value)
+    public function parse(Shape $shape, $value)
     {
         static $methods = [
             'parse_structure' => true,
@@ -31,9 +31,10 @@ class JsonBody
     private function parse_structure(StructureShape $shape, array $value)
     {
         $target = [];
-        foreach ($value as $k => $v) {
-            if ($shape->hasMember($k)) {
-                $target[$k] = $this->build($shape->getMember($k), $v);
+        foreach ($shape->getMembers() as $name => $member) {
+            $name = $member['locationName'] ?: $name;
+            if (isset($value[$name])) {
+                $target[$name] = $this->parse($member, $value[$name]);
             }
         }
 
@@ -45,7 +46,7 @@ class JsonBody
         $member = $shape->getMember();
         $target = [];
         foreach ($value as $v) {
-            $target[] = $this->build($member, $v);
+            $target[] = $this->parse($member, $v);
         }
 
         return $target;
@@ -57,7 +58,7 @@ class JsonBody
 
         $target = [];
         foreach ($value as $k => $v) {
-            $target[$k] = $this->build($values, $v);
+            $target[$k] = $this->parse($values, $v);
         }
 
         return $target;

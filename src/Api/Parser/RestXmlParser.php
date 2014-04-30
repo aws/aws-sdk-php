@@ -1,17 +1,19 @@
 <?php
 namespace Aws\Api\Parser;
 
-use Aws\Result;
-use Aws\Api\Service;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Api\StructureShape;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
- * @internal
+ * @internal Implements REST-XML parsing (e.g., S3, CloudFront, etc...)
  */
-class RestXmlParser extends RestParser
+class RestXmlParser extends AbstractRestParser
 {
-    public function createResult(Service $api, ProcessEvent $event)
-    {
-        return new Result([]);
+    protected function payload(
+        ResponseInterface $response,
+        StructureShape $member,
+        array &$result
+    ) {
+
     }
 }

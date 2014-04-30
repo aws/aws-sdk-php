@@ -6,27 +6,27 @@ use Aws\Result;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
- * @internal
+ * @internal Implements JSON-RPC parsing (e.g., DynamoDB)
  */
 class JsonRpcParser extends AbstractParser
 {
-    private $builder;
+    private $parser;
 
     /**
-     * @param Service  $api     Service description
-     * @param JsonBody $builder JSON body builder
+     * @param Service  $api    Service description
+     * @param JsonBody $parser JSON body builder
      */
-    public function __construct(Service $api, JsonBody $builder = null)
+    public function __construct(Service $api, JsonBody $parser = null)
     {
         parent::__construct($api);
-        $this->builder = $builder ?: new JsonBody();
+        $this->parser = $parser ?: new JsonBody();
     }
 
     public function createResult(Service $api, ProcessEvent $event)
     {
         $operation = $api->getOperation($event->getCommand()->getName());
 
-        return new Result($this->builder->build(
+        return new Result($this->parser->parse(
             $operation->getOutput(),
             $event->getResponse()->json()
         ));
