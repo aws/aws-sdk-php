@@ -206,19 +206,19 @@ class Service extends AbstractModel
 
         switch ($this->getMetadata('type')) {
             case 'json':
-                $em->attach(new JsonRpcSerializer($endpoint, $this));
+                $em->attach(new JsonRpcSerializer($this, $endpoint));
                 $em->attach(new JsonRpcParser($this));
                 break;
             case 'query':
-                $em->attach(new QuerySerializer($endpoint, $this));
+                $em->attach(new QuerySerializer($this, $endpoint));
                 // $em->attach(new XmlParser($this));
                 break;
             case 'rest-json':
-                $em->attach(new RestJsonSerializer($endpoint, $this));
+                $em->attach(new RestJsonSerializer($this, $endpoint));
                 // $em->attach(new RestJsonParser($this));
                 break;
             case 'rest-xml':
-                $em->attach(new RestXmlSerializer($endpoint, $this));
+                $em->attach(new RestXmlSerializer($this, $endpoint));
                 // $em->attach(new RestXmlParser($this));
                 break;
             default:

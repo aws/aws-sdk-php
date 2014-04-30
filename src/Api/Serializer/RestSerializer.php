@@ -25,10 +25,10 @@ abstract class RestSerializer implements SubscriberInterface
     private $endpoint;
 
     /**
-     * @param string $endpoint Endpoint to connect to
-     * @param Service  $api      Service API description
+     * @param Service $api      Service API description
+     * @param string  $endpoint Endpoint to connect to
      */
-    public function __construct($endpoint, Service $api)
+    public function __construct(Service $api, $endpoint)
     {
         $this->api = $api;
         $this->endpoint = Url::fromString($endpoint);

@@ -21,13 +21,13 @@ class JsonRpcSerializer implements SubscriberInterface
     private $api;
 
     /**
+     * @param Service  $api           Service description
      * @param string   $endpoint      Endpoint to connect to
-     * @param Service    $api           Service description
      * @param JsonBody $jsonFormatter Optional JSON formatter to use
      */
     public function __construct(
-        $endpoint,
         Service $api,
+        $endpoint,
         JsonBody $jsonFormatter = null
     ) {
         $this->endpoint = $endpoint;

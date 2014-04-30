@@ -16,16 +16,16 @@ class RestJsonSerializer extends RestSerializer
     private $jsonFormatter;
 
     /**
+     * @param Service    $api         Service API description
      * @param string   $endpoint      Endpoint to connect to
-     * @param Service    $api           Service API description
      * @param JsonBody $jsonFormatter Optional JSON formatter to use
      */
     public function __construct(
-        $endpoint,
         Service $api,
+        $endpoint,
         JsonBody $jsonFormatter = null
     ) {
-        parent::__construct($endpoint, $api);
+        parent::__construct($api, $endpoint);
         $this->jsonFormatter = $jsonFormatter ?: new JsonBody($api);
     }
 

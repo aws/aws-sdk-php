@@ -19,12 +19,10 @@ class QuerySerializer implements SubscriberInterface
     private $endpoint;
     private $api;
 
-    public function __construct(
-        $endpoint,
-        Service $api
-    ) {
-        $this->endpoint = $endpoint;
+    public function __construct(Service $api, $endpoint)
+    {
         $this->api = $api;
+        $this->endpoint = $endpoint;
     }
 
     public function getEvents()

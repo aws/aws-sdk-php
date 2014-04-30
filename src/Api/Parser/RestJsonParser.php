@@ -10,7 +10,18 @@ use GuzzleHttp\Command\Event\ProcessEvent;
  */
 class RestJsonParser extends RestParser
 {
-    use JsonTrait;
+    /** @var JsonBody */
+    private $builder;
+
+    /**
+     * @param Service  $api     Service description
+     * @param JsonBody $builder JSON body builder
+     */
+    public function __construct(Service $api, JsonBody $builder)
+    {
+        parent::__construct($api);
+        $this->builder = $builder;
+    }
 
     public function createResult(Service $api, ProcessEvent $event)
     {

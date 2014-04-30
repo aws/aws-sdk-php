@@ -49,7 +49,7 @@ class RestSerializerTest extends \PHPUnit_Framework_TestCase
             ->method('getHttpClient')
             ->will($this->returnValue($http));
 
-        $j = new RestXmlSerializer('http://foo.com', $service);
+        $j = new RestXmlSerializer($service, 'http://foo.com');
         $event = new PrepareEvent(
             new AwsCommand('foo', ['foo' => 'bam'], $service),
             $aws

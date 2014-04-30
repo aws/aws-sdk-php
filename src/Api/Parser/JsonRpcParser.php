@@ -10,13 +10,23 @@ use GuzzleHttp\Command\Event\ProcessEvent;
  */
 class JsonRpcParser extends AbstractParser
 {
-    use JsonTrait;
+    private $builder;
+
+    /**
+     * @param Service  $api     Service description
+     * @param JsonBody $builder JSON body builder
+     */
+    public function __construct(Service $api, JsonBody $builder = null)
+    {
+        parent::__construct($api);
+        $this->builder = $builder ?: new JsonBody();
+    }
 
     public function createResult(Service $api, ProcessEvent $event)
     {
         $operation = $api->getOperation($event->getCommand()->getName());
 
-        return new Result($this->parseJson(
+        return new Result($this->builder->build(
             $operation->getOutput(),
             $event->getResponse()->json()
         ));

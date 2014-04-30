@@ -9,9 +9,9 @@ use Aws\Api\StructureShape;
 /**
  * Implements standard JSON parsing.
  */
-trait JsonTrait
+class JsonBody
 {
-    private function parseJson(Shape $shape, $value)
+    public function build(Shape $shape, $value)
     {
         static $methods = [
             'parse_structure' => true,
@@ -33,7 +33,7 @@ trait JsonTrait
         $target = [];
         foreach ($value as $k => $v) {
             if ($shape->hasMember($k)) {
-                $target[$k] = $this->parseJson($shape->getMember($k), $v);
+                $target[$k] = $this->build($shape->getMember($k), $v);
             }
         }
 
@@ -45,7 +45,7 @@ trait JsonTrait
         $member = $shape->getMember();
         $target = [];
         foreach ($value as $v) {
-            $target[] = $this->parseJson($member, $v);
+            $target[] = $this->build($member, $v);
         }
 
         return $target;
@@ -57,7 +57,7 @@ trait JsonTrait
 
         $target = [];
         foreach ($value as $k => $v) {
-            $target[$k] = $this->parseJson($values, $v);
+            $target[$k] = $this->build($values, $v);
         }
 
         return $target;

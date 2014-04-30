@@ -43,7 +43,7 @@ class JsonRpcSerializerTest extends \PHPUnit_Framework_TestCase
             ->method('getHttpClient')
             ->will($this->returnValue($http));
 
-        $j = new JsonRpcSerializer('http://foo.com', $service);
+        $j = new JsonRpcSerializer($service, 'http://foo.com');
         $this->assertArrayHasKey('prepare', $j->getEvents());
         $event = new PrepareEvent(new Command('foo', ['baz' => 'bam']), $aws);
         $j->onPrepare($event);
