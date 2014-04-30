@@ -2,6 +2,7 @@
 namespace Aws\Service\DynamoDb;
 
 use Aws\AwsClient;
+use Aws\Service\DynamoDb\Session\SessionHandler;
 use GuzzleHttp\Stream\Stream;
 
 /**
@@ -90,13 +91,11 @@ class DynamoDbClient extends AwsClient
      *
      * @param array $config Array of options for the session handler factory
      *
-     * @return Session\SessionHandler
-     * @todo update this after session handler is refactored
+     * @return SessionHandler
      */
-    public function registerSessionHandler(array $config = array())
+    public function registerSessionHandler(array $config = [])
     {
-        $config += ['dynamodb_client' => $this];
-        $handler = Session\SessionHandler::factory($config);
+        $handler = SessionHandler::fromClient($this, $config);
         $handler->register();
 
         return $handler;
