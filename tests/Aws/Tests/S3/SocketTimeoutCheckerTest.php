@@ -62,27 +62,6 @@ class SocketTimeoutCheckerTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(8, $checker->getBackoffPeriod(3, $request, $response));
     }
 
-    public function testSetsContentLengthIfLocalFile()
-    {
-        $body = $this->getMockBuilder('Guzzle\Http\EntityBody')
-            ->setMethods(array('setSize'))
-            ->setConstructorArgs(array(fopen(__FILE__, 'r+')))
-            ->getMock();
-
-        $body->expects($this->once())
-            ->method('setSize');
-
-        $client = $this->getServiceBuilder()->get('s3');
-        $request = $client->put('/foo/bar', array('Content-Type' => 'text/plain'));
-        $request->setBody($body);
-
-        $response = new Response(400, array('content-type' => 'application/xml'), $this->message);
-        $checker = new SocketTimeoutChecker();
-        $this->assertEquals(0, $checker->getBackoffPeriod(1, $request, $response));
-
-        $this->assertEquals(filesize(__FILE__), (string) $request->getHeader('Content-Length'));
-    }
-
     public function testBehavesProperlyAsChainLink()
     {
         $s = new ExponentialBackoffStrategy();
