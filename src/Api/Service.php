@@ -1,12 +1,14 @@
 <?php
 namespace Aws\Api;
 
-use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Serializer\JsonRpcSerializer;
 use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Api\Serializer\RestXmlSerializer;
+use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Parser\RestJsonParser;
+use Aws\Api\Parser\RestXmlParser;
+use Aws\Api\Parser\QueryParser;
 use Aws\AwsClientInterface;
 use Aws\Signature\S3Signature;
 use Aws\Signature\S3SignatureV4;
@@ -212,7 +214,7 @@ class Service extends AbstractModel
                 break;
             case 'query':
                 $em->attach(new QuerySerializer($this, $endpoint));
-                // $em->attach(new XmlParser($this));
+                $em->attach(new QueryParser($this));
                 break;
             case 'rest-json':
                 $em->attach(new RestJsonSerializer($this, $endpoint));
@@ -220,7 +222,7 @@ class Service extends AbstractModel
                 break;
             case 'rest-xml':
                 $em->attach(new RestXmlSerializer($this, $endpoint));
-                // $em->attach(new RestXmlParser($this));
+                $em->attach(new RestXmlParser($this));
                 break;
             default:
                 throw new \UnexpectedValueException('Unknown protocol: '
