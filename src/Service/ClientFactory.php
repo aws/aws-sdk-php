@@ -1,11 +1,10 @@
 <?php
 namespace Aws\Service;
 
-use Aws\Api\ValidationSubscriber;
 use Aws\Api\Validator;
 use Aws\Paginator\PaginatorFactory;
 use Aws\Sdk;
-use Aws\AwsClient;
+use Aws\Subscriber\Validation;
 use Aws\AwsClientInterface;
 use Aws\Api\ApiProviderInterface;
 use Aws\Api\EndpointProviderInterface;
@@ -194,7 +193,7 @@ class ClientFactory
         }
 
         $validator = new Validator();
-        $client->getEmitter()->attach(new ValidationSubscriber($validator));
+        $client->getEmitter()->attach(new Validation($validator));
     }
 
     /**

@@ -3,13 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\Operation;
 use Aws\Api\ShapeMap;
-use Aws\Api\ValidationSubscriber;
+use Aws\Subscriber\Validation;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
- * @covers Aws\Api\ValidationSubscriber
+ * @covers Aws\Subscriber\Validation
  */
-class ValidationSubscriberTest extends \PHPUnit_Framework_TestCase
+class ValidationTest extends \PHPUnit_Framework_TestCase
 {
     public function testValdiatesBeforeSerialization()
     {
@@ -45,7 +45,7 @@ class ValidationSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $event = new PrepareEvent($command, $client);
-        $validation = new ValidationSubscriber($validator);
+        $validation = new Validation($validator);
         $this->assertNotEmpty($validation->getEvents());
         $validation->onPrepare($event);
     }

@@ -1,13 +1,14 @@
 <?php
-namespace Aws\Api;
+namespace Aws\Subscriber;
 
+use Aws\Api\Validator;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
  * @internal Validates input before serializing
  */
-class ValidationSubscriber implements SubscriberInterface
+class Validation implements SubscriberInterface
 {
     /** @var \Aws\Api\Validator */
     private $validator;
