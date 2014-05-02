@@ -92,6 +92,8 @@ abstract class RestSerializer implements SubscriberInterface
                     $this->applyHeader($request, $name, $member, $value);
                 } elseif ($location == 'querystring') {
                     $this->applyQuery($request, $name, $member, $value);
+                } elseif ($location == 'headers') {
+                    $this->applyHeaderMap($request, $name, $member, $value);
                 }
             }
         }
@@ -146,12 +148,8 @@ abstract class RestSerializer implements SubscriberInterface
         RequestInterface $request,
         $name,
         Shape $member,
-        $value
+        array $value
     ) {
-        if (!is_array($value)) {
-            throw new \InvalidArgumentException("$name must be an array.");
-        }
-
         $prefix = $member['locationName'];
         foreach ($value as $k => $v) {
             $request->setHeader($prefix . $k, $v);
