@@ -24,6 +24,9 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function setUp()
     {
+        putenv('HOME=');
+        putenv('HOMEDRIVE=');
+        putenv('HOMEPATH=');
         $_SERVER['HOME'] = null;
         $_SERVER['HOMEDRIVE'] = null;
         $_SERVER['HOMEPATH'] = null;
