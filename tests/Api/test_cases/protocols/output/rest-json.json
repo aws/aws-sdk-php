@@ -1,0 +1,486 @@
+[
+  {
+    "description": "Scalar members",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "ImaHeader": {
+            "shape": "HeaderShape"
+          },
+          "ImaHeaderLocation": {
+            "shape": "HeaderShape",
+            "locationName": "X-Foo"
+          },
+          "Status": {
+            "shape": "StatusShape"
+          },
+          "Str": {
+            "shape": "StringType"
+          },
+          "Num": {
+            "shape": "IntegerType"
+          },
+          "FalseBool": {
+            "shape": "BooleanType"
+          },
+          "TrueBool": {
+            "shape": "BooleanType"
+          },
+          "Float": {
+            "shape": "FloatType"
+          },
+          "Double": {
+            "shape": "DoubleType"
+          },
+          "Long": {
+            "shape": "LongType"
+          },
+          "Char": {
+            "shape": "CharType"
+          }
+        }
+      },
+      "HeaderShape": {
+        "type": "string",
+        "location": "header"
+      },
+      "StatusShape": {
+        "type": "integer",
+        "location": "statusCode"
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "IntegerType": {
+        "type": "integer"
+      },
+      "BooleanType": {
+        "type": "boolean"
+      },
+      "FloatType": {
+        "type": "float"
+      },
+      "DoubleType": {
+        "type": "double"
+      },
+      "LongType": {
+        "type": "long"
+      },
+      "CharType": {
+        "type": "char"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "ImaHeader": "test",
+          "ImaHeaderLocation": "abc",
+          "Status": 200,
+          "Str": "myname",
+          "Num": 123,
+          "FalseBool": false,
+          "TrueBool": true,
+          "Float": 1.2,
+          "Double": 1.3,
+          "Long": 200,
+          "Char": "a"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {
+            "ImaHeader": "test",
+            "X-Foo": "abc"
+          },
+          "body": "{\"Str\": \"myname\", \"Num\": 123, \"FalseBool\": false, \"TrueBool\": true, \"Float\": 1.2, \"Double\": 1.3, \"Long\": 200, \"Char\": \"a\"}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Blob members",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "BlobMember": {
+            "shape": "BlobType"
+          },
+          "StructMember": {
+            "shape": "BlobContainer"
+          }
+        }
+      },
+      "BlobType": {
+        "type": "blob"
+      },
+      "BlobContainer": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "shape": "BlobType"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "BlobMember": "hi!",
+          "StructMember": {
+            "foo": "there!"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"BlobMember\": \"aGkh\", \"StructMember\": {\"foo\": \"dGhlcmUh\"}}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Timestamp members",
+    "metadata": {
+      "protocol": "rest-json",
+      "timestampFormat": "iso8601"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "TimeMember": {
+            "shape": "TimeType"
+          },
+          "StructMember": {
+            "shape": "TimeContainer"
+          }
+        }
+      },
+      "TimeType": {
+        "type": "timestamp"
+      },
+      "TimeContainer": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "shape": "TimeType",
+            "timestampFormat": "unixTimestamp"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "TimeMember": 1398796238,
+          "StructMember": {
+            "foo": 1398796238
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"TimeMember\": \"2014-04-29T18:30:38+00:00\", \"StructMember\": {\"foo\": \"1398796238\"}}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Lists",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "ListMember": {
+            "shape": "ListType"
+          }
+        }
+      },
+      "ListType": {
+        "type": "list",
+        "member": {
+          "type": "string"
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "ListMember": ["a", "b"]
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"ListMember\": [\"a\", \"b\"]}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Maps",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "MapMember": {
+            "shape": "MapType"
+          }
+        }
+      },
+      "MapType": {
+        "type": "map",
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "list",
+          "member": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "MapMember": {
+            "a": [1, 2],
+            "b": [3, 4]
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"MapMember\": {\"a\": [1, 2], \"b\": [3, 4]}}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Ignores extra data",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "StrType": {
+            "shape": "StrType"
+          }
+        }
+      },
+      "StrType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {},
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"foo\": \"bar\"}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Supports header maps",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "AllHeaders": {
+            "type": "map",
+            "location": "headers",
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "PrefixedHeaders": {
+            "type": "map",
+            "location": "headers",
+            "locationName": "X-",
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "AllHeaders": {
+            "Content-Length": 10,
+            "x-Foo": "bar",
+            "X-bam": "boo"
+          },
+          "PrefixedHeaders": {
+            "Foo": "bar",
+            "bam": "boo"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {
+            "Content-Length": 10,
+            "x-Foo": "bar",
+            "X-bam": "boo"
+          },
+          "body": "{}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "JSON payload",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "payload": "Data",
+        "members": {
+          "Header": {
+            "type": "string",
+            "location": "header",
+            "locationName": "X-Foo"
+          },
+          "Data": {
+            "type": "structure",
+            "members": {
+              "foo": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Header": "baz",
+          "Data": {
+            "foo": "abc"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {
+            "X-Foo": "baz"
+          },
+          "body": "{\"foo\": \"abc\"}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Streaming payload",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "payload": "Stream",
+        "members": {
+          "Stream": {
+            "type": "blob"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Stream": "abc"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "abc"
+        }
+      }
+    ]
+  }
+]

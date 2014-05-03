@@ -45,10 +45,10 @@ abstract class AbstractRestParser extends AbstractParser
                     $this->extractHeader($name, $member, $response, $result);
                     break;
                 case 'headers':
-                    $this->extractHeaders($name, $member, $result, $response);
+                    $this->extractHeaders($name, $member, $response, $result);
                     break;
                 case 'statusCode':
-                    $this->extractStatus($name, $member, $response, $result);
+                    $this->extractStatus($name, $response, $result);
                     break;
             }
         }
@@ -95,19 +95,21 @@ abstract class AbstractRestParser extends AbstractParser
      * Extract a map of headers with an optional prefix from the response.
      */
     private function extractHeaders(
+        $name,
         Shape $shape,
         ResponseInterface $response,
         &$result
     ) {
         // Check if the headers are prefixed by a location name
+        $result[$name] = [];
         $prefix = $shape['locationName'];
         $prefixLen = strlen($prefix);
 
-        foreach ($response->getHeaders() as $name => $values) {
+        foreach ($response->getHeaders() as $k => $values) {
             if (!$prefixLen) {
-                $result[$name] = implode(', ', $values);
-            } elseif (strpos($name, $prefix) === 0) {
-                $result[substr($name, $prefixLen)] = implode(', ', $values);
+                $result[$name][$k] = implode(', ', $values);
+            } elseif (stripos($k, $prefix) === 0) {
+                $result[$name][substr($k, $prefixLen)] = implode(', ', $values);
             }
         }
     }
@@ -117,10 +119,9 @@ abstract class AbstractRestParser extends AbstractParser
      */
     private function extractStatus(
         $name,
-        Shape $shape,
         ResponseInterface $response,
         array &$result
     ) {
-        $result[$shape['locationName'] ?: $name] = $response->getStatusCode();
+        $result[$name] = (int) $response->getStatusCode();
     }
 }
