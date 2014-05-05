@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Api;
+namespace Aws\Test\Subscriber;
 
 use Aws\Api\Operation;
 use Aws\Api\ShapeMap;
