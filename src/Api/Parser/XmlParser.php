@@ -13,11 +13,6 @@ class XmlParser
 {
     public function parse(StructureShape $shape, \SimpleXMLElement $value)
     {
-        // Remove the outermost wrapping element if present
-        if ($shape['resultWrapper']) {
-            $value = $value->{$shape['resultWrapper']};
-        }
-
         return $this->dispatch($shape, $value);
     }
 

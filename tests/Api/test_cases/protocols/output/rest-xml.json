@@ -2,7 +2,7 @@
   {
     "description": "Scalar members",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {
@@ -15,14 +15,12 @@
             "shape": "HeaderShape",
             "locationName": "X-Foo"
           },
-          "Status": {
-            "shape": "StatusShape"
-          },
           "Str": {
             "shape": "StringType"
           },
           "Num": {
-            "shape": "IntegerType"
+            "shape": "IntegerType",
+            "locationName": "FooNum"
           },
           "FalseBool": {
             "shape": "BooleanType"
@@ -44,14 +42,6 @@
           }
         }
       },
-      "HeaderShape": {
-        "type": "string",
-        "location": "header"
-      },
-      "StatusShape": {
-        "type": "integer",
-        "location": "statusCode"
-      },
       "StringType": {
         "type": "string"
       },
@@ -72,6 +62,14 @@
       },
       "CharType": {
         "type": "char"
+      },
+      "HeaderShape": {
+        "type": "string",
+        "location": "header"
+      },
+      "StatusShape": {
+        "type": "integer",
+        "location": "statusCode"
       }
     },
     "cases": [
@@ -85,7 +83,6 @@
         "result": {
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
-          "Status": 200,
           "Str": "myname",
           "Num": 123,
           "FalseBool": false,
@@ -101,36 +98,22 @@
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "{\"Str\": \"myname\", \"Num\": 123, \"FalseBool\": false, \"TrueBool\": true, \"Float\": 1.2, \"Double\": 1.3, \"Long\": 200, \"Char\": \"a\"}"
+          "body": "<OperationNameResponse><Str>myname</Str><FooNum>123</FooNum><FalseBool>false</FalseBool><TrueBool>true</TrueBool><Float>1.2</Float><Double>1.3</Double><Long>200</Long><Char>a</Char></OperationNameResponse>"
         }
       }
     ]
   },
   {
-    "description": "Blob members",
+    "description": "Blob",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
         "members": {
-          "BlobMember": {
-            "shape": "BlobType"
-          },
-          "StructMember": {
-            "shape": "BlobContainer"
-          }
-        }
-      },
-      "BlobType": {
-        "type": "blob"
-      },
-      "BlobContainer": {
-        "type": "structure",
-        "members": {
-          "foo": {
-            "shape": "BlobType"
+          "Blob": {
+            "type": "blob"
           }
         }
       }
@@ -144,68 +127,12 @@
           "name": "OperationName"
         },
         "result": {
-          "BlobMember": "hi!",
-          "StructMember": {
-            "foo": "there!"
-          }
+          "Blob": "value"
         },
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "{\"BlobMember\": \"aGkh\", \"StructMember\": {\"foo\": \"dGhlcmUh\"}}"
-        }
-      }
-    ]
-  },
-  {
-    "description": "Timestamp members",
-    "metadata": {
-      "protocol": "rest-json",
-      "timestampFormat": "iso8601"
-    },
-    "shapes": {
-      "OutputShape": {
-        "type": "structure",
-        "members": {
-          "TimeMember": {
-            "shape": "TimeType"
-          },
-          "StructMember": {
-            "shape": "TimeContainer"
-          }
-        }
-      },
-      "TimeType": {
-        "type": "timestamp"
-      },
-      "TimeContainer": {
-        "type": "structure",
-        "members": {
-          "foo": {
-            "shape": "TimeType",
-            "timestampFormat": "unixTimestamp"
-          }
-        }
-      }
-    },
-    "cases": [
-      {
-        "given": {
-          "output": {
-            "shape": "OutputShape"
-          },
-          "name": "OperationName"
-        },
-        "result": {
-          "TimeMember": 1398796238,
-          "StructMember": {
-            "foo": 1398796238
-          }
-        },
-        "response": {
-          "status_code": 200,
-          "headers": {},
-          "body": "{\"TimeMember\": \"2014-04-29T18:30:38+00:00\", \"StructMember\": {\"foo\": \"1398796238\"}}"
+          "body": "<OperationNameResult><Blob>dmFsdWU=</Blob></OperationNameResult>"
         }
       }
     ]
@@ -213,18 +140,18 @@
   {
     "description": "Lists",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
         "members": {
           "ListMember": {
-            "shape": "ListType"
+            "shape": "ListShape"
           }
         }
       },
-      "ListType": {
+      "ListShape": {
         "type": "list",
         "member": {
           "type": "string"
@@ -240,40 +167,35 @@
           "name": "OperationName"
         },
         "result": {
-          "ListMember": ["a", "b"]
+          "ListMember": ["abc", "123"]
         },
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "{\"ListMember\": [\"a\", \"b\"]}"
+          "body": "<OperationNameResult><ListMember><member>abc</member><member>123</member></ListMember></OperationNameResult>"
         }
       }
     ]
   },
   {
-    "description": "Maps",
+    "description": "List with custom member name",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
         "members": {
-          "MapMember": {
-            "shape": "MapType"
+          "ListMember": {
+            "shape": "ListShape"
           }
         }
       },
-      "MapType": {
-        "type": "map",
-        "key": {
-          "type": "string"
-        },
-        "value": {
-          "type": "list",
-          "member": {
-            "type": "integer"
-          }
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "type": "string",
+          "locationName": "item"
         }
       }
     },
@@ -286,81 +208,29 @@
           "name": "OperationName"
         },
         "result": {
-          "MapMember": {
-            "a": [1, 2],
-            "b": [3, 4]
-          }
+          "ListMember": ["abc", "123"]
         },
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "{\"MapMember\": {\"a\": [1, 2], \"b\": [3, 4]}}"
+          "body": "<OperationNameResult><ListMember><item>abc</item><item>123</item></ListMember></OperationNameResult>"
         }
       }
     ]
   },
   {
-    "description": "Ignores extra data",
+    "description": "Flattened List",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
         "members": {
-          "StrType": {
-            "shape": "StrType"
-          }
-        }
-      },
-      "StrType": {
-        "type": "string"
-      }
-    },
-    "cases": [
-      {
-        "given": {
-          "output": {
-            "shape": "OutputShape"
-          },
-          "name": "OperationName"
-        },
-        "result": {},
-        "response": {
-          "status_code": 200,
-          "headers": {},
-          "body": "{\"foo\": \"bar\"}"
-        }
-      }
-    ]
-  },
-  {
-    "description": "Supports header maps",
-    "metadata": {
-      "protocol": "rest-json"
-    },
-    "shapes": {
-      "OutputShape": {
-        "type": "structure",
-        "members": {
-          "AllHeaders": {
-            "type": "map",
-            "location": "headers",
-            "key": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            }
-          },
-          "PrefixedHeaders": {
-            "type": "map",
-            "location": "headers",
-            "locationName": "X-",
-            "key": {
-              "type": "string"
-            },
-            "value": {
+          "ListMember": {
+            "type": "list",
+            "flattened": true,
+            "member": {
               "type": "string"
             }
           }
@@ -376,32 +246,162 @@
           "name": "OperationName"
         },
         "result": {
-          "AllHeaders": {
-            "Content-Length": 10,
-            "x-Foo": "bar",
-            "X-bam": "boo"
-          },
-          "PrefixedHeaders": {
-            "Foo": "bar",
-            "bam": "boo"
-          }
+          "ListMember": ["abc", "123"]
         },
         "response": {
           "status_code": 200,
-          "headers": {
-            "Content-Length": 10,
-            "x-Foo": "bar",
-            "X-bam": "boo"
-          },
-          "body": "{}"
+          "headers": {},
+          "body": "<OperationNameResult><ListMember>abc</ListMember><ListMember>123</ListMember></OperationNameResult>"
         }
       }
     ]
   },
   {
-    "description": "JSON payload",
+    "description": "Normal map",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Map": {
+            "type": "map",
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "structure",
+              "members": {
+                "foo": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Map": {
+            "qux": {
+              "foo": "bar"
+            },
+            "baz": {
+              "foo": "bam"
+            }
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Map><entry><key>qux</key><value><foo>bar</foo></value></entry><entry><key>baz</key><value><foo>bam</foo></value></entry></Map></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Flattened map",
+    "metadata": {
+      "protocol": "rest-xml"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Map": {
+            "type": "map",
+            "flattened": true,
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Map": {
+            "qux": "bar",
+            "baz": "bam"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Map><key>qux</key><value>bar</value></Map><Map><key>baz</key><value>bam</value></Map></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Named map",
+    "metadata": {
+      "protocol": "rest-xml"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Map": {
+            "type": "map",
+            "flattened": true,
+            "key": {
+              "type": "string",
+              "locationName": "foo"
+            },
+            "value": {
+              "type": "string",
+              "locationName": "bar"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Map": {
+            "qux": "bar",
+            "baz": "bam"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Map><foo>qux</foo><bar>bar</bar></Map><Map><foo>baz</foo><bar>bam</bar></Map></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "XML payload",
+    "metadata": {
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {
@@ -443,7 +443,7 @@
           "headers": {
             "X-Foo": "baz"
           },
-          "body": "{\"Foo\": \"abc\"}"
+          "body": "<OperationNameResponse><Foo>abc</Foo></OperationNameResponse>"
         }
       }
     ]
@@ -451,7 +451,7 @@
   {
     "description": "Streaming payload",
     "metadata": {
-      "protocol": "rest-json"
+      "protocol": "rest-xml"
     },
     "shapes": {
       "OutputShape": {

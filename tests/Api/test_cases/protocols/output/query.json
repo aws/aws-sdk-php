@@ -7,6 +7,7 @@
     "shapes": {
       "OutputShape": {
         "type": "structure",
+        "resultWrapper": "OperationNameResult",
         "members": {
           "Str": {
             "shape": "StringType"
@@ -84,7 +85,7 @@
     ]
   },
   {
-    "description": "Result wrapper",
+    "description": "Custom result wrapper",
     "metadata": {
       "protocol": "query"
     },
@@ -113,7 +114,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><Wrapper><Str>myname</Str></Wrapper></OperationNameResult></OperationNameResponse>"
+          "body": "<OperationNameResponse><Wrapper><Str>myname</Str></Wrapper></OperationNameResponse>"
         }
       }
     ]
@@ -156,8 +157,7 @@
   {
     "description": "Blob",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
@@ -191,8 +191,7 @@
   {
     "description": "Lists",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
@@ -232,8 +231,7 @@
   {
     "description": "List with custom member name",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
@@ -274,8 +272,7 @@
   {
     "description": "Flattened List",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
@@ -313,8 +310,7 @@
   {
     "description": "Normal map",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
@@ -366,8 +362,7 @@
   {
     "description": "Flattened map",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
@@ -411,8 +406,7 @@
   {
     "description": "Named map",
     "metadata": {
-      "protocol": "query",
-      "resultWrapped": false
+      "protocol": "query"
     },
     "shapes": {
       "OutputShape": {
