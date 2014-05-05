@@ -24,18 +24,19 @@ class XmlParser
     private function dispatch($shape, \SimpleXMLElement $value)
     {
         static $methods = [
-            'parse_structure' => true,
-            'parse_list'      => true,
-            'parse_map'       => true,
-            'parse_blob'      => true,
-            'parse_boolean'   => true,
-            'parse_integer'   => true,
-            'parse_float'     => true
+            'structure' => 'parse_structure',
+            'list'      => 'parse_list',
+            'map'       => 'parse_map',
+            'blob'      => 'parse_blob',
+            'boolean'   => 'parse_boolean',
+            'integer'   => 'parse_integer',
+            'float'     => 'parse_float',
+            'double'    => 'parse_float'
         ];
 
-        $type = 'parse_' . $shape['type'];
+        $type = $shape['type'];
         if (isset($methods[$type])) {
-            return $this->{$type}($shape, $value);
+            return $this->{$methods[$type]}($shape, $value);
         }
 
         return (string) $value;
@@ -61,10 +62,10 @@ class XmlParser
     private function memberKey(Shape $shape, $name)
     {
         if ($shape instanceof ListShape && $shape['flattened']) {
-            return $shape->getMember()['xmlName'] ?: $name;
+            return $shape->getMember()['locationName'] ?: $name;
         }
 
-        return $name;
+        return $shape['locationName'] ?: $name;
     }
 
     private function parse_list(ListShape $shape, \SimpleXMLElement  $value)
@@ -73,7 +74,7 @@ class XmlParser
         $member = $shape->getMember();
 
         if (!$shape['flattened']) {
-            $value = $value->{$member['xmlName'] ?: 'member'};
+            $value = $value->{$member['locationName'] ?: 'member'};
         }
 
         foreach ($value as $v) {
@@ -93,8 +94,8 @@ class XmlParser
 
         $mapKey = $shape->getKey();
         $mapValue = $shape->getValue();
-        $keyName = $shape->getKey()['xmlName'] ?: 'key';
-        $valueName = $shape->getValue()['xmlName'] ?: 'value';
+        $keyName = $shape->getKey()['locationName'] ?: 'key';
+        $valueName = $shape->getValue()['locationName'] ?: 'value';
 
         foreach ($value as $node) {
             $key = $this->dispatch($mapKey, $node->{$keyName});

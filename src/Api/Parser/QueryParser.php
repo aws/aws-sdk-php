@@ -25,11 +25,19 @@ class QueryParser extends AbstractParser
 
     protected function createResult(Service $api, ProcessEvent $event)
     {
-        $operation = $api->getOperation($event->getCommand()->getName());
+        /** @var \Aws\AwsCommandInterface $command */
+        $command = $event->getCommand();
+        $name = $command->getName();
+        $operation = $api->getOperation($name);
+        $xml = $event->getResponse()->xml();
+
+        if ($command->getApi()->getMetadata('resultWrapped') !== false) {
+            $xml = $xml->{$name . 'Result'};
+        }
 
         return new Result($this->xmlParser->parse(
             $operation->getOutput(),
-            $event->getResponse()->xml()
+            $xml
         ));
     }
 }
