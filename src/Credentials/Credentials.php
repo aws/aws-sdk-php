@@ -52,13 +52,10 @@ class Credentials implements CredentialsInterface
         }
 
         // Use credentials from environment variables, if available
-        if (isset($_SERVER[self::ENV_KEY]) &&
-            isset($_SERVER[self::ENV_SECRET])
-        ) {
-            return new self(
-                $_SERVER[self::ENV_KEY],
-                $_SERVER[self::ENV_SECRET]
-            );
+        $key = self::getEnvVar(self::ENV_KEY);
+        $secret = self::getEnvVar(self::ENV_SECRET);
+        if ($key & $secret) {
+            return new self($key, $secret);
         }
 
         // Use credentials from the ~/.aws/credentials INI file, if available
@@ -108,9 +105,7 @@ class Credentials implements CredentialsInterface
 
         // Determine the profile name and make sure it contains correct data
         if (!$profile) {
-            $profile = isset($_SERVER[self::ENV_PROFILE])
-                ? $_SERVER[self::ENV_PROFILE]
-                : 'default';
+            $profile = self::getEnvVar(self::ENV_PROFILE) ?: 'default';
         }
         if (empty($data[$profile])
             || !isset($data[$profile]['aws_access_key_id'])
@@ -191,18 +186,26 @@ class Credentials implements CredentialsInterface
     private static function getHomeDir()
     {
         // On Linux/Unix-like systems, use the HOME environment variable
-        if (isset($_SERVER['HOME'])) {
-            return $_SERVER['HOME'];
+        if ($homeDir = self::getEnvVar('HOME')) {
+            return $homeDir;
         }
 
         // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        // Note: getenv() is a fallback for case-insensitive keys on Windows
-        $homeDrive = isset($_SERVER['HOMEDRIVE'])
-            ? $_SERVER['HOMEDRIVE']
-            : getenv('HOMEDRIVE');
-        $homePath = isset($_SERVER['HOMEPATH'])
-            ? $_SERVER['HOMEPATH']
-            : getenv('HOMEPATH');
+        $homeDrive = self::getEnvVar('HOMEDRIVE');
+        $homePath = self::getEnvVar('HOMEPATH');
+
         return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
+    }
+
+    /**
+     * Fetches the value of an environment variable by checking $_SERVER and getenv().
+     *
+     * @param string $var Name of the environment variable
+     *
+     * @return mixed|null
+     */
+    private static function getEnvVar($var)
+    {
+        return isset($_SERVER[$var]) ? $_SERVER[$var] : getenv($var);
     }
 }

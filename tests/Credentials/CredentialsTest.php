@@ -142,6 +142,7 @@ EOT;
 
     public function testCreatesFromInstanceProfileCredentials()
     {
+        putenv('HOME=');
         unset($_SERVER['HOME']);
         $this->assertInstanceOf(
             'Aws\Credentials\InstanceProfileCredentials',
@@ -151,6 +152,7 @@ EOT;
 
     public function testGetsHomeDirectoryForWindowsUsers()
     {
+        putenv('HOME=');
         unset($_SERVER['HOME']);
         $_SERVER['HOMEDRIVE'] = 'C:';
         $_SERVER['HOMEPATH'] = '\\Michael\\Home';
