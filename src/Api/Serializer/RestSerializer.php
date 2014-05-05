@@ -134,11 +134,7 @@ abstract class RestSerializer implements SubscriberInterface
         Shape $member,
         $value
     ) {
-        if ($member instanceof MapShape) {
-            $this->applyHeaderMap($request, $name, $member, $value);
-        } else {
-            $request->setHeader($member['locationName'] ?: $name, $value);
-        }
+        $request->setHeader($member['locationName'] ?: $name, $value);
     }
 
     /**
