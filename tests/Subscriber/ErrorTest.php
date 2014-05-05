@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Tests;
+namespace Aws\Test\Subscriber;
 
 use Aws\Api\Service;
 use Aws\AwsClient;

@@ -36,7 +36,7 @@ class XmlBody
         $xml = new \XMLWriter();
         $xml->openMemory();
         $xml->startDocument('1.0', 'UTF-8');
-        $this->format($shape, $shape['xmlName'], $args, $xml);
+        $this->format($shape, $shape['locationName'], $args, $xml);
         $xml->endDocument();
 
         return $xml->outputMemory();
@@ -83,7 +83,7 @@ class XmlBody
         foreach ($value as $k => $v) {
             if ($v !== null && $shape->hasMember($k)) {
                 $member = $shape->getMember($k);
-                $elementName = $member['xmlName'] ?: $k;
+                $elementName = $member['locationName'] ?: $k;
                 $this->format($member, $elementName, $v, $xml);
             }
         }
@@ -103,7 +103,7 @@ class XmlBody
             $elementName = $name;
         } else {
             $this->startElement($shape, $name, $xml);
-            $elementName = $items['xmlName'] ?: 'member';
+            $elementName = $items['locationName'] ?: 'member';
         }
 
         foreach ($value as &$v) {

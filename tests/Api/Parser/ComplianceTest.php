@@ -11,10 +11,13 @@ use GuzzleHttp\Stream;
 
 /**
  * @covers Aws\Api\Parser\AbstractParser
+ * @covers Aws\Api\Parser\AbstractRestParser
  * @covers Aws\Api\Parser\JsonRpcParser
- * @covers Aws\Api\Parser\JsonTrait
+ * @covers Aws\Api\Parser\JsonParser
  * @covers Aws\Api\Parser\RestJsonParser
  * @covers Aws\Api\Parser\RestXmlParser
+ * @covers Aws\Api\Parser\QueryParser
+ * @covers Aws\Api\Parser\XmlParser
  */
 class ComplianceTest extends \PHPUnit_Framework_TestCase
 {

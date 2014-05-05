@@ -1,9 +1,10 @@
 <?php
 namespace Aws\Service;
 
+use Aws\Api\Validator;
 use Aws\Paginator\PaginatorFactory;
 use Aws\Sdk;
-use Aws\AwsClient;
+use Aws\Subscriber\Validation;
 use Aws\AwsClientInterface;
 use Aws\Api\ApiProviderInterface;
 use Aws\Api\EndpointProviderInterface;
@@ -60,7 +61,8 @@ class ClientFactory
         'waiter_factory'    => 1,
         'client_defaults'   => 1,
         'client'            => 1,
-        'retries'           => 2
+        'retries'           => 2,
+        'validate'          => 2
     ];
 
     /**
@@ -85,6 +87,7 @@ class ClientFactory
             'exception_class'   => true,
             'paginator_factory' => false,
             'waiter_factory'    => false,
+            'validate'          => true,
         ];
 
         foreach ($required as $r) {
@@ -175,6 +178,22 @@ class ClientFactory
                 ])
             ]));
         }
+    }
+
+    /**
+     * Applies validation to a client
+     */
+    protected function handle_validate(
+        $value,
+        array &$args,
+        AwsClientInterface $client
+    ) {
+        if ($value !== true) {
+            return;
+        }
+
+        $validator = new Validator();
+        $client->getEmitter()->attach(new Validation($validator));
     }
 
     /**

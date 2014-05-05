@@ -25,11 +25,14 @@ class QueryParser extends AbstractParser
 
     protected function createResult(Service $api, ProcessEvent $event)
     {
-        $operation = $api->getOperation($event->getCommand()->getName());
+        $command = $event->getCommand();
+        $output = $api->getOperation($command->getName())->getOutput();
+        $xml = $event->getResponse()->xml();
 
-        return new Result($this->xmlParser->parse(
-            $operation->getOutput(),
-            $event->getResponse()->xml()
-        ));
+        if ($wrapper = $output['resultWrapper']) {
+            $xml = $xml->{$wrapper};
+        }
+
+        return new Result($this->xmlParser->parse($output, $xml));
     }
 }

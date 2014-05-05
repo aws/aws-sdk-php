@@ -84,7 +84,7 @@ class QuerySerializer implements SubscriberInterface
     ) {
         foreach ($value as $k => $v) {
             $member = $shape->getMember($k);
-            $memberPrefix = $member['xmlName'] ?: $k;
+            $memberPrefix = $member['queryName'] ?: $k;
             if ($prefix) {
                 $memberPrefix = $prefix . '.' . $memberPrefix;
             }
@@ -102,10 +102,10 @@ class QuerySerializer implements SubscriberInterface
 
         if (!$shape['flattened']) {
             $prefix .= '.member';
-        } elseif ($locationName = $items['xmlName']) {
+        } elseif ($queryName = $items['queryName']) {
             $parts = explode('.', $prefix);
             array_pop($parts);
-            $parts[] = $locationName;
+            $parts[] = $queryName;
             $prefix = implode('.', $parts);
         }
 
@@ -127,8 +127,8 @@ class QuerySerializer implements SubscriberInterface
             $prefix .= '.entry';
         }
 
-        $kp = isset($keys['xmlName']) ? $keys['xmlName'] : 'key';
-        $vp = isset($vals['xmlName']) ? $vals['xmlName'] : 'value';
+        $kp = isset($keys['queryName']) ? $keys['queryName'] : 'key';
+        $vp = isset($vals['queryName']) ? $vals['queryName'] : 'value';
         $i = 0;
 
         foreach ($value as $k => $v) {

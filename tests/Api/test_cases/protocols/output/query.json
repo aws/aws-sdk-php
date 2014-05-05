@@ -1,0 +1,452 @@
+[
+  {
+    "description": "Scalar members",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "resultWrapper": "OperationNameResult",
+        "members": {
+          "Str": {
+            "shape": "StringType"
+          },
+          "Num": {
+            "shape": "IntegerType",
+            "locationName": "FooNum"
+          },
+          "FalseBool": {
+            "shape": "BooleanType"
+          },
+          "TrueBool": {
+            "shape": "BooleanType"
+          },
+          "Float": {
+            "shape": "FloatType"
+          },
+          "Double": {
+            "shape": "DoubleType"
+          },
+          "Long": {
+            "shape": "LongType"
+          },
+          "Char": {
+            "shape": "CharType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "IntegerType": {
+        "type": "integer"
+      },
+      "BooleanType": {
+        "type": "boolean"
+      },
+      "FloatType": {
+        "type": "float"
+      },
+      "DoubleType": {
+        "type": "double"
+      },
+      "LongType": {
+        "type": "long"
+      },
+      "CharType": {
+        "type": "char"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Str": "myname",
+          "Num": 123,
+          "FalseBool": false,
+          "TrueBool": true,
+          "Float": 1.2,
+          "Double": 1.3,
+          "Long": 200,
+          "Char": "a"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResponse><OperationNameResult><Str>myname</Str><FooNum>123</FooNum><FalseBool>false</FalseBool><TrueBool>true</TrueBool><Float>1.2</Float><Double>1.3</Double><Long>200</Long><Char>a</Char></OperationNameResult></OperationNameResponse>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Custom result wrapper",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "resultWrapper": "Wrapper",
+        "members": {
+          "Str": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Str": "myname"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResponse><Wrapper><Str>myname</Str></Wrapper></OperationNameResponse>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Result not wrapped",
+    "metadata": {
+      "protocol": "query",
+      "resultWrapped": false
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Str": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Str": "myname"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Str>myname</Str></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Blob",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Blob": {
+            "type": "blob"
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Blob": "value"
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Blob>dmFsdWU=</Blob></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Lists",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "ListMember": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "type": "string"
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "ListMember": ["abc", "123"]
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><ListMember><member>abc</member><member>123</member></ListMember></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "List with custom member name",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "ListMember": {
+            "shape": "ListShape"
+          }
+        }
+      },
+      "ListShape": {
+        "type": "list",
+        "member": {
+          "type": "string",
+          "locationName": "item"
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "ListMember": ["abc", "123"]
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><ListMember><item>abc</item><item>123</item></ListMember></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Flattened List",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "ListMember": {
+            "type": "list",
+            "flattened": true,
+            "member": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "ListMember": ["abc", "123"]
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><ListMember>abc</ListMember><ListMember>123</ListMember></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Normal map",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Map": {
+            "type": "map",
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "structure",
+              "members": {
+                "foo": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Map": {
+            "qux": {
+              "foo": "bar"
+            },
+            "baz": {
+              "foo": "bam"
+            }
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Map><entry><key>qux</key><value><foo>bar</foo></value></entry><entry><key>baz</key><value><foo>bam</foo></value></entry></Map></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Flattened map",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Map": {
+            "type": "map",
+            "flattened": true,
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Map": {
+            "qux": "bar",
+            "baz": "bam"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Map><key>qux</key><value>bar</value></Map><Map><key>baz</key><value>bam</value></Map></OperationNameResult>"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Named map",
+    "metadata": {
+      "protocol": "query"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Map": {
+            "type": "map",
+            "flattened": true,
+            "key": {
+              "type": "string",
+              "locationName": "foo"
+            },
+            "value": {
+              "type": "string",
+              "locationName": "bar"
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Map": {
+            "qux": "bar",
+            "baz": "bam"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResult><Map><foo>qux</foo><bar>bar</bar></Map><Map><foo>baz</foo><bar>bam</bar></Map></OperationNameResult>"
+        }
+      }
+    ]
+  }
+]
