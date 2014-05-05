@@ -140,9 +140,7 @@ class Credentials implements CredentialsInterface, FromConfigInterface
         }
 
         if (!$profile) {
-            $profile = isset($_SERVER[self::ENV_PROFILE])
-                ? $_SERVER[self::ENV_PROFILE]
-                : 'default';
+            $profile = self::getEnvVar(self::ENV_PROFILE) ?: 'default';
         }
 
         if (!file_exists($filename) || !($data = parse_ini_file($filename, true))) {
@@ -262,17 +260,10 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     private static function createFromEnvironment($config)
     {
         // Get key and secret from ENV variables
-        $envKey = isset($_SERVER[self::ENV_KEY])
-            ? $_SERVER[self::ENV_KEY]
-            : getenv(self::ENV_KEY);
-        $envSecret = isset($_SERVER[self::ENV_SECRET])
-            ? $_SERVER[self::ENV_SECRET]
-            : getenv(self::ENV_SECRET);
-        // Use AWS_SECRET_ACCESS_KEY if AWS_SECRET_KEY was not set.
-        if (!$envSecret) {
-            $envSecret = isset($_SERVER[self::ENV_SECRET_ACCESS_KEY])
-                ? $_SERVER[self::ENV_SECRET_ACCESS_KEY]
-                : getenv(self::ENV_SECRET_ACCESS_KEY);
+        $envKey = self::getEnvVar(self::ENV_KEY);
+        if (!($envSecret = self::getEnvVar(self::ENV_SECRET))) {
+            // Use AWS_SECRET_ACCESS_KEY if AWS_SECRET_KEY was not set.
+            $envSecret = self::getEnvVar(self::ENV_SECRET_ACCESS_KEY);
         }
 
         // Use credentials from the environment variables if available
@@ -321,19 +312,26 @@ class Credentials implements CredentialsInterface, FromConfigInterface
     private static function getHomeDir()
     {
         // On Linux/Unix-like systems, use the HOME environment variable
-        if (isset($_SERVER['HOME'])) {
-            return $_SERVER['HOME'];
+        if ($homeDir = self::getEnvVar('HOME')) {
+            return $homeDir;
         }
 
         // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        // Note: getenv() is a fallback for case-insensitive keys on Windows
-        $homeDrive = isset($_SERVER['HOMEDRIVE'])
-            ? $_SERVER['HOMEDRIVE']
-            : getenv('HOMEDRIVE');
-        $homePath = isset($_SERVER['HOMEPATH'])
-            ? $_SERVER['HOMEPATH']
-            : getenv('HOMEPATH');
+        $homeDrive = self::getEnvVar('HOMEDRIVE');
+        $homePath = self::getEnvVar('HOMEPATH');
 
         return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
+    }
+
+    /**
+     * Fetches the value of an environment variable by checking $_SERVER and getenv().
+     *
+     * @param string $var Name of the environment variable
+     *
+     * @return mixed|null
+     */
+    private static function getEnvVar($var)
+    {
+        return isset($_SERVER[$var]) ? $_SERVER[$var] : getenv($var);
     }
 }
