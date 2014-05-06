@@ -108,7 +108,7 @@ class FilesystemApiProvider implements ApiProviderInterface
     private function parseJsonFile($path)
     {
         if (!file_exists($path)) {
-            return [];
+            throw new \InvalidArgumentException("File not found: $path");
         }
 
         $data = json_decode(file_get_contents($path), true);
@@ -126,7 +126,7 @@ class FilesystemApiProvider implements ApiProviderInterface
                 rsort($versions);
                 $this->latestVersions[$service] = $versions[0];
             } else {
-                throw new \RuntimeException('There were no versions of the '
+                throw new \RuntimeException('There are no versions of the '
                     . $service . ' service available.');
             }
         }
