@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.6.2 (2014-05-05)
+2.6.2 (2014-05-06)
 ------------------
 
 * Added support for Amazon SQS message attributes.
