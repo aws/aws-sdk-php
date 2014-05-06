@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+2.6.2 (2014-05-05)
+------------------
+
+* Added support for Amazon SQS message attributes.
+* Fixed Amazon S3 multi-part uploads so that manually set ContentType values are not overwritten.
+* No longer recalculating file sizes when an Amazon S3 socket timeout occurs because this was causing issues with
+  multi-part uploads and it is very unlikely ever the culprit of a socket timeout.
+* Added better environment variable detection.
+
 2.6.1 (2014-04-25)
 ------------------
 
