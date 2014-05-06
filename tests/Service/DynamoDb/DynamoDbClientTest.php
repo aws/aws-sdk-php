@@ -98,7 +98,6 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
             'number' => ['N' => '3'],
         ];
 
-        $this->assertSame($expected, $client->formatData($original));
         $this->assertSame($expected, $client->formatAttributes($original));
     }
 }

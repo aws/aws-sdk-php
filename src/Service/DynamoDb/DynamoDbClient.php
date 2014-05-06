@@ -75,23 +75,13 @@ class DynamoDbClient extends AwsClient
      *
      * @return array The formatted values.
      */
-    public function formatData(array $data, $format = 'put')
+    public function formatAttributes(array $data, $format = 'put')
     {
         foreach ($data as &$value) {
             $value = $this->formatValue($value, $format);
         }
 
         return $data;
-    }
-
-    /**
-     * Alias of DynamoDbClient::formatData()
-     *
-     * @deprecated Use DynamoDbClient::formatData() instead
-     */
-    public function formatAttributes(array $data, $format = 'put')
-    {
-        return $this->formatData($data, $format);
     }
 
     /**
