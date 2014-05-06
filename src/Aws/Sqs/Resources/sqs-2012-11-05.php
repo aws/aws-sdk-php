@@ -571,6 +571,15 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'MessageAttributeNames' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'MessageAttributeName',
+                    'items' => array(
+                        'name' => 'MessageAttributeName',
+                        'type' => 'string',
+                    ),
+                ),
                 'MaxNumberOfMessages' => array(
                     'type' => 'numeric',
                     'location' => 'aws.query',
@@ -651,11 +660,57 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
+                'MessageAttributes' => array(
+                    'type' => 'object',
+                    'location' => 'aws.query',
+                    'sentAs' => 'MessageAttribute',
+                    'data' => array(
+                        'keyName' => 'Name',
+                        'valueName' => 'Value',
+                    ),
+                    'additionalProperties' => array(
+                        'type' => 'object',
+                        'data' => array(
+                            'shape_name' => 'String',
+                        ),
+                        'properties' => array(
+                            'StringValue' => array(
+                                'type' => 'string',
+                            ),
+                            'BinaryValue' => array(
+                                'type' => 'string',
+                            ),
+                            'StringListValues' => array(
+                                'type' => 'array',
+                                'sentAs' => 'StringListValue',
+                                'items' => array(
+                                    'name' => 'StringListValue',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'BinaryListValues' => array(
+                                'type' => 'array',
+                                'sentAs' => 'BinaryListValue',
+                                'items' => array(
+                                    'name' => 'BinaryListValue',
+                                    'type' => 'string',
+                                ),
+                            ),
+                            'DataType' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
                     'reason' => 'The message contains characters outside the allowed set.',
                     'class' => 'InvalidMessageContentsException',
+                ),
+                array(
+                    'class' => 'UnsupportedOperationException',
                 ),
             ),
         ),
@@ -701,6 +756,48 @@ return array (
                             'DelaySeconds' => array(
                                 'type' => 'numeric',
                             ),
+                            'MessageAttributes' => array(
+                                'type' => 'object',
+                                'sentAs' => 'MessageAttribute',
+                                'data' => array(
+                                    'keyName' => 'Name',
+                                    'valueName' => 'Value',
+                                ),
+                                'additionalProperties' => array(
+                                    'type' => 'object',
+                                    'data' => array(
+                                        'shape_name' => 'String',
+                                    ),
+                                    'properties' => array(
+                                        'StringValue' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'BinaryValue' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'StringListValues' => array(
+                                            'type' => 'array',
+                                            'sentAs' => 'StringListValue',
+                                            'items' => array(
+                                                'name' => 'StringListValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'BinaryListValues' => array(
+                                            'type' => 'array',
+                                            'sentAs' => 'BinaryListValue',
+                                            'items' => array(
+                                                'name' => 'BinaryListValue',
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                        'DataType' => array(
+                                            'required' => true,
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -725,6 +822,9 @@ return array (
                 array(
                     'reason' => 'The Id of a batch entry in a batch request does not abide by the specification.',
                     'class' => 'InvalidBatchEntryIdException',
+                ),
+                array(
+                    'class' => 'UnsupportedOperationException',
                 ),
             ),
         ),
@@ -1071,6 +1171,77 @@ return array (
                                 ),
                                 'additionalProperties' => false,
                             ),
+                            'MD5OfMessageAttributes' => array(
+                                'type' => 'string',
+                            ),
+                            'MessageAttributes' => array(
+                                'type' => 'array',
+                                'sentAs' => 'MessageAttribute',
+                                'data' => array(
+                                    'xmlFlattened' => true,
+                                ),
+                                'filters' => array(
+                                    array(
+                                        'method' => 'Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap',
+                                        'args' => array(
+                                            '@value',
+                                            'MessageAttribute',
+                                            'Name',
+                                            'Value',
+                                        ),
+                                    ),
+                                ),
+                                'items' => array(
+                                    'name' => 'MessageAttribute',
+                                    'type' => 'object',
+                                    'sentAs' => 'MessageAttribute',
+                                    'additionalProperties' => true,
+                                    'properties' => array(
+                                        'Name' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'StringValue' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'BinaryValue' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'StringListValues' => array(
+                                                    'type' => 'array',
+                                                    'sentAs' => 'StringListValue',
+                                                    'data' => array(
+                                                        'xmlFlattened' => true,
+                                                    ),
+                                                    'items' => array(
+                                                        'name' => 'StringListValue',
+                                                        'type' => 'string',
+                                                        'sentAs' => 'StringListValue',
+                                                    ),
+                                                ),
+                                                'BinaryListValues' => array(
+                                                    'type' => 'array',
+                                                    'sentAs' => 'BinaryListValue',
+                                                    'data' => array(
+                                                        'xmlFlattened' => true,
+                                                    ),
+                                                    'items' => array(
+                                                        'name' => 'BinaryListValue',
+                                                        'type' => 'string',
+                                                        'sentAs' => 'BinaryListValue',
+                                                    ),
+                                                ),
+                                                'DataType' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                                'additionalProperties' => false,
+                            ),
                         ),
                     ),
                 ),
@@ -1081,6 +1252,10 @@ return array (
             'additionalProperties' => true,
             'properties' => array(
                 'MD5OfMessageBody' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'MD5OfMessageAttributes' => array(
                     'type' => 'string',
                     'location' => 'xml',
                 ),
@@ -1113,6 +1288,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'MD5OfMessageBody' => array(
+                                'type' => 'string',
+                            ),
+                            'MD5OfMessageAttributes' => array(
                                 'type' => 'string',
                             ),
                         ),
