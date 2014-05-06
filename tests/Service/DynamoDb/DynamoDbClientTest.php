@@ -6,7 +6,6 @@ use Aws\Test\UsesServiceClientTrait;
 
 /**
  * @covers Aws\Service\DynamoDb\DynamoDbClient
- * @covers Aws\Service\DynamoDb\Binary
  */
 class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +28,10 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
     
     public function dataForFormatValueTest()
     {
-        $client = $this->getTestSdk()->getDynamoDb();
+        $handle = fopen('php://memory', 'w+');
+        fwrite($handle, 'foo');
+        rewind($handle);
+        $stream = \GuzzleHttp\Stream\create('bar');
 
         return [
             // String values
@@ -65,18 +67,15 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
             [ [true],  '{"NS":["1"]}' ],
             [ [false], '{"NS":["0"]}' ],
 
-            // Binary values
-            [ $client->binary('foo'),   '{"B":"foo"}' ],
-            [ [$client->binary('foo')], '{"BS":["foo"]}' ],
-
             // Empty and non-scalar values
-            [ '',                   null ],
-            [ null,                 null ],
-            [ [],                   null ],
-            [ [null],               null ],
-            [ new \stdClass(),      null ],
-            [ fopen(__FILE__, 'r'), null ],
-            [ ['foo', 1],           null ],
+            [ '',            null ],
+            [ null,          null ],
+            [ [],            null ],
+            [ [null],        null ],
+            [ ['foo', 1],    null ],
+            [ new \stdClass, null ],
+            [ $handle,       '{"B":"foo"}' ],
+            [ $stream,       '{"B":"bar"}' ],
         ];
     }
     
@@ -101,14 +100,5 @@ class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $client->formatData($original));
         $this->assertSame($expected, $client->formatAttributes($original));
-    }
-
-    public function testBinaryValue()
-    {
-        $client = $this->getTestSdk()->getDynamoDb();
-
-        $binary = $client->binary('foo');
-        $this->assertInstanceOf('Aws\Service\DynamoDb\Binary', $binary);
-        $this->assertEquals('foo', $binary->getValue());
     }
 }

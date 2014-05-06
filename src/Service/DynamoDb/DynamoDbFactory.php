@@ -47,7 +47,4 @@ class DynamoDbFactory extends ClientFactory
             ]));
         }
     }
-
-    // @todo Does this option from SDKv2 need to be accounted for anywhere?
-    // self::COMMAND_PARAMS => array(Cmd::RESPONSE_PROCESSING => Cmd::TYPE_NO_TRANSLATION)
 }

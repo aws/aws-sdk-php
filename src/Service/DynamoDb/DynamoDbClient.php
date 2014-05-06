@@ -2,6 +2,7 @@
 namespace Aws\Service\DynamoDb;
 
 use Aws\AwsClient;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * Client used to interact with the Amazon DynamoDB service.
@@ -29,9 +30,6 @@ class DynamoDbClient extends AwsClient
         } elseif (is_bool($value)) {
             $value = $value ? '1' : '0';
             $type = 'N';
-        } elseif ($value instanceof Binary) {
-            $value = $value->getValue();
-            $type = 'B';
         } elseif (is_array($value) && $value !== []) {
             $setType = null;
             // Recursively format values in the array, but ensure they are the
@@ -49,6 +47,10 @@ class DynamoDbClient extends AwsClient
                 }
             }
             $type = $setType . 'S';
+        } elseif (is_resource($value) || $value instanceof Stream) {
+            $stream = ($value instanceof Stream) ? $value : new Stream($value);
+            $value = $stream->getContents();
+            $type = 'B';
         } else {
             throw new \InvalidArgumentException(
                 'The value must be a scalar or array, and cannot be empty.'
@@ -93,30 +95,6 @@ class DynamoDbClient extends AwsClient
     }
 
     /**
-     * Mark a value binary (B) value so it can be formatted/serialized correctly.
-     *
-     * @param string $value Value to be marked as binary (B) value.
-     *
-     * @return Binary
-     */
-    public function binary($value)
-    {
-        return new Binary($value);
-    }
-
-    /**
-     * Convenience method for instantiating a WriteRequestBatch object
-     *
-     * @param array $config Batch configuration options.
-     *
-     * @return WriteRequestBatch
-     */
-    public function createWriteRequestBatch(array $config = [])
-    {
-        return new WriteRequestBatch($this, $config);
-    }
-
-    /**
      * Convenience method for instantiating and registering the DynamoDB
      * Session handler with this DynamoDB client object.
      *
@@ -132,33 +110,5 @@ class DynamoDbClient extends AwsClient
         $handler->register();
 
         return $handler;
-    }
-}
-
-/**
- * This class acts as a wrapper binary value (B) so that it can be formatted or
- * serialized correctly by the DynamoDB client. Users should create binary
- * values by using the DynamoDbClient::binary() method.
- *
- * @internal
- */
-class Binary
-{
-    private $value;
-
-    /**
-     * @param string $value
-     */
-    public function __construct($value)
-    {
-        $this->value = (string) $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 }
