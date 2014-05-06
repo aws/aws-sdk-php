@@ -1,50 +1,38 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
+namespace Aws\Service\DynamoDb;
 
-namespace Aws\Service\DynamoDb\Iterator;
-
-use Aws\Common\Exception\InvalidArgumentException;
-use Guzzle\Common\Collection;
-use Guzzle\Common\ToArrayInterface;
+use Aws\Result;
+use GuzzleHttp\Collection;
+use GuzzleHttp\ToArrayInterface;
 
 /**
  * Converts items to a simple associative array form with type information removed. Also performs base64_decode on
  * values specified as binary. Each item is yielded as an array-accessible Collection object
+ *
+ * @todo Decide if this class/features need to continue to exist and, if so, in what form.
  */
 class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInterface
 {
     /**
-     * Collects items from the result of a DynamoDB operation and returns them as an ItemIterator.
+     * Collects items from the result and returns them as an ItemIterator.
      *
-     * @param Collection $result  The result of a DynamoDB operation that potentially contains items
-     *                            (e.g., BatchGetItem, DeleteItem, GetItem, PutItem, Query, Scan, UpdateItem)
+     * @param Result $result Result of a DynamoDB operation that potentially
+     *                       contains items (e.g., BatchGetItem, DeleteItem,
+     *                       GetItem, PutItem, Query, Scan, UpdateItem)
      *
-     * @return self
+     * @return ItemIterator
      */
-    public static function fromResult(Collection $result)
+    public static function fromResult(Result $result)
     {
-        if (!($items = $result->get('Items'))) {
-            if ($item = $result->get('Item') ?: $result->get('Attributes')) {
-                $items = array($item);
+        if (!($items = $result['Items'])) {
+            if ($item = $result['Item'] ?: $result['Attributes']) {
+                $items = [$item];
             } else {
                 $items = $result->getPath('Responses/*');
             }
         }
 
-        return new self(new \ArrayIterator($items ?: array()));
+        return new self(new \ArrayIterator($items ?: []));
     }
 
     /**
@@ -52,12 +40,14 @@ class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInter
      *
      * {@inheritdoc}
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct(\Traversable $iterator)
     {
         if (!($iterator instanceof \Countable)) {
-            throw new InvalidArgumentException('The inner iterator for an ItemIterator must be Countable.');
+            throw new \InvalidArgumentException(
+                'The inner iterator for an ItemIterator must be Countable.'
+            );
         }
 
         parent::__construct($iterator);
@@ -79,7 +69,10 @@ class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInter
      */
     public function current()
     {
-        return new Collection(array_map(array($this, 'processAttribute'), parent::current()));
+        return new Collection(array_map(
+            [$this, 'processAttribute'],
+            parent::current()
+        ));
     }
 
     public function count()
@@ -93,8 +86,9 @@ class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInter
     }
 
     /**
-     * Converts an item's attribute from the DynamoDB format to a typeless value in order to simplify the overall
-     * array structure of an item. The method also base64 decodes the value any Binary attributes
+     * Converts an item's attribute from the DynamoDB format to a typeless value
+     * in order to simplify the overall array structure of an item. The method
+     * also base64 decodes the value any Binary attributes
      *
      * @param array $attribute
      *
