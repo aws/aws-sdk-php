@@ -3,6 +3,7 @@ namespace Aws\Waiter;
 
 use GuzzleHttp\Event\HasEmitterInterface;
 use GuzzleHttp\Event\HasEmitterTrait;
+use GuzzleHttp\Event\ListenerAttacherTrait;
 
 /**
  * A Waiter attempts to execute a given callback 1 or more times until the
@@ -15,12 +16,14 @@ use GuzzleHttp\Event\HasEmitterTrait;
 class Waiter implements HasEmitterInterface
 {
     use HasEmitterTrait;
+    use ListenerAttacherTrait;
 
     /** @var array Default configuration options */
     private static $defaults = [
         'delay'        => 0,
         'interval'     => 0,
         'max_attempts' => 3,
+        'wait'         => null,
     ];
 
     /** @var array Waiter configuration options */
@@ -37,9 +40,17 @@ class Waiter implements HasEmitterInterface
     {
         $this->waitCallback = $waitCallback;
         $this->config = $config + self::$defaults;
+        $this->attachListeners(
+            $this,
+            $this->prepareListeners($this->config, ['wait'])
+        );
     }
 
     /**
+     * Loops until the waitCallback returns true and sleeps in between attempts
+     * for a length of time specified by the interval. Also emits a WaitEvent
+     * during each loop before sleeping.
+     *
      * @throws \RuntimeException if the max attempts is exceeded
      */
     public function wait()

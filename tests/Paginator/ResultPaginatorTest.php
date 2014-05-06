@@ -20,22 +20,24 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $expectedRequestCount,
         array $expectedTableNames
     ) {
+        $requestCount = 0;
+
         // Create the client and paginator
         $client = $this->getTestClient('dynamodb');
         $this->addMockResults($client, $results);
-        $paginator = $client->getPaginator('ListTables', [], $config);
+        $paginator = $client->getPaginator('ListTables', [], $config + [
+            'process' => function () use (&$requestCount) {$requestCount++;}
+        ]);
 
         // Iterate over the paginator and keep track of the keys and values
         $tableNames = [];
-        $requestCount = 0;
-        foreach ($paginator as $i => $result) {
-            $requestCount = $i;
+        foreach ($paginator as $result) {
             $tableNames = array_merge($tableNames, $result['TableNames']);
         }
 
         // Make sure the paginator yields the expected results
         $this->assertInstanceOf('Aws\\Result', $result);
-        $this->assertEquals($expectedRequestCount, ++$requestCount);
+        $this->assertEquals($expectedRequestCount, $requestCount);
         $this->assertEquals($expectedTableNames, $tableNames);
     }
 

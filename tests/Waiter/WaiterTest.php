@@ -16,6 +16,7 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
         \Aws\Waiter\usleep(0);
         $returns = [false, false, true];
         $attempts = 0;
+        $timesWaited = 0;
         $waiter = new Waiter(
             function () use (&$returns, &$attempts) {
                 $attempts++;
@@ -25,10 +26,14 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
                 'delay'        => 5,
                 'interval'     => 2,
                 'max_attempts' => 3,
+                'wait'         => function () use (&$timesWaited) {
+                    $timesWaited++;
+                }
             ]
         );
 
         $waiter->wait();
+        $this->assertEquals(2, $timesWaited);
         $this->assertEquals(3, $attempts);
         $this->assertEquals(9000000, \Aws\Waiter\usleep(0));
     }

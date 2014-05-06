@@ -3,29 +3,35 @@ namespace Aws\Paginator;
 
 use Aws\AwsClientInterface;
 use Aws\Result;
+use GuzzleHttp\Event\ListenerAttacherTrait;
 
 class ResultPaginator implements \Iterator
 {
-    /** @var AwsClientInterface */
+    use ListenerAttacherTrait;
+
+    /** @var AwsClientInterface Client performing operations. */
     private $client;
 
-    /** @var string */
+    /** @var string Name of the operation being paginated. */
     private $operation;
 
-    /** @var array */
+    /** @var array Args for the operation. */
     private $args;
 
-    /** @var array */
+    /** @var array Configuration for the paginator. */
     private $config;
 
-    /** @var Result */
+    /** @var Result Most recent result from the client. */
     private $result;
 
-    /** @var string|array */
+    /** @var string|array Next token to use for pagination. */
     private $nextToken;
 
-    /** @var int */
+    /** @var int Number of operations/requests performed. */
     private $requestCount = 0;
+
+    /** @var array Event listeners. */
+    private $listeners;
 
     /**
      * @param AwsClientInterface $client
@@ -43,10 +49,15 @@ class ResultPaginator implements \Iterator
         $this->operation = $operation;
         $this->args = $args;
         $this->config = $config;
-        //$this->prepareEvents($config, ['prepare', 'process', 'error']);
+        $this->listeners = $this->prepareListeners(
+            $config,
+            ['prepare', 'process', 'error']
+        );
     }
 
     /**
+     * Returns either a single config value or entire paginator's config.
+     *
      * @param string $key
      *
      * @return string|array|null
@@ -61,6 +72,8 @@ class ResultPaginator implements \Iterator
     }
 
     /**
+     * Returns the next token that will be used for pagination.
+     *
      * @return array|string
      */
     public function getNextToken()
@@ -121,12 +134,17 @@ class ResultPaginator implements \Iterator
         $this->nextToken = null;
     }
 
+    /**
+     * Loads the next result by executing another command using the next token.
+     *
+     * @param array $args
+     */
     private function loadNextResult(array $args = [])
     {
         // Create the command
         $args = $args + $this->args;
         $command = $this->client->getCommand($this->operation, $args);
-        //$this->attachListeners($command);
+        $this->attachListeners($command, $this->listeners);
 
         // Set the next token
         if ($this->nextToken) {
