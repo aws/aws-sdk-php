@@ -15,7 +15,14 @@ class AwsException extends CommandException
      */
     public function __construct(CommandException $previous)
     {
-        $message = 'AWS Error: ' . $previous->getContext('aws_error/message');
+        $message = 'AWS Error: ';
+
+        if ($prev = $previous->getContext('aws_error/message')) {
+            $message .= $prev;
+        } else {
+            $message .= $previous->getMessage();
+        }
+
         if (!($previous->getClient() instanceof AwsClientInterface)) {
             throw new \InvalidArgumentException('The wrapped exception must use'
                 . ' an AwsClientInterface');

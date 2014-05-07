@@ -8,21 +8,6 @@ use Aws\Sdk;
  */
 class SdkTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreatesDefaultSharedValues()
-    {
-        $sdk = new Sdk(['foo' => 'bar']);
-        $args = $this->readAttribute($sdk, 'args');
-        $this->assertEquals('bar', $args['foo']);
-        $this->assertInstanceOf(
-            'Aws\Api\ApiProviderInterface',
-            $args['api_provider']
-        );
-        $this->assertInstanceOf(
-            'Aws\Api\EndpointProviderInterface',
-            $args['endpoint_provider']
-        );
-    }
-
     /**
      * @expectedException \BadMethodCallException
      */

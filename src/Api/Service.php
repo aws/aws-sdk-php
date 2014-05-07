@@ -207,7 +207,7 @@ class Service extends AbstractModel
     {
         $em = $client->getEmitter();
 
-        switch ($this->getMetadata('type')) {
+        switch ($this->getMetadata('protocol')) {
             case 'json':
                 $em->attach(new JsonRpcSerializer($this, $endpoint));
                 $em->attach(new JsonRpcParser($this));

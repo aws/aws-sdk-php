@@ -1,8 +1,6 @@
 <?php
 namespace Aws;
 
-use Aws\Api\RulesEndpointProvider;
-use Aws\Api\FilesystemApiProvider;
 use Aws\Service\ClientFactory;
 
 /**
@@ -115,22 +113,9 @@ class Sdk
      *
      * @throws \InvalidArgumentException
      * @see Aws\Sdk::getClient() for a list of available options.
-     * @todo create other ways to load models
      */
     public function __construct(array $args = [])
     {
-        if (!isset($args['api_provider'])) {
-            $path = __DIR__ . '/../vendor/aws/aws-models';
-            $args['api_provider'] = new FilesystemApiProvider($path, true);
-        }
-
-        if (!isset($args['endpoint_provider'])) {
-            $path = __DIR__ . '/../vendor/aws/aws-models/endpoint-rules.json';
-            $args['endpoint_provider'] = new RulesEndpointProvider(
-                json_decode(file_get_contents($path), true)
-            );
-        }
-
         $this->args = $args;
     }
 

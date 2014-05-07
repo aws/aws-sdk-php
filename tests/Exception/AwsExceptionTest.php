@@ -66,4 +66,25 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('c', $e2->getAwsErrorType());
         $this->assertEquals('AWS Error: a', $e2->getMessage());
     }
+
+    public function testUsesPreviousExceptionMessage()
+    {
+        $api = new Service([
+            'metadata' => ['endpointPrefix' => 'ec2']
+        ]);
+
+        $client = new AwsClient([
+            'api'         => $api,
+            'credentials' => 'foo',
+            'client'      => new Client(),
+            'signature'   => 'bar',
+            'region'      => 'boo'
+        ]);
+
+        $command = $this->getMockBuilder('Aws\AwsCommandInterface')
+            ->getMockForAbstractClass();
+        $e = new CommandException('Previous', $client, $command);
+        $ex = new AwsException($e);
+        $this->assertContains('Previous', $ex->getMessage());
+    }
 }

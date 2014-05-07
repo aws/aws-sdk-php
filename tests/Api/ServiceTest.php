@@ -133,7 +133,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testAttachesProtocols($type, $serializer, $parser = null)
     {
-        $service = new Service(['metadata' => ['type' => $type]]);
+        $service = new Service(['metadata' => ['protocol' => $type]]);
         $client = new AwsClient([
             'api' => $service,
             'credentials' => new NullCredentials(),
@@ -155,7 +155,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresProtocolExists()
     {
-        $service = new Service(['metadata' => ['type' => 'foo']]);
+        $service = new Service(['metadata' => ['protocol' => 'foo']]);
         $client = new AwsClient([
             'api' => $service,
             'credentials' => new NullCredentials(),

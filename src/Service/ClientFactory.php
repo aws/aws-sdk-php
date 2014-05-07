@@ -1,24 +1,26 @@
 <?php
 namespace Aws\Service;
 
-use Aws\Api\Validator;
-use Aws\Paginator\PaginatorFactory;
 use Aws\Sdk;
-use Aws\Subscriber\Validation;
 use Aws\AwsClientInterface;
 use Aws\Api\ApiProviderInterface;
 use Aws\Api\EndpointProviderInterface;
 use Aws\Api\ErrorParser\JsonRestErrorParser;
 use Aws\Api\ErrorParser\XmlErrorParser;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
+use Aws\Api\FilesystemApiProvider;
+use Aws\Api\RulesEndpointProvider;
 use Aws\Api\Service;
+use Aws\Api\Validator;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\NullCredentials;
+use Aws\Paginator\PaginatorFactory;
 use Aws\Retry\ThrottlingFilter;
 use Aws\Signature\SignatureInterface;
 use Aws\Subscriber\Error;
 use Aws\Subscriber\Signature;
+use Aws\Subscriber\Validation;
 use Aws\Waiter\ResourceWaiterFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -88,16 +90,17 @@ class ClientFactory
             'paginator_factory' => false,
             'waiter_factory'    => false,
             'validate'          => true,
+            'class_name'        => false
         ];
-
-        foreach ($required as $r) {
-            if (!isset($args[$r])) {
-                throw new \InvalidArgumentException($r . ' is required');
-            }
-        }
 
         $args += $defaultArgs;
         $this->addDefaultArgs($args);
+
+        foreach ($required as $r) {
+            if (!isset($args[$r])) {
+                throw new \InvalidArgumentException("{$r} is required");
+            }
+        }
 
         // Process each argument and keep track of deferred ones
         $deferred = [];
@@ -149,6 +152,18 @@ class ClientFactory
                     : []
             );
             unset($args['client_defaults']);
+        }
+
+        if (!isset($args['api_provider'])) {
+            $path = __DIR__ . '/../../vendor/aws/aws-models';
+            $args['api_provider'] = new FilesystemApiProvider($path, true);
+        }
+
+        if (!isset($args['endpoint_provider'])) {
+            $path = __DIR__ . '/../../vendor/aws/aws-models/endpoint-rules.json';
+            $args['endpoint_provider'] = new RulesEndpointProvider(
+                json_decode(file_get_contents($path), true)
+            );
         }
     }
 
@@ -208,7 +223,7 @@ class ClientFactory
      */
     protected function createErrorParser(Service $api)
     {
-        switch ($api->getMetadata('type')) {
+        switch ($api->getMetadata('protocol')) {
             case 'json':
                 return new JsonRpcErrorParser();
             case 'rest-json':
@@ -219,7 +234,7 @@ class ClientFactory
         }
 
         throw new \InvalidArgumentException('Unknown service type '
-            . $api->getMetadata('type'));
+            . $api->getMetadata('protocol'));
     }
 
     /**
@@ -250,34 +265,13 @@ class ClientFactory
             // An explicitly provided class_name must be found.
             $args['client_class'] = "Aws\\Service\\{$value}\\{$value}Client";
             if (!class_exists($args['client_class'])) {
-                throw new \RuntimeException("Client not found for: $value");
+                throw new \RuntimeException("Client not found for $value");
             }
             return;
         }
 
-        static $search = ['Amazon ', 'AWS ', ' (Beta)', ' '];
-        static $map = ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
-            'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i',
-            'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n',
-            'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's',
-            'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x',
-            'Y' => 'y', 'Z' => 'z'];
-
-        // Convert to a strict PascalCase
-        $value = str_replace(
-            $search,
-            '',
-            $args['api']->getMetadata('serviceFullName')
-        );
-
-        $i = -1;
-        while (isset($value[++$i])) {
-            if (isset($map[$value[$i]])) {
-                while (isset($value[++$i]) && isset($map[$value[$i]])) {
-                    $value[$i] = $map[$value[$i]];
-                }
-            }
-        }
+        $fullName = $args['api']->getMetadata('serviceFullName');
+        $value = $this->convertServiceName($fullName);
 
         // If the dynamically created exception cannot be found, then use the
         // default client class.
@@ -293,10 +287,11 @@ class ClientFactory
     {
         if ($value !== true) {
             // An explicitly provided exception must be found.
-            if (!class_exists($value)) {
-                throw new \RuntimeException("Exception not found: $value");
+            if (class_exists($value)) {
+                return;
             }
-            return;
+            throw new \InvalidArgumentException("Exception not found when "
+                . "evaluating the exception_class argument: $value");
         }
 
         $value = "Aws\\Service\\{$args['class_name']}\\{$args['class_name']}Exception";
@@ -313,7 +308,6 @@ class ClientFactory
     {
         if (isset($args['profile'])) {
             $args['credentials'] = Credentials::fromIni($args['profile']);
-            unset($args['profile']);
         } elseif ($value instanceof CredentialsInterface) {
             return;
         } elseif (is_array($value)) {
@@ -332,7 +326,7 @@ class ClientFactory
     {
         if (!($value instanceof ClientInterface)) {
             throw new \InvalidArgumentException('client must be an instance of'
-                . 'GuzzleHttp\ClientInterface');
+                . ' GuzzleHttp\ClientInterface');
         }
 
         // Make sure the user agent is prefixed by the SDK version
@@ -357,11 +351,6 @@ class ClientFactory
         }
 
         $api = $value->getService($args['service'], $args['version']);
-        if (!$api) {
-            throw new \InvalidArgumentException('Unknown service version: '
-                . $args['service'] . ' at ' . $args['version']);
-        }
-
         $api = new Service($api);
         $args['error_parser'] = $this->createErrorParser($api);
         $args['api'] = $api;
@@ -448,5 +437,30 @@ class ClientFactory
                 new Signature($credentials, $client->getSignature())
             );
         }
+    }
+
+    private function convertServiceName($serviceFullName)
+    {
+        static $search = ['Amazon ', 'AWS ', ' (Beta)', ' '];
+        static $map = ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
+            'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i',
+            'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n',
+            'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's',
+            'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x',
+            'Y' => 'y', 'Z' => 'z'];
+
+        // Convert to a strict PascalCase
+        $value = str_replace($search, '', $serviceFullName);
+
+        $i = -1;
+        while (isset($value[++$i])) {
+            if (isset($map[$value[$i]])) {
+                while (isset($value[++$i]) && isset($map[$value[$i]])) {
+                    $value[$i] = $map[$value[$i]];
+                }
+            }
+        }
+
+        return $value;
     }
 }
