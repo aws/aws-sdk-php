@@ -98,6 +98,12 @@ class QuerySerializer implements SubscriberInterface
         $prefix,
         &$query
     ) {
+        // Handle empty list serialization
+        if (!$value) {
+            $query[$prefix] = false;
+            return;
+        }
+
         $items = $shape->getMember();
 
         if (!$shape['flattened']) {
