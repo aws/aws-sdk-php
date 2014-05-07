@@ -88,7 +88,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * @param array $config Configuration options
      *
-     * @return AwsClientInterface
+     * @return self
      */
     public static function factory(array $config = [])
     {

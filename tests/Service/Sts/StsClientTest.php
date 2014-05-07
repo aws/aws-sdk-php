@@ -22,8 +22,10 @@ class StsClientTest extends \PHPUnit_Framework_TestCase
 
         $client = StsClient::factory();
         $credentials = $client->createCredentials($result);
-
-        $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $credentials);
+        $this->assertInstanceOf(
+            'Aws\Credentials\CredentialsInterface',
+            $credentials
+        );
         $this->assertEquals('foo', $credentials->getAccessKeyId());
         $this->assertEquals('bar', $credentials->getSecretKey());
         $this->assertEquals('baz', $credentials->getSecurityToken());
@@ -36,6 +38,6 @@ class StsClientTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWhenCreatingCredentialsFromInvalidInput()
     {
         $client = StsClient::factory();
-        $credentials = $client->createCredentials(new Result([]));
+        $client->createCredentials(new Result([]));
     }
 }
