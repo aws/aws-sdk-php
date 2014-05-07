@@ -83,6 +83,23 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         parent::__construct($config['client']);
     }
 
+    /**
+     * Creates a new client based on the provided configuration options.
+     *
+     * @param array $config Configuration options
+     *
+     * @return AwsClientInterface
+     */
+    public static function factory(array $config = [])
+    {
+        $sdk = new Sdk();
+        // Determine the short name of the client
+        $c = get_called_class();
+        $c = substr($c, strrpos($c, '\\') + 1);
+
+        return $sdk->getClient(str_replace('Client', '', $c), $config);
+    }
+
     public function getCommand($name, array $args = [])
     {
         $command = null;
