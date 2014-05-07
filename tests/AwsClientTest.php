@@ -5,9 +5,10 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
-use Aws\Service\Ec2\Ec2Exception;
 use Aws\Signature\SignatureV4;
 use Aws\Subscriber\Error;
+use Aws\Service\Sqs\SqsClient;
+use Aws\Service\Sts\StsClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Message\Response;
@@ -279,5 +280,16 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'      => 'foo',
             'api'         => new Service($service)
         ]);
+    }
+
+    public function testCreatesClientsFromFactoryMethod()
+    {
+        $client = SqsClient::factory(['region' => 'us-west-2']);
+        $this->assertInstanceOf('Aws\Service\Sqs\SqsClient', $client);
+        $this->assertEquals('us-west-2', $client->getRegion());
+
+        $client = StsClient::factory(['region' => 'us-west-2']);
+        $this->assertInstanceOf('Aws\Service\Sts\StsClient', $client);
+        $this->assertEquals('us-west-2', $client->getRegion());
     }
 }

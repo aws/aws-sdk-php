@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Service\Sqs;
 
-use Aws\Service\Exception\SqsException;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
