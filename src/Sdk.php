@@ -99,6 +99,7 @@ class Sdk
     private static $factories = [
         'dynamodb' => 'Aws\Service\DynamoDb\DynamoDbFactory',
         'glacier'  => 'Aws\Service\Glacier\GlacierFactory',
+        'route53'  => 'Aws\Service\Route53\Route53Factory',
         'sqs'      => 'Aws\Service\Sqs\SqsFactory',
     ];
 

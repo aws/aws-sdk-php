@@ -14,6 +14,7 @@ use Aws\Signature\S3Signature;
 use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureV2;
+use Aws\Signature\SignatureV3Https;
 use Aws\Signature\SignatureV4;
 
 /**
@@ -188,6 +189,8 @@ class Service extends AbstractModel
                 return new SignatureV2();
             case 's3':
                 return new S3Signature();
+            case 'v3https':
+                return new SignatureV3Https();
             default:
                 throw new \InvalidArgumentException('Unknown signature version '
                     . $version);

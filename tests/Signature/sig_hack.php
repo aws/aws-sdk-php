@@ -2,6 +2,7 @@
 namespace Aws\Signature;
 
 use Aws\Test\Signature\SignatureV2Test;
+use Aws\Test\Signature\SignatureV3HttpsTest;
 
 // Hack gmdate() to returned the canned result.
 function gmdate() {
@@ -12,6 +13,8 @@ function gmdate() {
                 return '20110909T233600Z';
             case 'SignatureV2.php':
                 return SignatureV2Test::DEFAULT_DATETIME;
+            case 'SignatureV3Https.php':
+                return SignatureV3HttpsTest::DEFAULT_DATETIME;
         }
     }
 

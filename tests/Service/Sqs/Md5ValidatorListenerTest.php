@@ -4,7 +4,6 @@ namespace Aws\Test\Service\Sqs;
 use Aws\Result;
 use Aws\Service\Sqs\Md5ValidatorListener;
 use Aws\Service\Sqs\SqsClient;
-use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
