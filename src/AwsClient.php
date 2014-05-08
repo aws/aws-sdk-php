@@ -154,7 +154,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         try {
             return parent::execute($command);
         } catch (CommandException $e) {
-            throw new $this->commandException($e);
+            throw call_user_func([$this->commandException, 'wrap'], $e);
         }
     }
 

@@ -10,10 +10,14 @@ use GuzzleHttp\Command\Exception\CommandException;
 class AwsException extends CommandException
 {
     /**
-     * @param CommandException $previous The wrapped command exception
-     * @throws \InvalidArgumentException if the wrapped exception is invalid.
+     * Create a wrapped exception from a CommandException
+     *
+     * @param CommandException $previous Command exception to wrap
+     *
+     * @return self
+     * @throws \InvalidArgumentException if the wrapped command has no client.
      */
-    public function __construct(CommandException $previous)
+    public static function wrap(CommandException $previous)
     {
         $message = 'AWS Error: ';
 
@@ -28,7 +32,7 @@ class AwsException extends CommandException
                 . ' an AwsClientInterface');
         }
 
-        parent::__construct(
+        return new static(
             $message,
             $previous->getClient(),
             $previous->getCommand(),

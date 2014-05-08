@@ -90,14 +90,23 @@ class SdkTest extends \PHPUnit_Framework_TestCase
             ->getProperty('factories');
         $customFactories->setAccessible(true);
 
-        eval('class FooFactory {function create($args) {return $args;}}');
-        $customFactories->setValue($sdk, ['foo' => 'FooFactory']);
-
+        $current = $customFactories->getValue($sdk);
+        $customFactories->setValue($sdk, [
+            'foo' => __NAMESPACE__ . '\\FooFactory'
+        ]);
         $args = $sdk->getFoo(['c' => 'c2', 'd' => 'd1']);
 
         $this->assertEquals('a1', $args['a']);
         $this->assertEquals('b2', $args['b']);
         $this->assertEquals('c2', $args['c']);
         $this->assertEquals('d1', $args['d']);
+        $customFactories->setValue($sdk, $current);
+    }
+}
+
+class FooFactory
+{
+    function create($args) {
+        return $args;
     }
 }

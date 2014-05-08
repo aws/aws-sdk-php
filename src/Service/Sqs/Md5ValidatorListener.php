@@ -22,6 +22,7 @@ class Md5ValidatorListener implements SubscriberInterface
         }
 
         $result = $event->getResult();
+
         if (isset($result['Messages'])) {
             foreach ($result['Messages'] as $message) {
                 if ($message['MD5OfBody'] != md5($message['Body'])) {

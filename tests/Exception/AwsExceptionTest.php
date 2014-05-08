@@ -28,7 +28,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $e->expects($this->once())
             ->method('getClient')
             ->will($this->returnValue('foo'));
-        new AwsException($e);
+        AwsException::wrap($e);
     }
 
     public function testProvidesExceptionData()
@@ -56,7 +56,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $e2 = new AwsException($e1);
+        $e2 = AwsException::wrap($e1);
         $this->assertSame('ec2', $e2->getServiceName());
         $this->assertSame($e1, $e2->getPrevious());
         $this->assertSame($api, $e2->getApi());
@@ -84,7 +84,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $command = $this->getMockBuilder('Aws\AwsCommandInterface')
             ->getMockForAbstractClass();
         $e = new CommandException('Previous', $client, $command);
-        $ex = new AwsException($e);
+        $ex = AwsException::wrap($e);
         $this->assertContains('Previous', $ex->getMessage());
     }
 }

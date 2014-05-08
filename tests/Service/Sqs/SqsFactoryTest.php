@@ -2,7 +2,6 @@
 namespace Aws\Test\Service\Sqs;
 
 use Aws\Service\Sqs\SqsFactory;
-use Aws\Sdk;
 use Aws\Test\SdkTest;
 
 /**

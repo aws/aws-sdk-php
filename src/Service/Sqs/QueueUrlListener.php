@@ -13,16 +13,17 @@ class QueueUrlListener implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare', RequestEvents::EARLY]];
+        return ['prepare' => ['onPrepare', RequestEvents::LATE]];
     }
 
     public function onPrepare(PrepareEvent $event)
     {
         $command = $event->getCommand();
-        if ($queueUrl = $command['QueueUrl']) {
+
+        if ($command->hasParam('QueueUrl')) {
             $request = $event->getRequest();
-            $url = Url::fromString($request->getUrl())->combine($queueUrl);
-            $request->setUrl($url);
+            $url = Url::fromString($request->getUrl());
+            $request->setUrl($url->combine($command['QueueUrl']));
         }
     }
 }
