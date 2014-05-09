@@ -23,6 +23,8 @@ class Compat
             'ssl.certificate_authority' => 'convert_ssl_certificate_authority',
             'curl.options' => 'convert_curl_options',
             'client.backoff.logger' => 'convert_client_backoff_logger',
+            'command.params' => 'convert_command_params',
+            'command.disable_validation' => 'convert_command_disable_validation',
         ];
 
         foreach (array_keys($config) as $key) {
@@ -84,11 +86,23 @@ class Compat
     {
         unset($config['client.backoff.logger']);
 
-        if ($value instanceof \Psr\Log\LoggerInterface) {
+        if ($value === 'debug' || $value instanceof \Psr\Log\LoggerInterface) {
             $config['retry_logger'] = $value;
         } else {
             trigger_error('client.backoff.logger must be an instance of '
-                . 'Psr\Log\LoggerInterface');
+                . 'Psr\Log\LoggerInterface or set to "debug"');
         }
+    }
+
+    private function convert_command_disable_validation($value, array &$config)
+    {
+        unset($config['command.disable_validation']);
+        $config['validate'] = $value;
+    }
+
+    private function convert_command_params($value, array &$config)
+    {
+        unset($config['command.params']);
+        $config['defaults'] = $value;
     }
 }

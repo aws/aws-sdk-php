@@ -157,6 +157,8 @@ class Sdk
      *   retries, or a number representing the maximum number of retries.
      * - retry_logger: Set to a PSR-3 Psr\Log\LoggerInterface compatible logger
      *   to log all retries.
+     * - defaults: Optional associative array of command parameters to pass to
+     *   each command created by the client.
      * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
      *   requests over the wire. You can specify either "client" or
      *   "client_defaults", but not both.

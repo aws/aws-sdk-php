@@ -381,4 +381,19 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'error'
         ));
     }
+
+    public function testAddsLoggerWithDebugSettings()
+    {
+        $f = new ClientFactory();
+        $c = $f->create([
+            'service'      => 'sqs',
+            'region'       => 'x',
+            'retry_logger' => 'debug'
+        ]);
+        $this->assertTrue(SdkTest::hasListener(
+            $c->getHttpClient()->getEmitter(),
+            'GuzzleHttp\Subscriber\Retry\RetrySubscriber',
+            'error'
+        ));
+    }
 }

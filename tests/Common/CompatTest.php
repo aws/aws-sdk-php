@@ -20,6 +20,8 @@ class CompatTest extends \PHPUnit_Framework_TestCase
             ['base_url', 'http://foo', 'endpoint', 'http://foo'],
             ['ssl.certificate_authority', '/path', 'client_defaults.verify', '/path'],
             ['client.backoff.logger', $logger, 'retry_logger', $logger],
+            ['command.params', ['a' => 'b'], 'defaults', ['a' => 'b']],
+            ['command.disable_validation', true, 'validate', true]
         ];
     }
 

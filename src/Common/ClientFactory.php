@@ -23,6 +23,7 @@ use Aws\Common\Waiter\ResourceWaiterFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
+use GuzzleHttp\Subscriber\Log\SimpleLogger;
 
 /**
  * @internal Default factory class used to create clients.
@@ -51,6 +52,7 @@ class ClientFactory
         'service'           => true,
         'endpoint'          => true,
         'version'           => true,
+        'defaults'          => true,
         'endpoint_provider' => 1,
         'api_provider'      => 1,
         'class_name'        => 1,
@@ -206,6 +208,11 @@ class ClientFactory
         $delay = isset($conf['delay'])
             ? $conf['delay']
             : 'GuzzleHttp\Subscriber\Retry\RetrySubscriber::exponentialDelay';
+
+        if ($args['retry_logger'] === 'debug') {
+            $args['retry_logger'] = new SimpleLogger();
+        }
+
         $conf['delay'] = RetrySubscriber::createLoggingDelay(
             $delay,
             $args['retry_logger']
