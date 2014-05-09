@@ -11,14 +11,14 @@ interface AwsClientInterface extends ServiceClientInterface
     /**
      * Returns the AWS credentials associated with the client.
      *
-     * @return \Aws\Credentials\CredentialsInterface
+     * @return \Aws\Common\Credentials\CredentialsInterface
      */
     public function getCredentials();
 
     /**
      * Returns the signature implementation used with the client.
      *
-     * @return \Aws\Signature\SignatureInterface
+     * @return \Aws\Common\Signature\SignatureInterface
      */
     public function getSignature();
 
@@ -32,7 +32,7 @@ interface AwsClientInterface extends ServiceClientInterface
     /**
      * Get the service description associated with the client.
      *
-     * @return \Aws\Api\Service
+     * @return \Aws\Common\Api\Service
      */
     public function getApi();
 
@@ -46,7 +46,7 @@ interface AwsClientInterface extends ServiceClientInterface
      *       iterated. If this is not provided, the default expression for the
      *       given operation will be used.
      *
-     * @return \Aws\Paginator\ResourceIterator
+     * @return \Aws\Common\Paginator\ResourceIterator
      * @throws \RuntimeException if a paginator factory is unavailable
      */
     public function getIterator($name, array $args = [], array $config = []);
@@ -58,7 +58,7 @@ interface AwsClientInterface extends ServiceClientInterface
      * @param array  $args   Command args to be used with each command
      * @param array  $config Hash of options
      *
-     * @return \Aws\Paginator\ResultPaginator
+     * @return \Aws\Common\Paginator\ResultPaginator
      * @throws \RuntimeException if a paginator factory is unavailable
      */
     public function getPaginator($name, array $args = [], array $config = []);

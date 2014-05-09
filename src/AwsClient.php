@@ -1,13 +1,12 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Service;
-use Aws\Credentials\CredentialsInterface;
-use Aws\Exception\AwsException;
-use Aws\Paginator\PaginatorFactory;
-use Aws\Signature\SignatureInterface;
-use Aws\Waiter\ResourceWaiterFactory;
-use Aws\Waiter\Waiter;
+use Aws\Common\Api\Service;
+use Aws\Common\Credentials\CredentialsInterface;
+use Aws\Common\Paginator\PaginatorFactory;
+use Aws\Common\Signature\SignatureInterface;
+use Aws\Common\Waiter\ResourceWaiterFactory;
+use Aws\Common\Waiter\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Exception\CommandException;
@@ -50,7 +49,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - signature: string representing the signature version to use (e.g., v4)
      * - region: (optional) Region used to interact with the service
      * - exception_class: (optional) A specific exception class to throw that
-     *   extends from {@see Aws\Exception\AwsException}.
+     *   extends from {@see Aws\AwsException}.
      *
      * @param array $config Configuration options
      * @throws \InvalidArgumentException if any required options are missing
@@ -71,7 +70,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class']
-            : 'Aws\Exception\AwsException';
+            : 'Aws\AwsException';
         $this->paginatorFactory = isset($config['paginator_factory'])
             ? $config['paginator_factory']
             : null;

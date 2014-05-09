@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Api\Service;
+use Aws\Common\Api\Service;
 use Aws\AwsCommand;
 use GuzzleHttp\Event\Emitter;
 
@@ -26,7 +26,7 @@ class AwsCommandTest extends \PHPUnit_Framework_TestCase
             $emitter
         );
 
-        $this->assertInstanceOf('Aws\Api\Operation', $command->getOperation());
+        $this->assertInstanceOf('Aws\Common\Api\Operation', $command->getOperation());
         $this->assertEquals('foo', $command->getName());
         $this->assertEquals('bar', $command['baz']);
         $this->assertSame($emitter, $command->getEmitter());

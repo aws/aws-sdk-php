@@ -1,14 +1,14 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Api\Service;
+use Aws\Common\Api\Service;
 use Aws\AwsClient;
-use Aws\Credentials\Credentials;
-use Aws\Exception\AwsException;
-use Aws\Signature\SignatureV4;
-use Aws\Subscriber\Error;
-use Aws\Service\Sqs\SqsClient;
-use Aws\Service\Sts\StsClient;
+use Aws\Common\Credentials\Credentials;
+use Aws\AwsException;
+use Aws\Common\Signature\SignatureV4;
+use Aws\Common\Subscriber\Error;
+use Aws\Sqs\SqsClient;
+use Aws\Sts\StsClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Message\Response;
@@ -70,8 +70,8 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     public function errorProvider()
     {
         return [
-            [null, 'Aws\Exception\AwsException'],
-            ['Aws\Service\Ec2\Ec2Exception', 'Aws\Service\Ec2\Ec2Exception']
+            [null, 'Aws\AwsException'],
+            ['Aws\Ec2\Ec2Exception', 'Aws\Ec2\Ec2Exception']
         ];
     }
 
@@ -155,10 +155,10 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetIterator()
     {
-        $iterator = $this->getMockBuilder('Aws\Paginator\ResourceIterator')
+        $iterator = $this->getMockBuilder('Aws\Common\Paginator\ResourceIterator')
             ->disableOriginalConstructor()
             ->getMock();
-        $factory = $this->getMockBuilder('Aws\Paginator\PaginatorFactory')
+        $factory = $this->getMockBuilder('Aws\Common\Paginator\PaginatorFactory')
             ->disableOriginalConstructor()
             ->setMethods(['createIterator'])
             ->getMock();
@@ -174,7 +174,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->createClient([], ['paginator_factory' => $factory]);
 
         $this->assertInstanceOf(
-            'Aws\Paginator\ResourceIterator',
+            'Aws\Common\Paginator\ResourceIterator',
             $client->getIterator('ListObjects', ['Bucket' => 'foobar'])
         );
     }
@@ -190,10 +190,10 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetPaginator()
     {
-        $paginator = $this->getMockBuilder('Aws\Paginator\ResultPaginator')
+        $paginator = $this->getMockBuilder('Aws\Common\Paginator\ResultPaginator')
             ->disableOriginalConstructor()
             ->getMock();
-        $factory = $this->getMockBuilder('Aws\Paginator\PaginatorFactory')
+        $factory = $this->getMockBuilder('Aws\Common\Paginator\PaginatorFactory')
             ->disableOriginalConstructor()
             ->setMethods(['createPaginator'])
             ->getMock();
@@ -209,7 +209,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->createClient([], ['paginator_factory' => $factory]);
 
         $this->assertInstanceOf(
-            'Aws\Paginator\ResultPaginator',
+            'Aws\Common\Paginator\ResultPaginator',
             $client->getPaginator('ListObjects', ['Bucket' => 'foobar'])
         );
     }
@@ -226,14 +226,14 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     public function testCansUseServiceWaiter()
     {
         $flag = false;
-        $waiter = $this->getMockBuilder('Aws\Waiter\Waiter')
+        $waiter = $this->getMockBuilder('Aws\Common\Waiter\Waiter')
             ->disableOriginalConstructor()
             ->setMethods(['wait'])
             ->getMock();
         $waiter->expects($this->once())
             ->method('wait')
             ->willReturnCallback(function() use(&$flag) {$flag = true;});
-        $factory = $this->getMockBuilder('Aws\Waiter\ResourceWaiterFactory')
+        $factory = $this->getMockBuilder('Aws\Common\Waiter\ResourceWaiterFactory')
             ->disableOriginalConstructor()
             ->setMethods(['createWaiter'])
             ->getMock();
@@ -285,11 +285,11 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     public function testCreatesClientsFromFactoryMethod()
     {
         $client = SqsClient::factory(['region' => 'us-west-2']);
-        $this->assertInstanceOf('Aws\Service\Sqs\SqsClient', $client);
+        $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
 
         $client = StsClient::factory(['region' => 'us-west-2']);
-        $this->assertInstanceOf('Aws\Service\Sts\StsClient', $client);
+        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
         $this->assertEquals('us-west-2', $client->getRegion());
     }
 }

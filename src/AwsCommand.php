@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\Api\Service;
+use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Event\EmitterInterface;
 

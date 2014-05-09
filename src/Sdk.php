@@ -1,7 +1,7 @@
 <?php
 namespace Aws;
 
-use Aws\Service\ClientFactory;
+use Aws\Common\ClientFactory;
 
 /**
  * Builds AWS clients based on configuration settings.
@@ -97,10 +97,10 @@ class Sdk
     ];
 
     private static $factories = [
-        'dynamodb' => 'Aws\Service\DynamoDb\DynamoDbFactory',
-        'glacier'  => 'Aws\Service\Glacier\GlacierFactory',
-        'route53'  => 'Aws\Service\Route53\Route53Factory',
-        'sqs'      => 'Aws\Service\Sqs\SqsFactory',
+        'dynamodb' => 'Aws\DynamoDb\DynamoDbFactory',
+        'glacier'  => 'Aws\Glacier\GlacierFactory',
+        'route53'  => 'Aws\Route53\Route53Factory',
+        'sqs'      => 'Aws\Sqs\SqsFactory',
     ];
 
     /** @var array Arguments for creating clients */
@@ -138,7 +138,7 @@ class Sdk
      * - region: The region to use of the service
      * - version: Optional API version of the service. If not specified, the
      *   latest version of the API will be used.
-     * - credentials: An {@see Aws\Credentials\CredentialsInterface} object to
+     * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface} object to
      *   use with each client OR an associative array of 'key', 'secret', and
      *   'token' key value pairs. If no credentials are provided, the SDK will
      *   attempt to load them from the environment.
