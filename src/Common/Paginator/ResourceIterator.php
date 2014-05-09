@@ -22,6 +22,12 @@ class ResourceIterator implements \OuterIterator
     private $limit;
 
     /**
+     * The config array accepts the following keys:
+     *
+     * - limit: The total number of resources to return
+     * - result_key: JMESPath expressions referencing where resources are found
+     * - limit_key: Which command parameter is used to specify a limit
+     *
      * @param ResultPaginator $paginator
      * @param array           $config
      */
