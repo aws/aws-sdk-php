@@ -5,7 +5,7 @@ use Aws\Common\RulesEndpointProvider;
 use Aws\Common\Exception\UnresolvedEndpointException;
 
 /**
- * @covers Aws\Common\Api\RulesEndpointProvider
+ * @covers Aws\Common\RulesEndpointProvider
  */
 class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
 {
