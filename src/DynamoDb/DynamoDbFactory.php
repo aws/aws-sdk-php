@@ -31,7 +31,7 @@ class DynamoDbFactory extends ClientFactory
         AwsClientInterface $client
     ) {
         if ($value = $this->validateRetries($value)) {
-            $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
+            $conf = [
                 'max' => $value,
                 'delay' => function ($retries) {
                     return $retries === 0
@@ -44,7 +44,10 @@ class DynamoDbFactory extends ClientFactory
                     RetrySubscriber::createStatusFilter(),
                     RetrySubscriber::createCurlFilter()
                 ])
-            ]));
+            ];
+            $this->addRetryLogger($args, $conf);
+            $retry = new RetrySubscriber($conf);
+            $client->getHttpClient()->getEmitter()->attach($retry);
         }
     }
 }

@@ -5,6 +5,7 @@ use Aws\Common\Api\Service;
 use Aws\Common\Credentials\NullCredentials;
 use Aws\AwsException;
 use Aws\Common\ClientFactory;
+use Aws\Test\SdkTest;
 use GuzzleHttp\Client;
 
 /**
@@ -362,5 +363,22 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'region'  => 'x'
         ]);
         $this->assertInstanceOf('Aws\SimpleDb\SimpleDbClient', $c);
+    }
+
+    public function testAddsLogger()
+    {
+        $f = new ClientFactory();
+        $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')
+            ->getMockForAbstractClass();
+        $c = $f->create([
+            'service'      => 'sqs',
+            'region'       => 'x',
+            'retry_logger' => $logger
+        ]);
+        $this->assertTrue(SdkTest::hasListener(
+            $c->getHttpClient()->getEmitter(),
+            'GuzzleHttp\Subscriber\Retry\RetrySubscriber',
+            'error'
+        ));
     }
 }

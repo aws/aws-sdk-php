@@ -182,15 +182,34 @@ class ClientFactory
         AwsClientInterface $client
     ) {
         if ($value = $this->validateRetries($value)) {
-            $client->getHttpClient()->getEmitter()->attach(new RetrySubscriber([
+            $conf = [
                 'max' => $value,
                 'filter' => RetrySubscriber::createChainFilter([
                     new ThrottlingFilter($args['error_parser']),
                     RetrySubscriber::createStatusFilter(),
                     RetrySubscriber::createCurlFilter()
                 ])
-            ]));
+            ];
+
+            $this->addRetryLogger($args, $conf);
+            $retry = new RetrySubscriber($conf);
+            $client->getHttpClient()->getEmitter()->attach($retry);
         }
+    }
+
+    protected function addRetryLogger(array $args, array &$conf)
+    {
+        if (!isset($args['retry_logger'])) {
+            return;
+        }
+
+        $delay = isset($conf['delay'])
+            ? $conf['delay']
+            : 'GuzzleHttp\Subscriber\Retry\RetrySubscriber::exponentialDelay';
+        $conf['delay'] = RetrySubscriber::createLoggingDelay(
+            $delay,
+            $args['retry_logger']
+        );
     }
 
     /**

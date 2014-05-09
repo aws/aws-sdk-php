@@ -2,6 +2,7 @@
 namespace Aws;
 
 use Aws\Common\Api\Service;
+use Aws\Common\Compat;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Paginator\PaginatorFactory;
 use Aws\Common\Signature\SignatureInterface;
@@ -95,6 +96,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         // Determine the short name of the client
         $c = get_called_class();
         $c = substr($c, strrpos($c, '\\') + 1);
+        // Convert v2 args to v3 args
+        (new Compat())->convertConfig($config);
 
         return $sdk->getClient(str_replace('Client', '', $c), $config);
     }

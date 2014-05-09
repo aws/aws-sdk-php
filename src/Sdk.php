@@ -155,6 +155,8 @@ class Sdk
      * - retries: Configures retries for clients. The value can be true (the
      *   default setting which enables retry behavior), false to disable
      *   retries, or a number representing the maximum number of retries.
+     * - retry_logger: Set to a PSR-3 Psr\Log\LoggerInterface compatible logger
+     *   to log all retries.
      * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
      *   requests over the wire. You can specify either "client" or
      *   "client_defaults", but not both.
