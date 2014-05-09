@@ -1,47 +1,24 @@
 <?php
 namespace Aws\Sns\MessageValidator;
 
-use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\Exception\UnexpectedValueException;
-use Guzzle\Common\Collection;
+use GuzzleHttp\Collection;
 
 class Message
 {
-    protected static $requiredKeys = array(
-        '__default' => array(
-            'Message',
-            'MessageId',
-            'Timestamp',
-            'TopicArn',
-            'Type',
-            'Signature',
-            'SigningCertURL',
-        ),
-        'SubscriptionConfirmation' => array(
-            'SubscribeURL',
-            'Token'
-        ),
-        'UnsubscribeConfirmation' => array(
-            'SubscribeURL',
-            'Token'
-        ),
-    );
+    private static $requiredKeys = [
+        '__default' => ['Message', 'MessageId', 'Timestamp', 'TopicArn',
+            'Type', 'Signature', 'SigningCertURL',],
+        'SubscriptionConfirmation' => ['SubscribeURL', 'Token'],
+        'UnsubscribeConfirmation' => ['SubscribeURL', 'Token']
+    ];
 
-    protected static $signableKeys = array(
-        'Message',
-        'MessageId',
-        'Subject',
-        'SubscribeURL',
-        'Timestamp',
-        'Token',
-        'TopicArn',
-        'Type',
-    );
+    private static $signableKeys = ['Message', 'MessageId', 'Subject',
+        'SubscribeURL', 'Timestamp', 'Token', 'TopicArn', 'Type'];
 
     /**
      * @var Collection The message data
      */
-    protected $data;
+    private $data;
 
     /**
      * Creates a Message object from an array of raw message data
@@ -49,21 +26,25 @@ class Message
      * @param array $data The message data
      *
      * @return Message
-     * @throws InvalidArgumentException If a valid type is not provided or there are other required keys missing
+     * @throws \InvalidArgumentException If a valid type is not provided or there are other required keys missing
      */
     public static function fromArray(array $data)
     {
         // Make sure the type key is set
         if (!isset($data['Type'])) {
-            throw new InvalidArgumentException('The "Type" key must be provided to instantiate a Message object.');
+            throw new \InvalidArgumentException('The "Type" key must be '
+                . 'provided to instantiate a Message object.');
         }
 
         // Determine required keys and create a collection from the message data
         $requiredKeys = array_merge(
             self::$requiredKeys['__default'],
-            isset(self::$requiredKeys[$data['Type']]) ? self::$requiredKeys[$data['Type']] : array()
+            isset(self::$requiredKeys[$data['Type']])
+                ? self::$requiredKeys[$data['Type']]
+                : []
         );
-        $data = Collection::fromConfig($data, array(), $requiredKeys);
+
+        $data = Collection::fromConfig($data, [], $requiredKeys);
 
         return new self($data);
     }
@@ -72,14 +53,17 @@ class Message
      * Creates a message object from the raw POST data
      *
      * @return Message
-     * @throws UnexpectedValueException If the POST data is absent, or not a valid JSON document
+     * @throws \UnexpectedValueException If the POST data is absent, or not a valid JSON document
      */
     public static function fromRawPostData()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+
         if (!is_array($data)) {
-            throw new UnexpectedValueException('POST data absent, or not a valid JSON document', json_last_error());
+            throw new \UnexpectedValueException('POST data absent, or not a '
+                . 'valid JSON document', json_last_error());
         }
+
         return self::fromArray($data);
     }
 
@@ -103,6 +87,8 @@ class Message
 
     /**
      * Gets a single key from the message data
+     *
+     * @param string $key Key to retrieve
      *
      * @return string
      */
