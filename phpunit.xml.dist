@@ -2,6 +2,14 @@
 <phpunit bootstrap="./tests/bootstrap.php"
          colors="true"
          forceCoversAnnotation="true">
+
+    <php>
+        <!-- Specify the path to your CloudFront private key -->
+        <server name="cf_private_key" value="changeme" />
+        <!-- Specify the CloudFront key pair ID to use when testing -->
+        <server name="cf_key_pair_id" value="change_me" />
+    </php>
+
     <testsuites>
         <testsuite name="Aws">
             <directory>tests</directory>
