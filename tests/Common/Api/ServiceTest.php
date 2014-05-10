@@ -95,6 +95,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             ['s3', 'Aws\Common\Signature\S3Signature'],
             ['v4', 'Aws\Common\Signature\SignatureV4'],
             ['v4', 'Aws\Common\Signature\S3SignatureV4', 's3'],
+            ['v3https', 'Aws\Common\Signature\SignatureV3Https']
         ];
     }
 
