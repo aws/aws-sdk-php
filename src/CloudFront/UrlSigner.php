@@ -7,7 +7,7 @@ use GuzzleHttp\Url;
 /**
  * Creates signed URLs for Amazon CloudFront resources.
  */
-class SignedUrl
+class UrlSigner
 {
     private $keyPairId;
     private $pk;
@@ -58,7 +58,7 @@ class SignedUrl
      * @throws \InvalidArgumentException if the URL provided is invalid
      * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/WorkingWithStreamingDistributions.html
      */
-    public function getSignedUrl($url, $expires = null, $policy = null)
+    public function getUrlSigner($url, $expires = null, $policy = null)
     {
         // Determine the scheme of the url
         $urlSections = explode('://', $url);

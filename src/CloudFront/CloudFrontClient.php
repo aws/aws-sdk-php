@@ -41,12 +41,12 @@ class CloudFrontClient extends AwsClient
             ['url', 'key_pair_id', 'private_key']
         );
 
-        $signedUrl = new SignedUrl(
+        $UrlSigner = new UrlSigner(
             $options['key_pair_id'],
             $options['private_key']
         );
 
-        return $signedUrl->getSignedUrl(
+        return $UrlSigner->getUrlSigner(
             $options['url'],
             $options['expires'],
             $options['policy']
