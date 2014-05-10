@@ -70,12 +70,12 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
         $ts = time() + 1000;
         $kp = $_SERVER['cf_key_pair_id'];
         $url = $client->getSignedUrl(array(
-            'url'         => 'rtmp://foo.cloudfront.net/test.mp4',
+            'url'         => 'rtmp://foo.cloudfront.net/test.mp4?a=b',
             'expires'     => $ts,
             'private_key' => $_SERVER['cf_private_key'],
             'key_pair_id' => $kp
         ));
-        $this->assertStringStartsWith("test.mp4?Expires={$ts}&Signature=", $url);
+        $this->assertStringStartsWith("test.mp4?a=b&Expires={$ts}&Signature=", $url);
         $this->assertContains("Key-Pair-Id={$kp}", $url);
     }
 
