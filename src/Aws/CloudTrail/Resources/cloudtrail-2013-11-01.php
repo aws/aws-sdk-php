@@ -25,10 +25,25 @@ return array (
     'signatureVersion' => 'v4',
     'namespace' => 'CloudTrail',
     'regions' => array(
+        'ap-southeast-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudtrail.ap-southeast-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudtrail.eu-west-1.amazonaws.com',
+        ),
         'us-east-1' => array(
             'http' => false,
             'https' => true,
             'hostname' => 'cloudtrail.us-east-1.amazonaws.com',
+        ),
+        'us-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'cloudtrail.us-west-1.amazonaws.com',
         ),
         'us-west-2' => array(
             'http' => false,
