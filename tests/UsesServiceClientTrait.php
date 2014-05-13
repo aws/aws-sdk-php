@@ -4,6 +4,7 @@ namespace Aws\Test;
 use Aws\AwsClientInterface;
 use Aws\Result;
 use Aws\Sdk;
+use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
@@ -93,9 +94,23 @@ trait UsesServiceClientTrait
      */
     private function createMockCommandException($code)
     {
+        $client = $this->getMockBuilder('Aws\AwsClientInterface')
+            ->setMethods(['getApi'])
+            ->getMockForAbstractClass();
+
+        $client->expects($this->any())
+            ->method('getApi')
+            ->will($this->returnValue(
+                new Service([
+                    'metadata' => [
+                        'endpointPrefix' => 'foo'
+                    ]
+                ])
+            ));
+
         return new CommandException(
             'Test error',
-            $this->getMock('Aws\AwsClientInterface'),
+            $client,
             $this->getMock('Aws\AwsCommandInterface'),
             null,
             null,

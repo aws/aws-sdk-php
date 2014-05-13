@@ -7,7 +7,6 @@ use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Paginator\PaginatorFactory;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Waiter\ResourceWaiterFactory;
-use Aws\Common\Waiter\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Exception\CommandException;
@@ -162,36 +161,35 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     public function getIterator($name, array $args = [], array $config = [])
     {
-        if ($this->paginatorFactory instanceof PaginatorFactory) {
-            return $this->paginatorFactory->createIterator($this, $name, $args, $config);
-        }
+        $this->validatePaginatorFactory();
 
-        throw new \RuntimeException('A paginator_factory must be provided to '
-            . 'the client in order to use the ' . __METHOD__ . ' method.');
+        return $this->paginatorFactory->createIterator($this, $name, $args, $config);
     }
 
     public function getPaginator($name, array $args = [], array $config = [])
     {
-        if ($this->paginatorFactory instanceof PaginatorFactory) {
-            return $this->paginatorFactory->createPaginator($this, $name, $args, $config);
-        }
+        $this->validatePaginatorFactory();
 
-        throw new \RuntimeException('A paginator_factory must be provided to '
-            . 'the client in order to use the ' . __METHOD__ . ' method.');
+        return $this->paginatorFactory->createPaginator($this, $name, $args, $config);
     }
 
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        if ($this->waiterFactory instanceof ResourceWaiterFactory) {
-            $waiter = $this->waiterFactory->createWaiter($this, $name, $args, $config);
-        } elseif (is_callable($name)) {
-            $config = $config ? $config + ['args' => $args] : $args;
-            $waiter = new Waiter($name, $config);
-        } else {
+        if (!($this->waiterFactory instanceof ResourceWaiterFactory)) {
             throw new \RuntimeException('A waiter_factory must be provided to '
                 . 'the client in order to use the ' . __METHOD__ . ' method.');
         }
 
+        $waiter = $this->waiterFactory->createWaiter($this, $name, $args, $config);
         $waiter->wait();
+    }
+
+    private function validatePaginatorFactory()
+    {
+        if (!($this->paginatorFactory instanceof PaginatorFactory)) {
+            $fn = debug_backtrace()[2]['function'];
+            throw new \RuntimeException('A paginator_factory must be provided '
+                . ' in order to use the ' . $fn . ' method.');
+        }
     }
 }

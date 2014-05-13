@@ -19,12 +19,9 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresWrappedExceptionIsValid()
     {
         $e = $this->getMockBuilder('GuzzleHttp\Command\Exception\CommandException')
-            ->setMethods(['getContext', 'getClient'])
+            ->setMethods(['getClient'])
             ->disableOriginalConstructor()
             ->getMock();
-        $e->expects($this->once())
-            ->method('getContext')
-            ->will($this->returnValue('foo'));
         $e->expects($this->once())
             ->method('getClient')
             ->will($this->returnValue('foo'));
@@ -64,7 +61,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('d', $e2->getAwsErrorCode());
         $this->assertEquals('b', $e2->getAwsRequestId());
         $this->assertEquals('c', $e2->getAwsErrorType());
-        $this->assertEquals('AWS Error: a', $e2->getMessage());
+        $this->assertEquals('AWS (ec2) Error: a', $e2->getMessage());
     }
 
     public function testUsesPreviousExceptionMessage()

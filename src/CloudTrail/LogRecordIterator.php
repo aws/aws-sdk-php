@@ -172,10 +172,10 @@ class LogRecordIterator implements \OuterIterator
      * it and load log records from it using the `logFileReader`. This method
      * expects that items pulled from the iterator will take the form:
      *
-     *     array(
+     *     [
      *         'Bucket' => '...',
      *         'Key'    => '...',
-     *     )
+     *     ]
      *
      * @return bool Returns `true` if records were loaded and `false` if no
      *     records were found

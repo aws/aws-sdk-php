@@ -18,7 +18,13 @@ class AwsException extends CommandException
      */
     public static function wrap(CommandException $previous)
     {
-        $message = 'AWS Error: ';
+        $client = $previous->getClient();
+        if (!($client instanceof AwsClientInterface)) {
+            throw new \InvalidArgumentException('The wrapped exception must use'
+                . ' an AwsClientInterface');
+        }
+
+        $message = 'AWS (' . $client->getApi()->getEndpointPrefix()  . ') Error: ';
 
         if ($prev = $previous->getContext('aws_error/message')) {
             $message .= $prev;
@@ -26,14 +32,9 @@ class AwsException extends CommandException
             $message .= $previous->getMessage();
         }
 
-        if (!($previous->getClient() instanceof AwsClientInterface)) {
-            throw new \InvalidArgumentException('The wrapped exception must use'
-                . ' an AwsClientInterface');
-        }
-
         return new static(
             $message,
-            $previous->getClient(),
+            $client,
             $previous->getCommand(),
             $previous->getRequest(),
             $previous->getResponse(),

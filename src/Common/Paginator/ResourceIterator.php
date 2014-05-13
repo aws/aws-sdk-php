@@ -15,7 +15,7 @@ class ResourceIterator implements \OuterIterator
     /** @var int */
     private $index;
 
-    /** @var string */
+    /** @var array Array of strings */
     private $path;
 
     /** @var int */
@@ -38,6 +38,7 @@ class ResourceIterator implements \OuterIterator
         $this->path = isset($config['result_key'])
             ? $config['result_key']
             : $paginator->getConfig('result_key');
+        $this->path = (array) $this->path;
     }
 
     public function getInnerIterator()
@@ -103,8 +104,10 @@ class ResourceIterator implements \OuterIterator
 
         // Get the next available set of resources
         while ($result = $this->paginator->getNext($args)) {
-            if ($this->resources = $result->search($this->path)) {
-                break;
+            foreach ($this->path as $path) {
+                if ($this->resources = $result->search($path)) {
+                    return;
+                }
             }
         }
     }

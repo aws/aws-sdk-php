@@ -106,7 +106,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
                         }
                         break;
                     case 'oneOf':
-                        if (!$value || !in_array($value, $cons[2], true)) {
+                        if (!in_array($value, $cons[2], true)) {
                             return null;
                         }
                         break;

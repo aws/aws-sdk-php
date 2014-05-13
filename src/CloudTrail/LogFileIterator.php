@@ -183,7 +183,7 @@ class LogFileIterator extends \IteratorIterator
 
         // Create an iterator that will emit all of the objects matching the
         // key prefix.
-        $objectsIterator = $this->s3Client->getListObjectsIterator([
+        $objectsIterator = $this->s3Client->getIterator('ListObjects', [
             'Bucket' => $this->s3BucketName,
             'Prefix' => $logKeyPrefix,
         ]);
@@ -281,10 +281,11 @@ class LogFileIterator extends \IteratorIterator
                 // Apply a regex filter iterator to remove files that don't
                 // match the provided options.
                 $objectsIterator = new \CallbackFilterIterator(
-                    $objectsIterator, function ($object
-                ) use ($regex) {
-                    return preg_match("#{$regex}#", $object['Key']);
-                });
+                    $objectsIterator,
+                    function ($object) use ($regex) {
+                        return preg_match("#{$regex}#", $object['Key']);
+                    }
+                );
             }
         }
 

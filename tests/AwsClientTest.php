@@ -252,16 +252,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($flag);
     }
 
-    public function testCansUseCustomWaiter()
-    {
-        $flag = false;
-        $client = $this->createClient([]);
-        $client->waitUntil(function () use (&$flag) {
-            return $flag = true;
-        }, ['interval' => 0, 'delay' => 0]);
-        $this->assertTrue($flag);
-    }
-
     /**
      * @expectedException \RuntimeException
      */
