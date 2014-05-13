@@ -146,6 +146,10 @@ return array (
                             'ParameterValue' => array(
                                 'type' => 'string',
                             ),
+                            'UsePreviousValue' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
                         ),
                     ),
                 ),
@@ -411,6 +415,10 @@ return array (
                             'ParameterValue' => array(
                                 'type' => 'string',
                             ),
+                            'UsePreviousValue' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
                         ),
                     ),
                 ),
@@ -597,6 +605,11 @@ return array (
                     'minLength' => 1,
                     'maxLength' => 1024,
                 ),
+                'UsePreviousTemplate' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
                 'StackPolicyDuringUpdateBody' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
@@ -623,6 +636,10 @@ return array (
                             'ParameterValue' => array(
                                 'type' => 'string',
                             ),
+                            'UsePreviousValue' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
                         ),
                     ),
                 ),
@@ -646,6 +663,16 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 1,
                     'maxLength' => 1350,
+                ),
+                'NotificationARNs' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'NotificationARNs.member',
+                    'maxItems' => 5,
+                    'items' => array(
+                        'name' => 'NotificationARN',
+                        'type' => 'string',
+                    ),
                 ),
             ),
             'errorResponses' => array(
@@ -871,6 +898,9 @@ return array (
                                         ),
                                         'ParameterValue' => array(
                                             'type' => 'string',
+                                        ),
+                                        'UsePreviousValue' => array(
+                                            'type' => 'boolean',
                                         ),
                                     ),
                                 ),
