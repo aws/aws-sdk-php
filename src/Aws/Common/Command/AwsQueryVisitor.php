@@ -12,11 +12,11 @@ use Guzzle\Service\Command\LocationVisitor\Request\AbstractRequestVisitor;
  */
 class AwsQueryVisitor extends AbstractRequestVisitor
 {
-    /**
-     * {@inheritdoc}
-     */
+    private $fqname;
+
     public function visit(CommandInterface $command, RequestInterface $request, Parameter $param, $value)
     {
+        $this->fqname = $command->getName();
         $query = array();
         $this->customResolver($value, $param, $query, $param->getWireName());
         $request->addPostFields($query);
@@ -90,6 +90,20 @@ class AwsQueryVisitor extends AbstractRequestVisitor
      */
     protected function resolveArray(Parameter $param, array $value, $prefix, array &$query)
     {
+        static $serializeEmpty = array(
+            'SetLoadBalancerPoliciesForBackendServer' => 1,
+            'SetLoadBalancerPoliciesOfListener' => 1,
+            'UpdateStack' => 1
+        );
+
+        // For BC, serialize empty lists for specific operations
+        if (!$value) {
+            if (isset($serializeEmpty[$this->fqname])) {
+                $query[$prefix] = '';
+            }
+            return;
+        }
+
         $offset = $param->getData('offset') ?: 1;
         foreach ($value as $index => $v) {
             $index += $offset;

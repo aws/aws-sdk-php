@@ -247,4 +247,41 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
 
         return $data;
     }
+
+    public function testSerializesEmptyLists()
+    {
+        $operation = new Operation(array('name' => 'UpdateStack'));
+        $command = new OperationCommand(array(), $operation);
+        $request = new EntityEnclosingRequest('POST', 'http://foo.com');
+        $visitor = new AwsQueryVisitor();
+        $visitor->visit($command, $request, new Parameter(array(
+            'name' => 'foo',
+            'type' => 'object',
+            'location' => 'aws.query',
+            'properties' => array(
+                'test' => array(
+                    'type' => 'array'
+                ),
+                'bar' => array(
+                    'type' => 'object',
+                    'properties' => array(
+                        'bam' => array(
+                            'type' => 'array'
+                        ),
+                        'boo' => array(
+                            'type' => 'string'
+                        )
+                    )
+                )
+            )
+        )), [
+            'test' => array(),
+            'bar' => array(
+                'bam' => array(),
+                'boo' => 'hi'
+            )
+        ]);
+        $fields = $request->getPostFields();
+        $this->assertEquals('foo.test=&foo.bar.bam=&foo.bar.boo=hi', (string) $fields);
+    }
 }
