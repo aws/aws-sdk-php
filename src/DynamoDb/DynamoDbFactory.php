@@ -30,24 +30,29 @@ class DynamoDbFactory extends ClientFactory
         array &$args,
         AwsClientInterface $client
     ) {
-        if ($value = $this->validateRetries($value)) {
-            $conf = [
-                'max' => $value,
-                'delay' => function ($retries) {
-                    return $retries === 0
-                        ? 0
-                        : (50 * (int) pow(2, $retries - 1)) / 1000;
-                },
-                'filter' => RetrySubscriber::createChainFilter([
-                    new ThrottlingFilter($args['error_parser']),
-                    new Crc32Filter($args['error_parser']),
-                    RetrySubscriber::createStatusFilter(),
-                    RetrySubscriber::createCurlFilter()
-                ])
-            ];
-            $this->addRetryLogger($args, $conf);
-            $retry = new RetrySubscriber($conf);
-            $client->getHttpClient()->getEmitter()->attach($retry);
+        $value = $this->validateRetries($value);
+
+        if ($value === false) {
+            return;
         }
+
+        $conf = [
+            'max' => $value,
+            'delay' => function ($retries) {
+                return $retries === 0
+                    ? 0
+                    : (50 * (int) pow(2, $retries - 1)) / 1000;
+            },
+            'filter' => RetrySubscriber::createChainFilter([
+                new ThrottlingFilter($args['error_parser']),
+                new Crc32Filter($args['error_parser']),
+                RetrySubscriber::createStatusFilter(),
+                RetrySubscriber::createCurlFilter()
+            ])
+        ];
+
+        $this->addRetryLogger($args, $conf);
+        $retry = new RetrySubscriber($conf);
+        $client->getHttpClient()->getEmitter()->attach($retry);
     }
 }
