@@ -274,13 +274,13 @@ class AwsQueryVisitorTest extends \Guzzle\Tests\GuzzleTestCase
                     )
                 )
             )
-        )), [
+        )), array(
             'test' => array(),
             'bar' => array(
                 'bam' => array(),
                 'boo' => 'hi'
             )
-        ]);
+        ));
         $fields = $request->getPostFields();
         $this->assertEquals('foo.test=&foo.bar.bam=&foo.bar.boo=hi', (string) $fields);
     }
