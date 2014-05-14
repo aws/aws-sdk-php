@@ -7,8 +7,8 @@ CHANGELOG
 * Added the ability to modify Amazon SNS topic settings to the UpdateStack
   operation of the Amazon CloudFormation client.
 * Added support for the us-west-1, ap-southeast-2, and eu-west-1 regions to the
-  Amazon CloudTrail client.
-* Removed no longer utilized Amazon CloudTrail shapes from the model.
+  AWS CloudTrail client.
+* Removed no longer utilized AWS CloudTrail shapes from the model.
 
 2.6.2 (2014-05-06)
 ------------------
