@@ -161,6 +161,19 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
     /**
      * @depends testUploadsDir
      */
+    public function testNoTrailingSlashes($path)
+    {
+        $results = scandir($path);
+        $this->assertNotEmpty($results);
+        // Ensure trailing slashes are not added
+        foreach ($results as $f) {
+            $this->assertNotContains('/', $f);
+        }
+    }
+
+    /**
+     * @depends testUploadsDir
+     */
     public function testUploadsRelativeDir()
     {
         $dir = getcwd();
@@ -174,16 +187,44 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * @depends testUploadsDir
+     * @depends testUploadsRelativeDir
      */
-    public function testNoTrailingSlashes($path)
+    public function testUploadsOnlyChanged()
     {
-        $results = scandir($path);
-        $this->assertNotEmpty($results);
-        // Ensure trailing slashes are not added
-        foreach ($results as $f) {
-            $this->assertNotContains('/', $f);
-        }
+        self::log('Upload only what has changed');
+        $debug = fopen('php://temp', 'r+');
+        $client = self::getServiceBuilder()->get('s3', true);
+        $client->uploadDirectory(__DIR__ . '/', $this->bucket, '', array('debug' => $debug));
+        rewind($debug);
+        $this->assertNotEmpty(stream_get_contents($debug));
+        fclose($debug);
+        $debug = fopen('php://temp', 'r+');
+        $client->uploadDirectory(__DIR__ . '/', $this->bucket, '', array('debug' => $debug));
+        rewind($debug);
+        $this->assertEmpty(stream_get_contents($debug));
+    }
+
+    /**
+     * @depends testUploadsRelativeDir
+     */
+    public function testUploadsOnlyChangedWithPrefix()
+    {
+        self::log('Upload only what has changed with prefix');
+        $client = self::getServiceBuilder()->get('s3', true);
+
+        $debug = fopen('php://temp', 'r+');
+        $client->uploadDirectory(__DIR__, $this->bucket, 'splat', array('debug' => $debug));
+        rewind($debug);
+        $contents = stream_get_contents($debug);
+        $this->assertNotEmpty($contents);
+        fclose($debug);
+
+        $debug = fopen('php://temp', 'r+');
+        $client->uploadDirectory(__DIR__, $this->bucket, 'splat', array('debug' => $debug));
+        rewind($debug);
+        $contents = stream_get_contents($debug);
+        $this->assertEmpty($contents, 'Not empty: ' . $contents);
+        fclose($debug);
     }
 
     /**
@@ -207,6 +248,7 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
     {
         self::log('Downloading test directory under a prefix');
         $client = self::getServiceBuilder()->get('s3', true);
+        exec('rm -rf /tmp/swtest');
         $client->downloadBucket('/tmp/swtest', $this->bucket, 'foo', array('debug' => true));
         $expected = $this->getTestFiles(dirname(__DIR__));
         foreach ($testFiles = $this->getTestFiles('/tmp/swtest') as $i => $file) {

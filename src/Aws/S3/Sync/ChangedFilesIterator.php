@@ -86,6 +86,8 @@ class ChangedFilesIterator extends \FilterIterator
      */
     protected function getTargetData($key)
     {
+        $key = $this->cleanKey($key);
+
         if (isset($this->cache[$key])) {
             $result = $this->cache[$key];
             unset($this->cache[$key]);
@@ -98,9 +100,12 @@ class ChangedFilesIterator extends \FilterIterator
             $value = $it->current();
             $data = array($value->getSize(), $value->getMTime());
             $filename = $this->targetConverter->convert($this->normalize($value));
+            $filename = $this->cleanKey($filename);
+
             if ($filename == $key) {
                 return $data;
             }
+
             $this->cache[$filename] = $data;
             $it->next();
         }
@@ -111,5 +116,10 @@ class ChangedFilesIterator extends \FilterIterator
     private function normalize($current)
     {
         return $current->getRealPath() ?: (string) $current;
+    }
+
+    private function cleanKey($key)
+    {
+        return ltrim($key, '/');
     }
 }
