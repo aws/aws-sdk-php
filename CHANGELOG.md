@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+2.6.4 (2014-05-20)
+------------------
+
+* Added support for lifecycles on versioning enabled buckets to the Amazon S3
+  client.
+* Fixed an Amazon S3 sync issue which resulted in unnecessary transfers when no
+  `$keyPrefix` argument was utilized.
+* Corrected the `CopySourceIfMatch` and `CopySourceIfNoneMatch` parameter for
+  Amazon S3 to not use a timestamp shape.
+* Corrected the sending of Amazon S3 PutBucketVersioning requests that utilize
+  the `MFADelete` parameter.
+
 2.6.3 (2014-05-14)
 ------------------
 
