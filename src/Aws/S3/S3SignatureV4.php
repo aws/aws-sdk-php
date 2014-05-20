@@ -77,14 +77,6 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
         return $request->getUrl();
     }
 
-    /**
-     * Overrides the parent class to prevent the removal of dot-segments
-     */
-    protected function normalizePath(RequestInterface $request)
-    {
-        return '/' . ltrim($request->getPath(), '/');
-    }
-
     private function convertExpires($expires)
     {
         if ($expires instanceof \DateTime) {

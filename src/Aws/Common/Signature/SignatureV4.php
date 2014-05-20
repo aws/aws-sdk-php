@@ -179,7 +179,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
         $canon = $request->getMethod() . "\n"
-            . $this->normalizePath($request) . "\n"
+            . '/' . ltrim($request->getPath(), '/') . "\n"
             . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Create the canonical headers
@@ -215,18 +215,6 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
             'canonical_request' => $canon,
             'signed_headers'    => $signedHeaders
         );
-    }
-
-    /**
-     * Get the normalized path of a request
-     *
-     * @param RequestInterface $request Request to normalize
-     *
-     * @return string Returns the normalized path
-     */
-    protected function normalizePath(RequestInterface $request)
-    {
-       return '/' . ltrim($request->getUrl(true)->normalizePath()->getPath(), '/');
     }
 
     /**
