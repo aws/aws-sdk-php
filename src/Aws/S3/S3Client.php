@@ -24,6 +24,7 @@ use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\RuntimeException;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Signature\SignatureV4;
+use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Model\MultipartUpload\AbstractTransfer;
 use Aws\S3\Exception\AccessDeniedException;
 use Aws\S3\Exception\Parser\S3ExceptionParser;
@@ -51,7 +52,6 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with Amazon Simple Storage Service
  *
- * @method S3SignatureInterface getSignature() Returns the signature implementation used with the client
  * @method Model abortMultipartUpload(array $args = array()) {@command S3 AbortMultipartUpload}
  * @method Model completeMultipartUpload(array $args = array()) {@command S3 CompleteMultipartUpload}
  * @method Model copyObject(array $args = array()) {@command S3 CopyObject}
@@ -255,7 +255,7 @@ class S3Client extends AbstractClient
      *
      * @param $config
      *
-     * @return S3Signature
+     * @return \Aws\Common\Signature\SignatureInterface
      * @throws InvalidArgumentException
      */
     private static function createSignature($config)
@@ -274,17 +274,13 @@ class S3Client extends AbstractClient
             $currentValue = new S3Signature();
         }
 
-        if ($currentValue instanceof S3SignatureInterface) {
-            // A region is require with v4
-            if ($currentValue instanceof SignatureV4 && !isset($config['region'])) {
-                throw new InvalidArgumentException('A region must be specified '
-                    . 'when using signature version 4');
-            }
-            return $currentValue;
+        // A region is require with v4
+        if ($currentValue instanceof SignatureV4 && !isset($config['region'])) {
+            throw new InvalidArgumentException('A region must be specified '
+                . 'when using signature version 4');
         }
 
-        throw new InvalidArgumentException('The provided signature value is '
-            . 'not an instance of S3SignatureInterface');
+        return $currentValue;
     }
 
     /**

@@ -17,6 +17,7 @@
 namespace Aws\S3;
 
 use Aws\Common\Signature\SignatureV4;
+use Aws\Common\Signature\SignatureInterface;
 use Guzzle\Common\Event;
 use Guzzle\Service\Command\CommandInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -34,7 +35,7 @@ class S3Md5Listener implements EventSubscriberInterface
         return array('command.after_prepare' => 'onCommandAfterPrepare');
     }
 
-    public function __construct(S3SignatureInterface $signature)
+    public function __construct(SignatureInterface $signature)
     {
         $this->signature = $signature;
     }

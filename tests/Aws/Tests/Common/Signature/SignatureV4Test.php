@@ -14,11 +14,23 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Tests\Common\Signature;
+// Hack to override the time returned from the S3SignatureV4
+namespace Aws\Common\Signature
+{
+    function time()
+    {
+        return isset($_SERVER['override_v4_time'])
+            ? strtotime('December 5, 2013 00:00:00 UTC')
+            : \time();
+    }
+}
+
+namespace Aws\Tests\Common\Signature {
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Enum\DateFormat;
 use Aws\Common\Signature\SignatureV4;
+use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Parser\ParserRegistry;
@@ -270,4 +282,77 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertEquals($string, $method->invoke($signature, $request));
     }
+
+    private function getFixtures()
+    {
+        $request = new Request('GET', 'http://foo.com');
+        $credentials = new Credentials('foo', 'bar');
+        $signature = new SignatureV4('service', 'region');
+        $ref = new \ReflectionMethod($signature, 'convertExpires');
+        $ref->setAccessible(true);
+
+        return array($request, $credentials, $signature, $ref);
+    }
+
+    public function testCreatesPresignedDatesFromDateTime()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature, $ref) = $this->getFixtures();
+        $this->assertEquals(518400, $ref->invoke($signature, new \DateTime('December 11, 2013 00:00:00 UTC')));
+    }
+
+    public function testCreatesPresignedDatesFromUnixTimestamp()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature, $ref) = $this->getFixtures();
+        $this->assertEquals(518400, $ref->invoke($signature, 1386720000));
+    }
+
+    public function testCreatesPresignedDateFromStrtotime()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature, $ref) = $this->getFixtures();
+        $this->assertEquals(518400, $ref->invoke($signature, 'December 11, 2013 00:00:00 UTC'));
+    }
+
+    public function testAddsSecurityTokenIfPresent()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials->setSecurityToken('123');
+        $url = $signature->createPresignedUrl($request, $credentials, 1386720000);
+        $this->assertContains('X-Amz-Security-Token=123', $url);
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresSigV4DurationIsLessThanOneWeek()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $signature->createPresignedUrl($request, $credentials, 'December 31, 2013 00:00:00 UTC');
+    }
+
+    public function testConvertsPostToGet()
+    {
+        $request = new EntityEnclosingRequest('POST', 'http://foo.com');
+        $request->setPostField('foo', 'bar');
+        $request->setPostField('baz', 'bam');
+        $request = SignatureV4::convertPostToGet($request);
+        $this->assertEquals('GET', $request->getMethod());
+        $this->assertEquals('bar', $request->getQuery()->get('foo'));
+        $this->assertEquals('bam', $request->getQuery()->get('baz'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresMethodIsPost()
+    {
+        $request = new EntityEnclosingRequest('PUT', 'http://foo.com');
+        SignatureV4::convertPostToGet($request);
+    }
+}
 }

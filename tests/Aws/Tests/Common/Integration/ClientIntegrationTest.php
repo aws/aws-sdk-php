@@ -137,10 +137,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
             // Services with a single/few regional endpoint (e.g., Data Pipeline, SES, Redshift)
             array('DataPipeline', self::REGION_MISSING, self::REGION_ERROR, self::REGION_ERROR),
             array('DataPipeline', Region::US_EAST_1,    Region::US_EAST_1,  Region::US_EAST_1),
-            array('DataPipeline', Region::US_WEST_2,    self::REGION_ERROR, self::REGION_ERROR),
             array('Redshift',     self::REGION_MISSING, self::REGION_ERROR, self::REGION_ERROR),
             array('Redshift',     Region::US_EAST_1,    Region::US_EAST_1,  Region::US_EAST_1),
-            array('Redshift',     Region::US_WEST_2,    self::REGION_ERROR, self::REGION_ERROR),
 
             // Services with a global endpoint (e.g., Sts, Iam, Route53)
             array('Sts',     self::REGION_MISSING, Region::US_EAST_1, Region::US_EAST_1),

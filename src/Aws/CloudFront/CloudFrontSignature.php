@@ -18,14 +18,14 @@ namespace Aws\CloudFront;
 
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\DateFormat;
-use Aws\Common\Signature\SignatureInterface;
+use Aws\Common\Signature\AbstractSignature;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
  * Amazon CloudFront signature implementation
  * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RESTAuthentication.html
  */
-class CloudFrontSignature implements SignatureInterface
+class CloudFrontSignature extends AbstractSignature
 {
     /**
      * {@inheritdoc}
