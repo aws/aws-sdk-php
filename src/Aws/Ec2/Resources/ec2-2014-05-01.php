@@ -15621,6 +15621,9 @@ return array (
         'DescribeVolumes' => array(
             'result_key' => 'Volumes',
         ),
+        'DescribeVpcPeeringConnections' => array(
+            'result_key' => 'VpcPeeringConnections',
+        ),
         'DescribeVpcs' => array(
             'result_key' => 'Vpcs',
         ),

@@ -253,12 +253,16 @@ class Ec2Client extends AbstractClient
             $config[Options::SIGNATURE] = new SignatureV4();
         }
 
-        return ClientBuilder::factory(__NAMESPACE__)
+        $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
             ->setConfigDefaults(array(
                 Options::VERSION             => self::LATEST_API_VERSION,
                 Options::SERVICE_DESCRIPTION => __DIR__ . '/Resources/ec2-%s.php'
             ))
             ->build();
+
+        $client->addSubscriber(new CopySnapshotListener());
+
+        return $client;
     }
 }

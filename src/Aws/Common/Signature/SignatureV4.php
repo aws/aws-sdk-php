@@ -452,7 +452,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         $query = $request->getQuery();
 
         foreach ($request->getHeaders() as $name => $header) {
-            if (substr($name, 0, 5) == 'x-amz' || $name === 'content-type') {
+            if (substr($name, 0, 5) == 'x-amz') {
                 $query[$header->getName()] = (string) $header;
             }
             if ($name !== 'host') {
