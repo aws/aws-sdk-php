@@ -43,6 +43,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteStack(array $args = array()) {@command OpsWorks DeleteStack}
  * @method Model deleteUserProfile(array $args = array()) {@command OpsWorks DeleteUserProfile}
  * @method Model deregisterElasticIp(array $args = array()) {@command OpsWorks DeregisterElasticIp}
+ * @method Model deregisterRdsDbInstance(array $args = array()) {@command OpsWorks DeregisterRdsDbInstance}
  * @method Model deregisterVolume(array $args = array()) {@command OpsWorks DeregisterVolume}
  * @method Model describeApps(array $args = array()) {@command OpsWorks DescribeApps}
  * @method Model describeCommands(array $args = array()) {@command OpsWorks DescribeCommands}
@@ -55,6 +56,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeMyUserProfile(array $args = array()) {@command OpsWorks DescribeMyUserProfile}
  * @method Model describePermissions(array $args = array()) {@command OpsWorks DescribePermissions}
  * @method Model describeRaidArrays(array $args = array()) {@command OpsWorks DescribeRaidArrays}
+ * @method Model describeRdsDbInstances(array $args = array()) {@command OpsWorks DescribeRdsDbInstances}
  * @method Model describeServiceErrors(array $args = array()) {@command OpsWorks DescribeServiceErrors}
  * @method Model describeStackSummary(array $args = array()) {@command OpsWorks DescribeStackSummary}
  * @method Model describeStacks(array $args = array()) {@command OpsWorks DescribeStacks}
@@ -66,6 +68,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
  * @method Model registerElasticIp(array $args = array()) {@command OpsWorks RegisterElasticIp}
+ * @method Model registerRdsDbInstance(array $args = array()) {@command OpsWorks RegisterRdsDbInstance}
  * @method Model registerVolume(array $args = array()) {@command OpsWorks RegisterVolume}
  * @method Model setLoadBasedAutoScaling(array $args = array()) {@command OpsWorks SetLoadBasedAutoScaling}
  * @method Model setPermission(array $args = array()) {@command OpsWorks SetPermission}
@@ -80,6 +83,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model updateInstance(array $args = array()) {@command OpsWorks UpdateInstance}
  * @method Model updateLayer(array $args = array()) {@command OpsWorks UpdateLayer}
  * @method Model updateMyUserProfile(array $args = array()) {@command OpsWorks UpdateMyUserProfile}
+ * @method Model updateRdsDbInstance(array $args = array()) {@command OpsWorks UpdateRdsDbInstance}
  * @method Model updateStack(array $args = array()) {@command OpsWorks UpdateStack}
  * @method Model updateUserProfile(array $args = array()) {@command OpsWorks UpdateUserProfile}
  * @method Model updateVolume(array $args = array()) {@command OpsWorks UpdateVolume}

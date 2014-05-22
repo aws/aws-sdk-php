@@ -366,6 +366,25 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'DataSources' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'DataSource',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Type' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
+                            'DatabaseName' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
                 'Type' => array(
                     'required' => true,
                     'type' => 'string',
@@ -590,6 +609,10 @@ return array (
                     'location' => 'json',
                 ),
                 'AvailabilityZone' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'VirtualizationType' => array(
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1242,6 +1265,44 @@ return array (
                 ),
             ),
         ),
+        'DeregisterRdsDbInstance' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DeregisterRdsDbInstance',
+                ),
+                'RdsDbInstanceArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'DeregisterVolume' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -1762,6 +1823,52 @@ return array (
                 ),
             ),
         ),
+        'DescribeRdsDbInstances' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeRdsDbInstancesResult',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.DescribeRdsDbInstances',
+                ),
+                'StackId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'RdsDbInstanceArns' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'String',
+                        'type' => 'string',
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
         'DescribeServiceErrors' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -2206,6 +2313,59 @@ return array (
                     'location' => 'json',
                 ),
                 'StackId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+            ),
+        ),
+        'RegisterRdsDbInstance' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.RegisterRdsDbInstance',
+                ),
+                'StackId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'RdsDbInstanceArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DbUser' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DbPassword' => array(
                     'required' => true,
                     'type' => 'string',
                     'location' => 'json',
@@ -2751,6 +2911,25 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'DataSources' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'DataSource',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Type' => array(
+                                'type' => 'string',
+                            ),
+                            'Arn' => array(
+                                'type' => 'string',
+                            ),
+                            'DatabaseName' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
                 'Type' => array(
                     'type' => 'string',
                     'location' => 'json',
@@ -2936,6 +3115,11 @@ return array (
                     'location' => 'json',
                 ),
                 'InstallUpdatesOnBoot' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+                'EbsOptimized' => array(
                     'type' => 'boolean',
                     'format' => 'boolean-string',
                     'location' => 'json',
@@ -3155,6 +3339,52 @@ return array (
                 array(
                     'reason' => 'Indicates that a request was invalid.',
                     'class' => 'ValidationException',
+                ),
+            ),
+        ),
+        'UpdateRdsDbInstance' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'OpsWorks_20130218.UpdateRdsDbInstance',
+                ),
+                'RdsDbInstanceArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DbUser' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+                'DbPassword' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Indicates that a request was invalid.',
+                    'class' => 'ValidationException',
+                ),
+                array(
+                    'reason' => 'Indicates that a resource was not found.',
+                    'class' => 'ResourceNotFoundException',
                 ),
             ),
         ),
@@ -3504,6 +3734,24 @@ return array (
                             'Description' => array(
                                 'type' => 'string',
                             ),
+                            'DataSources' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'DataSource',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Type' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Arn' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'DatabaseName' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
                             'Type' => array(
                                 'type' => 'string',
                             ),
@@ -3786,6 +4034,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'Ec2InstanceId' => array(
+                                'type' => 'string',
+                            ),
+                            'VirtualizationType' => array(
                                 'type' => 'string',
                             ),
                             'Hostname' => array(
@@ -4237,6 +4488,49 @@ return array (
                             ),
                             'Iops' => array(
                                 'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'DescribeRdsDbInstancesResult' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'RdsDbInstances' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'RdsDbInstance',
+                        'type' => 'object',
+                        'properties' => array(
+                            'RdsDbInstanceArn' => array(
+                                'type' => 'string',
+                            ),
+                            'DbInstanceIdentifier' => array(
+                                'type' => 'string',
+                            ),
+                            'DbUser' => array(
+                                'type' => 'string',
+                            ),
+                            'DbPassword' => array(
+                                'type' => 'string',
+                            ),
+                            'Region' => array(
+                                'type' => 'string',
+                            ),
+                            'Address' => array(
+                                'type' => 'string',
+                            ),
+                            'Engine' => array(
+                                'type' => 'string',
+                            ),
+                            'StackId' => array(
+                                'type' => 'string',
+                            ),
+                            'MissingOnRds' => array(
+                                'type' => 'boolean',
                             ),
                         ),
                     ),
