@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+2.6.5 (2014-05-22)
+------------------
+
+* Added cross-region support for the Amazon EC2 CopySnapshot operation.
+* Added AWS Relational Database (RDS) support to the AWS OpsWorks client.
+* Added support for tagging environments to the AWS Elastic Beanstalk client.
+* Refactored the signature version 4 implementation to be able to pre-sign
+  most operations.
+
 2.6.4 (2014-05-20)
 ------------------
 
