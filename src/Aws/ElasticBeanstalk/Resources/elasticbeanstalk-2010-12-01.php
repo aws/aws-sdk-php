@@ -354,6 +354,27 @@ return array (
                         ),
                     ),
                 ),
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'aws.query',
+                    'sentAs' => 'Tags.member',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 128,
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 256,
+                            ),
+                        ),
+                    ),
+                ),
                 'VersionLabel' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
