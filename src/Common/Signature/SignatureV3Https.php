@@ -7,7 +7,7 @@ use GuzzleHttp\Message\RequestInterface;
 /**
  * Implementation of Signature Version 3 HTTPS
  */
-class SignatureV3Https implements SignatureInterface
+class SignatureV3Https extends AbstractSignature
 {
     public function signRequest(
         RequestInterface $request,

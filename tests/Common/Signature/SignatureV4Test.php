@@ -1,12 +1,13 @@
 <?php
-namespace Aws\Test\Common\Signature;
-
-require_once __DIR__ . '/sig_hack.php';
+namespace Aws\Tests\Common\Signature;
 
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\SignatureV4;
-use GuzzleHttp\Message\MessageFactory;
+use GuzzleHttp\Client;
 use GuzzleHttp\Message\Request;
+use GuzzleHttp\Message\MessageFactory;
+
+require_once __DIR__ . '/sig_hack.php';
 
 // Super hacky stuff to get the date right for real request vs the test-suite.
 class HackRequest extends Request
@@ -31,14 +32,14 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $_SERVER['aws_time'] = true;
+        $_SERVER['aws_time'] = strtotime('December 5, 2013 00:00:00 UTC');
     }
 
     public function testReturnsRegionAndService()
     {
         $s = new SignatureV4('foo', 'bar');
-        $this->assertEquals('foo', $s->getServiceName());
-        $this->assertEquals('bar', $s->getRegionName());
+        $this->assertEquals('foo', $this->readAttribute($s, 'service'));
+        $this->assertEquals('bar', $this->readAttribute($s, 'region'));
     }
 
     public function testAddsSecurityTokenIfPresent()
@@ -145,6 +146,18 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         return $groups;
     }
 
+    public function testUsesExistingSha256HashIfPresent()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'x-amz-content-sha256' => '123'
+        ]);
+        $sig->signRequest($req, $creds);
+        $creq = $req->getConfig()->get('aws.signature')['creq'];
+        $this->assertContains('amz-content-sha256:123', $creq);
+    }
+
     public function testMaintainsCappedCache()
     {
         $sig = new SignatureV4('foo', 'bar');
@@ -203,5 +216,78 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
 
         $this->assertEquals($string, $method->invoke($signature, $request));
+    }
+
+    private function getFixtures()
+    {
+        $request = new Request('GET', 'http://foo.com');
+        $credentials = new Credentials('foo', 'bar');
+        $signature = new SignatureV4('service', 'region');
+        $ref = new \ReflectionMethod($signature, 'convertExpires');
+        $ref->setAccessible(true);
+
+        return array($request, $credentials, $signature, $ref);
+    }
+
+    public function testCreatesPresignedDatesFromDateTime()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature, $ref) = $this->getFixtures();
+        $this->assertEquals(518400, $ref->invoke($signature, new \DateTime('December 11, 2013 00:00:00 UTC')));
+    }
+
+    public function testCreatesPresignedDatesFromUnixTimestamp()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature, $ref) = $this->getFixtures();
+        $this->assertEquals(518400, $ref->invoke($signature, 1386720000));
+    }
+
+    public function testCreatesPresignedDateFromStrtotime()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature, $ref) = $this->getFixtures();
+        $this->assertEquals(518400, $ref->invoke($signature, 'December 11, 2013 00:00:00 UTC'));
+    }
+
+    public function testAddsSecurityTokenIfPresentInPresigned()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = $signature->createPresignedUrl($request, $credentials, 1386720000);
+        $this->assertContains('X-Amz-Security-Token=123', $url);
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresSigV4DurationIsLessThanOneWeek()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $signature->createPresignedUrl($request, $credentials, 'December 31, 2013 00:00:00 UTC');
+    }
+
+    public function testConvertsPostToGet()
+    {
+        $client = new Client();
+        $request = $client->createRequest('POST', 'http://foo.com');
+        $request->getBody()->setField('foo', 'bar');
+        $request->getBody()->setField('baz', 'bam');
+        $request = SignatureV4::convertPostToGet($request);
+        $this->assertEquals('GET', $request->getMethod());
+        $this->assertEquals('bar', $request->getQuery()->get('foo'));
+        $this->assertEquals('bam', $request->getQuery()->get('baz'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresMethodIsPost()
+    {
+        $request = new Request('PUT', 'http://foo.com');
+        SignatureV4::convertPostToGet($request);
     }
 }

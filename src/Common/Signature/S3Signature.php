@@ -9,7 +9,7 @@ use GuzzleHttp\Message\RequestInterface;
  * Default Amazon S3 signature implementation
  * @link http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
  */
-class S3Signature implements PresignedUrlInterface
+class S3Signature extends AbstractSignature
 {
     /** @var array Query string values that must be signed */
     private $signableQueryString = [

@@ -9,7 +9,7 @@ use GuzzleHttp\Post\PostBodyInterface;
  * Implementation of Signature Version 2
  * @link http://aws.amazon.com/articles/1928
  */
-class SignatureV2 implements SignatureInterface
+class SignatureV2 extends AbstractSignature
 {
     public function signRequest(
         RequestInterface $request,

@@ -20,3 +20,14 @@ function gmdate() {
 
     return call_user_func_array('gmdate', func_get_args());
 }
+
+function time()
+{
+    if (isset($_SERVER['aws_time'])) {
+        return $_SERVER['aws_time'] === true
+            ? strtotime('December 5, 2013 00:00:00 UTC')
+            : $_SERVER['aws_time'];
+    }
+
+    return \time();
+}
