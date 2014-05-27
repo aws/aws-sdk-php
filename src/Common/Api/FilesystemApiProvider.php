@@ -111,12 +111,7 @@ class FilesystemApiProvider implements ApiProviderInterface
             throw new \InvalidArgumentException("File not found: $path");
         }
 
-        $data = json_decode(file_get_contents($path), true);
-        if (!json_last_error()) {
-            return $data;
-        }
-
-        throw new \RuntimeException('Error parsing JSON: ' . json_last_error());
+        return \GuzzleHttp\json_decode(file_get_contents($path), true);
     }
 
     private function determineLatestVersion($service)

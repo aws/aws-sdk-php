@@ -53,7 +53,7 @@ class LogFileReader
 
         // Get the JSON response data and extract the log records
         $result = $this->s3Client->execute($command);
-        $logData = json_decode($result['Body'], true);
+        $logData = \GuzzleHttp\json_decode($result['Body'], true);
 
         return isset($logData['Records'])
             ? $logData['Records']

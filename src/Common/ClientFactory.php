@@ -162,7 +162,7 @@ class ClientFactory
         if (!isset($args['endpoint_provider'])) {
             $path = __DIR__ . '/../../vendor/aws/aws-models/endpoint-rules.json';
             $args['endpoint_provider'] = new RulesEndpointProvider(
-                json_decode(file_get_contents($path), true)
+                \GuzzleHttp\json_decode(file_get_contents($path), true)
             );
         }
     }

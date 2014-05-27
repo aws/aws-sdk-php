@@ -43,7 +43,7 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
         try {
             $p->getService('invalid', '2010-12-05');
             $this->fail('Did not throw');
-        } catch (\RuntimeException $e) {
+        } catch (\InvalidArgumentException $e) {
             unlink($path);
         }
     }
