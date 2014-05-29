@@ -40,8 +40,8 @@ Regardless of the technique used, it is encouraged that you follow the `IAM Best
 recommendation to not use your AWS account's root credentials. Instead, create separate IAM users with their own access
 keys for each project, and tailor the permissions of the users specific to those projects.
 
-*In general, it is recommended that you use IAM roles when running your application on Amazon EC2 and use environment
-variables elsewhere.*
+*In general, it is recommended that you use IAM roles when running your application on Amazon EC2 and use credential
+profiles or environment variables elsewhere.*
 
 .. _environment_credentials:
 
@@ -50,14 +50,9 @@ Using credentials from environment variables
 
 If you do not provide credentials to a client object at the time of its instantiation (e.g., via the client's factory
 method or via a service builder configuration), the SDK will attempt to find credentials in your environment when you
-call your first operation. The SDK will use the ``$_SERVER`` superglobal and ``getenv()`` function to look for the
-``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_KEY`` environment variables. These credentials are often called
+call your first operation. The SDK will use the ``$_SERVER`` superglobal and/or ``getenv()`` function to look for the
+``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables. These credentials are referred to as
 **environment credentials**.
-
-If you are hosting your application on `AWS Elastic Beanstalk
-<http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.html>`_, you can set the
-``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_KEY`` environment variables on the AWS Elastic Beanstalk console so that the SDK
-can use those credentials automatically.
 
 .. _instance_profile_credentials:
 
@@ -86,7 +81,7 @@ are available only when running on Amazon EC2 instances that have been configure
 
 For more information, see `IAM Roles for Amazon EC2 <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html>`_.
 
-.. _hardcoded_credentials:
+.. _caching_credentials:
 
 Caching IAM role credentials
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,7 +153,7 @@ service builder would utilize a shared credentials cache object.
 Using the AWS credentials file and credential profiles
 ------------------------------------------------------
 
-Starting with the AWS SDK for PHP version 2.6.1, you can use an AWS credentials file to specify your credentials. This
+Starting with the AWS SDK for PHP version 2.6.2, you can use an AWS credentials file to specify your credentials. This
 is a special, INI-formatted file stored under your HOME directory, and is a good way to manage credentials for your
 development environment. The file should be placed at ``~/.aws/credentials``, where ``~`` represents your HOME
 directory.
@@ -168,7 +163,7 @@ Using an AWS credentials file offers a few benefits:
 1. Your projects' credentials are stored outside of your projects, so there is no chance of accidentally committing
    them into version control.
 2. You can define and name multiple sets of credentials in one place.
-3. You easily reuse the same credentials between projects.
+3. You can easily reuse the same credentials between projects.
 4. Other AWS SDKs and tools support, or will soon support, this same credentials file. This allows you to reuse your
    credentials with other tools.
 
@@ -203,12 +198,14 @@ If no credentials or profiles were explicitly provided to the SDK and no credent
 variables, but a credentials file is defined, the SDK will use the "default" profile. You can change the default
 profile by specifying an alternate profile name in the ``AWS_PROFILE`` environment variable.
 
+.. _hardcoded_credentials:
+
 Setting credentials explicitly in your code
 -------------------------------------------
 
 The SDK allows you to explicitly set your credentials in your project in a few different ways. These techniques are
 useful for rapid development, integrating with existing configurations systems (e.g., your PHP framework of choice), and
-handling :ref:`temporary credentials <temporary_credentials>`. However, **be careful to not hard-code your credentials**
+using :ref:`temporary credentials <temporary_credentials>`. However, **be careful to not hard-code your credentials**
 inside of your applications. Hard-coding your credentials can be dangerous, because it is easy to accidentally commit
 your credentials into an SCM repository, potentially exposing your credentials to more people than intended. It can also
 make it difficult to rotate credentials in the future.

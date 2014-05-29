@@ -42,11 +42,8 @@ Factory method
 ~~~~~~~~~~~~~~
 
 The easiest way to get up and running quickly is to use the web service client's ``factory()`` method and provide your
-AWS credentials.
-
-For version 2.6.1 of the SDK and higher, the best way to provide your credentials is to specify a **credential profile**
-(via the ``profile`` option), which identifies the set of credentials you want to use from your ``~/.aws/credentials``
-file (see :ref:`credential_profiles`).
+**credential profile** (via the ``profile`` option), which identifies the set of credentials you want to use from your
+``~/.aws/credentials`` file (see :ref:`credential_profiles`).
 
 .. code-block:: php
 
@@ -60,16 +57,6 @@ file (see :ref:`credential_profiles`).
     // Instantiate the S3 client using your credential profile
     $s3Client = S3Client::factory(array(
         'profile' => 'my_profile',
-    ));
-
-For any version of the SDK, you can explicitly provide credentials using the ``key`` and ``secret`` options.
-**Note:** This is not recommended, however, because it requires you to hard code your credentials in your PHP code.
-
-.. code-block:: php
-
-    $s3Client = S3Client::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
     ));
 
 You can also choose to forgo specifying credentials if you are relying on **instance profile credentials**, provided via

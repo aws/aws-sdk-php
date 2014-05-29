@@ -39,9 +39,9 @@ Excerpt from ``src/Aws/Common/Resources/aws-config.php``:
 The ``aws-config.php`` file provides default configuration settings for associating client classes with service names.
 This file tells the ``Aws\Common\Aws`` service builder which class to instantiate when you reference a client by name.
 
-You can supply your credentials and other configuration settings to the service builder so that each client is
-instantiated with those settings. To do this, pass an array of settings (including your ``key`` and ``secret``) into the
-first argument of ``Aws\Common\Aws::factory()``.
+You can supply your credential profile (see :ref:`credential_profiles`) and other configuration settings to the service
+builder so that each client is instantiated with those settings. To do this, pass an array of settings (including your
+``profile``) into the first argument of ``Aws\Common\Aws::factory()``.
 
 .. code-block:: php
 
@@ -52,9 +52,8 @@ first argument of ``Aws\Common\Aws::factory()``.
     use Aws\Common\Aws;
 
     $aws = Aws::factory(array(
-        'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-        'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-        'region' => 'us-east-1',
+        'profile' => 'my_profile',
+        'region'  => 'us-east-1',
     ));
 
 Using a custom configuration file
@@ -74,9 +73,8 @@ You can create a custom configuration file that extends the default configuratio
         'services' => array(
             'default_settings' => array(
                 'params' => array(
-                    'key'    => 'YOUR_AWS_ACCESS_KEY_ID',
-                    'secret' => 'YOUR_AWS_SECRET_ACCESS_KEY',
-                    'region' => 'us-west-2'
+                    'profile' => 'my_profile', // Looks up credentials in ~/.aws/credentials
+                    'region'  => 'us-west-2'
                 )
             )
         )
@@ -99,7 +97,8 @@ configuration file in the first argument of the ``factory()`` method:
 
     $aws = Aws::factory('/path/to/custom/config.php');
 
-You can create custom named services if you need to use multiple accounts with the same service:
+You can create custom named services if you need to, for example, use multiple accounts/credentials with the
+same service:
 
 .. code-block:: php
 
@@ -109,17 +108,15 @@ You can create custom named services if you need to use multiple accounts with t
             'foo.dynamodb' => array(
                 'extends' => 'dynamodb',
                 'params'  => array(
-                    'key'    => 'your-aws-access-key-id-for-foo',
-                    'secret' => 'your-aws-secret-access-key-for-foo',
-                    'region' => 'us-west-2'
+                    'profile' => 'my_profile',
+                    'region'  => 'us-west-2'
                 )
             ),
             'bar.dynamodb' => array(
                 'extends' => 'dynamodb',
                 'params'  => array(
-                    'key'    => 'your-aws-access-key-id-for-bar',
-                    'secret' => 'your-aws-secret-access-key-for-bar',
-                    'region' => 'us-west-2'
+                    'profile' => 'my_other_profile',
+                    'region'  => 'us-west-2'
                 )
             )
         )
@@ -134,8 +131,7 @@ If you prefer JSON syntax, you can define your configuration in JSON format inst
         "services": {
             "default_settings": {
                 "params": {
-                    "key": "your-aws-access-key-id",
-                    "secret": "your-aws-secret-access-key",
+                    "profile": "my_profile",
                     "region": "us-west-2"
                 }
             }
@@ -148,8 +144,8 @@ For more information about writing custom configuration files, please see `Using
 Client configuration options
 -----------------------------
 
-Basic client configuration options include your ``key`` and ``secret`` credentials (see :doc:`credentials`) and a
-``region`` (see :ref:`specify_region`). For typical use cases, you will not need to provide more than these 3 options.
+Basic client configuration options include your credentials ``profile`` (see :doc:`credentials`) and a ``region``
+(see :ref:`specify_region`). For typical use cases, you will not need to provide more than these 3 options.
 The following represents all of the possible client configuration options for service clients in the SDK.
 
 ========================= ==============================================================================================
@@ -157,12 +153,21 @@ Credentials Options
 ------------------------------------------------------------------------------------------------------------------------
 Options                   Description
 ========================= ==============================================================================================
-``key``                   Your AWS access key ID. See `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_.
+``profile``               The AWS credential profile associated with the credentials you want to use. The profile is
+                          used to look up your credentials in your credentials file (``~/.aws/credentials``). See
+                          :ref:`credential_profiles` for more information.
 
-``secret``                Your AWS secret access key. See `AWS access keys <http://aws.amazon.com/developers/access-keys/>`_.
+``key``                   An AWS access key ID. Unless you are setting temporary credentials provided by AWS STS, it is
+                          recommended that you avoid hard-coding credentials with this parameter. Please see
+                          :doc:`credentials` for my information about credentials.
 
-``token``                 An AWS security token to use with request authentication. Please note that not all services
-                          accept temporary credentials. See http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html.
+``secret``                An AWS secret access key. Unless you are setting temporary credentials provided by AWS STS, it
+                          is recommended that you avoid hard-coding credentials with this parameter. Please see
+                          :doc:`credentials` for my information about credentials.
+
+``token``                 An AWS security token to use with request authentication. These are typically provided by the
+                          AWS STS service. Please note that not all services accept temporary credentials.
+                          See http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html.
 
 ``token.ttd``             The UNIX timestamp for when the provided credentials expire.
 
