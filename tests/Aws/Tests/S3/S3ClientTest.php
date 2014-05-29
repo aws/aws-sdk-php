@@ -49,7 +49,9 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             array('bucket-name', true),
             array('bucket', true),
             array('my.bucket.com', true),
-            array('test-fooCaps', false)
+            array('test-fooCaps', false),
+            array('w-w', true),
+            array('w------', false)
         );
     }
 

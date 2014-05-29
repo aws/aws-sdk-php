@@ -296,12 +296,10 @@ class S3Client extends AbstractClient
     {
         $bucketLen = strlen($bucket);
         if ($bucketLen < 3 || $bucketLen > 63 ||
-            // Cannot start or end with a '.'
-            $bucket[0] == '.' || $bucket[$bucketLen - 1] == '.' ||
             // Cannot look like an IP address
             preg_match('/(\d+\.){3}\d+$/', $bucket) ||
             // Cannot include special characters, must start and end with lower alnum
-            !preg_match('/^[a-z0-9][a-z0-9\-\.]*[a-z0-9]?$/', $bucket)
+            !preg_match('/^[a-z0-9]([a-z0-9\-\.]*[a-z0-9])?$/', $bucket)
         ) {
             return false;
         }
