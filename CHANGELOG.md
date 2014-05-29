@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+2.6.6 (2014-05-29)
+------------------
+
+* Added support for the [Desired Partition Count scaling
+  option](http://aws.amazon.com/releasenotes/2440176739861815) to the
+  CloudSearch client. Hebrew is also now a supported language.
+* Updated the STS service description to the latest version.
+* [Docs] Updated some of the documentation about credential profiles.
+* Fixed an issue with the regular expression in the `S3Client::isValidBucketName`
+  method. See #298.
+
 2.6.5 (2014-05-22)
 ------------------
 
