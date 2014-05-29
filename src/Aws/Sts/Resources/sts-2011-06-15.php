@@ -505,6 +505,26 @@ return array (
                     'type' => 'numeric',
                     'location' => 'xml',
                 ),
+                'Subject' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'SubjectType' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Issuer' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Audience' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'NameQualifier' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
             ),
         ),
         'AssumeRoleWithWebIdentityResponse' => array(
@@ -547,6 +567,14 @@ return array (
                 ),
                 'PackedPolicySize' => array(
                     'type' => 'numeric',
+                    'location' => 'xml',
+                ),
+                'Provider' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'Audience' => array(
+                    'type' => 'string',
                     'location' => 'xml',
                 ),
             ),
