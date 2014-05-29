@@ -1536,6 +1536,9 @@ return array (
                         'DesiredReplicationCount' => array(
                             'type' => 'numeric',
                         ),
+                        'DesiredPartitionCount' => array(
+                            'type' => 'numeric',
+                        ),
                     ),
                 ),
             ),
@@ -3138,6 +3141,9 @@ return array (
                                 'DesiredReplicationCount' => array(
                                     'type' => 'numeric',
                                 ),
+                                'DesiredPartitionCount' => array(
+                                    'type' => 'numeric',
+                                ),
                             ),
                         ),
                         'Status' => array(
@@ -3359,6 +3365,9 @@ return array (
                                     'type' => 'string',
                                 ),
                                 'DesiredReplicationCount' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'DesiredPartitionCount' => array(
                                     'type' => 'numeric',
                                 ),
                             ),
