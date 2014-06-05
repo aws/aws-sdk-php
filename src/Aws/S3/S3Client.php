@@ -52,6 +52,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with Amazon Simple Storage Service
  *
+ * @method S3SignatureInterface getSignature() Returns the signature implementation used with the client
  * @method Model abortMultipartUpload(array $args = array()) {@command S3 AbortMultipartUpload}
  * @method Model completeMultipartUpload(array $args = array()) {@command S3 CompleteMultipartUpload}
  * @method Model copyObject(array $args = array()) {@command S3 CopyObject}

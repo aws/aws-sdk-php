@@ -2309,11 +2309,6 @@ return array (
                         'Aws\\S3\\S3Client::explodeKey',
                     ),
                 ),
-                'VersionId' => array(
-                    'type' => 'string',
-                    'location' => 'query',
-                    'sentAs' => 'versionId',
-                ),
                 'Days' => array(
                     'required' => true,
                     'type' => 'numeric',

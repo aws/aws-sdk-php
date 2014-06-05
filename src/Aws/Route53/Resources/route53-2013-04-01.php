@@ -246,7 +246,6 @@ return array (
                     'location' => 'xml',
                     'properties' => array(
                         'IPAddress' => array(
-                            'required' => true,
                             'type' => 'string',
                             'maxLength' => 15,
                         ),

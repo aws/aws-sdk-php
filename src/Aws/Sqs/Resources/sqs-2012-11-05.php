@@ -710,6 +710,7 @@ return array (
                     'class' => 'InvalidMessageContentsException',
                 ),
                 array(
+                    'reason' => 'Error code 400. Unsupported operation.',
                     'class' => 'UnsupportedOperationException',
                 ),
             ),
@@ -824,6 +825,7 @@ return array (
                     'class' => 'InvalidBatchEntryIdException',
                 ),
                 array(
+                    'reason' => 'Error code 400. Unsupported operation.',
                     'class' => 'UnsupportedOperationException',
                 ),
             ),

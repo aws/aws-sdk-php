@@ -10742,6 +10742,17 @@ return array (
                         ),
                     ),
                 ),
+                'SourceDestCheck' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'sentAs' => 'sourceDestCheck',
+                    'properties' => array(
+                        'Value' => array(
+                            'type' => 'boolean',
+                            'sentAs' => 'value',
+                        ),
+                    ),
+                ),
             ),
         ),
         'DescribeInstanceStatusResult' => array(

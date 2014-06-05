@@ -1355,6 +1355,7 @@ return array (
                     'location' => 'json',
                 ),
                 'KeyConditions' => array(
+                    'required' => true,
                     'type' => 'object',
                     'location' => 'json',
                     'additionalProperties' => array(
