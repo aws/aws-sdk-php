@@ -333,6 +333,7 @@ class S3Client extends AwsClient
         $keyPrefix = null,
         array $options = []
     ) {
+        $this->validateSyncInstalled();
         $options = Collection::fromConfig(
             $options,
             ['base_dir' => realpath($directory) ?: $directory]
@@ -382,6 +383,7 @@ class S3Client extends AwsClient
         $keyPrefix = '',
         array $options = []
     ) {
+        $this->validateSyncInstalled();
         $options = new Collection($options);
         $builder = $options['builder'] ?: DownloadSyncBuilder::getInstance();
         $builder->setDirectory($directory)
@@ -485,5 +487,17 @@ class S3Client extends AwsClient
         }
 
         return $exists;
+    }
+
+    private function validateSyncInstalled()
+    {
+        if (class_exists('Aws\S3\Sync\AbstractSync')) {
+            return;
+        }
+
+        $caller = debug_backtrace()[2]['function'];
+
+        throw new \RuntimeException("The aws/s3-sync Composer package must "
+            . " be installed in order to use the {$caller} function.");
     }
 }
