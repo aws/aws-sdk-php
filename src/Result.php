@@ -13,4 +13,16 @@ class Result extends Model
     {
         return JmesPath\search($expression, $this->toArray());
     }
+
+    /**
+     * Get a specific key value.
+     *
+     * @param string $key Key to retrieve.
+     *
+     * @return mixed|null Value of the key or NULL
+     */
+    public function get($key)
+    {
+        return isset($this->data[$key]) ? $this->data[$key] : null;
+    }
 }

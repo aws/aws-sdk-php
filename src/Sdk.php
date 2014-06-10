@@ -129,7 +129,7 @@ class Sdk
             );
         }
 
-        throw new \BadMethodCallException('Unknown method ' . $name);
+        throw new \BadMethodCallException("Unknown method: {$name}.");
     }
 
     /**

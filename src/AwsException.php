@@ -94,4 +94,39 @@ class AwsException extends CommandException
     {
         return $this->getContext('aws_error/code');
     }
+
+    /**
+     * Get the request ID of the error. This value is only present if a
+     * response was received and is not present in the event of a networking
+     * error.
+     *
+     * @return string|null Returns null if no response was received
+     * @deprecated Use getAwsRequestId() instead
+     */
+    public function getRequestId()
+    {
+        return $this->getContext('aws_error/request_id');
+    }
+
+    /**
+     * Get the exception code
+     *
+     * @return string|null
+     * @deprecated Use getAwsErrorCode() instead
+     */
+    public function getExceptionCode()
+    {
+        return $this->getContext('aws_error/code');
+    }
+
+    /**
+     * Get the exception type (one of client or server)
+     *
+     * @return string|null
+     * @deprecated Use getAwsErrorType() instead
+     */
+    public function getExceptionType()
+    {
+        return $this->getContext('aws_error/type');
+    }
 }

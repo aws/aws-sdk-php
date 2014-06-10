@@ -6,7 +6,7 @@ class ResourceIterator implements \OuterIterator
     /** @var ResultPaginator */
     private $paginator;
 
-    /** @var ResultPaginator */
+    /** @var array */
     private $resources;
 
     /** @var int */

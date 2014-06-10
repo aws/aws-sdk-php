@@ -87,18 +87,19 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * @param array $config Configuration options
      *
-     * @return self
+     * @return static
      */
     public static function factory(array $config = [])
     {
-        $sdk = new Sdk();
-        // Determine the short name of the client
-        $c = get_called_class();
-        $c = substr($c, strrpos($c, '\\') + 1);
-        // Convert v2 args to v3 args
-        (new Compat())->convertConfig($config);
+        // Convert SDKv2 configuration options to SDKv3 configuration options.
+        (new Compat)->convertConfig($config);
 
-        return $sdk->getClient(str_replace('Client', '', $c), $config);
+        // Determine the service being called
+        $class = get_called_class();
+        $service = substr($class, strrpos($class, '\\') + 1, -6);
+
+        // Create the client using the Sdk class
+        return (new Sdk)->getClient($service, $config);
     }
 
     public function getCommand($name, array $args = [])
