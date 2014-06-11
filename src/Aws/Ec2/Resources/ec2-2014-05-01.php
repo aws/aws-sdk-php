@@ -15718,7 +15718,7 @@ return array (
         ),
         '__VolumeStatus' => array(
             'operation' => 'DescribeVolumes',
-            'acceptor.key' => 'VolumeStatuses/*/VolumeStatus/Status',
+            'acceptor.path' => 'Volumes/*/State',
         ),
         'VolumeAvailable' => array(
             'extends' => '__VolumeStatus',
