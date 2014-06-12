@@ -406,13 +406,10 @@ class S3Client extends AwsClient
 
     private function validateSyncInstalled()
     {
-        if (class_exists('Aws\S3\Sync\AbstractSync')) {
-            return;
+        if (!class_exists('Aws\S3\Sync\AbstractSync')) {
+            throw new \RuntimeException("The aws/s3-sync Composer package "
+                . "must be installed in order to use the "
+                . debug_backtrace()[2]['function'] . " function.");
         }
-
-        $caller = debug_backtrace()[2]['function'];
-
-        throw new \RuntimeException("The aws/s3-sync Composer package must "
-            . " be installed in order to use the {$caller} function.");
     }
 }
