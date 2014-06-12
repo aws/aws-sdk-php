@@ -18,46 +18,29 @@ use GuzzleHttp\Command\CommandInterface;
  */
 class S3Client extends AwsClient
 {
-    public static function oldFactory($config = [])
-    {
-        // Use virtual hosted buckets when possible
-        $client->addSubscriber(new BucketStyleListener());
-        // Ensure that ACP headers are applied when needed
-        $client->addSubscriber(new AcpListener());
-        // Validate and add required Content-MD5 hashes (e.g. DeleteObjects)
-        $client->addSubscriber(new S3Md5Listener($signature));
-        // Allow for specifying bodies with file paths and file handles
-        $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
-    }
-
     /**
      * Determine if a string is a valid name for a DNS compatible Amazon S3
-     * bucket, meaning the bucket can be used as a subdomain in a URL (e.g.,
+     * bucket.
+     *
+     * DNS compatible bucket names can be used as a subdomain in a URL (e.g.,
      * "<bucket>.s3.amazonaws.com").
      *
-     * @param string $bucket The name of the bucket to check.
+     * @param string $bucket Bucke name to check.
      *
-     * @return bool true if the bucket name is valid or false if it is invalid.
+     * @return bool
      */
     public static function isValidBucketName($bucket)
     {
         $bucketLen = strlen($bucket);
-        if ($bucketLen < 3 || $bucketLen > 63 ||
-            // Cannot start or end with a '.'
-            $bucket[0] == '.' || $bucket[$bucketLen - 1] == '.' ||
-            // Cannot look like an IP address
-            preg_match('/(\d+\.){3}\d+$/', $bucket) ||
-            // Cannot include special chars, must start & end with lower alnum
-            !preg_match('/^[a-z0-9][a-z0-9\-\.]*[a-z0-9]?$/', $bucket)
-        ) {
-            return false;
-        }
 
-        return true;
+        return ($bucketLen >= 3 && $bucketLen <= 63) &&
+            // Cannot look like an IP address
+            !preg_match('/(\d+\.){3}\d+$/', $bucket) &&
+            preg_match('/^[a-z0-9]([a-z0-9\-\.]*[a-z0-9])?$/', $bucket);
     }
 
     /**
-     * Create a pre-signed URL for a request
+     * Create a pre-signed URL for a request.
      *
      * @param RequestInterface $request     Request to generate the URL for.
      *                                      Use the factory methods of the
@@ -71,10 +54,7 @@ class S3Client extends AwsClient
      */
     public function createPresignedUrl(RequestInterface $request, $expires)
     {
-        /** @var \Aws\Common\Signature\PresignedUrlInterface $signature */
-        $signature = $this->getSignature();
-
-        return $signature->createPresignedUrl(
+        return $this->getSignature()->createPresignedUrl(
             $request,
             $this->getCredentials(),
             $expires
@@ -82,9 +62,10 @@ class S3Client extends AwsClient
     }
 
     /**
-     * Returns the URL to an object identified by its bucket and key. If an
-     * expiration time is provided, the URL will be signed and set to expire at
-     * the provided time.
+     * Returns the URL to an object identified by its bucket and key.
+     *
+     * If an expiration time is provided, the URL will be signed and set to
+     * expire at the provided time.
      *
      * @param string $bucket  The name of the bucket where the object is located
      * @param string $key     The key of the object
@@ -106,7 +87,7 @@ class S3Client extends AwsClient
         $command = $this->getCommand('GetObject', $args);
         $request = $command->prepare();
 
-        if ($command->hasParam('Scheme')) {
+        if (isset($command['Scheme'])) {
             $request->setScheme($command['Scheme']);
         }
 
@@ -116,20 +97,11 @@ class S3Client extends AwsClient
     }
 
     /**
-     * Helper used to clear the contents of a bucket.
-     *
-     * Use the {@see ClearBucket} object directly for more advanced options
-     * and control.
-     *
-     * @param string $bucket Name of the bucket to clear.
-     *
-     * @return int Returns the number of deleted keys
+     * @deprecated Use ClearBucket directly.
      */
     public function clearBucket($bucket)
     {
-        $clear = new ClearBucket($this, $bucket);
-
-        return $clear->clear();
+        return (new ClearBucket($this, $bucket))->clear();
     }
 
     /**
@@ -179,26 +151,6 @@ class S3Client extends AwsClient
     }
 
     /**
-     * Determines whether or not a bucket policy exists for a bucket.
-     *
-     * As with the other existence methods, this check is not 100% accurate,
-     * but rather a best-effort attempt.
-     *
-     * @param string $bucket  The name of the bucket
-     * @param array  $options Additional options to add to the executed command
-     *
-     * @return bool
-     */
-    public function doesBucketPolicyExist($bucket, array $options = [])
-    {
-        return $this->checkExistenceWithCommand(
-            $this->getCommand('GetBucketPolicy', array_merge($options, [
-                'Bucket' => $bucket
-            ]))
-        );
-    }
-
-    /**
      * Raw URL encode a key and allow for '/' characters
      *
      * @param string $key Key to encode
@@ -208,19 +160,6 @@ class S3Client extends AwsClient
     public static function encodeKey($key)
     {
         return str_replace('%2F', '/', rawurlencode($key));
-    }
-
-    /**
-     * Explode a prefixed key into an array of values
-     *
-     * @param string $key Key to explode
-     *
-     * @return array Returns the exploded
-     */
-    public static function explodeKey($key)
-    {
-        // Remove a leading slash if one is found
-        return explode('/', $key && $key[0] == '/' ? substr($key, 1) : $key);
     }
 
     /**
@@ -334,27 +273,13 @@ class S3Client extends AwsClient
         array $options = []
     ) {
         $this->validateSyncInstalled();
-        $options = Collection::fromConfig(
-            $options,
-            ['base_dir' => realpath($directory) ?: $directory]
+
+        return UploadSyncBuilder::uploadDirectory(
+            $directory,
+            $bucket,
+            $keyPrefix,
+            $options
         );
-
-        $builder = $options['builder'] ?: UploadSyncBuilder::getInstance();
-        $builder->uploadFromDirectory($directory)
-            ->setClient($this)
-            ->setBucket($bucket)
-            ->setKeyPrefix($keyPrefix)
-            ->setConcurrency($options['concurrency'] ?: 5)
-            ->setBaseDir($options['base_dir'])
-            ->force($options['force'])
-            ->setOperationParams($options['params'] ?: array())
-            ->enableDebugOutput($options['debug']);
-
-        if ($options->hasKey('multipart_upload_size')) {
-            $builder->setMultipartUploadSize($options['multipart_upload_size']);
-        }
-
-        $builder->build()->transfer();
     }
 
     /**
@@ -384,23 +309,13 @@ class S3Client extends AwsClient
         array $options = []
     ) {
         $this->validateSyncInstalled();
-        $options = new Collection($options);
-        $builder = $options['builder'] ?: DownloadSyncBuilder::getInstance();
-        $builder->setDirectory($directory)
-            ->setClient($this)
-            ->setBucket($bucket)
-            ->setKeyPrefix($keyPrefix)
-            ->setConcurrency($options['concurrency'] ?: 10)
-            ->setBaseDir($options['base_dir'])
-            ->force($options['force'])
-            ->setOperationParams($options['params'] ?: [])
-            ->enableDebugOutput($options['debug']);
 
-        if ($options['allow_resumable']) {
-            $builder->allowResumableDownloads();
-        }
-
-        $builder->build()->transfer();
+        return DownloadSyncBuilder::downloadBucket(
+            $directory,
+            $bucket,
+            $keyPrefix,
+            $options
+        );
     }
 
     /**
