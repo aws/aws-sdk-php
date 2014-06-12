@@ -216,6 +216,9 @@ class S3Client extends AbstractClient
         // Allow for specifying bodies with file paths and file handles
         $client->addSubscriber(new UploadBodyListener(array('PutObject', 'UploadPart')));
 
+        // Ensures that if a SSE-CPK key is provided, the key and md5 are formatted correctly
+        $client->addSubscriber(new SseCpkListener);
+
         // Add aliases for some S3 operations
         $default = CompositeFactory::getDefaultChain($client);
         $default->add(

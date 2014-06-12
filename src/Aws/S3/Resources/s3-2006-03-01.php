@@ -325,6 +325,36 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-website-redirect-location',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
+                'CopySourceSSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-algorithm',
+                ),
+                'CopySourceSSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key',
+                ),
+                'CopySourceSSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
+                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -518,6 +548,21 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-website-redirect-location',
+                ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
                 'ACP' => array(
                     'type' => 'object',
@@ -1008,6 +1053,21 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'versionId',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
                 'SaveAs' => array(
                     'location' => 'response_body',
                 ),
@@ -1160,6 +1220,21 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'versionId',
+                ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
             ),
             'errorResponses' => array(
@@ -2151,6 +2226,21 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-website-redirect-location',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
                 'ACP' => array(
                     'type' => 'object',
                     'additionalProperties' => true,
@@ -2383,6 +2473,21 @@ return array (
                     'location' => 'query',
                     'sentAs' => 'uploadId',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
             ),
         ),
         'UploadPartCopy' => array(
@@ -2466,6 +2571,36 @@ return array (
                     'type' => 'string',
                     'location' => 'query',
                     'sentAs' => 'uploadId',
+                ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
+                'CopySourceSSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-algorithm',
+                ),
+                'CopySourceSSECustomerKey' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key',
+                ),
+                'CopySourceSSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key-MD5',
                 ),
                 'command.expects' => array(
                     'static' => true,
@@ -2553,6 +2688,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -2594,6 +2739,16 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
+                ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -3313,6 +3468,16 @@ return array (
                         'type' => 'string',
                     ),
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -3500,6 +3665,16 @@ return array (
                     'additionalProperties' => array(
                         'type' => 'string',
                     ),
+                ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -4113,6 +4288,16 @@ return array (
                     'location' => 'header',
                     'sentAs' => 'x-amz-version-id',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -4154,6 +4339,16 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                 ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
+                ),
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -4181,6 +4376,16 @@ return array (
                     'type' => 'string',
                     'location' => 'header',
                     'sentAs' => 'x-amz-server-side-encryption',
+                ),
+                'SSECustomerAlgorithm' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm',
+                ),
+                'SSECustomerKeyMD5' => array(
+                    'type' => 'string',
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
