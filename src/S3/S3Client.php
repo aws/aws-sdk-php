@@ -194,6 +194,8 @@ class S3Client extends AwsClient
      *     - min_part_size: Minimum size to allow for each uploaded part when
      *       performing a multipart upload.
      *     - concurrency: Maximum number of concurrent multipart uploads.
+     *     - before_upload: Callback to invoke before each multipart upload.
+     *       The callback will receive a relevant Guzzle Event object.
      *
      * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more information.
      * @return Result Returns the modeled result of the performed operation.
