@@ -4,7 +4,8 @@ CHANGELOG
 2.6.7 (2014-06-12)
 ------------------
 
-* Added support for Amazon S3 customer provided encryption keys.
+* Added support for Amazon S3 server-side encryption using customer-provided
+  encryption keys.
 * Updated Amazon SNS to support message attributes.
 * Updated the Amazon Redshift model to support new cluster parameters.
 * Updated PHPUnit dev dependency to 4.* to work around a PHP serializing bug.

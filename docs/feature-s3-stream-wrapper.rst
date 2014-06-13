@@ -147,7 +147,7 @@ filesize()      Get the size of an object.
                 .. code-block:: php
 
                     // Get the Content-Length of an object
-                    $size = filesize('s3://bucket/key', );
+                    $size = filesize('s3://bucket/key');
 
 is_file()       Checks if a URL is a file.
 
@@ -201,11 +201,11 @@ parameters available to the
 .. code-block:: php
 
     // Create a bucket in the EU region
-    mkdir('s3://bucket', stream_context_create(array(
+    mkdir('s3://bucket', '0777', false, stream_context_create(array(
         's3' => array(
             'LocationConstraint' => 'eu-west-1'
         )
-    ));
+    )));
 
 You can delete buckets using the ``rmdir()`` function.
 
