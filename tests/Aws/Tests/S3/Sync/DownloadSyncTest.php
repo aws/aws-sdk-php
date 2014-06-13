@@ -25,6 +25,13 @@ use Aws\S3\Sync\KeyConverter;
  */
 class DownloadSyncTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    public function setUp()
+    {
+        if (version_compare(PHP_VERSION, '5.5.13') >= 0) {
+            $this->markTestSkipped('TODO: Remove once PHPUnit is tagged');
+        }
+    }
+
     protected function getSplFile($filename)
     {
         $file = $this->getMockBuilder('SplFileInfo')
