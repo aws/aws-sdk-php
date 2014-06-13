@@ -25,11 +25,11 @@ class S3Client extends AwsClient
      * DNS compatible bucket names can be used as a subdomain in a URL (e.g.,
      * "<bucket>.s3.amazonaws.com").
      *
-     * @param string $bucket Bucke name to check.
+     * @param string $bucket Bucket name to check.
      *
      * @return bool
      */
-    public static function isValidBucketName($bucket)
+    public static function isDnsCompatible($bucket)
     {
         $bucketLen = strlen($bucket);
 
@@ -176,9 +176,10 @@ class S3Client extends AwsClient
     }
 
     /**
-     * Upload a file, stream, or string to a bucket. If the upload size exceeds
-     * the specified threshold, the upload will be performed using parallel
-     * multipart uploads.
+     * Upload a file, stream, or string to a bucket.
+     *
+     * If the upload size exceeds the specified threshold, the upload will be
+     * performed using parallel multipart uploads.
      *
      * @param string $bucket  Bucket to upload the object
      * @param string $key     Key of the object
@@ -189,13 +190,10 @@ class S3Client extends AwsClient
      * @param array  $options Custom options used when executing commands:
      *
      *     - params: Custom parameters to use with the upload. The parameters
-     *       must map to a PutObject or InitiateMultipartUpload operation
-     *       parameters.
+     *       must map to the parameters specified in the PutObject operation.
      *     - min_part_size: Minimum size to allow for each uploaded part when
      *       performing a multipart upload.
      *     - concurrency: Maximum number of concurrent multipart uploads.
-     *     - before_upload: Callback to invoke before each multipart upload.
-     *       The callback will receive a relevant Guzzle Event object.
      *
      * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more information.
      * @return Result Returns the modeled result of the performed operation.
@@ -411,5 +409,14 @@ class S3Client extends AwsClient
                 . "must be installed in order to use the "
                 . debug_backtrace()[2]['function'] . " function.");
         }
+    }
+
+    /**
+     * @deprecated
+     */
+    public static function isValidBucketName($bucket)
+    {
+        trigger_error('This method is deprecated in favor of isDnsCompatible.');
+        return self::isDnsCompatible($bucket);
     }
 }
