@@ -104,6 +104,8 @@ class WriteRequestBatchTransfer implements BatchTransferInterface
                         $this->retryLargeRequest($request, $unprocessedRequests);
                     } elseif ($e->getExceptionCode() === 'ProvisionedThroughputExceededException') {
                         $this->handleUnprocessedRequestsAfterException($request, $unprocessedRequests);
+                    } else {
+                        $unhandledExceptions->add($e);
                     }
                 } else {
                     $unhandledExceptions->add($e);
