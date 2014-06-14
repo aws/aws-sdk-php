@@ -1,20 +1,5 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\S3\Model;
+namespace Aws\S3\Acp;
 
 use Aws\S3\Enum\Permission;
 use Aws\Common\Exception\InvalidArgumentException;
@@ -25,26 +10,20 @@ use Guzzle\Common\ToArrayInterface;
  */
 class Grant implements ToArrayInterface
 {
-    /**
-     * @var array A map of permissions to operation parameters
-     */
-    protected static $parameterMap = array(
+    /** @var array A map of permissions to operation parameters */
+    private static $parameterMap = [
         Permission::READ         => 'GrantRead',
         Permission::WRITE        => 'GrantWrite',
         Permission::READ_ACP     => 'GrantReadACP',
         Permission::WRITE_ACP    => 'GrantWriteACP',
         Permission::FULL_CONTROL => 'GrantFullControl'
-    );
+    ];
 
-    /**
-     * @var Grantee The grantee affected by the grant
-     */
-    protected $grantee;
+    /** @var Grantee The grantee affected by the grant */
+    private $grantee;
 
-    /**
-     * @var string The permission set by the grant
-     */
-    protected $permission;
+    /** @var string The permission set by the grant */
+    private $permission;
 
     /**
      * Constructs an ACL
@@ -115,25 +94,23 @@ class Grant implements ToArrayInterface
     }
 
     /**
-     * Returns an array of the operation parameter and value to set on the operation
+     * Returns an array of the operation parameter and value to set on the
+     * operation
      *
      * @return array
      */
     public function getParameterArray()
     {
-        return array(
-            self::$parameterMap[$this->permission] => $this->grantee->getHeaderValue()
-        );
+        $value = $this->grantee->getHeaderValue();
+
+        return [self::$parameterMap[$this->permission] => $value];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
-        return array(
+        return [
             'Grantee'    => $this->grantee->toArray(),
             'Permission' => $this->permission
-        );
+        ];
     }
 }

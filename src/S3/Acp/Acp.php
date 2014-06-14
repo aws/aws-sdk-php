@@ -1,20 +1,5 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\S3\Model;
+namespace Aws\S3\Acp;
 
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\OverflowException;
@@ -24,17 +9,13 @@ use Guzzle\Service\Command\AbstractCommand;
 /**
  * Amazon S3 Access Control Policy (ACP)
  */
-class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
+class Acp implements ToArrayInterface
 {
-    /**
-     * @var \SplObjectStorage List of grants on the ACP
-     */
-    protected $grants = array();
+    /** @var \SplObjectStorage List of grants on the ACP */
+    private $grants = [];
 
-    /**
-     * @var Grantee The owner of the ACP
-     */
-    protected $owner;
+    /** @var Grantee The owner of the ACP */
+    private $owner;
 
     /**
      * Constructs an ACP
@@ -49,8 +30,10 @@ class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
     }
 
     /**
-     * Create an Acp object from an array. This can be used to create an ACP from a response to a GetObject/Bucket ACL
-     * operation.
+     * Create an Acp object from an array.
+     *
+     * This can be used to create an ACP from a response to a GetObject/Bucket
+     * ACL operation.
      *
      * @param array $data Array of ACP data
      *
@@ -168,36 +151,16 @@ class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
      * @param Grant $grant Grant to add
      *
      * @return self
+     * @throws \OverflowException if more than 100 grants are added.
      */
     public function addGrant(Grant $grant)
     {
         if (count($this->grants) < 100) {
             $this->grants->attach($grant);
-        } else {
-            throw new OverflowException('An ACP may contain up to 100 grants.');
+            return $this;
         }
 
-        return $this;
-    }
-
-    /**
-     * Get the total number of attributes
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->grants);
-    }
-
-    /**
-     * Returns the grants for iteration
-     *
-     * @return \SplObjectStorage
-     */
-    public function getIterator()
-    {
-        return $this->grants;
+        throw new \OverflowException('An ACP may contain up to 100 grants.');
     }
 
     /**
@@ -222,9 +185,6 @@ class Acp implements ToArrayInterface, \IteratorAggregate, \Countable
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
         $grants = array();

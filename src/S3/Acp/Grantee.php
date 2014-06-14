@@ -1,20 +1,5 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\S3\Model;
+namespace Aws\S3\Acp;
 
 use Aws\S3\Enum\Group;
 use Aws\S3\Enum\GranteeType;
@@ -28,29 +13,21 @@ use Guzzle\Common\ToArrayInterface;
  */
 class Grantee implements ToArrayInterface
 {
-    /**
-     * @var array A map of grantee types to grant header value prefixes
-     */
-    protected static $headerMap = array(
+    /** @var array A map of grantee types to grant header value prefixes */
+    private static $headerMap = [
         GranteeType::USER  => 'id',
         GranteeType::EMAIL => 'emailAddress',
         GranteeType::GROUP => 'uri'
-    );
+    ];
 
-    /**
-     * @var string The account ID, email, or URL identifying the grantee
-     */
-    protected $id;
+    /** @var string The account ID, email, or URL identifying the grantee */
+    private $id;
 
-    /**
-     * @var string The display name of the grantee
-     */
-    protected $displayName;
+    /** @var string The display name of the grantee */
+    private $displayName;
 
-    /**
-     * @var string The type of the grantee (CanonicalUser or Group)
-     */
-    protected $type;
+    /** @var string The type of the grantee (CanonicalUser or Group) */
+    private $type;
 
     /**
      * Constructs a Grantee
@@ -83,7 +60,8 @@ class Grantee implements ToArrayInterface
         if (in_array($id, Group::values())) {
             $this->type = GranteeType::GROUP;
         } elseif (!is_string($id)) {
-            throw new InvalidArgumentException('The grantee ID must be provided as a string value.');
+            throw new InvalidArgumentException('The grantee ID must be '
+                . 'provided as a string value.');
         }
 
         if (strpos($id, '@') !== false) {
@@ -224,9 +202,7 @@ class Grantee implements ToArrayInterface
      */
     public function toArray()
     {
-        $result = array(
-            'Type' => $this->type
-        );
+        $result = ['Type' => $this->type];
 
         switch ($this->type) {
             case GranteeType::USER:

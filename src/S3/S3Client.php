@@ -29,7 +29,7 @@ class S3Client extends AwsClient
      *
      * @return bool
      */
-    public static function isDnsCompatible($bucket)
+    public static function isBucketDnsCompatible($bucket)
     {
         $bucketLen = strlen($bucket);
 
@@ -418,7 +418,7 @@ class S3Client extends AwsClient
      */
     public static function isValidBucketName($bucket)
     {
-        trigger_error('This method is deprecated in favor of isDnsCompatible.');
+        trigger_error('This method is deprecated in favor of isBucketDnsCompatible.');
         return self::isDnsCompatible($bucket);
     }
 }
