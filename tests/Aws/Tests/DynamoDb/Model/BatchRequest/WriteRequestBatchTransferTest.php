@@ -91,6 +91,12 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
         $exceptionCollectionThroughput = new ExceptionCollection();
         $exceptionCollectionThroughput->add($throughputExceededException);
 
+        // Some DynamoDbException that will be rethrown, not handled (case #7)
+        $unhandledDynamoDbException = new DynamoDbException();
+        $unhandledDynamoDbException->setExceptionCode('UnhandledException');
+        $exceptionCollectionUnhandled = new ExceptionCollection();
+        $exceptionCollectionUnhandled->add($unhandledDynamoDbException);
+
         return array(
             array(
                 array('UnprocessedItems' => array()),
@@ -122,6 +128,11 @@ class WriteRequestBatchTransferTest extends \Guzzle\Tests\GuzzleTestCase
                 $this->throwException($exceptionCollectionThroughput),
                 'some-unprocessed-items'
             ),
+            array(
+                array('UnprocessedItems' => array()),
+                $this->throwException($exceptionCollectionUnhandled),
+                'exceptions-thrown'
+            )
         );
     }
 
