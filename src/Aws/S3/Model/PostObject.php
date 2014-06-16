@@ -67,12 +67,19 @@ class PostObject extends Collection
      * - key:                          The location where the file should be uploaded to. The default value is
      *                                 `^${filename}` which will use the name of the uploaded file
      * - policy:                       A raw policy in JSON format. By default, the PostObject creates one for you
+     * - policy_callback:              A callback used to modify the policy before encoding and signing it. The
+     *                                 method signature for the callback should accept an array of the policy data as
+     *                                 the 1st argument, (optionally) the PostObject as the 2nd argument, and return
+     *                                 the policy data with the desired modifications.
      * - success_action_redirect:      The URI for Amazon S3 to redirect to upon successful upload
      * - success_action_status:        The status code for Amazon S3 to return upon successful upload
      * - ttd:                          The expiration time for the generated upload form data
+     * - x-amz-meta-*:                 Any custom meta tag that should be set to the object
      * - x-amz-server-side-encryption: The server-side encryption mechanism to use
      * - x-amz-storage-class:          The storage setting to apply to the object
-     * - x-amz-meta-*:                 Any custom meta tag that should be set to the object
+     * - x-amz-server-side​-encryption​-customer-algorithm: The SSE-C algorithm
+     * - x-amz-server-side​-encryption​-customer-key:       The SSE-C customer secret key
+     * - x-amz-server-side​-encryption​-customer-key-MD5:   The MD5 hash of the SSE-C customer secret key
      *
      * For the Cache-Control, Content-Disposition, Content-Encoding,
      * Content-Type, Expires, and key options, to use a "starts-with" comparison
@@ -109,9 +116,10 @@ class PostObject extends Collection
         $ttd = is_numeric($ttd) ? (int) $ttd : strtotime($ttd);
         unset($options['ttd']);
 
-        // Save policy if passed in
-        $rawPolicy = $options['policy'];
-        unset($options['policy']);
+        // If a policy or policy callback were provided, extract those from the options
+        $rawJsonPolicy = $options['policy'];
+        $policyCallback = $options['policy_callback'];
+        unset($options['policy'], $options['policy_callback']);
 
         // Setup policy document
         $policy = array(
@@ -146,7 +154,7 @@ class PostObject extends Collection
             $policy['conditions'][] = array(
                 'success_action_status' => (string) $status
             );
-            $options->remove('success_action_status');
+            unset($options['success_action_status']);
         }
 
         // Add other options
@@ -163,18 +171,10 @@ class PostObject extends Collection
             }
         }
 
-        // Add policy
-        $this->jsonPolicy = $rawPolicy ?: json_encode($policy);
-        $jsonPolicy64 = base64_encode($this->jsonPolicy);
-        $this->formInputs['policy'] = $jsonPolicy64;
-
-        // Add signature
-        $this->formInputs['signature'] = base64_encode(hash_hmac(
-            'sha1',
-            $jsonPolicy64,
-            $this->client->getCredentials()->getSecretKey(),
-            true
-        ));
+        // Handle the policy
+        $policy = is_callable($policyCallback) ? $policyCallback($policy, $this) : $policy;
+        $this->jsonPolicy = $rawJsonPolicy ?: json_encode($policy);
+        $this->applyPolicy();
 
         return $this;
     }
@@ -255,5 +255,21 @@ class PostObject extends Collection
     public function getJsonPolicy()
     {
         return $this->jsonPolicy;
+    }
+
+    /**
+     * Handles the encoding, singing, and injecting of the policy
+     */
+    protected function applyPolicy()
+    {
+        $jsonPolicy64 = base64_encode($this->jsonPolicy);
+        $this->formInputs['policy'] = $jsonPolicy64;
+
+        $this->formInputs['signature'] = base64_encode(hash_hmac(
+            'sha1',
+            $jsonPolicy64,
+            $this->client->getCredentials()->getSecretKey(),
+            true
+        ));
     }
 }

@@ -60,7 +60,11 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
                 'ttd' => 'Nov 24, 1984, midnight GMT',
                 'acl' => CannedAcl::PRIVATE_ACCESS,
                 'success_action_status' => 201,
-                'key' => '^foo/bar/${filename}'
+                'key' => '^foo/bar/${filename}',
+                'policy_callback' => function (array $policy) {
+                    $policy['conditions'][] = array('fizz' => 'buzz');
+                    return $policy;
+                }
             ),
             // Expected Results
             array(
@@ -75,10 +79,10 @@ class PostObjectTest extends \Guzzle\Tests\GuzzleTestCase
                     'key' => 'foo/bar/${filename}',
                     'Content-Type' => 'text/',
                     'acl' => 'private',
-                    'policy' => 'eyJleHBpcmF0aW9uIjoiMTk4NC0xMS0yNFQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJmb28ifSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwidGV4dFwvIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJmb29cL2JhclwvIl1dfQ==',
-                    'signature' => 'FHY919PP/ZzL/IRw8QX6Yd/i7hw='
+                    'policy' => 'eyJleHBpcmF0aW9uIjoiMTk4NC0xMS0yNFQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJmb28ifSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwidGV4dFwvIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJmb29cL2JhclwvIl0seyJmaXp6IjoiYnV6eiJ9XX0=',
+                    'signature' => 'XKwHh/c1moTcCw1L5xY/xmb/b58='
                 ),
-                'policy' => '{"expiration":"1984-11-24T00:00:00Z","conditions":[{"bucket":"foo"},{"success_action_status":"201"},["starts-with","$Content-Type","text\/"],{"acl":"private"},["starts-with","$key","foo\/bar\/"]]}'
+                'policy' => '{"expiration":"1984-11-24T00:00:00Z","conditions":[{"bucket":"foo"},{"success_action_status":"201"},["starts-with","$Content-Type","text\/"],{"acl":"private"},["starts-with","$key","foo\/bar\/"],{"fizz":"buzz"}]}'
             )
         );
 
