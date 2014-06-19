@@ -26,7 +26,7 @@ class AwsException extends CommandException
 
         $message = 'AWS (' . $client->getApi()->getEndpointPrefix()  . ') Error: ';
 
-        if ($prev = $previous->getContext('aws_error/message')) {
+        if ($prev = $previous->getContext()->getPath('aws_error/message')) {
             $message .= $prev;
         } else {
             $message .= $previous->getMessage();
@@ -34,12 +34,8 @@ class AwsException extends CommandException
 
         return new static(
             $message,
-            $client,
-            $previous->getCommand(),
-            $previous->getRequest(),
-            $previous->getResponse(),
-            $previous,
-            $previous->getContext()
+            $previous->getCommandTransaction(),
+            $previous
         );
     }
 
@@ -72,7 +68,7 @@ class AwsException extends CommandException
      */
     public function getAwsRequestId()
     {
-        return $this->getContext('aws_error/request_id');
+        return $this->getContext()->getPath('aws_error/request_id');
     }
 
     /**
@@ -82,7 +78,7 @@ class AwsException extends CommandException
      */
     public function getAwsErrorType()
     {
-        return $this->getContext('aws_error/type');
+        return $this->getContext()->getPath('aws_error/type');
     }
 
     /**
@@ -92,7 +88,7 @@ class AwsException extends CommandException
      */
     public function getAwsErrorCode()
     {
-        return $this->getContext('aws_error/code');
+        return $this->getContext()->getPath('aws_error/code');
     }
 
     /**
@@ -105,7 +101,7 @@ class AwsException extends CommandException
      */
     public function getRequestId()
     {
-        return $this->getContext('aws_error/request_id');
+        return $this->getContext()->getPath('aws_error/request_id');
     }
 
     /**
@@ -116,7 +112,7 @@ class AwsException extends CommandException
      */
     public function getExceptionCode()
     {
-        return $this->getContext('aws_error/code');
+        return $this->getContext()->getPath('aws_error/code');
     }
 
     /**
@@ -127,6 +123,6 @@ class AwsException extends CommandException
      */
     public function getExceptionType()
     {
-        return $this->getContext('aws_error/type');
+        return $this->getContext()->getPath('aws_error/type');
     }
 }

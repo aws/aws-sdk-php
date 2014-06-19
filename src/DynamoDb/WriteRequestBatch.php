@@ -160,7 +160,7 @@ class WriteRequestBatch
                     }
                 },
                 'error' => function (CommandErrorEvent $e) {
-                    if ($e['aws_error']['code'] === 'ProvisionedThroughputExceededException') {
+                    if ($e->getContext()['aws_error']['code'] === 'ProvisionedThroughputExceededException') {
                         $this->retryUnprocessed($e->getCommand()['RequestItems']);
                     } elseif (is_callable($this->config['error'])) {
                         $this->config['error']($e);

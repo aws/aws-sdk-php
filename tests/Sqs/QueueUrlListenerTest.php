@@ -2,6 +2,7 @@
 namespace Aws\Test\Sqs;
 
 use Aws\Sqs\SqsClient;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
@@ -17,7 +18,7 @@ class QueueUrlListenerTest extends \PHPUnit_Framework_TestCase
 
         $command = $client->getCommand('ReceiveMessage');
         $command['QueueUrl'] = $newUrl;
-        $event = new PrepareEvent($command, $client);
+        $event = new PrepareEvent(new CommandTransaction($client, $command));
         $command->getEmitter()->emit('prepare', $event);
         $this->assertEquals($newUrl, $event->getRequest()->getUrl());
     }

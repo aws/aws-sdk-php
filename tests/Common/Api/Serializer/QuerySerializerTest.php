@@ -6,6 +6,7 @@ use Aws\Common\Api\Service;
 use Aws\AwsCommand;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Command;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
@@ -45,7 +46,11 @@ class QuerySerializerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($http));
 
         $q = new QuerySerializer($service, 'http://foo.com');
-        $event = new PrepareEvent(new AwsCommand('foo', ['baz' => []], $service), $aws);
+        $trans = new CommandTransaction(
+            $aws,
+            new AwsCommand('foo', ['baz' => []], $service)
+        );
+        $event = new PrepareEvent($trans);
         $q->onPrepare($event);
         $request = $event->getRequest();
         $this->assertEquals('POST', $request->getMethod());

@@ -14,7 +14,9 @@ class JsonRpcErrorParser
     {
         $data = $this->genericHandler($response);
         // Make the casing consistent across services.
-        $data['parsed'] = array_change_key_case($data['parsed']);
+        if ($data['parsed']) {
+            $data['parsed'] = array_change_key_case($data['parsed']);
+        }
 
         if (isset($data['parsed']['__type'])) {
             $parts = explode('#', $data['parsed']['__type']);

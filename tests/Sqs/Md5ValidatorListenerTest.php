@@ -4,6 +4,7 @@ namespace Aws\Test\Sqs;
 use Aws\Result;
 use Aws\Sqs\Md5ValidatorListener;
 use Aws\Sqs\SqsClient;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -21,7 +22,7 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
         ]);
         $client = SqsClient::factory(['region' => 'us-west-2']);
         $command = $client->getCommand('ReceiveMessage');
-        $event = new ProcessEvent($command, $client);
+        $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
         $listener = new Md5ValidatorListener();
         $listener->onProcess($event);
@@ -40,7 +41,7 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
 
         $client = SqsClient::factory(['region' => 'us-west-2']);
         $command = $client->getCommand('ReceiveMessage');
-        $event = new ProcessEvent($command, $client);
+        $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
         $listener = new Md5ValidatorListener();
         $listener->onProcess($event);
@@ -51,7 +52,7 @@ class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
         $model  = new Result([]);
         $client = SqsClient::factory(['region' => 'us-west-2']);
         $command = $client->getCommand('ListQueues');
-        $event = new ProcessEvent($command, $client);
+        $event = new ProcessEvent(new CommandTransaction($client, $command));
         $event->setResult($model);
         $listener = new Md5ValidatorListener();
         $listener->onProcess($event);

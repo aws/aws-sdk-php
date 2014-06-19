@@ -5,6 +5,7 @@ use Aws\Common\Api\Serializer\JsonRpcSerializer;
 use Aws\Common\Api\Service;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Command;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
@@ -45,7 +46,11 @@ class JsonRpcSerializerTest extends \PHPUnit_Framework_TestCase
 
         $j = new JsonRpcSerializer($service, 'http://foo.com');
         $this->assertArrayHasKey('prepare', $j->getEvents());
-        $event = new PrepareEvent(new Command('foo', ['baz' => 'bam']), $aws);
+        $trans = new CommandTransaction(
+            $aws,
+            new Command('foo', ['baz' => 'bam'])
+        );
+        $event = new PrepareEvent($trans);
         $j->onPrepare($event);
         $request = $event->getRequest();
         $this->assertEquals('POST', $request->getMethod());

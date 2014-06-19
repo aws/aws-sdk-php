@@ -6,6 +6,7 @@ use Aws\AwsClient;
 use Aws\AwsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Command;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Exception\CommandException;
 
 /**
@@ -18,9 +19,12 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresWrappedExceptionIsValid()
     {
+        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
+            ->disableOriginalConstructor()
+            ->getMock();
         $e = $this->getMockBuilder('GuzzleHttp\Command\Exception\CommandException')
             ->setMethods(['getClient'])
-            ->disableOriginalConstructor()
+            ->setConstructorArgs(['Baz', $trans])
             ->getMock();
         $e->expects($this->once())
             ->method('getClient')
@@ -43,8 +47,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $cmd = new Command('foo');
-
-        $e1 = new CommandException('foo', $client, $cmd, null, null, null, [
+        $trans = new CommandTransaction($client, $cmd, [
             'aws_error' => [
                 'message'    => 'a',
                 'request_id' => 'b',
@@ -53,6 +56,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
+        $e1 = new CommandException('foo', $trans);
         $e2 = AwsException::wrap($e1);
         $this->assertSame('ec2', $e2->getServiceName());
         $this->assertSame($e1, $e2->getPrevious());
@@ -80,7 +84,8 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 
         $command = $this->getMockBuilder('Aws\AwsCommandInterface')
             ->getMockForAbstractClass();
-        $e = new CommandException('Previous', $client, $command);
+        $trans = new CommandTransaction($client, $command);
+        $e = new CommandException('Previous', $trans);
         $ex = AwsException::wrap($e);
         $this->assertContains('Previous', $ex->getMessage());
     }

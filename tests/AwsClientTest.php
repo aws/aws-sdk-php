@@ -124,7 +124,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
                     'type' => 'bar',
                     'request_id' => '123'
                 ]
-            ], $e->getContext());
+            ], $e->getContext()->toArray());
             $this->assertEquals('foo', $e->getAwsErrorCode());
             $this->assertEquals('bar', $e->getAwsErrorType());
             $this->assertEquals('123', $e->getAwsRequestId());

@@ -5,6 +5,7 @@ use Aws\Common\Api\Service;
 use Aws\AwsClient;
 use Aws\Common\Credentials\NullCredentials;
 use GuzzleHttp\Client;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream;
@@ -80,7 +81,9 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             Stream\create($res['body'])
         );
 
-        $event = new ProcessEvent($command, $client, null, $response);
+        $trans = new CommandTransaction($client, $command);
+        $trans->setResponse($response);
+        $event = new ProcessEvent($trans);
         $command->getEmitter()->emit('process', $event);
         $result = $event->getResult()->toArray();
 

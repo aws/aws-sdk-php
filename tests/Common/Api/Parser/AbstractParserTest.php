@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Common\Api\Parser;
 use GuzzleHttp\Command\Command;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -16,7 +17,8 @@ class AbstractParserTest extends \PHPUnit_Framework_TestCase
         $mockClient = $this->getMockBuilder('GuzzleHttp\Command\AbstractClient')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $event = new ProcessEvent(new Command('foo'), $mockClient);
+        $trans = new CommandTransaction($mockClient, new Command('foo'));
+        $event = new ProcessEvent($trans);
         $event->setResult('foo');
         $mock->onProcess($event);
         $this->assertSame('foo', $event->getResult());
@@ -33,7 +35,8 @@ class AbstractParserTest extends \PHPUnit_Framework_TestCase
         $mockClient = $this->getMockBuilder('GuzzleHttp\Command\AbstractClient')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $event = new ProcessEvent(new Command('foo'), $mockClient);
+        $trans = new CommandTransaction($mockClient, new Command('foo'));
+        $event = new ProcessEvent($trans);
         $mock->onProcess($event);
     }
 }

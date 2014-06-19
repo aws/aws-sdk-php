@@ -54,7 +54,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals([
                 'foo'    => 'bar',
                 'called' => 1
-            ], $e['aws_error']);
+            ], $e->getContext()['aws_error']);
             $e->setResult('foo');
         }, RequestEvents::LATE);
 
@@ -96,7 +96,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
         );
 
         $awsClient->getEmitter()->on('error', function (CommandErrorEvent $e) {
-            $this->assertNull($e['aws_error']);
+            $this->assertNull($e->getContext()['aws_error']);
             $e->setResult('foo');
         }, RequestEvents::LATE);
 

@@ -5,6 +5,7 @@ use Aws\Common\Api\Service;
 use Aws\AwsClient;
 use Aws\Common\Credentials\NullCredentials;
 use GuzzleHttp\Client;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
@@ -69,9 +70,10 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
 
         $service->applyProtocol($client, 'http://foo.com');
         $command = $client->getCommand($name, $args);
+        $trans = new CommandTransaction($client, $command);
         $event = $command->getEmitter()->emit(
             'prepare',
-            new PrepareEvent($command, $client)
+            new PrepareEvent($trans)
         );
 
         $request = $event->getRequest();

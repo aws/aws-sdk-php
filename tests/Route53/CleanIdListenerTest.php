@@ -3,6 +3,7 @@ namespace Aws\Test\Route53;
 
 use Aws\Route53\Route53Client;
 use Aws\Route53\CleanIdListener;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
@@ -16,7 +17,8 @@ class CleanIdListenerTest extends \PHPUnit_Framework_TestCase
         $command = $client->getCommand('ChangeResourceRecordSets', [
             'HostedZoneId' => '/hostedzone/foo'
         ]);
-        $event = new PrepareEvent($command, $client);
+        $trans = new CommandTransaction($client, $command);
+        $event = new PrepareEvent($trans);
         $listener = new CleanIdListener();
         $listener->onPrepare($event);
         $this->assertEquals('foo', $command['HostedZoneId']);

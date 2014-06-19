@@ -5,6 +5,7 @@ use Aws\AwsClientInterface;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
@@ -108,14 +109,12 @@ trait UsesServiceClientTrait
                 ])
             ));
 
-        return new CommandException(
-            'Test error',
+        $trans = new CommandTransaction(
             $client,
             $this->getMock('Aws\AwsCommandInterface'),
-            null,
-            null,
-            null,
             ['aws_error' => ['message' => 'Test error', 'code' => $code]]
         );
+
+        return new CommandException('Test error', $trans);
     }
 }

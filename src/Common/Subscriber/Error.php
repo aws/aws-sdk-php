@@ -30,7 +30,7 @@ class Error implements SubscriberInterface
 
     public function onError(CommandErrorEvent $event)
     {
-        $response = $event->getRequestErrorEvent()->getResponse();
+        $response = $event->getResponse();
 
         // Don't update networking errors
         if (!$response) {
@@ -38,6 +38,6 @@ class Error implements SubscriberInterface
         }
 
         $parser = $this->parser;
-        $event['aws_error'] = $parser($response);
+        $event->getContext()->set('aws_error', $parser($response));
     }
 }
