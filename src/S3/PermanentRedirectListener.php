@@ -2,8 +2,8 @@
 namespace Aws\S3;
 
 use Aws\S3\Exception\PermanentRedirectException;
-use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Event\SubscriberInterface;
 
 /**
  * Throws a PermanentRedirectException exception when a 301 redirect is
@@ -13,18 +13,17 @@ class PermanentRedirectListener implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['process' => ['checkForPermanentRedirect']];
+        return ['prepare' => ['checkForPermanentRedirect', 'last']];
     }
 
     public function checkForPermanentRedirect(ProcessEvent $e)
     {
-        if ($e->getResponse()->getStatusCode() == 301) {
+        $res = $e->getResponse();
+
+        if ($res && $res->getStatusCode() == 301) {
             throw new PermanentRedirectException(
                 'Encountered a permanent redirect',
-                $e->getClient(),
-                $e->getCommand(),
-                $e->getRequest(),
-                $e->getResponse()
+                $e->getCommandTransaction()
             );
         }
     }
