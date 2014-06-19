@@ -27,8 +27,8 @@ class DownloadSyncTest extends \Guzzle\Tests\GuzzleTestCase
 {
     public function setUp()
     {
-        if (version_compare(PHP_VERSION, '5.5.13') >= 0) {
-            $this->markTestSkipped('TODO: Remove once PHPUnit is tagged');
+        if (in_array(PHP_VERSION_ID, array(50429, 50513, 50600))) {
+            $this->markTestSkipped('TODO: Remove once PHPUnit is tagged.');
         }
     }
 
