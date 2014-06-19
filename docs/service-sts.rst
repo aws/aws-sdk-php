@@ -87,6 +87,4 @@ You can also use the same technique when setting credentials on an existing clie
     $credentials = $sts->createCredentials($sts->getSessionToken());
     $s3->setCredentials($credentials);
 
-.. include:: _snippets/incomplete.txt
-
 .. apiref:: Sts

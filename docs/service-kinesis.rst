@@ -10,6 +10,4 @@ count.
 
 .. example:: Kinesis/Integration/Kinesis_20131104_Test.php testCreateStream
 
-.. include:: _snippets/incomplete.txt
-
 .. apiref:: Kinesis

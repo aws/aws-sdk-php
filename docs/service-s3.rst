@@ -22,18 +22,10 @@ bucket used in the examples of this tutorial in order for them to work correctly
 Creating a bucket in another region
 -----------------------------------
 
-The above example creates a bucket in the standard US-EAST-1 region. You can change the bucket location by passing a
+The above example creates a bucket in the standard us-east-1 region. You can change the bucket location by passing a
 ``LocationConstraint`` value.
 
 .. example:: S3/Integration/S3_20060301_Test.php testCreateBucketInRegion
-
-You'll notice in the above example that we are using the ``Aws\Common\Enum\Region`` object to provide the ``US_WEST_2``
-constant. The SDK provides various Enum classes under the ``Aws\Common\Enum`` namespace that can be useful for
-remembering available values and ensuring you do not enter a typo.
-
-.. note::
-
-    Using the enum classes is not required. You could just pass 'us-west-2' in the ``LocationConstraint`` key.
 
 Waiting until the bucket exists
 -------------------------------
@@ -150,7 +142,6 @@ easier to upload large files using multipart upload.
 
 .. code-block:: php
 
-    use Aws\Common\Enum\Size;
     use Aws\Common\Exception\MultipartUploadException;
     use Aws\S3\Model\MultipartUpload\UploadBuilder;
 
@@ -207,19 +198,6 @@ You can specify a canned ACL on an object when uploading:
         'ACL'        => 'public-read'
     ));
 
-You can use the ``Aws\S3\Enum\CannedAcl`` object to provide canned ACL constants:
-
-.. code-block:: php
-
-    use Aws\S3\Enum\CannedAcl;
-
-    $client->putObject(array(
-        'Bucket'     => 'mybucket',
-        'Key'        => 'data.txt',
-        'SourceFile' => '/path/to/data.txt',
-        'ACL'        => CannedAcl::PUBLIC_READ
-    ));
-
 You can specify more complex ACLs using the ``ACP`` parameter when sending PutObject, CopyObject, CreateBucket,
 CreateMultipartUpload, PutBucketAcl, PutObjectAcl, and other operations that accept a canned ACL. Using the ``ACP``
 parameter allows you specify more granular access control policies using a ``Aws\S3\Model\Acp`` object. The easiest
@@ -227,15 +205,14 @@ way to create an Acp object is through the ``Aws\S3\Model\AcpBuilder``.
 
 .. code-block:: php
 
-    use Aws\S3\Enum\Permission;
     use Aws\S3\Enum\Group;
     use Aws\S3\Model\AcpBuilder;
 
     $acp = AcpBuilder::newInstance()
         ->setOwner($myOwnerId)
-        ->addGrantForEmail(Permission::READ, 'test@example.com')
-        ->addGrantForUser(Permission::FULL_CONTROL, 'user-id')
-        ->addGrantForGroup(Permission::READ, Group::AUTHENTICATED_USERS)
+        ->addGrantForEmail('READ', 'test@example.com')
+        ->addGrantForUser('FULL_CONTROL', 'user-id')
+        ->addGrantForGroup('READ', Group::AUTHENTICATED_USERS)
         ->build();
 
     $client->putObject(array(

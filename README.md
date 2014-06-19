@@ -26,11 +26,11 @@ minutes by [installing the SDK through Composer][docs-installation] or by downlo
 
 * Provides easy-to-use HTTP clients for all supported AWS [services][docs-services], [regions][docs-rande], and
   authentication protocols.
-* Is built for PHP 5.3.3+ and is compliant with [PSR-0][], [PSR-1][], and [PSR-2][].
-* Is easy to install through [Composer][install-packagist], [PEAR][install-pear], or single download ([zip][install-zip]
-  or [phar][install-phar]).
-* Is built on [Guzzle v3][guzzle], and utilizes many of its features including persistent connections, parallel requests, 
-  events and plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
+* Is built for PHP 5.3.3+ and is compliant with [PSR-0], [PSR-1], and [PSR-2].
+* Is easy to install through [Composer][install-packagist], or by downloading the [phar][install-phar] or
+  [zip][install-zip].
+* Is built on [Guzzle v3][guzzle], and utilizes many of its features, including persistent connections, parallel
+  requests, events and plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
   logging][docs-wire-logging], caching, flexible batching, and request retrying with truncated exponential backoff.
 * Provides convenience features including easy response pagination via [Iterators][docs-iterators], resource
   [Waiters][docs-waiters], and simple [modelled responses][docs-models].
@@ -46,13 +46,12 @@ minutes by [installing the SDK through Composer][docs-installation] or by downlo
 
 1. **Sign up for AWS** – Before you begin, you need to [sign up for an AWS account][docs-signup] and retrieve your AWS
    credentials.
-1. **Minimum requirements** – To run the SDK, your system will need to meet the [minimum
-   requirements][docs-requirements], including having **PHP 5.3.3+** compiled with the cURL extension and cURL 7.16.2+
-   compiled with OpenSSL and zlib.
-1. **Install the SDK** – Using [Composer][] is the recommended way to install the AWS SDK for PHP. The SDK is available
-   via [Packagist][] under the [`aws/aws-sdk-php`][install-packagist] package. Please see the
-   [Installation section of the User Guide][docs-installation] for more detailed information about installing the SDK
-   through Composer and other means (e.g., [Phar][install-phar], [Zip][install-zip], [PEAR][install-pear]).
+1. **Minimum requirements** – To run the SDK, your system will need to meet the [minimum requirements][docs-requirements],
+   including having **PHP 5.3.3+** compiled with the cURL extension and cURL 7.16.2+ compiled with OpenSSL and zlib.
+1. **Install the SDK** – Using [Composer] is the recommended way to install the AWS SDK for PHP. The SDK is available
+   via [Packagist] under the [`aws/aws-sdk-php`][install-packagist] package. Please see the [Installation section of
+   the User Guide][docs-installation] for more detailed information about installing the SDK through Composer and other
+   means.
 1. **Using the SDK** – The best way to become familiar with how to use the SDK is to read the [User Guide][docs-guide].
    The [Getting Started Guide][docs-quickstart] will help you become familiar with the basic concepts, and there are
    also specific guides for each of the [supported services][docs-services].
@@ -105,7 +104,7 @@ try {
 * [Put an item in your Amazon DynamoDB table][example-dynamodb-putitem]
 * [Send a message to your Amazon SQS queue][example-sqs-sendmessage]
 * Please browse the [User Guide][docs-guide] and [API docs][docs-api] or check out our [AWS SDK Development
-  Blog][sdk-blog] for even more examples.
+  Blog][sdk-blog] for even more examples and tutorials.
 
 ### Related Projects
 

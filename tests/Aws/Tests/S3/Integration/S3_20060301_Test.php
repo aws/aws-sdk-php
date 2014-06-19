@@ -98,7 +98,7 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
         // Create a valid bucket and use a LocationConstraint
         $result = $client->createBucket(array(
             'Bucket'             => $bucket,
-            'LocationConstraint' => \Aws\Common\Enum\Region::US_WEST_2
+            'LocationConstraint' => 'us-west-2',
         ));
 
         // Get the Location header of the response

@@ -105,7 +105,7 @@ following required and suggested libraries:
 
 Using the zip file is great if you:
 
-1. Prefer not to or cannot use package managers like Composer and PEAR.
+1. Prefer not to or cannot use Composer.
 2. Cannot use phar files due to environment limitations.
 3. Want to use only specific files from the SDK.
 
@@ -121,6 +121,14 @@ If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK a
 
 Installing via PEAR
 ~~~~~~~~~~~~~~~~~~~
+
+.. admonition:: Installation via PEAR will soon be unsupported.
+
+    The use of PEAR as a dependency management system has declined in the PHP community in favor of Composer, and
+    notable projects like PHPUnit, Symfony, and Doctrine are all retiring their PEAR channels at various points
+    during this year. We will eventually stop updating our PEAR channel during this year, so we strongly recommend that
+    you switch to using Composer to install the AWS SDK for PHP.
+
 
 `PEAR <http://pear.php.net/>`_ packages are easy to install, and are available in your PHP environment path so that they
 are accessible to any PHP project. PEAR packages are not specific to your project, but rather to the machine they're

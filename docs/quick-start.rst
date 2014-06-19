@@ -22,8 +22,6 @@ Using Composer             ``require '/path/to/vendor/autoload.php';``
 Using the Phar             ``require '/path/to/aws.phar';``
 -------------------------- ---------------------------------------------------------------------------------------------
 Using the Zip              ``require '/path/to/aws-autoloader.php';``
--------------------------- ---------------------------------------------------------------------------------------------
-Using PEAR                 ``require 'AWSSDKforPHP/aws.phar';``
 ========================== =============================================================================================
 
 For the remainder of this guide, we will show examples that use the Composer installation method. If you are using a

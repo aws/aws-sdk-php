@@ -16,14 +16,11 @@ You can also set attributes on your queue when you create it.
 
 .. code-block:: php
 
-    use Aws\Common\Enum\Size;
-    use Aws\Sqs\Enum\QueueAttribute;
-
     $result = $client->createQueue(array(
         'QueueName'  => 'my-queue',
         'Attributes' => array(
-            QueueAttribute::DELAY_SECONDS        => 5,
-            QueueAttribute::MAXIMUM_MESSAGE_SIZE => 4 * Size::KB,
+            'DelaySeconds'       => 5,
+            'MaximumMessageSize' => 4096, // 4 KB
         ),
     ));
     $queueUrl = $result->get('QueueUrl');
@@ -32,13 +29,10 @@ Or you can also set queue attributes later.
 
 .. code-block:: php
 
-    use Aws\Common\Enum\Time;
-    use Aws\Sqs\Enum\QueueAttribute;
-
     $result = $client->setQueueAttributes(array(
         'QueueUrl'   => $queueUrl,
         'Attributes' => array(
-            QueueAttribute::VISIBILITY_TIMEOUT => 2 * Time::MINUTES,
+            'VisibilityTimeout' => 2 * 60 * 60, // 2 min
         ),
     ));
 
