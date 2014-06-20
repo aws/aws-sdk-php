@@ -101,10 +101,12 @@ return array (
             'responseType' => 'model',
             'parameters' => array(
                 'PipelineId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Input' => array(
+                    'required' => true,
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -227,6 +229,58 @@ return array (
                                 ),
                             ),
                         ),
+                        'Captions' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'MergePolicy' => array(
+                                    'type' => 'string',
+                                ),
+                                'CaptionSources' => array(
+                                    'type' => 'array',
+                                    'maxItems' => 20,
+                                    'items' => array(
+                                        'name' => 'CaptionSource',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Key' => array(
+                                                'type' => 'string',
+                                                'minLength' => 1,
+                                                'maxLength' => 255,
+                                            ),
+                                            'Language' => array(
+                                                'type' => 'string',
+                                                'minLength' => 1,
+                                                'maxLength' => 255,
+                                            ),
+                                            'TimeOffset' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Label' => array(
+                                                'type' => 'string',
+                                                'minLength' => 1,
+                                                'maxLength' => 40,
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                                'CaptionFormats' => array(
+                                    'type' => 'array',
+                                    'maxItems' => 4,
+                                    'items' => array(
+                                        'name' => 'CaptionFormat',
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'Format' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'Pattern' => array(
+                                                'type' => 'string',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 'Outputs' => array(
@@ -330,6 +384,58 @@ return array (
                                     ),
                                 ),
                             ),
+                            'Captions' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'MergePolicy' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'CaptionSources' => array(
+                                        'type' => 'array',
+                                        'maxItems' => 20,
+                                        'items' => array(
+                                            'name' => 'CaptionSource',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Key' => array(
+                                                    'type' => 'string',
+                                                    'minLength' => 1,
+                                                    'maxLength' => 255,
+                                                ),
+                                                'Language' => array(
+                                                    'type' => 'string',
+                                                    'minLength' => 1,
+                                                    'maxLength' => 255,
+                                                ),
+                                                'TimeOffset' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Label' => array(
+                                                    'type' => 'string',
+                                                    'minLength' => 1,
+                                                    'maxLength' => 40,
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'CaptionFormats' => array(
+                                        'type' => 'array',
+                                        'maxItems' => 4,
+                                        'items' => array(
+                                            'name' => 'CaptionFormat',
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'Format' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'Pattern' => array(
+                                                    'type' => 'string',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -403,12 +509,14 @@ return array (
             'responseType' => 'model',
             'parameters' => array(
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
                     'maxLength' => 40,
                 ),
                 'InputBucket' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -417,6 +525,7 @@ return array (
                     'location' => 'json',
                 ),
                 'Role' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -549,6 +658,7 @@ return array (
             'responseType' => 'model',
             'parameters' => array(
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                     'minLength' => 1,
@@ -560,6 +670,7 @@ return array (
                     'maxLength' => 255,
                 ),
                 'Container' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1080,18 +1191,22 @@ return array (
             'responseType' => 'model',
             'parameters' => array(
                 'Role' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'InputBucket' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'OutputBucket' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Topics' => array(
+                    'required' => true,
                     'type' => 'array',
                     'location' => 'json',
                     'maxItems' => 30,
@@ -1283,6 +1398,7 @@ return array (
                     'location' => 'uri',
                 ),
                 'Notifications' => array(
+                    'required' => true,
                     'type' => 'object',
                     'location' => 'json',
                     'properties' => array(
@@ -1340,6 +1456,7 @@ return array (
                     'location' => 'uri',
                 ),
                 'Status' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -1522,6 +1639,50 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'Captions' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'MergePolicy' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'CaptionSources' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'CaptionSource',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Key' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Language' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'TimeOffset' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Label' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'CaptionFormats' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'CaptionFormat',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Format' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Pattern' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -1626,6 +1787,50 @@ return array (
                                                             'type' => 'string',
                                                         ),
                                                         'Duration' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Captions' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'CaptionSources' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionSource',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Key' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Language' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'TimeOffset' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Label' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                            'CaptionFormats' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionFormat',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Format' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Pattern' => array(
                                                             'type' => 'string',
                                                         ),
                                                     ),
@@ -2116,6 +2321,50 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'Captions' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'CaptionSources' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionSource',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Key' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Language' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'TimeOffset' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Label' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                            'CaptionFormats' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionFormat',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Format' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Pattern' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -2220,6 +2469,50 @@ return array (
                                                                 'type' => 'string',
                                                             ),
                                                             'Duration' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'Captions' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'MergePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'CaptionSources' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'CaptionSource',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Key' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Language' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'TimeOffset' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Label' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                                'CaptionFormats' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'CaptionFormat',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Format' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Pattern' => array(
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -2422,6 +2715,50 @@ return array (
                                             ),
                                         ),
                                     ),
+                                    'Captions' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'CaptionSources' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionSource',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Key' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Language' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'TimeOffset' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Label' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                            'CaptionFormats' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionFormat',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Format' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Pattern' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'Outputs' => array(
@@ -2526,6 +2863,50 @@ return array (
                                                                 'type' => 'string',
                                                             ),
                                                             'Duration' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'Captions' => array(
+                                            'type' => 'object',
+                                            'properties' => array(
+                                                'MergePolicy' => array(
+                                                    'type' => 'string',
+                                                ),
+                                                'CaptionSources' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'CaptionSource',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Key' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Language' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'TimeOffset' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Label' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                                'CaptionFormats' => array(
+                                                    'type' => 'array',
+                                                    'items' => array(
+                                                        'name' => 'CaptionFormat',
+                                                        'type' => 'object',
+                                                        'properties' => array(
+                                                            'Format' => array(
+                                                                'type' => 'string',
+                                                            ),
+                                                            'Pattern' => array(
                                                                 'type' => 'string',
                                                             ),
                                                         ),
@@ -3030,6 +3411,50 @@ return array (
                                         ),
                                     ),
                                 ),
+                                'Captions' => array(
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'MergePolicy' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'CaptionSources' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'CaptionSource',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Key' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Language' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'TimeOffset' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Label' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        'CaptionFormats' => array(
+                                            'type' => 'array',
+                                            'items' => array(
+                                                'name' => 'CaptionFormat',
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'Format' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                    'Pattern' => array(
+                                                        'type' => 'string',
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                         'Outputs' => array(
@@ -3134,6 +3559,50 @@ return array (
                                                             'type' => 'string',
                                                         ),
                                                         'Duration' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    'Captions' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'MergePolicy' => array(
+                                                'type' => 'string',
+                                            ),
+                                            'CaptionSources' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionSource',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Key' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Language' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'TimeOffset' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Label' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                            'CaptionFormats' => array(
+                                                'type' => 'array',
+                                                'items' => array(
+                                                    'name' => 'CaptionFormat',
+                                                    'type' => 'object',
+                                                    'properties' => array(
+                                                        'Format' => array(
+                                                            'type' => 'string',
+                                                        ),
+                                                        'Pattern' => array(
                                                             'type' => 'string',
                                                         ),
                                                     ),
