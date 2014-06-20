@@ -1,14 +1,16 @@
 CHANGELOG
 =========
 
-2.6.8 (2014-06-19)
+2.6.8 (2014-06-20)
 ------------------
 
-* Added support for Captions to the Elastic Transcoder client.
-* Added support for Service Captions to the Elastic MapReduce client.
+* Added support for closed captions to the Elastic Transcoder client.
+* Added support for IAM roles to the Elastic MapReduce client.
 * Updated the S3 PostObject to ease customization.
 * Fixed an issue in some EC2 waiters by merging PR #306.
 * Fixed an issue with the DynamoDB `WriteRequestBatch` by merging PR #310.
+* Fixed issue #309, where the `url_stat()` logic in the S3 Stream Wrapper was
+  affected by a change in PHP 5.5.13.
 
 2.6.7 (2014-06-12)
 ------------------
