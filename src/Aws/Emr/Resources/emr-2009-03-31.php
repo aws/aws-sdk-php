@@ -265,10 +265,12 @@ return array (
                     'default' => 'ElasticMapReduce.AddTags',
                 ),
                 'ResourceId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'Tags' => array(
+                    'required' => true,
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -318,6 +320,7 @@ return array (
                     'default' => 'ElasticMapReduce.DescribeCluster',
                 ),
                 'ClusterId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -419,10 +422,12 @@ return array (
                     'default' => 'ElasticMapReduce.DescribeStep',
                 ),
                 'ClusterId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'StepId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -460,6 +465,7 @@ return array (
                     'default' => 'ElasticMapReduce.ListBootstrapActions',
                 ),
                 'ClusterId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -564,6 +570,7 @@ return array (
                     'default' => 'ElasticMapReduce.ListInstanceGroups',
                 ),
                 'ClusterId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -605,6 +612,7 @@ return array (
                     'default' => 'ElasticMapReduce.ListInstances',
                 ),
                 'ClusterId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -658,6 +666,7 @@ return array (
                     'default' => 'ElasticMapReduce.ListSteps',
                 ),
                 'ClusterId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
@@ -761,10 +770,12 @@ return array (
                     'default' => 'ElasticMapReduce.RemoveTags',
                 ),
                 'ResourceId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'json',
                 ),
                 'TagKeys' => array(
+                    'required' => true,
                     'type' => 'array',
                     'location' => 'json',
                     'items' => array(
@@ -1039,6 +1050,11 @@ return array (
                     'location' => 'json',
                 ),
                 'JobFlowRole' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 10280,
+                ),
+                'ServiceRole' => array(
                     'type' => 'string',
                     'location' => 'json',
                     'maxLength' => 10280,
@@ -1359,6 +1375,9 @@ return array (
                                 ),
                             ),
                         ),
+                        'ServiceRole' => array(
+                            'type' => 'string',
+                        ),
                     ),
                 ),
             ),
@@ -1622,6 +1641,9 @@ return array (
                                 'type' => 'boolean',
                             ),
                             'JobFlowRole' => array(
+                                'type' => 'string',
+                            ),
+                            'ServiceRole' => array(
                                 'type' => 'string',
                             ),
                         ),
