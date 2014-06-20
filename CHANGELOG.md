@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+2.6.8 (2014-06-19)
+------------------
+
+* Added support for Captions to the Elastic Transcoder client.
+* Added support for Service Captions to the Elastic MapReduce client.
+* Updated the S3 PostObject to ease customization.
+* Fixed an issue in some EC2 waiters by merging PR #306.
+* Fixed an issue with the DynamoDB `WriteRequestBatch` by merging PR #310.
+
 2.6.7 (2014-06-12)
 ------------------
 
