@@ -723,6 +723,10 @@ class StreamWrapper
      */
     protected function triggerError($errors, $flags = null)
     {
+        // Only consider the 2 bits of flags
+        // Note: 5.5.13 added a new flag, which is why this is needed
+        $flags &= 3;
+
         if ($flags === STREAM_URL_STAT_QUIET) {
             // This is triggered with things like file_exists()
             return false;
