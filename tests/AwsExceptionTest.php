@@ -14,6 +14,8 @@ use GuzzleHttp\Command\Exception\CommandException;
  */
 class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -34,7 +36,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testProvidesExceptionData()
     {
-        $api = new Service([
+        $api = $this->createServiceApi([
             'metadata' => ['endpointPrefix' => 'ec2']
         ]);
 
@@ -70,7 +72,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesPreviousExceptionMessage()
     {
-        $api = new Service([
+        $api = $this->createServiceApi([
             'metadata' => ['endpointPrefix' => 'ec2']
         ]);
 

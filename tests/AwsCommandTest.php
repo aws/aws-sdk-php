@@ -10,10 +10,12 @@ use GuzzleHttp\Event\Emitter;
  */
 class AwsCommandTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testHasApi()
     {
         $emitter = new Emitter();
-        $api = new Service([
+        $api = $this->createServiceApi([
             'operations' => [
                 'foo' => []
             ]

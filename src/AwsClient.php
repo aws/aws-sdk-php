@@ -4,9 +4,11 @@ namespace Aws;
 use Aws\Common\Api\Service;
 use Aws\Common\Compat;
 use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Paginator\PaginatorFactory;
+use Aws\Common\Paginator\ResourceIterator;
+use Aws\Common\Paginator\ResultPaginator;
 use Aws\Common\Signature\SignatureInterface;
-use Aws\Common\Waiter\ResourceWaiterFactory;
+use Aws\Common\Waiter\ResourceWaiter;
+use Aws\Common\Waiter\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Exception\CommandException;
@@ -33,12 +35,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     /** @var string */
     private $commandException;
-
-    /** @var PaginatorFactory|null */
-    private $paginatorFactory;
-
-    /** @var ResourceWaiterFactory|null */
-    private $waiterFactory;
 
     /**
      * The AwsClient constructor requires the following constructor options:
@@ -68,16 +64,10 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->credentials = $config['credentials'];
         $this->signature = $config['signature'];
         $this->region = isset($config['region']) ? $config['region'] : null;
+        $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
         $this->commandException = isset($config['exception_class'])
             ? $config['exception_class']
             : 'Aws\AwsException';
-        $this->paginatorFactory = isset($config['paginator_factory'])
-            ? $config['paginator_factory']
-            : null;
-        $this->waiterFactory = isset($config['waiter_factory'])
-            ? $config['waiter_factory']
-            : null;
-        $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
 
         parent::__construct($config['client']);
     }
@@ -156,41 +146,52 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         try {
             return parent::execute($command);
         } catch (CommandException $e) {
-            throw call_user_func([$this->commandException, 'wrap'], $e);
+            /** @var AwsException $exceptionClass */
+            $exceptionClass = $this->commandException;
+            throw $exceptionClass::wrap($e);
         }
     }
 
     public function getIterator($name, array $args = [], array $config = [])
     {
-        $this->validatePaginatorFactory();
+        $config += $this->api->getPaginatorConfig($name);
 
-        return $this->paginatorFactory->createIterator($this, $name, $args, $config);
+        if ($config['result_key']) {
+            return new ResourceIterator(
+                new ResultPaginator($this, $name, $args, $config),
+                $config
+            );
+        }
+
+        throw new \UnexpectedValueException("There are no resources to iterate "
+            . "for the {$name} operation of {$this->api['serviceFullName']}.");
     }
 
     public function getPaginator($name, array $args = [], array $config = [])
     {
-        $this->validatePaginatorFactory();
+        $config += $this->api->getPaginatorConfig($name);
+        if ($config['output_token'] && $config['input_token']) {
+            return new ResultPaginator($this, $name, $args, $config);
+        }
 
-        return $this->paginatorFactory->createPaginator($this, $name, $args, $config);
+        throw new \UnexpectedValueException("Results for the {$name} operation "
+            . "of {$this->api['serviceFullName']} cannot be paginated.");
+    }
+
+    public function getWaiter($name, array $args = [], array $config = [])
+    {
+        $config += $this->api->getWaiterConfig($name);
+        return new ResourceWaiter($this, $name, $args, $config);
     }
 
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        if (!($this->waiterFactory instanceof ResourceWaiterFactory)) {
-            throw new \RuntimeException('A waiter_factory must be provided to '
-                . 'the client in order to use the ' . __METHOD__ . ' method.');
+        if (is_callable($name)) {
+            $waiter = new Waiter($name, $config + $args);
+        } else {
+            $waiter = $this->getWaiter($name, $args, $config);
         }
 
-        $waiter = $this->waiterFactory->createWaiter($this, $name, $args, $config);
         $waiter->wait();
-    }
-
-    private function validatePaginatorFactory()
-    {
-        if (!($this->paginatorFactory instanceof PaginatorFactory)) {
-            $fn = debug_backtrace()[2]['function'];
-            throw new \RuntimeException('A paginator_factory must be provided '
-                . ' in order to use the ' . $fn . ' method.');
-        }
     }
 }

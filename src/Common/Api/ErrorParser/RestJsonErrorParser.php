@@ -6,7 +6,7 @@ use GuzzleHttp\Message\ResponseInterface;
 /**
  * Parses JSON-REST errors.
  */
-class JsonRestErrorParser
+class RestJsonErrorParser
 {
     use JsonParserTrait;
 

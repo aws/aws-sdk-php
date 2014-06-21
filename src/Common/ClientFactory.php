@@ -1,29 +1,38 @@
 <?php
 namespace Aws\Common;
 
-use Aws\Sdk;
 use Aws\AwsClientInterface;
 use Aws\Common\Api\ApiProviderInterface;
-use Aws\Common\Api\ErrorParser\JsonRestErrorParser;
-use Aws\Common\Api\ErrorParser\XmlErrorParser;
+use Aws\Common\Api\ErrorParser\RestJsonErrorParser;
 use Aws\Common\Api\ErrorParser\JsonRpcErrorParser;
+use Aws\Common\Api\ErrorParser\XmlErrorParser;
 use Aws\Common\Api\FilesystemApiProvider;
+use Aws\Common\Api\Parser\JsonRpcParser;
+use Aws\Common\Api\Parser\QueryParser;
+use Aws\Common\Api\Parser\RestJsonParser;
+use Aws\Common\Api\Parser\RestXmlParser;
+use Aws\Common\Api\Serializer\JsonRpcSerializer;
+use Aws\Common\Api\Serializer\QuerySerializer;
+use Aws\Common\Api\Serializer\RestJsonSerializer;
+use Aws\Common\Api\Serializer\RestXmlSerializer;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Validator;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Credentials\NullCredentials;
-use Aws\Common\Paginator\PaginatorFactory;
 use Aws\Common\Retry\ThrottlingFilter;
 use Aws\Common\Signature\SignatureInterface;
+use Aws\Common\Signature\SignatureV2;
+use Aws\Common\Signature\SignatureV3Https;
+use Aws\Common\Signature\SignatureV4;
 use Aws\Common\Subscriber\Error;
 use Aws\Common\Subscriber\Signature;
 use Aws\Common\Subscriber\Validation;
-use Aws\Common\Waiter\ResourceWaiterFactory;
+use Aws\Sdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 use GuzzleHttp\Subscriber\Log\SimpleLogger;
+use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
 
 /**
  * @internal Default factory class used to create clients.
@@ -59,8 +68,6 @@ class ClientFactory
         'exception_class'   => 1,
         'credentials'       => 1,
         'signature'         => 1,
-        'paginator_factory' => 1,
-        'waiter_factory'    => 1,
         'client_defaults'   => 1,
         'client'            => 1,
         'retries'           => 2,
@@ -87,8 +94,6 @@ class ClientFactory
             'signature'         => false,
             'version'           => 'latest',
             'exception_class'   => true,
-            'paginator_factory' => false,
-            'waiter_factory'    => false,
             'validate'          => true,
             'class_name'        => false
         ];
@@ -242,7 +247,7 @@ class ClientFactory
      *
      * @param Service $api API to parse
      *
-     * @return JsonRestErrorParser|JsonRpcErrorParser|XmlErrorParser
+     * @return RestJsonErrorParser|JsonRpcErrorParser|XmlErrorParser
      * @throws \InvalidArgumentException if the service type is unknown
      */
     protected function createErrorParser(Service $api)
@@ -251,7 +256,7 @@ class ClientFactory
             case 'json':
                 return new JsonRpcErrorParser();
             case 'rest-json':
-                return new JsonRestErrorParser($api);
+                return new RestJsonErrorParser($api);
             case 'rest-xml':
             case 'query':
                 return new XmlErrorParser($api);
@@ -305,6 +310,31 @@ class ClientFactory
         }
 
         $args['class_name'] = $value;
+    }
+
+    private function convertServiceName($serviceFullName)
+    {
+        static $search = ['Amazon ', 'AWS ', ' (Beta)', ' '];
+        static $map = ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
+           'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i',
+           'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n',
+           'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's',
+           'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x',
+           'Y' => 'y', 'Z' => 'z'];
+
+        // Convert to a strict PascalCase
+        $value = str_replace($search, '', $serviceFullName);
+
+        $i = -1;
+        while (isset($value[++$i])) {
+            if (isset($map[$value[$i]])) {
+                while (isset($value[++$i]) && isset($map[$value[$i]])) {
+                    $value[$i] = $map[$value[$i]];
+                }
+            }
+        }
+
+        return $value;
     }
 
     private function handle_exception_class($value, array &$args)
@@ -374,8 +404,7 @@ class ClientFactory
                 . 'instance of Aws\Common\Api\ApiProviderInterface');
         }
 
-        $api = $value->getService($args['service'], $args['version']);
-        $api = new Service($api);
+        $api = new Service($value, $args['service'], $args['version']);
         $args['error_parser'] = $this->createErrorParser($api);
         $args['api'] = $api;
     }
@@ -403,55 +432,50 @@ class ClientFactory
         }
     }
 
-    private function handle_paginator_factory($value, array &$args)
-    {
-        if ($value === false) {
-            $args['paginator_factory'] = new PaginatorFactory(
-                $args['api_provider'],
-                $args['service'],
-                $args['api']->getMetadata('apiVersion')
-            );
-        }
-
-        if (!($args['paginator_factory'] instanceof PaginatorFactory)) {
-            throw new \InvalidArgumentException('paginator_factory must be an '
-                . 'instance of PaginatorFactory.');
-        }
-    }
-
-    private function handle_waiter_factory($value, array &$args)
-    {
-        if ($value === false) {
-            $args['waiter_factory'] = new ResourceWaiterFactory(
-                $args['api_provider'],
-                $args['service'],
-                $args['api']->getMetadata('apiVersion')
-            );
-        }
-
-        if (!($args['waiter_factory'] instanceof ResourceWaiterFactory)) {
-            throw new \InvalidArgumentException('waiter_factory must be an '
-                . 'instance of ResourceWaiterFactory.');
-        }
-    }
-
     private function handle_signature($value, array &$args)
     {
         $region = isset($args['region']) ? $args['region'] : 'us-east-1';
+        $version = $value ?: $args['api']->getMetadata('signatureVersion');
 
-        if ($value === false) {
-            $args['signature'] = $args['api']->createSignature($region);
-        } elseif (is_string($value)) {
-            $args['signature'] = $args['api']->createSignature($region, $value);
-        } elseif (!($value instanceof SignatureInterface)) {
-            throw new \InvalidArgumentException('Invalid signature option');
+        if (is_string($version)) {
+            $args['signature'] = $this->createSignature(
+                $version,
+                $args['api']->getSigningName(),
+                $region
+            );
+        } elseif (!($version instanceof SignatureInterface)) {
+            throw new \InvalidArgumentException('Invalid signature option.');
         }
+    }
+
+    /**
+     * Creates a signature object based on the service description.
+     *
+     * @param string $version     Signature version name
+     * @param string $signingName Signing name of the service (for V4)
+     * @param string $region      Region used for the service (for V4)
+     *
+     * @return SignatureInterface
+     * @throws \InvalidArgumentException if the signature cannot be created
+     */
+    protected function createSignature($version, $signingName, $region)
+    {
+        switch ($version) {
+            case 'v4':
+                return new SignatureV4($signingName, $region);
+            case 'v2':
+                return new SignatureV2();
+            case 'v3https':
+                return new SignatureV3Https();
+        }
+
+        throw new \InvalidArgumentException('Unable to create the signature.');
     }
 
     protected function postCreate(AwsClientInterface $client, array $args)
     {
         // Apply the protocol of the service description to the client.
-        $client->getApi()->applyProtocol($client, $args['endpoint']);
+        $this->applyProtocol($client, $args['endpoint']);
         // Attach an error parser
         $client->getEmitter()->attach(new Error($args['error_parser']));
         // Attach a signer to the client.
@@ -463,28 +487,41 @@ class ClientFactory
         }
     }
 
-    private function convertServiceName($serviceFullName)
+    /**
+     * Creates and attaches serializers and parsers to the given client based
+     * on the protocol of the description.
+     *
+     * @param AwsClientInterface $client   AWS client to update
+     * @param string             $endpoint Service endpoint to connect to.
+     *
+     * @throws \UnexpectedValueException if the protocol doesn't exist
+     */
+    protected function applyProtocol(AwsClientInterface $client, $endpoint)
     {
-        static $search = ['Amazon ', 'AWS ', ' (Beta)', ' '];
-        static $map = ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
-            'E' => 'e', 'F' => 'f', 'G' => 'g', 'H' => 'h', 'I' => 'i',
-            'J' => 'j', 'K' => 'k', 'L' => 'l', 'M' => 'm', 'N' => 'n',
-            'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r', 'S' => 's',
-            'T' => 't', 'U' => 'u', 'V' => 'v', 'W' => 'w', 'X' => 'x',
-            'Y' => 'y', 'Z' => 'z'];
+        $em = $client->getEmitter();
+        $api = $client->getApi();
 
-        // Convert to a strict PascalCase
-        $value = str_replace($search, '', $serviceFullName);
-
-        $i = -1;
-        while (isset($value[++$i])) {
-            if (isset($map[$value[$i]])) {
-                while (isset($value[++$i]) && isset($map[$value[$i]])) {
-                    $value[$i] = $map[$value[$i]];
-                }
-            }
+        switch ($api->getProtocol()) {
+            case 'json':
+                $em->attach(new JsonRpcSerializer($api, $endpoint));
+                $em->attach(new JsonRpcParser($api));
+                break;
+            case 'query':
+                $em->attach(new QuerySerializer($api, $endpoint));
+                $em->attach(new QueryParser($api));
+                break;
+            case 'rest-json':
+                $em->attach(new RestJsonSerializer($api, $endpoint));
+                $em->attach(new RestJsonParser($api));
+                break;
+            case 'rest-xml':
+                $em->attach(new RestXmlSerializer($api, $endpoint));
+                $em->attach(new RestXmlParser($api));
+                break;
+            default:
+                throw new \UnexpectedValueException(
+                    'Unknown protocol: ' . $api->getProtocol()
+                );
         }
-
-        return $value;
     }
 }

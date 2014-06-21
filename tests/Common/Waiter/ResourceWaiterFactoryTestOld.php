@@ -4,12 +4,12 @@ namespace Aws\Test\Common\Waiter;
 require_once 'wait_hack.php';
 
 use Aws\Result;
-use Aws\Test\UsesServiceClientTrait;
+use Aws\Test\UsesServiceTrait;
 use Aws\Common\Waiter\ResourceWaiterFactory;
 
 class ResourceWaiterFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    use UsesServiceClientTrait;
+    use UsesServiceTrait;
 
     /**
      * @covers Aws\Common\Waiter\ResourceWaiterFactory::__construct

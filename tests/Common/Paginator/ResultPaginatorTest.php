@@ -2,14 +2,14 @@
 namespace Aws\Test\Common\Paginator;
 
 use Aws\Result;
-use Aws\Test\UsesServiceClientTrait;
+use Aws\Test\UsesServiceTrait;
 
 /**
  * @covers Aws\Common\Paginator\ResultPaginator
  */
 class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
 {
-    use UsesServiceClientTrait;
+    use UsesServiceTrait;
 
     /**
      * @dataProvider getPaginatorIterationData

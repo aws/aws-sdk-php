@@ -19,14 +19,17 @@ use GuzzleHttp\Subscriber\Mock;
  */
 class AwsClientTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testHasGetters()
     {
+        $apiProvider = $this->getMock('Aws\Common\Api\ApiProviderInterface');
         $config = [
             'client'      => new Client(),
             'credentials' => new Credentials('foo', 'bar'),
             'signature'   => new SignatureV4('foo', 'bar'),
             'region'      => 'foo',
-            'api'         => new Service([])
+            'api'         => new Service($apiProvider, 'foo', 'bar')
         ];
 
         $client = new AwsClient($config);
@@ -52,7 +55,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresOperationIsFoundWhenCreatingCommands()
     {
-        $this->createClient([])->getCommand('foo');
+        $this->createClient()->getCommand('foo');
     }
 
     public function testReturnsCommandForOperation()
@@ -80,9 +83,13 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsSpecificErrors($value, $type)
     {
-        $service = new Service(['operations' => ['foo' => [
-            'http' => ['method' => 'POST']
-        ]]]);
+        $apiProvider = $this->getMock('Aws\Common\Api\ApiProviderInterface');
+        $apiProvider->expects($this->any())
+            ->method('getService')
+            ->willReturn(['operations' => ['foo' => [
+                'http' => ['method' => 'POST']
+            ]]]);
+        $service = new Service($apiProvider, 'foo', 'bar');
 
         $client = new AwsClient([
             'client'          => new Client(),
@@ -155,24 +162,11 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetIterator()
     {
-        $iterator = $this->getMockBuilder('Aws\Common\Paginator\ResourceIterator')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $factory = $this->getMockBuilder('Aws\Common\Paginator\PaginatorFactory')
-            ->disableOriginalConstructor()
-            ->setMethods(['createIterator'])
-            ->getMock();
-        $factory->expects($this->once())
-            ->method('createIterator')
-            ->with(
-                $this->isInstanceOf('Aws\AwsClientInterface'),
-                $this->equalTo('ListObjects'),
-                $this->equalTo(['Bucket' => 'foobar'])
-            )
-            ->will($this->returnValue($iterator));
-
-        $client = $this->createClient([], ['paginator_factory' => $factory]);
-
+        $client = $this->createClient(['pagination' => [
+            'ListObjects' => [
+                'result_key' => 'foo',
+            ]
+        ]]);
         $this->assertInstanceOf(
             'Aws\Common\Paginator\ResourceIterator',
             $client->getIterator('ListObjects', ['Bucket' => 'foobar'])
@@ -180,33 +174,22 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \UnexpectedValueException
      */
-    public function testGetIteratorRequiresPaginatorFactory()
+    public function testGetIteratorFailsForMissingConfig()
     {
-        $client = $this->createClient([]);
+        $client = $this->createClient();
         $client->getIterator('ListObjects');
     }
 
     public function testCanGetPaginator()
     {
-        $paginator = $this->getMockBuilder('Aws\Common\Paginator\ResultPaginator')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $factory = $this->getMockBuilder('Aws\Common\Paginator\PaginatorFactory')
-            ->disableOriginalConstructor()
-            ->setMethods(['createPaginator'])
-            ->getMock();
-        $factory->expects($this->once())
-            ->method('createPaginator')
-            ->with(
-                $this->isInstanceOf('Aws\AwsClientInterface'),
-                $this->equalTo('ListObjects'),
-                $this->equalTo(['Bucket' => 'foobar'])
-            )
-            ->will($this->returnValue($paginator));
-
-        $client = $this->createClient([], ['paginator_factory' => $factory]);
+        $client = $this->createClient(['pagination' => [
+            'ListObjects' => [
+                'input_token' => 'foo',
+                'output_token' => 'foo',
+            ]
+        ]]);
 
         $this->assertInstanceOf(
             'Aws\Common\Paginator\ResultPaginator',
@@ -215,60 +198,69 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \UnexpectedValueException
      */
-    public function testGetPaginatorRequiresPaginatorFactory()
+    public function testGetPaginatorFailsForMissingConfig()
     {
-        $client = $this->createClient([]);
+        $client = $this->createClient();
         $client->getPaginator('ListObjects');
     }
 
-    public function testCansUseServiceWaiter()
+    public function testCanGetWaiter()
+    {
+        $client = $this->createClient(['waiters' => ['PigsFly' => []]]);
+
+        $this->assertInstanceOf(
+            'Aws\Common\Waiter\ResourceWaiter',
+            $client->getWaiter('PigsFly', ['PigId' => 4])
+        );
+    }
+
+    public function testCanWait()
     {
         $flag = false;
-        $waiter = $this->getMockBuilder('Aws\Common\Waiter\Waiter')
-            ->disableOriginalConstructor()
-            ->setMethods(['wait'])
-            ->getMock();
-        $waiter->expects($this->once())
-            ->method('wait')
-            ->willReturnCallback(function() use(&$flag) {$flag = true;});
-        $factory = $this->getMockBuilder('Aws\Common\Waiter\ResourceWaiterFactory')
-            ->disableOriginalConstructor()
-            ->setMethods(['createWaiter'])
-            ->getMock();
-        $factory->expects($this->once())
-            ->method('createWaiter')
-            ->with(
-                $this->isInstanceOf('Aws\AwsClientInterface'),
-                $this->equalTo('BucketExists'),
-                $this->equalTo(['Bucket' => 'foobar'])
-            )
-            ->will($this->returnValue($waiter));
+        $client = $this->createClient();
 
-        $client = $this->createClient([], ['waiter_factory' => $factory]);
+        $client->waitUntil(function () use (&$flag) {
+            return $flag = true;
+        });
 
-        $client->waitUntil('BucketExists', ['Bucket' => 'foobar']);
         $this->assertTrue($flag);
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \UnexpectedValueException
      */
     public function testGetWaiterRequiresWaiterFactory()
     {
-        $client = $this->createClient([]);
-        $client->waitUntil('ListObjects');
+        $client = $this->createClient();
+        $client->waitUntil('PigsFly');
     }
 
-    private function createClient(array $service, array $conf = [])
+    private function createClient(array $service = [], array $config = [])
     {
-        return new AwsClient($conf + [
+        $api = $this->createServiceApi($service, $apiProvider);
+
+        if (isset($service['pagination'])) {
+            $apiProvider->expects($this->any())
+                ->method('getServicePaginatorConfig')
+                ->willReturn(['pagination' => $service['pagination']]);
+            unset($service['pagination']);
+        }
+
+        if (isset($service['waiters'])) {
+            $apiProvider->expects($this->any())
+                ->method('getServiceWaiterConfig')
+                ->willReturn(['waiters' => $service['waiters']]);
+            unset($service['waiters']);
+        }
+
+        return new AwsClient($config + [
             'client'      => new Client(),
             'credentials' => new Credentials('foo', 'bar'),
             'signature'   => new SignatureV4('foo', 'bar'),
             'region'      => 'foo',
-            'api'         => new Service($service)
+            'api'         => $api
         ]);
     }
 

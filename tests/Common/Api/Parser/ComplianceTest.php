@@ -3,7 +3,9 @@ namespace Aws\Test\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
 use Aws\AwsClient;
+use Aws\Common\ClientFactory;
 use Aws\Common\Credentials\NullCredentials;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
@@ -22,6 +24,8 @@ use GuzzleHttp\Stream;
  */
 class ComplianceTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testCaseProvider()
     {
         $cases = [];
@@ -32,7 +36,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             foreach ($data as $suite) {
                 $suite['metadata']['type'] = $suite['metadata']['protocol'];
                 foreach ($suite['cases'] as $case) {
-                    $description = new Service([
+                    $description = $this->createServiceApi([
                         'metadata'   => $suite['metadata'],
                         'shapes'     => $suite['shapes'],
                         'operations' => [
@@ -67,11 +71,16 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'api'         => $service,
             'credentials' => new NullCredentials(),
             'client'      => new Client(),
-            'signature'   => $service->createSignature('foo', 'v4'),
+            'signature'   => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
             'region'      => 'us-west-2'
         ]);
 
-        $service->applyProtocol($client, 'http://foo.com');
+        $cf = new ClientFactory();
+        $rc = new \ReflectionClass($cf);
+        $rm = $rc->getMethod('applyProtocol');
+        $rm->setAccessible(true);
+
+        $rm->invoke($cf, $client, 'http://foo.com');
         $command = $client->getCommand($name, []);
 
         // Create a response based on the serialized property of the test.

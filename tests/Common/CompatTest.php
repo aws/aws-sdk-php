@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test\Common;
+
 use Aws\Common\Compat;
+use JmesPath\Env as JmesPath;
 
 /**
  * @covers Aws\Common\Compat
@@ -32,7 +34,7 @@ class CompatTest extends \PHPUnit_Framework_TestCase
     {
         $conf[$setting] = $value;
         (new Compat)->convertConfig($conf);
-        $result = \JmesPath\search($exp, $conf);
+        $result = JmesPath::search($exp, $conf);
         $this->assertSame($result, $v);
         $this->assertArrayNotHasKey($setting, $conf);
     }

@@ -1,36 +1,52 @@
 <?php
 namespace Aws\Common\Api;
 
-use Aws\Common\Api\Serializer\JsonRpcSerializer;
-use Aws\Common\Api\Serializer\QuerySerializer;
-use Aws\Common\Api\Serializer\RestJsonSerializer;
-use Aws\Common\Api\Serializer\RestXmlSerializer;
-use Aws\Common\Api\Parser\JsonRpcParser;
-use Aws\Common\Api\Parser\RestJsonParser;
-use Aws\Common\Api\Parser\RestXmlParser;
-use Aws\Common\Api\Parser\QueryParser;
-use Aws\AwsClientInterface;
-use Aws\Common\Signature\S3Signature;
-use Aws\Common\Signature\S3SignatureV4;
-use Aws\Common\Signature\SignatureInterface;
-use Aws\Common\Signature\SignatureV2;
-use Aws\Common\Signature\SignatureV3Https;
-use Aws\Common\Signature\SignatureV4;
-
 /**
  * Represents a web service API model.
  */
 class Service extends AbstractModel
 {
+    /** @var ApiProviderInterface */
+    private $apiProvider;
+
+    /** @var string */
+    private $serviceName;
+
+    /** @var string */
+    private $apiVersion;
+
     /** @var Operation[] */
     private $operations = [];
 
+    /** @var array */
+    private $paginators = [];
+
+    /** @var array */
+    private $waiters = [];
+
     /**
-     * @param array $definition Service description
-     * @param array $options    Hash of options
+     * @param ApiProviderInterface $apiProvider
+     * @param string               $serviceName
+     * @param string               $apiVersion
+     * @param array                $options Hash of options
+     *
+     * @internal param array $definition Service description
      */
-    public function __construct(array $definition, array $options = [])
-    {
+    public function __construct(
+        ApiProviderInterface $apiProvider,
+        $serviceName,
+        $apiVersion,
+        array $options = []
+    ) {
+        $this->apiProvider = $apiProvider;
+        $this->serviceName = $serviceName;
+        $this->apiVersion = $apiVersion;
+
+        $definition = $this->apiProvider->getService(
+            $this->serviceName,
+            $this->apiVersion
+        );
+
         if (!isset($definition['operations'])) {
             $definition['operations'] = [];
         }
@@ -85,6 +101,17 @@ class Service extends AbstractModel
     {
         return $this->getMetadata('signingName')
             ?: $this->getMetadata('endpointPrefix');
+    }
+
+    /**
+     * Get the protocol used by the service.
+     *
+     * @return string
+     */
+    public function getProtocol()
+    {
+        return $this->getMetadata('protocol')
+            ?: $this->getMetadata('type');
     }
 
     /**
@@ -162,74 +189,97 @@ class Service extends AbstractModel
         return null;
     }
 
-    /**
-     * Creates a signature object based on the service description.
-     *
-     * @param string $region  Region to use when the signature requires a region
-     * @param string $version Optional signature version override
-     *
-     * @return SignatureInterface
-     * @throws \InvalidArgumentException if the signature cannot be created
-     */
-    public function createSignature($region, $version = null)
+    public function getPaginatorConfig($operationName)
     {
-        if (!$version) {
-            if (!($version = $this->getMetadata('signatureVersion'))) {
-                throw new \InvalidArgumentException('Unable to determine '
-                    . 'signatureVersion');
+        static $defaults = [
+            'input_token'  => null,
+            'output_token' => null,
+            'limit_key'    => null,
+            'result_key'   => null,
+            'more_results' => null,
+        ];
+
+        if (!$this->paginators) {
+            $this->paginators = $this->apiProvider->getServicePaginatorConfig(
+                $this->serviceName,
+                $this->apiVersion
+            )['pagination'];
+        }
+
+        $config = $defaults;
+        if (isset($this->paginators[$operationName])) {
+            $config = $this->paginators[$operationName] + $config;
+        }
+
+        return $config;
+    }
+
+    public function getWaiterConfig($name)
+    {
+        if (!$this->waiters) {
+            $this->waiters = $this->apiProvider->getServiceWaiterConfig(
+                $this->serviceName,
+                $this->apiVersion
+            )['waiters'];
+        }
+
+        // Error if the waiter is not defined
+        if (!isset($this->waiters[$name])) {
+            throw new \UnexpectedValueException("There is no {$name} waiter "
+                . " defined for the {$this->serviceName} service.");
+        }
+
+        // Resolve the configuration for the named waiter
+        if (!isset($this->waiters[$name]['waiter_name'])) {
+            $this->resolveWaiterConfig($name);
+        }
+
+        return $this->waiters[$name];
+    }
+
+    private function resolveWaiterConfig($name)
+    {
+        static $defaults = [
+            'operation'     => null,
+            'ignore_errors' => [],
+            'description'   => null,
+            'success_type'  => null,
+            'success_path'  => null,
+            'success_value' => null,
+            'failure_type'  => null,
+            'failure_path'  => null,
+            'failure_value' => null,
+        ];
+
+        $config = $this->waiters[$name];
+
+        // Resolve extensions and defaults
+        if (isset($config['extends'])) {
+            $config += $this->waiters[$config['extends']];
+        }
+        if (isset($this->waiters['__default__'])) {
+            $config += $this->waiters['__default__'];
+        }
+        $config += $defaults;
+
+        // Merge acceptor settings into success/failure settings
+        foreach ($config as $cfgKey => $cfgVal) {
+            if (substr($cfgKey, 0, 9) == 'acceptor_') {
+                $option = substr($cfgKey, 9);
+                if (!isset($config["success_{$option}"])) {
+                    $config["success_{$option}"] = $cfgVal;
+                }
+                if (!isset($config["failure_{$option}"])) {
+                    $config["failure_{$option}"] = $cfgVal;
+                }
+                unset($config[$cfgKey]);
             }
         }
 
-        switch ($version) {
-            case 'v4':
-                return $this->getEndpointPrefix() == 's3'
-                    ? new S3SignatureV4($this->getSigningName(), $region)
-                    : new SignatureV4($this->getSigningName(), $region);
-            case 'v2':
-                return new SignatureV2();
-            case 's3':
-                return new S3Signature();
-            case 'v3https':
-                return new SignatureV3Https();
-            default:
-                throw new \InvalidArgumentException('Unknown signature version '
-                    . $version);
-        }
-    }
+        // Add the waiter name and remove description
+        $config['waiter_name'] = $name;
+        unset($config['description']);
 
-    /**
-     * Creates and attaches serializers and parsers to the given client based
-     * on the protocol of the description.
-     *
-     * @param AwsClientInterface $client   AWS client to update
-     * @param string             $endpoint Service endpoint to connect to.
-     *
-     * @throws \RuntimeException if the serializer subscriber cannot be created.
-     */
-    public function applyProtocol(AwsClientInterface $client, $endpoint)
-    {
-        $em = $client->getEmitter();
-
-        switch ($this->getMetadata('protocol')) {
-            case 'json':
-                $em->attach(new JsonRpcSerializer($this, $endpoint));
-                $em->attach(new JsonRpcParser($this));
-                break;
-            case 'query':
-                $em->attach(new QuerySerializer($this, $endpoint));
-                $em->attach(new QueryParser($this));
-                break;
-            case 'rest-json':
-                $em->attach(new RestJsonSerializer($this, $endpoint));
-                $em->attach(new RestJsonParser($this));
-                break;
-            case 'rest-xml':
-                $em->attach(new RestXmlSerializer($this, $endpoint));
-                $em->attach(new RestXmlParser($this));
-                break;
-            default:
-                throw new \UnexpectedValueException('Unknown protocol: '
-                    . $this->getMetadata('type'));
-        }
+        $this->waiters[$name] = $config;
     }
 }

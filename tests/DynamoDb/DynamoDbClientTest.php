@@ -2,14 +2,14 @@
 namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\DynamoDbClient;
-use Aws\Test\UsesServiceClientTrait;
+use Aws\Test\UsesServiceTrait;
 
 /**
  * @covers Aws\DynamoDb\DynamoDbClient
  */
 class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
 {
-    use UsesServiceClientTrait;
+    use UsesServiceTrait;
 
     /**
      * @dataProvider dataForFormatValueTest

@@ -3,7 +3,7 @@ namespace Aws\Test\DynamoDb;
 
 use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
-use Aws\Test\UsesServiceClientTrait;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream;
 
@@ -12,7 +12,7 @@ use GuzzleHttp\Stream;
  */
 class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
 {
-    use UsesServiceClientTrait;
+    use UsesServiceTrait;
 
     public function testInstantiateWriteRequestBatch()
     {

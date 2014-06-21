@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\Common\Aws;
+use JmesPath\Env as JmesPath;
 
 /**
  * @covers \Aws\Common\Aws
@@ -18,7 +19,7 @@ class AwsTest extends \PHPUnit_Framework_TestCase
 
         $config = $this->readAttribute($aws, 'args');
         $this->assertArrayNotHasKey('key', $config);
-        $this->assertEquals('foo', \Jmespath\search('credentials.key', $config));
+        $this->assertEquals('foo', Jmespath::search('credentials.key', $config));
     }
 
     public function testThrowsErrorWithFile()

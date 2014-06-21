@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use Aws\Sdk;
 use GuzzleHttp\Event\EmitterInterface;
+use JmesPath\Env as JmesPath;
 
 /**
  * @covers Aws\Sdk
@@ -31,7 +32,7 @@ class SdkTest extends \PHPUnit_Framework_TestCase
             ? $emitter->listeners($event)
             : $emitter->listeners();
 
-        $result = \JmesPath\search($expression, $listeners) ?: [];
+        $result = JmesPath::search($expression, $listeners) ?: [];
 
         if (!is_object($value)) {
             $result = array_map(function($o) {

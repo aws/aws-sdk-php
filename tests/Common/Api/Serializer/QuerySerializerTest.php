@@ -4,6 +4,7 @@ namespace Aws\Test\Common\Api\Serializer;
 use Aws\Common\Api\Serializer\QuerySerializer;
 use Aws\Common\Api\Service;
 use Aws\AwsCommand;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandTransaction;
@@ -14,9 +15,11 @@ use GuzzleHttp\Command\Event\PrepareEvent;
  */
 class QuerySerializerTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testSerializesEmptyLists()
     {
-        $service = new Service([
+        $service = $this->createServiceApi([
             'metadata'=> ['protocol' => 'query', 'apiVersion' => '1'],
             'operations' => [
                 'foo' => [

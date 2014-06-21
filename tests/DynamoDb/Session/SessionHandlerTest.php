@@ -2,14 +2,14 @@
 namespace Aws\Test\DynamoDb\Session;
 
 use Aws\DynamoDb\Session\SessionHandler;
-use Aws\Test\UsesServiceClientTrait;
+use Aws\Test\UsesServiceTrait;
 
 /**
  * @covers Aws\DynamoDb\Session\SessionHandler
  */
 class SessionHandlerTest extends \PHPUnit_Framework_TestCase
 {
-    use UsesServiceClientTrait;
+    use UsesServiceTrait;
 
     public function testCanCreateSessionHandler()
     {

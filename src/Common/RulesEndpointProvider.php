@@ -2,6 +2,7 @@
 namespace Aws\Common;
 
 use Aws\Common\Exception\UnresolvedEndpointException;
+use JmesPath\Env as JmesPath;
 
 /**
  * Provides endpoints for services based on a rules engine.
@@ -148,7 +149,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
 
         // Give a hint that a region should be set if one is present in rules.
         if (!empty($this->rules[$service])) {
-            if (!isset($args['region']) && \JmesPath\search(
+            if (!isset($args['region']) && JmesPath::search(
                 '[*].constraints[?[0]==`region`]',
                 $this->rules[$service]
             )) {

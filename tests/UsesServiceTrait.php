@@ -11,7 +11,7 @@ use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
 
-trait UsesServiceClientTrait
+trait UsesServiceTrait
 {
     /**
      * Creates an instance of the AWS SDK for a test
@@ -101,13 +101,9 @@ trait UsesServiceClientTrait
 
         $client->expects($this->any())
             ->method('getApi')
-            ->will($this->returnValue(
-                new Service([
-                    'metadata' => [
-                        'endpointPrefix' => 'foo'
-                    ]
-                ])
-            ));
+            ->will($this->returnValue($this->createServiceApi(['metadata' => [
+                'endpointPrefix' => 'foo'
+            ]])));
 
         $trans = new CommandTransaction(
             $client,
@@ -116,5 +112,15 @@ trait UsesServiceClientTrait
         );
 
         return new CommandException('Test error', $trans);
+    }
+
+    private function createServiceApi(array $serviceData = [], &$api = null)
+    {
+        $api = $this->getMock('Aws\Common\Api\ApiProviderInterface');
+        $api->expects($this->any())
+            ->method('getService')
+            ->willReturn($serviceData);
+
+        return new Service($api, 'service', 'region');
     }
 }

@@ -3,6 +3,7 @@ namespace Aws\Test\Common\Api\Serializer;
 
 use Aws\Common\Api\Serializer\JsonRpcSerializer;
 use Aws\Common\Api\Service;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Command;
 use GuzzleHttp\Command\CommandTransaction;
@@ -13,9 +14,11 @@ use GuzzleHttp\Command\Event\PrepareEvent;
  */
 class JsonRpcSerializerTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testPreparesRequests()
     {
-        $service = new Service([
+        $service = $this->createServiceApi([
             'metadata'=> [
                 'targetPrefix' => 'test',
                 'jsonVersion' => '1.1'

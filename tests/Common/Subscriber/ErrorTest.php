@@ -6,6 +6,7 @@ use Aws\AwsClient;
 use Aws\Common\Signature\SignatureV2;
 use Aws\Common\Subscriber\Error;
 use Aws\Common\Credentials\Credentials;
+use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\CommandErrorEvent;
 use GuzzleHttp\Command\Event\PrepareEvent;
@@ -19,9 +20,11 @@ use GuzzleHttp\Message\Response;
  */
 class ErrorTest extends \PHPUnit_Framework_TestCase
 {
+    use UsesServiceTrait;
+
     public function testParsesErrors()
     {
-        $api = new Service([
+        $api = $this->createServiceApi([
             'operations' => [
                 'foo' => ['http' => ['httpMethod' => 'POST']]
             ]
@@ -64,7 +67,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
 
     public function testSkipsNetworkingErrors()
     {
-        $api = new Service([
+        $api = $this->createServiceApi([
             'operations' => [
                 'foo' => ['http' => ['httpMethod' => 'POST']]
             ]

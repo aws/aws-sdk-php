@@ -2,7 +2,7 @@
 namespace Aws;
 
 use GuzzleHttp\Command\Model;
-use JmesPath;
+use JmesPath\Env as JmesPath;
 
 /**
  * AWS-specific model class representing the result of an API operation
@@ -23,7 +23,7 @@ class Result extends Model
      */
     public function search($expression)
     {
-        return JmesPath\search($expression, $this->toArray());
+        return JmesPath::search($expression, $this->toArray());
     }
 
     /**

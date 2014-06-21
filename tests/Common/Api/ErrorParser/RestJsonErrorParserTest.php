@@ -1,14 +1,14 @@
 <?php
 namespace Aws\Test\Common\Api\ErrorParser;
 
-use Aws\Common\Api\ErrorParser\JsonRestErrorParser;
+use Aws\Common\Api\ErrorParser\RestJsonErrorParser;
 use GuzzleHttp\Message\MessageFactory;
 
 /**
- * @covers Aws\Common\Api\ErrorParser\JsonRestErrorParser
+ * @covers Aws\Common\Api\ErrorParser\RestJsonErrorParser
  * @covers Aws\Common\Api\ErrorParser\JsonParserTrait
  */
-class JsonRestErrorParserTest extends \PHPUnit_Framework_TestCase
+class RestJsonErrorParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testParsesClientErrorResponses()
     {
@@ -18,7 +18,7 @@ class JsonRestErrorParserTest extends \PHPUnit_Framework_TestCase
             '{ "type": "client", "message": "lorem ipsum", "code": "foo" }'
         );
 
-        $parser = new JsonRestErrorParser();
+        $parser = new RestJsonErrorParser();
         $this->assertEquals(array(
             'code'       => 'foo',
             'message'    => 'lorem ipsum',
@@ -41,7 +41,7 @@ class JsonRestErrorParserTest extends \PHPUnit_Framework_TestCase
             '{"message": "lorem ipsum"}'
         );
 
-        $parser = new JsonRestErrorParser();
+        $parser = new RestJsonErrorParser();
         $this->assertEquals(array(
             'code'       => 'foo',
             'message'    => 'lorem ipsum',
