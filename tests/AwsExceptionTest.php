@@ -65,8 +65,11 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($api, $e2->getApi());
         $this->assertSame($client, $e2->getClient());
         $this->assertEquals('d', $e2->getAwsErrorCode());
+        $this->assertEquals('d', $e2->getExceptionCode());
         $this->assertEquals('b', $e2->getAwsRequestId());
+        $this->assertEquals('b', $e2->getRequestId());
         $this->assertEquals('c', $e2->getAwsErrorType());
+        $this->assertEquals('c', $e2->getExceptionType());
         $this->assertEquals('AWS (ec2) Error: a', $e2->getMessage());
     }
 

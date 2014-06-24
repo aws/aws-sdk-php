@@ -92,27 +92,6 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         return (new Sdk)->getClient($service, $config);
     }
 
-    public function getCommand($name, array $args = [])
-    {
-        $command = null;
-        if (isset($this->api['operations'][$name])) {
-            $command = $this->api['operations'][$name];
-        } else {
-            $name = ucfirst($name);
-            if (isset($this->api['operations'][$name])) {
-                $command = $this->api['operations'][$name];
-            }
-        }
-
-        if (!$command) {
-            throw new \InvalidArgumentException("Operation not found: $name");
-        }
-
-        $args += $this->defaults;
-
-        return new AwsCommand($name, $args, $this->api, clone $this->getEmitter());
-    }
-
     public function getCredentials()
     {
         return $this->credentials;
@@ -152,6 +131,27 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         }
     }
 
+    public function getCommand($name, array $args = [])
+    {
+        $command = null;
+        if (isset($this->api['operations'][$name])) {
+            $command = $this->api['operations'][$name];
+        } else {
+            $name = ucfirst($name);
+            if (isset($this->api['operations'][$name])) {
+                $command = $this->api['operations'][$name];
+            }
+        }
+
+        if (!$command) {
+            throw new \InvalidArgumentException("Operation not found: $name");
+        }
+
+        $args += $this->defaults;
+
+        return new AwsCommand($name, $args, $this->api, clone $this->getEmitter());
+    }
+
     public function getIterator($name, array $args = [], array $config = [])
     {
         $config += $this->api->getPaginatorConfig($name);
@@ -181,6 +181,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function getWaiter($name, array $args = [], array $config = [])
     {
         $config += $this->api->getWaiterConfig($name);
+
         return new ResourceWaiter($this, $name, $args, $config);
     }
 

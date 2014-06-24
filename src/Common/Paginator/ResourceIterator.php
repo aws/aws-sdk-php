@@ -106,7 +106,7 @@ class ResourceIterator implements \OuterIterator
         while ($result = $this->paginator->getNext($args)) {
             foreach ($this->path as $path) {
                 if ($this->resources = $result->search($path)) {
-                    return;
+                    break(2);
                 }
             }
         }

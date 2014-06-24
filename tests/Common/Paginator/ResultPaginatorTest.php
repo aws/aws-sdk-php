@@ -31,13 +31,16 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
 
         // Iterate over the paginator and keep track of the keys and values
         $tableNames = [];
-        foreach ($paginator as $result) {
+        $lastKey = $result = null;
+        foreach ($paginator as $key => $result) {
             $tableNames = array_merge($tableNames, $result['TableNames']);
+            $lastKey = $key;
         }
 
         // Make sure the paginator yields the expected results
         $this->assertInstanceOf('Aws\\Result', $result);
         $this->assertEquals($expectedRequestCount, $requestCount);
+        $this->assertEquals($expectedRequestCount - 1, $lastKey);
         $this->assertEquals($expectedTableNames, $tableNames);
     }
 
