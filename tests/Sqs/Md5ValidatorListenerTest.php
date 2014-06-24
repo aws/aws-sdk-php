@@ -13,7 +13,7 @@ use GuzzleHttp\Command\Event\ProcessEvent;
 class Md5ValidatorListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Aws\Sqs\SqsException
+     * @expectedException \Aws\Sqs\Exception\SqsException
      */
     public function testValidatesMd5WithException()
     {

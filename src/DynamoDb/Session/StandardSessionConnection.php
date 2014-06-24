@@ -2,7 +2,7 @@
 namespace Aws\DynamoDb\Session;
 
 use Aws\DynamoDb\DynamoDbClient;
-use Aws\DynamoDb\DynamoDbException;
+use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\WriteRequestBatch;
 
 /**

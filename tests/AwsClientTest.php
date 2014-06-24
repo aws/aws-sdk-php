@@ -74,7 +74,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null, 'Aws\AwsException'],
-            ['Aws\Ec2\Ec2Exception', 'Aws\Ec2\Ec2Exception']
+            ['Aws\Ec2\Exception\Ec2Exception', 'Aws\Ec2\Exception\Ec2Exception']
         ];
     }
 

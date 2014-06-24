@@ -2,6 +2,7 @@
 
 namespace Aws\CloudTrail;
 
+use Aws\CloudTrail\Exception\CloudTrailException;
 use Aws\S3\S3Client;
 
 /**
