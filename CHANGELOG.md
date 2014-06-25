@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+
+* Added support for delivery notifications to the Amazon SES client.
+
 2.6.8 (2014-06-20)
 ------------------
 
