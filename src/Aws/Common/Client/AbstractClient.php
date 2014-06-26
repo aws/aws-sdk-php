@@ -84,7 +84,9 @@ abstract class AbstractClient extends Client implements AwsClientInterface
 
         // Add the event listener so that requests are signed before they are sent
         $dispatcher = $this->getEventDispatcher();
-        $dispatcher->addSubscriber(new SignatureListener($credentials, $signature));
+        if (!$config->get('signature.ignore')) {
+            $dispatcher->addSubscriber(new SignatureListener($credentials, $signature));
+        }
 
         if ($backoff = $config->get(Options::BACKOFF)) {
             $dispatcher->addSubscriber($backoff, -255);
