@@ -27,6 +27,8 @@ AWS SDK for PHP
     service-cloudfront
     service-cloudfront-20120505
     service-cloudsearch
+    service-cloudsearch-20110201
+    service-cloudsearchdomain
     service-cloudtrail
     service-cloudwatch
     service-datapipeline
@@ -118,6 +120,10 @@ Service-Specific Guides
   .. indexlinks:: CloudSearch
 
   * :doc:`Using the older 2011-02-01 API version <service-cloudsearch-20110201>`
+
+* Amazon CloudSearchDomain
+
+  .. indexlinks:: CloudSearchDomain
 
 * Amazon CloudWatch
 

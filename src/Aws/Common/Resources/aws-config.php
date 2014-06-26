@@ -60,6 +60,12 @@ return array(
             )
         ),
 
+        'cloudsearchdomain' => array(
+            'alias'   => 'CloudSearchDomain',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudSearchDomain\CloudSearchDomainClient'
+        ),
+
         'cloudtrail' => array(
             'alias'   => 'CloudTrail',
             'extends' => 'default_settings',

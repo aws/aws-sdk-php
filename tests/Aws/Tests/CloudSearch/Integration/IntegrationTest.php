@@ -75,9 +75,9 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $client = $this->client;
 
         // @begin
-        $iterator = $client->getDescribeDomainsIterator();
+        $iterator = $client->getIterator('DescribeDomains');
         foreach ($iterator as $domain) {
-            echo $domain['DomainName'] . "\n";
+            echo "{$domain['DomainName']}: {$domain['SearchService']['Endpoint']}\n";
         }
         // @end
 
