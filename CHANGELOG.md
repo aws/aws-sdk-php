@@ -1,10 +1,15 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.6.9 (2014-06-26)
+------------------
 
+* Added support for the CloudSearchDomain client, which allows you to search and
+  upload documents to your CloudSearch domains.
 * Added support for delivery notifications to the Amazon SES client.
+* Updated the CloudFront client to support the 2014-05-31 API.
+* Merged PR #316 as a better solution for issue #309.
+
 
 2.6.8 (2014-06-20)
 ------------------
