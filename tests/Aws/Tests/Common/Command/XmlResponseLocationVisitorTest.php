@@ -23,16 +23,6 @@ use Aws\Common\Command\XmlResponseLocationVisitor;
  */
 class XmlResponseLocationVisitorTest extends \Guzzle\Tests\GuzzleTestCase
 {
-    public function testHandlesWrappedResponses()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testHandlesWrappedMembers()
-    {
-        $this->markTestIncomplete();
-    }
-
     public function testHandlesXmlMaps()
     {
         $result = XmlResponseLocationVisitor::xmlMap(array(

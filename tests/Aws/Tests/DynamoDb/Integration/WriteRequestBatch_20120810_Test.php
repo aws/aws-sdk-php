@@ -38,7 +38,7 @@ class WriteRequestBatch_20120810_Test extends \Aws\Tests\IntegrationTestCase
         try {
             $client->deleteTable(array('TableName' => 'batch-write-test'));
         } catch (\Exception $e) {}
-        $client->waitUntilTableNotExists(array('TableName' => 'batch-write-test'));
+        $client->waitUntil('TableNotExists', array('TableName' => 'batch-write-test'));
     }
 
     public static function tearDownAfterClass()
@@ -87,7 +87,7 @@ class WriteRequestBatch_20120810_Test extends \Aws\Tests\IntegrationTestCase
         }
 
         self::log("Wait until the {$tableName} table's status is ACTIVE...");
-        $client->waitUntilTableExists(array('TableName' => $tableName));
+        $client->waitUntil('TableExists', array('TableName' => $tableName));
 
         self::log("Test writing items in batches using WriteRequestBatch.");
         // @begin

@@ -18,7 +18,7 @@ passing optional values prefixed with "waiter.":
 
 .. code-block:: php
 
-    $s3Client->waitUntilBucketExists(array(
+    $s3Client->waitUntil('BucketExists', array(
         'Bucket'              => 'my-bucket',
         'waiter.interval'     => 10,
         'waiter.max_attempts' => 3
@@ -115,7 +115,7 @@ factory such that it can create instances of the custom Waiter.
         $compositeFactory = $s3Client->getWaiterFactory();
         $compositeFactory->addFactory(new WaiterClassFactory('MyApp\FakeWaiters'));
 
-        $waiter = $s3Client->waitUntilSleptThreeTimes();
+        $waiter = $s3Client->waitUntil('SleptThreeTimes');
     }
 
 The result of this code should look like the following::

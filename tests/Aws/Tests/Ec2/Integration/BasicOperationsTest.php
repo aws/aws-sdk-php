@@ -87,7 +87,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertCount(2, $instanceIds);
 
         self::log('Wait until they are running.');
-        $this->client->waitUntilInstanceRunning(array('InstanceIds' => $instanceIds));
+        $this->client->waitUntil('InstanceRunning', array('InstanceIds' => $instanceIds));
 
         self::log('Terminate the instances and verify that they are shutting-down.');
         $result = $this->client->getCommand('TerminateInstances', array(
@@ -97,7 +97,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $this->assertEquals(InstanceStateName::SHUTTING_DOWN, $result->getPath('TerminatingInstances/1/CurrentState/Name'));
 
         self::log('Wait until they are terminated.');
-        $this->client->waitUntilInstanceTerminated(array('InstanceIds' => $instanceIds));
+        $this->client->waitUntil('InstanceTerminated', array('InstanceIds' => $instanceIds));
 
         self::log('Verify that the instances are terminated using the DescribeInstances iterator.');
         $instances = $this->client->getIterator('DescribeInstances', array(
@@ -156,7 +156,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         ))->execute();
 
         self::log('Wait until the instance is stopped.');
-        $this->client->waitUntilInstanceStopped(array(
+        $this->client->waitUntil('InstanceStopped', array(
             'InstanceIds' => array($instanceId),
         ));
 
@@ -173,7 +173,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         ))->execute();
 
         self::log('Wait until the instance is running.');
-        $this->client->waitUntilInstanceRunning(array(
+        $this->client->waitUntil('InstanceRunning', array(
             'InstanceIds' => array($instanceId),
         ));
 
@@ -195,7 +195,7 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         $instanceId = current($result->getPath('Instances/*/InstanceId'));
 
         self::log('Wait until the instance is running.');
-        $this->client->waitUntilInstanceRunning(array('InstanceIds' => array($instanceId)));
+        $this->client->waitUntil('InstanceRunning', array('InstanceIds' => array($instanceId)));
 
         return $instanceId;
     }
@@ -211,6 +211,6 @@ class BasicOperationsTest extends \Aws\Tests\IntegrationTestCase
         ))->execute();
 
         self::log('Wait until the instance is terminated.');
-        $this->client->waitUntilInstanceTerminated(array('InstanceIds' => array($instanceId)));
+        $this->client->waitUntil('InstanceTerminated', array('InstanceIds' => array($instanceId)));
     }
 }

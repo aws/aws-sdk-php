@@ -84,7 +84,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         self::log('Create a new identity.');
         $this->ses->getCommand('VerifyEmailIdentity', array('EmailAddress' => $emailAddress))->execute();
-        $this->ses->waitUntilIdentityExists(array('Identities' => array($emailAddress)));
+        $this->ses->waitUntil('IdentityExists', array('Identities' => array($emailAddress)));
 
         self::log('Check the status and make sure it\'s pending.');
         $result = $this->ses->getCommand('GetIdentityVerificationAttributes', array(

@@ -60,7 +60,7 @@ class StreamWrapperTest extends \Aws\Tests\IntegrationTestCase
     {
         $this->bucket = $this->getResourcePrefix() . 'stream';
         $client = self::getServiceBuilder()->get('s3');
-        $client->waitUntilBucketExists(array('Bucket' => $this->bucket));
+        $client->waitUntil('BucketExists', array('Bucket' => $this->bucket));
     }
 
     public function testChecksIfThingsExist()

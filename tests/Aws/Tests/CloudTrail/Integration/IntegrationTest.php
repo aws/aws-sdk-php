@@ -53,7 +53,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $bucket = 'php-' . $this->getResourcePrefix() . '-cloudtrail';
 
         self::log('Delete existing trails.');
-        foreach ($client->getDescribeTrailsIterator() as $trail) {
+        foreach ($client->getIterator('DescribeTrails') as $trail) {
             $client->deleteTrail(array('Name' => $trail['Name']));
         }
 
@@ -62,7 +62,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         // @begin
         // Create a bucket in S3 to store the logs and configure the policy
         $s3->createBucket(array('Bucket' => $bucket));
-        $s3->waitUntilBucketExists(array('Bucket' => $bucket));
+        $s3->waitUntil('BucketExists]', array('Bucket' => $bucket));
         $s3->putBucketPolicy(array(
             'Bucket' => $bucket,
             'Policy' => json_encode(array(
@@ -151,7 +151,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
         // @begin
         // List and delete all of the trails
-        $trails = $client->getDescribeTrailsIterator();
+        $trails = $client->getIterator('DescribeTrails');
         foreach ($trails as $trail) {
             $client->deleteTrail(array('Name' => $trail['Name']));
             echo "Deleted trail {$trail['Name']}.\n";

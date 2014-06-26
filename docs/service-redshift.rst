@@ -33,7 +33,7 @@ If you would like your code to wait until the cluster is available, you can use 
 
 .. code-block:: php
 
-    $client->waitUntilClusterAvailable(array(
+    $client->waitUntil('ClusterAvailable', array(
         'ClusterIdentifier' => 'your-unique-cluster-id',
     ));
 
@@ -51,7 +51,7 @@ time before they become available as well, so there is a corresponding ``Snapsho
         'ClusterIdentifier'  => 'your-unique-cluster-id',
         'SnapshotIdentifier' => 'your-unique-snapshot-id',
     ));
-    $client->waitUntilSnapshotAvailable(array(
+    $client->waitUntil('SnapshotAvailable', array(
         'SnapshotIdentifier' => 'your-unique-snapshot-id',
     ));
 

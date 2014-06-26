@@ -37,13 +37,13 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         // Delete the errors table if it exists
         try {
             $client->deleteTable(array('TableName' => 'errors'));
-            $client->waitUntilTableNotExists(array('TableName' => 'errors'));
+            $client->waitUntil('TableNotExists', array('TableName' => 'errors'));
         } catch (\Exception $e) {}
 
         // Delete the Orders table if it exists
         try {
             $client->deleteTable(array('TableName' => 'Orders'));
-            $client->waitUntilTableNotExists(array('TableName' => 'Orders'));
+            $client->waitUntil('TableNotExists', array('TableName' => 'Orders'));
         } catch (\Exception $e) {}
     }
 
