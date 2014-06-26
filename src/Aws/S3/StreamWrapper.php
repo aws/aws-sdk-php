@@ -723,16 +723,14 @@ class StreamWrapper
      */
     protected function triggerError($errors, $flags = null)
     {
-        // Only consider the 2 bits of flags
-        // Note: 5.5.13 added a new flag, which is why this is needed
-        $flags &= 3;
-
-        if ($flags === STREAM_URL_STAT_QUIET) {
-            // This is triggered with things like file_exists()
-            return false;
-        } elseif ($flags === (STREAM_URL_STAT_QUIET | STREAM_URL_STAT_LINK)) {
+        if ($flags & STREAM_URL_STAT_QUIET) {
+          // This is triggered with things like file_exists()
+          
+          if ($flags & STREAM_URL_STAT_LINK) {
             // This is triggered for things like is_link()
             return $this->formatUrlStat(false);
+          }
+          return false;
         }
 
         // This is triggered when doing things like lstat() or stat()
