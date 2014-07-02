@@ -30,6 +30,16 @@ return array (
             'https' => true,
             'hostname' => 'kinesis.us-east-1.amazonaws.com',
         ),
+        'us-west-2' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'kinesis.us-west-2.amazonaws.com',
+        ),
+        'eu-west-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'kinesis.eu-west-1.amazonaws.com',
+        ),
     ),
     'operations' => array(
         'CreateStream' => array(
