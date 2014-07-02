@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+2.6.10 (2014-07-02)
+-------------------
+
+* Added the `ap-northeast-1`, `ap-southeast-1`, and `sa-east-1` regions to the
+  Amazon CloudTrail client.
+* Added the `eu-west-1` and `us-west-2` regions to the Amazon Kinesis client.
+* Fixed an issue with the SignatureV4 implementation when used with Amazon S3.
+* Fixed an issue with a test that was causing failures when run on EC2 instances
+  that have associated Instance Metadata credentials.
+
 2.6.9 (2014-06-26)
 ------------------
 
@@ -9,7 +19,6 @@ CHANGELOG
 * Added support for delivery notifications to the Amazon SES client.
 * Updated the CloudFront client to support the 2014-05-31 API.
 * Merged PR #316 as a better solution for issue #309.
-
 
 2.6.8 (2014-06-20)
 ------------------
