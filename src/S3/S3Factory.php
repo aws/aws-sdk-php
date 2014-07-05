@@ -10,6 +10,15 @@ use Aws\Common\Signature\S3SignatureV4;
  */
 class S3Factory extends ClientFactory
 {
+    protected function createClient(array $args)
+    {
+        $client = parent::createClient($args);
+
+        $client->getEmitter()->attach(new BucketStyleSubscriber);
+
+        return $client;
+    }
+
     protected function createSignature($version, $signingName, $region)
     {
         switch ($version) {

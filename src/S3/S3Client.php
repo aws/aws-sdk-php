@@ -3,9 +3,9 @@ namespace Aws\S3;
 
 use Aws\AwsClient;
 use Aws\Result;
-use Aws\S3\Model\ClearBucket;
-use Aws\S3\Model\MultipartUpload\AbstractTransfer as AbstractMulti;
-use Aws\S3\Model\MultipartUpload\UploadBuilder;
+use Aws\S3\Exception\S3Exception;
+use Aws\S3\Multipart\AbstractTransfer as AbstractMulti;
+use Aws\S3\Multipart\UploadBuilder;
 use Aws\S3\Sync\DownloadSyncBuilder;
 use Aws\S3\Sync\UploadSyncBuilder;
 use GuzzleHttp\Collection;
@@ -419,6 +419,6 @@ class S3Client extends AwsClient
     public static function isValidBucketName($bucket)
     {
         trigger_error('This method is deprecated in favor of isBucketDnsCompatible.');
-        return self::isDnsCompatible($bucket);
+        return self::isBucketDnsCompatible($bucket);
     }
 }
