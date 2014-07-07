@@ -54,7 +54,7 @@ class InstanceMetadataClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals('AKIAIEXAMPLEEXAMPLEA', $credentials->getAccessKeyId());
         $this->assertEquals('EXAMPLErUcddCyEXAMPLEnG3vwyGTnFZ4EXAMPLE', $credentials->getSecretKey());
         $this->assertEquals('AxCusEXAMPLEFooBarBaz...', $credentials->getSecurityToken());
-        $this->assertEquals(2535752140, $credentials->getExpiration());
+        $this->assertEquals(1904600140, $credentials->getExpiration());
         $mockedRequests = $mock->getReceivedRequests();
         $this->assertEquals(2, count($mockedRequests));
         $this->assertContains('/webapp', (string) $mockedRequests[1]->getUrl());
