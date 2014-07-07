@@ -2,12 +2,13 @@
 
 namespace Aws\S3;
 
+use Aws\Common\Exception\RuntimeException;
 use Guzzle\Common\Event;
 use Guzzle\Service\Command\CommandInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * This listener simplifies the SSE-CPK process by encoding and hashing the key.
+ * This listener simplifies the SSE-C process by encoding and hashing the key.
  */
 class SseCpkListener implements EventSubscriberInterface
 {
@@ -20,6 +21,11 @@ class SseCpkListener implements EventSubscriberInterface
     {
         /** @var CommandInterface $command */
         $command = $event['command'];
+
+        // Allows only HTTPS connections for SSE-C
+        if ($command->getClient()->getConfig('scheme') !== 'https') {
+            throw new RuntimeException('You must configure your S3 client to use HTTPS in order to use the SSE-C features.');
+        }
 
         // Prepare the normal SSE-CPK headers
         if ($command['SSECustomerKey']) {

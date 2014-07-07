@@ -18,13 +18,16 @@ class SseCpkListenerTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $this->assertContains('onCommandBeforePrepare', SseCpkListener::getSubscribedEvents());
 
-        $command = $this->getMock('Guzzle\Service\Command\AbstractCommand', array('getName', 'build'), array($params));
+        $command = $this->getMock('Guzzle\Service\Command\AbstractCommand', array('getName', 'getClient', 'build'), array($params));
         $command->expects($this->any())
             ->method('getName')
             ->will($this->returnValue($operation));
         $command->expects($this->any())
             ->method('build')
             ->will($this->returnSelf());
+        $command->expects($this->any())
+            ->method('getClient')
+            ->will($this->returnValue($this->getServiceBuilder()->get('s3')));
 
         $event = new Event(array('command' => $command));
         $listener = new SseCpkListener();
@@ -72,5 +75,17 @@ class SseCpkListenerTest extends \Guzzle\Tests\GuzzleTestCase
                 )
             ),
         );
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testCannotUseWithoutHttps()
+    {
+        $s3 = $this->getServiceBuilder()->get('s3', array('scheme' => 'http'));
+        $s3->listBuckets(array(
+            'SSECustomerKey' => 'foo',
+            'CopySourceSSECustomerKey' => 'bar',
+        ));
     }
 }
