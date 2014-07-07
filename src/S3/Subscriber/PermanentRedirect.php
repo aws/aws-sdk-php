@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3;
+namespace Aws\S3\Subscriber;
 
 use Aws\S3\Exception\PermanentRedirectException;
 use GuzzleHttp\Command\Event\ProcessEvent;
@@ -9,11 +9,11 @@ use GuzzleHttp\Event\SubscriberInterface;
  * Throws a PermanentRedirectException exception when a 301 redirect is
  * encountered.
  */
-class PermanentRedirectListener implements SubscriberInterface
+class PermanentRedirect implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['checkForPermanentRedirect', 'last']];
+        return ['process' => ['checkForPermanentRedirect', 'last']];
     }
 
     public function checkForPermanentRedirect(ProcessEvent $e)

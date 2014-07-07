@@ -4,6 +4,10 @@ namespace Aws\S3;
 use Aws\Common\ClientFactory;
 use Aws\Common\Signature\S3Signature;
 use Aws\Common\Signature\S3SignatureV4;
+use Aws\Common\Subscriber\UploadBody;
+use Aws\S3\Subscriber\BucketStyle;
+use Aws\S3\Subscriber\PermanentRedirect;
+use Aws\S3\Subscriber\PutObjectUrl;
 
 /**
  * @internal
@@ -14,7 +18,11 @@ class S3Factory extends ClientFactory
     {
         $client = parent::createClient($args);
 
-        $client->getEmitter()->attach(new BucketStyleSubscriber);
+        $emitter = $client->getEmitter();
+        $emitter->attach(new BucketStyle);
+        $emitter->attach(new PermanentRedirect);
+        $emitter->attach(new PutObjectUrl);
+        $emitter->attach(new UploadBody(['PutObject', 'UploadPart']));
 
         return $client;
     }

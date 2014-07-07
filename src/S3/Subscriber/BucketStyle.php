@@ -1,18 +1,19 @@
 <?php
 
-namespace Aws\S3;
+namespace Aws\S3\Subscriber;
 
+use Aws\S3\S3Client;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
  * Listener used to change the way in which buckets are referenced (path/virtual style) based on context
  */
-class BucketStyleSubscriber implements SubscriberInterface
+class BucketStyle implements SubscriberInterface
 {
     public function getEvents()
     {
-        return array('prepare' => array('onPrepare', 'last'));
+        return ['prepare' => ['setBucketStyle', 'last']];
     }
 
     /**
@@ -20,7 +21,7 @@ class BucketStyleSubscriber implements SubscriberInterface
      *
      * @param PrepareEvent $event Event emitted
      */
-    public function onPrepare(PrepareEvent $event)
+    public function setBucketStyle(PrepareEvent $event)
     {
         $command = $event->getCommand();
         $bucket = $command['Bucket'];
