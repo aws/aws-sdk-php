@@ -31,6 +31,7 @@ AWS SDK for PHP
     service-cloudsearchdomain
     service-cloudtrail
     service-cloudwatch
+    service-cloudwatchlogs
     service-datapipeline
     service-directconnect
     service-dynamodb
@@ -128,6 +129,10 @@ Service-Specific Guides
 * Amazon CloudWatch
 
   .. indexlinks:: CloudWatch
+
+* Amazon CloudWatch Logs
+
+  .. indexlinks:: CloudWatchLogs
 
 * Amazon DynamoDB
 
