@@ -69,10 +69,10 @@ class CloudSearchDomainClientBuilder extends ClientBuilder
                 new TruncatedBackoffStrategy(3,
                     // Retry failed requests with 400-level responses due to throttling
                     new ThrottlingErrorChecker($exceptionParser,
-                        // Retry failed requests with 500-level responses
-                        new HttpBackoffStrategy(array(500, 503, 509),
-                            // Retry failed requests due to transient network or cURL problems
-                            new CurlBackoffStrategy(null,
+                        // Retry failed requests due to transient network or cURL problems
+                        new CurlBackoffStrategy(null,
+                            // Retry failed requests with 500-level responses
+                            new HttpBackoffStrategy(array(500, 503, 509),
                                 new ExponentialBackoffStrategy()
                             )
                         )

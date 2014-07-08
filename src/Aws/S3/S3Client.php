@@ -241,9 +241,9 @@ class S3Client extends AbstractClient
     {
         return new BackoffPlugin(
             new TruncatedBackoffStrategy(3,
-                new HttpBackoffStrategy(null,
-                    new SocketTimeoutChecker(
-                        new CurlBackoffStrategy(null,
+                new CurlBackoffStrategy(null,
+                    new HttpBackoffStrategy(null,
+                        new SocketTimeoutChecker(
                             new ExpiredCredentialsChecker($exceptionParser,
                                 new ExponentialBackoffStrategy()
                             )
