@@ -78,6 +78,18 @@ return array(
             'class'   => 'Aws\CloudWatch\CloudWatchClient'
         ),
 
+        'cognitoidentity' => array(
+            'alias'   => 'CognitoIdentity',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CognitoIdentity\CognitoIdentityClient'
+        ),
+
+        'cognitosync' => array(
+            'alias'   => 'CognitoSync',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CognitoSync\CognitoSyncClient'
+        ),
+
         'datapipeline' => array(
             'alias'   => 'DataPipeline',
             'extends' => 'default_settings',
