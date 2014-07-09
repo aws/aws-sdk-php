@@ -16,7 +16,8 @@
             "locationName": "X-Foo"
           },
           "Status": {
-            "shape": "StatusShape"
+            "shape": "StatusShape",
+            "location": "statusCode"
           },
           "Str": {
             "shape": "StringType"
@@ -49,8 +50,7 @@
         "location": "header"
       },
       "StatusShape": {
-        "type": "integer",
-        "location": "statusCode"
+        "type": "integer"
       },
       "StringType": {
         "type": "string"
@@ -205,7 +205,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "{\"TimeMember\": \"2014-04-29T18:30:38+00:00\", \"StructMember\": {\"foo\": \"1398796238\"}}"
+          "body": "{\"TimeMember\": \"2014-04-29T18:30:38+00:00\", \"StructMember\": {\"foo\": 1398796238}}"
         }
       }
     ]

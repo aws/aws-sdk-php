@@ -314,7 +314,7 @@
     ]
   },
   {
-    "description": "Non flattened lists",
+    "description": "Non flattened lists with locationName",
     "metadata": {
       "protocol": "rest-xml",
       "apiVersion": "2014-01-01"
@@ -324,7 +324,8 @@
         "type": "structure",
         "members": {
           "ListParam": {
-            "shape": "ListShape"
+            "shape": "ListShape",
+            "locationName": "AlternateName"
           }
         }
       },
@@ -333,8 +334,7 @@
         "member": {
           "shape": "StringType",
           "locationName": "NotMember"
-        },
-        "locationName": "AlternateName"
+        }
       },
       "StringType": {
         "type": "string"
@@ -427,7 +427,7 @@
     ]
   },
   {
-    "description": "Flattened lists",
+    "description": "Flattened lists with locationName",
     "metadata": {
       "protocol": "rest-xml",
       "apiVersion": "2014-01-01"
@@ -437,7 +437,8 @@
         "type": "structure",
         "members": {
           "ListParam": {
-            "shape": "ListShape"
+            "shape": "ListShape",
+            "locationName": "item"
           }
         }
       },
@@ -446,8 +447,7 @@
         "member": {
           "shape": "StringType"
         },
-        "flattened": true,
-        "locationName": "item"
+        "flattened": true
       },
       "StringType": {
         "type": "string"
@@ -494,7 +494,8 @@
         "type": "structure",
         "members": {
           "ListParam": {
-            "shape": "ListShape"
+            "shape": "ListShape",
+            "locationName": "item"
           }
         }
       },
@@ -503,8 +504,7 @@
         "member": {
           "shape": "SingleFieldStruct"
         },
-        "flattened": true,
-        "locationName": "item"
+        "flattened": true
       },
       "StringType": {
         "type": "string"
@@ -574,13 +574,19 @@
         "type": "structure",
         "members": {
           "t": {
-            "type": "timestamp",
-            "timestampFormat": "iso8601"
+            "shape": "TShape"
           },
           "b": {
-            "type": "blob"
+            "shape": "BShape"
           }
         }
+      },
+      "TShape": {
+        "type": "timestamp",
+        "timestampFormat": "iso8601"
+      },
+      "BShape": {
+        "type": "blob"
       }
     },
     "cases": [
@@ -623,14 +629,23 @@
         "type": "structure",
         "members": {
           "foo": {
-            "type": "map",
-            "location": "headers",
-            "locationName": "x-foo-",
-            "values": {
-              "type": "string"
-            }
+            "shape": "FooShape"
           }
         }
+      },
+      "FooShape": {
+        "type": "map",
+        "location": "headers",
+        "locationName": "x-foo-",
+        "key": {
+          "shape": "FooKeyValue"
+        },
+        "value": {
+          "shape": "FooKeyValue"
+        }
+      },
+      "FooKeyValue": {
+        "type": "string"
       }
     },
     "cases": [
@@ -676,9 +691,12 @@
         "type": "structure",
         "members": {
           "foo": {
-            "type": "string"
+            "shape": "FooShape"
           }
         }
+      },
+      "FooShape": {
+        "type": "string"
       }
     },
     "cases": [
@@ -716,9 +734,12 @@
         "type": "structure",
         "members": {
           "foo": {
-            "type": "blob"
+            "shape": "FooShape"
           }
         }
+      },
+      "FooShape": {
+        "type": "blob"
       }
     },
     "cases": [
@@ -756,15 +777,21 @@
         "type": "structure",
         "members": {
           "foo": {
-            "locationName": "foo",
-            "type": "structure",
-            "members": {
-              "baz": {
-                "type": "string"
-              }
-            }
+            "shape": "FooShape"
           }
         }
+      },
+      "FooShape": {
+        "locationName": "foo",
+        "type": "structure",
+        "members": {
+          "baz": {
+            "shape": "BazShape"
+          }
+        }
+      },
+      "BazShape": {
+        "type": "string"
       }
     },
     "cases": [
