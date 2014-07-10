@@ -78,13 +78,13 @@ return array(
             'class'   => 'Aws\CloudWatch\CloudWatchClient'
         ),
 
-        'cognitoidentity' => array(
+        'cognito-identity' => array(
             'alias'   => 'CognitoIdentity',
             'extends' => 'default_settings',
             'class'   => 'Aws\CognitoIdentity\CognitoIdentityClient'
         ),
 
-        'cognitosync' => array(
+        'cognito-sync' => array(
             'alias'   => 'CognitoSync',
             'extends' => 'default_settings',
             'class'   => 'Aws\CognitoSync\CognitoSyncClient'

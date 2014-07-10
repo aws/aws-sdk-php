@@ -18,7 +18,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('cognitoidentity');
+        $this->client = $this->getServiceBuilder()->get('cognito-identity');
     }
 
     public function testListIdentityPools()

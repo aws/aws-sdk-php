@@ -17,7 +17,7 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
 
     public function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('cognitosync');
+        $this->client = $this->getServiceBuilder()->get('cognito-sync');
     }
 
     public function testErrorsAreParsedCorrectly()
