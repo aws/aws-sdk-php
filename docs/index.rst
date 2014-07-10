@@ -33,6 +33,7 @@ AWS SDK for PHP
     service-cloudwatch
     service-cognitoidentity
     service-cognitosync
+    service-cloudwatchlogs
     service-datapipeline
     service-directconnect
     service-dynamodb
@@ -138,6 +139,10 @@ Service-Specific Guides
 * Amazon Cognito Sync
 
   .. indexlinks:: CognitoSync
+
+* Amazon CloudWatch Logs
+
+  .. indexlinks:: CloudWatchLogs
 
 * Amazon DynamoDB
 

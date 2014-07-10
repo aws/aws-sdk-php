@@ -90,6 +90,12 @@ return array(
             'class'   => 'Aws\CognitoSync\CognitoSyncClient'
         ),
 
+        'cloudwatchlogs' => array(
+            'alias'   => 'CloudWatchLogs',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\CloudWatchLogs\CloudWatchLogsClient'
+        ),
+
         'datapipeline' => array(
             'alias'   => 'DataPipeline',
             'extends' => 'default_settings',
