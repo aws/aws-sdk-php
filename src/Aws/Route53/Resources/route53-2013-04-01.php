@@ -218,6 +218,82 @@ return array (
                 ),
             ),
         ),
+        'ChangeTagsForResource' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2013-04-01/tags/{ResourceType}/{ResourceId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'ChangeTagsForResourceResponse',
+            'responseType' => 'model',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'ChangeTagsForResourceRequest',
+                    'namespaces' => array(
+                        'https://route53.amazonaws.com/doc/2013-04-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'ResourceType' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'ResourceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'maxLength' => 64,
+                ),
+                'AddTags' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'minItems' => 1,
+                    'maxItems' => 10,
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                                'maxLength' => 128,
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                                'maxLength' => 256,
+                            ),
+                        ),
+                    ),
+                ),
+                'RemoveTagKeys' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'minItems' => 1,
+                    'maxItems' => 10,
+                    'items' => array(
+                        'name' => 'Key',
+                        'type' => 'string',
+                        'maxLength' => 128,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
+                    'class' => 'PriorRequestNotCompleteException',
+                ),
+                array(
+                    'class' => 'ThrottlingException',
+                ),
+            ),
+        ),
         'CreateHealthCheck' => array(
             'httpMethod' => 'POST',
             'uri' => '/2013-04-01/healthcheck',
@@ -466,6 +542,19 @@ return array (
                 ),
             ),
         ),
+        'GetCheckerIpRanges' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2013-04-01/checkeripranges',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetCheckerIpRangesResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+        ),
         'GetHealthCheck' => array(
             'httpMethod' => 'GET',
             'uri' => '/2013-04-01/healthcheck/{HealthCheckId}',
@@ -496,6 +585,19 @@ return array (
                 array(
                     'reason' => 'The resource you are trying to access is unsupported on this Route 53 endpoint. Please consider using a newer endpoint or a tool that does so.',
                     'class' => 'IncompatibleVersionException',
+                ),
+            ),
+        ),
+        'GetHealthCheckCount' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2013-04-01/healthcheckcount',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetHealthCheckCountResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
                 ),
             ),
         ),
@@ -648,6 +750,179 @@ return array (
                 ),
             ),
         ),
+        'ListTagsForResource' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2013-04-01/tags/{ResourceType}/{ResourceId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'ListTagsForResourceResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'ResourceType' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'ResourceId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'maxLength' => 64,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
+                    'class' => 'PriorRequestNotCompleteException',
+                ),
+                array(
+                    'class' => 'ThrottlingException',
+                ),
+            ),
+        ),
+        'ListTagsForResources' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2013-04-01/tags/{ResourceType}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'ListTagsForResourcesResponse',
+            'responseType' => 'model',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'ListTagsForResourcesRequest',
+                    'namespaces' => array(
+                        'https://route53.amazonaws.com/doc/2013-04-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'ResourceType' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                ),
+                'ResourceIds' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'minItems' => 1,
+                    'maxItems' => 10,
+                    'items' => array(
+                        'name' => 'ResourceId',
+                        'type' => 'string',
+                        'maxLength' => 64,
+                    ),
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'reason' => 'The request was rejected because Route 53 was still processing a prior request.',
+                    'class' => 'PriorRequestNotCompleteException',
+                ),
+                array(
+                    'class' => 'ThrottlingException',
+                ),
+            ),
+        ),
+        'UpdateHealthCheck' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/2013-04-01/healthcheck/{HealthCheckId}',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'UpdateHealthCheckResponse',
+            'responseType' => 'model',
+            'data' => array(
+                'xmlRoot' => array(
+                    'name' => 'UpdateHealthCheckRequest',
+                    'namespaces' => array(
+                        'https://route53.amazonaws.com/doc/2013-04-01/',
+                    ),
+                ),
+            ),
+            'parameters' => array(
+                'HealthCheckId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'maxLength' => 64,
+                ),
+                'HealthCheckVersion' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                    'minimum' => 1,
+                ),
+                'IPAddress' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'maxLength' => 15,
+                ),
+                'Port' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                    'minimum' => 1,
+                    'maximum' => 65535,
+                ),
+                'ResourcePath' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'maxLength' => 255,
+                ),
+                'FullyQualifiedDomainName' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'maxLength' => 255,
+                ),
+                'SearchString' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                    'maxLength' => 255,
+                ),
+                'FailureThreshold' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
+                    'minimum' => 1,
+                    'maximum' => 10,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The health check you are trying to get or delete does not exist.',
+                    'class' => 'NoSuchHealthCheckException',
+                ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+                array(
+                    'class' => 'HealthCheckVersionMismatchException',
+                ),
+            ),
+        ),
     ),
     'models' => array(
         'ChangeResourceRecordSetsResponse' => array(
@@ -672,6 +947,16 @@ return array (
                         ),
                     ),
                 ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'ChangeTagsForResourceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
                 'RequestId' => array(
                     'location' => 'header',
                     'sentAs' => 'x-amz-request-id',
@@ -720,6 +1005,9 @@ return array (
                                     'type' => 'numeric',
                                 ),
                             ),
+                        ),
+                        'HealthCheckVersion' => array(
+                            'type' => 'numeric',
                         ),
                     ),
                 ),
@@ -871,6 +1159,24 @@ return array (
                 ),
             ),
         ),
+        'GetCheckerIpRangesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'CheckerIpRanges' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'IPAddressCidr',
+                        'type' => 'string',
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'GetHealthCheckResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -914,7 +1220,24 @@ return array (
                                 ),
                             ),
                         ),
+                        'HealthCheckVersion' => array(
+                            'type' => 'numeric',
+                        ),
                     ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'GetHealthCheckCountResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'HealthCheckCount' => array(
+                    'type' => 'numeric',
+                    'location' => 'xml',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -1018,6 +1341,9 @@ return array (
                                         'type' => 'numeric',
                                     ),
                                 ),
+                            ),
+                            'HealthCheckVersion' => array(
+                                'type' => 'numeric',
                             ),
                         ),
                     ),
@@ -1186,6 +1512,141 @@ return array (
                 'MaxItems' => array(
                     'type' => 'string',
                     'location' => 'xml',
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'ListTagsForResourceResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ResourceTagSet' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'ResourceType' => array(
+                            'type' => 'string',
+                        ),
+                        'ResourceId' => array(
+                            'type' => 'string',
+                        ),
+                        'Tags' => array(
+                            'type' => 'array',
+                            'items' => array(
+                                'name' => 'Tag',
+                                'type' => 'object',
+                                'sentAs' => 'Tag',
+                                'properties' => array(
+                                    'Key' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'Value' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'ListTagsForResourcesResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'ResourceTagSets' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'ResourceTagSet',
+                        'type' => 'object',
+                        'sentAs' => 'ResourceTagSet',
+                        'properties' => array(
+                            'ResourceType' => array(
+                                'type' => 'string',
+                            ),
+                            'ResourceId' => array(
+                                'type' => 'string',
+                            ),
+                            'Tags' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'Tag',
+                                    'type' => 'object',
+                                    'sentAs' => 'Tag',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'UpdateHealthCheckResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'HealthCheck' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'Id' => array(
+                            'type' => 'string',
+                        ),
+                        'CallerReference' => array(
+                            'type' => 'string',
+                        ),
+                        'HealthCheckConfig' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'IPAddress' => array(
+                                    'type' => 'string',
+                                ),
+                                'Port' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'Type' => array(
+                                    'type' => 'string',
+                                ),
+                                'ResourcePath' => array(
+                                    'type' => 'string',
+                                ),
+                                'FullyQualifiedDomainName' => array(
+                                    'type' => 'string',
+                                ),
+                                'SearchString' => array(
+                                    'type' => 'string',
+                                ),
+                                'RequestInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'FailureThreshold' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'HealthCheckVersion' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
                 ),
                 'RequestId' => array(
                     'location' => 'header',
