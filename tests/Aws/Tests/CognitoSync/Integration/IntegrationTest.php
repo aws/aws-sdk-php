@@ -24,8 +24,8 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
     {
         try {
             $this->client->deleteDataset(array(
-                'IdentityPoolId' => 'abc:abc',
-                'IdentityId'     => 'foo',
+                'IdentityPoolId' => 'abc:123af',
+                'IdentityId'     => 'foo:123af',
                 'DatasetName'    => 'bar',
             ));
             $this->fail('An exception should have been thrown.');

@@ -100,13 +100,16 @@ class SignatureV4Test extends \Guzzle\Tests\GuzzleTestCase
         $context = $request->getParams()->get('aws.signature');
 
         // Test that the canonical request is correct
-        $this->assertEquals(str_replace("\r", '', file_get_contents($group['creq'])), $context['canonical_request']);
+        $this->assertEquals(str_replace("\r", '', trim(file_get_contents($group['creq']))), $context['canonical_request']);
 
         // Test that the string to sign is correct
-        $this->assertEquals(str_replace("\r", '', file_get_contents($group['sts'])), $context['string_to_sign']);
+        $this->assertEquals(str_replace("\r", '', trim(file_get_contents($group['sts']))), $context['string_to_sign']);
 
         // Test that the authorization header is correct
-        $this->assertEquals(str_replace("\r", '', file_get_contents($group['authz'])), $request->getHeader('Authorization'));
+        $this->assertEquals(
+            str_replace("\r", '', trim(file_get_contents($group['authz']))),
+            (string) $request->getHeader('Authorization')
+        );
 
         $parser->setUtf8Support(false);
     }

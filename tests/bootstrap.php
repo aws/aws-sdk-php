@@ -42,7 +42,7 @@ if (get_cfg_var('CONFIG')) {
 
 // Set the service configuration file if it was not provided from the CLI
 if (!isset($_SERVER['CONFIG'])) {
-    $serviceConfig = $_SERVER['CONFIG'] = dirname(__DIR__) . '/test_services.json';
+    $serviceConfig = dirname(__DIR__) . '/test_services.json';
     if (file_exists($serviceConfig)) {
         $_SERVER['CONFIG'] = $serviceConfig;
     }
@@ -54,7 +54,7 @@ if (!isset($_SERVER['PREFIX']) || $_SERVER['PREFIX'] == 'hostname') {
 }
 
 // Instantiate the service builder
-$aws = Aws\Common\Aws::factory(isset($_SERVER['CONFIG']) ? $_SERVER['CONFIG'] : null);
+$aws = Aws\Common\Aws::factory(isset($_SERVER['CONFIG']) ? $_SERVER['CONFIG'] : 'test_services.dist.json');
 
 // Turn on wire logging if configured
 $aws->getEventDispatcher()->addListener('service_builder.create_client', function (\Guzzle\Common\Event $event) {

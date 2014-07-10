@@ -16,6 +16,7 @@
 
 namespace Aws\S3\Integration;
 
+use Aws\S3\S3Client;
 use Aws\S3\Model\ClearBucket;
 use Guzzle\Http\EntityBody;
 
@@ -625,9 +626,25 @@ class S3_20060301_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
+     * @depends testGetObjectUrlWithSessionCredentials
+     */
+    public function testPutObjectSigV4()
+    {
+        $client = $this->getServiceBuilder()->get('s3', array(
+            'signature' => 'v4'
+        ));
+        $client->waitUntil('BucketExists', array('Bucket' => $this->bucket));
+        $client->putObject(array(
+            'Bucket' => $this->bucket,
+            'Key'    => 'foo:bar.txt',
+            'Body'   => 'Hello!'
+        ));
+    }
+
+    /**
      * Clear the contents and delete a bucket
      *
-     * @depends testGetObjectUrlWithSessionCredentials
+     * @depends testPutObjectSigV4
      * @example Aws\S3\S3Client::clearBucket
      * @example Aws\S3\S3Client::deleteBucket
      * @example Aws\S3\S3Client::waitUntilBucketNotExists

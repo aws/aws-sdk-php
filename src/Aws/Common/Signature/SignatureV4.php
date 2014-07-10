@@ -254,6 +254,13 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         return $this->getPayload($request);
     }
 
+    protected function createCanonicalizedPath(RequestInterface $request)
+    {
+        $doubleEncoded = rawurlencode(ltrim($request->getPath(), '/'));
+
+        return '/' . str_replace('%2F', '/', $doubleEncoded);
+    }
+
     private function createStringToSign($longDate, $credentialScope, $creq)
     {
         return "AWS4-HMAC-SHA256\n{$longDate}\n{$credentialScope}\n"
@@ -299,7 +306,7 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
     {
         // Normalize the path as required by SigV4 and ensure it's absolute
         $canon = $request->getMethod() . "\n"
-            . '/' . ltrim($request->getPath(), '/') . "\n"
+            . $this->createCanonicalizedPath($request) . "\n"
             . $this->getCanonicalizedQueryString($request) . "\n";
 
         // Create the canonical headers

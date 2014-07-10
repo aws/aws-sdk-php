@@ -53,4 +53,12 @@ class S3SignatureV4 extends SignatureV4 implements S3SignatureInterface
 
         return $result;
     }
+
+    /**
+     * Amazon S3 does not double-encode the path component in the canonical req
+     */
+    protected function createCanonicalizedPath(RequestInterface $request)
+    {
+        return '/' . ltrim($request->getPath(), '/');
+    }
 }
