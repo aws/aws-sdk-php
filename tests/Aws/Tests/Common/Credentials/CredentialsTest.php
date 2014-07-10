@@ -140,6 +140,9 @@ class CredentialsTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testFactoryCreatesInstanceProfileWhenNoKeysAreProvided()
     {
+        unset($_SERVER[Credentials::ENV_KEY], $_SERVER[Credentials::ENV_SECRET]);
+        putenv('AWS_ACCESS_KEY_ID=');
+        putenv('AWS_SECRET_KEY=');
         $credentials = Credentials::factory();
         $this->assertInstanceOf('Aws\Common\Credentials\RefreshableInstanceProfileCredentials', $credentials);
     }

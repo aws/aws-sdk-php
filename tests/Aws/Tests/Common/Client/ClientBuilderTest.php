@@ -207,6 +207,9 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     public function testAddsDefaultCredentials()
     {
         $_SERVER['HOME'] = '/tmp';
+        unset($_SERVER[Credentials::ENV_KEY], $_SERVER[Credentials::ENV_SECRET]);
+        putenv('AWS_ACCESS_KEY_ID=');
+        putenv('AWS_SECRET_KEY=');
 
         $creds = Credentials::factory(array('key' => 'foo', 'secret' => 'bar'));
         $config = array(
@@ -247,7 +250,6 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $client3 = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertEquals('server-key', $client3->getCredentials()->getAccessKeyId());
         $this->assertEquals('server-secret', $client3->getCredentials()->getSecretKey());
-        unset($_SERVER[Credentials::ENV_KEY], $_SERVER[Credentials::ENV_SECRET]);
 
         // Ensure that environment credentials are picked up if supplied via AWS_SECRET_ACCESS_KEY
         $_SERVER[Credentials::ENV_KEY] = 'server-key';
