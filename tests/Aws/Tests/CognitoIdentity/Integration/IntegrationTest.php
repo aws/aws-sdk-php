@@ -21,6 +21,14 @@ class IntegrationTest extends \Aws\Tests\IntegrationTestCase
         $this->client = $this->getServiceBuilder()->get('cognito-identity');
     }
 
+    public function testHasAliasName()
+    {
+        $this->assertSame(
+            get_class($this->getServiceBuilder()->get('cognito-identity')),
+            get_class($this->getServiceBuilder()->get('cognitoidentity'))
+        );
+    }
+
     public function testListIdentityPools()
     {
         $result = $this->client->listIdentityPools(array(

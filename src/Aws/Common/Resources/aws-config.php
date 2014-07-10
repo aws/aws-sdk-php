@@ -84,11 +84,15 @@ return array(
             'class'   => 'Aws\CognitoIdentity\CognitoIdentityClient'
         ),
 
+        'cognitoidentity' => array('extends' => 'cognito-identity'),
+
         'cognito-sync' => array(
             'alias'   => 'CognitoSync',
             'extends' => 'default_settings',
             'class'   => 'Aws\CognitoSync\CognitoSyncClient'
         ),
+
+        'cognitosync' => array('extends' => 'cognito-sync'),
 
         'cloudwatchlogs' => array(
             'alias'   => 'CloudWatchLogs',
