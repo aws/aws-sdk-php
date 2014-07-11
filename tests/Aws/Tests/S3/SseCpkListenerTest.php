@@ -5,6 +5,8 @@ namespace Aws\Tests\S3;
 use Aws\S3\SseCpkListener;
 use Guzzle\Common\Event;
 use Guzzle\Service\Command\AbstractCommand;
+use Guzzle\Plugin\Mock\MockPlugin;
+use Guzzle\Http\Message\Response;
 
 /**
  * @covers Aws\S3\SseCpkListener
@@ -16,9 +18,16 @@ class SseCpkListenerTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testSseCpkListener($operation, array $params, array $expectedResults)
     {
-        $this->assertContains('onCommandBeforePrepare', SseCpkListener::getSubscribedEvents());
+        $this->assertContains(
+            'onCommandBeforePrepare',
+            SseCpkListener::getSubscribedEvents()
+        );
 
-        $command = $this->getMock('Guzzle\Service\Command\AbstractCommand', array('getName', 'getClient', 'build'), array($params));
+        $command = $this->getMock(
+            'Guzzle\Service\Command\AbstractCommand',
+            array('getName', 'getClient', 'build'),
+            array($params)
+        );
         $command->expects($this->any())
             ->method('getName')
             ->will($this->returnValue($operation));
@@ -87,5 +96,13 @@ class SseCpkListenerTest extends \Guzzle\Tests\GuzzleTestCase
             'SSECustomerKey' => 'foo',
             'CopySourceSSECustomerKey' => 'bar',
         ));
+    }
+
+    public function testCanUseWithoutHttpsForNonSse()
+    {
+        $s3 = $this->getServiceBuilder()->get('s3', array('scheme' => 'http'));
+        $mock = new MockPlugin(array(new Response(200)));
+        $s3->getEventDispatcher()->addSubscriber($mock);
+        $s3->listBuckets();
     }
 }
