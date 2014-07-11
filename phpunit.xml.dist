@@ -2,6 +2,12 @@
 <phpunit bootstrap="./tests/bootstrap.php"
          colors="true">
 
+    <!-- Dummy values used to provide credentials. No need to change these. -->
+    <php>
+        <server name="AWS_ACCESS_KEY_ID" value="foo" />
+        <server name="AWS_ACCESS_KEY_ID" value="bar" />
+    </php>
+
     <testsuites>
         <testsuite name="Aws">
             <directory>tests/Aws/Tests</directory>
