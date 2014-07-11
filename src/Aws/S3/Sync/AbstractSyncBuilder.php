@@ -414,7 +414,16 @@ abstract class AbstractSyncBuilder
         }
 
         // Use opendir so that we can pass stream context to the iterator
-        $dh = opendir($dir, stream_context_create(array('s3' => array('delimiter' => ''))));
+        $dh = opendir($dir, stream_context_create(array(
+            's3' => array(
+                'delimiter'  => '',
+                'listFilter' => function ($obj) {
+                    // Ensure that we do not try to download a glacier object.
+                    return !isset($obj['StorageClass']) ||
+                        $obj['StorageClass'] != 'GLACIER';
+                }
+            )
+        )));
 
         // Add the trailing slash for the OpendirIterator concatenation
         if (!$this->keyPrefix) {
