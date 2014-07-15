@@ -27,8 +27,10 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with AWS Support
  *
+ * @method Model addAttachmentsToSet(array $args = array()) {@command Support AddAttachmentsToSet}
  * @method Model addCommunicationToCase(array $args = array()) {@command Support AddCommunicationToCase}
  * @method Model createCase(array $args = array()) {@command Support CreateCase}
+ * @method Model describeAttachment(array $args = array()) {@command Support DescribeAttachment}
  * @method Model describeCases(array $args = array()) {@command Support DescribeCases}
  * @method Model describeCommunications(array $args = array()) {@command Support DescribeCommunications}
  * @method Model describeServices(array $args = array()) {@command Support DescribeServices}

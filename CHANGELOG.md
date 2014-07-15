@@ -4,6 +4,8 @@ CHANGELOG
 Next Release:
 -------------
 
+* Added support for adding attachments to support case communications to the
+  AWS Support API client.
 * Added a `listFilter` stream context option that can be used when using
   `opendir()` and the Amazon S3 stream wrapper. This option is used to filter
   out specific objects from the files yielded from the stream wrapper.
