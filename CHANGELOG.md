@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+
+* Added a `listFilter` stream context option that can be used when using
+  `opendir()` and the Amazon S3 stream wrapper. This option is used to filter
+  out specific objects from the files yielded from the stream wrapper.
+* Fixed #322 so that the download sync builder ignores objects that have a
+  `GLACIER` storage class.
+* Fixed an issue with the S3 SSE-C logic so that HTTPS is only required when
+  the SSE-C parameters are provided.
+* Updated the Travis configuration to include running HHVM tests.
+
 2.6.11 (2014-07-09)
 -------------------
 
