@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.6.12 (2014-07-16)
+-------------------
 
 * Added support for adding attachments to support case communications to the
   AWS Support API client.
@@ -22,9 +22,9 @@ Next Release:
 2.6.11 (2014-07-09)
 -------------------
 
-* Added support for Amazon Cognito Identity
-* Added support for Amazon Cognito Sync
-* Added support for Amazon CloudWatch Logs
+* Added support for **Amazon Cognito Identity**.
+* Added support for **Amazon Cognito Sync**.
+* Added support for **Amazon CloudWatch Logs**.
 * Added support for editing existing health checks and associating health checks
   with tags to the Amazon Route 53 client.
 * Added the ModifySubnetAttribute operation to the Amazon EC2 client.
