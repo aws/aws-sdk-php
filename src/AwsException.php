@@ -9,34 +9,13 @@ use GuzzleHttp\Command\Exception\CommandException;
 class AwsException extends CommandException
 {
     /**
-     * Create a wrapped exception from a CommandException
+     * Gets the client that executed the command.
      *
-     * @param CommandException $previous Command exception to wrap
-     *
-     * @return self
-     * @throws \InvalidArgumentException if the wrapped command has no client.
+     * @return AwsClientInterface
      */
-    public static function wrap(CommandException $previous)
+    public function getClient()
     {
-        $client = $previous->getClient();
-        if (!($client instanceof AwsClientInterface)) {
-            throw new \InvalidArgumentException('The wrapped exception must use'
-                . ' an AwsClientInterface');
-        }
-
-        $message = 'AWS (' . $client->getApi()->getEndpointPrefix()  . ') Error: ';
-
-        if ($prev = $previous->getContext()->getPath('aws_error/message')) {
-            $message .= $prev;
-        } else {
-            $message .= $previous->getMessage();
-        }
-
-        return new static(
-            $message,
-            $previous->getCommandTransaction(),
-            $previous
-        );
+        return $this->getTransaction()->getClient();
     }
 
     /**
@@ -50,16 +29,6 @@ class AwsException extends CommandException
     }
 
     /**
-     * Get the service description model of the web service.
-     *
-     * @return \Aws\Common\Api\Service
-     */
-    public function getApi()
-    {
-        return $this->getClient()->getApi();
-    }
-
-    /**
      * Get the request ID of the error. This value is only present if a
      * response was received and is not present in the event of a networking
      * error.
@@ -68,7 +37,9 @@ class AwsException extends CommandException
      */
     public function getAwsRequestId()
     {
-        return $this->getContext()->getPath('aws_error/request_id');
+        return $this->getTransaction()
+            ->getContext()
+            ->getPath('aws_error/request_id');
     }
 
     /**
@@ -78,7 +49,9 @@ class AwsException extends CommandException
      */
     public function getAwsErrorType()
     {
-        return $this->getContext()->getPath('aws_error/type');
+        return $this->getTransaction()
+            ->getContext()
+            ->getPath('aws_error/type');
     }
 
     /**
@@ -88,41 +61,32 @@ class AwsException extends CommandException
      */
     public function getAwsErrorCode()
     {
-        return $this->getContext()->getPath('aws_error/code');
+        return $this ->getTransaction()
+            ->getContext()
+            ->getPath('aws_error/code');
     }
 
     /**
-     * Get the request ID of the error. This value is only present if a
-     * response was received and is not present in the event of a networking
-     * error.
-     *
-     * @return string|null Returns null if no response was received
      * @deprecated Use getAwsRequestId() instead
      */
     public function getRequestId()
     {
-        return $this->getContext()->getPath('aws_error/request_id');
+        return $this->getAwsRequestId();
     }
 
     /**
-     * Get the exception code
-     *
-     * @return string|null
      * @deprecated Use getAwsErrorCode() instead
      */
     public function getExceptionCode()
     {
-        return $this->getContext()->getPath('aws_error/code');
+        return $this->getAwsErrorCode();
     }
 
     /**
-     * Get the exception type (one of client or server)
-     *
-     * @return string|null
      * @deprecated Use getAwsErrorType() instead
      */
     public function getExceptionType()
     {
-        return $this->getContext()->getPath('aws_error/type');
+        return $this->getAwsErrorType();
     }
 }

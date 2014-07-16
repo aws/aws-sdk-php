@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
+use Aws\AwsException;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
@@ -11,6 +12,9 @@ use GuzzleHttp\Command\Exception\CommandException;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
 
+/**
+ * @internal
+ */
 trait UsesServiceTrait
 {
     /**
@@ -93,7 +97,7 @@ trait UsesServiceTrait
      *
      * @return CommandException
      */
-    private function createMockCommandException($code)
+    private function createMockAwsException($code)
     {
         $client = $this->getMockBuilder('Aws\AwsClientInterface')
             ->setMethods(['getApi'])
@@ -111,7 +115,7 @@ trait UsesServiceTrait
             ['aws_error' => ['message' => 'Test error', 'code' => $code]]
         );
 
-        return new CommandException('Test error', $trans);
+        return new AwsException('Test error', $trans);
     }
 
     private function createServiceApi(array $serviceData = [], &$api = null)

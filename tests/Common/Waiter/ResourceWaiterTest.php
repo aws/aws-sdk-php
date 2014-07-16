@@ -87,7 +87,7 @@ class ResourceWaiterTest extends \PHPUnit_Framework_TestCase
         return [
             // Normal workflow with success_path
             ['TableExists', [
-                $this->createMockCommandException('ResourceNotFoundException'),
+                $this->createMockAwsException('ResourceNotFoundException'),
                 new Result(['Table' => ['TableStatus' => 'CREATING']]),
                 new Result(['Table' => ['TableStatus' => 'CREATING']]),
                 new Result(['Table' => ['TableStatus' => 'ACTIVE']]),
@@ -95,11 +95,11 @@ class ResourceWaiterTest extends \PHPUnit_Framework_TestCase
             // Normal workflow with success_type: error
             ['TableNotExists', [
                 new Result([]),
-                $this->createMockCommandException('ResourceNotFoundException'),
+                $this->createMockAwsException('ResourceNotFoundException'),
             ], 1000000],
             // Non ignored exception is thrown
             ['TableExists', [
-                $this->createMockCommandException('ValidationException'),
+                $this->createMockAwsException('ValidationException'),
             ], 'Aws\AwsException'],
             // Waiter enters invalid state
             ['TableFail', [

@@ -1,13 +1,8 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Common\Api\Service;
-use Aws\AwsClient;
+use GuzzleHttp\Collection;
 use Aws\AwsException;
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\CommandTransaction;
-use GuzzleHttp\Command\Exception\CommandException;
 
 /**
  * @covers Aws\AwsException
@@ -16,82 +11,61 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testEnsuresWrappedExceptionIsValid()
+    public function testReturnsClient()
     {
+        $client = $this->getTestClient('s3');
         $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
+            ->setMethods(['getClient'])
             ->disableOriginalConstructor()
             ->getMock();
-        $e = $this->getMockBuilder('GuzzleHttp\Command\Exception\CommandException')
-            ->setMethods(['getClient'])
-            ->setConstructorArgs(['Baz', $trans])
-            ->getMock();
-        $e->expects($this->once())
+        $trans->expects($this->once())
             ->method('getClient')
-            ->will($this->returnValue('foo'));
-        AwsException::wrap($e);
+            ->will($this->returnValue($client));
+        $e = new AwsException('Foo', $trans);
+        $this->assertSame($client, $e->getClient());
     }
 
-    public function testProvidesExceptionData()
+    public function testProvidesContextShortcuts()
     {
-        $api = $this->createServiceApi([
-            'metadata' => ['endpointPrefix' => 'ec2']
-        ]);
-
-        $client = new AwsClient([
-            'api'         => $api,
-            'credentials' => 'foo',
-            'client'      => new Client(),
-            'signature'   => 'bar',
-            'region'      => 'boo'
-        ]);
-
-        $cmd = new Command('foo');
-        $trans = new CommandTransaction($client, $cmd, [
+        $coll = new Collection([
             'aws_error' => [
-                'message'    => 'a',
-                'request_id' => 'b',
-                'type'       => 'c',
-                'code'       => 'd'
+                'request_id' => '10',
+                'type'       => 'mytype',
+                'code'       => 'mycode'
             ]
         ]);
 
-        $e1 = new CommandException('foo', $trans);
-        $e2 = AwsException::wrap($e1);
-        $this->assertSame('ec2', $e2->getServiceName());
-        $this->assertSame($e1, $e2->getPrevious());
-        $this->assertSame($api, $e2->getApi());
-        $this->assertSame($client, $e2->getClient());
-        $this->assertEquals('d', $e2->getAwsErrorCode());
-        $this->assertEquals('d', $e2->getExceptionCode());
-        $this->assertEquals('b', $e2->getAwsRequestId());
-        $this->assertEquals('b', $e2->getRequestId());
-        $this->assertEquals('c', $e2->getAwsErrorType());
-        $this->assertEquals('c', $e2->getExceptionType());
-        $this->assertEquals('AWS (ec2) Error: a', $e2->getMessage());
+        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
+            ->setMethods(['getContext'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $trans->expects($this->any())
+            ->method('getContext')
+            ->will($this->returnValue($coll));
+
+        $e = new AwsException('Foo', $trans);
+        $this->assertEquals('10', $e->getAwsRequestId());
+        $this->assertEquals('10', $e->getRequestId());
+
+        $this->assertEquals('mytype', $e->getAwsErrorType());
+        $this->assertEquals('mytype', $e->getExceptionType());
+
+        $this->assertEquals('mycode', $e->getAwsErrorCode());
+        $this->assertEquals('mycode', $e->getExceptionCode());
     }
 
-    public function testUsesPreviousExceptionMessage()
+    public function testReturnsServiceName()
     {
-        $api = $this->createServiceApi([
-            'metadata' => ['endpointPrefix' => 'ec2']
-        ]);
-
-        $client = new AwsClient([
-            'api'         => $api,
-            'credentials' => 'foo',
-            'client'      => new Client(),
-            'signature'   => 'bar',
-            'region'      => 'boo'
-        ]);
-
-        $command = $this->getMockBuilder('Aws\AwsCommandInterface')
-            ->getMockForAbstractClass();
-        $trans = new CommandTransaction($client, $command);
-        $e = new CommandException('Previous', $trans);
-        $ex = AwsException::wrap($e);
-        $this->assertContains('Previous', $ex->getMessage());
+        $client = $this->getTestClient('s3');
+        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
+            ->setMethods(['getClient'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $trans->expects($this->once())
+            ->method('getClient')
+            ->will($this->returnValue($client));
+        $e = new AwsException('Foo', $trans);
+        $this->assertSame('s3', $e->getServiceName());
     }
 }

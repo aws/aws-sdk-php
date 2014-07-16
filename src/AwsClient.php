@@ -11,7 +11,8 @@ use Aws\Common\Waiter\ResourceWaiter;
 use Aws\Common\Waiter\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Exception\CommandException;
+use GuzzleHttp\Command\CommandTransaction;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Default AWS client implementation
@@ -124,10 +125,20 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     {
         try {
             return parent::execute($command);
-        } catch (CommandException $e) {
-            /** @var AwsException $exceptionClass */
+        } catch (AwsException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            // Wrap other uncaught exceptions for consistency
             $exceptionClass = $this->commandException;
-            throw $exceptionClass::wrap($e);
+            throw new $exceptionClass(
+                sprintf('Error executing %s::%s on %s: %s',
+                    get_class($this),
+                    $command->getName(),
+                    $this->getRegion(),
+                    $e->getMessage()),
+                new CommandTransaction($this, $command),
+                $e
+            );
         }
     }
 
@@ -194,5 +205,29 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         }
 
         $waiter->wait();
+    }
+
+    /**
+     * Creates AWS specific exceptions.
+     *
+     * {@inheritdoc}
+     *
+     * @return AwsException
+     */
+    public function createCommandException(
+        CommandTransaction $transaction,
+        RequestException $previous
+    ) {
+        $exceptionClass = $this->commandException;
+
+        return new $exceptionClass(
+            sprintf('Error executing %s::%s on %s: %s',
+                get_class($this),
+                $transaction->getCommand()->getName(),
+                $this->getRegion(),
+                $previous->getMessage()),
+            $transaction,
+            $previous
+        );
     }
 }

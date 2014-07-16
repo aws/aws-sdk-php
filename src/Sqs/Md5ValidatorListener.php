@@ -29,7 +29,7 @@ class Md5ValidatorListener implements SubscriberInterface
                 if ($message['MD5OfBody'] != md5($message['Body'])) {
                     throw new SqsException(
                         'Body MD5 mismatch for ' . var_export($message, true),
-                        $event->getCommandTransaction()
+                        $event->getTransaction()
                     );
                 }
             }
