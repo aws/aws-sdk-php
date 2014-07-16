@@ -8,6 +8,8 @@ use GuzzleHttp\Event\SubscriberInterface;
 /**
  * Throws a PermanentRedirectException exception when a 301 redirect is
  * encountered.
+ *
+ * @internal
  */
 class PermanentRedirect implements SubscriberInterface
 {

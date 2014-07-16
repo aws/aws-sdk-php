@@ -6,6 +6,8 @@ use GuzzleHttp\Event\SubscriberInterface;
 
 /**
  * Injects ObjectURL into the result model of the PutObject operation.
+ *
+ * @internal
  */
 class PutObjectUrl implements SubscriberInterface
 {

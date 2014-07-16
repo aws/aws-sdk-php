@@ -5,6 +5,7 @@ use Aws\Common\ClientFactory;
 use Aws\Common\Signature\S3Signature;
 use Aws\Common\Signature\S3SignatureV4;
 use Aws\Common\Subscriber\UploadBody;
+use Aws\S3\Subscriber\ApplyMd5;
 use Aws\S3\Subscriber\BucketStyle;
 use Aws\S3\Subscriber\PermanentRedirect;
 use Aws\S3\Subscriber\PutObjectUrl;
@@ -23,6 +24,7 @@ class S3Factory extends ClientFactory
         $emitter->attach(new PermanentRedirect);
         $emitter->attach(new PutObjectUrl);
         $emitter->attach(new UploadBody(['PutObject', 'UploadPart']));
+        $emitter->attach(new ApplyMd5);
 
         return $client;
     }
