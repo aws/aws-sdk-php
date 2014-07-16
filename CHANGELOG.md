@@ -4,8 +4,10 @@ CHANGELOG
 Next Release:
 -------------
 
-* Added support for credential reports and password rotation policies to the
+* Added support for credential reports and password rotation features to the
   AWS IAM client.
+* Added the `ap-northeast-1`, `ap-southeast-1`, and `ap-southeast-2` regions to
+  the Amazon Kinesis client.
 * Added a `listFilter` stream context option that can be used when using
   `opendir()` and the Amazon S3 stream wrapper. This option is used to filter
   out specific objects from the files yielded from the stream wrapper.
