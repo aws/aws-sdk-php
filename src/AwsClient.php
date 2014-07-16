@@ -137,7 +137,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             // Wrap other uncaught exceptions for consistency
             $exceptionClass = $this->commandException;
             throw new $exceptionClass(
-                sprintf('Uncaught exception while executing %s::%s: %s',
+                sprintf('Uncaught exception while executing %s::%s - %s',
                     get_class($this),
                     $command->getName(),
                     $e->getMessage()),

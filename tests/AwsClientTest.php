@@ -11,6 +11,7 @@ use Aws\Sqs\SqsClient;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Mock;
 
@@ -135,6 +136,42 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('bar', $e->getAwsErrorType());
             $this->assertEquals('123', $e->getAwsRequestId());
         }
+    }
+
+    /**
+     * @expectedException \Aws\AwsException
+     * @expectedExceptionMessage Uncaught exception while executing Aws\AwsClient::foo - Baz Bar!
+     */
+    public function testWrapsUncaughtExceptions()
+    {
+        $client = $this->createClient(['operations' => ['foo' => [
+            'http' => ['method' => 'POST']
+        ]]]);
+        $command = $client->getCommand('foo');
+        $command->getEmitter()->on('prepare', function () {
+            throw new \RuntimeException('Baz Bar!');
+        });
+        $client->execute($command);
+    }
+
+    /**
+     * @expectedException \Aws\AwsException
+     * @expectedExceptionMessage Error executing Aws\AwsClient::foo() on "http://localhost:12399"; Baz Bar!
+     */
+    public function testHandlesNetworkingErrorsGracefully()
+    {
+        $client = $this->createClient(['operations' => ['foo' => [
+            'http' => ['method' => 'POST']
+        ]]]);
+        $command = $client->getCommand('foo');
+        $command->getEmitter()->on('prepare', function (PrepareEvent $e) {
+            $request = new Request('GET', 'http://localhost:12399');
+            $request->getEmitter()->on('before', function () {
+                throw new \RuntimeException('Baz Bar!');
+            });
+            $e->setRequest($request);
+        });
+        $client->execute($command);
     }
 
     public function testChecksBothLowercaseAndUppercaseOperationNames()
