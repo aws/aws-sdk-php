@@ -35,7 +35,7 @@ class S3Client extends AwsClient
 
         return ($bucketLen >= 3 && $bucketLen <= 63) &&
             // Cannot look like an IP address
-            !preg_match('/(\d+\.){3}\d+$/', $bucket) &&
+            !filter_var($bucket, FILTER_VALIDATE_IP) &&
             preg_match('/^[a-z0-9]([a-z0-9\-\.]*[a-z0-9])?$/', $bucket);
     }
 
