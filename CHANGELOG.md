@@ -4,6 +4,8 @@ CHANGELOG
 Next Release:
 -------------
 
+* Added the `ap-northeast-1`, `ap-southeast-1`, and `ap-southeast-2` regions to
+  the Amazon Kinesis client.
 * Added a `listFilter` stream context option that can be used when using
   `opendir()` and the Amazon S3 stream wrapper. This option is used to filter
   out specific objects from the files yielded from the stream wrapper.
@@ -11,14 +13,14 @@ Next Release:
   `GLACIER` storage class.
 * Fixed an issue with the S3 SSE-C logic so that HTTPS is only required when
   the SSE-C parameters are provided.
-* Updated the Travis configuration to include running HHVM tests.
+* Updated the Travis configuration to include running the test suite on HHVM.
 
 2.6.11 (2014-07-09)
 -------------------
 
-* Added support for Amazon Cognito Identity
-* Added support for Amazon Cognito Sync
-* Added support for Amazon CloudWatch Logs
+* Added support for **Amazon Cognito Identity**
+* Added support for **Amazon Cognito Sync**
+* Added support for **Amazon CloudWatch Logs**
 * Added support for editing existing health checks and associating health checks
   with tags to the Amazon Route 53 client.
 * Added the ModifySubnetAttribute operation to the Amazon EC2 client.
@@ -36,8 +38,8 @@ Next Release:
 2.6.9 (2014-06-26)
 ------------------
 
-* Added support for the CloudSearchDomain client, which allows you to search and
-  upload documents to your CloudSearch domains.
+* Added support for **Amazon CloudSearch Domain**, which allows you to search
+  and upload documents to your CloudSearch domains.
 * Added support for delivery notifications to the Amazon SES client.
 * Updated the CloudFront client to support the 2014-05-31 API.
 * Merged PR #316 as a better solution for issue #309.
