@@ -23,4 +23,10 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['target' => 2], $result->get('bar'));
         $this->assertEquals([1, 2], $result->search('*.target'));
     }
+
+    public function testCanBeCastToString()
+    {
+        $result = new Result(['foo' => 'bar']);
+        $this->assertContains('"foo": "bar"', (string) $result);
+    }
 }

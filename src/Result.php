@@ -37,4 +37,21 @@ class Result extends Model
     {
         return $this[$key];
     }
+
+   /**
+    * Provides debug information about the result object
+    *
+    * @return string
+    */
+    public function __toString()
+    {
+        return "Result data\n-----------\n\n"
+            . "Data can be retrieved from the result object using the "
+            . "get() method of the result (e.g., `\$result->get(\$key)`) or "
+            . "accessing the result like an associative array "
+            . "(e.g. `\$result['key']`). You can also execute JMESPath "
+            . "expressions on the result data using the search() method.\n\n"
+            . json_encode($this->toArray(), JSON_PRETTY_PRINT)
+            . "\n\n";
+    }
 }
