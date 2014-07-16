@@ -68,11 +68,12 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         $res
     ) {
         $client = new AwsClient([
-            'api'         => $service,
-            'credentials' => new NullCredentials(),
-            'client'      => new Client(),
-            'signature'   => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
-            'region'      => 'us-west-2'
+            'api'          => $service,
+            'credentials'  => new NullCredentials(),
+            'client'       => new Client(),
+            'signature'    => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
+            'region'       => 'us-west-2',
+            'error_parser' => function () {}
         ]);
 
         $cf = new ClientFactory();

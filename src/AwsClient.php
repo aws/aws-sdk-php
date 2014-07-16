@@ -37,6 +37,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var string */
     private $commandException;
 
+    /** @var callable */
+    private $errorParser;
+
     /**
      * The AwsClient constructor requires the following constructor options:
      *
@@ -45,6 +48,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - client: {@see GuzzleHttp\Client} used to send requests.
      * - signature: string representing the signature version to use (e.g., v4)
      * - region: (optional) Region used to interact with the service
+     * - error_parser: A callable that parses response exceptions
      * - exception_class: (optional) A specific exception class to throw that
      *   extends from {@see Aws\AwsException}.
      *
@@ -53,7 +57,8 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      */
     public function __construct(array $config)
     {
-        static $required = ['api', 'credentials', 'client', 'signature'];
+        static $required = ['api', 'credentials', 'client', 'signature',
+                            'error_parser'];
 
         foreach ($required as $r) {
             if (!isset($config[$r])) {
@@ -64,6 +69,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         $this->api = $config['api'];
         $this->credentials = $config['credentials'];
         $this->signature = $config['signature'];
+        $this->errorParser = $config['error_parser'];
         $this->region = isset($config['region']) ? $config['region'] : null;
         $this->defaults = isset($config['defaults']) ? $config['defaults'] : [];
         $this->commandException = isset($config['exception_class'])
@@ -131,10 +137,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             // Wrap other uncaught exceptions for consistency
             $exceptionClass = $this->commandException;
             throw new $exceptionClass(
-                sprintf('Error executing %s::%s on %s: %s',
+                sprintf('Uncaught exception while executing %s::%s: %s',
                     get_class($this),
                     $command->getName(),
-                    $this->getRegion(),
                     $e->getMessage()),
                 new CommandTransaction($this, $command),
                 $e
@@ -219,13 +224,26 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         RequestException $previous
     ) {
         $exceptionClass = $this->commandException;
+        $response = $previous->getResponse();
+
+        if (!$response) {
+            $transaction->getContext()->set('aws_error', []);
+            $serviceError = $previous->getMessage();
+        } else {
+            $parser = $this->errorParser;
+            $context = $transaction->getContext();
+            $context['aws_error'] = $parser($response);
+            $serviceError =  $context->getPath('aws_error/code')
+                . ' (' . $context->getPath('aws_error/type') . ' error): '
+                . $context->getPath('aws_error/message');
+        }
 
         return new $exceptionClass(
-            sprintf('Error executing %s::%s on %s: %s',
+            sprintf('Error executing %s::%s() on "%s"; %s',
                 get_class($this),
-                $transaction->getCommand()->getName(),
-                $this->getRegion(),
-                $previous->getMessage()),
+                lcfirst($transaction->getCommand()->getName()),
+                $previous->getRequest()->getUrl(),
+                $serviceError),
             $transaction,
             $previous
         );

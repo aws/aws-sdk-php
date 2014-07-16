@@ -74,8 +74,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanDisableValidation()
     {
-        $f = new ClientFactory();
-        $c = $f->create([
+        $c = (new ClientFactory())->create([
             'service'  => 'dynamodb',
             'region'   => 'x',
             'validate' => false
@@ -433,7 +432,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'api' => $service,
             'credentials' => $this->getMock('Aws\Common\Credentials\CredentialsInterface'),
             'signature' => $this->getMock('Aws\Common\Signature\SignatureInterface'),
-            'client' => new Client()
+            'client' => new Client(),
+            'error_parser' => function () {}
         ]);
 
         try {

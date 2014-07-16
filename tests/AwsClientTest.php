@@ -25,11 +25,12 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
     {
         $apiProvider = $this->getMock('Aws\Common\Api\ApiProviderInterface');
         $config = [
-            'client'      => new Client(),
-            'credentials' => new Credentials('foo', 'bar'),
-            'signature'   => new SignatureV4('foo', 'bar'),
-            'region'      => 'foo',
-            'api'         => new Service($apiProvider, 'foo', 'bar')
+            'client'       => new Client(),
+            'credentials'  => new Credentials('foo', 'bar'),
+            'signature'    => new SignatureV4('foo', 'bar'),
+            'region'       => 'foo',
+            'api'          => new Service($apiProvider, 'foo', 'bar'),
+            'error_parser' => function () {}
         ];
 
         $client = new AwsClient($config);
@@ -97,22 +98,19 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'signature'       => new SignatureV4('foo', 'bar'),
             'region'          => 'foo',
             'exception_class' => $value,
-            'api'             => $service
-        ]);
-
-        $client->getHttpClient()->getEmitter()->attach(new Mock([
-            new Response(404)
-        ]));
-
-        $client->getEmitter()->attach(new Error(
-            function () {
+            'api'             => $service,
+            'error_parser'    => function () {
                 return [
                     'code' => 'foo',
                     'type' => 'bar',
                     'request_id' => '123'
                 ];
             }
-        ));
+        ]);
+
+        $client->getHttpClient()->getEmitter()->attach(new Mock([
+            new Response(404)
+        ]));
 
         $client->getEmitter()->on('prepare', function (PrepareEvent $e) {
             $e->setRequest($e->getTransaction()
@@ -257,11 +255,12 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         }
 
         return new AwsClient($config + [
-            'client'      => new Client(),
-            'credentials' => new Credentials('foo', 'bar'),
-            'signature'   => new SignatureV4('foo', 'bar'),
-            'region'      => 'foo',
-            'api'         => $api
+            'client'       => new Client(),
+            'credentials'  => new Credentials('foo', 'bar'),
+            'signature'    => new SignatureV4('foo', 'bar'),
+            'region'       => 'foo',
+            'api'          => $api,
+            'error_parser' => function () {}
         ]);
     }
 

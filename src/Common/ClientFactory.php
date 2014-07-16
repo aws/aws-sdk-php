@@ -25,7 +25,6 @@ use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureV2;
 use Aws\Common\Signature\SignatureV3Https;
 use Aws\Common\Signature\SignatureV4;
-use Aws\Common\Subscriber\Error;
 use Aws\Common\Subscriber\Signature;
 use Aws\Common\Subscriber\Validation;
 use Aws\Sdk;
@@ -476,8 +475,6 @@ class ClientFactory
     {
         // Apply the protocol of the service description to the client.
         $this->applyProtocol($client, $args['endpoint']);
-        // Attach an error parser
-        $client->getEmitter()->attach(new Error($args['error_parser']));
         // Attach a signer to the client.
         $credentials = $client->getCredentials();
         if (!($credentials instanceof NullCredentials)) {
