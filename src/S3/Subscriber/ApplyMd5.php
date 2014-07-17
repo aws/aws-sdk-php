@@ -44,7 +44,6 @@ class ApplyMd5 implements SubscriberInterface
             if ($value === true ||
                 ($value === null && !($signature instanceof SignatureV4))
             ) {
-                unset($command['ContentMD5']);
                 $this->addMd5($event->getRequest());
             }
         }

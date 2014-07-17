@@ -83,7 +83,8 @@ abstract class RestSerializer implements SubscriberInterface
         }
 
         foreach ($args as $name => $value) {
-            if ($member = $input->getMember($name)) {
+            if ($input->hasMember($name)) {
+                $member = $input->getMember($name);
                 $location = $member['location'];
                 if (!$payload && !$location) {
                     $bodyMembers[$name] = $value;

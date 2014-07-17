@@ -83,12 +83,14 @@ class QuerySerializer implements SubscriberInterface
         &$query
     ) {
         foreach ($value as $k => $v) {
-            $member = $shape->getMember($k);
-            $memberPrefix = $member['queryName'] ?: $k;
-            if ($prefix) {
-                $memberPrefix = $prefix . '.' . $memberPrefix;
+            if ($shape->hasMember($k)) {
+                $member = $shape->getMember($k);
+                $memberPrefix = $member['queryName'] ?: $k;
+                if ($prefix) {
+                    $memberPrefix = $prefix . '.' . $memberPrefix;
+                }
+                $this->format($member, $v, $memberPrefix, $query);
             }
-            $this->format($member, $v, $memberPrefix, $query);
         }
     }
 

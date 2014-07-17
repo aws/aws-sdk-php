@@ -16,9 +16,7 @@ class BucketStyle implements SubscriberInterface
 {
     public function getEvents()
     {
-        return [
-            'prepare' => ['setBucketStyle', 'last']
-        ];
+        return ['prepare' => ['setBucketStyle', 'last']];
     }
 
     /**
@@ -31,20 +29,24 @@ class BucketStyle implements SubscriberInterface
         $command = $event->getCommand();
         $request = $event->getRequest();
         $bucket = $command['Bucket'];
-        $key = $command['Key'];
+        $path = $request->getPath();
 
-        // Modify the command Key to account for the {/Key*} explosion into an array
-        if ($key && is_array($key)) {
-            $command['Key'] = $key = implode('/', $key);
-        }
-
-        // Switch to virtual if PathStyle is disabled, or not a DNS compatible bucket name,
-        // or the scheme is https and there are no dots in the host header (avoids SSL issues)
+        // Switch to virtual if PathStyle is disabled, or not a DNS compatible
+        // bucket name, or the scheme is https and there are no dots in the host
+        // header (avoids SSL issues).
         if (!$command['PathStyle'] && S3Client::isBucketDnsCompatible($bucket)
             && !($request->getScheme() == 'https' && strpos($bucket, '.'))
         ) {
             $request->setHost($bucket . '.' . $request->getHost());
-            $request->setPath(substr($request->getPath(), strlen($bucket) + 2));
+            $path = substr($path, strlen($bucket) + 2);
         }
+
+        // Modify the Key to make sure the key is encoded, but slashes are not.
+        if ($command['Key']) {
+            $eKey = rawurlencode($command['Key']);
+            $path = str_replace($eKey, str_replace('%2F', '/', $eKey), $path);
+        }
+
+        $request->setPath($path);
     }
 }
