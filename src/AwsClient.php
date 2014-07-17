@@ -163,9 +163,12 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             throw new \InvalidArgumentException("Operation not found: $name");
         }
 
-        $args += $this->defaults;
-
-        return new AwsCommand($name, $args, $this->api, clone $this->getEmitter());
+        return new AwsCommand(
+            $name,
+            $args + $this->defaults,
+            $this->api,
+            clone $this->getEmitter()
+        );
     }
 
     public function getIterator($name, array $args = [], array $config = [])
