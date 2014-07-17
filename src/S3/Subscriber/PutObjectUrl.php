@@ -13,16 +13,17 @@ class PutObjectUrl implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['process' => ['addObjectUrl']];
+        return ['process' => ['addObjectUrl', -10]];
     }
 
     public function addObjectUrl(ProcessEvent $e)
     {
         $name = $e->getCommand()->getName();
+
         if ($name === 'PutObject') {
             $e->getResult()['ObjectURL'] = $e->getRequest()->getUrl();
         } elseif ($name === 'CompleteMultipartUpload') {
-            $e->getResult()['ObjectURL'] =  $e->getResult()['Location'];
+            $e->getResult()['ObjectURL'] = $e->getResult()['Location'];
         }
     }
 }

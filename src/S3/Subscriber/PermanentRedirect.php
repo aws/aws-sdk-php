@@ -24,8 +24,9 @@ class PermanentRedirect implements SubscriberInterface
 
         if ($res && $res->getStatusCode() == 301) {
             throw new PermanentRedirectException(
-                'Encountered a permanent redirect',
-                $e->getCommandTransaction()
+                'Encountered a permanent redirect while requesting '
+                    . $e->getRequest()->getUrl(),
+                $e->getTransaction()
             );
         }
     }
