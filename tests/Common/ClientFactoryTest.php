@@ -335,8 +335,9 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $f = new ClientFactory();
         $c = $f->create([
-            'service' => 'sdb',
-            'region'  => 'x'
+            'service'  => 'sdb',
+            'region'   => 'x',
+            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
         ]);
         $this->assertInstanceOf('Aws\SimpleDb\SimpleDbClient', $c);
     }
@@ -349,7 +350,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = $f->create([
             'service'      => 'sqs',
             'region'       => 'x',
-            'retry_logger' => $logger
+            'retry_logger' => $logger,
+            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
         ]);
         $this->assertTrue(SdkTest::hasListener(
             $c->getHttpClient()->getEmitter(),
@@ -364,7 +366,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = $f->create([
             'service'      => 'sqs',
             'region'       => 'x',
-            'retry_logger' => 'debug'
+            'retry_logger' => 'debug',
+            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
         ]);
         $this->assertTrue(SdkTest::hasListener(
             $c->getHttpClient()->getEmitter(),
@@ -433,6 +436,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'credentials' => $this->getMock('Aws\Common\Credentials\CredentialsInterface'),
             'signature' => $this->getMock('Aws\Common\Signature\SignatureInterface'),
             'client' => new Client(),
+            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'error_parser' => function () {}
         ]);
 

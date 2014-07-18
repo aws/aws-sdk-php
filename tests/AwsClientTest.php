@@ -30,6 +30,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'credentials'  => new Credentials('foo', 'bar'),
             'signature'    => new SignatureV4('foo', 'bar'),
             'region'       => 'foo',
+            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'api'          => new Service($apiProvider, 'foo', 'bar'),
             'error_parser' => function () {}
         ];
@@ -97,6 +98,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'client'          => new Client(),
             'credentials'     => new Credentials('foo', 'bar'),
             'signature'       => new SignatureV4('foo', 'bar'),
+            'endpoint'        => 'http://us-east-1.foo.amazonaws.com',
             'region'          => 'foo',
             'exception_class' => $value,
             'api'             => $service,
@@ -295,6 +297,7 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'client'       => new Client(),
             'credentials'  => new Credentials('foo', 'bar'),
             'signature'    => new SignatureV4('foo', 'bar'),
+            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'region'       => 'foo',
             'api'          => $api,
             'error_parser' => function () {}

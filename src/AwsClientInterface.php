@@ -30,6 +30,13 @@ interface AwsClientInterface extends ServiceClientInterface
     public function getRegion();
 
     /**
+     * Gets the default endpoint, or base URL, used by the client.
+     *
+     * @return string
+     */
+    public function getEndpoint();
+
+    /**
      * Get the service description associated with the client.
      *
      * @return \Aws\Common\Api\Service

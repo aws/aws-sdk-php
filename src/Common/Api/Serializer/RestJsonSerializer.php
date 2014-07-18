@@ -16,7 +16,7 @@ class RestJsonSerializer extends RestSerializer
     private $jsonFormatter;
 
     /**
-     * @param Service    $api         Service API description
+     * @param Service  $api           Service API description
      * @param string   $endpoint      Endpoint to connect to
      * @param JsonBody $jsonFormatter Optional JSON formatter to use
      */

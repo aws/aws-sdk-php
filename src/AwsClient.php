@@ -31,6 +31,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var string */
     private $region;
 
+    /** @var string */
+    private $endpoint;
+
     /** @var Service */
     private $api;
 
@@ -58,7 +61,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function __construct(array $config)
     {
         static $required = ['api', 'credentials', 'client', 'signature',
-                            'error_parser'];
+                            'error_parser', 'endpoint'];
 
         foreach ($required as $r) {
             if (!isset($config[$r])) {
@@ -67,6 +70,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         }
 
         $this->api = $config['api'];
+        $this->endpoint = $config['endpoint'];
         $this->credentials = $config['credentials'];
         $this->signature = $config['signature'];
         $this->errorParser = $config['error_parser'];
@@ -107,6 +111,11 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     public function getSignature()
     {
         return $this->signature;
+    }
+
+    public function getEndpoint()
+    {
+        return $this->endpoint;
     }
 
     public function getRegion()

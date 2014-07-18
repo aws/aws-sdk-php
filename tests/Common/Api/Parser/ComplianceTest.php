@@ -73,6 +73,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'client'       => new Client(),
             'signature'    => $this->getMock('Aws\Commom\Signature\SignatureInterface'),
             'region'       => 'us-west-2',
+            'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
             'error_parser' => function () {}
         ]);
 
