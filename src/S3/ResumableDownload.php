@@ -2,6 +2,7 @@
 namespace Aws\S3;
 
 use Aws\Result;
+use GuzzleHttp\Collection;
 use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
@@ -28,61 +29,58 @@ class ResumableDownload
     private $target;
 
     /**
-     * @param S3Client $client Client to use when executing requests
-     * @param string   $bucket Bucket that holds the object
-     * @param string   $key    Key of the object
-     * @param mixed    $target Where the object should be downloaded to. Pass a
-     *                         string to save the object to a file, pass a
-     *                         resource returned by fopen() to save the object
-     *                         to a stream resource, or pass a StreamInterface
-     *                         object to save the contents to a stream.
-     * @param array    $params Any additional GetObject or HeadObject
-     *                         parameters to use with each command issued by
-     *                         the client. (e.g. pass "Version" to download a
-     *                         specific version of an object)
+     * Accepts an associative array of the following options. Each option is
+     * required.
+     *
+     * - client: The Amazon S3 client to use to download the object
+     * - target: Where the object should be downloaded to. Pass a string to
+     *   save the object to a file, pass a resource returned by fopen() to save
+     *   the object to a stream resource, or pass a StreamInterface object to
+     *   save the contents to a stream.
+     * - params: Associative array of GetObject operation parameters, including
+     *   the required Key and Bucket key value pairs.
+     *
+     * @param array $config Associative array of configuration data.
      *
      * @throws \RuntimeException if the target variable points to a file that
      *                           cannot be opened
      */
-    public function __construct(
-        S3Client $client,
-        $bucket,
-        $key,
-        $target,
-        array $params = []
-    ) {
-        $this->params = $params;
-        $this->client = $client;
-        $this->params['Bucket'] = $bucket;
-        $this->params['Key'] = $key;
+    public function __construct(array $config)
+    {
+        $config = Collection::fromConfig(
+            $config, [], ['client', 'target', 'params']
+        );
+
+        $this->params = $config['params'];
+        $this->client = $config['client'];
+        $this->target = $config['target'];
 
         // If a string is passed, then assume that the download should stream
         // to a file on disk.
-        if (is_string($target)) {
-            $target = fopen($target, 'a+');
-            if (!$target) {
-                throw new \RuntimeException("Unable to open {$target} for "
+        if (is_string($this->target)) {
+            $this->target = fopen($this->target, 'a+');
+            if (!$this->target) {
+                throw new \RuntimeException("Unable to open file for "
                     . "writing " . error_get_last()['message']);
             }
             // Always append to the file
-            fseek($target, 0, SEEK_END);
+            fseek($this->target, 0, SEEK_END);
         }
 
         // Get the metadata and Content-MD5 of the object
-        $this->target = Stream::factory($target);
+        $this->target = Stream::factory($this->target);
     }
 
     /**
-     * Download the remainder of the object from Amazon S3
+     * Download the remainder of the object from Amazon S3.
      *
-     * Performs a message integrity check if possible
-     *
-     * @return Result
+     * @return Result|bool Returns false if the file does not need to be
+     *                     downloaded or returns a Result object of a GetObject
+     *                     operation if the file was downloaded.
      */
-    public function transfer()
+    public function __invoke()
     {
-        $command = $this->client->getCommand('HeadObject', $this->params);
-        $this->meta = $this->client->execute($command);
+        $this->meta = $this->client->headObject($this->params);
 
         if ($this->target->tell() >= $this->meta['ContentLength']) {
             return false;
@@ -104,31 +102,11 @@ class ResumableDownload
     }
 
     /**
-     * @deprecated
+     * @see __invoke
      */
-    public function __invoke()
+    public function transfer()
     {
-        return $this->transfer();
-    }
-
-    /**
-     * Get the bucket of the download
-     *
-     * @return string
-     */
-    public function getBucket()
-    {
-        return $this->params['Bucket'];
-    }
-
-    /**
-     * Get the key of the download
-     *
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->params['Key'];
+        return $this();
     }
 
     /**
@@ -144,9 +122,8 @@ class ResumableDownload
         // Set the starting offset so that the body is never seeked to before
         // this point in the event of a retry.
         $this->params['SaveAs']->setOffset($current);
-        $command = $this->client->getCommand('GetObject', $this->params);
 
-        return $this->client->execute($command);
+        return $this->client->getObject($this->params);
     }
 
     /**
@@ -156,16 +133,19 @@ class ResumableDownload
      */
     private function checkIntegrity()
     {
-        if (!$this->target->isReadable() || !$this->meta['ContentMD5']) {
+        $etag = trim($this->meta['ETag'], '" ');
+
+        if (!$this->target->isReadable() ||
+            !$etag ||
+            !preg_match('/^[0-9a-f]+$/', $etag)) {
             return;
         }
 
-        $actual = $this->target->getContentMd5();
+        $actual = \GuzzleHttp\Stream\hash($this->target, 'md5');
 
-        if ($actual != $this->meta['ContentMD5']) {
+        if ($actual !== $etag) {
             throw new \UnexpectedValueException("Message integrity check "
-                . "failed. Expected {$this->meta['ContentMD5']} but got "
-                . "{$actual}.");
+                . "failed. Expected $etag but got $actual.");
         }
     }
 }

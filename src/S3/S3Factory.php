@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws\Common\ClientFactory;
 use Aws\Common\Signature\S3Signature;
 use Aws\Common\Signature\S3SignatureV4;
+use Aws\Common\Subscriber\SaveAs;
 use Aws\Common\Subscriber\UploadBody;
 use Aws\S3\Subscriber\ApplyMd5;
 use Aws\S3\Subscriber\BucketStyle;
@@ -25,6 +26,7 @@ class S3Factory extends ClientFactory
         $emitter->attach(new PutObjectUrl);
         $emitter->attach(new UploadBody(['PutObject', 'UploadPart']));
         $emitter->attach(new ApplyMd5);
+        $emitter->attach(new SaveAs);
 
         return $client;
     }
