@@ -58,7 +58,7 @@ class S3FactoryTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertContains('Aws\Common\Subscriber\UploadBody', $found);
+        $this->assertContains('Aws\Common\Subscriber\SourceFile', $found);
         $this->assertContains('Aws\S3\Subscriber\BucketStyle', $found);
         $this->assertContains('Aws\S3\Subscriber\ApplyMd5', $found);
         $this->assertContains('Aws\S3\Subscriber\PermanentRedirect', $found);
