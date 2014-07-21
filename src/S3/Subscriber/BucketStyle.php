@@ -43,8 +43,7 @@ class BucketStyle implements SubscriberInterface
 
         // Modify the Key to make sure the key is encoded, but slashes are not.
         if ($command['Key']) {
-            $eKey = rawurlencode($command['Key']);
-            $path = str_replace($eKey, str_replace('%2F', '/', $eKey), $path);
+            $path = S3Client::encodeKey(rawurldecode($path));
         }
 
         $request->setPath($path);

@@ -3,6 +3,7 @@ namespace Aws\Common\Signature;
 
 use Aws\Common\Credentials\CredentialsInterface;
 use Aws\S3\S3UriParser;
+use Aws\S3\S3Client;
 use GuzzleHttp\Message\RequestInterface;
 
 /**
@@ -65,6 +66,11 @@ class S3Signature extends AbstractSignature
     ) {
         // Operate on a clone of the request, so the original is not altered.
         $request = clone $request;
+
+        // URL encoding already occurs in the URI template expansion. Undo that
+        // and encode using the same encoding as GET object, PUT object, etc.
+        $path = S3Client::encodeKey(rawurldecode($request->getPath()));
+        $request->setPath($path);
 
         // Make sure to handle temporary credentials
         if ($token = $credentials->getSecurityToken()) {
