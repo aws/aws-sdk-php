@@ -209,6 +209,12 @@ return array(
             'class'   => 'Aws\Route53\Route53Client'
         ),
 
+        'route53domains' => array(
+            'alias'   => 'Route53Domains',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Route53Domains\Route53DomainsClient'
+        ),
+
         's3' => array(
             'alias'   => 'S3',
             'extends' => 'default_settings',

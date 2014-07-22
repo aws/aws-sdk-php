@@ -52,6 +52,7 @@ AWS SDK for PHP
     service-rds
     service-redshift
     service-route53
+    service-route53domains
     service-s3
     service-ses
     service-simpledb
@@ -186,6 +187,10 @@ Service-Specific Guides
 * Amazon Route 53
 
   .. indexlinks:: Route53
+
+* Amazon Route 53 Domains
+
+  .. indexlinks:: Route53Domains
 
 * Amazon Simple Email Service (Amazon SES)
 
