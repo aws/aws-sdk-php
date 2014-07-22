@@ -2,167 +2,145 @@
 namespace Aws\Common;
 
 use Aws\Common\Exception\UnresolvedEndpointException;
-use JmesPath\Env as JmesPath;
 
 /**
- * Provides endpoints for services based on a rules engine.
+ * Provides endpoints for services based on a directory of rules files.
  */
 class RulesEndpointProvider implements EndpointProviderInterface
 {
     /** @var array */
-    private $rules;
+    private $ruleSets;
 
     /**
-     * @param array $rules Associative array of endpoint rules.
+     * @param string $path Path to an endpoint rules file or path to a directory
+     *                     of endpoint rules files. If no path is provided, the
+     *                     default public rules are utilized.
      */
-    public function __construct(array $rules)
+    public function __construct($path = null)
     {
-        $this->rules = $rules;
+        if (!$path) {
+            $this->ruleSets = \GuzzleHttp\json_decode(
+                file_get_contents(__DIR__ . '/Resources/endpoints/public.json'),
+                true
+            );
+        } else {
+            $this->ruleSets = [];
+            $this->addRulesFromPath($path);
+        }
     }
 
-    public function getEndpoint($service, array $args = [])
+    public function getEndpoint(array $args = [])
     {
-        $args['service'] = $service;
+        $this->prepareArguments($args);
+
+        foreach ($this->ruleSets as $ruleSet) {
+
+            // Ensure the region matches
+            if (!empty($ruleSet['regionPrefix']) &&
+                strpos($args['region'], $ruleSet['regionPrefix']) !== 0
+            ) {
+                continue;
+            }
+
+            foreach ($ruleSet['rules'] as $rule) {
+                if (isset($rule['services']) &&
+                    !in_array($args['service'], $rule['services'])
+                ) {
+                    continue;
+                }
+
+                $rule['config']['endpoint'] = \GuzzleHttp\uri_template(
+                    $rule['config']['endpoint'], $args
+                );
+
+                return $rule['config'];
+            }
+        }
+
+        throw $this->getUnresolvedException($args);
+    }
+
+    /**
+     * Prepare and validate arguments to resolve an endpoint
+     *
+     * @param array $args Arguments passed by reference
+     *
+     * @throws \InvalidArgumentException if region or service are missing
+     */
+    private function prepareArguments(array &$args)
+    {
         if (!isset($args['scheme'])) {
             $args['scheme'] = 'https';
         }
 
-        // Use the _default section if no rule is found by the given name.
-        if (!isset($this->rules[$service])) {
-            // Fall back to _default, and if it is not set, throw an exception.
-            if (!isset($this->rules['_default'])) {
-                throw new UnresolvedEndpointException('No service found');
-            }
-            $service = '_default';
+        if (!isset($args['service'])) {
+            throw new \InvalidArgumentException('Requires a "service" value');
         }
 
-        if ($result = $this->checkSection($service, $args)) {
-            return $result;
+        if (!isset($args['region'])) {
+            throw new \InvalidArgumentException('Requires a "region" value');
         }
-
-        throw $this->getUnresolvedException($service, $args);
     }
 
     /**
-     * Prepends a rule to the given service name.
+     * Merges in rules from the path to a file or directory of rules files.
      *
-     * @param string $service Service name or _default to apply to all.
-     * @param array  $rule    Rule to prepend
+     * @param string $path Directory of rules files
+     * @throws \InvalidArgumentException if the path is invalid
      */
-    public function prependRule($service, array $rule)
+    private function addRulesFromPath($path)
     {
-        if (!isset($this->rules[$service])) {
-            $this->rules[$service] = [];
+        if (is_dir($path)) {
+            foreach (glob(rtrim($path, '/') . '/*.json') as $file) {
+                $this->addRulesFromFile($file);
+            }
+        } elseif (is_readable($path)) {
+            $this->addRulesFromFile($path);
+        } else {
+            throw new \InvalidArgumentException($path . ' is not a directory '
+                . 'or readable file');
         }
 
-        array_unshift($this->rules[$service], $rule);
+        // Sort the rules
+        foreach ($this->ruleSets as &$ruleSet) {
+            usort($ruleSet, function ($a, $b) {
+                return $a['priority'] < $b['priority']
+                    ? -1
+                    : ($a['priority'] > $b['priority'] ? 1 : 0);
+            });
+        }
     }
 
     /**
-     * Appends a rule to the given service name.
+     * Merges in rules from a file.
      *
-     * @param string $service Service name or _default to apply to all.
-     * @param array  $rule    Rule to append
+     * @param string $filename File to add
+     * @throws \InvalidArgumentException if the filename is not readable
      */
-    public function appendRule($service, array $rule)
+    private function addRulesFromFile($filename)
     {
-        $this->rules[$service][] = $rule;
-    }
-
-    /**
-     * Checks the provided arguments against the rules of a service/section.
-     *
-     * @param string $name Service name
-     * @param array  $args Arguments used to resolve rules.
-     *
-     * @return array|null
-     */
-    private function checkSection($name, array $args)
-    {
-        if (isset($this->rules[$name])) {
-            foreach ($this->rules[$name] as $rule) {
-                if ($endpoint = $this->checkRule($rule, $args)) {
-                    return $endpoint;
-                }
-            }
+        if (!is_readable($filename)) {
+            throw new \InvalidArgumentException($filename . ' is not readable');
         }
 
-        if ($name !== '_default') {
-            return $this->checkSection('_default', $args);
-        }
-
-        return null;
-    }
-
-    private function checkRule(array $rule, array $args)
-    {
-        // Check each rule constraint against the provided region
-        if (isset($rule['constraints'])) {
-            foreach ($rule['constraints'] as $cons) {
-                $value = isset($args[$cons[0]]) ? $args[$cons[0]] : null;
-                switch ($cons[1]) {
-                    case 'startsWith':
-                        if (strpos($value, $cons[2]) !== 0) {
-                            return null;
-                        }
-                        break;
-                    case 'oneOf':
-                        if (!in_array($value, $cons[2], true)) {
-                            return null;
-                        }
-                        break;
-                    case 'equals':
-                        if ($value !== $cons[2]) {
-                            return null;
-                        }
-                        break;
-                    case 'notEquals':
-                        if ($value === $cons[2]) {
-                            return null;
-                        }
-                        break;
-                    default:
-                        return null;
-                }
-            }
-        }
-
-        return [
-            'uri' => \GuzzleHttp\uri_template($rule['uri'], $args),
-            'properties' => isset($rule['properties'])
-                    ? $rule['properties'] : []
-        ];
+        $this->ruleSets = array_merge(
+            $this->ruleSets,
+            \GuzzleHttp\json_decode(file_get_contents($filename), true)
+        );
     }
 
     /**
      * Creates an unresolved endpoint exception and attempts to format a useful
      * error message based on the constrains of the matching service.
      */
-    private function getUnresolvedException($service, array $args)
+    private function getUnresolvedException(array $args)
     {
         $message = sprintf(
-            'Unable to resolve an endpoint for the %s service based on the'
-            . ' provided configuration values: %s',
+            'Unable to resolve an endpoint for the "%s" service based on the'
+            . ' provided configuration values: %s.',
             $args['service'],
             str_replace('&', ', ', http_build_query($args))
         );
-
-        // Give a hint that a region should be set if one is present in rules.
-        if (!empty($this->rules[$service])) {
-            if (!isset($args['region']) && JmesPath::search(
-                '[*].constraints[?[0]==`region`]',
-                $this->rules[$service]
-            )) {
-                $message .= "\nTry specifying a valid 'region' argument.";
-            }
-
-            // Show the rules to the user in the exception message.
-            $message .= "\n\nThis endpoint has the following rules: \n\n" .
-                '    ' . str_replace("\n", "\n    ", json_encode(
-                    $this->rules[$service],
-                    JSON_PRETTY_PRINT
-                ));
-        }
 
         return new UnresolvedEndpointException($message);
     }

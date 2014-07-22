@@ -9,12 +9,19 @@ interface EndpointProviderInterface
     /**
      * Get an endpoint for a service.
      *
-     * @param string $service Name of the service
-     * @param array  $args    Array of arguments used when constructing
+     * The args array accepts the following options:
+     *
+     * - region: Required region
+     * - service: Required service name
+     * - scheme: URL scheme (defaults to https)
+     *
+     * @param array $args Associative array of options used to resolve endpoints
      *
      * @return array Returns an array containing a 'uri' key and a 'properties'
      *               key containing an associative array of endpoint specific
      *               properties.
+     *
+     * @throws \Aws\Common\Exception\UnresolvedEndpointException
      */
-    public function getEndpoint($service, array $args = []);
+    public function getEndpoint(array $args = []);
 }
