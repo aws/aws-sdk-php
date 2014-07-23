@@ -164,10 +164,7 @@ class ClientFactory
         }
 
         if (!isset($args['endpoint_provider'])) {
-            $path = __DIR__ . '/../../vendor/aws/aws-models/endpoint-rules.json';
-            $args['endpoint_provider'] = new RulesEndpointProvider(
-                \GuzzleHttp\json_decode(file_get_contents($path), true)
-            );
+            $args['endpoint_provider'] = new RulesEndpointProvider();
         }
     }
 
@@ -416,17 +413,16 @@ class ClientFactory
         }
 
         if (!isset($args['endpoint'])) {
-            $result = $value->getEndpoint(
-                $args['service'],
-                [
-                    'service' => $args['service'],
-                    'region'  => $args['region'],
-                    'scheme'  => $args['scheme']
-                ]
-            );
-            $args['endpoint'] = $result['uri'];
-            if (isset($result['properties']['signatureVersion'])) {
-                $args['signature'] = $result['properties']['signatureVersion'];
+            $result = $value->getEndpoint([
+                'service' => $args['service'],
+                'region'  => $args['region'],
+                'scheme'  => $args['scheme']
+            ]);
+
+            $args['endpoint'] = $result['endpoint'];
+
+            if (isset($result['signatureVersion'])) {
+                $args['signature'] = $result['signatureVersion'];
             }
         }
     }
