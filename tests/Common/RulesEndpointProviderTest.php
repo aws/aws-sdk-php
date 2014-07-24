@@ -2,236 +2,183 @@
 namespace Aws\Test\Common;
 
 use Aws\Common\RulesEndpointProvider;
-use Aws\Common\Exception\UnresolvedEndpointException;
 
 /**
  * @covers Aws\Common\RulesEndpointProvider
  */
 class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
 {
+    public function invalidConfigProvider()
+    {
+        return [
+            [[]],
+            [['region' => 'foo']],
+            [['service' => 'foo']],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidConfigProvider
+     * @expectedException \InvalidArgumentException
+     */
+    public function testThrowsWhenConfigIsMissingData($input)
+    {
+        $e = new RulesEndpointProvider();
+        $e->getEndpoint($input);
+    }
+
     /**
      * @expectedException \Aws\Common\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage Unable to resolve an endpoint for the foo service based on the provided configuration values: foo=baz, bam=boo, service=foo, scheme=https
+     * @expectedExceptionMessage Unable to resolve an endpoint for the "foo" service based on the provided configuration values: service=foo, region=bar, scheme=https
      */
     public function testThrowsWhenEndpointIsNotResolved()
     {
-        $e = new RulesEndpointProvider(['foo' => []]);
-        $e->getEndpoint('foo', ['foo' => 'baz', 'bam' => 'boo']);
-    }
-
-    /**
-     * @expectedException \Aws\Common\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage No service found
-     */
-    public function testThrowsWhenEndpointIsMissing()
-    {
-        $e = new RulesEndpointProvider([]);
-        $e->getEndpoint('foo', []);
-    }
-
-    public function testThrowsWithHelpfulRegionError()
-    {
-        try {
-            $e = new RulesEndpointProvider([
-                'foo' => [
-                    [
-                        'uri'         => 'foo',
-                        'constraints' => [["region", "notEquals", null]]
-                    ]
-                ]
-            ]);
-            $e->getEndpoint('foo', []);
-            $this->fail('Did not throw');
-        } catch (UnresolvedEndpointException $e) {
-            $this->assertContains(
-                'Try specifying a valid \'region\' argument',
-                $e->getMessage()
-            );
-        }
+        $e = new RulesEndpointProvider(['foo' => ['rules' => []]]);
+        $e->getEndpoint(['service' => 'foo', 'region' => 'bar']);
     }
 
     public function endpointProvider()
     {
         return [
-            [['foo' => [['uri' => '/abc']]], 'foo', [], ['uri' => '/abc', 'properties' => []]],
-            [['_default' => [['uri' => '/abc']]], 'foo', [], ['uri' => '/abc', 'properties' => []]],
-
-            // startsWith true
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'startsWith', 'foo-']]
-                        ]
-                    ]
-                ],
-                'foo',
-                ['region' => 'foo-east-2'],
-                ['uri' => '/abc/foo-east-2', 'properties' => []]
+                ['region' => 'us-east-1', 'service' => 's3'],
+                ['endpoint' => 'https://s3.amazonaws.com']
             ],
-
-            // startsWith pass
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'startsWith', 'foo-']]
-                        ],
-                        ['uri' => '{scheme}://{service}.other/{region}']
-                    ]
-                ],
-                'foo',
-                ['region' => 'bar'],
-                ['uri' => 'https://foo.other/bar', 'properties' => []]
+                ['region' => 'us-east-1', 'service' => 's3', 'scheme' => 'http'],
+                ['endpoint' => 'http://s3.amazonaws.com']
             ],
-
-            // oneOf true
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'oneOf', ['foo']]]
-                        ]
-                    ]
-                ],
-                'foo',
-                ['region' => 'foo'],
-                ['uri' => '/abc/foo', 'properties' => []]
+                ['region' => 'us-east-1', 'service' => 'sdb'],
+                ['endpoint' => 'https://sdb.amazonaws.com']
             ],
-
-            // oneOf pass
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'oneOf', ['foo']]]
-                        ],
-                        ['uri' => '{scheme}://{service}.other/{region}']
-                    ]
-                ],
-                'foo',
-                ['region' => 'bar'],
-                ['uri' => 'https://foo.other/bar', 'properties' => []]
+                ['region' => 'us-west-2', 'service' => 's3'],
+                ['endpoint' => 'https://s3-us-west-2.amazonaws.com']
             ],
-
-            // equals true
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'equals', 'foo']]
-                        ]
-                    ]
-                ],
-                'foo',
-                ['region' => 'foo'],
-                ['uri' => '/abc/foo', 'properties' => []]
+                ['region' => 'us-east-1', 'service' => 'iam'],
+                ['endpoint' => 'https://iam.amazonaws.com']
             ],
-
-            // Equals pass
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'equals', 'foo']]
-                        ],
-                        ['uri' => '{scheme}://{service}.other/{region}']
-                    ]
-                ],
-                'foo',
-                ['region' => 'bar'],
-                ['uri' => 'https://foo.other/bar', 'properties' => []]
+                ['region' => 'bar', 'service' => 'foo'],
+                ['endpoint' => 'https://foo.bar.amazonaws.com']
             ],
-
-            // notEquals true
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'notEquals', 'foo']]
-                        ]
-                    ]
-                ],
-                'foo',
-                ['region' => 'bar'],
-                ['uri' => '/abc/bar', 'properties' => []]
+                ['region' => 'us-gov-baz', 'service' => 'iam'],
+                ['endpoint' => 'https://iam.us-gov.amazonaws.com']
             ],
-
-            // notEquals pass
             [
-                [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'notEquals', 'bar']]
-                        ],
-                        ['uri' => '{scheme}://{service}.other/{region}']
-                    ]
-                ],
-                'foo',
-                ['region' => 'bar'],
-                ['uri' => 'https://foo.other/bar', 'properties' => []]
+                ['region' => 'us-gov-baz', 'service' => 's3'],
+                ['endpoint' => 'https://s3.us-gov-baz.us-gov.amazonaws.com']
             ],
-
-            // Skips unknown constraints
             [
+                ['region' => 'cn-north-1', 'service' => 's3'],
                 [
-                    '_default' => [
-                        [
-                            'uri' => '/abc/{region}',
-                            'constraints' => [['region', 'wha?', 'bar']]
-                        ],
-                        ['uri' => 'jarjar.binks']
-                    ]
-                ],
-                'foo',
-                ['region' => 'bar'],
-                ['uri' => 'jarjar.binks', 'properties' => []]
+                    'endpoint' => 'https://s3.cn-north-1.amazonaws.com.cn',
+                    'signatureVersion' => 'v4'
+                ]
             ],
+            [
+                ['region' => 'cn-north-1', 'service' => 'ec2'],
+                [
+                    'endpoint' => 'https://ec2.cn-north-1.amazonaws.com.cn',
+                    'signatureVersion' => 'v4'
+                ]
+            ]
         ];
     }
 
     /**
      * @dataProvider endpointProvider
      */
-    public function testResolvesEndpoints($data, $service, $input, $output)
+    public function testResolvesEndpoints($input, $output)
     {
-        $p = new RulesEndpointProvider($data);
-        $this->assertEquals($output, $p->getEndpoint($service, $input));
+        // Use the default endpoints file
+        $p = new RulesEndpointProvider();
+        $this->assertEquals($output, $p->getEndpoint($input));
     }
 
-    public function testCanPrependRules()
+    public function testCanAddRegionsFromDirectory()
     {
-        $p = new RulesEndpointProvider([
-            '_default' => [['uri' => '/abc']]
-        ]);
-        $this->assertEquals('/abc', $p->getEndpoint('foo')['uri']);
-        $p->prependRule('_default', ['uri' => '/bar']);
-        $this->assertEquals('/bar', $p->getEndpoint('foo')['uri']);
+        $tmp = sys_get_temp_dir() . '/endpoints';
+
+        if (!is_dir($tmp)) {
+            mkdir($tmp, 0777, true);
+        }
+
+        $f1 = $tmp . '/file-a.json';
+        $f2 = $tmp . '/file-b.json';
+
+        file_put_contents($f1, <<<EOT
+[
+  {
+    "priority": 900,
+    "regionPrefix": "foo-",
+    "rules": [
+      {
+        "services": ["test"],
+        "config": {
+          "test": "123",
+          "endpoint": "{scheme}://{service}.foo.com"
+        }
+      },
+      {
+        "config": {
+          "endpoint": "{scheme}://foo.com"
+        }
+      }
+    ]
+  }
+]
+EOT
+);
+
+        file_put_contents($f2, <<<EOT
+[
+  {
+    "priority": 100,
+    "regionPrefix": "foo-",
+    "rules": [
+      {
+        "services": ["qux"],
+        "config": {
+          "endpoint": "{scheme}://{service}.{region}.com"
+        }
+      }
+    ]
+  }
+]
+EOT
+        );
+
+        $e = new RulesEndpointProvider($tmp);
+
+        $this->assertEquals(
+            ['test' => '123', 'endpoint' => 'https://test.foo.com'],
+            $e->getEndpoint(['service' => 'test', 'region' => 'foo-one'])
+        );
+
+        $this->assertEquals(
+            ['endpoint' => 'https://qux.foo-one.com'],
+            $e->getEndpoint(['service' => 'qux', 'region' => 'foo-one'])
+        );
+
+        $this->assertEquals(
+            ['endpoint' => 'https://foo.com'],
+            $e->getEndpoint(['service' => 'other', 'region' => 'foo-one'])
+        );
+
+        unlink($f1);
+        unlink($f2);
+        rmdir($tmp);
     }
 
-    public function testCanAppendRules()
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresFileIsReadable()
     {
-        $p = new RulesEndpointProvider([
-            '_default' => [
-                ['uri' => '/abc', 'constraints' => ['foo', 'equals', 'bar']]
-            ]
-        ]);
-        $p->appendRule('_default', ['uri' => '/bar']);
-        $this->assertEquals('/bar', $p->getEndpoint('foo')['uri']);
-    }
-
-    public function testCanPrependRulesToEmptyList()
-    {
-        $p = new RulesEndpointProvider([]);
-        $p->prependRule('foo', ['uri' => '/bar']);
-        $this->assertEquals('/bar', $p->getEndpoint('foo')['uri']);
+        new RulesEndpointProvider('/path/to/file/that/does/not/exist');
     }
 }

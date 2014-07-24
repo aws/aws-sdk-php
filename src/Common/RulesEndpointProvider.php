@@ -12,20 +12,24 @@ class RulesEndpointProvider implements EndpointProviderInterface
     private $ruleSets;
 
     /**
-     * @param string $path Path to an endpoint rules file or path to a directory
-     *                     of endpoint rules files. If no path is provided, the
-     *                     default public rules are utilized.
+     * @param string $pathOrData Path to an endpoint rules file, path to a
+     *                           directory of endpoint rules files, or array of
+     *                           endpoint rules file data. If no argument is
+     *                           provided, the default public rules are
+     *                           utilized.
      */
-    public function __construct($path = null)
+    public function __construct($pathOrData = null)
     {
-        if (!$path) {
+        if (!$pathOrData) {
             $this->ruleSets = \GuzzleHttp\json_decode(
                 file_get_contents(__DIR__ . '/Resources/endpoints/public.json'),
                 true
             );
+        } elseif (is_array($pathOrData)) {
+            $this->ruleSets = $pathOrData;
         } else {
             $this->ruleSets = [];
-            $this->addRulesFromPath($path);
+            $this->addRulesFromPath($pathOrData);
         }
     }
 
@@ -94,21 +98,16 @@ class RulesEndpointProvider implements EndpointProviderInterface
             foreach (glob(rtrim($path, '/') . '/*.json') as $file) {
                 $this->addRulesFromFile($file);
             }
-        } elseif (is_readable($path)) {
-            $this->addRulesFromFile($path);
         } else {
-            throw new \InvalidArgumentException($path . ' is not a directory '
-                . 'or readable file');
+            $this->addRulesFromFile($path);
         }
 
         // Sort the rules
-        foreach ($this->ruleSets as &$ruleSet) {
-            usort($ruleSet, function ($a, $b) {
-                return $a['priority'] < $b['priority']
-                    ? -1
-                    : ($a['priority'] > $b['priority'] ? 1 : 0);
-            });
-        }
+        usort($this->ruleSets, function ($a, $b) {
+            return $a['priority'] < $b['priority']
+                ? -1
+                : ($a['priority'] > $b['priority'] ? 1 : 0);
+        });
     }
 
     /**

@@ -16,6 +16,20 @@ use Aws\S3\Subscriber\PutObjectUrl;
  */
 class S3Factory extends ClientFactory
 {
+    /**
+     * {@inheritdoc}
+     *
+     * Amazon S3 does not require a region for the "classic" endpoint.
+     */
+    protected function addDefaultArgs(&$args)
+    {
+        if (!isset($args['region'])) {
+            $args['region'] = 'us-east-1';
+        }
+
+        parent::addDefaultArgs($args);
+    }
+
     protected function createClient(array $args)
     {
         $client = parent::createClient($args);

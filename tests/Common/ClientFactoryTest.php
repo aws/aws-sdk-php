@@ -314,10 +314,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $p->expects($this->once())
             ->method('getEndpoint')
             ->will($this->returnValue([
-                'uri' => 'http://foo.com',
-                'properties' => [
-                    'signatureVersion' => 'v2'
-                ]
+                'endpoint' => 'http://foo.com',
+                'signatureVersion' => 'v2'
             ]));
         $f = new ClientFactory();
         $c = $f->create([

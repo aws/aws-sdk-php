@@ -101,6 +101,7 @@ class Sdk
         'glacier'  => 'Aws\Glacier\GlacierFactory',
         'route53'  => 'Aws\Route53\Route53Factory',
         's3'       => 'Aws\S3\S3Factory',
+        'sts'      => 'Aws\Sts\StsFactory',
         'sqs'      => 'Aws\Sqs\SqsFactory',
     ];
 
