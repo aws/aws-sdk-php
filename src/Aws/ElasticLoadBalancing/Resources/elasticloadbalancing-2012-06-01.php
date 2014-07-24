@@ -951,6 +951,12 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'PageSize' => array(
+                    'type' => 'numeric',
+                    'location' => 'aws.query',
+                    'minimum' => 1,
+                    'maximum' => 400,
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1153,6 +1159,17 @@ return array (
                                 ),
                                 'Timeout' => array(
                                     'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'ConnectionSettings' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'IdleTimeout' => array(
+                                    'required' => true,
+                                    'type' => 'numeric',
+                                    'minimum' => 1,
+                                    'maximum' => 3600,
                                 ),
                             ),
                         ),
@@ -1551,6 +1568,14 @@ return array (
                                 ),
                             ),
                         ),
+                        'ConnectionSettings' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'IdleTimeout' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1945,6 +1970,14 @@ return array (
                                     'type' => 'boolean',
                                 ),
                                 'Timeout' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                        'ConnectionSettings' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'IdleTimeout' => array(
                                     'type' => 'numeric',
                                 ),
                             ),

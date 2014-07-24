@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+* Added support for configurable idle timeouts to the Elastic Load Balancing
+  client.
+
 2.6.12 (2014-07-16)
 -------------------
 
