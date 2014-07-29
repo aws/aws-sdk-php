@@ -38,7 +38,7 @@ class UploadSync extends AbstractSync
     protected function createTransferAction(\SplFileInfo $file)
     {
         // Open the file for reading
-        $filename = $file->getRealPath();
+        $filename = $file->getRealPath() ?: $file->getPathName();
 
         if (!($resource = fopen($filename, 'r'))) {
             // @codeCoverageIgnoreStart
