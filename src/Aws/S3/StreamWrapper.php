@@ -409,16 +409,29 @@ class StreamWrapper
                 return true;
             }
 
+            // Use a key that adds a trailing slash if needed.
+            $prefix = rtrim($params['Key'], '/') . '/';
+
             $result = self::$client->listObjects(array(
                 'Bucket'  => $params['Bucket'],
-                // Use a key that adds a trailing slash if needed.
-                'Prefix'  => rtrim($params['Key'], '/') . '/',
+                'Prefix'  => $prefix,
                 'MaxKeys' => 1
             ));
 
-            return $result['Contents'] || $result['CommonPrefixes']
-                ? $this->triggerError('Pseudo directory is not empty')
-                : $this->unlink(rtrim($path, '/') . '/');
+            // Check if the bucket contains keys other than the placeholder
+            if ($result['Contents']) {
+                foreach ($result['Contents'] as $key) {
+                    if ($key['Key'] == $prefix) {
+                        continue;
+                    }
+                    return $this->triggerError('Psuedo folder is not empty');
+                }
+                return $this->unlink(rtrim($path, '/') . '/');
+            }
+
+            return $result['CommonPrefixes']
+                ? $this->triggerError('Pseudo folder contains nested folders')
+                : true;
 
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());

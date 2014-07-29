@@ -390,12 +390,35 @@ class StreamWrapperTest extends \Guzzle\Tests\GuzzleTestCase
         $this->setMockResponse($this->client, array(new Response(200), new Response(204)));
         $this->assertTrue(rmdir($path));
         $requests = $this->getMockedRequests();
+        $this->assertEquals(1, count($requests));
+        $this->assertEquals('GET', $requests[0]->getMethod());
+        $this->assertEquals('object/', $requests[0]->getQuery()->get('prefix'));
+    }
+
+    public function testCanDeleteNestedFolderWithRmDir()
+    {
+        $xml = <<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Name>foo</Name>
+    <Delimiter>/</Delimiter>
+    <IsTruncated>false</IsTruncated>
+    <Contents>
+        <Key>bar/</Key>
+    </Contents>
+</ListBucketResult>
+EOT;
+        $this->setMockResponse(
+            $this->client,
+            array(new Response(200, array(), $xml), new Response(204))
+        );
+        $this->assertTrue(rmdir('s3://foo/bar'));
+        $requests = $this->getMockedRequests();
         $this->assertEquals(2, count($requests));
         $this->assertEquals('GET', $requests[0]->getMethod());
+        $this->assertEquals('bar/', $requests[0]->getQuery()->get('prefix'));
         $this->assertEquals('DELETE', $requests[1]->getMethod());
-        $this->assertEquals('/object/', $requests[1]->getResource());
-        $this->assertEquals('object/', $requests[0]->getQuery()->get('prefix'));
-        $this->assertEquals('bucket.s3.amazonaws.com', $requests[1]->getHost());
+        $this->assertEquals('/bar/', $requests[1]->getPath());
     }
 
     /**
