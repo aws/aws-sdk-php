@@ -1,32 +1,15 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\Common\MultipartUpload;
-
-use Aws\Common\Exception\InvalidArgumentException;
+namespace Aws\Common\Multipart;
 
 /**
  * An object that encapsulates the data for an upload part
  */
-abstract class AbstractUploadPart implements UploadPartInterface
+abstract class AbstractUploadPart
 {
     /**
      * @var array A map of external array keys to internal property names
      */
-    protected static $keyMap = array();
+    protected static $keyMap = [];
 
     /**
      * @var int The number of the upload part representing its order in the overall upload
@@ -38,6 +21,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
      */
     public static function fromArray($data)
     {
+        /** @var AbstractUploadPart $part */
         $part = new static();
         $part->loadData($data);
 
@@ -57,7 +41,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
      */
     public function toArray()
     {
-        $array = array();
+        $array = [];
         foreach (static::$keyMap as $key => $property) {
             $array[$key] = $this->{$property};
         }
@@ -86,7 +70,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
      *
      * @param array|\Traversable $data Data to load into the upload part value object
      *
-     * @throws InvalidArgumentException if a required key is missing
+     * @throws \InvalidArgumentException if a required key is missing
      */
     protected function loadData($data)
     {
@@ -94,7 +78,7 @@ abstract class AbstractUploadPart implements UploadPartInterface
             if (isset($data[$key])) {
                 $this->{$property} = $data[$key];
             } else {
-                throw new InvalidArgumentException("A required key [$key] was missing from the upload part.");
+                throw new \InvalidArgumentException("A required key [$key] was missing from the upload part.");
             }
         }
     }

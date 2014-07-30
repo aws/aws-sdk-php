@@ -1,26 +1,8 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
 namespace Aws\Glacier\Multipart;
 
-use Aws\Common\Enum\Size;
-use Aws\Common\Enum\UaString as Ua;
-use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\MultipartUpload\AbstractUploadBuilder;
-use Aws\Common\MultipartUpload\TransferStateInterface as State;
+use Aws\Common\Multipart\AbstractUploadBuilder;
+use Aws\Common\Multipart\AbstractTransferState as State;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -37,16 +19,6 @@ class UploadBuilder extends AbstractUploadBuilder
      * @var string Name of the vault to upload to
      */
     protected $vaultName;
-
-    /**
-     * @var int Concurrency level to transfer the parts
-     */
-    protected $concurrency = 1;
-
-    /**
-     * @var int Size of upload parts
-     */
-    protected $partSize;
 
     /**
      * @var string Archive description
@@ -87,20 +59,6 @@ class UploadBuilder extends AbstractUploadBuilder
     }
 
     /**
-     * Set the upload part size
-     *
-     * @param int $partSize Upload part size
-     *
-     * @return self
-     */
-    public function setPartSize($partSize)
-    {
-        $this->partSize = (int) $partSize;
-
-        return $this;
-    }
-
-    /**
      * Set the archive description
       *
       * @param string $archiveDescription Archive description
@@ -110,21 +68,6 @@ class UploadBuilder extends AbstractUploadBuilder
     public function setArchiveDescription($archiveDescription)
     {
         $this->archiveDescription = $archiveDescription;
-
-        return $this;
-    }
-
-    /**
-     * Set the concurrency level to use when uploading parts. This affects how many parts are uploaded in parallel. You
-     * must use a local file as your data source when using a concurrency greater than 1
-     *
-     * @param int $concurrency Concurrency level
-     *
-     * @return self
-     */
-    public function setConcurrency($concurrency)
-    {
-        $this->concurrency = $concurrency;
 
         return $this;
     }
@@ -145,8 +88,8 @@ class UploadBuilder extends AbstractUploadBuilder
 
     /**
      * {@inheritdoc}
-     * @throws InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
-     * @throws InvalidArgumentException when missing required properties (bucket, key, client, source)
+     * @throws \InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
+     * @throws \InvalidArgumentException when missing required properties (bucket, key, client, source)
      */
     public function build()
     {
@@ -156,19 +99,18 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         if (!($this->state instanceof State) && !$this->vaultName || !$this->client || !$this->source) {
-            throw new InvalidArgumentException('You must specify a vault name, client, and source.');
+            throw new \InvalidArgumentException('You must specify a vault name, client, and source.');
         }
 
         if (!$this->source->isSeekable()) {
-            throw new InvalidArgumentException('You cannot upload from a non-seekable source.');
+            throw new \InvalidArgumentException('You cannot upload from a non-seekable source.');
         }
 
         // If no state was set, then create one by initiating or loading a multipart upload
         if (is_string($this->state)) {
             if (!$this->partGenerator) {
-                throw new InvalidArgumentException('You must provide an UploadPartGenerator when resuming an upload.');
+                throw new \InvalidArgumentException('You must provide an UploadPartGenerator when resuming an upload.');
             }
-            /** @var $state \Aws\Glacier\Model\MultipartUpload\TransferState */
             $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
                 'accountId' => $this->accountId,
                 'vaultName' => $this->vaultName,
@@ -204,9 +146,9 @@ class UploadBuilder extends AbstractUploadBuilder
             'command.headers'    => $this->headers,
             'partSize'           => $partGenerator->getPartSize(),
             'archiveDescription' => $this->archiveDescription,
-            Ua::OPTION           => Ua::MULTIPART_UPLOAD
         )));
-        $params['uploadId'] = $command->getResult()->get('uploadId');
+        $result = $this->client->execute($command);
+        $params['uploadId'] = $result->get('uploadId');
 
         // Create a new state based on the initiated upload
         $state = new TransferState(UploadId::fromParams($params));

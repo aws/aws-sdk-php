@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3\Multipart;
 
-use Aws\Common\MultipartUpload\AbstractUploadId;
+use Aws\Common\Multipart\AbstractUploadId;
 
 /**
  * An object that encapsulates the identification for a Glacier upload part

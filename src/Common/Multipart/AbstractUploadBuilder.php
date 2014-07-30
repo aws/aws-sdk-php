@@ -1,24 +1,9 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\Common\MultipartUpload;
+namespace Aws\Common\Multipart;
 
 use Aws\AwsClientInterface;
-use Aws\Common\Exception\InvalidArgumentException;
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Stream\StreamInterface;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -32,36 +17,36 @@ abstract class AbstractUploadBuilder
     protected $client;
 
     /**
-     * @var TransferStateInterface State of the transfer
+     * @var AbstractTransferState State of the transfer
      */
     protected $state;
 
     /**
-     * @var EntityBody Source of the data
+     * @var StreamInterface Source of the data
      */
     protected $source;
 
     /**
-     * @var array Array of headers to set on the object
+     * @var int Concurrency level to transfer the parts
      */
-    protected $headers = array();
+    protected $concurrency = 1;
 
     /**
-     * Return a new instance of the UploadBuilder
-     *
-     * @return self
+     * @var int Size of upload parts
      */
-    public static function newInstance()
-    {
-        return new static;
-    }
+    protected $partSize;
+
+    /**
+     * @var array Array of headers to set on the object
+     */
+    protected $headers = [];
 
     /**
      * Set the client used to connect to the AWS service
      *
      * @param AwsClientInterface $client Client to use
      *
-     * @return self
+     * @return static
      */
     public function setClient(AwsClientInterface $client)
     {
@@ -74,11 +59,11 @@ abstract class AbstractUploadBuilder
      * Set the state of the upload. This is useful for resuming from a previously started multipart upload.
      * You must use a local file stream as the data source if you wish to resume from a previous upload.
      *
-     * @param TransferStateInterface|string $state Pass a TransferStateInterface object or the ID of the initiated
+     * @param AbstractTransferState|string $state Pass a TransferStateInterface object or the ID of the initiated
      *                                             multipart upload. When an ID is passed, the builder will create a
      *                                             state object using the data from a ListParts API response.
      *
-     * @return self
+     * @return static
      */
     public function resumeFrom($state)
     {
@@ -90,30 +75,60 @@ abstract class AbstractUploadBuilder
     /**
      * Set the data source of the transfer
      *
-     * @param resource|string|EntityBody $source Source of the transfer. Pass a string to transfer from a file on disk.
+     * @param resource|string|StreamInterface $source Source of the transfer. Pass a string to transfer from a file on disk.
      *                                           You can also stream from a resource returned from fopen or a Guzzle
      *                                           {@see EntityBody} object.
      *
-     * @return self
-     * @throws InvalidArgumentException when the source cannot be found or opened
+     * @return static
+     * @throws \InvalidArgumentException when the source cannot be found or opened
      */
     public function setSource($source)
     {
         // Use the contents of a file as the data source
         if (is_string($source)) {
             if (!file_exists($source)) {
-                throw new InvalidArgumentException("File does not exist: {$source}");
+                throw new \InvalidArgumentException("File does not exist: {$source}");
             }
             // Clear the cache so that we send accurate file sizes
             clearstatcache(true, $source);
             $source = fopen($source, 'r');
         }
 
-        $this->source = EntityBody::factory($source);
+        $this->source = Stream::factory($source);
 
         if ($this->source->isSeekable() && $this->source->getSize() == 0) {
-            throw new InvalidArgumentException('Empty body provided to upload builder');
+            throw new \InvalidArgumentException('Empty body provided to upload builder');
         }
+
+        return $this;
+    }
+
+    /**
+     * Set the upload part size
+     *
+     * @param int $partSize Upload part size
+     *
+     * @return self
+     */
+    public function setPartSize($partSize)
+    {
+        $this->partSize = (int) $partSize;
+
+        return $this;
+    }
+
+    /**
+     * Set the concurrency level to use when uploading parts. This affects how
+     * many parts are uploaded in parallel. You must use a local file as your
+     * data source when using a concurrency greater than 1.
+     *
+     * @param int $concurrency Concurrency level
+     *
+     * @return self
+     */
+    public function setConcurrency($concurrency)
+    {
+        $this->concurrency = $concurrency;
 
         return $this;
     }
@@ -123,7 +138,7 @@ abstract class AbstractUploadBuilder
      *
      * @param array $headers Headers to add to the uploaded object
      *
-     * @return self
+     * @return static
      */
     public function setHeaders(array $headers)
     {
@@ -135,14 +150,14 @@ abstract class AbstractUploadBuilder
     /**
      * Build the appropriate uploader based on the builder options
      *
-     * @return TransferInterface
+     * @return AbstractTransfer
      */
     abstract public function build();
 
     /**
      * Initiate the multipart upload
      *
-     * @return TransferStateInterface
+     * @return AbstractTransferState
      */
     abstract protected function initiateMultipartUpload();
 }

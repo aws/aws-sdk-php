@@ -1,42 +1,35 @@
 <?php
 namespace Aws\S3\Multipart;
 
-use Aws\Common\Exception\RuntimeException;
-use Aws\Common\Enum\DateFormat;
-use Aws\Common\Enum\UaString as Ua;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\ReadLimitEntityBody;
+use GuzzleHttp\Command\Event\CommandErrorEvent;
+use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Stream\LimitStream;
+
 
 /**
  * Transfers multipart upload parts in parallel
  */
 class ParallelTransfer extends AbstractTransfer
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function init()
     {
         parent::init();
 
-        if (!$this->source->isLocal() || $this->source->getWrapper() != 'plainfile') {
-            throw new RuntimeException('The source data must be a local file stream when uploading in parallel.');
+        if (!$this->source->isSeekable() || $this->source->getMetadata('wrapper_type') != 'plainfile') {
+            throw new \RuntimeException('The source data must be a local file stream when uploading in parallel.');
         }
 
         if (empty($this->options['concurrency'])) {
-            throw new RuntimeException('The `concurrency` option must be specified when instantiating.');
+            throw new \RuntimeException('The `concurrency` option must be specified when instantiating.');
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function transfer()
     {
-        $totalParts  = (int) ceil($this->source->getContentLength() / $this->partSize);
+        $totalParts  = (int) ceil($this->source->getSize() / $this->partSize);
         $concurrency = min($totalParts, $this->options['concurrency']);
         $partsToSend = $this->prepareParts($concurrency);
-        $eventData   = $this->getEventData();
 
         while (!$this->stopped && count($this->state) < $totalParts) {
 
@@ -44,45 +37,47 @@ class ParallelTransfer extends AbstractTransfer
             $commands = array();
 
             for ($i = 0; $i < $concurrency && $i + $currentTotal < $totalParts; $i++) {
+                /** @var LimitStream $part */
+                $part = $partsToSend[$i];
 
                 // Move the offset to the correct position
-                $partsToSend[$i]->setOffset(($currentTotal + $i) * $this->partSize);
+                $part->setOffset(($currentTotal + $i) * $this->partSize);
 
                 // @codeCoverageIgnoreStart
-                if ($partsToSend[$i]->getContentLength() == 0) {
+                if ($part->getSize() == 0) {
                     break;
                 }
                 // @codeCoverageIgnoreEnd
 
                 $params = $this->state->getUploadId()->toParams();
-                $eventData['command'] = $this->client->getCommand('UploadPart', array_replace($params, array(
+                $commands[] = $this->client->getCommand('UploadPart', array_replace($params, array(
                     'PartNumber' => count($this->state) + 1 + $i,
                     'Body'       => $partsToSend[$i],
-                    'ContentMD5' => (bool) $this->options['part_md5'],
-                    Ua::OPTION   => Ua::MULTIPART_UPLOAD
                 )));
-                $commands[] = $eventData['command'];
-                // Notify any listeners of the part upload
-                $this->dispatch(self::BEFORE_PART_UPLOAD, $eventData);
-            }
-
-            // Allow listeners to stop the transfer if needed
-            if ($this->stopped) {
-                break;
             }
 
             // Execute each command, iterate over the results, and add to the transfer state
-            /** @var $command \Guzzle\Service\Command\OperationCommand */
-            foreach ($this->client->execute($commands) as $command) {
-                $this->state->addPart(UploadPart::fromArray(array(
-                    'PartNumber'   => count($this->state) + 1,
-                    'ETag'         => $command->getResponse()->getEtag(),
-                    'Size'         => (int) $command->getResponse()->getContentLength(),
-                    'LastModified' => gmdate(DateFormat::RFC2822)
-                )));
-                $eventData['command'] = $command;
-                // Notify any listeners the the part was uploaded
-                $this->dispatch(self::AFTER_PART_UPLOAD, $eventData);
+            $errors = [];
+            $this->client->executeAll($commands, [
+                'parallel' => $concurrency,
+                'process' => [
+                    'fn' => function (ProcessEvent $event) {
+                        $this->state->addPart(UploadPart::fromArray(array(
+                            'PartNumber'   => (int) $event->getCommand()['PartNumber'],
+                            'ETag'         => $event->getResult()['ETag'],
+                            'Size'         => $event->getRequest()->getBody()->getSize(),
+                            'LastModified' => gmdate(\DateTime::RFC2822)
+                        )));
+                    },
+                    'priority' => 'last',
+                ],
+                'error' => function (CommandErrorEvent $e) use (&$errors) {
+                    $errors[] = $e->getException();
+                },
+            ]);
+
+            if ($errors) {
+                throw end($errors);
             }
         }
     }
@@ -96,12 +91,12 @@ class ParallelTransfer extends AbstractTransfer
      */
     protected function prepareParts($concurrency)
     {
-        $url = $this->source->getUri();
+        $url = $this->source->getMetadata('uri');
         // Use the source EntityBody as the first part
-        $parts = array(new ReadLimitEntityBody($this->source, $this->partSize));
+        $parts = array(new LimitStream($this->source, $this->partSize));
         // Open EntityBody handles for each part to upload in parallel
         for ($i = 1; $i < $concurrency; $i++) {
-            $parts[] = new ReadLimitEntityBody(new EntityBody(fopen($url, 'r')), $this->partSize);
+            $parts[] = new LimitStream(new Stream(fopen($url, 'r')), $this->partSize);
         }
 
         return $parts;

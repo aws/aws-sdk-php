@@ -1,37 +1,20 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\Common\MultipartUpload;
-
-use Aws\Common\Exception\RuntimeException;
+namespace Aws\Common\Multipart;
 
 /**
  * State of a multipart upload
  */
-abstract class AbstractTransferState implements TransferStateInterface
+abstract class AbstractTransferState implements \Countable, \IteratorAggregate, \Serializable
 {
     /**
-     * @var UploadIdInterface Object holding params used to identity the upload part
+     * @var AbstractUploadId Object holding params used to identity the upload part
      */
     protected $uploadId;
 
     /**
      * @var array Array of parts where the part number is the index
      */
-    protected $parts = array();
+    protected $parts = [];
 
     /**
      * @var bool Whether or not the transfer was aborted
@@ -41,9 +24,9 @@ abstract class AbstractTransferState implements TransferStateInterface
     /**
      * Construct a new transfer state object
      *
-     * @param UploadIdInterface $uploadId Upload identifier object
+     * @param AbstractUploadId $uploadId Upload identifier object
      */
-    public function __construct(UploadIdInterface $uploadId)
+    public function __construct(AbstractUploadId $uploadId)
     {
         $this->uploadId = $uploadId;
     }
@@ -81,10 +64,9 @@ abstract class AbstractTransferState implements TransferStateInterface
     /**
      * {@inheritdoc}
      */
-    public function addPart(UploadPartInterface $part)
+    public function addPart(AbstractUploadPart $part)
     {
-        $partNumber = $part->getPartNumber();
-        $this->parts[$partNumber] = $part;
+        $this->parts[$part->getPartNumber()] = $part;
 
         return $this;
     }
@@ -157,7 +139,7 @@ abstract class AbstractTransferState implements TransferStateInterface
             if (array_key_exists($property, $data)) {
                 $this->{$property} = $data[$property];
             } else {
-                throw new RuntimeException("The {$property} property could be restored during unserialization.");
+                throw new \RuntimeException("The {$property} property could be restored during unserialization.");
             }
         }
     }

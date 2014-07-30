@@ -1,10 +1,9 @@
 <?php
 namespace Aws\S3\Multipart;
 
-use Aws\Common\Enum\UaString as Ua;
-use Aws\Common\Exception\InvalidArgumentException;
-use Aws\Common\MultipartUpload\AbstractUploadBuilder;
-use Aws\S3\Model\Acp;
+use Aws\Common\Multipart\AbstractUploadBuilder;
+use Aws\S3\Acp\Acp;
+use GuzzleHttp\Mimetypes;
 
 /**
  * Easily create a multipart uploader used to quickly and reliably upload a
@@ -12,16 +11,6 @@ use Aws\S3\Model\Acp;
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    /**
-     * @var int Concurrency level to transfer the parts
-     */
-    protected $concurrency = 1;
-
-    /**
-     * @var int Minimum part size to upload
-     */
-    protected $minPartSize = AbstractTransfer::MIN_PART_SIZE;
-
     /**
      * @var string MD5 hash of the entire body to transfer
      */
@@ -69,36 +58,6 @@ class UploadBuilder extends AbstractUploadBuilder
     public function setKey($key)
     {
         return $this->setOption('Key', $key);
-    }
-
-    /**
-     * Set the minimum acceptable part size
-     *
-     * @param int $minSize Minimum acceptable part size in bytes
-     *
-     * @return self
-     */
-    public function setMinPartSize($minSize)
-    {
-        $this->minPartSize = (int) max((int) $minSize, AbstractTransfer::MIN_PART_SIZE);
-
-        return $this;
-    }
-
-    /**
-     * Set the concurrency level to use when uploading parts. This affects how
-     * many parts are uploaded in parallel. You must use a local file as your
-     * data source when using a concurrency greater than 1
-     *
-     * @param int $concurrency Concurrency level
-     *
-     * @return self
-     */
-    public function setConcurrency($concurrency)
-    {
-        $this->concurrency = $concurrency;
-
-        return $this;
     }
 
     /**
@@ -203,8 +162,8 @@ class UploadBuilder extends AbstractUploadBuilder
 
     /**
      * {@inheritdoc}
-     * @throws InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
-     * @throws InvalidArgumentException when missing required properties (bucket, key, client, source)
+     * @throws \InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
+     * @throws \InvalidArgumentException when missing required properties (bucket, key, client, source)
      */
     public function build()
     {
@@ -215,11 +174,11 @@ class UploadBuilder extends AbstractUploadBuilder
         if (!isset($this->commandOptions['Bucket']) || !isset($this->commandOptions['Key'])
             || !$this->client || !$this->source
         ) {
-            throw new InvalidArgumentException('You must specify a Bucket, Key, client, and source.');
+            throw new \InvalidArgumentException('You must specify a Bucket, Key, client, and source.');
         }
 
         if ($this->state && !$this->source->isSeekable()) {
-            throw new InvalidArgumentException('You cannot resume a transfer using a non-seekable source.');
+            throw new \InvalidArgumentException('You cannot resume a transfer using a non-seekable source.');
         }
 
         // If no state was set, then create one by initiating or loading a multipart upload
@@ -234,9 +193,9 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         $options = array_replace(array(
-            'min_part_size' => $this->minPartSize,
-            'part_md5'      => (bool) $this->calculatePartMd5,
-            'concurrency'   => $this->concurrency
+            'part_size'   => $this->partSize,
+            'part_md5'    => (bool) $this->calculatePartMd5,
+            'concurrency' => $this->concurrency
         ), $this->transferOptions);
 
         return $this->concurrency > 1
@@ -250,19 +209,20 @@ class UploadBuilder extends AbstractUploadBuilder
     protected function initiateMultipartUpload()
     {
         // Determine Content-Type
-        if ($mimeType = $this->source->getContentType()) {
-            $this->commandOptions['ContentType'] = $mimeType;
+        if ($uri = $this->source->getMetadata('uri')) {
+            if ($mimeType = Mimetypes::getInstance()->fromFilename($uri)) {
+                $this->commandOptions['ContentType'] = $mimeType;
+            }
         }
 
         $params = array_replace(array(
-            Ua::OPTION        => Ua::MULTIPART_UPLOAD,
             'command.headers' => $this->headers,
             'Metadata'        => array()
         ), $this->commandOptions);
 
         // Calculate the MD5 hash if none was set and it is asked of the builder
         if ($this->calculateEntireMd5) {
-            $this->md5 = $this->source->getContentMd5();
+            $this->md5 = \GuzzleHttp\Stream\hash($this->source, 'md5');
         }
 
         // If an MD5 is specified, then add it to the custom headers of the request
@@ -271,7 +231,8 @@ class UploadBuilder extends AbstractUploadBuilder
             $params['Metadata']['x-amz-Content-MD5'] = $this->md5;
         }
 
-        $result = $this->client->getCommand('CreateMultipartUpload', $params)->execute();
+        $command = $this->client->getCommand('CreateMultipartUpload', $params);
+        $result = $this->client->execute($command);
         // Create a new state based on the initiated upload
         $params['UploadId'] = $result['UploadId'];
 

@@ -2,8 +2,8 @@
 namespace Aws\S3\Multipart;
 
 use Aws\AwsClientInterface;
-use Aws\Common\MultipartUpload\AbstractTransferState;
-use Aws\Common\MultipartUpload\UploadIdInterface;
+use Aws\Common\Multipart\AbstractTransferState;
+use Aws\Common\Multipart\AbstractUploadId;
 
 /**
  * State of a multipart upload
@@ -13,7 +13,7 @@ class TransferState extends AbstractTransferState
     /**
      * {@inheritdoc}
      */
-    public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
+    public static function fromUploadId(AwsClientInterface $client, AbstractUploadId $uploadId)
     {
         $transferState = new self($uploadId);
 

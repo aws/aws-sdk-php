@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3\Multipart;
 
-use Aws\Common\MultipartUpload\AbstractUploadPart;
+use Aws\Common\Multipart\AbstractUploadPart;
 
 /**
  * An object that encapsulates the data for a Glacier upload operation

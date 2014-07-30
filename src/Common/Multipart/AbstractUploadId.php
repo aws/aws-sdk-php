@@ -1,43 +1,27 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\Common\MultipartUpload;
-
-use Aws\Common\Exception\InvalidArgumentException;
+namespace Aws\Common\Multipart;
 
 /**
  * An object that encapsulates the data identifying an upload
  */
-abstract class AbstractUploadId implements UploadIdInterface
+abstract class AbstractUploadId
 {
     /**
      * @var array Expected values (with defaults)
      */
-    protected static $expectedValues = array();
+    protected static $expectedValues = [];
 
     /**
      * @var array Params representing the identifying information
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * {@inheritdoc}
      */
     public static function fromParams($data)
     {
+        /** @var AbstractUploadId $uploadId */
         $uploadId = new static();
         $uploadId->loadData($data);
 
@@ -73,7 +57,7 @@ abstract class AbstractUploadId implements UploadIdInterface
      *
      * @param array $data Data to load
      *
-     * @throws InvalidArgumentException if a required key is missing
+     * @throws \InvalidArgumentException if a required key is missing
      */
     protected function loadData($data)
     {
@@ -82,7 +66,7 @@ abstract class AbstractUploadId implements UploadIdInterface
             if (isset($data[$key])) {
                 $this->data[$key] = $data[$key];
             } else {
-                throw new InvalidArgumentException("A required key [$key] was missing from the UploadId.");
+                throw new \InvalidArgumentException("A required key [$key] was missing from the UploadId.");
             }
         }
     }

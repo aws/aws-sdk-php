@@ -1,23 +1,10 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
 namespace Aws\Glacier\Multipart;
 
-use Aws\Common\Exception\RuntimeException;
-use Guzzle\Iterator\ChunkedIterator;
+use Aws\AwsCommandInterface;
+use Aws\Common\AwsException;
+use Aws\Common\Iterator\ChunkedIterator;
+use Aws\Result;
 
 /**
  * Transfers multipart upload parts in parallel
@@ -31,12 +18,12 @@ class ParallelTransfer extends AbstractTransfer
     {
         parent::init();
 
-        if (!$this->source->isLocal() || $this->source->getWrapper() != 'plainfile') {
-            throw new RuntimeException('The source data must be a local file stream when uploading in parallel.');
+        if (!$this->source->isSeekable() || $this->source->getMetadata('wrapper_type') != 'plainfile') {
+            throw new \RuntimeException('The source data must be a local file stream when uploading in parallel.');
         }
 
         if (empty($this->options['concurrency'])) {
-            throw new RuntimeException('The `concurrency` option must be specified when instantiating.');
+            throw new \RuntimeException('The `concurrency` option must be specified when instantiating.');
         }
     }
 
@@ -54,8 +41,8 @@ class ParallelTransfer extends AbstractTransfer
             /** @var $part UploadPart */
             $commands = array();
             foreach ($partSet as $index => $part) {
-                $command = $this->getCommandForPart($part, (bool) $index)->set('part', $part);
-                $this->dispatch(self::BEFORE_PART_UPLOAD, $this->getEventData($command));
+                $command = $this->getCommandForPart($part, (bool) $index);
+                $command['part'] = $part;
                 $commands[] = $command;
             }
 
@@ -65,10 +52,19 @@ class ParallelTransfer extends AbstractTransfer
             }
 
             // Execute each command, iterate over the results, and add to the transfer state
-            /** @var $command \Guzzle\Service\Command\OperationCommand */
-            foreach ($this->client->execute($commands) as $command) {
-                $this->state->addPart($command->get('part'));
-                $this->dispatch(self::AFTER_PART_UPLOAD, $this->getEventData($command));
+            $errors = [];
+            /** @var $command AwsCommandInterface */
+            $commands = $this->client->batch($commands);
+            foreach ($commands as $command) {
+                if ($commands[$command] instanceof Result) {
+                    $this->state->addPart($command['part']);
+                } else {
+                    $errors[] = $commands[$command];
+                }
+            }
+
+            if ($errors) {
+                throw end($errors);
             }
         }
     }

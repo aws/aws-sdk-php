@@ -1,54 +1,30 @@
 <?php
-/**
- * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- * http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-namespace Aws\Common\MultipartUpload;
+namespace Aws\Common\Multipart;
 
 use Aws\AwsClientInterface;
+use Aws\AwsCommandInterface;
 use Aws\Common\Exception\MultipartUploadException;
-use Aws\Common\Exception\RuntimeException;
-use Guzzle\Common\AbstractHasDispatcher;
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\EntityBodyInterface;
-use Guzzle\Service\Command\OperationCommand;
-use Guzzle\Service\Resource\Model;
+use Aws\Result;
+use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Stream\MetadataStreamInterface;
 
 /**
  * Abstract class for transfer commonalities
  */
-abstract class AbstractTransfer extends AbstractHasDispatcher implements TransferInterface
+abstract class AbstractTransfer
 {
-    const BEFORE_UPLOAD      = 'multipart_upload.before_upload';
-    const AFTER_UPLOAD       = 'multipart_upload.after_upload';
-    const BEFORE_PART_UPLOAD = 'multipart_upload.before_part_upload';
-    const AFTER_PART_UPLOAD  = 'multipart_upload.after_part_upload';
-    const AFTER_ABORT        = 'multipart_upload.after_abort';
-    const AFTER_COMPLETE     = 'multipart_upload.after_complete';
-
     /**
      * @var AwsClientInterface Client used for the transfers
      */
     protected $client;
 
     /**
-     * @var TransferStateInterface State of the transfer
+     * @var AbstractTransferState State of the transfer
      */
     protected $state;
 
     /**
-     * @var EntityBody Data source of the transfer
+     * @var StreamInterface|MetadataStreamInterface Data source of the transfer
      */
     protected $source;
 
@@ -71,15 +47,15 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
      * Construct a new transfer object
      *
      * @param AwsClientInterface     $client  Client used for the transfers
-     * @param TransferStateInterface $state   State used to track transfer
-     * @param EntityBody             $source  Data source of the transfer
+     * @param AbstractTransferState $state   State used to track transfer
+     * @param StreamInterface             $source  Data source of the transfer
      * @param array                  $options Array of options to apply
      */
     public function __construct(
         AwsClientInterface $client,
-        TransferStateInterface $state,
-        EntityBody $source,
-        array $options = array()
+        AbstractTransferState $state,
+        StreamInterface $source,
+        array $options = []
     ) {
         $this->client  = $client;
         $this->state   = $state;
@@ -99,29 +75,13 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * {@inheritdoc}
      */
-    public static function getAllEvents()
-    {
-        return array(
-            self::BEFORE_PART_UPLOAD,
-            self::AFTER_UPLOAD,
-            self::BEFORE_PART_UPLOAD,
-            self::AFTER_PART_UPLOAD,
-            self::AFTER_ABORT,
-            self::AFTER_COMPLETE
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function abort()
     {
         $command = $this->getAbortCommand();
-        $result = $command->getResult();
+        $result = $this->client->execute($command);
 
         $this->state->setAborted(true);
         $this->stop();
-        $this->dispatch(self::AFTER_ABORT, $this->getEventData($command));
 
         return $result;
     }
@@ -172,7 +132,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * Get the source body of the upload
      *
-     * @return EntityBodyInterface
+     * @return StreamInterface
      */
     public function getSource()
     {
@@ -180,60 +140,30 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     }
 
     /**
-     * {@inheritdoc}
      * @throws MultipartUploadException when an error is encountered. Use getLastException() to get more information.
-     * @throws RuntimeException         when attempting to upload an aborted transfer
+     * @throws \RuntimeException         when attempting to upload an aborted transfer
      */
     public function upload()
     {
         if ($this->state->isAborted()) {
-            throw new RuntimeException('The transfer has been aborted and cannot be uploaded');
+            throw new \RuntimeException('The transfer has been aborted and cannot be uploaded');
         }
 
         $this->stopped = false;
-        $eventData = $this->getEventData();
-        $this->dispatch(self::BEFORE_UPLOAD, $eventData);
 
         try {
             $this->transfer();
-            $this->dispatch(self::AFTER_UPLOAD, $eventData);
 
             if ($this->stopped) {
                 return null;
             } else {
                 $result = $this->complete();
-                $this->dispatch(self::AFTER_COMPLETE, $eventData);
             }
         } catch (\Exception $e) {
             throw new MultipartUploadException($this->state, $e);
         }
 
         return $result;
-    }
-
-    /**
-     * Get an array used for event notifications
-     *
-     * @param OperationCommand $command Command to include in event data
-     *
-     * @return array
-     */
-    protected function getEventData(OperationCommand $command = null)
-    {
-        $data = array(
-            'transfer'  => $this,
-            'source'    => $this->source,
-            'options'   => $this->options,
-            'client'    => $this->client,
-            'part_size' => $this->partSize,
-            'state'     => $this->state
-        );
-
-        if ($command) {
-            $data['command'] = $command;
-        }
-
-        return $data;
     }
 
     /**
@@ -252,7 +182,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * Complete the multipart upload
      *
-     * @return Model Returns the result of the complete multipart upload command
+     * @return Result Returns the result of the complete multipart upload command
      */
     abstract protected function complete();
 
@@ -264,7 +194,7 @@ abstract class AbstractTransfer extends AbstractHasDispatcher implements Transfe
     /**
      * Fetches the abort command fom the concrete implementation
      *
-     * @return OperationCommand
+     * @return AwsCommandInterface
      */
     abstract protected function getAbortCommand();
 }
