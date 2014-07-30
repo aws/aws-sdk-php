@@ -4,8 +4,8 @@ namespace Aws\S3;
 use Aws\Common\Paginator\ResourceIterator;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Stream\MetadataStreamInterface;
 use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Stream\CachingStream;
 
@@ -63,19 +63,10 @@ class StreamWrapper
     /** @var resource|null Stream context (this is set by PHP) */
     public $context;
 
-    /** @var string Mode the stream was opened with */
-    private $mode;
-
-    /** @var StreamInterface Underlying stream resource */
+    /** @var MetadataStreamInterface Underlying stream resource */
     private $body;
 
-    /** @var array Current parameters to use with the flush operation */
-    private $params;
-
-    /**
-     * Iterator used with opendir() and subsequent readdir() calls
-     * @var ResourceIterator
-     */
+    /** @var ResourceIterator Iterator used with opendir() related calls */
     private $objectIterator;
 
     /** @var string The bucket that was opened when opendir() was called */
@@ -114,54 +105,40 @@ class StreamWrapper
         $this->body = null;
     }
 
-    /**
-     * @param string $path
-     * @param string $mode
-     * @param int    $options
-     * @param string $opened_path
-     *
-     * @return bool
-     */
     public function stream_open($path, $mode, $options, &$opened_path)
     {
-        // We don't care about the binary flag
-        $this->mode = $mode = rtrim($mode, 'bt');
-        $this->params = $this->getParams($path);
+        $parts = $this->getBucketKey($path);
+        stream_context_set_option($this->context, 's3', 'Bucket', $parts[0]);
+        stream_context_set_option($this->context, 's3', 'Key', $parts[1]);
+        $mode = rtrim($mode, 'bt');
 
         if ($errors = $this->validate($path, $mode)) {
             return $this->triggerError($errors);
         }
 
-        if ($mode == 'r') {
-            $this->openReadStream($this->params, $errors);
-        } elseif ($mode == 'a') {
-            $this->openAppendStream($this->params, $errors);
-        } else {
-            $this->openWriteStream($this->params, $errors);
+        switch ($mode) {
+            case 'r':
+                return $this->openReadStream();
+            case 'a':
+                return $this->openAppendStream();
+            default:
+                return $this->openWriteStream();
         }
-
-        return true;
     }
 
-    /**
-     * @return bool
-     */
     public function stream_eof()
     {
         return $this->body->eof();
     }
 
-    /**
-     * @return bool
-     */
     public function stream_flush()
     {
-        if ($this->mode == 'r') {
+        if (rtrim($this->body->getMetadata('mode'), 'bt') == 'r') {
             return false;
         }
 
         $this->body->seek(0);
-        $params = $this->params;
+        $params = $this->getOptions();
         $params['Body'] = $this->body;
 
         // Attempt to guess the ContentType of the upload based on the
@@ -172,12 +149,10 @@ class StreamWrapper
             $params['ContentType'] = $type;
         }
 
-        try {
+        return $this->boolCall(function () use ($params) {
             $this->getClient()->putObject($params);
             return true;
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
-        }
+        });
     }
 
     /**
@@ -235,25 +210,18 @@ class StreamWrapper
      */
     public function unlink($path)
     {
-        try {
+        return $this->boolCall(function () use ($path) {
             $this->clearStatInfo($path);
             $this->getClient()->deleteObject($this->getParams($path));
             return true;
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
-        }
+        });
     }
 
-    /**
-     * @return array
-     */
     public function stream_stat()
     {
-        $stat = fstat($this->body->getStream());
-        // Add the size of the underlying stream if it is known
-        if ($this->mode == 'r' && $this->body->getSize()) {
-            $stat[7] = $stat['size'] = $this->body->getSize();
-        }
+        $stat = $this->getStatTemplate();
+        $stat[7] = $stat['size'] = (int) $this->body->getSize();
+        $stat[2] = $stat['mode'] = $this->body->getMetadata('mode');
 
         return $stat;
     }
@@ -373,7 +341,7 @@ class StreamWrapper
                 . 'specify a bucket.');
         }
 
-        try {
+        return $this->boolCall(function () use ($params, $path) {
 
             if (!$params['Key']) {
                 $this->getClient()->deleteBucket([
@@ -406,10 +374,7 @@ class StreamWrapper
             return $result['CommonPrefixes']
                 ? $this->triggerError('Pseudo folder contains nested folders')
                 : true;
-
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
-        }
+        });
     }
 
     /**
@@ -462,7 +427,7 @@ class StreamWrapper
 
         // Filter our "/" keys added by the console as directories, and ensure
         // that if a filter function is provided that it passes the filter.
-        $this->objectIterator = new FilterIterator(
+        $this->objectIterator = new \CallbackFilterIterator(
             $objectIterator,
             function ($key) use ($filterFn) {
                 // Each yielded results can contain a "Key" or "Prefix"
@@ -553,46 +518,35 @@ class StreamWrapper
     {
         $partsFrom = $this->getParams($path_from);
         $partsTo = $this->getParams($path_to);
-        $this->clearStatInfo($path_from);
-        $this->clearStatInfo($path_to);
+        $this->clearStatInfo($path_from, $path_to);
 
         if (!$partsFrom['Key'] || !$partsTo['Key']) {
             return $this->triggerError('The Amazon S3 stream wrapper only '
                 . 'supports copying objects');
         }
 
-        try {
+        return $this->boolCall(function () use ($partsTo, $partsFrom) {
             // Copy the object and allow overriding default parameters if
             // desired, but by default copy metadata
             $this->getClient()->copyObject($this->getOptions() + [
                 'Bucket'            => $partsTo['Bucket'],
                 'Key'               => $partsTo['Key'],
                 'CopySource'        => '/' . $partsFrom['Bucket'] . '/'
-                                           . rawurlencode($partsFrom['Key']),
+                    . rawurlencode($partsFrom['Key']),
                 'MetadataDirective' => 'COPY'
             ]);
+
             // Delete the original object
             $this->getClient()->deleteObject([
                 'Bucket' => $partsFrom['Bucket'],
                 'Key'    => $partsFrom['Key']
             ] + $this->getOptions());
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
-        }
-
-        return true;
+        });
     }
 
-    /**
-     * Cast the stream to return the underlying file resource
-     *
-     * @param int $cast_as STREAM_CAST_FOR_SELECT or STREAM_CAST_AS_STREAM
-     *
-     * @return resource
-     */
     public function stream_cast($cast_as)
     {
-        return $this->body->getStream();
+        return false;
     }
 
     /**
@@ -603,14 +557,9 @@ class StreamWrapper
     {
         $errors = [];
 
-        if (!$this->params['Key']) {
+        if (!$this->getOption('Key')) {
             $errors[] = 'Cannot open a bucket. You must specify a path in the '
                 . 'form of s3://bucket/key';
-        }
-
-        if (strpos($mode, '+')) {
-            $errors[] = 'The Amazon S3 stream wrapper does not allow '
-                . 'simultaneous reading and writing.';
         }
 
         if (!in_array($mode, ['r', 'w', 'a', 'x'])) {
@@ -622,8 +571,8 @@ class StreamWrapper
         // to read
         if ($mode == 'x' &&
             $this->getClient()->doesObjectExist(
-                $this->params['Bucket'],
-                $this->params['Key'],
+                $this->getOption('Bucket'),
+                $this->getOption('Key'),
                 $this->getOptions()
             )
         ) {
@@ -668,13 +617,17 @@ class StreamWrapper
      */
     private function getClient()
     {
-        $client = $this->getOption('client');
-
-        if (!$client) {
+        if (!$client = $this->getOption('client')) {
             throw new \RuntimeException('No client in stream context');
         }
 
         return $client;
+    }
+
+    private function getBucketKey($path)
+    {
+        $parts = explode('/', substr($path, 5), 2);
+        return [$parts[0], isset($parts[1]) ? $parts[1] : null];
     }
 
     /**
@@ -686,28 +639,24 @@ class StreamWrapper
      */
     private function getParams($path)
     {
-        $parts = explode('/', substr($path, 5), 2);
-
+        $parts = $this->getBucketKey($path);
         $params = $this->getOptions();
         unset($params['seekable']);
 
-        return [
-            'Bucket' => $parts[0],
-            'Key'    => isset($parts[1]) ? $parts[1] : null
-        ] + $params;
+        return ['Bucket' => $parts[0],'Key' => $parts[1]] + $params;
     }
 
     /**
      * Initialize the stream wrapper for a read only stream
      *
-     * @param array $params Operation parameters
-     * @param array $errors Any encountered errors to append to
-     *
      * @return bool
      */
-    private function openReadStream(array $params, array &$errors)
+    private function openReadStream()
     {
-        $command = $this->getClient()->getCommand('GetObject', $params);
+        $command = $this->getClient()->getCommand(
+            'GetObject',
+            $this->getOptions()
+        );
 
         // Ensure that a streaming adapter is utilized
         $command->getEmitter()->on('prepare', function (PrepareEvent $e) {
@@ -727,36 +676,33 @@ class StreamWrapper
     /**
      * Initialize the stream wrapper for a write only stream
      *
-     * @param array $params Operation parameters
-     * @param array $errors Any encountered errors to append to
-     *
      * @return bool
      */
-    private function openWriteStream(array $params, array &$errors)
+    private function openWriteStream()
     {
         $this->body = new Stream(fopen('php://temp', 'r+'));
+
+        return true;
     }
 
     /**
      * Initialize the stream wrapper for an append stream
      *
-     * @param array $params Operation parameters
-     * @param array $errors Any encountered errors to append to
-     *
      * @return bool
      */
-    private function openAppendStream(array $params, array &$errors)
+    private function openAppendStream()
     {
         try {
-            // Get the body of the object
-            $this->body = $this->getClient()->getObject($params)['Body'];
+            // Get the body of the object and seek to the end of the stream
+            $this->body = $this->getClient()->getObject(
+                $this->getOptions()
+            )['Body'];
             $this->body->seek(0, SEEK_END);
+            return true;
         } catch (S3Exception $e) {
             // The object does not exist, so use a simple write stream
-            $this->openWriteStream($params, $errors);
+            return $this->openWriteStream();
         }
-
-        return true;
     }
 
     /**
@@ -771,14 +717,12 @@ class StreamWrapper
      */
     private function triggerError($errors, $flags = null)
     {
+        // This is triggered with things like file_exists()
         if ($flags & STREAM_URL_STAT_QUIET) {
-          // This is triggered with things like file_exists()
-
-          if ($flags & STREAM_URL_STAT_LINK) {
-            // This is triggered for things like is_link()
-            return $this->formatUrlStat(false);
-          }
-          return false;
+            return $flags & STREAM_URL_STAT_LINK
+                // This is triggered for things like is_link()
+                ? $this->formatUrlStat(false)
+                : false;
         }
 
         // This is triggered when doing things like lstat() or stat()
@@ -796,23 +740,7 @@ class StreamWrapper
      */
     private function formatUrlStat($result = null)
     {
-        static $statTemplate = [
-            0  => 0,  'dev'     => 0,
-            1  => 0,  'ino'     => 0,
-            2  => 0,  'mode'    => 0,
-            3  => 0,  'nlink'   => 0,
-            4  => 0,  'uid'     => 0,
-            5  => 0,  'gid'     => 0,
-            6  => -1, 'rdev'    => -1,
-            7  => 0,  'size'    => 0,
-            8  => 0,  'atime'   => 0,
-            9  => 0,  'mtime'   => 0,
-            10 => 0,  'ctime'   => 0,
-            11 => -1, 'blksize' => -1,
-            12 => -1, 'blocks'  => -1,
-        ];
-
-        $stat = $statTemplate;
+        $stat = $this->getStatTemplate();
         $type = gettype($result);
 
         // Determine what type of data is being cached
@@ -834,15 +762,14 @@ class StreamWrapper
     }
 
     /**
-     * Clear the next stat result from the cache
+     * Clear the next stat result from the cache.
      *
-     * @param string $path If a path is specific, clearstatcache() will be called
+     * Accepts an optional variadic number of string paths to clearstatcache on
      */
-    private function clearStatInfo($path = null)
+    private function clearStatInfo()
     {
         self::$nextStat = [];
-
-        if ($path) {
+        foreach (func_get_args() as $path) {
             clearstatcache(true, $path);
         }
     }
@@ -861,13 +788,11 @@ class StreamWrapper
             return $this->triggerError("Directory already exists: {$path}");
         }
 
-        try {
+        return $this->boolCall(function () use ($params, $path) {
             $this->getClient()->createBucket($params);
             $this->clearStatInfo($path);
             return true;
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
-        }
+        });
     }
 
     /**
@@ -892,13 +817,11 @@ class StreamWrapper
             return $this->triggerError("Directory already exists: {$path}");
         }
 
-        try {
+        return $this->boolCall(function () use ($params, $path) {
             $this->getClient()->putObject($params);
             $this->clearStatInfo($path);
             return true;
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
-        }
+        });
     }
 
     /**
@@ -910,16 +833,54 @@ class StreamWrapper
      */
     private function determineAcl($mode)
     {
-        $mode = decoct($mode);
-
-        if ($mode >= 700 && $mode <= 799) {
-            return 'public-read';
+        switch (substr((string) decoct($mode), 0, 1)) {
+            case '7':
+                return 'public-read';
+            case '6':
+                return 'authenticated-read';
+            default:
+                return 'private';
         }
+    }
 
-        if ($mode >= 600 && $mode <= 699) {
-            return 'authenticated-read';
+    /**
+     * Gets a URL stat template with default values
+     *
+     * @return array
+     */
+    private function getStatTemplate()
+    {
+        return [
+            0  => 0,  'dev'     => 0,
+            1  => 0,  'ino'     => 0,
+            2  => 0,  'mode'    => 0,
+            3  => 0,  'nlink'   => 0,
+            4  => 0,  'uid'     => 0,
+            5  => 0,  'gid'     => 0,
+            6  => -1, 'rdev'    => -1,
+            7  => 0,  'size'    => 0,
+            8  => 0,  'atime'   => 0,
+            9  => 0,  'mtime'   => 0,
+            10 => 0,  'ctime'   => 0,
+            11 => -1, 'blksize' => -1,
+            12 => -1, 'blocks'  => -1,
+        ];
+    }
+
+    /**
+     * Invokes a callable and triggers an error if an exception occurs while
+     * calling the function.
+     *
+     * @param callable $fn
+     *
+     * @return bool
+     */
+    private function boolCall(callable $fn)
+    {
+        try {
+            return $fn();
+        } catch (\Exception $e) {
+            return $this->triggerError($e->getMessage());
         }
-
-        return 'private';
     }
 }
