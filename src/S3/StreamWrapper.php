@@ -107,9 +107,9 @@ class StreamWrapper
 
     public function stream_open($path, $mode, $options, &$opened_path)
     {
-        $parts = $this->getBucketKey($path);
-        stream_context_set_option($this->context, 's3', 'Bucket', $parts[0]);
-        stream_context_set_option($this->context, 's3', 'Key', $parts[1]);
+        $p = $this->getBucketKey($path);
+        stream_context_set_option($this->context, 's3', 'Bucket', $p['Bucket']);
+        stream_context_set_option($this->context, 's3', 'Key', $p['Key']);
         $mode = rtrim($mode, 'bt');
 
         if ($errors = $this->validate($path, $mode)) {
@@ -150,8 +150,7 @@ class StreamWrapper
         }
 
         return $this->boolCall(function () use ($params) {
-            $this->getClient()->putObject($params);
-            return true;
+            return (bool) $this->getClient()->putObject($params);
         });
     }
 
@@ -531,9 +530,9 @@ class StreamWrapper
             $this->getClient()->copyObject($this->getOptions() + [
                 'Bucket'            => $partsTo['Bucket'],
                 'Key'               => $partsTo['Key'],
+                'MetadataDirective' => 'COPY',
                 'CopySource'        => '/' . $partsFrom['Bucket'] . '/'
-                    . rawurlencode($partsFrom['Key']),
-                'MetadataDirective' => 'COPY'
+                                           . rawurlencode($partsFrom['Key']),
             ]);
 
             // Delete the original object
@@ -627,7 +626,11 @@ class StreamWrapper
     private function getBucketKey($path)
     {
         $parts = explode('/', substr($path, 5), 2);
-        return [$parts[0], isset($parts[1]) ? $parts[1] : null];
+
+        return [
+            'Bucket' => $parts[0],
+            'Key'    => isset($parts[1]) ? $parts[1] : null
+        ];
     }
 
     /**
@@ -635,35 +638,27 @@ class StreamWrapper
      *
      * @param string $path Path passed to the stream wrapper
      *
-     * @return array Hash of 'Bucket', 'Key', and custom params
+     * @return array Hash of 'Bucket', 'Key', and custom params from the context
      */
     private function getParams($path)
     {
-        $parts = $this->getBucketKey($path);
         $params = $this->getOptions();
         unset($params['seekable']);
 
-        return ['Bucket' => $parts[0],'Key' => $parts[1]] + $params;
+        return $this->getBucketKey($path) + $params;
     }
 
-    /**
-     * Initialize the stream wrapper for a read only stream
-     *
-     * @return bool
-     */
     private function openReadStream()
     {
-        $command = $this->getClient()->getCommand(
-            'GetObject',
-            $this->getOptions()
-        );
+        $client = $this->getClient();
+        $command = $client->getCommand('GetObject', $this->getOptions());
 
         // Ensure that a streaming adapter is utilized
         $command->getEmitter()->on('prepare', function (PrepareEvent $e) {
             $e->getRequest()->getConfig()->set('stream', true);
         });
 
-        $this->body = $this->getClient()->execute($command)['Body'];
+        $this->body = $client->execute($command)['Body'];
 
         // Wrap the body in a caching entity body if seeking is allowed
         if ($this->getOption('seekable') && !$this->body->isSeekable()) {
@@ -673,11 +668,6 @@ class StreamWrapper
         return true;
     }
 
-    /**
-     * Initialize the stream wrapper for a write only stream
-     *
-     * @return bool
-     */
     private function openWriteStream()
     {
         $this->body = new Stream(fopen('php://temp', 'r+'));
@@ -685,18 +675,12 @@ class StreamWrapper
         return true;
     }
 
-    /**
-     * Initialize the stream wrapper for an append stream
-     *
-     * @return bool
-     */
     private function openAppendStream()
     {
         try {
             // Get the body of the object and seek to the end of the stream
-            $this->body = $this->getClient()->getObject(
-                $this->getOptions()
-            )['Body'];
+            $client = $this->getClient();
+            $this->body = $client->getObject($this->getOptions())['Body'];
             $this->body->seek(0, SEEK_END);
             return true;
         } catch (S3Exception $e) {
@@ -741,21 +725,24 @@ class StreamWrapper
     private function formatUrlStat($result = null)
     {
         $stat = $this->getStatTemplate();
-        $type = gettype($result);
 
-        // Determine what type of data is being cached
-        if ($type == 'NULL' || $type == 'string') {
-            // Directory with 0777 access - see "man 2 stat".
-            $stat['mode'] = $stat[2] = 0040777;
-        } elseif ($type == 'array' && isset($result['LastModified'])) {
-            // ListObjects or HeadObject result
-            $stat['mtime'] = $stat[9] = $stat['ctime'] = $stat[10]
-                = strtotime($result['LastModified']);
-            $stat['size'] = $stat[7] = (isset($result['ContentLength'])
-                ? $result['ContentLength']
-                : $result['Size']);
-            // Regular file with 0777 access - see "man 2 stat".
-            $stat['mode'] = $stat[2] = 0100777;
+        switch (gettype($result)) {
+            case 'NULL':
+            case 'string':
+                // Directory with 0777 access - see "man 2 stat".
+                $stat['mode'] = $stat[2] = 0040777;
+                break;
+            case 'array':
+                if (isset($result['LastModified'])) {
+                    // ListObjects or HeadObject result
+                    $stat['mtime'] = $stat[9] = $stat['ctime'] = $stat[10]
+                        = strtotime($result['LastModified']);
+                    $stat['size'] = $stat[7] = (isset($result['ContentLength'])
+                        ? $result['ContentLength']
+                        : $result['Size']);
+                    // Regular file with 0777 access - see "man 2 stat".
+                    $stat['mode'] = $stat[2] = 0100777;
+                }
         }
 
         return $stat;
@@ -833,7 +820,7 @@ class StreamWrapper
      */
     private function determineAcl($mode)
     {
-        switch (substr((string) decoct($mode), 0, 1)) {
+        switch (substr(decoct($mode), 0, 1)) {
             case '7':
                 return 'public-read';
             case '6':
