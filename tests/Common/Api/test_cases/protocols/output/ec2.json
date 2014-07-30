@@ -2,12 +2,11 @@
   {
     "description": "Scalar members",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "Str": {
             "shape": "StringType"
@@ -79,45 +78,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><Str>myname</Str><FooNum>123</FooNum><FalseBool>false</FalseBool><TrueBool>true</TrueBool><Float>1.2</Float><Double>1.3</Double><Long>200</Long><Char>a</Char></OperationNameResult><ResponseMetadata><RequestId>request-id</RequestId></ResponseMetadata></OperationNameResponse>"
-        }
-      }
-    ]
-  },
-  {
-    "description": "Custom result wrapper",
-    "metadata": {
-      "protocol": "query"
-    },
-    "shapes": {
-      "OutputShape": {
-        "type": "structure",
-        "resultWrapper": "Wrapper",
-        "members": {
-          "Str": {
-            "shape": "StringType"
-          }
-        }
-      },
-      "StringType": {
-        "type": "string"
-      }
-    },
-    "cases": [
-      {
-        "given": {
-          "output": {
-            "shape": "OutputShape"
-          },
-          "name": "OperationName"
-        },
-        "result": {
-          "Str": "myname"
-        },
-        "response": {
-          "status_code": 200,
-          "headers": {},
-          "body": "<OperationNameResponse><Wrapper><Str>myname</Str></Wrapper><ResponseMetadata><RequestId>request-id</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><Str>myname</Str><FooNum>123</FooNum><FalseBool>false</FalseBool><TrueBool>true</TrueBool><Float>1.2</Float><Double>1.3</Double><Long>200</Long><Char>a</Char><RequestId>request-id</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -125,11 +86,10 @@
   {
     "description": "Blob",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
-        "resultWrapper": "OperationNameResult",
         "type": "structure",
         "members": {
           "Blob": {
@@ -155,7 +115,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><Blob>dmFsdWU=</Blob></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><Blob>dmFsdWU=</Blob><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -163,12 +123,11 @@
   {
     "description": "Lists",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "ListMember": {
             "shape": "ListShape"
@@ -199,7 +158,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><ListMember><member>abc</member><member>123</member></ListMember></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><ListMember><member>abc</member><member>123</member></ListMember><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -207,12 +166,11 @@
   {
     "description": "List with custom member name",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "ListMember": {
             "shape": "ListShape"
@@ -244,7 +202,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><ListMember><item>abc</item><item>123</item></ListMember></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><ListMember><item>abc</item><item>123</item></ListMember><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -252,21 +210,20 @@
   {
     "description": "Flattened List",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "ListMember": {
-            "shape": "ListType"
+            "shape": "ListType",
+            "flattened": true
           }
         }
       },
       "ListType": {
         "type": "list",
-        "flattened": true,
         "member": {
           "shape": "StringType"
         }
@@ -289,7 +246,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><ListMember>abc</ListMember><ListMember>123</ListMember></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><ListMember>abc</ListMember><ListMember>123</ListMember><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -297,37 +254,36 @@
   {
     "description": "Normal map",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "Map": {
-            "shape": "StringMap"
+            "shape": "MapType"
           }
         }
       },
-      "StringMap": {
+      "MapType": {
         "type": "map",
         "key": {
-            "shape": "StringType"
+          "shape": "StringType"
         },
         "value": {
-            "shape": "StructType"
+          "shape": "StructureType"
         }
       },
-      "StringType": {
-        "type": "string"
-      },
-      "StructType": {
+      "StructureType": {
         "type": "structure",
         "members": {
           "foo": {
             "shape": "StringType"
           }
         }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -351,7 +307,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><Map><entry><key>qux</key><value><foo>bar</foo></value></entry><entry><key>baz</key><value><foo>bam</foo></value></entry></Map></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><Map><entry><key>qux</key><value><foo>bar</foo></value></entry><entry><key>baz</key><value><foo>bam</foo></value></entry></Map><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -359,26 +315,25 @@
   {
     "description": "Flattened map",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "Map": {
-            "shape": "StringMap",
+            "shape": "MapType",
             "flattened": true
           }
         }
       },
-      "StringMap": {
+      "MapType": {
         "type": "map",
         "key": {
-            "shape": "StringType"
+          "shape": "StringType"
         },
         "value": {
-            "shape": "StringType"
+          "shape": "StringType"
         }
       },
       "StringType": {
@@ -402,7 +357,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><Map><key>qux</key><value>bar</value></Map><Map><key>baz</key><value>bam</value></Map></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><Map><key>qux</key><value>bar</value></Map><Map><key>baz</key><value>bam</value></Map><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]
@@ -410,28 +365,27 @@
   {
     "description": "Named map",
     "metadata": {
-      "protocol": "query"
+      "protocol": "ec2"
     },
     "shapes": {
       "OutputShape": {
         "type": "structure",
-        "resultWrapper": "OperationNameResult",
         "members": {
           "Map": {
-            "shape": "MapType"
+            "shape": "MapType",
+            "flattened": true
           }
         }
       },
       "MapType": {
         "type": "map",
-        "flattened": true,
         "key": {
-          "locationName": "foo",
-          "shape": "StringType"
+          "shape": "StringType",
+          "locationName": "foo"
         },
         "value": {
-          "locationName": "bar",
-          "shape": "StringType"
+          "shape": "StringType",
+          "locationName": "bar"
         }
       },
       "StringType": {
@@ -455,7 +409,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "<OperationNameResponse><OperationNameResult><Map><foo>qux</foo><bar>bar</bar></Map><Map><foo>baz</foo><bar>bam</bar></Map></OperationNameResult><ResponseMetadata><RequestId>requestid</RequestId></ResponseMetadata></OperationNameResponse>"
+          "body": "<OperationNameResponse><Map><foo>qux</foo><bar>bar</bar></Map><Map><foo>baz</foo><bar>bam</bar></Map><RequestId>requestid</RequestId></OperationNameResponse>"
         }
       }
     ]

@@ -71,7 +71,7 @@
         "type": "long"
       },
       "CharType": {
-        "type": "char"
+        "type": "character"
       }
     },
     "cases": [
@@ -227,8 +227,11 @@
       "ListType": {
         "type": "list",
         "member": {
-          "type": "string"
+          "shape": "StringType"
         }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -251,6 +254,57 @@
     ]
   },
   {
+    "description": "Lists with structure member",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "ListMember": {
+            "shape": "ListType"
+          }
+        }
+      },
+      "ListType": {
+        "type": "list",
+        "member": {
+          "shape": "SingleStruct"
+        }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "SingleStruct": {
+        "type": "structure",
+        "members": {
+            "Foo": {
+              "shape": "StringType"
+            }
+        }
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "ListMember": [{"Foo": "a"}, {"Foo": "b"}]
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"ListMember\": [{\"Foo\": \"a\"}, {\"Foo\": \"b\"}]}"
+        }
+      }
+    ]
+  },
+  {
     "description": "Maps",
     "metadata": {
       "protocol": "rest-json"
@@ -267,14 +321,23 @@
       "MapType": {
         "type": "map",
         "key": {
-          "type": "string"
+          "shape": "StringType"
         },
         "value": {
-          "type": "list",
-          "member": {
-            "type": "integer"
-          }
+          "shape": "ListType"
         }
+      },
+      "ListType": {
+        "type": "list",
+        "member": {
+          "shape": "IntegerType"
+        }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "IntegerType": {
+        "type": "integer"
       }
     },
     "cases": [
@@ -295,6 +358,59 @@
           "status_code": 200,
           "headers": {},
           "body": "{\"MapMember\": {\"a\": [1, 2], \"b\": [3, 4]}}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Complex Map Values",
+    "metadata": {
+      "protocol": "rest-json",
+      "timestampFormat": "iso8601"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "MapMember": {
+            "shape": "MapType"
+          }
+        }
+      },
+      "MapType": {
+        "type": "map",
+        "key": {
+          "shape": "StringType"
+        },
+        "value": {
+          "shape": "TimeType"
+        }
+      },
+      "TimeType": {
+        "type": "timestamp"
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "MapMember": {
+            "a": 1398796238,
+            "b": 1398796238
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"MapMember\": {\"a\": \"2014-04-29T18:30:38+00:00\", \"b\": \"2014-04-29T18:30:38+00:00\"}}"
         }
       }
     ]
@@ -344,27 +460,27 @@
         "type": "structure",
         "members": {
           "AllHeaders": {
-            "type": "map",
-            "location": "headers",
-            "key": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            }
+            "shape": "HeaderMap",
+            "location": "headers"
           },
           "PrefixedHeaders": {
-            "type": "map",
+            "shape": "HeaderMap",
             "location": "headers",
-            "locationName": "X-",
-            "key": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            }
+            "locationName": "X-"
           }
         }
+      },
+      "HeaderMap": {
+        "type": "map",
+        "key": {
+          "shape": "StringType"
+        },
+        "value": {
+          "shape": "StringType"
+        }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -409,19 +525,25 @@
         "payload": "Data",
         "members": {
           "Header": {
-            "type": "string",
+            "shape": "StringType",
             "location": "header",
             "locationName": "X-Foo"
           },
           "Data": {
-            "type": "structure",
-            "members": {
-              "Foo": {
-                "type": "string"
-              }
-            }
+            "shape": "BodyStructure"
           }
         }
+      },
+      "BodyStructure": {
+        "type": "structure",
+        "members": {
+          "Foo": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -459,9 +581,12 @@
         "payload": "Stream",
         "members": {
           "Stream": {
-            "type": "blob"
+            "shape": "Stream"
           }
         }
+      },
+      "Stream": {
+        "type": "blob"
       }
     },
     "cases": [

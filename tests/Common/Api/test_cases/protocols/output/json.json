@@ -53,7 +53,7 @@
         "type": "long"
       },
       "CharType": {
-        "type": "char"
+        "type": "character"
       }
     },
     "cases": [
@@ -203,8 +203,11 @@
       "ListType": {
         "type": "list",
         "member": {
-          "type": "string"
+          "shape": "StringType"
         }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -243,14 +246,23 @@
       "MapType": {
         "type": "map",
         "key": {
-          "type": "string"
+          "shape": "StringType"
         },
         "value": {
-          "type": "list",
-          "member": {
-            "type": "integer"
-          }
+          "shape": "NumberList"
         }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "NumberList": {
+        "type": "list",
+        "member": {
+          "shape": "IntegerType"
+        }
+      },
+      "IntegerType": {
+        "type": "integer"
       }
     },
     "cases": [

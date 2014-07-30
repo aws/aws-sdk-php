@@ -174,6 +174,7 @@ abstract class RestSerializer implements SubscriberInterface
         $uri = $this->endpoint->combine($operation['http']['requestUri']);
         $varspecs = [];
 
+        // Create an associative array of varspecs used in expansions
         foreach ($operation->getInput()->getMembers() as $name => $member) {
             if ($member['location'] == 'uri') {
                 $varspecs[$member['locationName'] ?: $name] =
@@ -181,6 +182,22 @@ abstract class RestSerializer implements SubscriberInterface
             }
         }
 
-        return [$uri, $varspecs];
+        // Expand path place holders using Amazon's slightly different URI
+        // template syntax.
+        return preg_replace_callback(
+            '/\{([^\}]+)\}/',
+            function (array $matches) use ($varspecs) {
+                $isGreedy = substr($matches[1], -1, 1) == '+';
+                $k = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
+                if (!isset($varspecs[$k])) {
+                    return '';
+                } elseif ($isGreedy) {
+                    return str_replace('%2F', '/', rawurlencode($varspecs[$k]));
+                } else {
+                    return rawurlencode($varspecs[$k]);
+                }
+            },
+            $uri
+        );
     }
 }

@@ -838,5 +838,56 @@
         }
       }
     ]
+  },
+  {
+    "description": "Greedy keys",
+    "metadata": {
+      "protocol": "rest-xml",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Bucket": {
+            "shape": "BucketShape",
+            "location": "uri"
+          },
+          "Key": {
+            "shape": "KeyShape",
+            "location": "uri"
+          }
+        }
+      },
+      "BucketShape": {
+        "type": "string"
+      },
+      "KeyShape": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "GET",
+            "requestUri": "/{Bucket}/{Key+}"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Key": "testing /123",
+          "Bucket": "my/bucket"
+        },
+        "serialized": {
+          "method": "GET",
+          "body": "",
+          "uri": "/my%2Fbucket/testing%20/123"
+        }
+      }
+    ]
   }
 ]

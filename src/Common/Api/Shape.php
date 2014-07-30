@@ -28,7 +28,7 @@ class Shape extends AbstractModel
             'long'      => 'Aws\Common\Api\Shape',
             'string'    => 'Aws\Common\Api\Shape',
             'byte'      => 'Aws\Common\Api\Shape',
-            'char'      => 'Aws\Common\Api\Shape',
+            'character' => 'Aws\Common\Api\Shape',
             'blob'      => 'Aws\Common\Api\Shape',
             'boolean'   => 'Aws\Common\Api\Shape'
         ];

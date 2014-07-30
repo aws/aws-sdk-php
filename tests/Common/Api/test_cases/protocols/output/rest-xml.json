@@ -61,7 +61,7 @@
         "type": "long"
       },
       "CharType": {
-        "type": "char"
+        "type": "character"
       },
       "HeaderShape": {
         "type": "string",
@@ -113,9 +113,12 @@
         "type": "structure",
         "members": {
           "Blob": {
-            "type": "blob"
+            "shape": "BlobType"
           }
         }
+      },
+      "BlobType": {
+        "type": "blob"
       }
     },
     "cases": [
@@ -154,8 +157,11 @@
       "ListShape": {
         "type": "list",
         "member": {
-          "type": "string"
+          "shape": "StringType"
         }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -194,9 +200,12 @@
       "ListShape": {
         "type": "list",
         "member": {
-          "type": "string",
+          "shape": "StringType",
           "locationName": "item"
         }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -228,13 +237,19 @@
         "type": "structure",
         "members": {
           "ListMember": {
-            "type": "list",
-            "flattened": true,
-            "member": {
-              "type": "string"
-            }
+            "shape": "StringList",
+            "flattened": true
           }
         }
+      },
+      "StringList": {
+        "type": "list",
+        "member": {
+          "shape": "StringType"
+        }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -266,20 +281,29 @@
         "type": "structure",
         "members": {
           "Map": {
-            "type": "map",
-            "key": {
-              "type": "string"
-            },
-            "value": {
-              "type": "structure",
-              "members": {
-                "foo": {
-                  "type": "string"
-                }
-              }
-            }
+            "shape": "StringMap"
           }
         }
+      },
+      "StringMap": {
+        "type": "map",
+        "key": {
+          "shape": "StringType"
+        },
+        "value": {
+          "shape": "SingleStructure"
+        }
+      },
+      "SingleStructure": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "shape": "StringType"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -318,16 +342,22 @@
         "type": "structure",
         "members": {
           "Map": {
-            "type": "map",
-            "flattened": true,
-            "key": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            }
+            "shape": "StringMap",
+            "flattened": true
           }
         }
+      },
+      "StringMap": {
+        "type": "map",
+        "key": {
+          "shape": "StringType"
+        },
+        "value": {
+          "shape": "StringType"
+        }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -362,18 +392,23 @@
         "type": "structure",
         "members": {
           "Map": {
-            "type": "map",
-            "flattened": true,
-            "key": {
-              "type": "string",
-              "locationName": "foo"
-            },
-            "value": {
-              "type": "string",
-              "locationName": "bar"
-            }
+            "shape": "StringMap"
           }
         }
+      },
+      "StringMap": {
+        "type": "map",
+        "key": {
+          "shape": "StringType",
+          "locationName": "foo"
+        },
+        "value": {
+          "shape": "StringType",
+          "locationName": "bar"
+        }
+      },
+      "StringType": {
+        "type": "string"
       }
     },
     "cases": [
@@ -409,17 +444,23 @@
         "payload": "Data",
         "members": {
           "Header": {
-            "type": "string",
+            "shape": "StringType",
             "location": "header",
             "locationName": "X-Foo"
           },
           "Data": {
-            "type": "structure",
-            "members": {
-              "Foo": {
-                "type": "string"
-              }
-            }
+            "shape": "SingleStructure"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      },
+      "SingleStructure": {
+        "type": "structure",
+        "members": {
+          "Foo": {
+            "shape": "StringType"
           }
         }
       }
@@ -459,9 +500,12 @@
         "payload": "Stream",
         "members": {
           "Stream": {
-            "type": "blob"
+            "shape": "BlobStream"
           }
         }
+      },
+      "BlobStream": {
+        "type": "blob"
       }
     },
     "cases": [
