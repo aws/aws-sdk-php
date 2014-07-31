@@ -2572,6 +2572,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'VpcPeeringConnectionId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -3557,20 +3558,7 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
-                'Description' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'SourceDestCheck' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                ),
-                'Groups' => array(
-                    'type' => 'string',
-                    'location' => 'aws.query',
-                    'sentAs' => 'GroupSet',
-                ),
-                'Attachment' => array(
+                'Attribute' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -5450,10 +5438,12 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'AvailabilityZone' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'Image' => array(
+                    'required' => true,
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -5476,6 +5466,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Volume' => array(
+                    'required' => true,
                     'type' => 'object',
                     'location' => 'aws.query',
                     'properties' => array(
@@ -6238,6 +6229,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Name' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6339,6 +6331,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'VpcPeeringConnectionId' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6597,6 +6590,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'Instances' => array(
+                    'required' => true,
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'InstanceId',
@@ -6606,6 +6600,7 @@ return array (
                     ),
                 ),
                 'Status' => array(
+                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -6628,6 +6623,7 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'ReasonCodes' => array(
+                    'required' => true,
                     'type' => 'array',
                     'location' => 'aws.query',
                     'sentAs' => 'ReasonCode',

@@ -9,6 +9,8 @@ Next Release:
   AutoScaling client.
 * Added support for creating Amazon ElastiCache for Memcached clusters with
   nodes in multiple availability zones.
+* Added minor fixes to the Amazon EC2 model for ImportVolume,
+  DescribeNetworkInterfaceAttribute, and DeleteVpcPeeringConnection
 
 2.6.12 (2014-07-16)
 -------------------
