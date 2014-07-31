@@ -138,6 +138,26 @@ return array (
                                                 'minLength' => 1,
                                                 'maxLength' => 64,
                                             ),
+                                            'GeoLocation' => array(
+                                                'type' => 'object',
+                                                'properties' => array(
+                                                    'ContinentCode' => array(
+                                                        'type' => 'string',
+                                                        'minLength' => 2,
+                                                        'maxLength' => 2,
+                                                    ),
+                                                    'CountryCode' => array(
+                                                        'type' => 'string',
+                                                        'minLength' => 1,
+                                                        'maxLength' => 2,
+                                                    ),
+                                                    'SubdivisionCode' => array(
+                                                        'type' => 'string',
+                                                        'minLength' => 1,
+                                                        'maxLength' => 3,
+                                                    ),
+                                                ),
+                                            ),
                                             'Failover' => array(
                                                 'type' => 'string',
                                             ),
@@ -555,6 +575,50 @@ return array (
                 ),
             ),
         ),
+        'GetGeoLocation' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2013-04-01/geolocation',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'GetGeoLocationResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'ContinentCode' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'continentcode',
+                    'minLength' => 2,
+                    'maxLength' => 2,
+                ),
+                'CountryCode' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'countrycode',
+                    'minLength' => 1,
+                    'maxLength' => 2,
+                ),
+                'SubdivisionCode' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'subdivisioncode',
+                    'minLength' => 1,
+                    'maxLength' => 3,
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The geo location you are trying to get does not exist.',
+                    'class' => 'NoSuchGeoLocationException',
+                ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
         'GetHealthCheck' => array(
             'httpMethod' => 'GET',
             'uri' => '/2013-04-01/healthcheck/{HealthCheckId}',
@@ -626,6 +690,51 @@ return array (
                 array(
                     'class' => 'NoSuchHostedZoneException',
                 ),
+                array(
+                    'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
+                    'class' => 'InvalidInputException',
+                ),
+            ),
+        ),
+        'ListGeoLocations' => array(
+            'httpMethod' => 'GET',
+            'uri' => '/2013-04-01/geolocations',
+            'class' => 'Guzzle\\Service\\Command\\OperationCommand',
+            'responseClass' => 'ListGeoLocationsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'StartContinentCode' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'startcontinentcode',
+                    'minLength' => 2,
+                    'maxLength' => 2,
+                ),
+                'StartCountryCode' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'startcountrycode',
+                    'minLength' => 1,
+                    'maxLength' => 2,
+                ),
+                'StartSubdivisionCode' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'startsubdivisioncode',
+                    'minLength' => 1,
+                    'maxLength' => 3,
+                ),
+                'MaxItems' => array(
+                    'type' => 'string',
+                    'location' => 'query',
+                    'sentAs' => 'maxitems',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/xml',
+                ),
+            ),
+            'errorResponses' => array(
                 array(
                     'reason' => 'Some value specified in the request is invalid or the XML document is malformed.',
                     'class' => 'InvalidInputException',
@@ -1177,6 +1286,40 @@ return array (
                 ),
             ),
         ),
+        'GetGeoLocationResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'GeoLocationDetails' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'ContinentCode' => array(
+                            'type' => 'string',
+                        ),
+                        'ContinentName' => array(
+                            'type' => 'string',
+                        ),
+                        'CountryCode' => array(
+                            'type' => 'string',
+                        ),
+                        'CountryName' => array(
+                            'type' => 'string',
+                        ),
+                        'SubdivisionCode' => array(
+                            'type' => 'string',
+                        ),
+                        'SubdivisionName' => array(
+                            'type' => 'string',
+                        ),
+                    ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
         'GetHealthCheckResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1288,6 +1431,65 @@ return array (
                             ),
                         ),
                     ),
+                ),
+                'RequestId' => array(
+                    'location' => 'header',
+                    'sentAs' => 'x-amz-request-id',
+                ),
+            ),
+        ),
+        'ListGeoLocationsResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'GeoLocationDetailsList' => array(
+                    'type' => 'array',
+                    'location' => 'xml',
+                    'items' => array(
+                        'name' => 'GeoLocationDetails',
+                        'type' => 'object',
+                        'sentAs' => 'GeoLocationDetails',
+                        'properties' => array(
+                            'ContinentCode' => array(
+                                'type' => 'string',
+                            ),
+                            'ContinentName' => array(
+                                'type' => 'string',
+                            ),
+                            'CountryCode' => array(
+                                'type' => 'string',
+                            ),
+                            'CountryName' => array(
+                                'type' => 'string',
+                            ),
+                            'SubdivisionCode' => array(
+                                'type' => 'string',
+                            ),
+                            'SubdivisionName' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'IsTruncated' => array(
+                    'type' => 'boolean',
+                    'location' => 'xml',
+                ),
+                'NextContinentCode' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'NextCountryCode' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'NextSubdivisionCode' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'MaxItems' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
                 ),
                 'RequestId' => array(
                     'location' => 'header',
@@ -1453,6 +1655,20 @@ return array (
                             ),
                             'Region' => array(
                                 'type' => 'string',
+                            ),
+                            'GeoLocation' => array(
+                                'type' => 'object',
+                                'properties' => array(
+                                    'ContinentCode' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'CountryCode' => array(
+                                        'type' => 'string',
+                                    ),
+                                    'SubdivisionCode' => array(
+                                        'type' => 'string',
+                                    ),
+                                ),
                             ),
                             'Failover' => array(
                                 'type' => 'string',

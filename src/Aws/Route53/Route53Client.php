@@ -36,9 +36,11 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteHostedZone(array $args = array()) {@command Route53 DeleteHostedZone}
  * @method Model getChange(array $args = array()) {@command Route53 GetChange}
  * @method Model getCheckerIpRanges(array $args = array()) {@command Route53 GetCheckerIpRanges}
+ * @method Model getGeoLocation(array $args = array()) {@command Route53 GetGeoLocation}
  * @method Model getHealthCheck(array $args = array()) {@command Route53 GetHealthCheck}
  * @method Model getHealthCheckCount(array $args = array()) {@command Route53 GetHealthCheckCount}
  * @method Model getHostedZone(array $args = array()) {@command Route53 GetHostedZone}
+ * @method Model listGeoLocations(array $args = array()) {@command Route53 ListGeoLocations}
  * @method Model listHealthChecks(array $args = array()) {@command Route53 ListHealthChecks}
  * @method Model listHostedZones(array $args = array()) {@command Route53 ListHostedZones}
  * @method Model listResourceRecordSets(array $args = array()) {@command Route53 ListResourceRecordSets}
