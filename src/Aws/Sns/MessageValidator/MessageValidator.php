@@ -64,9 +64,7 @@ class MessageValidator
     {
         // Get the cert's URL and ensure it is from AWS
         $certUrl = Url::factory($message->get('SigningCertURL'));
-        if ('.amazonaws.com' != substr($certUrl->getHost(), -14)) {
-            throw new CertificateFromUnrecognizedSourceException();
-        }
+        $this->validateUrl($certUrl);
 
         // Get the cert itself and extract the public key
         $certificate = $this->client->get((string) $certUrl)->send()->getBody();
@@ -80,6 +78,19 @@ class MessageValidator
         $incomingSignature = base64_decode($message->get('Signature'));
         if (!openssl_verify($stringToSign, $incomingSignature, $publicKey, OPENSSL_ALGO_SHA1)) {
             throw new InvalidMessageSignatureException();
+        }
+    }
+
+    private function validateUrl(Url $url)
+    {
+        // The host must match the following pattern
+        $hostPattern = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
+
+        if ($url->getScheme() !== 'https' ||
+            substr($url, -4) !== '.pem' ||
+            !preg_match($hostPattern, $url->getHost())
+        ) {
+            throw new CertificateFromUnrecognizedSourceException();
         }
     }
 
