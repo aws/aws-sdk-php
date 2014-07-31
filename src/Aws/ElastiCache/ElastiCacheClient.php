@@ -78,7 +78,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 class ElastiCacheClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2014-03-24';
+    const LATEST_API_VERSION = '2014-07-15';
 
     /**
      * Factory method to create a new Amazon ElastiCache client using an array of configuration options.

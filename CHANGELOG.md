@@ -7,6 +7,8 @@ Next Release:
   client.
 * Added support for Lifecycle Hooks, Detach Instances, and Standby to the
   AutoScaling client.
+* Added support for creating Amazon ElastiCache for Memcached clusters with
+  nodes in multiple availability zones.
 
 2.6.12 (2014-07-16)
 -------------------
