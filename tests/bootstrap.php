@@ -68,3 +68,17 @@ Guzzle\Tests\GuzzleTestCase::setServiceBuilder($aws);
 
 // Emit deprecation warnings
 Guzzle\Common\Version::$emitWarnings = true;
+
+function can_mock_internal_classes()
+{
+    switch (substr(PHP_VERSION, 0, 3)) {
+        case '5.3.':
+            return true;
+        case '5.4.':
+            return version_compare(PHP_VERSION, '5.4.30', '<');
+        case '5.5.':
+            return version_compare(PHP_VERSION, '5.5.14', '<');
+        default:
+            return false;
+    }
+}
