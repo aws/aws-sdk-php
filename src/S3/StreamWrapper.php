@@ -154,59 +154,26 @@ class StreamWrapper
         });
     }
 
-    /**
-     * Read data from the underlying stream
-     *
-     * @param int $count Amount of bytes to read
-     *
-     * @return string
-     */
     public function stream_read($count)
     {
         return $this->body->read($count);
     }
 
-    /**
-     * Seek to a specific byte in the stream
-     *
-     * @param int $offset Seek offset
-     * @param int $whence Whence (SEEK_SET, SEEK_CUR, SEEK_END)
-     *
-     * @return bool
-     */
     public function stream_seek($offset, $whence = SEEK_SET)
     {
         return $this->body->seek($offset, $whence);
     }
 
-    /**
-     * Get the current position of the stream
-     *
-     * @return int Returns the current position in the stream
-     */
     public function stream_tell()
     {
         return $this->body->tell();
     }
 
-    /**
-     * Write data the to the stream
-     *
-     * @param string $data
-     *
-     * @return int Returns the number of bytes written to the stream
-     */
     public function stream_write($data)
     {
         return $this->body->write($data);
     }
 
-    /**
-     * Delete a specific object
-     *
-     * @param string $path
-     * @return bool
-     */
     public function unlink($path)
     {
         return $this->boolCall(function () use ($path) {
@@ -227,12 +194,7 @@ class StreamWrapper
 
     /**
      * Provides information for is_dir, is_file, filesize, etc. Works on
-     * buckets, keys, and prefixes
-     *
-     * @param string $path
-     * @param int    $flags
-     *
-     * @return array Returns an array of stat data
+     * buckets, keys, and prefixes.
      * @link http://www.php.net/manual/en/streamwrapper.url-stat.php
      */
     public function url_stat($path, $flags)
@@ -245,20 +207,10 @@ class StreamWrapper
         $parts = $this->getParams($path);
 
         if (!$parts['Key']) {
-            // Stat "directories": buckets, or "s3://"
-            if (!$parts['Bucket'] ||
-                $this->getClient()->doesBucketExist($parts['Bucket'])
-            ) {
-                return $this->formatUrlStat($path);
-            } else {
-                return $this->triggerError(
-                    "File or directory not found: {$path}",
-                    $flags
-                );
-            }
+            return $this->statDirectory($parts, $path, $flags);
         }
 
-        try {
+        return $this->boolCall(function () use ($parts, $path) {
             try {
                 $result = $this->getClient()->headObject($parts)->toArray();
                 if (substr($parts['Key'], -1, 1) == '/' &&
@@ -271,7 +223,7 @@ class StreamWrapper
                     // Attempt to stat and cache regular object
                     return $this->formatUrlStat($result);
                 }
-            } catch (NoSuchKeyException $e) {
+            } catch (S3Exception $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix
                 // listing of objects to determine.
                 $result = $this->getClient()->listObjects([
@@ -280,16 +232,26 @@ class StreamWrapper
                     'MaxKeys' => 1
                 ]);
                 if (!$result['Contents'] && !$result['CommonPrefixes']) {
-                    return $this->triggerError(
-                        "File or directory not found: {$path}",
-                        $flags
-                    );
+                    throw new \Exception("File or directory not found: $path");
                 }
                 // This is a directory prefix
                 return $this->formatUrlStat($path);
             }
-        } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage(), $flags);
+        }, $flags);
+    }
+
+    private function statDirectory($parts, $path, $flags)
+    {
+        // Stat "directories": buckets, or "s3://"
+        if (!$parts['Bucket'] ||
+            $this->getClient()->doesBucketExist($parts['Bucket'])
+        ) {
+            return $this->formatUrlStat($path);
+        } else {
+            return $this->triggerError(
+                "File or directory not found: {$path}",
+                $flags
+            );
         }
     }
 
@@ -320,59 +282,26 @@ class StreamWrapper
 
         return !isset($params['Key']) || $params['Key'] === '/'
             ? $this->createBucket($path, $params)
-            : $this->createPseudoDirectory($path, $params);
+            : $this->createSubfolder($path, $params);
     }
 
-    /**
-     * Remove a bucket from Amazon S3
-     *
-     * @param string $path the directory path
-     *
-     * @return bool true if directory was successfully removed
-     * @link http://www.php.net/manual/en/streamwrapper.rmdir.php
-     */
     public function rmdir($path)
     {
         $params = $this->getParams($path);
+        $client = $this->getClient();
 
         if (!$params['Bucket']) {
             return $this->triggerError('You cannot delete s3://. Please '
                 . 'specify a bucket.');
         }
 
-        return $this->boolCall(function () use ($params, $path) {
-
+        return $this->boolCall(function () use ($params, $path, $client) {
             if (!$params['Key']) {
-                $this->getClient()->deleteBucket([
-                    'Bucket' => $params['Bucket']
-                ]);
+                $client->deleteBucket(['Bucket' => $params['Bucket']]);
                 $this->clearStatInfo($path);
                 return true;
             }
-
-            // Use a key that adds a trailing slash if needed.
-            $prefix = rtrim($params['Key'], '/') . '/';
-
-            $result = $this->getClient()->listObjects([
-                'Bucket'  => $params['Bucket'],
-                'Prefix'  => $prefix,
-                'MaxKeys' => 1
-            ]);
-
-            // Check if the bucket contains keys other than the placeholder
-            if ($result['Contents']) {
-                foreach ($result['Contents'] as $key) {
-                    if ($key['Key'] == $prefix) {
-                        continue;
-                    }
-                    return $this->triggerError('Psuedo folder is not empty');
-                }
-                return $this->unlink(rtrim($path, '/') . '/');
-            }
-
-            return $result['CommonPrefixes']
-                ? $this->triggerError('Pseudo folder contains nested folders')
-                : true;
+            return $this->deleteSubfolder($params, $path);
         });
     }
 
@@ -459,10 +388,11 @@ class StreamWrapper
      */
     public function dir_rewinddir()
     {
-        $this->clearStatInfo();
-        $this->objectIterator->rewind();
-
-        return true;
+        return $this->boolCall(function () {
+            $this->clearStatInfo();
+            $this->objectIterator->rewind();
+            return true;
+        });
     }
 
     /**
@@ -790,7 +720,7 @@ class StreamWrapper
      *
      * @return bool
      */
-    private function createPseudoDirectory($path, array $params)
+    private function createSubfolder($path, array $params)
     {
         // Ensure the path ends in "/" and the body is empty.
         $params['Key'] = rtrim($params['Key'], '/') . '/';
@@ -810,6 +740,33 @@ class StreamWrapper
             return true;
         });
     }
+
+    private function deleteSubfolder($params, $path)
+    {
+        // Use a key that adds a trailing slash if needed.
+        $prefix = rtrim($params['Key'], '/') . '/';
+        $result = $this->getClient()->listObjects([
+            'Bucket'  => $params['Bucket'],
+            'Prefix'  => $prefix,
+            'MaxKeys' => 1
+        ]);
+
+        // Check if the bucket contains keys other than the placeholder
+        if ($result['Contents']) {
+            foreach ($result['Contents'] as $key) {
+                if ($key['Key'] == $prefix) {
+                    continue;
+                }
+                return $this->triggerError('Psuedo folder is not empty');
+            }
+            return $this->unlink(rtrim($path, '/') . '/');
+        }
+
+        return $result['CommonPrefixes']
+            ? $this->triggerError('Pseudo folder contains nested folders')
+            : true;
+    }
+
 
     /**
      * Determine the most appropriate ACL based on a file mode.
@@ -859,15 +816,16 @@ class StreamWrapper
      * calling the function.
      *
      * @param callable $fn
+     * @param int      $flags
      *
      * @return bool
      */
-    private function boolCall(callable $fn)
+    private function boolCall(callable $fn, $flags = null)
     {
         try {
             return $fn();
         } catch (\Exception $e) {
-            return $this->triggerError($e->getMessage());
+            return $this->triggerError($e->getMessage(), $flags);
         }
     }
 }
