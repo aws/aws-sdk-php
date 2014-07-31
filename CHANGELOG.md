@@ -18,6 +18,7 @@ CHANGELOG
 * Fixed an issue with deleting nested folders in the Amazon S3 stream wrapper.
 * Fixed an issue with the Amazon S3 sync abstraction to ensure that S3->S3
   communication works correctly.
+* Added stricter validation to the Amazon SNS MessageValidator.
 
 2.6.12 (2014-07-16)
 -------------------
