@@ -27,11 +27,13 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * Client to interact with Auto Scaling
  *
  * @method Model attachInstances(array $args = array()) {@command AutoScaling AttachInstances}
+ * @method Model completeLifecycleAction(array $args = array()) {@command AutoScaling CompleteLifecycleAction}
  * @method Model createAutoScalingGroup(array $args = array()) {@command AutoScaling CreateAutoScalingGroup}
  * @method Model createLaunchConfiguration(array $args = array()) {@command AutoScaling CreateLaunchConfiguration}
  * @method Model createOrUpdateTags(array $args = array()) {@command AutoScaling CreateOrUpdateTags}
  * @method Model deleteAutoScalingGroup(array $args = array()) {@command AutoScaling DeleteAutoScalingGroup}
  * @method Model deleteLaunchConfiguration(array $args = array()) {@command AutoScaling DeleteLaunchConfiguration}
+ * @method Model deleteLifecycleHook(array $args = array()) {@command AutoScaling DeleteLifecycleHook}
  * @method Model deleteNotificationConfiguration(array $args = array()) {@command AutoScaling DeleteNotificationConfiguration}
  * @method Model deletePolicy(array $args = array()) {@command AutoScaling DeletePolicy}
  * @method Model deleteScheduledAction(array $args = array()) {@command AutoScaling DeleteScheduledAction}
@@ -42,6 +44,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeAutoScalingInstances(array $args = array()) {@command AutoScaling DescribeAutoScalingInstances}
  * @method Model describeAutoScalingNotificationTypes(array $args = array()) {@command AutoScaling DescribeAutoScalingNotificationTypes}
  * @method Model describeLaunchConfigurations(array $args = array()) {@command AutoScaling DescribeLaunchConfigurations}
+ * @method Model describeLifecycleHookTypes(array $args = array()) {@command AutoScaling DescribeLifecycleHookTypes}
+ * @method Model describeLifecycleHooks(array $args = array()) {@command AutoScaling DescribeLifecycleHooks}
  * @method Model describeMetricCollectionTypes(array $args = array()) {@command AutoScaling DescribeMetricCollectionTypes}
  * @method Model describeNotificationConfigurations(array $args = array()) {@command AutoScaling DescribeNotificationConfigurations}
  * @method Model describePolicies(array $args = array()) {@command AutoScaling DescribePolicies}
@@ -50,12 +54,17 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeScheduledActions(array $args = array()) {@command AutoScaling DescribeScheduledActions}
  * @method Model describeTags(array $args = array()) {@command AutoScaling DescribeTags}
  * @method Model describeTerminationPolicyTypes(array $args = array()) {@command AutoScaling DescribeTerminationPolicyTypes}
+ * @method Model detachInstances(array $args = array()) {@command AutoScaling DetachInstances}
  * @method Model disableMetricsCollection(array $args = array()) {@command AutoScaling DisableMetricsCollection}
  * @method Model enableMetricsCollection(array $args = array()) {@command AutoScaling EnableMetricsCollection}
+ * @method Model enterStandby(array $args = array()) {@command AutoScaling EnterStandby}
  * @method Model executePolicy(array $args = array()) {@command AutoScaling ExecutePolicy}
+ * @method Model exitStandby(array $args = array()) {@command AutoScaling ExitStandby}
+ * @method Model putLifecycleHook(array $args = array()) {@command AutoScaling PutLifecycleHook}
  * @method Model putNotificationConfiguration(array $args = array()) {@command AutoScaling PutNotificationConfiguration}
  * @method Model putScalingPolicy(array $args = array()) {@command AutoScaling PutScalingPolicy}
  * @method Model putScheduledUpdateGroupAction(array $args = array()) {@command AutoScaling PutScheduledUpdateGroupAction}
+ * @method Model recordLifecycleActionHeartbeat(array $args = array()) {@command AutoScaling RecordLifecycleActionHeartbeat}
  * @method Model resumeProcesses(array $args = array()) {@command AutoScaling ResumeProcesses}
  * @method Model setDesiredCapacity(array $args = array()) {@command AutoScaling SetDesiredCapacity}
  * @method Model setInstanceHealth(array $args = array()) {@command AutoScaling SetInstanceHealth}

@@ -5,6 +5,8 @@ Next Release:
 -------------
 * Added support for configurable idle timeouts to the Elastic Load Balancing
   client.
+* Added support for Lifecycle Hooks, Detach Instances, and Standby to the
+  AutoScaling client.
 
 2.6.12 (2014-07-16)
 -------------------
