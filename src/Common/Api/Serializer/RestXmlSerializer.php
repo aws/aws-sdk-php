@@ -14,6 +14,8 @@ class RestXmlSerializer extends RestSerializer
     /** @var XmlBody */
     private $xmlBody;
 
+    protected $contentType = 'application/xml';
+
     /**
      * @param Service $api      Service API description
      * @param string  $endpoint Endpoint to connect to
@@ -33,7 +35,6 @@ class RestXmlSerializer extends RestSerializer
         StructureShape $member,
         array $value
     ) {
-        $request->setHeader('Content-Type', 'application/xml');
         $request->setBody(Stream\create(
             $this->xmlBody->build($member, $value)
         ));

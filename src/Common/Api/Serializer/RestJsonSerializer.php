@@ -15,6 +15,8 @@ class RestJsonSerializer extends RestSerializer
     /** @var JsonBody */
     private $jsonFormatter;
 
+    protected $contentType = 'application/json';
+
     /**
      * @param Service  $api           Service API description
      * @param string   $endpoint      Endpoint to connect to
@@ -34,7 +36,6 @@ class RestJsonSerializer extends RestSerializer
         StructureShape $member,
         array $value
     ) {
-        $request->setHeader('Content-Type', 'application/json');
         $request->setBody(Stream\create(
             $this->jsonFormatter->build($member, $value)
         ));

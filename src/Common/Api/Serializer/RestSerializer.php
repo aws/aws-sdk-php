@@ -23,6 +23,9 @@ abstract class RestSerializer implements SubscriberInterface
     /** @var Url */
     private $endpoint;
 
+    /** @var string The content type to set on requests. */
+    protected $contentType;
+
     /**
      * @param Service $api      Service API description
      * @param string  $endpoint Endpoint to connect to
@@ -51,6 +54,7 @@ abstract class RestSerializer implements SubscriberInterface
             $this->buildEndpoint($operation, $args),
             ['config' => ['command' => $command]]
         );
+        $request->setHeader('Content-Type', $this->contentType);
 
         $event->setRequest($this->serialize($request, $operation, $args));
     }
