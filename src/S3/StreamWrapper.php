@@ -234,7 +234,6 @@ class StreamWrapper
                 if (!$result['Contents'] && !$result['CommonPrefixes']) {
                     throw new \Exception("File or directory not found: $path");
                 }
-                // This is a directory prefix
                 return $this->formatUrlStat($path);
             }
         }, $flags);
@@ -287,21 +286,20 @@ class StreamWrapper
 
     public function rmdir($path)
     {
+        $this->clearStatInfo($path);
         $params = $this->getParams($path);
         $client = $this->getClient();
 
         if (!$params['Bucket']) {
-            return $this->triggerError('You cannot delete s3://. Please '
-                . 'specify a bucket.');
+            return $this->triggerError('You must specify a bucket');
         }
 
         return $this->boolCall(function () use ($params, $path, $client) {
             if (!$params['Key']) {
                 $client->deleteBucket(['Bucket' => $params['Bucket']]);
-                $this->clearStatInfo($path);
                 return true;
             }
-            return $this->deleteSubfolder($params, $path);
+            return $this->deleteSubfolder($path, $params);
         });
     }
 
@@ -322,7 +320,6 @@ class StreamWrapper
      */
     public function dir_opendir($path, $options)
     {
-        // Reset the cache
         $this->clearStatInfo();
         $params = $this->getParams($path);
         $delimiter = $this->getOption('delimiter');
@@ -338,10 +335,11 @@ class StreamWrapper
 
         $this->openedBucket = $params['Bucket'];
         $this->openedBucketPrefix = $params['Key'];
-        $operationParams = [
-            'Bucket' => $params['Bucket'],
-            'Prefix' => $params['Key']
-        ];
+        $operationParams = ['Bucket' => $params['Bucket']];
+
+        if ($params['Key']) {
+            $operationParams['Prefix'] = $params['Key'];
+        }
 
         if ($delimiter) {
             $operationParams['Delimiter'] = $delimiter;
@@ -601,7 +599,6 @@ class StreamWrapper
     private function openWriteStream()
     {
         $this->body = new Stream(fopen('php://temp', 'r+'));
-
         return true;
     }
 
@@ -741,7 +738,15 @@ class StreamWrapper
         });
     }
 
-    private function deleteSubfolder($params, $path)
+    /**
+     * Deletes a nested subfolder if it is empty.
+     *
+     * @param string $path   Path that is being deleted (e.g., 's3://a/b/c')
+     * @param array  $params A result of StreamWrapper::getParams()
+     *
+     * @return bool
+     */
+    private function deleteSubfolder($path, $params)
     {
         // Use a key that adds a trailing slash if needed.
         $prefix = rtrim($params['Key'], '/') . '/';
@@ -752,14 +757,10 @@ class StreamWrapper
         ]);
 
         // Check if the bucket contains keys other than the placeholder
-        if ($result['Contents']) {
-            foreach ($result['Contents'] as $key) {
-                if ($key['Key'] == $prefix) {
-                    continue;
-                }
-                return $this->triggerError('Psuedo folder is not empty');
-            }
-            return $this->unlink(rtrim($path, '/') . '/');
+        if ($contents = $result['Contents']) {
+            return (count($contents) > 1 || $contents[0] != $prefix)
+                ? $this->triggerError('Psuedo folder is not empty')
+                : $this->unlink(rtrim($path, '/') . '/');
         }
 
         return $result['CommonPrefixes']
