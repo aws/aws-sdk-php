@@ -4,7 +4,7 @@ namespace Aws\S3;
 use Aws\Common\Paginator\ResourceIterator;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Stream\MetadataStreamInterface;
+use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Mimetypes;
 use GuzzleHttp\Stream\CachingStream;
@@ -63,8 +63,14 @@ class StreamWrapper
     /** @var resource|null Stream context (this is set by PHP) */
     public $context;
 
-    /** @var MetadataStreamInterface Underlying stream resource */
+    /** @var StreamInterface Underlying stream resource */
     private $body;
+
+    /** @var array Hash of opened stream parameters */
+    private $params = [];
+
+    /** @var string Mode in which the stream was opened */
+    private $mode;
 
     /** @var ResourceIterator Iterator used with opendir() related calls */
     private $objectIterator;
@@ -107,22 +113,20 @@ class StreamWrapper
 
     public function stream_open($path, $mode, $options, &$opened_path)
     {
-        $p = $this->getBucketKey($path);
-        stream_context_set_option($this->context, 's3', 'Bucket', $p['Bucket']);
-        stream_context_set_option($this->context, 's3', 'Key', $p['Key']);
-        $mode = rtrim($mode, 'bt');
+        $this->params = $this->getBucketKey($path);
+        $this->mode = rtrim($mode, 'bt');
 
-        if ($errors = $this->validate($path, $mode)) {
+        if ($errors = $this->validate($path, $this->mode)) {
             return $this->triggerError($errors);
         }
 
-        switch ($mode) {
+        switch ($this->mode) {
             case 'r':
-                return $this->openReadStream();
+                return $this->openReadStream($path);
             case 'a':
-                return $this->openAppendStream();
+                return $this->openAppendStream($path);
             default:
-                return $this->openWriteStream();
+                return $this->openWriteStream($path);
         }
     }
 
@@ -133,7 +137,7 @@ class StreamWrapper
 
     public function stream_flush()
     {
-        if (rtrim($this->body->getMetadata('mode'), 'bt') == 'r') {
+        if ($this->mode == 'r') {
             return false;
         }
 
@@ -178,7 +182,7 @@ class StreamWrapper
     {
         return $this->boolCall(function () use ($path) {
             $this->clearStatInfo($path);
-            $this->getClient()->deleteObject($this->getParams($path));
+            $this->getClient()->deleteObject($this->withPath($path));
             return true;
         });
     }
@@ -187,7 +191,7 @@ class StreamWrapper
     {
         $stat = $this->getStatTemplate();
         $stat[7] = $stat['size'] = (int) $this->body->getSize();
-        $stat[2] = $stat['mode'] = $this->body->getMetadata('mode');
+        $stat[2] = $stat['mode'] = $this->mode;
 
         return $stat;
     }
@@ -204,7 +208,7 @@ class StreamWrapper
             return self::$nextStat[$path];
         }
 
-        $parts = $this->getParams($path);
+        $parts = $this->withPath($path);
 
         if (!$parts['Key']) {
             return $this->statDirectory($parts, $path, $flags);
@@ -270,7 +274,7 @@ class StreamWrapper
      */
     public function mkdir($path, $mode, $options)
     {
-        $params = $this->getParams($path);
+        $params = $this->withPath($path);
         if (!$params['Bucket']) {
             return false;
         }
@@ -279,7 +283,7 @@ class StreamWrapper
             $params['ACL'] = $this->determineAcl($mode);
         }
 
-        return !isset($params['Key']) || $params['Key'] === '/'
+        return empty($params['Key'])
             ? $this->createBucket($path, $params)
             : $this->createSubfolder($path, $params);
     }
@@ -287,7 +291,7 @@ class StreamWrapper
     public function rmdir($path)
     {
         $this->clearStatInfo($path);
-        $params = $this->getParams($path);
+        $params = $this->withPath($path);
         $client = $this->getClient();
 
         if (!$params['Bucket']) {
@@ -321,7 +325,7 @@ class StreamWrapper
     public function dir_opendir($path, $options)
     {
         $this->clearStatInfo();
-        $params = $this->getParams($path);
+        $params = $this->withPath($path);
         $delimiter = $this->getOption('delimiter');
         $filterFn = $this->getOption('listFilter');
 
@@ -443,8 +447,8 @@ class StreamWrapper
      */
     public function rename($path_from, $path_to)
     {
-        $partsFrom = $this->getParams($path_from);
-        $partsTo = $this->getParams($path_to);
+        $partsFrom = $this->withPath($path_from);
+        $partsTo = $this->withPath($path_to);
         $this->clearStatInfo($path_from, $path_to);
 
         if (!$partsFrom['Key'] || !$partsTo['Key']) {
@@ -452,7 +456,7 @@ class StreamWrapper
                 . 'supports copying objects');
         }
 
-        return $this->boolCall(function () use ($partsTo, $partsFrom) {
+        return $this->boolCall(function () use ($partsFrom, $partsTo) {
             // Copy the object and allow overriding default parameters if
             // desired, but by default copy metadata
             $this->getClient()->copyObject($this->getOptions() + [
@@ -462,12 +466,12 @@ class StreamWrapper
                 'CopySource'        => '/' . $partsFrom['Bucket'] . '/'
                                            . rawurlencode($partsFrom['Key']),
             ]);
-
             // Delete the original object
             $this->getClient()->deleteObject([
                 'Bucket' => $partsFrom['Bucket'],
                 'Key'    => $partsFrom['Key']
             ] + $this->getOptions());
+            return true;
         });
     }
 
@@ -516,10 +520,18 @@ class StreamWrapper
      */
     private function getOptions()
     {
-        $context = $this->context ?: stream_context_get_default();
-        $options = stream_context_get_options($context);
+        // Context is not set when doing things like stat
+        if ($this->context === null) {
+            $options = [];
+        } else {
+            $options = stream_context_get_options($this->context);
+            $options = isset($options['s3']) ? $options['s3'] : [];
+        }
 
-        return isset($options['s3']) ? $options['s3'] : [];
+        $default = stream_context_get_options(stream_context_get_default());
+        $default = isset($default['s3']) ? $default['s3'] : [];
+
+        return $this->params + $options + $default;
     }
 
     /**
@@ -568,10 +580,10 @@ class StreamWrapper
      *
      * @return array Hash of 'Bucket', 'Key', and custom params from the context
      */
-    private function getParams($path)
+    private function withPath($path)
     {
         $params = $this->getOptions();
-        unset($params['seekable']);
+        unset($params['seekable'], $params['client']);
 
         return $this->getBucketKey($path) + $params;
     }
@@ -692,14 +704,14 @@ class StreamWrapper
      * Creates a bucket for the given parameters.
      *
      * @param string $path   Stream wrapper path
-     * @param array  $params A result of StreamWrapper::getParams()
+     * @param array  $params A result of StreamWrapper::withPath()
      *
      * @return bool Returns true on success or false on failure
      */
     private function createBucket($path, array $params)
     {
         if ($this->getClient()->doesBucketExist($params['Bucket'])) {
-            return $this->triggerError("Directory already exists: {$path}");
+            return $this->triggerError("Bucket already exists: {$path}");
         }
 
         return $this->boolCall(function () use ($params, $path) {
@@ -713,7 +725,7 @@ class StreamWrapper
      * Creates a pseudo-folder by creating an empty "/" suffixed key
      *
      * @param string $path   Stream wrapper path
-     * @param array  $params A result of StreamWrapper::getParams()
+     * @param array  $params A result of StreamWrapper::withPath()
      *
      * @return bool
      */
@@ -728,7 +740,7 @@ class StreamWrapper
             $params['Bucket'],
             $params['Key'])
         ) {
-            return $this->triggerError("Directory already exists: {$path}");
+            return $this->triggerError("Subfolder already exists: {$path}");
         }
 
         return $this->boolCall(function () use ($params, $path) {
@@ -742,7 +754,7 @@ class StreamWrapper
      * Deletes a nested subfolder if it is empty.
      *
      * @param string $path   Path that is being deleted (e.g., 's3://a/b/c')
-     * @param array  $params A result of StreamWrapper::getParams()
+     * @param array  $params A result of StreamWrapper::withPath()
      *
      * @return bool
      */
@@ -758,13 +770,13 @@ class StreamWrapper
 
         // Check if the bucket contains keys other than the placeholder
         if ($contents = $result['Contents']) {
-            return (count($contents) > 1 || $contents[0] != $prefix)
-                ? $this->triggerError('Psuedo folder is not empty')
+            return (count($contents) > 1 || $contents[0]['Key'] != $prefix)
+                ? $this->triggerError('Subfolder is not empty')
                 : $this->unlink(rtrim($path, '/') . '/');
         }
 
         return $result['CommonPrefixes']
-            ? $this->triggerError('Pseudo folder contains nested folders')
+            ? $this->triggerError('Subfolder contains nested folders')
             : true;
     }
 

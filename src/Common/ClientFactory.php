@@ -360,7 +360,7 @@ class ClientFactory
                 . "evaluating the exception_class argument: $value");
         }
 
-        $value = "Aws\\Service\\{$args['class_name']}\\{$args['class_name']}Exception";
+        $value = "Aws\\{$args['class_name']}\\Exception\\{$args['class_name']}Exception";
         // If the dynamically created exception cannot be found, then use the
         // default exception class.
         if (!class_exists($value)) {
