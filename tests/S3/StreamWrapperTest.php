@@ -282,6 +282,23 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('private', (string) $requests[5]);
     }
 
+    public function testCreatesNestedSubfolder()
+    {
+        $history = new History();
+        $this->client->getHttpClient()->getEmitter()->attach($history);
+
+        $this->addMockResponses($this->client, [
+            new Response(404), new Response(204)
+        ]);
+
+        $this->assertTrue(mkdir('s3://bucket/key/', 0777));
+        $requests = $history->getRequests();
+        $this->assertEquals(2, count($requests));
+        $this->assertEquals('HEAD', $requests[0]->getMethod());
+        $this->assertEquals('PUT', $requests[1]->getMethod());
+        $this->assertContains('public-read', (string) $requests[1]);
+    }
+
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage specify a bucket
@@ -610,5 +627,43 @@ EOT;
             count($responses),
             count($history)
         );
+    }
+
+    /**
+     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage cannot represent a stream of type user-space
+     */
+    public function testStreamCastIsNotPossible()
+    {
+        $this->addMockResponses($this->client, [
+            new Response(200, [], Stream::factory(''))
+        ]);
+        $r = fopen('s3://bucket/key', 'r');
+        $read = [$r];
+        $write = $except = null;
+        stream_select($read, $write, $except, 0);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage No client in stream context
+     */
+    public function testEnsuresClientIsSet()
+    {
+        fopen('s3://bucket/key', 'r', false, stream_context_create([
+            's3' => ['client' => null]
+        ]));
+    }
+
+    public function testDoesNotErrorOnIsLink()
+    {
+        $this->addMockResponses($this->client, [new Response(404)]);
+        $this->assertFalse(is_link('s3://bucket/key'));
+    }
+
+    public function testDoesNotErrorOnFileExists()
+    {
+        $this->addMockResponses($this->client, [new Response(404)]);
+        $this->assertFalse(file_exists('s3://bucket/key'));
     }
 }
