@@ -33,6 +33,7 @@ class RestXmlSerializer extends RestSerializer
         StructureShape $member,
         array $value
     ) {
+        $request->setHeader('Content-Type', 'application/xml');
         $request->setBody(Stream\create(
             $this->xmlBody->build($member, $value)
         ));
