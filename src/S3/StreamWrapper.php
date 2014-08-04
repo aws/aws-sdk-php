@@ -328,37 +328,28 @@ class StreamWrapper
         $params = $this->withPath($path);
         $delimiter = $this->getOption('delimiter');
         $filterFn = $this->getOption('listFilter');
+        $operationParams = ['Bucket' => $params['Bucket']];
+        $this->openedBucket = $params['Bucket'];
 
         if ($delimiter === null) {
             $delimiter = '/';
-        }
-
-        if ($params['Key']) {
-            $params['Key'] = rtrim($params['Key'], $delimiter) . $delimiter;
-        }
-
-        $this->openedBucket = $params['Bucket'];
-        $this->openedBucketPrefix = $params['Key'];
-        $operationParams = ['Bucket' => $params['Bucket']];
-
-        if ($params['Key']) {
-            $operationParams['Prefix'] = $params['Key'];
         }
 
         if ($delimiter) {
             $operationParams['Delimiter'] = $delimiter;
         }
 
-        $objectIterator = $this->getClient()->getIterator(
-            'ListObjects',
-            $operationParams,
-            ['return_prefixes' => true, 'sort_results' => true]
-        );
+        if ($params['Key']) {
+            $params['Key'] = rtrim($params['Key'], $delimiter) . $delimiter;
+            $operationParams['Prefix'] = $params['Key'];
+        }
+
+        $this->openedBucketPrefix = $params['Key'];
 
         // Filter our "/" keys added by the console as directories, and ensure
         // that if a filter function is provided that it passes the filter.
         $this->objectIterator = new \CallbackFilterIterator(
-            $objectIterator,
+            $this->getClient()->getIterator('ListObjects', $operationParams),
             function ($key) use ($filterFn) {
                 // Each yielded results can contain a "Key" or "Prefix"
                 return (!$filterFn || call_user_func($filterFn, $key)) &&
