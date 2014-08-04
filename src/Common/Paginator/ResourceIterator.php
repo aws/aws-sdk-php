@@ -48,9 +48,7 @@ class ResourceIterator implements \OuterIterator
 
     public function current()
     {
-        return $this->valid()
-            ? $this->resources[$this->index]
-            : false;
+        return $this->valid() ? $this->resources[$this->index] : false;
     }
 
     public function key()
@@ -81,8 +79,7 @@ class ResourceIterator implements \OuterIterator
 
     public function rewind()
     {
-        $this->resourceIndex = 0;
-        $this->index = 0;
+        $this->resourceIndex = $this->index = 0;
         $this->resources = [];
         $this->paginator->rewind();
     }
@@ -93,22 +90,35 @@ class ResourceIterator implements \OuterIterator
         $this->index = 0;
         $this->resources = [];
 
-        // Apply a limit, if specified... and possible
+        // Get the next available set of resources
+        while ($result = $this->paginator->getNext($this->getArgs())) {
+            // Iterate over each possible path
+            foreach ($this->path as $path) {
+                if ($matches = $result->search($path)) {
+                    // Merge these path matches onto any other path matches.
+                    $this->resources = array_merge($this->resources, $matches);
+                }
+            }
+            // No need to continue paginating when viable results are present.
+            if ($this->resources) {
+                break;
+            }
+        }
+    }
+
+    private function getArgs()
+    {
         $args = [];
-        if ($this->limit && ($key = $this->paginator->getConfig('limit_key'))) {
-            $args[$key] = $this->limit;
-            if ($this->limit > $this->resourceIndex) {
-                $args[$key] = $this->limit - $this->resourceIndex;
+
+        // Add the Limit key if necessary
+        if ($this->limit) {
+            if ($key = $this->paginator->getConfig('limit_key')) {
+                $args[$key] = $this->limit > $this->resourceIndex
+                    ? $this->limit - $this->resourceIndex
+                    : $this->limit;
             }
         }
 
-        // Get the next available set of resources
-        while ($result = $this->paginator->getNext($args)) {
-            foreach ($this->path as $path) {
-                if ($this->resources = $result->search($path)) {
-                    break(2);
-                }
-            }
-        }
+        return $args;
     }
 }
