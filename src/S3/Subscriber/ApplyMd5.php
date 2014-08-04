@@ -4,7 +4,7 @@ namespace Aws\S3\Subscriber;
 use Aws\Common\Signature\SignatureV4;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
-use GuzzleHttp\Message\Request;
+use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Stream;
 
 /**
@@ -18,10 +18,17 @@ class ApplyMd5 implements SubscriberInterface
         'DeleteObjects',
         'PutBucketCors',
         'PutBucketLifecycle',
-        'PutBucketTagging'
     ];
 
     private static $canMd5 = ['PutObject', 'UploadPart'];
+
+    /** @var bool Whether or not to calculate optionals checksums. */
+    private $calculateChecksums;
+
+    public function __construct($calculateChecksums = true)
+    {
+        $this->calculateChecksums = $calculateChecksums;
+    }
 
     public function getEvents()
     {
@@ -30,26 +37,27 @@ class ApplyMd5 implements SubscriberInterface
 
     public function setMd5(PrepareEvent $event)
     {
-        $signature = $event->getClient()->getSignature();
-
+        /** @var \Aws\AwsClientInterface $client */
+        $client = $event->getClient();
+        $signature = $client->getSignature();
         $command = $event->getCommand();
 
-        if (in_array($command->getName(), self::$requireMd5)) {
-            // Add the MD5 if it is a required parameter
+        // If ContentMD5 is set, there is nothing to do.
+        if ($command['ContentMD5']) {
+            return;
+        }
+
+        // If and MD5 is required or enabled, add one.
+        $required = in_array($command->getName(), self::$requireMd5);
+        $optionalAndEnabled = $this->calculateChecksums
+            && in_array($command->getName(), self::$canMd5)
+            && !($signature instanceof SignatureV4);
+        if ($required || $optionalAndEnabled) {
             $this->addMd5($event->getRequest());
-        } elseif (in_array($command->getName(), self::$canMd5)) {
-            $value = $command['ContentMD5'];
-            // Add a computed MD5 if the parameter is set to true or if
-            // not using Signature V4 and the value is not set (null).
-            if ($value === true ||
-                ($value === null && !($signature instanceof SignatureV4))
-            ) {
-                $this->addMd5($event->getRequest());
-            }
         }
     }
 
-    private function addMd5(Request $request)
+    private function addMd5(RequestInterface $request)
     {
         $body = $request->getBody();
         if ($body && $body->getSize() > 0) {

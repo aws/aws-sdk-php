@@ -2,7 +2,7 @@
 namespace Aws\Glacier;
 
 use Aws\Common\ClientFactory;
-use Aws\Common\Subscriber\UploadBody;
+use Aws\Common\Subscriber\SourceFile;
 
 /**
  * @internal
@@ -11,10 +11,14 @@ class GlacierFactory extends ClientFactory
 {
     protected function createClient(array $args)
     {
-        $client = parent::createClient($args);
+        if (!isset($args['defaults'])) {
+            $args['defaults'] = [];
+        }
 
         // Set the default accountId to "-" for all operations.
-        $client->setConfig('defaults/accountId', '-');
+        $args['defaults']['accountId'] = '-';
+
+        $client = parent::createClient($args);
 
         // Add the Glacier version header required for all operations.
         $client->getHttpClient()->setDefaultOption(
@@ -24,14 +28,10 @@ class GlacierFactory extends ClientFactory
 
         $emitter = $client->getEmitter();
         // Allow for specifying bodies with file paths and file handles.
-        $emitter->attach(new UploadBody(
-            ['UploadArchive', 'UploadMultipartPart'],
-            'body',
-            'sourceFile'
-        ));
+        $emitter->attach(new SourceFile('body', 'sourceFile'));
         // Listen for upload operations and make sure the required hash headers
         // are added.
-        $emitter->attach(new GlacierUploadListener());
+        $emitter->attach(new ContentHash);
 
         return $client;
     }

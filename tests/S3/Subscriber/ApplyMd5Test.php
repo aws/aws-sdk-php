@@ -34,8 +34,17 @@ class ApplyMd5Test extends \PHPUnit_Framework_TestCase
     public function getContentMd5UseCases()
     {
         $args = ['Bucket' => 'foo', 'Key' => 'bar'];
+        $md5 = base64_encode(md5('baz', true));
 
         return [
+            // Do nothing if Content MD% was explicitly provided.
+            [
+                [],
+                'PutObject',
+                $args + ['ContentMD5' => $md5],
+                true,
+                $md5
+            ],
             // Gets added for operations that require it
             [
                 [],
@@ -44,13 +53,21 @@ class ApplyMd5Test extends \PHPUnit_Framework_TestCase
                 true,
                 'SKIP'
             ],
-            // Gets added for upload operations
+            // Gets added for upload operations by default
             [
                 [],
                 'PutObject',
                 $args + ['Body' => 'baz'],
                 true,
-                base64_encode(md5('baz', true)),
+                $md5,
+            ],
+            // Not added for upload operations when turned off a client level
+            [
+                ['calculate_checksums' => false],
+                'PutObject',
+                $args + ['Body' => 'baz'],
+                false,
+                null,
             ],
             // Not added for operations that does not require it
             [

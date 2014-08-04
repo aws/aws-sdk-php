@@ -3,17 +3,18 @@ namespace Aws\Glacier;
 
 use Aws\Glacier\Multipart\UploadPartGenerator;
 use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
  * Adds the content sha256 and tree hash to Glacier upload requests if not set
+ *
+ * @internal
  */
-class GlacierUploadListener implements SubscriberInterface
+class ContentHash implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare', RequestEvents::EARLY]];
+        return ['prepare' => ['onPrepare', 'last']];
     }
 
     /**
@@ -25,8 +26,11 @@ class GlacierUploadListener implements SubscriberInterface
     public function onPrepare(PrepareEvent $event)
     {
         $command = $event->getCommand();
-        $contentHash = $command['ContentSHA256'];
-        if ($contentHash === true) {
+        $name = $command->getName();
+
+        if ($hash = $command['ContentSHA256']) {
+            $event->getRequest()->addHeader('x-amz-content-sha256', $hash);
+        } elseif ($name === 'UploadArchive' || $name === 'UploadPart') {
             $request = $event->getRequest();
             $upload = UploadPartGenerator::createSingleUploadPart(
                 $request->getBody()
@@ -41,9 +45,6 @@ class GlacierUploadListener implements SubscriberInterface
                     $upload->getChecksum()
                 );
             }
-        } elseif (is_string($contentHash)) {
-            $request = $event->getRequest();
-            $request->addHeader('x-amz-content-sha256', $contentHash);
         }
     }
 }

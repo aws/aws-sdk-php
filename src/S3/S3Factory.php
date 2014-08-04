@@ -27,6 +27,10 @@ class S3Factory extends ClientFactory
             $args['region'] = 'us-east-1';
         }
 
+        if (!isset($args['calculate_checksums'])) {
+            $args['calculate_checksums'] = true;
+        }
+
         parent::addDefaultArgs($args);
     }
 
@@ -39,7 +43,7 @@ class S3Factory extends ClientFactory
         $emitter->attach(new PermanentRedirect);
         $emitter->attach(new PutObjectUrl);
         $emitter->attach(new SourceFile);
-        $emitter->attach(new ApplyMd5);
+        $emitter->attach(new ApplyMd5($args['calculate_checksums']));
         $emitter->attach(new SaveAs);
 
         return $client;
