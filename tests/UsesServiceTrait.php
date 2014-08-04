@@ -79,13 +79,18 @@ trait UsesServiceTrait
      *
      * @param AwsClientInterface $client
      * @param Response[]         $responses
+     * @param bool               $readBodies
      *
      * @return AwsClientInterface
      * @throws \InvalidArgumentException
      */
-    private function addMockResponses($client, array $responses)
-    {
-        $client->getHttpClient()->getEmitter()->attach(new Mock($responses));
+    private function addMockResponses(
+        $client,
+        array $responses,
+        $readBodies = true
+    ) {
+        $mock = new Mock($responses, $readBodies);
+        $client->getHttpClient()->getEmitter()->attach($mock);
 
         return $client;
     }

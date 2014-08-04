@@ -374,6 +374,22 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         ));
     }
 
+    public function testAddsDebugListener()
+    {
+        $f = new ClientFactory();
+        $c = $f->create([
+            'service'  => 'sqs',
+            'region'   => 'x',
+            'debug'    => true,
+            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
+        ]);
+        $this->assertTrue(SdkTest::hasListener(
+            $c->getEmitter(),
+            'GuzzleHttp\Command\Subscriber\Debug',
+            'prepare'
+        ));
+    }
+
     public function signatureVersionProvider()
     {
         return [

@@ -32,6 +32,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Subscriber\Log\SimpleLogger;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
+use GuzzleHttp\Command\Subscriber\Debug;
 
 /**
  * @internal Default factory class used to create clients.
@@ -70,7 +71,8 @@ class ClientFactory
         'client_defaults'   => 1,
         'client'            => 1,
         'retries'           => 2,
-        'validate'          => 2
+        'validate'          => 2,
+        'debug'             => 2
     ];
 
     /**
@@ -236,6 +238,20 @@ class ClientFactory
         $client->getEmitter()->attach(new Validation($validator));
     }
 
+    protected function handle_debug(
+        $value,
+        array &$args,
+        AwsClientInterface $client
+    ) {
+        if ($value === false) {
+            return;
+        }
+
+        $client->getEmitter()->attach(new Debug(
+            $value === true ? [] : $value
+        ));
+    }
+
     /**
      * Creates an appropriate error parser for the given API.
      *
@@ -344,7 +360,7 @@ class ClientFactory
                 . "evaluating the exception_class argument: $value");
         }
 
-        $value = "Aws\\Service\\{$args['class_name']}\\{$args['class_name']}Exception";
+        $value = "Aws\\{$args['class_name']}\\Exception\\{$args['class_name']}Exception";
         // If the dynamically created exception cannot be found, then use the
         // default exception class.
         if (!class_exists($value)) {

@@ -390,18 +390,16 @@ class S3Client extends AwsClient
     ) {
         try {
             $this->execute($command);
-            $exists = true;
+            return true;
         } catch (S3Exception $e) {
             if ($e->getAwsErrorCode('AccessDenied')) {
                 return (bool) $accept403;
             }
-            $exists = false;
-            if ($e->getResponse()->getStatusCode() >= 500) {
+            if ($e->getTransaction()->getResponse()->getStatusCode() >= 500) {
                 throw $e;
             }
+            return false;
         }
-
-        return $exists;
     }
 
     private function validateSyncInstalled()

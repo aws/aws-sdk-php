@@ -15,8 +15,6 @@ class RestJsonSerializer extends RestSerializer
     /** @var JsonBody */
     private $jsonFormatter;
 
-    protected $contentType = 'application/json';
-
     /**
      * @param Service  $api           Service API description
      * @param string   $endpoint      Endpoint to connect to
