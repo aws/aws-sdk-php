@@ -115,7 +115,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             [
                 [
                     'type' => 'structure',
-                    'members' => ['foo' => ['type' => 'char']]
+                    'members' => ['foo' => ['type' => 'character']]
                 ],
                 ['foo' => 'a'],
                 true
@@ -123,7 +123,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             [
                 [
                     'type' => 'structure',
-                    'members' => ['foo' => ['type' => 'char']]
+                    'members' => ['foo' => ['type' => 'character']]
                 ],
                 ['foo' => 1],
                 true
