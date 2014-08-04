@@ -2,157 +2,105 @@
 namespace Aws\Glacier\Multipart;
 
 use Aws\Common\Multipart\AbstractUploadBuilder;
-use Aws\Common\Multipart\AbstractTransferState as State;
+use Aws\Common\Multipart\UploadState;
 
 /**
- * Easily create a multipart uploader used to quickly and reliably upload a
- * large file or data stream to Amazon Glacier using multipart uploads
+ * Creates a multipart uploader used to easily upload large archives to Glacier.
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    /**
-     * @var string Account ID to upload to
-     */
-    protected $accountId = '-';
+    protected static $requiredParams = ['accountId', 'vaultName'];
+
+    protected static $uploadIdParam = 'uploadId';
+
+    protected $uploadParams = [
+        'accountId' => '-',
+        'vaultName' => null,
+        'uploadId'  => null,
+    ];
 
     /**
-     * @var string Name of the vault to upload to
-     */
-    protected $vaultName;
-
-    /**
-     * @var string Archive description
+     * @var string Archive description.
      */
     protected $archiveDescription;
 
     /**
-     * @var UploadPartGenerator Glacier upload helper object
-     */
-    protected $partGenerator;
-
-    /**
-     * Set the account ID to upload the part to
+     * Set the account ID of the the archive.
      *
-     * @param string $accountId ID of the account
+     * @param string $accountId ID of the account.
      *
      * @return self
      */
     public function setAccountId($accountId)
     {
-        $this->accountId = $accountId;
+        $this->uploadParams['accountId'] = $accountId;
 
         return $this;
     }
 
     /**
-     * Set the vault name to upload the part to
-      *
-      * @param string $vaultName Name of the vault
-      *
-      * @return self
-     */
-    public function setVaultName($vaultName)
-    {
-        $this->vaultName = $vaultName;
-
-        return $this;
-    }
-
-    /**
-     * Set the archive description
-      *
-      * @param string $archiveDescription Archive description
-      *
-      * @return self
-     */
-    public function setArchiveDescription($archiveDescription)
-    {
-        $this->archiveDescription = $archiveDescription;
-
-        return $this;
-    }
-
-    /**
-     * Sets the Glacier upload helper object that pre-calculates hashes and sizes for all upload parts
+     * Set the vault name to upload the archive to.
      *
-     * @param UploadPartGenerator $partGenerator Glacier upload helper object
+     * @param string $vaultName Name of the vault.
      *
      * @return self
      */
-    public function setPartGenerator(UploadPartGenerator $partGenerator)
+    public function setVaultName($vaultName)
     {
-        $this->partGenerator = $partGenerator;
+        $this->uploadParams['vaultName'] = $vaultName;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
-     * @throws \InvalidArgumentException when attempting to resume a transfer using a non-seekable stream
-     * @throws \InvalidArgumentException when missing required properties (bucket, key, client, source)
+     * Set the archive description.
+     *
+     * @param string $archiveDescription Archive description.
+     *
+     * @return self
      */
-    public function build()
+    public function setArchiveDescription($archiveDescription)
     {
-        // If a Glacier upload helper object was set, use the source and part size from it
-        if ($this->partGenerator) {
-            $this->partSize = $this->partGenerator->getPartSize();
-        }
+        $this->addParam(Uploader::INITIATE, 'archiveDescription', $archiveDescription);
 
-        if (!($this->state instanceof State) && !$this->vaultName || !$this->client || !$this->source) {
-            throw new \InvalidArgumentException('You must specify a vault name, client, and source.');
-        }
-
-        if (!$this->source->isSeekable()) {
-            throw new \InvalidArgumentException('You cannot upload from a non-seekable source.');
-        }
-
-        // If no state was set, then create one by initiating or loading a multipart upload
-        if (is_string($this->state)) {
-            if (!$this->partGenerator) {
-                throw new \InvalidArgumentException('You must provide an UploadPartGenerator when resuming an upload.');
-            }
-            $this->state = TransferState::fromUploadId($this->client, UploadId::fromParams(array(
-                'accountId' => $this->accountId,
-                'vaultName' => $this->vaultName,
-                'uploadId'  => $this->state
-            )));
-            $this->state->setPartGenerator($this->partGenerator);
-        } elseif (!$this->state) {
-            $this->state = $this->initiateMultipartUpload();
-        }
-
-        $options = array(
-            'concurrency' => $this->concurrency
-        );
-
-        return $this->concurrency > 1
-            ? new ParallelTransfer($this->client, $this->state, $this->source, $options)
-            : new SerialTransfer($this->client, $this->state, $this->source, $options);
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function initiateMultipartUpload()
+    public function createUploader()
     {
-        $params = array(
-            'accountId' => $this->accountId,
-            'vaultName' => $this->vaultName
-        );
+        // Create the part generator.
+        $parts = new PartGenerator($this->source, [
+            'part_size' => $this->partSize,
+            'skip'      => $this->state->getUploadedParts(),
+        ]);
 
-        $partGenerator = $this->partGenerator ?: UploadPartGenerator::factory($this->source, $this->partSize);
+        // Store the part size in the state.
+        $this->partSize = $parts->getPartSize();
+        $this->state->setPartSize($this->partSize);
+        $this->addParam(Uploader::INITIATE, 'partSize', $this->partSize);
 
-        $command = $this->client->getCommand('InitiateMultipartUpload', array_replace($params, array(
-            'command.headers'    => $this->headers,
-            'partSize'           => $partGenerator->getPartSize(),
-            'archiveDescription' => $this->archiveDescription,
-        )));
-        $result = $this->client->execute($command);
-        $params['uploadId'] = $result->get('uploadId');
+        return new Uploader($this->client, $this->state, $parts, $this->params);
+    }
 
-        // Create a new state based on the initiated upload
-        $state = new TransferState(UploadId::fromParams($params));
-        $state->setPartGenerator($partGenerator);
+    protected function loadStateFromParams(array $params = [])
+    {
+        $state = new UploadState($params);
+
+        // Get all of the parts and archive information
+        $partSize = null;
+        $results = $this->client->getPaginator('ListParts', $params);
+        foreach ($results as $result) {
+            if (!$partSize) $partSize = $result['PartSizeInBytes'];
+            foreach ($result['Parts'] as $part) {
+                $rangeData = Uploader::parseRange($part['RangeInBytes'], $partSize);
+                $state->markPartAsUploaded($rangeData['PartNumber'], [
+                    'size'     => $rangeData['Size'],
+                    'checksum' => $part['SHA256TreeHash'],
+                ]);
+            }
+        }
+        $state->setPartSize('partSize', $partSize);
+        $state->setStatus($state::INITIATED);
 
         return $state;
     }

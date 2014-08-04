@@ -4,45 +4,43 @@ namespace Aws\Common\Multipart;
 use Aws\AwsClientInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Stream\MetadataStreamInterface;
 
-/**
- * Easily create a multipart uploader used to quickly and reliably upload a
- * large file or data stream to Amazon S3 using multipart uploads
- */
 abstract class AbstractUploadBuilder
 {
+    protected static $requiredParams;
+    protected static $uploadIdParam;
+
+    /** @var array Parameters required to identify an upload. */
+    protected $uploadParams;
+
     /**
-     * @var AwsClientInterface Client used to transfer requests
+     * @var AwsClientInterface Client used to transfer requests.
      */
     protected $client;
 
     /**
-     * @var AbstractTransferState State of the transfer
+     * @var UploadState State of the transfer.
      */
     protected $state;
 
     /**
-     * @var StreamInterface Source of the data
+     * @var StreamInterface|MetadataStreamInterface Source of the data.
      */
     protected $source;
 
     /**
-     * @var int Concurrency level to transfer the parts
-     */
-    protected $concurrency = 1;
-
-    /**
-     * @var int Size of upload parts
+     * @var int Size, in bytes, of each part.
      */
     protected $partSize;
 
     /**
-     * @var array Array of headers to set on the object
+     * @var array Parameters for executed commands.
      */
-    protected $headers = [];
+    protected $params = [];
 
     /**
-     * Set the client used to connect to the AWS service
+     * Set the client used to connect to the AWS service.
      *
      * @param AwsClientInterface $client Client to use
      *
@@ -56,16 +54,15 @@ abstract class AbstractUploadBuilder
     }
 
     /**
-     * Set the state of the upload. This is useful for resuming from a previously started multipart upload.
-     * You must use a local file stream as the data source if you wish to resume from a previous upload.
+     * Set the state of the upload. This is useful for resuming from a
+     * previously started multipart upload. It is the responsibility to provide
+     * the source that correlates to the provided state.
      *
-     * @param AbstractTransferState|string $state Pass a TransferStateInterface object or the ID of the initiated
-     *                                             multipart upload. When an ID is passed, the builder will create a
-     *                                             state object using the data from a ListParts API response.
+     * @param UploadState $state Upload state to resume from.
      *
      * @return static
      */
-    public function resumeFrom($state)
+    public function setState(UploadState $state)
     {
         $this->state = $state;
 
@@ -73,14 +70,14 @@ abstract class AbstractUploadBuilder
     }
 
     /**
-     * Set the data source of the transfer
+     * Set the data source of the transfer.
      *
-     * @param resource|string|StreamInterface $source Source of the transfer. Pass a string to transfer from a file on disk.
-     *                                           You can also stream from a resource returned from fopen or a Guzzle
-     *                                           {@see EntityBody} object.
+     * @param resource|string|StreamInterface $source Source of the upload.
+     *     Pass a string to transfer from a file on disk. You can also stream
+     *     from a resource returned from fopen or a Guzzle StreamInterface.
      *
      * @return static
-     * @throws \InvalidArgumentException when the source cannot be found or opened
+     * @throws \InvalidArgumentException when the source cannot be opened/read.
      */
     public function setSource($source)
     {
@@ -96,68 +93,128 @@ abstract class AbstractUploadBuilder
 
         $this->source = Stream::factory($source);
 
-        if ($this->source->isSeekable() && $this->source->getSize() == 0) {
-            throw new \InvalidArgumentException('Empty body provided to upload builder');
+        if (!$this->source->isReadable()) {
+            throw new \InvalidArgumentException('Source stream must be readable.');
         }
 
         return $this;
     }
 
     /**
-     * Set the upload part size
+     * Set the upload ID of the upload.
      *
-     * @param int $partSize Upload part size
+     * @param string $uploadId ID of the upload.
      *
      * @return self
      */
-    public function setPartSize($partSize)
+    public function setUploadId($uploadId)
     {
-        $this->partSize = (int) $partSize;
+        $this->uploadParams[static::$uploadIdParam] = $uploadId;
 
         return $this;
     }
 
     /**
-     * Set the concurrency level to use when uploading parts. This affects how
-     * many parts are uploaded in parallel. You must use a local file as your
-     * data source when using a concurrency greater than 1.
+     * Set the size of the upload parts.
      *
-     * @param int $concurrency Concurrency level
-     *
-     * @return self
-     */
-    public function setConcurrency($concurrency)
-    {
-        $this->concurrency = $concurrency;
-
-        return $this;
-    }
-
-    /**
-     * Specify the headers to set on the upload
-     *
-     * @param array $headers Headers to add to the uploaded object
+     * @param int $partSize Part size, in bytes.
      *
      * @return static
      */
-    public function setHeaders(array $headers)
+    public function setPartSize($partSize)
     {
-        $this->headers = $headers;
+        $this->partSize = $partSize;
 
         return $this;
     }
 
     /**
-     * Build the appropriate uploader based on the builder options
+     * Set additional parameters to be used with the specified command.
      *
-     * @return AbstractTransfer
+     * @param string $commandName Name of the command to set parameters for.
+     * @param array  $params      Parameters to include for the command.
+     *
+     * @return static
      */
-    abstract public function build();
+    public function setParams($commandName, array $params)
+    {
+        $this->params[$commandName] = $params;
+
+        return $this;
+    }
 
     /**
-     * Initiate the multipart upload
+     * Set a single additional parameter to be used with the specified command.
      *
-     * @return AbstractTransferState
+     * @param string $commandName Name of the command to set parameters for.
+     * @param string $param       Parameter to include for the command.
+     * @param mixed  $value       Parameter value
+     *
+     * @return static
      */
-    abstract protected function initiateMultipartUpload();
+    public function addParam($commandName, $param, $value)
+    {
+        if (isset($this->params[$commandName])) {
+            $this->params[$commandName] = [];
+        }
+
+        $this->params[$commandName][$param] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Build the uploader based on the provided configuration.
+     *
+     * @return static
+     */
+     public function build()
+     {
+         $this->determineUploadState();
+
+         return $this->createUploader();
+     }
+
+    /**
+     * Creates an upload state by listing existing parts to assemble a state.
+     *
+     * @param array $params Parameters used to identify an upload.
+     *
+     * @return mixed
+     */
+    abstract protected function loadStateFromParams(array $params = []);
+
+    /**
+     * Creates the service-specific Uploader object.
+     *
+     * @return static
+     */
+    abstract protected function createUploader();
+
+    /**
+     * Determines the upload state using the provided upload params.
+     *
+     * @throws \InvalidArgumentException if required upload params not included.
+     */
+    private function determineUploadState()
+    {
+        if (!($this->state instanceof UploadState)) {
+            // Make sure that essential upload params are set.
+            foreach (static::$requiredParams as $param) {
+                if (!isset($this->uploadParams[$param])) {
+                    throw new \InvalidArgumentException('You must provide an '
+                        . $param . 'value to the UploadBuilder.');
+                }
+            }
+
+            // Create a state from the upload params.
+            if (isset($this->uploadParams[static::$uploadIdParam])) {
+                $this->state = $this->loadStateFromParams($this->uploadParams);
+                $this->partSize = $this->state->getMetaData('PartSize');
+            } else {
+                unset($this->uploadParams[static::$uploadIdParam]);
+                $this->state = new UploadState($this->uploadParams);
+            }
+        }
+    }
 }

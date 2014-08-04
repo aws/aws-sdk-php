@@ -1,26 +1,27 @@
 <?php
 namespace Aws\Common\Exception;
 
-use Aws\Common\Multipart\AbstractTransferState;
+use Aws\Common\Multipart\UploadState;
 
 class MultipartUploadException extends \RuntimeException
 {
     /**
-     * @var AbstractTransferState State of the transfer when the error was encountered
+     * @var UploadState State of the transfer when the error was encountered
      */
     protected $state;
 
     /**
-     * @param AbstractTransferState $state     Transfer state
-     * @param \Exception            $exception Last encountered exception
+     * @param UploadState $state  Upload state at time of the exception.
+     * @param string              $action Action being taken.
+     * @param \Exception          $prev   Exception being thrown.
      */
-    public function __construct(AbstractTransferState $state, \Exception $exception = null)
-    {
-        parent::__construct(
-            'An error was encountered while performing a multipart upload: ' . $exception->getMessage(),
-            0,
-            $exception
-        );
+    public function __construct(
+        UploadState $state,
+        $action = 'performing',
+        \Exception $prev = null
+    ) {
+        $message = "An exception occurred while {$action} a multipart upload.";
+        parent::__construct($message, 0, $prev);
 
         $this->state = $state;
     }
@@ -28,7 +29,7 @@ class MultipartUploadException extends \RuntimeException
     /**
      * Get the state of the transfer
      *
-     * @return AbstractTransferState
+     * @return UploadState
      */
     public function getState()
     {
