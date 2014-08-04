@@ -20,6 +20,9 @@ class JsonRpcSerializer implements SubscriberInterface
     /** @var Service */
     private $api;
 
+    /** @var string */
+    private $contentType;
+
     /**
      * @param Service  $api           Service description
      * @param string   $endpoint      Endpoint to connect to
@@ -33,6 +36,7 @@ class JsonRpcSerializer implements SubscriberInterface
         $this->endpoint = $endpoint;
         $this->api = $api;
         $this->jsonFormatter = $jsonFormatter ?: new JsonBody($this->api);
+        $this->contentType = JsonBody::getContentType($api);
     }
 
     public function getEvents()
@@ -54,11 +58,7 @@ class JsonRpcSerializer implements SubscriberInterface
                 'headers' => [
                     'X-Amz-Target' => $this->api->getMetadata('targetPrefix')
                         . '.' . $name,
-                    'Content-Type' => 'application/x-amz-json-'
-                        . number_format(
-                            $this->api->getMetadata('jsonVersion'),
-                            1
-                        )
+                    'Content-Type' => $this->contentType
                 ],
                 'body' => $this->jsonFormatter->build(
                     $operation->getInput(),

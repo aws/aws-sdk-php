@@ -22,6 +22,19 @@ class JsonBody
     }
 
     /**
+     * Gets the JSON Content-Type header for a service API
+     *
+     * @param Service $service
+     *
+     * @return string
+     */
+    public static function getContentType(Service $service)
+    {
+        return 'application/x-amz-json-'
+            . number_format($service->getMetadata('jsonVersion'), 1);
+    }
+
+    /**
      * Builds the JSON body based on an array of arguments.
      *
      * @param Shape $shape Operation being constructed
