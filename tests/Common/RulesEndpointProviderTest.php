@@ -70,7 +70,11 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 ['region' => 'us-gov-baz', 'service' => 's3'],
-                ['endpoint' => 'https://s3.us-gov-baz.us-gov.amazonaws.com']
+                ['endpoint' => 'https://s3-us-gov-baz.amazonaws.com']
+            ],
+            [
+                ['region' => 'us-gov-baz', 'service' => 'foo'],
+                ['endpoint' => 'https://foo.us-gov-baz.amazonaws.com']
             ],
             [
                 ['region' => 'cn-north-1', 'service' => 's3'],
