@@ -50,7 +50,7 @@ trait UsesServiceTrait
      * Queues up mock Result objects for a client
      *
      * @param AwsClientInterface $client
-     * @param Result[]           $results
+     * @param Result[]|array[]   $results
      *
      * @return AwsClientInterface
      */
@@ -59,7 +59,9 @@ trait UsesServiceTrait
         $client->getEmitter()->on('prepare',
             function (PrepareEvent $event) use (&$results) {
                 $result = array_shift($results);
-                if ($result instanceof Result) {
+                if (is_array($result)) {
+                    $event->setResult(new Result($result));
+                } elseif ($result instanceof Result) {
                     $event->setResult($result);
                 } elseif ($result instanceof CommandException) {
                     throw $result;
@@ -68,7 +70,7 @@ trait UsesServiceTrait
                         . 'This client executed more commands than expected.');
                 }
             },
-            'first'
+            'last'
         );
 
         return $client;
