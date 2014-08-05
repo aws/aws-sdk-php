@@ -4,10 +4,12 @@ namespace Aws\Test\S3;
 use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\NoSeekStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Subscriber\History;
+use GuzzleHttp\Command\Event\PrepareEvent;
 
 /**
  * @covers Aws\S3\StreamWrapper
@@ -663,5 +665,113 @@ EOT;
     {
         $this->addMockResponses($this->client, [new Response(404)]);
         $this->assertFalse(file_exists('s3://bucket/key'));
+    }
+
+    public function testProvidesDirectoriesForS3()
+    {
+        $results = [
+            [
+                'IsTruncated' => true,
+                'NextMarker'  => 'b/',
+                'Delimiter'   => '/',
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000,
+                'CommonPrefixes' => [['Prefix' => 'a/'], ['Prefix' => 'b/']]
+            ],
+            [
+                'IsTruncated' => true,
+                'Marker'      => '',
+                'Delimiter'   => '/',
+                'Contents'    => [['Key' => 'c']],
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000,
+                'CommonPrefixes' => [['Prefix' => 'd/']]
+            ],
+            [
+                'IsTruncated' => true,
+                'Marker'      => '',
+                'Delimiter'   => '/',
+                'Contents'    => [['Key' => 'e'], ['Key' => 'f']],
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000
+            ],
+            [
+                'IsTruncated' => true,
+                'Marker'      => '',
+                'Delimiter'   => '/',
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'NextMarker'  => 'DUMMY',
+                'MaxKeys'     => 1000
+            ],
+            [
+                'IsTruncated' => false,
+                'Delimiter'   => '/',
+                'Name'        => 'bucket',
+                'NextMarker'  => 'DUMMY',
+                'MaxKeys'     => 1000,
+                'CommonPrefixes' => [['Prefix' => 'g/']]
+            ]
+        ];
+
+        $this->addMockResults($this->client, array_merge($results, $results));
+
+        $this->client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+            $c = $e->getCommand();
+            $this->assertEquals('bucket', $c['Bucket']);
+            $this->assertEquals('/', $c['Delimiter']);
+            $this->assertEquals('key/', $c['Prefix']);
+        });
+
+        $dir = 's3://bucket/key/';
+        $r = opendir($dir);
+        $this->assertInternalType('resource', $r);
+
+        $files = [];
+        while (($file = readdir($r)) !== false) {
+            $files[] = $file;
+        }
+
+        // This is the order that the mock responses should provide
+        $expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+        $this->assertEquals($expected, $files);
+
+        rewinddir($r);
+        $files = [];
+        while (($file = readdir($r)) !== false) {
+            $files[] = $file;
+        }
+
+        $this->assertEquals($expected, $files);
+        closedir($r);
+    }
+
+    public function testCanSetDelimiterStreamContext()
+    {
+        $this->client->getEmitter()->on('prepare', function (PrepareEvent $e) {
+            $c = $e->getCommand();
+            $this->assertEquals('bucket', $c['Bucket']);
+            $this->assertEquals('', $c['Delimiter']);
+            $this->assertEquals('', $c['Prefix']);
+        });
+
+        $this->addMockResults($this->client, [
+            [
+                'IsTruncated' => false,
+                'Marker'      => '',
+                'Contents'    => [],
+                'Name'        => 'bucket',
+                'Prefix'      => '',
+                'MaxKeys'     => 1000,
+                'CommonPrefixes' => [['Prefix' => 'foo']]
+            ]
+        ]);
+
+        $context = stream_context_create(['s3' => ['delimiter' => '']]);
+        $r = opendir('s3://bucket', $context);
+        closedir($r);
     }
 }
