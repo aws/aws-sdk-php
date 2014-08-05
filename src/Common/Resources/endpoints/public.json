@@ -4,13 +4,6 @@
     "regionPrefix": "cn-",
     "rules": [
       {
-        "services": ["iam", "sts"],
-        "config": {
-          "signatureVersion": "v4",
-          "endpoint": "{scheme}://{service}.cn-north-1.amazonaws.com.cn"
-        }
-      },
-      {
         "config": {
           "signatureVersion": "v4",
           "endpoint": "{scheme}://{service}.{region}.amazonaws.com.cn"
@@ -26,11 +19,6 @@
         "services": ["iam"],
         "config": {
           "endpoint": "{scheme}://{service}.us-gov.amazonaws.com"
-        }
-      },
-      {
-        "config": {
-          "endpoint": "{scheme}://{service}.{region}.us-gov.amazonaws.com"
         }
       }
     ]
