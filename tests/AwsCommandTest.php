@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test;
 
-use Aws\Common\Api\Service;
 use Aws\AwsCommand;
 use GuzzleHttp\Event\Emitter;
 

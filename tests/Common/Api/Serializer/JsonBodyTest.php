@@ -2,7 +2,6 @@
 namespace Aws\Test\Common\Api\Serializer;
 
 use Aws\Common\Api\Serializer\JsonBody;
-use Aws\Common\Api\Service;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\ShapeMap;
 use Aws\Test\UsesServiceTrait;

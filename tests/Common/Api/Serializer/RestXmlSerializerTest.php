@@ -1,15 +1,10 @@
 <?php
 namespace Aws\Test\Common\Api\Serializer;
 
-use Aws\AwsCommand;
-use Aws\Common\Api\Serializer\RestXmlSerializer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Subscriber\History;
-use GuzzleHttp\Subscriber\Mock;
 
 /**
  * @covers Aws\Common\Api\Serializer\RestXmlSerializer
