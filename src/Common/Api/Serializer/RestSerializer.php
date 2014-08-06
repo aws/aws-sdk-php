@@ -158,7 +158,9 @@ abstract class RestSerializer implements SubscriberInterface
         Shape $member,
         $value
     ) {
-        $request->getQuery()->set($member['locationName'] ?: $name, $value);
+        if ($value !== null) {
+            $request->getQuery()->set($member['locationName'] ?: $name, $value);
+        }
     }
 
     /**

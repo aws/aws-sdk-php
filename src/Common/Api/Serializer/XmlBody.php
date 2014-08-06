@@ -46,8 +46,11 @@ class XmlBody
     {
         $xml->startElement($name);
 
-        if ($shape['xmlNamespace']) {
-            $xml->writeAttribute('xmlns', $shape['xmlNamespace']);
+        if ($ns = $shape['xmlNamespace']) {
+            $xml->writeAttribute(
+                isset($ns['prefix']) ? "xmlns:{$ns['prefix']}" : 'xmlns',
+                $shape['xmlNamespace']['uri']
+            );
         }
     }
 
@@ -60,16 +63,22 @@ class XmlBody
             'add_blob'      => true,
             'add_timestamp' => true,
             'add_boolean'   => true,
+            'add_string'    => true
         ];
 
         $type = 'add_' . $shape['type'];
         if (isset($methods[$type])) {
             $this->{$type}($shape, $name, $value, $xml);
         } else {
-            $this->startElement($shape, $name, $xml);
-            $this->writeContent($value, $xml);
-            $xml->endElement();
+            $this->defaultShape($shape, $name, $value, $xml);
         }
+    }
+
+    private function defaultShape(Shape $shape, $name, $value, \XMLWriter $xml)
+    {
+        $this->startElement($shape, $name, $xml);
+        $this->writeContent($value, $xml);
+        $xml->endElement();
     }
 
     private function add_structure(
@@ -146,6 +155,19 @@ class XmlBody
         $this->startElement($shape, $name, $xml);
         $this->writeContent($value ? 'true' : 'false', $xml);
         $xml->endElement();
+    }
+
+    private function add_string(
+        Shape $shape,
+        $name,
+        $value,
+        \XMLWriter $xml
+    ) {
+        if ($shape['xmlAttribute']) {
+            $xml->writeAttribute($shape['locationName'] ?: $name, $value);
+        } else {
+            $this->defaultShape($shape, $name, $value, $xml);
+        }
     }
 
     /**

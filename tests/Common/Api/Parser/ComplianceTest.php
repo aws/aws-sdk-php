@@ -3,6 +3,7 @@ namespace Aws\Test\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
 use Aws\AwsClient;
+use Aws\Common\Api\Shape;
 use Aws\Common\ClientFactory;
 use Aws\Common\Credentials\NullCredentials;
 use Aws\Test\UsesServiceTrait;
@@ -101,11 +102,35 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         $event = new ProcessEvent($trans);
         $command->getEmitter()->emit('process', $event);
         $result = $event->getResult()->toArray();
-
-        if (strpos($about, 'Timestamp members') !== false) {
-            $result['TimeMember'] = strtotime($result['TimeMember']);
-        }
-
+        $this->fixTimestamps($result, $command->getOperation()->getOutput());
         $this->assertEquals($expectedResult, $result);
+    }
+
+    private function fixTimestamps(&$data, Shape $shape)
+    {
+        switch (get_class($shape)) {
+            case 'Aws\Common\Api\StructureShape':
+                foreach ($data as $key => &$value) {
+                    if ($shape->hasMember($key)) {
+                        $this->fixTimestamps($value, $shape->getMember($key));
+                    }
+                }
+                break;
+            case 'Aws\Common\Api\ListShape':
+                foreach ($data as &$value) {
+                    $this->fixTimestamps($value, $shape->getMember());
+                }
+                break;
+            case 'Aws\Common\Api\MapShape':
+                foreach ($data as &$value) {
+                    $this->fixTimestamps($value, $shape->getValue());
+                }
+                break;
+            case 'Aws\Common\Api\TimestampShape':
+                if (is_string($data)) {
+                    $data = strtotime($data);
+                }
+                break;
+        }
     }
 }

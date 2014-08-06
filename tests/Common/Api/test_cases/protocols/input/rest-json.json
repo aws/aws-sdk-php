@@ -361,5 +361,61 @@
         }
       }
     ]
+  },
+  {
+    "description": "Omits null query params, but serializes empty strings",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "location":"querystring",
+            "locationName":"param-name",
+            "shape": "Foo"
+          }
+        }
+      },
+      "Foo": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "name": "OperationName",
+          "http": {
+            "method": "POST",
+            "requestUri": "/path"
+          },
+          "input": { "shape": "InputShape" }
+        },
+        "params": { "foo": null },
+        "serialized": {
+          "method": "POST",
+          "body": "",
+          "uri": "/path"
+        }
+      },
+      {
+        "given": {
+          "name": "OperationName",
+          "http": {
+            "method": "POST",
+            "requestUri": "/path?abc=mno"
+          },
+          "input": { "shape": "InputShape" }
+        },
+        "params": { "foo": "" },
+        "serialized": {
+          "method": "POST",
+          "body": "",
+          "uri": "/path?abc=mno&param-name="
+        }
+      }
+    ]
   }
 ]

@@ -17,12 +17,11 @@ class FilesystemApiProvider implements ApiProviderInterface
 
     /**
      * @param string $path Path to the service descriptions on disk
-     * @param bool   $min  Set to true to load minified models
      */
-    public function __construct($path, $min = false)
+    public function __construct($path)
     {
         $this->path = rtrim($path, '/\\');
-        $this->apiSuffix = $min ? '.normal.min.json' : '.normal.json';
+        $this->apiSuffix = '.normal.json';
     }
 
     public function getService($service, $version)
@@ -54,9 +53,10 @@ class FilesystemApiProvider implements ApiProviderInterface
         $files = $this->getServiceFiles($this->apiSuffix);
         $search = [$this->path, $this->apiSuffix];
         $results = [];
+        $needle = $service . '-';
 
         foreach ($files as $f) {
-            if (strpos($f, $service) === 0) {
+            if (strpos($f, $needle) === 0) {
                 $results[] = explode('-', str_replace($search, '', $f), 2)[1];
             }
         }
