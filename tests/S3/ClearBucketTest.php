@@ -24,7 +24,7 @@ class ClearBucketTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid options provided: Array
+     * @expectedExceptionMessage Invalid option provided: baz
      */
     public function testValidatesInput()
     {

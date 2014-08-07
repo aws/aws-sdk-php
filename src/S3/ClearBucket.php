@@ -57,6 +57,12 @@ class ClearBucket implements HasEmitterInterface
         $this->client = $client;
         $this->bucket = $bucket;
         $this->handleOptions($options);
+
+        if (!$this->iterator) {
+            $this->iterator = $this->client->getIterator('ListObjects', [
+                'Bucket' => $this->bucket
+            ]);
+        }
     }
 
     /**
@@ -98,54 +104,48 @@ class ClearBucket implements HasEmitterInterface
      * Gets the iterator from the options hash or creates one to delete all
      * objects from the bucket.
      *
-     * @throws \InvalidArgumentException if invalid options are provided. These
-     *                                   overly verbose checks should help to
-     *                                   avoid typos for the very important
-     *                                   iterator key.
+     * @throws \InvalidArgumentException if invalid options are provided.
      */
     private function handleOptions(array $options)
     {
-        if (!array_key_exists('iterator', $options)) {
-            $this->iterator = $this->client->getIterator('ListObjects', [
-                'Bucket' => $this->bucket
-            ]);
-        } elseif (!($options['iterator'] instanceof \Iterator)) {
+        // Double dispatch on each provided option
+        foreach ($options as $key => $value) {
+            if (!method_exists($this, "handle_{$key}")) {
+                throw new \InvalidArgumentException(
+                    "Invalid option provided: $key"
+                );
+            }
+            $this->{"handle_{$key}"}($value);
+        }
+    }
+
+    private function handle_iterator($value)
+    {
+         if (!($value instanceof \Iterator)) {
             throw new \InvalidArgumentException('iterator must be an '
                 . 'instance of Iterator');
-        } else {
-            $this->iterator = $options['iterator'];
-            unset($options['iterator']);
         }
 
-        // A string value means set on class, false means set on the options
-        // array that is used with the created BatchDelete class
-        $conv = [
-            'batch_size' => 'batchSize',
-            'before'     => 'before',
-            'mfa'        => false
-        ];
+        $this->iterator = $value;
+    }
 
-        foreach ($conv as $take => $to) {
-            if (isset($options[$take])) {
-                if ($to === false) {
-                    $this->options[$take] = $options[$take];
-                } else {
-                    $this->{$to} = $options[$take];
-                }
-                unset($options[$take]);
-            }
-        }
-
-        if ($options) {
-            throw new \InvalidArgumentException(
-                'Invalid options provided: '
-                . print_r(array_keys($options), true)
-            );
-        }
-
-        if ($this->batchSize <= 0) {
+    private function handle_batch_size($value)
+    {
+        if ($value <= 0) {
             throw new \InvalidArgumentException('batch_size must be > 0');
         }
+
+        $this->batchSize = $this->options['batch_size'] = $value;
+    }
+
+    private function handle_before($value)
+    {
+        $this->before = $value;
+    }
+
+    private function handle_mfa($value)
+    {
+        $this->options['mfa'] = $value;
     }
 
     private function validateObject($object)
