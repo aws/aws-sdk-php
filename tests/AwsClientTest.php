@@ -275,6 +275,26 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client->waitUntil('PigsFly');
     }
 
+    public function testCreatesClientsFromFactoryMethod()
+    {
+        $client = SqsClient::factory(['region' => 'us-west-2']);
+        $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
+        $this->assertEquals('us-west-2', $client->getRegion());
+
+        $client = StsClient::factory(['region' => 'us-west-2']);
+        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
+        $this->assertEquals('us-west-2', $client->getRegion());
+    }
+
+    public function testCanGetEndpoint()
+    {
+        $client = $this->createClient();
+        $this->assertEquals(
+            'http://us-east-1.foo.amazonaws.com',
+            $client->getEndpoint()
+        );
+    }
+
     private function createClient(array $service = [], array $config = [])
     {
         $api = $this->createServiceApi($service, $apiProvider);
@@ -302,16 +322,5 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'api'          => $api,
             'error_parser' => function () {}
         ]);
-    }
-
-    public function testCreatesClientsFromFactoryMethod()
-    {
-        $client = SqsClient::factory(['region' => 'us-west-2']);
-        $this->assertInstanceOf('Aws\Sqs\SqsClient', $client);
-        $this->assertEquals('us-west-2', $client->getRegion());
-
-        $client = StsClient::factory(['region' => 'us-west-2']);
-        $this->assertInstanceOf('Aws\Sts\StsClient', $client);
-        $this->assertEquals('us-west-2', $client->getRegion());
     }
 }
