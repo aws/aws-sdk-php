@@ -12,7 +12,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        foreach (['cf_private_key', 'cf_key_pair_id'] as $k) {
+        foreach (['CF_PRIVATE_KEY', 'CF_KEY_PAIR_ID'] as $k) {
             if (!isset($_SERVER[$k]) || $_SERVER[$k] == 'change_me') {
                 $this->markTestSkipped('$_SERVER[\'' . $k . '\'] not set in '
                     . 'phpunit.xml');
@@ -25,8 +25,8 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
         /** @var $client \Aws\CloudFront\CloudFrontClient */
         $client = CloudFrontClient::factory(['region' => 'us-west-2']);
         $ts = time() + 1000;
-        $key = $_SERVER['cf_private_key'];
-        $kp = $_SERVER['cf_key_pair_id'];
+        $key = $_SERVER['CF_PRIVATE_KEY'];
+        $kp = $_SERVER['CF_KEY_PAIR_ID'];
 
         $url = $client->getSignedUrl([
             'url'         => 'http://abc.cloudfront.net/images/image.jpg?color=red',
@@ -56,8 +56,8 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
         $url = $client->getSignedUrl(array(
             'url'    => 'http://abc.cloudfront.net/images/image.jpg',
             'policy' => '{}',
-            'private_key' => $_SERVER['cf_private_key'],
-            'key_pair_id' => $_SERVER['cf_key_pair_id']
+            'private_key' => $_SERVER['CF_PRIVATE_KEY'],
+            'key_pair_id' => $_SERVER['CF_KEY_PAIR_ID']
         ));
         $policy = Url::fromString($url)->getQuery()->get('Policy');
         $this->assertRegExp('/^[0-9a-zA-Z-_~]+$/', $policy);
@@ -68,11 +68,11 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
         /** @var $client \Aws\CloudFront\CloudFrontClient */
         $client = CloudFrontClient::factory(['region' => 'us-west-2']);
         $ts = time() + 1000;
-        $kp = $_SERVER['cf_key_pair_id'];
+        $kp = $_SERVER['CF_KEY_PAIR_ID'];
         $url = $client->getSignedUrl(array(
             'url'         => 'rtmp://foo.cloudfront.net/test.mp4?a=b',
             'expires'     => $ts,
-            'private_key' => $_SERVER['cf_private_key'],
+            'private_key' => $_SERVER['CF_PRIVATE_KEY'],
             'key_pair_id' => $kp
         ));
         $this->assertStringStartsWith("test.mp4?a=b&Expires={$ts}&Signature=", $url);
@@ -81,7 +81,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatesCannedUrlSignersForRtmpWhileStrippingFileExtension()
     {
-        $s = new UrlSigner('a', $_SERVER['cf_private_key']);
+        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
         $m = new \ReflectionMethod($s, 'createCannedPolicy');
         $m->setAccessible(true);
         $ts = time() + 1000;
@@ -106,7 +106,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresExpiresIsSetWhenUsingCannedPolicy()
     {
-        $s = new UrlSigner('a', $_SERVER['cf_private_key']);
+        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
         $s->getUrlSigner('http://foo/bar');
     }
 
@@ -116,7 +116,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresUriSchemeIsValid()
     {
-        $s = new UrlSigner('a', $_SERVER['cf_private_key']);
+        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
         $s->getUrlSigner('foo://bar.com', '+10 minutes');
     }
 
@@ -126,7 +126,7 @@ class UrlSignerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEnsuresUriSchemeIsPresent()
     {
-        $s = new UrlSigner('a', $_SERVER['cf_private_key']);
+        $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
         $s->getUrlSigner('bar.com');
     }
 
