@@ -6,6 +6,8 @@ use Aws\AwsException;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
+use GuzzleHttp\Adapter\MockAdapter;
+use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Command\Exception\CommandException;
@@ -43,6 +45,16 @@ trait UsesServiceTrait
      */
     private function getTestClient($service, array $args = [])
     {
+        // Disable network access. If the INTEGRATION envvar is set, then this
+        // disabling is not done.
+        if (!isset($args['client']) && !isset($_SERVER['INTEGRATION'])) {
+            $args['client'] = new Client([
+                'adapter' => new MockAdapter(function () {
+                    throw new \RuntimeException('No network access');
+                })
+            ]);
+        }
+
         return $this->getTestSdk()->getClient($service, $args);
     }
 
