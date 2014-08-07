@@ -2,173 +2,187 @@
 namespace Aws\S3;
 
 use Aws\AwsClientInterface;
-use Guzzle\Common\AbstractHasDispatcher;
-use Guzzle\Batch\FlushingBatch;
-use Guzzle\Batch\ExceptionBufferingBatch;
-use Guzzle\Batch\NotifyingBatch;
-use Guzzle\Common\Exception\ExceptionCollection;
+use Aws\S3\Exception\ClearBucketException;
+use GuzzleHttp\Event\HasEmitterInterface;
+use GuzzleHttp\Event\HasEmitterTrait;
+use Aws\S3\Exception\DeleteMultipleObjectsException;
 
 /**
- * Class used to clear the contents of a bucket or the results of an iterator
+ * Deletes objects from a bucket.
+ *
+ * This class can be used to efficiently delete all objects of a bucket or
+ * to delete only objects yielded by an iterator.
+ *
+ * If an error occurs while deleting objects, a ClearBucketException is thrown.
+ * This exception allows you to resume the transfer if needed by inspecting the
+ * failures and using the same iterator to continue deleting objects. The
+ * iterator is not rewound in this class, so you can utilize non-seekable
+ * iterators like Generators and still recover from failure.
  */
-class ClearBucket extends AbstractHasDispatcher
+class ClearBucket implements HasEmitterInterface
 {
-    /**
-     * @var string Event emitted when a batch request has completed
-     */
-    const AFTER_DELETE = 'clear_bucket.after_delete';
+    use HasEmitterTrait;
+
+    /** @var AwsClientInterface */
+    private $client;
+
+    /** @var \Iterator */
+    private $iterator;
+
+    private $options = [];
+    private $batchSize = 1000;
+    private $before;
 
     /**
-     * @var string Event emitted before the bucket is cleared
+     * This function accepts a hash of options:
+     *
+     * - iterator: An \Iterator instance that yields associative arrays that
+     *   contain a 'Key' and optional 'VersionId'.
+     * - before: Callable to invoke before each delete is called. This callable
+     *   accepts the underlying iterator being used and an array of the keys
+     *   that are about to be deleted.
+     * - batch_size: The size of each delete batch. Defaults to 1000.
+     * - mfa: MFA token used when contacting the Amazon S3 API.
+     *
+     * @param AwsClientInterface $client  Client used to execute requests
+     * @param string             $bucket  Name of the bucket to delete from
+     * @param array              $options Hash of options used with the class
+     * @throws \InvalidArgumentException if the provided iterator is invalid
      */
-    const BEFORE_CLEAR = 'clear_bucket.before_clear';
-
-    /**
-     * @var string Event emitted after the bucket is cleared
-     */
-    const AFTER_CLEAR = 'clear_bucket.after_clear';
-
-    /**
-     * @var AwsClientInterface Client used to execute the requests
-     */
-    protected $client;
-
-    /**
-     * @var AbstractS3ResourceIterator Iterator used to yield keys
-     */
-    protected $iterator;
-
-    /**
-     * @var string MFA used with each request
-     */
-    protected $mfa;
-
-    /**
-     * @param AwsClientInterface $client Client used to execute requests
-     * @param string             $bucket Name of the bucket to clear
-     */
-    public function __construct(AwsClientInterface $client, $bucket)
-    {
+    public function __construct(
+        AwsClientInterface $client,
+        $bucket,
+        array $options = []
+    ) {
         $this->client = $client;
         $this->bucket = $bucket;
+        $this->handleOptions($options);
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function getAllEvents()
-    {
-        return array(self::AFTER_DELETE, self::BEFORE_CLEAR, self::AFTER_CLEAR);
-    }
-
-    /**
-     * Set the bucket that is to be cleared
+     * Removes the keys from the bucket that are yielded from the underlying
+     * iterator.
      *
-     * @param string $bucket Name of the bucket to clear
+     * WARNING: If no iterator was provided in the constructor, then ALL keys
+     * will be removed from the bucket!
      *
-     * @return self
-     */
-    public function setBucket($bucket)
-    {
-        $this->bucket = $bucket;
-
-        return $this;
-    }
-
-    /**
-     * Get the iterator used to yield the keys to be deleted. A default iterator
-     * will be created and returned if no iterator has been explicitly set.
-     *
-     * @return \Iterator
-     */
-    public function getIterator()
-    {
-        if (!$this->iterator) {
-            $this->iterator = $this->client->getIterator('ListObjectVersions', array(
-                'Bucket' => $this->bucket
-            ));
-        }
-
-        return $this->iterator;
-    }
-
-    /**
-     * Sets a different iterator to use than the default iterator. This can be helpful when you wish to delete
-     * only specific keys from a bucket (e.g. keys that match a certain prefix or delimiter, or perhaps keys that
-     * pass through a filtered, decorated iterator).
-     *
-     * @param \Iterator $iterator Iterator used to yield the keys to be deleted
-     *
-     * @return self
-     */
-    public function setIterator(\Iterator $iterator)
-    {
-        $this->iterator = $iterator;
-
-        return $this;
-    }
-
-    /**
-     * Set the MFA token to send with each request
-     *
-     * @param string $mfa MFA token to send with each request. The value is the concatenation of the authentication
-     *                    device's serial number, a space, and the value displayed on your authentication device.
-     *
-     * @return self
-     */
-    public function setMfa($mfa)
-    {
-        $this->mfa = $mfa;
-
-        return $this;
-    }
-
-    /**
-     * Clear the bucket
-     *
-     * @return int Returns the number of deleted keys
-     * @throws ExceptionCollection
+     * @throws ClearBucketException if an error occurs while transferring
      */
     public function clear()
     {
-        $that = $this;
-        $batch = DeleteObjectsBatch::factory($this->client, $this->bucket, $this->mfa);
-        $batch = new NotifyingBatch($batch, function ($items) use ($that) {
-            $that->dispatch(ClearBucket::AFTER_DELETE, array('keys' => $items));
-        });
-        $batch = new FlushingBatch(new ExceptionBufferingBatch($batch), 1000);
+        $batch = new BatchDelete($this->client, $this->bucket, $this->options);
 
-        // Let any listeners know that the bucket is about to be cleared
-        $this->dispatch(self::BEFORE_CLEAR, array(
-            'iterator' => $this->getIterator(),
-            'batch'    => $batch,
-            'mfa'      => $this->mfa
-        ));
+        while ($this->iterator->valid()) {
 
-        $deleted = 0;
-        foreach ($this->getIterator() as $object) {
-            if (isset($object['VersionId'])) {
-                $versionId = $object['VersionId'] == 'null' ? null : $object['VersionId'];
-            } else {
-                $versionId = null;
+            $object = $this->validateObject($this->iterator->current());
+            $batch->addObject(
+                $object['Key'],
+                isset($object['VersionId']) ? $object['VersionId'] : null
+            );
+
+            if (count($batch) >= $this->batchSize) {
+                $this->sendBatch($batch);
             }
-            $batch->addKey($object['Key'], $versionId);
-            $deleted++;
-        }
-        $batch->flush();
 
-        // If any errors were encountered, then throw an ExceptionCollection
-        if (count($batch->getExceptions())) {
-            $e = new ExceptionCollection();
-            foreach ($batch->getExceptions() as $exception) {
-                $e->add($exception->getPrevious());
-            }
-            throw $e;
+            $this->iterator->next();
         }
 
-        // Let any listeners know that the bucket was cleared
-        $this->dispatch(self::AFTER_CLEAR, array('deleted' => $deleted));
+        if (count($batch)) {
+            $this->sendBatch($batch);
+        }
+    }
 
-        return $deleted;
+    /**
+     * Validate the provided options.
+     *
+     * Gets the iterator from the options hash or creates one to delete all
+     * objects from the bucket.
+     *
+     * @throws \InvalidArgumentException if invalid options are provided. These
+     *                                   overly verbose checks should help to
+     *                                   avoid typos for the very important
+     *                                   iterator key.
+     */
+    private function handleOptions(array $options)
+    {
+        if (!array_key_exists('iterator', $options)) {
+            $this->iterator = $this->client->getIterator('ListObjects', [
+                'Bucket' => $this->bucket
+            ]);
+        } elseif (!($options['iterator'] instanceof \Iterator)) {
+            throw new \InvalidArgumentException('iterator must be an '
+                . 'instance of Iterator');
+        } else {
+            $this->iterator = $options['iterator'];
+            unset($options['iterator']);
+        }
+
+        // A string value means set on class, false means set on the options
+        // array that is used with the created BatchDelete class
+        $conv = [
+            'batch_size' => 'batchSize',
+            'before'     => 'before',
+            'mfa'        => false
+        ];
+
+        foreach ($conv as $take => $to) {
+            if (isset($options[$take])) {
+                if ($to === false) {
+                    $this->options[$take] = $options[$take];
+                } else {
+                    $this->{$to} = $options[$take];
+                }
+                unset($options[$take]);
+            }
+        }
+
+        if ($options) {
+            throw new \InvalidArgumentException(
+                'Invalid options provided: '
+                . print_r(array_keys($options), true)
+            );
+        }
+
+        if ($this->batchSize <= 0) {
+            throw new \InvalidArgumentException('batch_size must be > 0');
+        }
+    }
+
+    private function validateObject($object)
+    {
+        if (is_array($object) && isset($object['Key'])) {
+            return $object;
+        }
+
+        throw new ClearBucketException(
+            [
+                [
+                    'Key'     => null,
+                    'Message' => 'Invalid value returned from iterator',
+                    'Value'   => $object
+                ]
+            ],
+            $this->iterator
+        );
+    }
+
+    private function sendBatch(BatchDelete $batch)
+    {
+        try {
+            if ($this->before) {
+                call_user_func(
+                    $this->before,
+                    $this->iterator,
+                    $batch->getQueue()
+                );
+            }
+            $batch->delete();
+        } catch (DeleteMultipleObjectsException $e) {
+            throw new ClearBucketException(
+                $e->getErrors(),
+                $this->iterator,
+                $e
+            );
+        }
     }
 }

@@ -6,7 +6,6 @@ use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Event\RequestEvents;
 
 /**
  * @covers Aws\S3\BatchDelete
@@ -23,12 +22,13 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
         $this->client = $this->getTestClient('s3', ['region' => 'us-east-1']);
     }
 
-    public function testCounts()
+    public function testCountsAndReturnsQueue()
     {
         $b = new BatchDelete($this->client, 'bucket');
         $this->assertCount(0, $b);
         $b->addObject('foo');
         $this->assertCount(1, $b);
+        $this->assertEquals([['Key' => 'foo']], $b->getQueue());
     }
 
     public function testSendsBatchRequestsPerThousand()

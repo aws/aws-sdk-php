@@ -2,15 +2,12 @@
 namespace Aws\Test\S3\Exception;
 
 use Aws\S3\Exception\DeleteMultipleObjectsException;
-use Aws\Test\UsesServiceTrait;
 
 /**
  * @covers Aws\S3\Exception\DeleteMultipleObjectsException
  */
 class DeleteMultipleObjectsExceptionTest extends \PHPUnit_Framework_TestCase
 {
-    use UsesServiceTrait;
-
     public function testReturnsData()
     {
         $del = [['Key' => 'foo']];

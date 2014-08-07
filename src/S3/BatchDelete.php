@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\AwsClientInterface;
 use Aws\Result;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use GuzzleHttp\Command\Event\PrepareEvent;
@@ -23,16 +24,19 @@ class BatchDelete implements \Countable
     /**
      * The constructor accepts an optional hash of configuration options:
      *
-     * - mfo: MFA token used when contacting the Amazon S3 API.
+     * - mfa: MFA token used when contacting the Amazon S3 API.
      * - batch_size: The size of each delete batch. Defaults to 1000.
      *
-     * @param S3Client $client  Client used to transfer the requests
-     * @param string   $bucket  Name of the bucket that stores the objects
-     * @param array    $options Hash of options used with the batch
+     * @param AwsClientInterface $client  Client used to transfer the requests
+     * @param string             $bucket  Bucket that stores the objects
+     * @param array              $options Hash of options used with the batch
      * @throws \InvalidArgumentException if the provided batch_size is <= 0
      */
-    public function __construct(S3Client $client, $bucket, array $options = [])
-    {
+    public function __construct(
+        AwsClientInterface $client,
+        $bucket,
+        array $options = []
+    ) {
         $this->client = $client;
         $this->bucket = $bucket;
 
@@ -64,6 +68,21 @@ class BatchDelete implements \Countable
         }
     }
 
+    /**
+     * Returns an array of the objects that are queued for deletion.
+     *
+     * @return array
+     */
+    public function getQueue()
+    {
+        return $this->objects;
+    }
+
+    /**
+     * Returns the number of enqueued objects to delete
+     *
+     * @return int
+     */
     public function count()
     {
         return count($this->objects);

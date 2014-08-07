@@ -19,7 +19,24 @@ class DeleteMultipleObjectsException extends \Exception
         $this->deleted = $deleted;
         $this->errors = $errors;
         parent::__construct('Unable to delete certain keys when executing a'
-            . ' DeleteMultipleObjects request');
+            . ' DeleteMultipleObjects request: '
+            . self::createMessageFromErrors($errors));
+    }
+
+    /**
+     * Create a single error message from multiple errors.
+     *
+     * @param array $errors Errors encountered
+     *
+     * @return string
+     */
+    public static function createMessageFromErrors(array $errors)
+    {
+        return implode('; ', array_map(function ($key) {
+            $value = '<' . (isset($key['Code']) ? $key['Code'] : '') . '> ';
+            $value .= isset($key['Message']) ? $key['Message'] : '';
+            return trim($value);
+        }, $errors));
     }
 
     /**
