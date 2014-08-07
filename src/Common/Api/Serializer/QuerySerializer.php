@@ -110,11 +110,6 @@ class QuerySerializer implements SubscriberInterface
 
         if (!$shape['flattened']) {
             $prefix .= '.member';
-        } elseif ($queryName = $items['queryName']) {
-            $parts = explode('.', $prefix);
-            array_pop($parts);
-            $parts[] = $queryName;
-            $prefix = implode('.', $parts);
         }
 
         foreach ($value as $k => $v) {
