@@ -58,12 +58,7 @@ class ResumableDownload
         // If a string is passed, then assume that the download should stream
         // to a file on disk.
         if (is_string($this->target)) {
-            $this->target = fopen($this->target, 'a+');
-            if (!$this->target) {
-                throw new \RuntimeException("Unable to open file for "
-                    . "writing " . error_get_last()['message']);
-            }
-            // Always append to the file
+            $this->target = \GuzzleHttp\Stream\safe_open($this->target, 'a+');
             fseek($this->target, 0, SEEK_END);
         }
 

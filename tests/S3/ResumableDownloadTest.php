@@ -16,7 +16,8 @@ class ResumableDownloadTest extends \PHPUnit_Framework_TestCase
     use UsesServiceTrait;
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unable to open /does/not/exist/foo using mode a+
      */
     public function testEnsuresFilesCanBeOpened()
     {
@@ -143,5 +144,20 @@ class ResumableDownloadTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $resumable->transfer();
+    }
+
+    public function testSeeksToTheEndOfFile()
+    {
+        $client = $this->getTestClient('s3');
+        $resumable = new ResumableDownload([
+            'client' => $client,
+            'target' => __FILE__,
+            'params' => [
+                'Bucket' => 'test',
+                'Key' => 'key'
+            ]
+        ]);
+        $h = $this->readAttribute($resumable, 'target');
+        $this->assertNotEquals(0, $h->tell());
     }
 }
