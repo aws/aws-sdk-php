@@ -53,22 +53,21 @@ class SourceFileTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\AwsException
-     * @expectedExceptionMessage GetObject does not support the SourceFile parameter
-     */
-    public function testEnsuresBodyParamExistsToo()
+    public function testEnsuresBodyParamExists()
     {
-        $this->getTestClient('s3')->getObject([
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, [[]]);
+        $command = $client->getObject([
             'Bucket'     => 'foo',
             'Key'        => 'bar',
             'SourceFile' => __FILE__
         ]);
+        $this->assertNull($command['Body']);
     }
 
     /**
      * @expectedException \Aws\AwsException
-     * @expectedExceptionMessage Invalid source parameter
+     * @expectedExceptionMessage Unable to open /tmp/foo/baz/bar/_doesNotExist.txt using mode r
      */
     public function testEnsuresSourceParamExists()
     {

@@ -4,9 +4,11 @@ namespace Aws\Common\Subscriber;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\LazyOpenStream;
 
 /**
- * Looks for instances of a "Filename" parameter and turns it into a Body param.
+ * Looks for instances of a "Filename" parameter and turns it into a Body param
+ * that is only opened when the first byte is attempted to be read.
  */
 class SourceFile implements SubscriberInterface
 {
@@ -35,27 +37,17 @@ class SourceFile implements SubscriberInterface
 
     public function onPrepare(PrepareEvent $event)
     {
-        /** @var \Aws\AwsCommandInterface $command */
-        $command = $event->getCommand();
-        $source = $command[$this->sourceParameter];
+        /** @var $c \Aws\AwsCommandInterface $command */
+        $c = $event->getCommand();
+        $source = $c[$this->sourceParameter];
 
-        if ($source === null) {
+        if ($source === null ||
+            !$c->getOperation()->getInput()->hasMember($this->bodyParameter)
+        ) {
             return;
         }
 
-        $input = $command->getOperation()->getInput();
-
-        if (!$input->hasMember($this->bodyParameter)) {
-            throw new \InvalidArgumentException($command->getName() . ' does '
-                . 'not support the ' . $this->sourceParameter . ' parameter');
-        }
-
-        if (!file_exists($source)) {
-            throw new \InvalidArgumentException('Invalid source '
-                . 'parameter: ' . $source . '. ' . error_get_last()['message']);
-        }
-
-        unset($command[$this->sourceParameter]);
-        $command[$this->bodyParameter] = Stream\create(fopen($source, 'r'));
+        $c[$this->bodyParameter] = new LazyOpenStream($source, 'r');
+        unset($c[$this->sourceParameter]);
     }
 }
