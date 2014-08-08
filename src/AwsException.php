@@ -29,6 +29,16 @@ class AwsException extends CommandException
     }
 
     /**
+     * If available, gets the HTTP status code of the corresponding response
+     *
+     * @return int|null
+     */
+    public function getStatusCode()
+    {
+        return $this->getTransaction()->getResponse()->getStatusCode();
+    }
+
+    /**
      * Get the request ID of the error. This value is only present if a
      * response was received and is not present in the event of a networking
      * error.

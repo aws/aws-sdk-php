@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use GuzzleHttp\Collection;
 use Aws\AwsException;
+use GuzzleHttp\Message\Response;
 
 /**
  * @covers Aws\AwsException
@@ -67,5 +68,19 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($client));
         $e = new AwsException('Foo', $trans);
         $this->assertSame('s3', $e->getServiceName());
+    }
+
+    public function testReturnsStatusCode()
+    {
+        $client = $this->getTestClient('s3');
+        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
+            ->setMethods(['getResponse'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $trans->expects($this->once())
+            ->method('getResponse')
+            ->will($this->returnValue(new Response(400)));
+        $e = new AwsException('Foo', $trans);
+        $this->assertSame('400', $e->getStatusCode());
     }
 }

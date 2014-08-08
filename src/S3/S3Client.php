@@ -5,9 +5,6 @@ use Aws\AwsClient;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Multipart\AbstractTransfer as AbstractMulti;
-use Aws\S3\Multipart\UploadBuilder;
-use Aws\S3\Sync\DownloadSyncBuilder;
-use Aws\S3\Sync\UploadSyncBuilder;
 use GuzzleHttp\Collection;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Stream;
@@ -85,7 +82,7 @@ class S3Client extends AwsClient
     ) {
         $args = ['Bucket' => $bucket, 'Key' => $key] + $args;
         $command = $this->getCommand('GetObject', $args);
-        $request = $command->prepare();
+        $request = $command::createRequest($this, $command);
 
         if (isset($command['Scheme'])) {
             $request->setScheme($command['Scheme']);
@@ -97,56 +94,36 @@ class S3Client extends AwsClient
     }
 
     /**
-     * @deprecated Use ClearBucket directly.
-     */
-    public function clearBucket($bucket)
-    {
-        return (new ClearBucket($this, $bucket))->clear();
-    }
-
-    /**
      * Determines whether or not a bucket exists by name.
      *
-     * Note: This method cannot give a 100% accurate result as to whether or
-     * not a bucket exists. It provides only a best-effort attempt.
-     *
-     * @param string $bucket    The name of the bucket
-     * @param bool   $accept403 Set to true if 403s are acceptable
-     * @param array  $options   Additional command options to add
+     * @param string $bucket  The name of the bucket
      *
      * @return bool
      */
-    public function doesBucketExist(
-        $bucket,
-        $accept403 = true,
-        array $options = []
-    ) {
+    public function doesBucketExist($bucket)
+    {
         return $this->checkExistenceWithCommand(
-            $this->getCommand('HeadBucket', array_merge($options, [
-                'Bucket' => $bucket
-            ])), $accept403
+            $this->getCommand('HeadBucket', ['Bucket' => $bucket])
         );
     }
 
     /**
      * Determines whether or not an object exists by name.
      *
-     * Note: This method cannot give a 100% accurate result as to whether or
-     * not an object exists. It provides only a best-effort attempt.
-     *
      * @param string $bucket  The name of the bucket
      * @param string $key     The key of the object
-     * @param array  $options Additional options to add to the executed command
+     * @param array  $options Additional options available in the HeadObject
+     *                        operation (e.g., VersionId).
      *
      * @return bool
      */
     public function doesObjectExist($bucket, $key, array $options = [])
     {
         return $this->checkExistenceWithCommand(
-            $this->getCommand('HeadObject', array_merge($options, [
+            $this->getCommand('HeadObject', [
                 'Bucket' => $bucket,
                 'Key'    => $key
-            ]))
+            ] + $options)
         );
     }
 
@@ -163,16 +140,11 @@ class S3Client extends AwsClient
     }
 
     /**
-     * Register the Amazon S3 stream wrapper and associates it with this client
-     * object.
-     *
-     * @return self
+     * Register the Amazon S3 stream wrapper with this client instance.
      */
     public function registerStreamWrapper()
     {
         StreamWrapper::register($this);
-
-        return $this;
     }
 
     /**
@@ -208,10 +180,9 @@ class S3Client extends AwsClient
         array $options = []
     ) {
         $body = Stream\create($body);
-        $options = Collection::fromConfig(array_change_key_case($options), [
+        $options = Collection::fromConfig($options, [
             'min_part_size' => AbstractMulti::MIN_PART_SIZE,
-            'params'        => [],
-            'concurrency'   => $body->getWrapper() == 'plainfile' ? 3 : 1
+            'params'        => []
         ]);
 
         if ($body->getSize() < $options['min_part_size']) {
@@ -222,201 +193,66 @@ class S3Client extends AwsClient
                 'Body'   => $body,
                 'ACL'    => $acl
             ] + $options['params']);
+        } else {
+            // @todo
         }
-
-        // Perform a multipart upload if the file is large enough
-        $transfer = UploadBuilder::newInstance()
-            ->setBucket($bucket)
-            ->setKey($key)
-            ->setMinPartSize($options['min_part_size'])
-            ->setConcurrency($options['concurrency'])
-            ->setClient($this)
-            ->setSource($body)
-            ->setTransferOptions($options->toArray())
-            ->addOptions($options['params'])
-            ->setOption('ACL', $acl)
-            ->build()
-            ->upload();
-
-        if ($options['before_upload']) {
-            $transfer->getEmitter()->on('prepare', $options['before_upload']);
-        }
-
-        return $transfer;
-    }
-
-    /**
-     * Recursively uploads all files in a given directory to a given bucket.
-     *
-     * @param string $directory Full path to a directory to upload
-     * @param string $bucket    Name of the bucket
-     * @param string $keyPrefix Virtual directory key prefix to add to each upload
-     * @param array  $options   Associative array of upload options
-     *
-     *     - params: Array of parameters to use with each PutObject operation
-     *       performed during the transfer.
-     *     - base_dir: Base directory to remove from each object key
-     *     - force: Set to true to upload every file, even if the file is
-     *       already in Amazon S3 and has not changed.
-     *     - concurrency: Maximum number of parallel uploads (defaults to 10)
-     *     - debug: Set to true or an fopen resource to enable debug mode to
-     *       print information about each upload.
-     *     - multipart_upload_size: When the size of a file exceeds this value,
-     *       the file will be uploaded using a multipart upload.
-     *
-     * @see Aws\S3\S3Sync\S3Sync for more options and customization
-     */
-    public function uploadDirectory(
-        $directory,
-        $bucket,
-        $keyPrefix = null,
-        array $options = []
-    ) {
-        $this->validateSyncInstalled();
-
-        return UploadSyncBuilder::uploadDirectory(
-            $directory,
-            $bucket,
-            $keyPrefix,
-            $options
-        );
-    }
-
-    /**
-     * Downloads a bucket to the local filesystem
-     *
-     * @param string $directory Directory to download to
-     * @param string $bucket    Bucket to download from
-     * @param string $keyPrefix Only download objects that use this key prefix
-     * @param array  $options   Associative array of download options
-     *
-     *     - params: Array of parameters to use with each GetObject operation
-     *       performed during the transfer
-     *     - base_dir: Base directory to remove from each object key when
-     *       storing in the local filesystem
-     *     - force: Set to true to download every file, even if the file is
-     *       already on the local filesystem and has not changed
-     *     - concurrency: Maximum number of parallel downloads (defaults to 10)
-     *     - debug: Set to true or a fopen resource to enable debug mode to
-     *       print information about each download
-     *     - allow_resumable: Set to true to allow previously interrupted
-     *       downloads to be resumed using a Range GET
-     */
-    public function downloadBucket(
-        $directory,
-        $bucket,
-        $keyPrefix = '',
-        array $options = []
-    ) {
-        $this->validateSyncInstalled();
-
-        return DownloadSyncBuilder::downloadBucket(
-            $directory,
-            $bucket,
-            $keyPrefix,
-            $options
-        );
-    }
-
-    /**
-     * Deletes objects from Amazon S3 that match the result of a ListObjects
-     * operation.
-     *
-     * For example, this allows you to do things like delete all objects that
-     * match a specific key prefix.
-     *
-     * @param string $bucket  Bucket that contains the object keys
-     * @param string $prefix  Optionally delete only objects under this key prefix
-     * @param string $regex   Delete only objects that match this regex
-     * @param array  $options Options used when deleting the object:
-     *
-     *     - before_delete: Callback to invoke before each delete. The callback
-     *       will receive a relevant Guzzle event object.
-     *
-     * @see Aws\S3\S3Client::listObjects
-     * @see Aws\S3\Model\ClearBucket For more options or customization
-     * @return int Returns the number of deleted keys
-     * @throws \RuntimeException if no prefix and no regex is given
-     */
-    public function deleteMatchingObjects(
-        $bucket,
-        $prefix = '',
-        $regex = '',
-        array $options = []
-    ) {
-        if (!$prefix && !$regex) {
-            throw new \RuntimeException('A prefix or regex is required, or '
-                . 'use S3Client::clearBucket().');
-        }
-
-        $clear = new ClearBucket($this, $bucket);
-        $iterator = $this->getIterator('ListObjects', [
-            'Bucket' => $bucket,
-            'Prefix' => $prefix
-        ]);
-
-        if ($regex) {
-            $iterator = new \CallbackFilterIterator(
-                $iterator,
-                function ($current) use ($regex) {
-                    return preg_match($regex, $current['Key']);
-                }
-            );
-        }
-
-        $clear->setIterator($iterator);
-        if (isset($options['before_delete'])) {
-            $clear->getEmitter()->on(
-                ClearBucket::BEFORE_CLEAR,
-                $options['before_delete']
-            );
-        }
-
-        return $clear->clear();
     }
 
     /**
      * Determines whether or not a resource exists using a command
      *
-     * @param CommandInterface $command   Command used to poll for the resource
-     * @param bool             $accept403 Set to true if 403s are acceptable
+     * @param CommandInterface $command Command used to poll for the resource
      *
      * @return bool
      * @throws S3Exception|\Exception if there is an unhandled exception
      */
-    private function checkExistenceWithCommand(
-        CommandInterface $command,
-        $accept403 = false
-    ) {
+    private function checkExistenceWithCommand(CommandInterface $command)
+    {
         try {
             $this->execute($command);
             return true;
         } catch (S3Exception $e) {
-            if ($e->getAwsErrorCode('AccessDenied')) {
-                return (bool) $accept403;
+            if ($e->getAwsErrorCode() == 'AccessDenied') {
+                return true;
             }
-            if ($e->getTransaction()->getResponse()->getStatusCode() >= 500) {
+            if ($e->getStatusCode() >= 500) {
                 throw $e;
             }
             return false;
         }
     }
 
-    private function validateSyncInstalled()
+    /** @deprecated */
+    public function uploadDirectory()
     {
-        if (!class_exists('Aws\S3\Sync\AbstractSync')) {
-            throw new \RuntimeException("The aws/s3-sync Composer package "
-                . "must be installed in order to use the "
-                . debug_backtrace()[2]['function'] . " function.");
-        }
+        $this->syncProxy();
+    }
+
+    /** @deprecated */
+    public function downloadBucket()
+    {
+        $this->syncProxy();
+    }
+
+    private function syncProxy()
+    {
+        throw new \RuntimeException("uploadDirectory() and downloadBucket() "
+            . "have been moved into a separate project: aws/s3-sync.");
     }
 
     /**
-     * @deprecated
+     * @deprecated This method is deprecated. Use Aws\S3\ClearBucket directly.
+     */
+    public function clearBucket($bucket)
+    {
+        (new ClearBucket($this, $bucket))->clear();
+    }
+
+    /**
+     * @deprecated Use Aws\S3\S3Client::isBucketDnsCompatible() directly
      */
     public static function isValidBucketName($bucket)
     {
-        trigger_error('This method is deprecated in favor of isBucketDnsCompatible.');
         return self::isBucketDnsCompatible($bucket);
     }
 }
