@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Next Release
+------------
+
+* Added support for tagging to the Elastic Load Balancing client.
+
 2.6.13 (2014-07-31)
 -------------------
 
