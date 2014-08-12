@@ -49,7 +49,7 @@ abstract class AbstractUploadBuilder
     /**
      * Return a new instance of the UploadBuilder
      *
-     * @return self
+     * @return static
      */
     public static function newInstance()
     {
