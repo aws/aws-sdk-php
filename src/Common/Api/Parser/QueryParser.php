@@ -13,14 +13,24 @@ class QueryParser extends AbstractParser
     /** @var XmlParser */
     private $xmlParser;
 
+    /** @var bool */
+    private $honorResultWrapper;
+
     /**
-     * @param Service   $api       Service description
-     * @param XmlParser $xmlParser Optional XML parser
+     * @param Service   $api                Service description
+     * @param XmlParser $xmlParser          Optional XML parser
+     * @param bool      $honorResultWrapper Set to false to disable the peeling
+     *                                      back of result wrappers from the
+     *                                      output strucutre.
      */
-    public function __construct(Service $api, XmlParser $xmlParser = null)
-    {
+    public function __construct(
+        Service $api,
+        XmlParser $xmlParser = null,
+        $honorResultWrapper = true
+    ) {
         parent::__construct($api);
         $this->xmlParser = $xmlParser ?: new XmlParser();
+        $this->honorResultWrapper = $honorResultWrapper;
     }
 
     protected function createResult(Service $api, ProcessEvent $event)
@@ -29,8 +39,8 @@ class QueryParser extends AbstractParser
         $output = $api->getOperation($command->getName())->getOutput();
         $xml = $event->getResponse()->xml();
 
-        if ($wrapper = $output['resultWrapper']) {
-            $xml = $xml->{$wrapper};
+        if ($this->honorResultWrapper && $output['resultWrapper']) {
+            $xml = $xml->{$output['resultWrapper']};
         }
 
         return new Result($this->xmlParser->parse($output, $xml));

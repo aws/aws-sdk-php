@@ -527,6 +527,10 @@ class ClientFactory
                 $em->attach(new RestXmlSerializer($api, $endpoint));
                 $em->attach(new RestXmlParser($api));
                 break;
+            case 'ec2':
+                $em->attach(new QuerySerializer($api, $endpoint));
+                $em->attach(new QueryParser($api, null, false));
+                break;
             default:
                 throw new \UnexpectedValueException(
                     'Unknown protocol: ' . $api->getProtocol()
