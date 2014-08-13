@@ -74,13 +74,10 @@ with the phar file are the following required and suggested libraries:
 -  `Monolog <https://github.com/seldaek/monolog>`_ and `Psr\\Log <https://github.com/php-fig/log>`_ for logging
 -  `Doctrine <https://github.com/doctrine/common>`_ for caching
 
-You can `download the packaged Phar <http://pear.amazonwebservices.com/get/aws.phar>`_ and simply include it in your
-scripts to get started::
+You can download specific versions of a packaged Phar from https://github.com/aws/aws-sdk-php/releases
+and simply include it in your scripts to get started::
 
     require '/path/to/aws.phar';
-
-If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK and build a phar file yourself using the
-*"phar"* task.
 
 .. note::
 
@@ -109,7 +106,8 @@ Using the zip file is great if you:
 2. Cannot use phar files due to environment limitations.
 3. Want to use only specific files from the SDK.
 
-To get started, you must `download the zip file <http://pear.amazonwebservices.com/get/aws.zip>`_, unzip it into your
+To get started, you must download a specific version of the zip file from
+https://github.com/aws/aws-sdk-php/releases, unzip it into your
 project to a location of your choosing, and include the autoloader::
 
     require '/path/to/aws-autoloader.php';
@@ -118,41 +116,3 @@ Alternatively, you can write your own autoloader or use an existing one from you
 
 If you have `phing <http://www.phing.info/>`_ installed, you can clone the SDK and build a zip file yourself using the
 *"zip"* task.
-
-Installing via PEAR
-~~~~~~~~~~~~~~~~~~~
-
-.. admonition:: Installation via PEAR will soon be unsupported.
-
-    The use of PEAR as a dependency management system has declined in the PHP community in favor of Composer, and
-    notable projects like PHPUnit, Symfony, and Doctrine are all retiring their PEAR channels at various points
-    during this year. We will eventually stop updating our PEAR channel during this year, so we strongly recommend that
-    you switch to using Composer to install the AWS SDK for PHP.
-
-
-`PEAR <http://pear.php.net/>`_ packages are easy to install, and are available in your PHP environment path so that they
-are accessible to any PHP project. PEAR packages are not specific to your project, but rather to the machine they're
-installed on.
-
-From the command-line, you can install the SDK with PEAR as follows (this might need to be run as ``sudo``):
-
-.. code-block:: sh
-
-    pear config-set auto_discover 1
-    pear channel-discover pear.amazonwebservices.com
-    pear install aws/sdk
-
-Alternatively, you can combine all three of the preceding statements into one by doing the following:
-
-.. code-block:: sh
-
-    pear -D auto_discover=1 install pear.amazonwebservices.com/sdk
-
-Once the SDK has been installed via PEAR, you can include the ``aws.phar`` into your project with:
-
-.. code-block:: php
-
-    require 'AWSSDKforPHP/aws.phar';
-
-This assumes that the PEAR directory is in your PHP include path, which it probably is, if PEAR is working correctly.
-If needed, you can determine your PEAR directory by running ``pear config-get php_dir``.
