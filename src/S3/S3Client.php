@@ -5,9 +5,10 @@ use Aws\AwsClient;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Multipart\AbstractTransfer as AbstractMulti;
+use Aws\S3\Multipart\UploadBuilder;
 use GuzzleHttp\Collection;
 use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;
 
 /**
@@ -163,11 +164,12 @@ class S3Client extends AwsClient
      *
      *     - params: Custom parameters to use with the upload. The parameters
      *       must map to the parameters specified in the PutObject operation.
-     *     - min_part_size: Minimum size to allow for each uploaded part when
+     *     - part_size: Minimum size to allow for each uploaded part when
      *       performing a multipart upload.
      *     - concurrency: Maximum number of concurrent multipart uploads.
      *     - before_upload: Callback to invoke before each multipart upload.
      *       The callback will receive a relevant Guzzle Event object.
+     *     - threshold:
      *
      * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more information.
      * @return Result Returns the modeled result of the performed operation.
@@ -179,13 +181,15 @@ class S3Client extends AwsClient
         $acl = 'private',
         array $options = []
     ) {
-        $body = Stream\create($body);
-        $options = Collection::fromConfig($options, [
-            'min_part_size' => AbstractMulti::MIN_PART_SIZE,
-            'params'        => []
-        ]);
+        $body = Stream::factory($body);
+        $options += [
+            'threshold'     => 52428800, // 50 MB
+            'params'        => [],
+            'concurrency'   => 1,
+            'before_upload' => null
+        ];
 
-        if ($body->getSize() < $options['min_part_size']) {
+        if ($body->getSize() < $options['threshold']) {
             // Perform a simple PutObject operation
             return $this->putObject([
                 'Bucket' => $bucket,
@@ -194,7 +198,15 @@ class S3Client extends AwsClient
                 'ACL'    => $acl
             ] + $options['params']);
         } else {
-            // @todo
+            $params = ['ACL' => $acl] + $options['params'];
+            return (new UploadBuilder)
+                ->setClient($this)
+                ->setSource($body)
+                ->setBucket($bucket)
+                ->setKey($key)
+                ->setParams('CreateMultipartUpload', $params)
+                ->build()
+                ->upload($options['concurrency'], $options['before_upload']);
         }
     }
 

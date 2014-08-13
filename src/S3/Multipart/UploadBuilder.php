@@ -11,14 +11,10 @@ use GuzzleHttp\Mimetypes;
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    protected static $requiredParams = ['Bucket', 'Key'];
-
-    protected static $uploadIdParam = 'UploadId';
-
-    protected $uploadParams = [
-        'Bucket'   => null,
-        'Key'      => null,
-        'UploadId' => null,
+   protected $uploadParams = [
+        'Bucket'   => null, // Required to initiate.
+        'Key'      => null, // Required to initiate.
+        'UploadId' => null, // Required to upload.
     ];
 
     /**
@@ -59,18 +55,15 @@ class UploadBuilder extends AbstractUploadBuilder
         }
 
         // Create part generator.
-        $signature = $this->client->getSignature();
-        $options = [
-            'part_size'           => $this->partSize,
-            'skip'                => $this->state->getUploadedParts(),
-            'calculate_checksums' => true, // @TODO determine from client.
-            'checksum_type'       => ($signature instanceof SignatureV4)
+        $isSigV4 = ($this->client->getSignature() instanceof SignatureV4);
+        $parts = new PartGenerator($this->source, [
+            'part_size'     => $this->partSize,
+            'skip'          => $this->state->getUploadedParts(),
+            'calculate_md5' => $this->client->getConfig('calculate_md5'),
+            'checksum_type' => $isSigV4
                 ? 'sha256'
                 : 'md5',
-        ];
-        $parts = ($this->source->getMetadata('wrapper_type') !== 'plainfile')
-            ? new PartGenerator($this->source, $options)
-            : new OptimizedPartGenerator($this->source, $options);
+        ]);
 
         // Store the part size in the state.
         $this->state->setPartSize($parts->getPartSize());

@@ -9,14 +9,10 @@ use Aws\Common\Multipart\UploadState;
  */
 class UploadBuilder extends AbstractUploadBuilder
 {
-    protected static $requiredParams = ['accountId', 'vaultName'];
-
-    protected static $uploadIdParam = 'uploadId';
-
     protected $uploadParams = [
-        'accountId' => '-',
-        'vaultName' => null,
-        'uploadId'  => null,
+        'accountId' => '-',  // Required to initiate.
+        'vaultName' => null, // Required to initiate.
+        'uploadId'  => null, // Required to upload.
     ];
 
     /**
@@ -55,13 +51,13 @@ class UploadBuilder extends AbstractUploadBuilder
     /**
      * Set the archive description.
      *
-     * @param string $archiveDescription Archive description.
+     * @param string $description Description to associate with the archive.
      *
      * @return self
      */
-    public function setArchiveDescription($archiveDescription)
+    public function setArchiveDescription($description)
     {
-        $this->addParam(Uploader::INITIATE, 'archiveDescription', $archiveDescription);
+        $this->addParam(Uploader::INITIATE, 'archiveDescription', $description);
 
         return $this;
     }

@@ -8,35 +8,22 @@ use GuzzleHttp\Stream\MetadataStreamInterface;
 
 abstract class AbstractUploadBuilder
 {
-    protected static $requiredParams;
-    protected static $uploadIdParam;
-
-    /** @var array Parameters required to identify an upload. */
+    /** @var array Set of three parameters required to identify an upload. */
     protected $uploadParams;
 
-    /**
-     * @var AwsClientInterface Client used to transfer requests.
-     */
+    /** @var AwsClientInterface Client used to transfer requests. */
     protected $client;
 
-    /**
-     * @var UploadState State of the transfer.
-     */
+    /** @var UploadState State of the transfer. */
     protected $state;
 
-    /**
-     * @var StreamInterface|MetadataStreamInterface Source of the data.
-     */
+    /** @var StreamInterface|MetadataStreamInterface Source of the data. */
     protected $source;
 
-    /**
-     * @var int Size, in bytes, of each part.
-     */
+    /** @var int Size, in bytes, of each part. */
     protected $partSize;
 
-    /**
-     * @var array Parameters for executed commands.
-     */
+    /** @var array Parameters for executed commands. */
     protected $params = [];
 
     /**
@@ -109,7 +96,7 @@ abstract class AbstractUploadBuilder
      */
     public function setUploadId($uploadId)
     {
-        $this->uploadParams[static::$uploadIdParam] = $uploadId;
+        $this->uploadParams[array_keys($this->uploadParams)[2]] = $uploadId;
 
         return $this;
     }
@@ -154,7 +141,7 @@ abstract class AbstractUploadBuilder
      */
     public function addParam($commandName, $param, $value)
     {
-        if (isset($this->params[$commandName])) {
+        if (!isset($this->params[$commandName])) {
             $this->params[$commandName] = [];
         }
 
@@ -166,7 +153,7 @@ abstract class AbstractUploadBuilder
     /**
      * Build the uploader based on the provided configuration.
      *
-     * @return static
+     * @return AbstractUploader
      */
      public function build()
      {
@@ -180,14 +167,14 @@ abstract class AbstractUploadBuilder
      *
      * @param array $params Parameters used to identify an upload.
      *
-     * @return mixed
+     * @return UploadState
      */
     abstract protected function loadStateFromParams(array $params = []);
 
     /**
      * Creates the service-specific Uploader object.
      *
-     * @return static
+     * @return AbstractUploader
      */
     abstract protected function createUploader();
 
@@ -199,20 +186,24 @@ abstract class AbstractUploadBuilder
     private function determineUploadState()
     {
         if (!($this->state instanceof UploadState)) {
+            // Get the required and uploadId param names.
+            $requiredParams = array_keys($this->uploadParams);
+            $uploadIdParam = array_pop($requiredParams);
+
             // Make sure that essential upload params are set.
-            foreach (static::$requiredParams as $param) {
+            foreach ($requiredParams as $param) {
                 if (!isset($this->uploadParams[$param])) {
                     throw new \InvalidArgumentException('You must provide an '
-                        . $param . 'value to the UploadBuilder.');
+                        . $param . ' value to the UploadBuilder.');
                 }
             }
 
             // Create a state from the upload params.
-            if (isset($this->uploadParams[static::$uploadIdParam])) {
+            if (isset($this->uploadParams[$uploadIdParam])) {
                 $this->state = $this->loadStateFromParams($this->uploadParams);
-                $this->partSize = $this->state->getMetaData('PartSize');
+                $this->partSize = $this->state->getPartSize();
             } else {
-                unset($this->uploadParams[static::$uploadIdParam]);
+                unset($this->uploadParams[$uploadIdParam]);
                 $this->state = new UploadState($this->uploadParams);
             }
         }

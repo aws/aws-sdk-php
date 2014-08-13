@@ -5,6 +5,14 @@ use GuzzleHttp\Stream\StreamInterface;
 
 /**
  * Generates data from the provided source needed to make multipart requests.
+ *
+ * The Part Generator yields associative arrays of parameters that are
+ * ultimately merged in with others to form the complete parameters of an
+ * UploadPart (or UploadMultipartPart for Glacier) command. This includes the
+ * Body parameter, which is a limited stream (i.e., a Stream object, decorated
+ * with a LimitStream object). This class has two different ways of navigating
+ * the original source to create these limited streams, and chooses the most
+ * optimum way depending on whether the source is a seekable, local file.
  */
 abstract class AbstractPartGenerator implements \Iterator
 {
@@ -17,11 +25,17 @@ abstract class AbstractPartGenerator implements \Iterator
     /** @var int Part size in bytes. */
     protected $partSize;
 
+    /** @var bool True if source is a seekable, local file. */
+    protected $seekableSource;
+
     /** @var int The current part's number. */
     private $partNumber;
 
     /** @var array The current part's data. */
     private $currentPart;
+
+    /** @var int */
+    private $offset;
 
     /**
      * @param StreamInterface $source  Upload source/body.
@@ -29,13 +43,17 @@ abstract class AbstractPartGenerator implements \Iterator
      */
     public function __construct(StreamInterface $source, array $options = [])
     {
-        // Receive options
         $this->options = $options;
-
-        // Validate and/or adjust the part size and source
         $this->source = $source;
+
+        // Call the S3/Glacier-specific subclass to determine the part size.
         $this->determinePartSize();
-        $this->validateSource();
+
+        // Determine if the source is seekable and is a local file. If it is,
+        // there are various optimizations on how we iterate through the source
+        // and generate parts.
+        $this->seekableSource = $this->source->isSeekable()
+            && $this->source->getMetadata('wrapper_type') === 'plainfile';
 
         // Initialize the iterator
         $this->next();
@@ -72,40 +90,43 @@ abstract class AbstractPartGenerator implements \Iterator
 
         // Skip parts that the iterator was configured to skip
         while (isset($this->options['skip'][$this->partNumber]) && $this->valid()) {
-            $this->moveSourceToNextPart();
             $this->partNumber++;
+            $this->advanceOffset();
         }
     }
 
     public function valid()
     {
-        return !$this->source->eof();
+        return $this->seekableSource
+            ? $this->offset < $this->source->getSize()
+            : !$this->source->eof();
     }
 
     public function rewind() {}
 
     /**
-     * Determines is the provided source is valid for the part generator.
+     * Gets the offset/tell of the source.
      *
-     * Checks properties about the source stream and throws an exception if the
-     * source cannot be used. The source needs to be readable at a minimum.
-     *
-     * @throws \InvalidArgumentException if the source cannot be used.
+     * @return int
      */
-    protected function validateSource()
+    protected function getOffset()
     {
-        if (!$this->source->isReadable()) {
-            throw new \InvalidArgumentException('Source stream must be readable.');
-        }
+        return $this->seekableSource
+            ? (int) min($this->offset, $this->source->getSize())
+            : $this->source->tell();
     }
 
     /**
      * Moves the source offset/tell to where the next part begins.
      */
-    protected function moveSourceToNextPart()
+    protected function advanceOffset()
     {
         // Reads data to move forward, but does not use the content.
-        $this->source->getContents($this->partSize);
+        if ($this->seekableSource) {
+            $this->offset += $this->partSize;
+        } else {
+            $this->source->getContents($this->partSize);
+        }
     }
 
     /**

@@ -1,8 +1,9 @@
 <?php
 namespace Aws\S3\Multipart;
 
+use Aws\AwsCommandInterface;
 use Aws\Common\Multipart\AbstractUploader;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Result;
 
 /**
  * Abstract class for transfer commonalities
@@ -11,22 +12,17 @@ class Uploader extends AbstractUploader
 {
     protected function getCompleteCommand()
     {
-        $parts = $this->state->getUploadedParts();
-        ksort($parts);
-
         return $this->createCommand(static::COMPLETE, [
-            'MultipartUpload' => ['Parts' => $parts]
+            'MultipartUpload' => ['Parts' => $this->state->getUploadedParts()]
         ]);
     }
 
-    protected function getResultHandler()
+    protected function handleResult(AwsCommandInterface $command, Result $result)
     {
-        return function (ProcessEvent $event) {
-            $partNumber = $event->getCommand()['PartNumber'];
-            $this->state->markPartAsUploaded($partNumber, [
-                'PartNumber' => $partNumber,
-                'ETag'       => $event->getResult()['ETag']
-            ]);
-        };
+        $partNumber = $command['PartNumber'];
+        $this->state->markPartAsUploaded($partNumber, [
+            'PartNumber' => $partNumber,
+            'ETag'       => $result['ETag']
+        ]);
     }
 }

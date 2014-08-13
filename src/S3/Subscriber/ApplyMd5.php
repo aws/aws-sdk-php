@@ -1,11 +1,10 @@
 <?php
 namespace Aws\S3\Subscriber;
 
-use Aws\Common\Signature\SignatureV4;
+use Aws\Common\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Utils;
 
 /**
  * Adds required and optional Content-MD5 headers.
@@ -22,14 +21,6 @@ class ApplyMd5 implements SubscriberInterface
 
     private static $canMd5 = ['PutObject', 'UploadPart'];
 
-    /** @var bool Whether or not to calculate optionals checksums. */
-    private $calculateChecksums;
-
-    public function __construct($calculateChecksums = true)
-    {
-        $this->calculateChecksums = $calculateChecksums;
-    }
-
     public function getEvents()
     {
         return ['prepare' => ['setMd5', 'last']];
@@ -37,33 +28,29 @@ class ApplyMd5 implements SubscriberInterface
 
     public function setMd5(PrepareEvent $event)
     {
-        /** @var \Aws\AwsClientInterface $client */
         $client = $event->getClient();
-        $signature = $client->getSignature();
         $command = $event->getCommand();
+        $body = $event->getRequest()->getBody();
 
-        // If ContentMD5 is set, there is nothing to do.
-        if ($command['ContentMD5']) {
+        // If ContentMD5 is set or there is no body, there is nothing to do.
+        if ($command['ContentMD5'] || !$body) {
             return;
         }
 
         // If and MD5 is required or enabled, add one.
-        $required = in_array($command->getName(), self::$requireMd5);
-        $optionalAndEnabled = $this->calculateChecksums
-            && in_array($command->getName(), self::$canMd5)
-            && !($signature instanceof SignatureV4);
-        if ($required || $optionalAndEnabled) {
-            $this->addMd5($event->getRequest());
-        }
-    }
-
-    private function addMd5(RequestInterface $request)
-    {
-        $body = $request->getBody();
-        if ($body && $body->getSize() > 0) {
-            if (false !== ($md5 = Stream\hash($body, 'md5', true))) {
-                $request->setHeader('Content-MD5', base64_encode($md5));
+        $optional = $client->getConfig('calculate_md5')
+            && in_array($command->getName(), self::$canMd5);
+        if (in_array($command->getName(), self::$requireMd5) || $optional) {
+            // Throw exception is calculating and MD5 would result in an error.
+            if (!$body->isSeekable()) {
+                throw new CouldNotCreateChecksumException('md5');
             }
+
+            // Set the Content-MD5 header.
+            $event->getRequest()->setHeader(
+                'Content-MD5',
+                base64_encode(Utils::hash($body, 'md5', true))
+            );
         }
     }
 }

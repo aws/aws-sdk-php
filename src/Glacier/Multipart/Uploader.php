@@ -1,9 +1,10 @@
 <?php
 namespace Aws\Glacier\Multipart;
 
+use Aws\AwsCommandInterface;
 use Aws\Common\Multipart\AbstractUploader;
 use Aws\Glacier\TreeHash;
-use GuzzleHttp\Command\Event\ProcessEvent;
+use Aws\Result;
 
 class Uploader extends AbstractUploader
 {
@@ -11,14 +12,13 @@ class Uploader extends AbstractUploader
     const UPLOAD = 'UploadMultipartPart';
 
     protected static $uploadIdParam = 'uploadId';
+    protected static $partNumberParam = 'range';
 
     protected function getCompleteCommand()
     {
         $treeHash = new TreeHash();
         $archiveSize = 0;
-        $parts = $this->state->getUploadedParts();
-        ksort($parts);
-        foreach ($parts as $part) {
+        foreach ($this->state->getUploadedParts() as $part) {
             $archiveSize += $part['size'];
             $treeHash->addChecksum($part['checksum']);
         }
@@ -29,21 +29,16 @@ class Uploader extends AbstractUploader
         ]);
     }
 
-    protected function getResultHandler()
+    protected function handleResult(AwsCommandInterface $command, Result $result)
     {
-        return function (ProcessEvent $event) {
-            // Get data from the range.
-            $rangeData = self::parseRange(
-                $event->getCommand()['range'],
-                $this->parts->getPartSize()
-            );
+        // Get data from the range.
+        $rangeData = self::parseRange($command['range'], $this->state->getPartSize());
 
-            // Store the data we need for later.
-            $this->state->markPartAsUploaded($rangeData['PartNumber'], [
-                'size'     => $rangeData['Size'],
-                'checksum' => $event->getCommand()['checksum']
-            ]);
-        };
+        // Store the data we need for later.
+        $this->state->markPartAsUploaded($rangeData['PartNumber'], [
+            'size'     => $rangeData['Size'],
+            'checksum' => $command['checksum']
+        ]);
     }
 
     /**
@@ -67,7 +62,7 @@ class Uploader extends AbstractUploader
         // Calculate and return data from the range.
         return [
             'Size'       => $lastByte - $firstByte + 1,
-            'PartNumber' => intval($firstByte / $partSize),
+            'PartNumber' => intval($firstByte / $partSize) + 1,
         ];
     }
 }

@@ -2,9 +2,11 @@
 namespace Aws\S3\Multipart;
 
 use Aws\Common\Multipart\AbstractPartGenerator;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\LazyOpenStream;
 use GuzzleHttp\Stream\LimitStream;
+use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Stream\Utils;
 use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
 
@@ -18,11 +20,13 @@ class PartGenerator extends AbstractPartGenerator
     const MAX_PART_SIZE = 5368709120;
     const MAX_PARTS = 10000;
 
+    private $calculateChecksums;
+
     public function __construct(StreamInterface $source, array $options = [])
     {
         // Ensure calculate_checksums option is set
-        if (!isset($options['calculate_checksums'])) {
-            $options['calculate_checksums'] = true;
+        if (!isset($options['calculate_md5'])) {
+            $options['calculate_md5'] = true;
         }
 
         // Ensure calculate_checksums option is set
@@ -31,6 +35,9 @@ class PartGenerator extends AbstractPartGenerator
         }
 
         parent::__construct($source, $options);
+
+        $this->calculateChecksums = $this->options['calculate_md5']
+            || $this->options['checksum_type'] === 'sha256';
     }
 
     protected function generatePartData()
@@ -38,20 +45,22 @@ class PartGenerator extends AbstractPartGenerator
         // Initialize the array of part data that will be returned.
         $data = ['PartNumber' => $this->key()];
 
-        // Limit what is read from the source to the part size.
-        $source = new LimitStream($this->source, $this->partSize, $this->source->tell());
-
-        // Decorate source stream with hashing logic if checksum is desired.
-        if ($this->options['calculate_checksums']) {
-            $this->enableChecksumCalculation($source, $data);
+        // Read from the source to create the body stream.
+        if ($this->seekableSource) {
+            // Case 1: Source is seekable, use lazy stream to defer work.
+            $source = new LazyOpenStream($this->source->getMetadata('uri'), 'r');
+            $body = $this->addStreamDecorators($source, $data);
+            $this->advanceOffset();
+        } else {
+            // Case 2: Stream is not seekable, must store part in temp stream.
+            $source = $this->addStreamDecorators($this->source, $data);
+            $body = Stream::factory();
+            Utils::copyToStream($source, $body);
+            $data['ContentLength'] = $body->getSize();
         }
 
-        // Read from the source to create the body stream.
-        $body = Stream\create('');
-        Stream\copy_to_stream($source, $body);
         $body->seek(0);
         $data['Body'] = $body;
-        $data['ContentLength'] = $body->getSize();
 
         return $data;
     }
@@ -80,14 +89,22 @@ class PartGenerator extends AbstractPartGenerator
         }
     }
 
-    private function enableChecksumCalculation(StreamInterface $stream, array &$data)
+    private function addStreamDecorators(StreamInterface $stream, array &$data)
     {
-        $algorithm = $this->options['checksum_type'];
-        $hash = new PhpHash($algorithm, ['base64' => true]);
-        $onComplete = function ($result) use (&$data, $algorithm) {
-            $data['Content' . strtoupper($algorithm)] = $result;
-        };
+        // Limit what is read from the source to the part size.
+        $stream = new LimitStream($stream, $this->partSize, $this->getOffset());
 
-        return new HashingStream($stream, $hash, $onComplete);
+        // Decorate source stream with hashing logic if checksum is needed.
+        // Hashing algo will be different based on Signature being used.
+        if (!$this->seekableSource && $this->calculateChecksums) {
+            $algorithm = $this->options['checksum_type'];
+            $hash = new PhpHash($algorithm, ['base64' => true]);
+            $onComplete = function ($result) use (&$data, $algorithm) {
+                $data['Content' . strtoupper($algorithm)] = $result;
+            };
+            $stream = new HashingStream($stream, $hash, $onComplete);
+        }
+
+        return $stream;
     }
 }

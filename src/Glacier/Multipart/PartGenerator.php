@@ -3,9 +3,10 @@ namespace Aws\Glacier\Multipart;
 
 use Aws\Common\Multipart\AbstractPartGenerator;
 use Aws\Glacier\TreeHash;
-use GuzzleHttp\Stream;
 use GuzzleHttp\Stream\LimitStream;
+use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Stream\Utils;
 use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
 
@@ -21,21 +22,40 @@ class PartGenerator extends AbstractPartGenerator
 
     protected function generatePartData()
     {
-        // checksum, ContentSHA256, range, body
         $data = [];
-        $firstByte = $this->source->tell();
+        $firstByte = $this->getOffset();
 
-        // Limit what is read from the source to the part size.
-        $source = new LimitStream($this->source, $this->partSize, $this->source->tell());
-        $source = self::addHashDecorators($source, $data);
+        // Read from the source to create the body stream. This also calculates
+        // the linear and tree hashes as the data is read.
+        if ($this->seekableSource) {
+            // Case 1: Stream is seekable, can make stream from new handle.
+            $body = Utils::open($this->source->getMetadata('uri'), 'r');
+            $body = new LimitStream(
+                Stream::factory($body),
+                $this->partSize,
+                $this->getOffset()
+            );
+            // Decorate the body with hashing streams and read through it. The
+            // body should be returned without the hashing streams though, so it
+            // is not hashed again when it is read for sending.
+            $decoratedBody = $this->addHashingDecorators($body, $data);
+            while (!$decoratedBody->eof()) $decoratedBody->read(1048576);
+            $this->advanceOffset();
+        } else {
+            // Case 2: Stream is not seekable, must store part in temp stream.
+            $source = new LimitStream(
+                $this->source,
+                $this->partSize,
+                $this->getOffset()
+            );
+            $source = $this->addHashingDecorators($source, $data);
+            $body = Stream::factory();
+            Utils::copyToStream($source, $body);
+        }
 
-        // Read from the source to create the body stream.
-        $body = Stream\create('');
-        Stream\copy_to_stream($source, $body);
         $body->seek(0);
         $data['body'] = $body;
-
-        $lastByte = $this->source->tell() - 1;
+        $lastByte = $this->getOffset() - 1;
         $data['range'] = "bytes {$firstByte}-{$lastByte}/*";
 
         return $data;
@@ -63,8 +83,12 @@ class PartGenerator extends AbstractPartGenerator
         }
     }
 
-    public static function addHashDecorators(StreamInterface $stream, array &$data)
+    private function addHashingDecorators(StreamInterface $stream, array &$data)
     {
+        // Limit what is read from the source to the part size.
+        $stream = new LimitStream($stream, $this->partSize, $this->getOffset());
+
+        // Make sure that a tree hash is calculated.
         $stream = new HashingStream(
             $stream,
             new TreeHash(),
@@ -73,6 +97,7 @@ class PartGenerator extends AbstractPartGenerator
             }
         );
 
+        // Make sure that a linear SHA256 hash is calculated.
         $stream = new HashingStream(
             $stream,
             new PhpHash('sha256'),

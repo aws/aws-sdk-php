@@ -2,9 +2,12 @@
 
 namespace Aws\Test\S3\Subscriber;
 
+use Aws\S3\Exception\S3Exception;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Message\Response;
+use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\NoSeekStream;
 
 /**
  * @covers Aws\S3\Subscriber\ApplyMd5
@@ -12,6 +15,25 @@ use GuzzleHttp\Message\Response;
 class ApplyMd5Test extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
+
+    public function testThrowsExceptionIfBodyIsNotSeekable()
+    {
+        $s3 = $this->getTestClient('s3');
+        $command = $s3->getCommand('PutObject', [
+            'Bucket' => 'foo',
+            'Key'    => 'bar',
+            'Body'   => new NoSeekStream(Stream\create('foo')),
+        ]);
+        try {
+            $s3->execute($command);
+            $this->fail('An exception should have been thrown.');
+        } catch (S3Exception $e) {
+            $this->assertInstanceOf(
+                'Aws\Common\Exception\CouldNotCreateChecksumException',
+                $e->getPrevious()
+            );
+        }
+    }
 
     /**
      * @dataProvider getContentMd5UseCases
@@ -61,9 +83,9 @@ class ApplyMd5Test extends \PHPUnit_Framework_TestCase
                 true,
                 $md5,
             ],
-            // Not added for upload operations when turned off a client level
+            // Not added for upload operations when turned off at client level
             [
-                ['calculate_checksums' => false],
+                ['calculate_md5' => false],
                 'PutObject',
                 $args + ['Body' => 'baz'],
                 false,

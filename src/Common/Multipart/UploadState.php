@@ -17,7 +17,7 @@ class UploadState
     /** @var array Params used to identity the upload. */
     private $uploadId;
 
-    /** @var array Part size being used by the upload. */
+    /** @var int Part size being used by the upload. */
     private $partSize;
 
     /** @var array Parts that have been uploaded. */
@@ -34,6 +34,11 @@ class UploadState
         $this->uploadId = $uploadId;
     }
 
+    /**
+     * Returns
+     *
+     * @return array
+     */
     public function getUploadId()
     {
         return $this->uploadId;
@@ -51,11 +56,13 @@ class UploadState
 
     public function markPartAsUploaded($partNumber, array $partData = [])
     {
-        $this->uploadedParts[$partNumber] = $partData ?: true;
+        $this->uploadedParts[$partNumber] = $partData;
     }
 
     public function getUploadedParts()
     {
+        ksort($this->uploadedParts);
+
         return $this->uploadedParts;
     }
 

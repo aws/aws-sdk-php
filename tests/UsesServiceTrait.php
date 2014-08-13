@@ -116,7 +116,7 @@ trait UsesServiceTrait
      *
      * @return CommandException
      */
-    private function createMockAwsException($code)
+    private function createMockAwsException($code = 'ERROR')
     {
         $client = $this->getMockBuilder('Aws\AwsClientInterface')
             ->setMethods(['getApi'])

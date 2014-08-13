@@ -5,63 +5,6 @@ use Aws\Glacier\TreeHash;
 
 class TreeHashTest extends \PHPUnit_Framework_TestCase
 {
-    public function getTestData()
-    {
-        $completedChunks = function ($chunks, $useBinaryForm) {
-            return array_map(function ($chunk) use ($useBinaryForm) {
-                return hash('sha256', $chunk, $useBinaryForm);
-            }, $chunks);
-        };
-
-        $data = new \stdClass;
-        $data->chunks = array(str_repeat('x', 1048576), 'foobar');
-        $data->content = join('', $data->chunks);
-        $data->binHashes = $completedChunks($data->chunks, true);
-        $data->hexHashes = $completedChunks($data->chunks, false);
-        $data->checksum = hash('sha256', join('', $data->binHashes), true);
-
-        return $data;
-    }
-
-    /**
-     * @covers Aws\Glacier\TreeHash::fromChecksums
-     */
-    public function testTreeHashingChecksumsWorksCorrectly()
-    {
-        $d = $this->getTestData();
-        $this->assertEquals(
-            $d->checksum,
-            TreeHash::fromChecksums($d->binHashes, true)->complete()
-        );
-        $this->assertEquals(
-            $d->checksum,
-            TreeHash::fromChecksums($d->hexHashes)->complete()
-        );
-    }
-
-    /**
-     * @covers Aws\Glacier\TreeHash::fromContent
-     */
-    public function testTreeHashingContentWorksCorrectly()
-    {
-        $d = $this->getTestData();
-        $this->assertEquals(
-            $d->checksum,
-            TreeHash::fromContent($d->content)->complete()
-        );
-    }
-
-    /**
-     * @covers Aws\Glacier\TreeHash::validateChecksum
-     */
-    public function testValidatingChecksumWorksCorrectly()
-    {
-        $d = $this->getTestData();
-        $this->assertTrue(
-            TreeHash::validateChecksum($d->content, bin2hex($d->checksum))
-        );
-    }
-
     /**
      * @covers Aws\Glacier\TreeHash::__construct
      * @covers Aws\Glacier\TreeHash::update
@@ -70,12 +13,27 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
      */
     public function testHashingIsHappeningCorrectly()
     {
-        $d = $this->getTestData();
-        $treeHash = new TreeHash('sha256');
-        $treeHash->update($d->chunks[0]);
-        $treeHash->addChecksum($d->hexHashes[1]);
+        $chunks = [
+            str_repeat('x', 1024 * 1024),
+            str_repeat('x', 1024 * 1024 - 2),
+            '1234567890',
+            'foobar',
+        ];
 
-        $this->assertEquals($d->checksum, $treeHash->complete());
+        $hash = new TreeHash('sha256');
+        $hash->addChecksum(hash('sha256', $chunks[0]));
+        $hash->update($chunks[1]);
+        $hash->update($chunks[2]);
+        $hash->update($chunks[3]);
+
+        // Build expected tree hash
+        $leaf1 = hash('sha256', $chunks[0], true);
+        $leaf2 = hash('sha256', $chunks[1] . substr($chunks[2], 0, 2), true);
+        $leaf3 = hash('sha256', substr($chunks[2], 2) . $chunks[3], true);
+        $leaf1 = hash('sha256', $leaf1 . $leaf2, true);
+        $expectedTreeHash = hash('sha256', $leaf1 . $leaf3, true);
+
+        $this->assertEquals($expectedTreeHash, $hash->complete());
     }
 
     /**
@@ -84,21 +42,11 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
      */
     public function testCannotUpdateAfterHashCalculation()
     {
-        $chunkHash = new TreeHash('sha256');
-        $chunkHash->update('foo');
-        $chunkHash->complete();
+        $hash = new TreeHash('sha256');
+        $hash->update('foo');
+        $hash->complete();
 
-        $chunkHash->update('bar');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @covers Aws\Glacier\TreeHash::update
-     */
-    public function testCannotUpdateChunksLargerThanOneMegabyte()
-    {
-        $chunkHash = new TreeHash('sha256');
-        $chunkHash->update(str_repeat('foo', 1000000));
+        $hash->update('bar');
     }
 
     /**
@@ -107,10 +55,23 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
      */
     public function testCannotAddChecksumsAfterHashCalculation()
     {
-        $chunkHash = new TreeHash('sha256');
-        $chunkHash->update('foo');
-        $chunkHash->complete();
+        $hash = new TreeHash('sha256');
+        $hash->update('foo');
+        $hash->complete();
 
-        $chunkHash->addChecksum('bar');
+        $hash->addChecksum('bar');
+    }
+
+    /**
+     * @covers Aws\Glacier\TreeHash::reset
+     */
+    public function testCanResetHash()
+    {
+        $hash = new TreeHash('sha256');
+        $hash->update('foo');
+        $hash->reset();
+        $hash->update('foo');
+
+        $this->assertEquals(hash('sha256', 'foo', true), $hash->complete());
     }
 }
