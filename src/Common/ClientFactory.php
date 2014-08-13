@@ -11,6 +11,7 @@ use Aws\Common\Api\Parser\JsonRpcParser;
 use Aws\Common\Api\Parser\QueryParser;
 use Aws\Common\Api\Parser\RestJsonParser;
 use Aws\Common\Api\Parser\RestXmlParser;
+use Aws\Common\Api\Serializer\Ec2ParamBuilder;
 use Aws\Common\Api\Serializer\JsonRpcSerializer;
 use Aws\Common\Api\Serializer\QuerySerializer;
 use Aws\Common\Api\Serializer\RestJsonSerializer;
@@ -528,7 +529,9 @@ class ClientFactory
                 $em->attach(new RestXmlParser($api));
                 break;
             case 'ec2':
-                $em->attach(new QuerySerializer($api, $endpoint));
+                $em->attach(
+                    new QuerySerializer($api, $endpoint, new Ec2ParamBuilder())
+                );
                 $em->attach(new QueryParser($api, null, false));
                 break;
             default:
