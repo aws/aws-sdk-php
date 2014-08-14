@@ -5,6 +5,8 @@ return array (
     'endpointPrefix' => 'cloudsearchdomain',
     'serviceFullName' => 'Amazon CloudSearchDomain',
     'serviceType' => 'rest-json',
+    'signatureVersion' => 'v4',
+    'signingName' => 'cloudsearch',
     'namespace' => 'CloudSearchDomain',
     'operations' => array(
         'Search' => array(
