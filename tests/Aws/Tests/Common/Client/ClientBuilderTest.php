@@ -365,4 +365,21 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertNotNull($client->getDescription());
     }
+
+    public function testCanCreateNullCredentials()
+    {
+        $client = ClientBuilder::factory()
+            ->setConfig(array(
+                'service' => 'foo',
+                'region' => 'us-east-1',
+                'credentials' => false,
+                'service.description' => array(
+                    'signatureVersion' => 'v4',
+                    'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+                )
+            ))
+            ->build();
+        $this->assertInstanceOf('Aws\\Common\\Signature\\SignatureV4', $client->getSignature());
+        $this->assertInstanceOf('Aws\\Common\\Credentials\\NullCredentials', $client->getCredentials());
+    }
 }

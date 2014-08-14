@@ -451,3 +451,24 @@ You can also use the same technique when setting credentials on an existing clie
 For more information about why you might need to use temporary credentials in your application or project, see
 `Scenarios for Granting Temporary Access <http://docs.aws.amazon.com/STS/latest/UsingSTS/STSUseCases.html>`_ in the AWS
 STS documentation.
+
+.. _anonymous_access:
+
+Creating Anonymous Clients
+--------------------------
+
+In some cases, you may want to create a client that is not associated with any credentials. This allows you to make
+anonymous requests to a service. For example, both S3 Objects and CloudSearch Domains can be configured to allow
+anonymous access.
+
+To create an anonymous client, you can set the ``'credentials'`` option to ``false``.
+
+.. code-block:: php
+
+    $s3Client = S3Client::factory(array('credentials' => false));
+
+    // Makes an anonymous request. The Object would need to be publicly readable for this to succeed.
+    $result = $s3Client->getObject(array(
+        'Bucket' => 'my-bucket',
+        'Key'    => 'my-key',
+    ));

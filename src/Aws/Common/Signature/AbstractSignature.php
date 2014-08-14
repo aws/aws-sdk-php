@@ -31,6 +31,9 @@ abstract class AbstractSignature implements SignatureInterface
         return time();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function createPresignedUrl(
         RequestInterface $request,
         CredentialsInterface $credentials,
