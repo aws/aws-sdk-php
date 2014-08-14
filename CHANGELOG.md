@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+2.6.15 (2014-08-14)
+-------------------
+
+* Added support for signing requests to the Amazon CloudSearch Domains client.
+* Added support for creating anonymous clients.
+
 2.6.14 (2014-08-11)
 -------------------
 
