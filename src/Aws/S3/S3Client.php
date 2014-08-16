@@ -155,7 +155,7 @@ class S3Client extends AbstractClient
      *
      * @param array|Collection $config Client configuration data
      *
-     * @return self
+     * @return S3Client
      * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
@@ -164,10 +164,10 @@ class S3Client extends AbstractClient
 
         // Configure the custom exponential backoff plugin for retrying S3 specific errors
         if (!isset($config[Options::BACKOFF])) {
-            $config[Options::BACKOFF] = self::createBackoffPlugin($exceptionParser);
+            $config[Options::BACKOFF] = static::createBackoffPlugin($exceptionParser);
         }
 
-        $config[Options::SIGNATURE] = $signature = self::createSignature($config);
+        $config[Options::SIGNATURE] = $signature = static::createSignature($config);
 
         $client = ClientBuilder::factory(__NAMESPACE__)
             ->setConfig($config)
@@ -221,7 +221,7 @@ class S3Client extends AbstractClient
         // Add aliases for some S3 operations
         $default = CompositeFactory::getDefaultChain($client);
         $default->add(
-            new AliasFactory($client, self::$commandAliases),
+            new AliasFactory($client, static::$commandAliases),
             'Guzzle\Service\Command\Factory\ServiceDescriptionFactory'
         );
         $client->setCommandFactory($default);
@@ -460,7 +460,7 @@ class S3Client extends AbstractClient
     /**
      * Register the Amazon S3 stream wrapper and associates it with this client object
      *
-     * @return self
+     * @return $this
      */
     public function registerStreamWrapper()
     {

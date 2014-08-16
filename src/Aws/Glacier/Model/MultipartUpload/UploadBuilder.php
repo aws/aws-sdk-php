@@ -64,7 +64,7 @@ class UploadBuilder extends AbstractUploadBuilder
      *
      * @param string $accountId ID of the account
      *
-     * @return self
+     * @return $this
      */
     public function setAccountId($accountId)
     {
@@ -78,7 +78,7 @@ class UploadBuilder extends AbstractUploadBuilder
       *
       * @param string $vaultName Name of the vault
       *
-      * @return self
+      * @return $this
      */
     public function setVaultName($vaultName)
     {
@@ -92,7 +92,7 @@ class UploadBuilder extends AbstractUploadBuilder
      *
      * @param int $partSize Upload part size
      *
-     * @return self
+     * @return $this
      */
     public function setPartSize($partSize)
     {
@@ -106,7 +106,7 @@ class UploadBuilder extends AbstractUploadBuilder
       *
       * @param string $archiveDescription Archive description
       *
-      * @return self
+      * @return $this
      */
     public function setArchiveDescription($archiveDescription)
     {
@@ -121,7 +121,7 @@ class UploadBuilder extends AbstractUploadBuilder
      *
      * @param int $concurrency Concurrency level
      *
-     * @return self
+     * @return $this
      */
     public function setConcurrency($concurrency)
     {
@@ -135,7 +135,7 @@ class UploadBuilder extends AbstractUploadBuilder
      *
      * @param UploadPartGenerator $partGenerator Glacier upload helper object
      *
-     * @return self
+     * @return $this
      */
     public function setPartGenerator(UploadPartGenerator $partGenerator)
     {
