@@ -74,7 +74,7 @@ class UploadPartContext
      *
      * @param string $data Data to add to the context
      *
-     * @return self
+     * @return $this
      * @throws LogicException when the context is already finalized
      */
     public function addData($data)

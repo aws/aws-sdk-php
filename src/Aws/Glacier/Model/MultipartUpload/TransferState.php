@@ -38,7 +38,7 @@ class TransferState extends AbstractTransferState
      */
     public static function fromUploadId(AwsClientInterface $client, UploadIdInterface $uploadId)
     {
-        $transferState = new self($uploadId);
+        $transferState = new static($uploadId);
         $listParts = $client->getIterator('ListParts', $uploadId->toParams());
 
         foreach ($listParts as $part) {
@@ -60,7 +60,7 @@ class TransferState extends AbstractTransferState
     /**
      * @param UploadPartGenerator $partGenerator Glacier upload helper object
      *
-     * @return self
+     * @return $this
      */
     public function setPartGenerator(UploadPartGenerator $partGenerator)
     {
