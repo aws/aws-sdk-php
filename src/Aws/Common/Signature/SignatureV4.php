@@ -394,6 +394,8 @@ class SignatureV4 extends AbstractSignature implements EndpointSignatureInterfac
         foreach ($queryParams as $key => $values) {
             if (is_array($values)) {
                 sort($values);
+            } elseif ($values === 0) {
+                $values = array('0');
             } elseif (!$values) {
                 $values = array('');
             }
