@@ -18,16 +18,6 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage File not found:
-     */
-    public function testEnsuresFileExists()
-    {
-        $p = new FilesystemApiProvider(__DIR__);
-        $p->getService('foo', '2010-20-04');
-    }
-
     public function testEnsuresValidJson()
     {
         $path = sys_get_temp_dir() . '/invalid-2010-12-05.normal.json';

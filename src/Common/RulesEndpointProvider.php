@@ -12,26 +12,43 @@ class RulesEndpointProvider implements EndpointProviderInterface
     private $ruleSets;
 
     /**
-     * @param string $pathOrData Path to an endpoint rules file, path to a
-     *                           directory of endpoint rules files, or array of
-     *                           endpoint rules file data. If no argument is
-     *                           provided, the default public rules are
-     *                           utilized.
+     * @param array $ruleSets Rule sets to utilize
      */
-    public function __construct($pathOrData = null)
+    public function __construct(array $ruleSets)
     {
-        if (!$pathOrData) {
-            $this->ruleSets = \GuzzleHttp\json_decode(
-                file_get_contents(__DIR__ . '/Resources/endpoints/public.json'),
-                true
-            );
-        } elseif (is_array($pathOrData)) {
-            $this->ruleSets = $pathOrData;
-        } else {
-            $this->ruleSets = [];
-            $this->addRulesFromPath($pathOrData);
-        }
+        $this->ruleSets = $ruleSets;
     }
+
+    /**
+     * Creates and returns the default RulesEndpointProvider based on the
+     * public rule sets.
+     *
+     * @return array
+     */
+    public static function fromDefaults()
+    {
+        return new self(require __DIR__ . '/Resources/public-endpoints.php');
+    }
+
+    /**
+     * Creates and returns a RulesEndpointProvider based on a JSON file.
+     *
+     * @param string $path Path to a JSON rules file
+     *
+     * @return array
+     * @throws \InvalidArgumentException on error
+     */
+    public static function fromJsonFile($path)
+    {
+        if (!file_exists($path)) {
+            throw new \InvalidArgumentException("File not found: $path");
+        }
+
+        return new self(
+            \GuzzleHttp\json_decode(file_get_contents($path), true)
+        );
+    }
+
 
     public function getEndpoint(array $args = [])
     {
@@ -84,48 +101,6 @@ class RulesEndpointProvider implements EndpointProviderInterface
         if (!isset($args['region'])) {
             throw new \InvalidArgumentException('Requires a "region" value');
         }
-    }
-
-    /**
-     * Merges in rules from the path to a file or directory of rules files.
-     *
-     * @param string $path Directory of rules files
-     * @throws \InvalidArgumentException if the path is invalid
-     */
-    private function addRulesFromPath($path)
-    {
-        if (is_dir($path)) {
-            foreach (glob(rtrim($path, '/') . '/*.json') as $file) {
-                $this->addRulesFromFile($file);
-            }
-        } else {
-            $this->addRulesFromFile($path);
-        }
-
-        // Sort the rules
-        usort($this->ruleSets, function ($a, $b) {
-            return $a['priority'] < $b['priority']
-                ? -1
-                : ($a['priority'] > $b['priority'] ? 1 : 0);
-        });
-    }
-
-    /**
-     * Merges in rules from a file.
-     *
-     * @param string $filename File to add
-     * @throws \InvalidArgumentException if the filename is not readable
-     */
-    private function addRulesFromFile($filename)
-    {
-        if (!is_readable($filename)) {
-            throw new \InvalidArgumentException($filename . ' is not readable');
-        }
-
-        $this->ruleSets = array_merge(
-            $this->ruleSets,
-            \GuzzleHttp\json_decode(file_get_contents($filename), true)
-        );
     }
 
     /**

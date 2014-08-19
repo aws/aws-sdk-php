@@ -100,9 +100,11 @@ class ClientFactory
             'class_name'        => false
         ];
 
+        // Merge in and handle default arguments
         $args += $defaultArgs;
         $this->addDefaultArgs($args);
 
+        // Ensure required arguments are provided.
         foreach ($required as $r) {
             if (!isset($args[$r])) {
                 throw new \InvalidArgumentException("{$r} is required");
@@ -126,6 +128,7 @@ class ClientFactory
         foreach ($deferred as $key => $value) {
             $this->{"handle_{$key}"}($value, $args, $client);
         }
+
         $this->postCreate($client, $args);
 
         return $client;
@@ -162,12 +165,13 @@ class ClientFactory
         }
 
         if (!isset($args['api_provider'])) {
-            $path = __DIR__ . '/../../vendor/aws/aws-models';
-            $args['api_provider'] = new FilesystemApiProvider($path, true);
+            $args['api_provider'] = new FilesystemApiProvider(
+                __DIR__ . '/../../vendor/aws/aws-models'
+            );
         }
 
         if (!isset($args['endpoint_provider'])) {
-            $args['endpoint_provider'] = new RulesEndpointProvider();
+            $args['endpoint_provider'] = RulesEndpointProvider::fromDefaults();
         }
     }
 

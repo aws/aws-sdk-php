@@ -16,7 +16,7 @@ class FilesystemApiProvider implements ApiProviderInterface
     private $latestVersions = [];
 
     /**
-     * @param string $path Path to the service descriptions on disk
+     * @param string $path Path to the service description files
      */
     public function __construct($path)
     {
@@ -32,7 +32,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, $this->apiSuffix);
 
-        return $this->parseJsonFile($path);
+        return \GuzzleHttp\json_decode(file_get_contents($path), true);
     }
 
     public function getServiceNames()
@@ -72,7 +72,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, '.paginators.json');
 
-        return $this->parseJsonFile($path);
+        return \GuzzleHttp\json_decode(file_get_contents($path), true);
     }
 
     public function getServiceWaiterConfig($service, $version)
@@ -83,7 +83,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, '.waiters.json');
 
-        return $this->parseJsonFile($path);
+        return \GuzzleHttp\json_decode(file_get_contents($path), true);
     }
 
     private function getPath($service, $version, $extension)
@@ -103,15 +103,6 @@ class FilesystemApiProvider implements ApiProviderInterface
         }
 
         return $services;
-    }
-
-    private function parseJsonFile($path)
-    {
-        if (!file_exists($path)) {
-            throw new \InvalidArgumentException("File not found: $path");
-        }
-
-        return \GuzzleHttp\json_decode(file_get_contents($path), true);
     }
 
     private function determineLatestVersion($service)
