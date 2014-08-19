@@ -7,7 +7,7 @@ namespace Aws\Common;
 class MapIterator extends \IteratorIterator
 {
     /** @var mixed Callback */
-    protected $callback;
+    private $callback;
 
     /**
      * @param \Traversable $iterator Traversable iterator

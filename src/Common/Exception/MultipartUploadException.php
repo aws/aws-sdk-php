@@ -7,10 +7,8 @@ class MultipartUploadException extends \RuntimeException
 {
     const MSG_TEMPLATE = 'An exception occurred while %s a multipart upload.';
 
-    /**
-     * @var UploadState State of the transfer when the error was encountered
-     */
-    protected $state;
+    /** @var UploadState State of the erroneous transfer */
+    private $state;
 
     /**
      * @param UploadState $state  Upload state at time of the exception.
