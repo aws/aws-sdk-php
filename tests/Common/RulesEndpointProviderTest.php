@@ -83,4 +83,40 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
         $p = RulesEndpointProvider::fromDefaults();
         $this->assertEquals($output, $p->getEndpoint($input));
     }
+
+    public function testCanLoadFromJson()
+    {
+        $f = sys_get_temp_dir() . '/test.json';
+        file_put_contents($f, '[]');
+        RulesEndpointProvider::fromJsonFile($f);
+        unlink($f);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresJsonFileExists()
+    {
+        RulesEndpointProvider::fromJsonFile('/does/not/exist.json');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Requires a "service" value
+     */
+    public function testEnsuresService()
+    {
+        $p = RulesEndpointProvider::fromDefaults();
+        $p->getEndpoint(['region' => 'foo']);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Requires a "region" value
+     */
+    public function testEnsuresVersion()
+    {
+        $p = RulesEndpointProvider::fromDefaults();
+        $p->getEndpoint(['service' => 'foo']);
+    }
 }

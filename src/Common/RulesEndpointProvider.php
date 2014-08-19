@@ -23,7 +23,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
      * Creates and returns the default RulesEndpointProvider based on the
      * public rule sets.
      *
-     * @return array
+     * @return self
      */
     public static function fromDefaults()
     {

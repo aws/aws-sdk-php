@@ -83,7 +83,7 @@ class QueryParamBuilder
 
         $items = $shape->getMember();
 
-        if (!$shape['flattened']) {
+        if (!$this->isFlat($shape)) {
             $prefix .= '.member';
         } elseif ($name = $this->queryName($items)) {
             $parts = explode('.', $prefix);
@@ -105,7 +105,7 @@ class QueryParamBuilder
         $vals = $shape->getValue();
         $keys = $shape->getKey();
 
-        if (!$shape['flattened']) {
+        if (!$this->isFlat($shape)) {
             $prefix .= '.entry';
         }
 

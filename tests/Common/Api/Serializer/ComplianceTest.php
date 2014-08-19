@@ -18,6 +18,8 @@ use GuzzleHttp\Command\Event\PrepareEvent;
  * @covers Aws\Common\Api\Serializer\RestXmlSerializer
  * @covers Aws\Common\Api\Serializer\JsonBody
  * @covers Aws\Common\Api\Serializer\XmlBody
+ * @covers Aws\Common\Api\Serializer\Ec2ParamBuilder
+ * @covers Aws\Common\Api\Serializer\QueryParamBuilder
  */
 class ComplianceTest extends \PHPUnit_Framework_TestCase
 {
