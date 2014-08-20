@@ -330,11 +330,14 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
             's3/complete_multipart_upload'
         ));
         $history = new HistoryPlugin();
+        $called = false;
         $client->addSubscriber($history);
         $result = $client->upload('test', 'key', fopen(__FILE__, 'r'), 'public-read', array(
             'min_part_size' => 4,
-            'params'        => array('Metadata' => array('Foo' => 'Bar'))
+            'params'        => array('Metadata' => array('Foo' => 'Bar')),
+            'before_upload' => function () use (&$called) {$called = true;},
         ));
+        $this->assertTrue($called);
         $this->assertInstanceOf('Guzzle\Service\Resource\Model', $result);
         $this->assertCount(3, $history);
         $request = $history->getLastRequest();
