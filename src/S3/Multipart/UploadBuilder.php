@@ -54,15 +54,13 @@ class UploadBuilder extends AbstractUploadBuilder
             }
         }
 
-        // Create part generator.
+        // Create the part generator.
         $isSigV4 = ($this->client->getSignature() instanceof SignatureV4);
         $parts = new PartGenerator($this->source, [
             'part_size'     => $this->partSize,
             'skip'          => $this->state->getUploadedParts(),
             'calculate_md5' => $this->client->getConfig('calculate_md5'),
-            'checksum_type' => $isSigV4
-                ? 'sha256'
-                : 'md5',
+            'checksum_type' => $isSigV4 ? 'sha256' : 'md5',
         ]);
 
         // Store the part size in the state.
