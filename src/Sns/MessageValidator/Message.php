@@ -53,14 +53,18 @@ class Message
      * Creates a message object from the raw POST data
      *
      * @return Message
-     * @throws \UnexpectedValueException If the POST data is absent, or not a valid JSON document
+     * @throws \RuntimeException If the POST data is absent, or not a valid JSON document
      */
     public static function fromRawPostData()
     {
+        if (!isset($_SERVER['HTTP_X_AMZ_SNS_MESSAGE_TYPE'])) {
+            throw new \RuntimeException('SNS message type header not provided.');
+        }
+
         $data = \GuzzleHttp\json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
-            throw new \UnexpectedValueException('POST data invalid');
+            throw new \RuntimeException('POST data invalid');
         }
 
         return self::fromArray($data);
@@ -105,12 +109,8 @@ class Message
     public function getStringToSign()
     {
         $stringToSign = '';
-
-        $data = $this->data->toArray();
-        ksort($data);
-
-        foreach ($data as $key => $value) {
-            if (in_array($key, self::$signableKeys)) {
+        foreach (self::$signableKeys as $key) {
+            if ($value = $this->get($key)) {
                 $stringToSign .= "{$key}\n{$value}\n";
             }
         }

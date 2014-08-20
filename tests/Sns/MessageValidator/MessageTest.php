@@ -61,6 +61,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreateFromRawPost()
     {
+        $_SERVER['HTTP_X_AMZ_SNS_MESSAGE_TYPE'] = 'Notification';
+
         // Prep php://input with mocked data
         MockPhpStream::setStartingData(json_encode($this->messageData));
         stream_wrapper_unregister('php');
@@ -70,14 +72,25 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Aws\Sns\MessageValidator\Message', $message);
 
         stream_wrapper_restore("php");
+        unset($_SERVER['HTTP_X_AMZ_SNS_MESSAGE_TYPE']);
     }
 
     /**
-     * @expectedException \UnexpectedValueException
+     * @expectedException \RuntimeException
+     */
+    public function testCreateFromRawPostFailsWithMissingHeader()
+    {
+        Message::fromRawPostData();
+    }
+
+    /**
+     * @expectedException \RuntimeException
      */
     public function testCreateFromRawPostFailsWithMissingData()
     {
+        $_SERVER['HTTP_X_AMZ_SNS_MESSAGE_TYPE'] = 'Notification';
         Message::fromRawPostData();
+        unset($_SERVER['HTTP_X_AMZ_SNS_MESSAGE_TYPE']);
     }
 
     /**

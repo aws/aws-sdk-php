@@ -46,34 +46,25 @@ class MessageValidator
      */
     public function validate(Message $message)
     {
+        // Get and validate the URL for the certificate.
         $certUrl = Url::fromString($message->get('SigningCertURL'));
-
-        if ('.amazonaws.com' != substr($certUrl->getHost(), -14)) {
-            throw new SnsMessageValidatorException('The certificate is from '
-                . 'an unrecognized source');
-        }
+        $this->validateUrl($certUrl);
 
         // Get the cert itself and extract the public key
         $certificate = $this->client->get((string) $certUrl)->getBody();
-        $publicKey = openssl_get_publickey($certificate);
-
-        if (!$publicKey) {
+        $key = openssl_get_publickey($certificate);
+        if (!$key) {
             throw new SnsMessageValidatorException('Cannot get the public key '
-                . 'from the certificate');
+                . 'from the certificate.');
         }
 
         // Verify the signature of the message
-        $stringToSign = $message->getStringToSign();
-        $incomingSignature = base64_decode($message->get('Signature'));
+        $content = $message->getStringToSign();
+        $signature = base64_decode($message->get('Signature'));
 
-        if (!openssl_verify(
-            $stringToSign,
-            $incomingSignature,
-            $publicKey,
-            OPENSSL_ALGO_SHA1
-        )) {
+        if (!openssl_verify($content, $signature, $key, OPENSSL_ALGO_SHA1)) {
             throw new SnsMessageValidatorException('The message signature is '
-                . 'invalid');
+                . 'invalid.');
         }
     }
 
@@ -92,6 +83,27 @@ class MessageValidator
             return true;
         } catch (SnsMessageValidatorException $e) {
             return false;
+        }
+    }
+
+    /**
+     * Ensures that the url of the certificate is one belonging to AWS, and not
+     * just something from the amazonaws domain, which includes S3 buckets.
+     *
+     * @param Url $url
+     *
+     * @throws SnsMessageValidatorException if the cert url is invalid
+     */
+    private function validateUrl(Url $url)
+    {
+        // The cert URL must be https, a .pem, and match the following pattern.
+        $hostPattern = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
+        if ($url->getScheme() !== 'https'
+            || substr($url, -4) !== '.pem'
+            || !preg_match($hostPattern, $url->getHost())
+        ) {
+            throw new SnsMessageValidatorException('The certificate is located '
+                . 'on an invalid domain.');
         }
     }
 }

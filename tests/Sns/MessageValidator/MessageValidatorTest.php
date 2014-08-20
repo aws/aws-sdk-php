@@ -7,13 +7,15 @@ use GuzzleHttp\Collection;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Client;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers \Aws\Sns\MessageValidator\MessageValidator
  */
 class MessageValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    const VALID_CERT_URL = "https://sns.foo.amazonaws.com/bar.pem";
+
     protected function setUp()
     {
         if (!extension_loaded('openssl')) {
@@ -31,21 +33,11 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
+     * @expectedExceptionMessage The certificate is located on an invalid domain.
      */
-    public function testValidateFailsWhenCertUrlDoesNotMatchAws()
+    public function testValidateFailsWhenCertUrlInvalid()
     {
         $validator = new MessageValidator();
-        $message = new Message(new Collection());
-        $validator->validate($message);
-    }
-
-    /**
-     * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
-     */
-    public function testValidateFailsWhenCannotDeterminePublicKey()
-    {
-        $client = $this->getMockClient();
-        $validator = new MessageValidator($client);
         $message = new Message(new Collection([
             'SigningCertURL' => 'https://foo.amazonaws.com/bar'
         ]));
@@ -54,6 +46,21 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
+     * @expectedExceptionMessage Cannot get the public key from the certificate.
+     */
+    public function testValidateFailsWhenCannotDeterminePublicKey()
+    {
+        $client = $this->getMockClient();
+        $validator = new MessageValidator($client);
+        $message = new Message(new Collection([
+            'SigningCertURL' => self::VALID_CERT_URL
+        ]));
+        $validator->validate($message);
+    }
+
+    /**
+     * @expectedException \Aws\Sns\MessageValidator\SnsMessageValidatorException
+     * @expectedExceptionMessage The message signature is invalid.
      */
     public function testValidateFailsWhenMessageIsInvalid()
     {
@@ -64,7 +71,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMockClient(new Response(200, [], $certificate));
         $validator = new MessageValidator($client);
         $message = new Message(new Collection([
-            'SigningCertURL' => 'https://foo.amazonaws.com/bar',
+            'SigningCertURL' => self::VALID_CERT_URL,
             'Signature'      => $signature,
         ]));
         $validator->validate($message);
@@ -79,7 +86,7 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
             'Timestamp'      => time(),
             'TopicArn'       => 'baz',
             'Type'           => 'Notification',
-            'SigningCertURL' => 'https://foo.amazonaws.com/bar',
+            'SigningCertURL' => self::VALID_CERT_URL,
             'Signature'      => '',
         ]);
 
@@ -121,6 +128,6 @@ class MessageValidatorTest extends \PHPUnit_Framework_TestCase
         openssl_pkey_free($keypair);
         openssl_x509_free($x509);
 
-        return [base64_encode($signature), Stream\create($certificate)];
+        return [base64_encode($signature), Stream::factory($certificate)];
     }
 }
