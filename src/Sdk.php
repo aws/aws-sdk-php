@@ -140,18 +140,14 @@ class Sdk
      * - region: The region to use of the service
      * - version: Optional API version of the service. If not specified, the
      *   latest version of the API will be used.
-     * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface} object to
-     *   use with each client OR an associative array of 'key', 'secret', and
-     *   'token' key value pairs. If no credentials are provided, the SDK will
-     *   attempt to load them from the environment.
+     * - credentials: An {@see Aws\Common\Credentials\CredentialsInterface}
+     *   object to use with each client OR an associative array of 'key',
+     *   'secret', and 'token' key value pairs. If no credentials are provided,
+     *   the SDK will attempt to load them from the environment.
      * - profile: Allows you to specify which profile to use when credentials
      *   are created from the AWS credentials file in your home directory. This
      *   setting overrides the AWS_PROFILE environment variable. Specifying
      *   "profile" will cause the "credentials" key to be ignored.
-     * - scheme: The scheme to use when interacting with a service (https or
-     *   http). Defaults to https.
-     * - endpoint: An optional custom endpoint to use when interacting with a
-     *   service.
      * - signature: A string representing a custom signature version to use
      *   with a service or a {@see Aws\Signture\SignatureInterface} object.
      * - retries: Configures retries for clients. The value can be true (the
@@ -162,13 +158,14 @@ class Sdk
      * - defaults: Optional associative array of command parameters to pass to
      *   each command created by the client.
      * - client: Optional {@see GuzzleHttp\ClientInterface} used to transfer
-     *   requests over the wire. You can specify either "client" or
-     *   "client_defaults", but not both.
-     * - client_defaults: Optional default client options which allows you to
-     *   specify things like timeouts, proxies, etc...
-     * - api_provider: Optional service description provider.
+     *   requests over the wire.
+     * - api_provider: Optional service description API provider.
+     * - endpoint: An optional custom endpoint to use when interacting with a
+     *   service.
      * - endpoint_provider: Optional endpoint provider used when creating
      *   service endpoints.
+     * - scheme: The scheme to use when interacting with a service (https or
+     *   http). Defaults to https.
      *
      * @param string $name Client name
      * @param array  $args Custom arguments to provide to the client.

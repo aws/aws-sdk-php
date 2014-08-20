@@ -252,21 +252,6 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage "client_defaults" cannot be specified
-     */
-    public function testCannotPassClientDefaultsAndClient()
-    {
-        $f = new ClientFactory();
-        $f->create([
-            'service' => 'sqs',
-            'region' => 'x',
-            'client' => new Client(),
-            'client_defaults' => []
-        ]);
-    }
-
-    /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Invalid AWS credentials profile "profile_
      */

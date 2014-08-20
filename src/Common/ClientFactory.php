@@ -69,7 +69,6 @@ class ClientFactory
         'exception_class'   => 1,
         'credentials'       => 1,
         'signature'         => 1,
-        'client_defaults'   => 1,
         'client'            => 1,
         'retries'           => 2,
         'validate'          => 2,
@@ -156,12 +155,7 @@ class ClientFactory
     protected function addDefaultArgs(&$args)
     {
         if (!isset($args['client'])) {
-            $args['client'] = new Client(
-                isset($args['client_defaults'])
-                    ? ['defaults' => $args['client_defaults']]
-                    : []
-            );
-            unset($args['client_defaults']);
+            $args['client'] = new Client();
         }
 
         if (!isset($args['api_provider'])) {
@@ -405,13 +399,6 @@ class ClientFactory
             'headers/User-Agent',
             'aws-sdk-php/' . Sdk::VERSION . ' ' . Client::getDefaultUserAgent()
         );
-    }
-
-    private function handle_client_defaults($value, array &$args)
-    {
-        throw new \InvalidArgumentException('"client_defaults" cannot be'
-            . ' specified if the "client" option is provided. You can use one'
-            . ' or the other.');
     }
 
     private function handle_api_provider($value, array &$args)
