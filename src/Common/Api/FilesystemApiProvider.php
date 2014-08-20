@@ -17,11 +17,16 @@ class FilesystemApiProvider implements ApiProviderInterface
 
     /**
      * @param string $path Path to the service description files
+     * @throws \InvalidArgumentException if the path is not found.
      */
     public function __construct($path)
     {
         $this->path = rtrim($path, '/\\');
         $this->apiSuffix = '.normal.json';
+
+        if (!is_dir($path)) {
+            throw new \InvalidArgumentException("Path not found: $path");
+        }
     }
 
     public function getService($service, $version)

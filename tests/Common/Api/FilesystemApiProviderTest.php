@@ -8,6 +8,14 @@ use Aws\Common\Api\FilesystemApiProvider;
  */
 class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testEnsuresDirectoryIsValid()
+    {
+        new FilesystemApiProvider('/path/to/invalid/dir');
+    }
+
     public function testPathAndSuffixSetCorrectly()
     {
         $p1 = new FilesystemApiProvider(__DIR__ . '/');

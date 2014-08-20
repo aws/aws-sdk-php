@@ -86,7 +86,13 @@ class ClientFactory
      */
     public function create(array $args = [])
     {
-        static $required = ['api_provider', 'endpoint_provider', 'service'];
+        static $required = [
+            'service',
+            'region',
+            'api_provider',
+            'endpoint_provider'
+        ];
+
         static $defaultArgs = [
             'credentials'       => [],
             'region'            => null,
@@ -106,7 +112,8 @@ class ClientFactory
         // Ensure required arguments are provided.
         foreach ($required as $r) {
             if (!isset($args[$r])) {
-                throw new \InvalidArgumentException("{$r} is required");
+                throw new \InvalidArgumentException("{$r} is a required "
+                    . "configuration setting when creating a client.");
             }
         }
 
