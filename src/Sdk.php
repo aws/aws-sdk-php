@@ -97,12 +97,13 @@ class Sdk
     ];
 
     private static $factories = [
-        'dynamodb' => 'Aws\DynamoDb\DynamoDbFactory',
-        'glacier'  => 'Aws\Glacier\GlacierFactory',
-        'route53'  => 'Aws\Route53\Route53Factory',
-        's3'       => 'Aws\S3\S3Factory',
-        'sts'      => 'Aws\Sts\StsFactory',
-        'sqs'      => 'Aws\Sqs\SqsFactory',
+        'cloudsearchdomain' => 'Aws\CloudSearchDomain\CloudSearchDomainFactory',
+        'dynamodb'          => 'Aws\DynamoDb\DynamoDbFactory',
+        'glacier'           => 'Aws\Glacier\GlacierFactory',
+        'route53'           => 'Aws\Route53\Route53Factory',
+        's3'                => 'Aws\S3\S3Factory',
+        'sts'               => 'Aws\Sts\StsFactory',
+        'sqs'               => 'Aws\Sqs\SqsFactory',
     ];
 
     /** @var array Arguments for creating clients */
