@@ -167,7 +167,7 @@ class ClientFactory
 
         if (!isset($args['api_provider'])) {
             $args['api_provider'] = new FilesystemApiProvider(
-                __DIR__ . '/../../vendor/aws/aws-models'
+                __DIR__ . '/Resources/api'
             );
         }
 

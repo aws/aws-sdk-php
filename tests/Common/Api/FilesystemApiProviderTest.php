@@ -21,14 +21,14 @@ class FilesystemApiProviderTest extends \PHPUnit_Framework_TestCase
         $p1 = new FilesystemApiProvider(__DIR__ . '/');
         $this->assertEquals(__DIR__, $this->readAttribute($p1, 'path'));
         $this->assertEquals(
-            '.normal.json',
+            '.api.json',
             $this->readAttribute($p1, 'apiSuffix')
         );
     }
 
     public function testEnsuresValidJson()
     {
-        $path = sys_get_temp_dir() . '/invalid-2010-12-05.normal.json';
+        $path = sys_get_temp_dir() . '/invalid-2010-12-05.api.json';
         file_put_contents($path, 'foo, bar');
         $p = new FilesystemApiProvider(sys_get_temp_dir());
         try {
