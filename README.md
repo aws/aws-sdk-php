@@ -5,10 +5,11 @@
 [![Build Status](https://travis-ci.org/aws/aws-sdk-php.png)](https://travis-ci.org/aws/aws-sdk-php)
 [![Code Coverage](https://scrutinizer-ci.com/g/aws/aws-sdk-php/badges/coverage.png?s=a5e380fe64b957af62cc52a999e77c0641c6bc91)](https://scrutinizer-ci.com/g/aws/aws-sdk-php/)
 
-The **AWS SDK for PHP** enables PHP developers to use [Amazon Web Services][aws] in their PHP code, and build robust
-applications and software using services like Amazon S3, Amazon DynamoDB, Amazon Glacier, etc. You can get started in
-minutes by [installing the SDK through Composer][docs-installation] or by downloading a single [zip][install-zip] or
-[phar][install-phar] file.
+The **AWS SDK for PHP** enables PHP developers to use [Amazon Web Services][aws]
+in their PHP code, and build robust applications and software using services
+like Amazon S3, Amazon DynamoDB, Amazon Glacier, etc. You can get started in
+minutes by [installing the SDK through Composer][docs-installation] or by
+downloading a single zip or phar file from our [latest release][latest-release].
 
 ## Resources
 
@@ -17,44 +18,58 @@ minutes by [installing the SDK through Composer][docs-installation] or by downlo
 * [Blog][sdk-blog] – Tips & tricks, articles, and announcements
 * [Sample Project][sdk-sample] - A quick, sample project to help get you started
 * [Forum][sdk-forum] – Ask questions, get help, and give feedback
-* [Issues][sdk-issues] – Report issues and submit pull requests (see [Apache 2.0 License][sdk-license])
+* [Issues][sdk-issues] – Report issues and submit pull requests
+  (see [Apache 2.0 License][sdk-license])
 * [@awsforphp][sdk-twitter] – Follow us on Twitter
-
-**NEW:** Watch our video — **[Mastering the AWS SDK for PHP](http://youtu.be/_zaW2VZB1ok)** from AWS re:Invent 2013!
+* [Mastering the AWS SDK for PHP](http://youtu.be/_zaW2VZB1ok) video from AWS
+  re:Invent 2013
 
 ## Features
 
-* Provides easy-to-use HTTP clients for all supported AWS [services][docs-services], [regions][docs-rande], and
-  authentication protocols.
+* Provides easy-to-use HTTP clients for all supported AWS
+  [services][docs-services], [regions][docs-rande], and authentication
+  protocols.
 * Is built for PHP 5.3.3+ and is compliant with [PSR-0], [PSR-1], and [PSR-2].
-* Is easy to install through [Composer][install-packagist], or by downloading the [phar][install-phar] or
-  [zip][install-zip].
-* Is built on [Guzzle v3][guzzle], and utilizes many of its features, including persistent connections, parallel
-  requests, events and plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
-  logging][docs-wire-logging], caching, flexible batching, and request retrying with truncated exponential backoff.
-* Provides convenience features including easy response pagination via [Iterators][docs-iterators], resource
-  [Waiters][docs-waiters], and simple [modelled responses][docs-models].
+* Is easy to install through [Composer][install-packagist], or by downloading
+  the phar or zip file of our [latest release][latest-release].
+* Is built on [Guzzle v3][guzzle], and utilizes many of its features, including
+  persistent connections, parallel requests, events and plugins
+  (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions,
+  [over-the-wire logging][docs-wire-logging], caching, flexible batching, and
+  request retrying with truncated exponential backoff.
+* Provides convenience features including easy response pagination via
+  [Iterators][docs-iterators], resource [Waiters][docs-waiters], and simple
+  [modelled responses][docs-models].
 * Allows you to [sync local directories to Amazon S3 buckets][docs-s3-sync].
-* Provides a [multipart uploader tool][docs-s3-multipart] for Amazon S3 and Amazon Glacier that can be paused and
-  resumed.
-* Provides an [Amazon S3 Stream Wrapper][docs-streamwrapper], so that you can use PHP's native file handling functions
-  to interact with your S3 buckets and objects like a local filesystem.
-* Provides the [Amazon DynamoDB Session Handler][docs-ddbsh] for easily scaling sessions on a fast, NoSQL database.
-* Automatically uses [IAM Instance Profile Credentials][aws-iam-credentials] on configured Amazon EC2 instances.
+* Provides a [multipart uploader tool][docs-s3-multipart] for Amazon S3 and
+  Amazon Glacier that can be paused and resumed.
+* Provides an [Amazon S3 Stream Wrapper][docs-streamwrapper], so that you can
+  use PHP's native file handling functions to interact with your S3 buckets and
+  objects like a local filesystem.
+* Provides the [Amazon DynamoDB Session Handler][docs-ddbsh] for easily scaling
+  sessions on a fast, NoSQL database.
+* Automatically uses [IAM Instance Profile Credentials][aws-iam-credentials] on
+  configured Amazon EC2 instances.
 
 ## Getting Started
 
-1. **Sign up for AWS** – Before you begin, you need to [sign up for an AWS account][docs-signup] and retrieve your AWS
-   credentials.
-1. **Minimum requirements** – To run the SDK, your system will need to meet the [minimum requirements][docs-requirements],
-   including having **PHP 5.3.3+** compiled with the cURL extension and cURL 7.16.2+ compiled with OpenSSL and zlib.
-1. **Install the SDK** – Using [Composer] is the recommended way to install the AWS SDK for PHP. The SDK is available
-   via [Packagist] under the [`aws/aws-sdk-php`][install-packagist] package. Please see the [Installation section of
-   the User Guide][docs-installation] for more detailed information about installing the SDK through Composer and other
+1. **Sign up for AWS** – Before you begin, you need to
+   [sign up for an AWS account][docs-signup] and retrieve your AWS credentials.
+1. **Minimum requirements** – To run the SDK, your system will need to meet the
+   [minimum requirements][docs-requirements], including having **PHP 5.3.3+**
+   compiled with the cURL extension and cURL 7.16.2+ compiled with OpenSSL and
+   zlib.
+1. **Install the SDK** – Using [Composer] is the recommended way to install the
+   AWS SDK for PHP. The SDK is available via [Packagist] under the
+   [`aws/aws-sdk-php`][install-packagist] package. Please see the
+   [Installation section of the User Guide][docs-installation] for more
+   detailed information about installing the SDK through Composer and other
    means.
-1. **Using the SDK** – The best way to become familiar with how to use the SDK is to read the [User Guide][docs-guide].
-   The [Getting Started Guide][docs-quickstart] will help you become familiar with the basic concepts, and there are
-   also specific guides for each of the [supported services][docs-services].
+1. **Using the SDK** – The best way to become familiar with how to use the SDK
+   is to read the [User Guide][docs-guide]. The
+   [Getting Started Guide][docs-quickstart] will help you become familiar with
+   the basic concepts, and there are also specific guides for each of the
+   [supported services][docs-services].
 
 ## Quick Example
 
@@ -62,18 +77,16 @@ minutes by [installing the SDK through Composer][docs-installation] or by downlo
 
 ```php
 <?php
-
 require 'vendor/autoload.php';
 
-use Aws\Common\Aws;
+use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
 // Instantiate an S3 client
-$aws = Aws::factory('/path/to/config.php');
-$s3 = $aws->get('s3');
+$s3 = S3Client::factory();
 
-// Upload a publicly accessible file.
-// The file size, file type, and MD5 hash are automatically calculated by the SDK
+// Upload a publicly accessible file. The file size, file type, and MD5 hash
+// are automatically calculated by the SDK.
 try {
     $s3->putObject(array(
         'Bucket' => 'my-bucket',
@@ -86,12 +99,13 @@ try {
 }
 ```
 
-You can also use the even easier `upload()` method, which will automatically do either single or multipart uploads,
-as needed.
+You can also use the even easier `upload()` method, which will automatically do
+either single or multipart uploads, as needed.
 
 ```php
 try {
-    $s3->upload('my-bucket', 'my-object', fopen('/path/to/file', 'r'), 'public-read');
+    $resource = fopen('/path/to/file', 'r');
+    $s3->upload('my-bucket', 'my-object', $resource, 'public-read');
 } catch (S3Exception $e) {
     echo "There was an error uploading the file.\n";
 }
@@ -103,8 +117,9 @@ try {
 * [Upload a large file to Amazon S3 in parts][example-s3-multipart]
 * [Put an item in your Amazon DynamoDB table][example-dynamodb-putitem]
 * [Send a message to your Amazon SQS queue][example-sqs-sendmessage]
-* Please browse the [User Guide][docs-guide] and [API docs][docs-api] or check out our [AWS SDK Development
-  Blog][sdk-blog] for even more examples and tutorials.
+* Please browse the [User Guide][docs-guide] and [API docs][docs-api] or check
+  out our [AWS SDK Development Blog][sdk-blog] for even more examples and
+  tutorials.
 
 ### Related Projects
 
@@ -123,9 +138,7 @@ try {
 [sdk-sample]: http://aws.amazon.com/developers/getting-started/php
 
 [install-packagist]: https://packagist.org/packages/aws/aws-sdk-php
-[install-phar]: http://pear.amazonwebservices.com/get/aws.phar
-[install-zip]: http://pear.amazonwebservices.com/get/aws.zip
-[install-pear]: http://pear.amazonwebservices.com
+[latest-release]: https://github.com/aws/aws-sdk-php/releases/latest
 
 [docs-api]: http://docs.aws.amazon.com/aws-sdk-php/latest/index.html
 [docs-guide]: http://docs.aws.amazon.com/aws-sdk-php/guide/latest/index.html
