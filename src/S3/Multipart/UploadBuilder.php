@@ -5,6 +5,7 @@ use Aws\Common\Multipart\AbstractUploadBuilder;
 use Aws\Common\Multipart\UploadState;
 use Aws\Common\Signature\SignatureV4;
 use GuzzleHttp\Mimetypes;
+use GuzzleHttp\Stream\MetadataStreamInterface;
 
 /**
  * Creates a multipart uploader used to easily upload large objects to S3.
@@ -48,7 +49,9 @@ class UploadBuilder extends AbstractUploadBuilder
     public function createUploader()
     {
         // Set the content type.
-        if ($uri = $this->source->getMetadata('uri')) {
+        if ($this->source instanceof MetadataStreamInterface
+            && ($uri = $this->source->getMetadata('uri'))
+        ) {
             if ($mimeType = Mimetypes::getInstance()->fromFilename($uri)) {
                 $this->addParam(Uploader::INITIATE, 'ContentType', $mimeType);
             }

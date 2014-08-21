@@ -1,8 +1,13 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Stream\FnStream;
+use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Subscriber\History;
 
 /**
  * @covers Aws\S3\S3Client
@@ -184,5 +189,81 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         ]);
         $result = call_user_func_array([$s3, 'getObjectUrl'], $args);
         $this->assertSame($url, $result);
+    }
+
+    /**
+     * @dataProvider getUploadTestCases
+     */
+    public function testUploadHelperDoesCorrectOperation(
+        StreamInterface $body,
+        array $mockedResults,
+        array $options
+    ) {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        //$history = new History();
+        //$client->getHttpClient()->getEmitter()->attach($history);
+        $this->addMockResults($client, $mockedResults);
+        $result = $client->upload('bucket', 'key', $body, 'private', $options);
+        $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+    }
+
+    public function getUploadTestCases()
+    {
+        $putObject = new Result([]);
+        $initiate = new Result(['UploadId' => 'foo']);
+        $putPart = new Result(['ETag' => 'bar']);
+        $complete = new Result(['Location' => 'https://bucket.s3.amazonaws.com/key']);
+
+        return [
+            [
+                // 3 MB, known-size stream (put)
+                $this->generateStream(1024 * 1024 * 3),
+                [$putObject],
+                []
+            ],
+            [
+                // 3 MB, unknown-size stream (put)
+                $this->generateStream(1024 * 1024 * 3, false),
+                [$putObject],
+                []
+            ],
+            [
+                // 6 MB, known-size stream (put)
+                $this->generateStream(1024 * 1024 * 6),
+                [$putObject],
+                []
+            ],
+            [
+                // 6 MB, known-size stream, above threshold (mup)
+                $this->generateStream(1024 * 1024 * 6),
+                [$initiate, $putPart, $putPart, $complete],
+                ['threshold' => 1024 * 1024 * 4]
+            ],
+            [
+                // 6 MB, unknown-size stream (mup)
+                $this->generateStream(1024 * 1024 * 6, false),
+                [$initiate, $putPart, $putPart, $complete],
+                []
+            ],
+            [
+                // 6 MB, unknown-size, non-seekable stream (mup)
+                $this->generateStream(1024 * 1024 * 6, false, false),
+                [$initiate, $putPart, $putPart, $complete],
+                []
+            ]
+        ];
+    }
+
+    private function generateStream($size, $sizeKnown = true, $seekable = true)
+    {
+        return FnStream::decorate(Stream::factory(str_repeat('.', $size)), [
+            'getSize' => function () use ($sizeKnown, $size) {
+                return $sizeKnown ? $size : null;
+            },
+            'isSeekable' => function () use ($seekable) {
+                return (bool) $seekable;
+            }
+        ]);
     }
 }

@@ -8,8 +8,12 @@ use Aws\S3\Multipart\AbstractTransfer as AbstractMulti;
 use Aws\S3\Multipart\UploadBuilder;
 use GuzzleHttp\Collection;
 use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Stream\AppendStream;
+use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;
+use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Stream\Utils;
 
 /**
  * Client to interact with Amazon Simple Storage Service.
@@ -162,14 +166,15 @@ class S3Client extends AwsClient
      * @param string $acl     ACL to apply to the object
      * @param array  $options Custom options used when executing commands:
      *
+     *     - before_upload: Callback to invoke before each multipart upload.
+     *       The callback will receive a relevant Guzzle Event object.
+     *     - concurrency: Maximum number of concurrent multipart uploads.
      *     - params: Custom parameters to use with the upload. The parameters
      *       must map to the parameters specified in the PutObject operation.
      *     - part_size: Minimum size to allow for each uploaded part when
      *       performing a multipart upload.
-     *     - concurrency: Maximum number of concurrent multipart uploads.
-     *     - before_upload: Callback to invoke before each multipart upload.
-     *       The callback will receive a relevant Guzzle Event object.
-     *     - threshold:
+     *     - threshold: The minimum size, in bytes, the upload must be before
+     *       a multipart upload is required.
      *
      * @see Aws\S3\Model\MultipartUpload\UploadBuilder for more information.
      * @return Result Returns the modeled result of the performed operation.
@@ -181,32 +186,79 @@ class S3Client extends AwsClient
         $acl = 'private',
         array $options = []
     ) {
-        $body = Stream::factory($body);
+        // Apply default options.
         $options += [
-            'threshold'     => 52428800, // 50 MB
-            'params'        => [],
+            'before_upload' => null,
             'concurrency'   => 1,
-            'before_upload' => null
+            'params'        => [],
+            'part_size'     => null,
+            'threshold'     => 16777216 // 16 MB
         ];
 
-        if ($body->getSize() < $options['threshold']) {
-            // Perform a simple PutObject operation
-            return $this->putObject([
-                'Bucket' => $bucket,
-                'Key'    => $key,
-                'Body'   => $body,
-                'ACL'    => $acl
-            ] + $options['params']);
-        } else {
-            $params = ['ACL' => $acl] + $options['params'];
+        // Perform the needed operations to upload the S3 Object.
+        $body = Stream::factory($body);
+        $params = ['ACL' => $acl] + $options['params'];
+        if ($this->requiresMultipart($body, $options['threshold'])) {
             return (new UploadBuilder)
                 ->setClient($this)
                 ->setSource($body)
                 ->setBucket($bucket)
                 ->setKey($key)
                 ->setParams('CreateMultipartUpload', $params)
+                ->setPartSize($options['part_size'])
                 ->build()
                 ->upload($options['concurrency'], $options['before_upload']);
+        } else {
+            return $this->execute($this->getCommand('PutObject', [
+                'Bucket' => $bucket,
+                'Key'    => $key,
+                'Body'   => $body,
+            ] + $params));
+        }
+    }
+
+    /**
+     * Determines if the body should be uploaded using PutObject or the
+     * Multipart Upload System. It also modifies the passed-in $body as needed
+     * to support the upload.
+     *
+     * @param StreamInterface $body      Stream representing the body.
+     * @param integer         $threshold Minimum bytes before using Multipart.
+     *
+     * @return bool
+     */
+    private function requiresMultipart(StreamInterface &$body, $threshold)
+    {
+        // Handle the situation where the body size is unknown.
+        if ($body->getSize() === null) {
+            // Read up to 5MB into a buffer to determine how to upload the body.
+            $buffer = Stream::factory();
+            Utils::copyToStream($body, $buffer, 5242880);
+            if ($buffer->getSize() < 5242880) {
+                // If body < 5MB, use PutObject with the buffer.
+                $buffer->seek(0);
+                $body = $buffer;
+                return false;
+            } elseif ($body->isSeekable()) {
+                // If >= 5 MB, and seekable, use Multipart with rewound body.
+                $body->seek(0);
+                return true;
+            } else {
+                // If >= 5 MB, and non-seekable, use Multipart, but stitch the
+                // buffer and the body together into one stream. This avoids
+                // needing to seek and unnecessary disc usage, while requiring
+                // only the 5 MB buffer to be re-read by the Multipart system.
+                $buffer->seek(0);
+                $body = new AppendStream([$buffer, $body]);
+                return true;
+            }
+        }
+
+        // Body size known, so compare to threshold to determine if Multipart.
+        if ($body->getSize() < $threshold) {
+            return false;
+        } else {
+            return true;
         }
     }
 
