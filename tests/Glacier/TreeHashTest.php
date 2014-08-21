@@ -74,4 +74,14 @@ class TreeHashTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(hash('sha256', 'foo', true), $hash->complete());
     }
+
+    /**
+     * @covers Aws\Glacier\TreeHash::complete
+     */
+    public function testCanCalculateEmptyHash()
+    {
+        $hash = new TreeHash('sha256');
+
+        $this->assertEquals(TreeHash::EMPTY_HASH, bin2hex($hash->complete()));
+    }
 }

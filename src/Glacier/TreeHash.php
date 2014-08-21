@@ -10,6 +10,7 @@ use GuzzleHttp\Subscriber\MessageIntegrity\HashInterface;
 class TreeHash implements HashInterface
 {
     const MB = 1048576;
+    const EMPTY_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
 
     /** @var string Algorithm used for hashing. */
     private $algorithm;
@@ -84,6 +85,11 @@ class TreeHash implements HashInterface
             if ($this->buffer) {
                 $this->checksums[] = hash($this->algorithm, $this->buffer, true);
                 $this->buffer = '';
+            }
+
+            // If no hashes, add the EMPTY_HASH.
+            if (!$this->checksums) {
+                $this->checksums[] = hex2bin(self::EMPTY_HASH);
             }
 
             // Perform hashes up the tree to arrive at the root checksum.

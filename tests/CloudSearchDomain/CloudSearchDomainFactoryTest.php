@@ -16,7 +16,7 @@ class CloudSearchDomainFactoryTest extends \PHPUnit_Framework_TestCase
         (new CloudSearchDomainFactory)->create();
     }
 
-    public function testDisablesRedirects()
+    public function testGetsRegionFromEndpoint()
     {
         $client = (new CloudSearchDomainFactory)->create([
             'service'   => 'cloudsearchdomain',

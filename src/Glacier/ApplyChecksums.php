@@ -44,8 +44,11 @@ class ApplyChecksums implements SubscriberInterface
             // Add a tree hash if not provided.
             if (!$command['checksum']) {
                 $body = new HashingStream($body, new TreeHash(),
-                    function ($result) use ($command) {
-                        $command['checksum'] = bin2hex($result);
+                    function ($result) use ($command, $event) {
+                        $event->getRequest()->setHeader(
+                            'x-amz-sha256-tree-hash',
+                            bin2hex($result)
+                        );
                     }
                 );
             }
