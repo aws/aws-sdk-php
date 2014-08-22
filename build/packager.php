@@ -5,7 +5,8 @@ $stageDirectory = __DIR__ . '/artifacts/staging';
 $projectRoot = __DIR__ . '/../';
 $burgomaster = new \Burgomaster($stageDirectory, $projectRoot);
 
-foreach (['README.md', 'LICENSE.md', 'NOTICE.md'] as $file) {
+$metaFiles = ['README.md', 'LICENSE.md', 'NOTICE.md', 'CHANGELOG.md'];
+foreach ($metaFiles as $file) {
     $burgomaster->deepCopy($file, $file);
 }
 
