@@ -9,7 +9,7 @@ use Aws\DynamoDb\Exception\DynamoDbException;
  */
 class LockingSessionConnection extends StandardSessionConnection
 {
-    public function __construct(DynamoDbClient $client, array $config)
+    public function __construct(DynamoDbClient $client, array $config = [])
     {
         parent::__construct($client, $config + [
             'max_lock_wait_time'       => 10,
@@ -58,8 +58,8 @@ class LockingSessionConnection extends StandardSessionConnection
             [
                 'interval' => function () {
                     return pow(10, -6) * rand(
-                        $this->config['min_lock_retry_time'],
-                        $this->config['max_lock_retry_time']
+                        $this->config['min_lock_retry_microtime'],
+                        $this->config['max_lock_retry_microtime']
                     );
                 }
             ]

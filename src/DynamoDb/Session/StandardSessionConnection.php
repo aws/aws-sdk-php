@@ -24,7 +24,7 @@ class StandardSessionConnection implements SessionConnectionInterface
      * @param DynamoDbClient $client DynamoDB client
      * @param array          $config Session handler config
      */
-    public function __construct(DynamoDbClient $client, array $config)
+    public function __construct(DynamoDbClient $client, array $config = [])
     {
         $this->client = $client;
         $this->config = $config + [
@@ -40,7 +40,7 @@ class StandardSessionConnection implements SessionConnectionInterface
     {
         $item = [];
         try {
-            // Execute a GetItem command to retrieve the item
+            // Execute a GetItem command to retrieve the item.
             $result = $this->client->getItem([
                  'TableName'      => $this->config['table_name'],
                  'Key'            => $this->formatKey($id),
@@ -53,7 +53,7 @@ class StandardSessionConnection implements SessionConnectionInterface
                 $item[$key] = current($value);
             }
         } catch (DynamoDbException $e) {
-            // Could not retrieve item
+            // Could not retrieve item, so return nothing.
         }
 
         return $item;
@@ -64,10 +64,8 @@ class StandardSessionConnection implements SessionConnectionInterface
         // Prepare the attributes
         $expires = time() + $this->config['session_lifetime'];
         $attributes = [
-            'expires' => [
-                'Value' => ['N' => (string) $expires],
-                'lock' => ['Action' => 'DELETE']
-            ]
+            'expires' => ['Value' => ['N' => (string) $expires]],
+            'lock' => ['Action' => 'DELETE'],
         ];
         if ($isChanged) {
             if ($data != '') {

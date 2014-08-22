@@ -96,6 +96,7 @@ class SessionHandler implements \SessionHandlerInterface
      * Register the DynamoDB session handler.
      *
      * @return bool Whether or not the handler was registered.
+     * @codeCoverageIgnore
      */
     public function register()
     {
@@ -209,6 +210,7 @@ class SessionHandler implements \SessionHandlerInterface
      * @param int $maxLifetime Ignored.
      *
      * @return bool Whether or not the operation succeeded.
+     * @codeCoverageIgnore
      */
     public function gc($maxLifetime)
     {
@@ -218,6 +220,7 @@ class SessionHandler implements \SessionHandlerInterface
 
     /**
      * Triggers garbage collection on expired sessions.
+     * @codeCoverageIgnore
      */
     public function garbageCollect()
     {

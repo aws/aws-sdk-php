@@ -113,10 +113,11 @@ trait UsesServiceTrait
      * Creates a mock CommandException with a given error code
      *
      * @param string $code
+     * @param string $type
      *
      * @return CommandException
      */
-    private function createMockAwsException($code = 'ERROR')
+    private function createMockAwsException($code = 'ERROR', $type = 'Aws\AwsException')
     {
         $client = $this->getMockBuilder('Aws\AwsClientInterface')
             ->setMethods(['getApi'])
@@ -134,7 +135,7 @@ trait UsesServiceTrait
             ['aws_error' => ['message' => 'Test error', 'code' => $code]]
         );
 
-        return new AwsException('Test error', $trans);
+        return new $type('Test error', $trans);
     }
 
     private function createServiceApi(array $serviceData = [], &$api = null)

@@ -26,4 +26,31 @@ class SessionHandlerTest extends \PHPUnit_Framework_TestCase
             $this->readAttribute($sh2, 'connection')
         );
     }
+
+    public function testHandlerFunctions()
+    {
+        $data = ['fizz' => 'buzz'];
+        $connection = $this->getMockForAbstractClass(
+            'Aws\DynamoDb\Session\SessionConnectionInterface'
+        );
+        $connection->expects($this->any())
+            ->method('read')
+            ->willReturn([
+                'expires' => time() - 1000,
+                'data' => ['fizz' => 'buzz'],
+            ]);
+        $connection->expects($this->any())
+            ->method('write')
+            ->willReturnOnConsecutiveCalls(false, true);
+        $connection->expects($this->any())
+            ->method('delete')
+            ->willReturn(true);
+
+        $sh = new SessionHandler($connection);
+        session_id('test');
+        $this->assertTrue($sh->open('foo', 'bar'));
+        $this->assertEquals('', $sh->read('test'));
+        $this->assertFalse($sh->write('test', serialize($data)));
+        $this->assertTrue($sh->close());
+    }
 }
