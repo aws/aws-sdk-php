@@ -41,6 +41,9 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model setStackPolicy(array $args = array()) {@command CloudFormation SetStackPolicy}
  * @method Model updateStack(array $args = array()) {@command CloudFormation UpdateStack}
  * @method Model validateTemplate(array $args = array()) {@command CloudFormation ValidateTemplate}
+ * @method waitUntilStackDeleted(array $input) The input array uses the parameters of the DescribeStacks operation and waiter specific settings
+ * @method waitUntilStackUpdated(array $input) The input array uses the parameters of the DescribeStacks operation and waiter specific settings
+ * @method waitUntilStackCreated(array $input) The input array uses the parameters of the DescribeStacks operation and waiter specific settings
  * @method ResourceIteratorInterface getDescribeStackEventsIterator(array $args = array()) The input array uses the parameters of the DescribeStackEvents operation
  * @method ResourceIteratorInterface getDescribeStackResourcesIterator(array $args = array()) The input array uses the parameters of the DescribeStackResources operation
  * @method ResourceIteratorInterface getDescribeStacksIterator(array $args = array()) The input array uses the parameters of the DescribeStacks operation
