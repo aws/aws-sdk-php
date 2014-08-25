@@ -59,7 +59,7 @@ class PostObject extends Collection
      *   use
      * - x-amz-storage-class: The storage setting to apply to the object
      * - x-amz-storage-class: The storage setting to apply to the object
-     * - x-amz-server-side-cryption-customer-algorithm: The SSE-C algorithm
+     * - x-amz-server-side-encryption-customer-algorithm: The SSE-C algorithm
      * - x-amz-server-side-encryption-customer-key: The SSE-C secret key
      * - x-amz-server-side-encryption-customer-key-MD5: MD5 hash of the
      *   SSE-C customer secret key

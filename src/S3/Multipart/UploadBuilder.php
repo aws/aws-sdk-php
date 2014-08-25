@@ -48,8 +48,9 @@ class UploadBuilder extends AbstractUploadBuilder
 
     public function createUploader()
     {
-        // Set the content type.
-        if ($this->source instanceof MetadataStreamInterface
+        // Set the content type, if not specified, and can be detected.
+        if (!isset($this->params[Uploader::INITIATE]['ContentType'])
+            && $this->source instanceof MetadataStreamInterface
             && ($uri = $this->source->getMetadata('uri'))
         ) {
             if ($mimeType = Mimetypes::getInstance()->fromFilename($uri)) {
