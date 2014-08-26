@@ -40,13 +40,6 @@ class CloudSearchDomainClientTest extends \Guzzle\Tests\GuzzleTestCase
         $client->setRegion('us-west-2');
     }
 
-    public function testThrowsExceptionWhenAttemptingToMutateCredentials()
-    {
-        $client = CloudSearchDomainClient::factory(array('base_url' => 'example.com'));
-        $this->setExpectedException('BadMethodCallException');
-        $client->setCredentials(new Credentials('foo', 'bar'));
-    }
-
     public function testSignsRequests()
     {
         $mock = new MockPlugin(array(new Response(200), new Response(200)));
