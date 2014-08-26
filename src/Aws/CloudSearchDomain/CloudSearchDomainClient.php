@@ -46,16 +46,7 @@ class CloudSearchDomainClient extends AbstractClient
 
     /**
      * @internal
-     * @throws \Aws\Common\Exception\BadMethodCallException Do not call this method
-     */
-    public function setCredentials(CredentialsInterface $credentials)
-    {
-        throw new BadMethodCallException('The CloudSearchDomain client does not require AWS credentials.');
-    }
-
-    /**
-     * @internal
-     * @throws \Aws\Common\Exception\BadMethodCallException Do not call this method
+     * @throws BadMethodCallException Do not call this method.
      */
     public function setRegion($region)
     {

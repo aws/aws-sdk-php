@@ -91,9 +91,11 @@ class CloudSearchClient extends AbstractClient
      * @param array  $config     Config options for the CloudSearchDomainClient
      *
      * @return CloudSearchDomainClient
+     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
      */
     public function getDomainClient($domainName, array $config = array())
     {
+        // Determine the Domain client's base_url
         $config['base_url'] = $this->describeDomains(array(
             'DomainNames' => array($domainName)
         ))->getPath('DomainStatusList/0/SearchService/Endpoint');
