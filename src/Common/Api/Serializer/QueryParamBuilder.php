@@ -131,6 +131,6 @@ class QueryParamBuilder
         $prefix,
         array &$query
     ) {
-        $query[$prefix] = $shape->format($value, 'iso8601');
+        $query[$prefix] = TimestampShape::format($value, 'iso8601');
     }
 }

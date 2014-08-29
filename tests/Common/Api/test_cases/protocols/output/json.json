@@ -136,8 +136,7 @@
   {
     "description": "Timestamp members",
     "metadata": {
-      "protocol": "json",
-      "timestampFormat": "iso8601"
+      "protocol": "json"
     },
     "shapes": {
       "OutputShape": {
@@ -158,8 +157,7 @@
         "type": "structure",
         "members": {
           "foo": {
-            "shape": "TimeType",
-            "timestampFormat": "unixTimestamp"
+            "shape": "TimeType"
           }
         }
       }
@@ -181,7 +179,7 @@
         "response": {
           "status_code": 200,
           "headers": {},
-          "body": "{\"TimeMember\": \"2014-04-29T18:30:38+00:00\", \"StructMember\": {\"foo\": 1398796238}}"
+          "body": "{\"TimeMember\": 1398796238, \"StructMember\": {\"foo\": 1398796238}}"
         }
       }
     ]

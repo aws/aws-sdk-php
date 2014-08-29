@@ -113,7 +113,7 @@ class JsonBodyTest extends \PHPUnit_Framework_TestCase
                     'members' => ['foo' => ['type' => 'timestamp']]
                 ],
                 ['foo' => 1397259637],
-                '{"foo":"2014-04-11T23:40:37Z"}'
+                '{"foo":1397259637}'
             ],
         ];
     }

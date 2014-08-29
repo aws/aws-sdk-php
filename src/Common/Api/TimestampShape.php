@@ -15,17 +15,15 @@ class TimestampShape extends Shape
     /**
      * Formats a timestamp value for a service.
      *
-     * @param mixed  $value         Value to format
-     * @param string $defaultFormat Default format to use when none is provided
+     * @param mixed  $value  Value to format
+     * @param string $format Format used to serialize the value
      *
      * @return int|string
      * @throws \UnexpectedValueException if the format is unknown.
      * @throws \InvalidArgumentException if the value is an unsupported type.
      */
-    public function format($value, $defaultFormat = null)
+    public static function format($value, $format)
     {
-        $format = $this['timestampFormat'] ?: $defaultFormat ?: 'iso8601';
-
         if ($value instanceof \DateTime) {
             $value = $value->getTimestamp();
         } elseif (is_string($value)) {

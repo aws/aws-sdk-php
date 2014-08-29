@@ -324,8 +324,7 @@
     "description": "Timestamp values",
     "metadata": {
       "protocol": "ec2",
-      "apiVersion": "2014-01-01",
-      "timestampFormat": "iso8601"
+      "apiVersion": "2014-01-01"
     },
     "shapes": {
       "InputShape": {
@@ -333,18 +332,11 @@
         "members": {
           "TimeArg": {
             "shape": "TimestampType"
-          },
-          "TimeArg2": {
-            "shape": "TimestampType2"
           }
         }
       },
       "TimestampType": {
         "type": "timestamp"
-      },
-      "TimestampType2": {
-        "type": "timestamp",
-        "timestampFormat": "unixTimestamp"
       }
     },
     "cases": [
@@ -361,21 +353,6 @@
         "serialized": {
           "uri": "/",
           "body": "Action=OperationName&Version=2014-01-01&TimeArg=2015-01-25T08%3A00%3A00Z"
-        }
-      },
-      {
-        "given": {
-          "input": {
-            "shape": "InputShape"
-          },
-          "name": "OperationName"
-        },
-        "params": {
-          "TimeArg2": 1422172800
-        },
-        "serialized": {
-          "uri": "/",
-          "body": "Action=OperationName&Version=2014-01-01&TimeArg2=1422172800"
         }
       }
     ]

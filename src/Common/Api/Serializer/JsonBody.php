@@ -109,9 +109,6 @@ class JsonBody
 
     private function format_timestamp(TimestampShape $shape, $value)
     {
-        return $shape->format(
-            $value,
-            $this->api->getMetadata('timestampFormat')
-        );
+        return TimestampShape::format($value, 'unixTimestamp');
     }
 }

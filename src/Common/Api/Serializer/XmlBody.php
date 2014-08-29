@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Common\Api\Serializer;
 
+use Aws\Common\Api\MapShape;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;
@@ -63,6 +64,7 @@ class XmlBody
             'add_blob'      => true,
             'add_timestamp' => true,
             'add_boolean'   => true,
+            'add_map'       => true,
             'add_string'    => true
         ];
 
@@ -77,7 +79,7 @@ class XmlBody
     private function defaultShape(Shape $shape, $name, $value, \XMLWriter $xml)
     {
         $this->startElement($shape, $name, $xml);
-        $this->writeContent($value, $xml);
+        $xml->writeRaw($value);
         $xml->endElement();
     }
 
@@ -127,7 +129,7 @@ class XmlBody
     private function add_blob(Shape $shape, $name, $value, \XMLWriter $xml)
     {
         $this->startElement($shape, $name, $xml);
-        $this->writeContent(base64_encode($value), $xml);
+        $xml->writeRaw(base64_encode($value));
         $xml->endElement();
     }
 
@@ -138,11 +140,7 @@ class XmlBody
         \XMLWriter $xml
     ) {
         $this->startElement($shape, $name, $xml);
-        $value = $shape->format(
-            $value,
-            $this->api->getMetadata('timestampFormat')
-        );
-        $this->writeContent($value, $xml);
+        $xml->writeRaw(TimestampShape::format($value, 'iso8601'));
         $xml->endElement();
     }
 
@@ -153,7 +151,7 @@ class XmlBody
         \XMLWriter $xml
     ) {
         $this->startElement($shape, $name, $xml);
-        $this->writeContent($value ? 'true' : 'false', $xml);
+        $xml->writeRaw($value ? 'true' : 'false');
         $xml->endElement();
     }
 
@@ -168,13 +166,5 @@ class XmlBody
         } else {
             $this->defaultShape($shape, $name, $value, $xml);
         }
-    }
-
-    /**
-     * Write raw XML content (text) to the XML writer.
-     */
-    private function writeContent($value, \XMLWriter $xml)
-    {
-        $xml->writeRaw($value);
     }
 }

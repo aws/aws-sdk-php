@@ -5,6 +5,7 @@ use Aws\Common\Api\Service;
 use Aws\Common\Api\Operation;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;
+use Aws\Common\Api\TimestampShape;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Message\RequestInterface;
@@ -134,6 +135,10 @@ abstract class RestSerializer implements SubscriberInterface
         Shape $member,
         $value
     ) {
+        if ($member->getType() == 'timestamp') {
+            $value = TimestampShape::format($value, 'rfc822');
+        }
+
         $request->setHeader($member['locationName'] ?: $name, $value);
     }
 

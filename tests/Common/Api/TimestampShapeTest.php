@@ -30,16 +30,7 @@ class TimestampShapeTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatsData($value, $format, $result)
     {
-        $s = new TimestampShape(
-            ['timestampFormat' => $format],
-            new ShapeMap([])
-        );
-
-        // use the shape format value
-        $this->assertEquals($result, $s->format($value, 'foo'));
-
-        // Try using a default
-        unset($s['timestampFormat']);
+        $s = new TimestampShape([], new ShapeMap([]));
         $this->assertEquals($result, $s->format($value, $format));
     }
 
@@ -48,8 +39,8 @@ class TimestampShapeTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidatesTimestampFormat()
     {
-        $s = new TimestampShape(['timestampFormat' => 'foo'], new ShapeMap([]));
-        $s->format('now');
+        $s = new TimestampShape([], new ShapeMap([]));
+        $s->format('now', 'foo');
     }
 
     /**
@@ -57,7 +48,7 @@ class TimestampShapeTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidatesTimestampValue()
     {
-        $s = new TimestampShape(['timestampFormat' => 'foo'], new ShapeMap([]));
-        $s->format(true);
+        $s = new TimestampShape([], new ShapeMap([]));
+        $s->format(true, 'iso8601');
     }
 }
