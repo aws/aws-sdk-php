@@ -6,38 +6,38 @@ use Aws\Common\ClientFactory;
 /**
  * Builds AWS clients based on configuration settings.
  *
- * @method AwsClientInterface getAutoScaling(array $args = [])
- * @method AwsClientInterface getCloudFormation(array $args = [])
- * @method AwsClientInterface getCloudFront(array $args = [])
- * @method AwsClientInterface getCloudSearch(array $args = [])
- * @method AwsClientInterface getCloudTrail(array $args = [])
- * @method AwsClientInterface getCloudWatch(array $args = [])
- * @method AwsClientInterface getDataPipeline(array $args = [])
- * @method AwsClientInterface getDirectConnect(array $args = [])
- * @method AwsClientInterface getDynamoDb(array $args = [])
- * @method AwsClientInterface getEc2(array $args = [])
- * @method AwsClientInterface getElastiCache(array $args = [])
- * @method AwsClientInterface getElasticBeanstalk(array $args = [])
- * @method AwsClientInterface getElasticLoadBalancing(array $args = [])
- * @method AwsClientInterface getElasticTranscoder(array $args = [])
- * @method AwsClientInterface getEmr(array $args = [])
- * @method AwsClientInterface getGlacier(array $args = [])
- * @method AwsClientInterface getIam(array $args = [])
- * @method AwsClientInterface getImportExport(array $args = [])
- * @method AwsClientInterface getKinesis(array $args = [])
- * @method AwsClientInterface getOpsWorks(array $args = [])
- * @method AwsClientInterface getRds(array $args = [])
- * @method AwsClientInterface getRedshift(array $args = [])
- * @method AwsClientInterface getRoute53(array $args = [])
- * @method AwsClientInterface getS3(array $args = [])
- * @method AwsClientInterface getSes(array $args = [])
- * @method AwsClientInterface getSimpleDb(array $args = [])
- * @method AwsClientInterface getSns(array $args = [])
- * @method AwsClientInterface getSqs(array $args = [])
- * @method AwsClientInterface getStorageGateway(array $args = [])
- * @method AwsClientInterface getSts(array $args = [])
- * @method AwsClientInterface getSupport(array $args = [])
- * @method AwsClientInterface getSwf(array $args = [])
+ * @method \Aws\AutoScaling\AutoScalingClient getAutoScaling(array $args = [])
+ * @method \Aws\CloudFormation\CloudFormationClient getCloudFormation(array $args = [])
+ * @method \Aws\CloudFront\CloudFrontClient getCloudFront(array $args = [])
+ * @method \Aws\CloudSearch\CloudSearchClient getCloudSearch(array $args = [])
+ * @method \Aws\CloudTrail\CloudTrailClient getCloudTrail(array $args = [])
+ * @method \Aws\CloudWatch\CloudWatchClient getCloudWatch(array $args = [])
+ * @method \Aws\DataPipeline\DataPipelineClient getDataPipeline(array $args = [])
+ * @method \Aws\DirectConnect\DirectConnectClient getDirectConnect(array $args = [])
+ * @method \Aws\DynamoDb\DynamoDbClient getDynamoDb(array $args = [])
+ * @method \Aws\Ec2\Ec2Client getEc2(array $args = [])
+ * @method \Aws\ElastiCache\ElastiCacheClient getElastiCache(array $args = [])
+ * @method \Aws\ElasticBeanstalk\ElasticBeanstalkClient getElasticBeanstalk(array $args = [])
+ * @method \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient getElasticLoadBalancing(array $args = [])
+ * @method \Aws\ElasticTranscoder\ElasticTranscoderClient getElasticTranscoder(array $args = [])
+ * @method \Aws\Emr\EmrClient getEmr(array $args = [])
+ * @method \Aws\Glacier\GlacierClient getGlacier(array $args = [])
+ * @method \Aws\Iam\IamClient getIam(array $args = [])
+ * @method \Aws\ImportExport\ImportExportClient getImportExport(array $args = [])
+ * @method \Aws\Kinesis\KinesisClient getKinesis(array $args = [])
+ * @method \Aws\OpsWorks\OpsWorksClient getOpsWorks(array $args = [])
+ * @method \Aws\Rds\RdsClient getRds(array $args = [])
+ * @method \Aws\Redshift\RedshiftClient getRedshift(array $args = [])
+ * @method \Aws\Route53\Route53Client getRoute53(array $args = [])
+ * @method \Aws\S3\S3Client getS3(array $args = [])
+ * @method \Aws\Ses\SesClient getSes(array $args = [])
+ * @method \Aws\SimpleDb\SimpleDbClient getSimpleDb(array $args = [])
+ * @method \Aws\Sns\SnsClient getSns(array $args = [])
+ * @method \Aws\Sqs\SqsClient getSqs(array $args = [])
+ * @method \Aws\StorageGateway\StorageGatewayClient getStorageGateway(array $args = [])
+ * @method \Aws\Sts\StsClient getSts(array $args = [])
+ * @method \Aws\Support\SupportClient getSupport(array $args = [])
+ * @method \Aws\Swf\SwfClient getSwf(array $args = [])
  */
 class Sdk
 {
@@ -116,7 +116,7 @@ class Sdk
      * @param array $args
      *
      * @throws \InvalidArgumentException
-     * @see Aws\Sdk::getClient() for a list of available options.
+     * @see Aws\Sdk::getClient for a list of available options.
      */
     public function __construct(array $args = [])
     {
@@ -171,7 +171,7 @@ class Sdk
      * @param string $name Client name
      * @param array  $args Custom arguments to provide to the client.
      *
-     * @return AwsClientInterface
+     * @return \Aws\AwsClientInterface
      * @throws \InvalidArgumentException
      */
     public function getClient($name, array $args = [])
