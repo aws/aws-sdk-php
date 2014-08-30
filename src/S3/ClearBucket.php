@@ -3,8 +3,6 @@ namespace Aws\S3;
 
 use Aws\AwsClientInterface;
 use Aws\S3\Exception\ClearBucketException;
-use GuzzleHttp\Event\HasEmitterInterface;
-use GuzzleHttp\Event\HasEmitterTrait;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 
 /**
@@ -19,10 +17,8 @@ use Aws\S3\Exception\DeleteMultipleObjectsException;
  * iterator is not rewound in this class, so you can utilize non-seekable
  * iterators like Generators and still recover from failure.
  */
-class ClearBucket implements HasEmitterInterface
+class ClearBucket
 {
-    use HasEmitterTrait;
-
     /** @var AwsClientInterface */
     private $client;
 
