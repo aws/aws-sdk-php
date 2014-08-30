@@ -4,7 +4,7 @@ namespace Aws\Sqs;
 use Aws\AwsClient;
 
 /**
- * Client used to interact with the Amazon Simple Queue Service.
+ * This client is used to interact with the **Amazon Simple Queue Service (Amazon SQS)**.
  */
 class SqsClient extends AwsClient
 {

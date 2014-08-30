@@ -4,6 +4,6 @@ namespace Aws\Emr;
 use Aws\AwsClient;
 
 /**
- * Client used to interact with the Amazon Elastic MapReduce service.
+ * This client is used to interact with the **Amazon Elastic MapReduce (Amazon EMR)** service.
  */
 class EmrClient extends AwsClient {}

@@ -4,6 +4,6 @@ namespace Aws\Rds;
 use Aws\AwsClient;
 
 /**
- * Client used to interact with the Amazon Relational Database Service.
+ * This client is used to interact with the **Amazon Relational Database Service (Amazon RDS)**.
  */
 class RdsClient extends AwsClient {}

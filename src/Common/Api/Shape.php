@@ -55,4 +55,14 @@ class Shape extends AbstractModel
     {
         return $this->definition['type'];
     }
+
+    /**
+     * Get the name of the shape
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->definition['name'];
+    }
 }

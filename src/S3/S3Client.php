@@ -16,7 +16,7 @@ use GuzzleHttp\Stream\StreamInterface;
 use GuzzleHttp\Stream\Utils;
 
 /**
- * Client to interact with Amazon Simple Storage Service.
+ * This client is used to interact with the **Amazon Simple Storage Service (Amazon S3)**.
  */
 class S3Client extends AwsClient
 {

@@ -6,7 +6,7 @@ use Aws\Common\Credentials\Credentials;
 use Aws\Result;
 
 /**
- * Client used to interact with the AWS Security Token Service.
+ * This client is used to interact with the **AWS Security Token Service (AWS STS)**.
  */
 class StsClient extends AwsClient
 {
