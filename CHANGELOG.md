@@ -4,7 +4,8 @@ CHANGELOG
 Next Release:
 -------------
 
-* Added support for tagging to the Amazon Kinesis Client.
+* Added support for tagging to the Amazon Kinesis client.
+* Added support for setting environment variables to the AWS OpsWorks client.
 
 2.6.15 (2014-08-14)
 -------------------

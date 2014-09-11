@@ -454,6 +454,28 @@ return array (
                         ),
                     ),
                 ),
+                'Environment' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'EnvironmentVariable',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Secure' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1803,6 +1825,10 @@ return array (
                     'type' => 'string',
                     'location' => 'json',
                 ),
+                'StackId' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
                 'RaidArrayIds' => array(
                     'type' => 'array',
                     'location' => 'json',
@@ -2998,6 +3024,28 @@ return array (
                         ),
                     ),
                 ),
+                'Environment' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'EnvironmentVariable',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'required' => true,
+                                'type' => 'string',
+                            ),
+                            'Secure' => array(
+                                'type' => 'boolean',
+                                'format' => 'boolean-string',
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -3811,6 +3859,24 @@ return array (
                             'CreatedAt' => array(
                                 'type' => 'string',
                             ),
+                            'Environment' => array(
+                                'type' => 'array',
+                                'items' => array(
+                                    'name' => 'EnvironmentVariable',
+                                    'type' => 'object',
+                                    'properties' => array(
+                                        'Key' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Value' => array(
+                                            'type' => 'string',
+                                        ),
+                                        'Secure' => array(
+                                            'type' => 'boolean',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -4481,6 +4547,9 @@ return array (
                                 'type' => 'string',
                             ),
                             'CreatedAt' => array(
+                                'type' => 'string',
+                            ),
+                            'StackId' => array(
                                 'type' => 'string',
                             ),
                             'VolumeType' => array(
