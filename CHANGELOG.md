@@ -1,11 +1,15 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+2.6.16 (2014-09-11)
+-------------------
 
 * Added support for tagging to the Amazon Kinesis client.
 * Added support for setting environment variables to the AWS OpsWorks client.
+* Fixed issue #334 to allow the `before_upload` callback to work in the
+  `S3Client::upload` method.
+* Fixed an issue in the Signature V4 signer that was causing an issue with some
+  CloudSearch Domain operations.
 
 2.6.15 (2014-08-14)
 -------------------
