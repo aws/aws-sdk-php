@@ -1,10 +1,15 @@
 CHANGELOG
 =========
 
+Next Release:
+-------------
+
+* Added support for tagging to the Amazon Kinesis Client.
+
 2.6.15 (2014-08-14)
 -------------------
 
-* Added support for signing requests to the Amazon CloudSearch Domains client.
+* Added support for signing requests to the Amazon CloudSearch Domain client.
 * Added support for creating anonymous clients.
 
 2.6.14 (2014-08-11)

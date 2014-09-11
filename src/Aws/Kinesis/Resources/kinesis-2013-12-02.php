@@ -57,6 +57,66 @@ return array (
         ),
     ),
     'operations' => array(
+        'AddTagsToStream' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Kinesis_20131202.AddTagsToStream',
+                ),
+                'StreamName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'Tags' => array(
+                    'required' => true,
+                    'type' => 'object',
+                    'location' => 'json',
+                    'additionalProperties' => array(
+                        'type' => 'string',
+                        'maxLength' => 256,
+                        'data' => array(
+                            'shape_name' => 'TagKey',
+                        ),
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'The resource is not available for this operation. For example, you attempted to split a shard but the stream is not in the ACTIVE state.',
+                    'class' => 'ResourceInUseException',
+                ),
+                array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
+                    'class' => 'InvalidArgumentException',
+                ),
+                array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
+                    'class' => 'LimitExceededException',
+                ),
+            ),
+        ),
         'CreateStream' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -94,12 +154,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The resource is not available for this operation. For example, you attempted to split a shard but the stream is not in the ACTIVE state.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
                     'class' => 'LimitExceededException',
                 ),
                 array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
                     'class' => 'InvalidArgumentException',
                 ),
             ),
@@ -135,9 +198,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -185,9 +250,11 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -229,15 +296,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
                     'class' => 'InvalidArgumentException',
                 ),
                 array(
+                    'reason' => 'The request rate is too high, or the requested data is too large for the available throughput. Reduce the frequency or size of your requests. For more information, see Error Retries and Exponential Backoff in AWS in the AWS General Reference.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
                 array(
+                    'reason' => 'The provided iterator exceeds the maximum age allowed.',
                     'class' => 'ExpiredIteratorException',
                 ),
             ),
@@ -289,12 +360,15 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
                     'class' => 'InvalidArgumentException',
                 ),
                 array(
+                    'reason' => 'The request rate is too high, or the requested data is too large for the available throughput. Reduce the frequency or size of your requests. For more information, see Error Retries and Exponential Backoff in AWS in the AWS General Reference.',
                     'class' => 'ProvisionedThroughputExceededException',
                 ),
             ),
@@ -335,6 +409,63 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
+                    'class' => 'LimitExceededException',
+                ),
+            ),
+        ),
+        'ListTagsForStream' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'ListTagsForStreamOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Kinesis_20131202.ListTagsForStream',
+                ),
+                'StreamName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'ExclusiveStartTagKey' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'Limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 10,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
+                    'class' => 'InvalidArgumentException',
+                ),
+                array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -384,15 +515,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The resource is not available for this operation. For example, you attempted to split a shard but the stream is not in the ACTIVE state.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
                     'class' => 'InvalidArgumentException',
                 ),
                 array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -451,13 +586,77 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
                     'class' => 'InvalidArgumentException',
                 ),
                 array(
+                    'reason' => 'The request rate is too high, or the requested data is too large for the available throughput. Reduce the frequency or size of your requests. For more information, see Error Retries and Exponential Backoff in AWS in the AWS General Reference.',
                     'class' => 'ProvisionedThroughputExceededException',
+                ),
+            ),
+        ),
+        'RemoveTagsFromStream' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Kinesis_20131202.RemoveTagsFromStream',
+                ),
+                'StreamName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 128,
+                ),
+                'TagKeys' => array(
+                    'required' => true,
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 10,
+                    'items' => array(
+                        'name' => 'TagKey',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 128,
+                    ),
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'The resource is not available for this operation. For example, you attempted to split a shard but the stream is not in the ACTIVE state.',
+                    'class' => 'ResourceInUseException',
+                ),
+                array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
+                    'class' => 'InvalidArgumentException',
+                ),
+                array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
+                    'class' => 'LimitExceededException',
                 ),
             ),
         ),
@@ -504,15 +703,19 @@ return array (
             ),
             'errorResponses' => array(
                 array(
+                    'reason' => 'The requested resource could not be found. It might not be specified correctly, or it might not be in the ACTIVE state.',
                     'class' => 'ResourceNotFoundException',
                 ),
                 array(
+                    'reason' => 'The resource is not available for this operation. For example, you attempted to split a shard but the stream is not in the ACTIVE state.',
                     'class' => 'ResourceInUseException',
                 ),
                 array(
+                    'reason' => 'A specified parameter exceeds its restrictions, is not supported, or can\'t be used. For more information, see the returned message.',
                     'class' => 'InvalidArgumentException',
                 ),
                 array(
+                    'reason' => 'The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).',
                     'class' => 'LimitExceededException',
                 ),
             ),
@@ -647,6 +850,32 @@ return array (
                 ),
             ),
         ),
+        'ListTagsForStreamOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'Tags' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Tag',
+                        'type' => 'object',
+                        'properties' => array(
+                            'Key' => array(
+                                'type' => 'string',
+                            ),
+                            'Value' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'HasMoreTags' => array(
+                    'type' => 'boolean',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'PutRecordOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -669,12 +898,6 @@ return array (
             'more_results' => 'StreamDescription/HasMoreShards',
             'output_token' => 'StreamDescription/Shards/#/ShardId',
             'result_key' => 'StreamDescription/Shards',
-        ),
-        'GetRecords' => array(
-            'input_token' => 'ShardIterator',
-            'limit_key' => 'Limit',
-            'output_token' => 'NextShardIterator',
-            'result_key' => 'Records',
         ),
         'ListStreams' => array(
             'input_token' => 'ExclusiveStartStreamName',
