@@ -29,7 +29,7 @@ package: burgomaster
 # Downloads a copy of Burgomaster
 burgomaster:
 	mkdir -p build/artifacts
-	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/0.0.1/src/Burgomaster.php > build/artifacts/Burgomaster.php
+	curl -s https://raw.githubusercontent.com/mtdowling/Burgomaster/0.0.2/src/Burgomaster.php > build/artifacts/Burgomaster.php
 
 # Ensures that the TAG variable was passed to the make command
 check_tag:

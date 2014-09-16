@@ -15,10 +15,10 @@ $burgomaster->recursiveCopy('src/Aws', 'Aws', ['php', 'json']);
 $burgomaster->recursiveCopy('vendor/guzzle/guzzle/src/Guzzle', 'Guzzle', ['php', 'pem']);
 $burgomaster->recursiveCopy('vendor/doctrine/cache/lib/Doctrine', 'Doctrine');
 $burgomaster->recursiveCopy('vendor/psr/log/Psr', 'Psr');
-$burgomaster->recursiveCopy('vendor/monolog/monolog/src/Monolog', 'Monlog');
+$burgomaster->recursiveCopy('vendor/monolog/monolog/src/Monolog', 'Monolog');
 $burgomaster->recursiveCopy('vendor/symfony/event-dispatcher/Symfony', 'Symfony');
 
-$burgomaster->createAutoloader();
+$burgomaster->createAutoloader(array(), 'aws-autoloader.php');
 $burgomaster->createZip(__DIR__ . '/artifacts/aws.zip');
 $burgomaster->createPhar(__DIR__ . '/artifacts/aws.phar');
 $burgomaster->startSection('test_phar');
