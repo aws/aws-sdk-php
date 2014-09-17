@@ -66,6 +66,7 @@ class Sdk
         'cloudformation'       => 'CloudFormation',
         'cloudfront'           => 'CloudFront',
         'cloudsearch'          => 'CloudSearch',
+        'cloudsearchdomain'    => 'CloudSearchDomain',
         'cloudtrail'           => 'CloudTrail',
         'datapipeline'         => 'DataPipeline',
         'directconnect'        => 'DirectConnect',

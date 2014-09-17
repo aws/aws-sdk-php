@@ -5,7 +5,7 @@ use Aws\AwsClient;
 use GuzzleHttp\Collection;
 
 /**
- * Client used to interact with the Amazon CloudFront service.
+ * This client is used to interact with the **Amazon CloudFront** service.
  */
 class CloudFrontClient extends AwsClient
 {

@@ -4,6 +4,6 @@ namespace Aws\SimpleDb;
 use Aws\AwsClient;
 
 /**
- * Client used to interact with the Amazon SimpleDB service.
+ * This client is used to interact with the **Amazon SimpleDB** service.
  */
 class SimpleDbClient extends AwsClient {}
