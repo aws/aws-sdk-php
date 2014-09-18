@@ -52,15 +52,6 @@ class ItemIteratorTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFailsOnNonCountableIterator()
-    {
-        $inner = new \InfiniteIterator(new \ArrayIterator(range(0, 9)));
-        $items = new ItemIterator($inner);
-    }
-
     public function dataForFromResultsTest()
     {
         return [

@@ -9,7 +9,7 @@ use GuzzleHttp\ToArrayInterface;
  * Converts items to a simple associative array form with type information
  * removed. Each item is yielded as an array-accessible Collection object.
  */
-class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInterface
+class ItemIterator extends \IteratorIterator implements ToArrayInterface
 {
     /**
      * Collects items from the result and returns them as an ItemIterator.
@@ -74,11 +74,6 @@ class ItemIterator extends \IteratorIterator implements \Countable, ToArrayInter
             },
             parent::current()
         ));
-    }
-
-    public function count()
-    {
-        return $this->getInnerIterator()->count();
     }
 
     public function toArray()
