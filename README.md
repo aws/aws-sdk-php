@@ -1,4 +1,5 @@
 # AWS SDK for PHP
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/aws/aws-sdk-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php/version.svg)](https://packagist.org/packages/aws/aws-sdk-php)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php/d/total.svg)](https://packagist.org/packages/aws/aws-sdk-php)
