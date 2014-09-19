@@ -125,7 +125,7 @@ abstract class AbstractPartGenerator implements \Iterator
         if ($this->seekableSource) {
             $this->offset += $this->partSize;
         } else {
-            $this->source->getContents($this->partSize);
+            $this->source->read($this->partSize);
         }
     }
 
