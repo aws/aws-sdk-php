@@ -164,6 +164,9 @@ abstract class AbstractUploader
             return $this->createCommand(static::UPLOAD, $partData);
         });
 
+        // This is needed to get the MapIterator ready for the valid() method.
+        $commands->rewind();
+
         // Execute the commands in parallel and process results. This collects
         // unhandled errors along the way and throws an exception at the end
         // that contains the state and a list of the failed parts.

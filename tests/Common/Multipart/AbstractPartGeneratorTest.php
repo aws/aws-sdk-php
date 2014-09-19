@@ -92,4 +92,3 @@ class AbstractPartGeneratorTest extends \PHPUnit_Framework_TestCase
         return $source;
     }
 }
-

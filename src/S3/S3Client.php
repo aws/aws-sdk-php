@@ -195,23 +195,24 @@ class S3Client extends AwsClient
         // Perform the needed operations to upload the S3 Object.
         $body = Stream::factory($body);
         $params = ['ACL' => $acl] + $options['params'];
-        if ($this->requiresMultipart($body, $options['threshold'])) {
-            return (new UploadBuilder)
-                ->setClient($this)
-                ->setSource($body)
-                ->setBucket($bucket)
-                ->setKey($key)
-                ->setParams('CreateMultipartUpload', $params)
-                ->setPartSize($options['part_size'])
-                ->build()
-                ->upload($options['concurrency'], $options['before_upload']);
-        } else {
+
+        if (!$this->requiresMultipart($body, $options['threshold'])) {
             return $this->execute($this->getCommand('PutObject', [
                 'Bucket' => $bucket,
                 'Key'    => $key,
                 'Body'   => $body,
             ] + $params));
         }
+
+        return (new UploadBuilder)
+            ->setClient($this)
+            ->setSource($body)
+            ->setBucket($bucket)
+            ->setKey($key)
+            ->setParams('CreateMultipartUpload', $params)
+            ->setPartSize($options['part_size'])
+            ->build()
+            ->upload($options['concurrency'], $options['before_upload']);
     }
 
     /**

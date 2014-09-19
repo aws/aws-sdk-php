@@ -116,7 +116,6 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
             $uploader->upload(3);
             $this->fail('No exception was thrown.');
         } catch (MultipartUploadException $e) {
-            echo $e;
             $this->assertContains('Part 3', $e->getMessage());
         }
     }

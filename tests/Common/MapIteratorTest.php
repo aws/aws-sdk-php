@@ -11,10 +11,12 @@ class MapIteratorTest extends \PHPUnit_Framework_TestCase
 {
     public function testMapsValues()
     {
-        $i = new MapIterator(new \ArrayIterator(range(0, 100)), function ($value) {
-            return $value * 10;
+        $i = new MapIterator(new \ArrayIterator([1, 2]), function ($value) {
+            return $value + 1;
         });
 
-        $this->assertEquals(range(0, 1000, 10), iterator_to_array($i, false));
+        $i->rewind();
+        $this->assertTrue($i->valid());
+        $this->assertEquals([2, 3], iterator_to_array($i, false));
     }
 }
