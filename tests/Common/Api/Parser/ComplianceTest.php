@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\Common\Api\Parser\AbstractParser
@@ -90,11 +90,11 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
         $response = new Response(
             $res['status_code'],
             $res['headers'],
-            Stream\create($res['body'])
+            Stream::factory($res['body'])
         );
 
         $trans = new CommandTransaction($client, $command);
-        $trans->setResponse($response);
+        $trans->response = $response;
         $event = new ProcessEvent($trans);
         $command->getEmitter()->emit('process', $event);
         $result = $event->getResult()->toArray();

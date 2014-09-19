@@ -4,7 +4,7 @@ namespace Aws\Test\Common\Signature;
 use Aws\Common\Credentials\Credentials;
 use Aws\Common\Signature\S3SignatureV4;
 use GuzzleHttp\Message\Request;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 require __DIR__ . '/sig_hack.php';
 
@@ -40,7 +40,7 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
     public function testAddsContentSha256WhenBodyIsPresent()
     {
         $request = new Request('PUT', 'http://foo.com');
-        $request->setBody(Stream\create('foo'));
+        $request->setBody(Stream::factory('foo'));
         $credentials = new Credentials('foo', 'bar');
         $signature = new S3SignatureV4('service', 'region');
         $signature->signRequest($request, $credentials);

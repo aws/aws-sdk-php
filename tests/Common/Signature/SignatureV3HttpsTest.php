@@ -29,7 +29,8 @@ class SignatureV3HttpsTest extends \PHPUnit_Framework_TestCase
     {
         // Create a request based on the request
         $request = (new MessageFactory)->fromMessage($request);
-        $request->removeHeader('User-Agent')->removeHeader('Content-Length');
+        $request->removeHeader('User-Agent');
+        $request->removeHeader('Content-Length');
         $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
         $signature = new SignatureV3Https();
         $signature->signRequest($request, $credentials);

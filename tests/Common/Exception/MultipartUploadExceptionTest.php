@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Test\Common\Exception;
 
 use Aws\Common\Exception\MultipartUploadException;

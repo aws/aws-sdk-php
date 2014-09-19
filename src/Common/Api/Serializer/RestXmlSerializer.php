@@ -4,7 +4,7 @@ namespace Aws\Common\Api\Serializer;
 use Aws\Common\Api\StructureShape;
 use Aws\Common\Api\Service;
 use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @internal
@@ -34,7 +34,7 @@ class RestXmlSerializer extends RestSerializer
         array $value
     ) {
         $request->setHeader('Content-Type', 'application/xml');
-        $request->setBody(Stream\create(
+        $request->setBody(Stream::factory(
             $this->xmlBody->build($member, $value)
         ));
     }

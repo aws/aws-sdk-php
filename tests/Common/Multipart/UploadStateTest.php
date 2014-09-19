@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Test\Common\Multipart;
 
 use Aws\Common\Multipart\UploadState;

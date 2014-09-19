@@ -100,9 +100,9 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         $uploader = $this->getMockUploader(
             [
                 new Result([]), // Initiate
-                $this->createMockAwsException(), // Upload 1
-                $this->createMockAwsException(), // Upload 2
-                $this->createMockAwsException(), // Upload 3
+                $this->createMockAwsException('ERROR', 'Aws\AwsException', '1'),
+                $this->createMockAwsException('ERROR', 'Aws\AwsException', '2'),
+                $this->createMockAwsException('ERROR', 'Aws\AwsException', '3'),
             ],
             null,
             [
@@ -116,6 +116,7 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
             $uploader->upload(3);
             $this->fail('No exception was thrown.');
         } catch (MultipartUploadException $e) {
+            echo $e;
             $this->assertContains('Part 3', $e->getMessage());
         }
     }

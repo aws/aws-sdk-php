@@ -4,7 +4,6 @@ namespace Aws\Common\Multipart;
 use Aws\AwsClientInterface;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
-use GuzzleHttp\Stream\MetadataStreamInterface;
 
 abstract class AbstractUploadBuilder
 {
@@ -17,7 +16,7 @@ abstract class AbstractUploadBuilder
     /** @var UploadState State of the transfer. */
     protected $state;
 
-    /** @var StreamInterface|MetadataStreamInterface Source of the data. */
+    /** @var StreamInterface Source of the data. */
     protected $source;
 
     /** @var int Size, in bytes, of each part. */

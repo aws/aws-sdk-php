@@ -6,6 +6,7 @@ use GuzzleHttp\Collection;
 use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
+use GuzzleHttp\Stream\Utils;
 
 /**
  * Allows you to resume the download of a partially downloaded object.
@@ -58,7 +59,7 @@ class ResumableDownload
         // If a string is passed, then assume that the download should stream
         // to a file on disk.
         if (is_string($this->target)) {
-            $this->target = \GuzzleHttp\Stream\safe_open($this->target, 'a+');
+            $this->target = Utils::open($this->target, 'a+');
             fseek($this->target, 0, SEEK_END);
         }
 
@@ -136,7 +137,7 @@ class ResumableDownload
             return;
         }
 
-        $actual = \GuzzleHttp\Stream\hash($this->target, 'md5');
+        $actual = Utils::hash($this->target, 'md5');
 
         if ($actual !== $etag) {
             throw new \UnexpectedValueException("Message integrity check "

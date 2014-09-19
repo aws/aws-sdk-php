@@ -63,7 +63,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $f = new ClientFactory();
         $c = $f->create(['service' => 'dynamodb', 'region' => 'x']);
         try {
-            $c->listTables([]);
+            // CreateTable requires actual input parameters.
+            $c->createTable([]);
             $this->fail('Did not validate');
         } catch (AwsException $e) {}
     }
@@ -74,6 +75,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanDisableValidation()
     {
+        // Validation is disabled, so server side validation is used.
         $c = (new ClientFactory())->create([
             'service'  => 'dynamodb',
             'region'   => 'x',
@@ -84,7 +86,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             throw new \Exception('Throwing!');
         });
 
-        $c->listTables([]);
+        $c->createTable([]);
     }
 
     /**

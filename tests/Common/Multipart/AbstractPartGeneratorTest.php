@@ -1,9 +1,10 @@
 <?php
-
 namespace Aws\Test\Common\Multipart;
 
 use Aws\Common\Multipart\AbstractPartGenerator;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\LimitStream;
+use GuzzleHttp\Stream\NoSeekStream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * Concrete PartGenerator used for the purpose of the following test.
@@ -18,10 +19,10 @@ class TestPartGenerator extends AbstractPartGenerator
     protected function generatePartData()
     {
         if ($this->seekableSource) {
-            $body = new Stream\LimitStream($this->source, $this->partSize, $this->getOffset());
+            $body = new LimitStream($this->source, $this->partSize, $this->getOffset());
             $this->advanceOffset();
         } else {
-            $body = Stream\create($this->source->read($this->partSize));
+            $body = Stream::factory($this->source->read($this->partSize));
         }
 
         return ['Body' => $body->getContents()];
@@ -83,9 +84,9 @@ class AbstractPartGeneratorTest extends \PHPUnit_Framework_TestCase
 
     private function getTestSource($seekable)
     {
-        $source = Stream\create(fopen(__DIR__ . '/source.txt', 'r'));
+        $source = Stream::factory(fopen(__DIR__ . '/source.txt', 'r'));
         if (!$seekable) {
-            $source = new Stream\NoSeekStream($source);
+            $source = new NoSeekStream($source);
         }
 
         return $source;

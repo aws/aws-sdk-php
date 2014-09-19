@@ -85,13 +85,13 @@ class S3Signature extends AbstractSignature
         }
 
         // Set query params required for pre-signed URLs
-        $request->getQuery()
-            ->set('AWSAccessKeyId', $credentials->getAccessKeyId())
-            ->set('Expires', $expires)
-            ->set('Signature', $this->signString(
-                $this->createCanonicalizedString($request, $expires),
-                $credentials
-            ));
+        $query = $request->getQuery();
+        $query['AWSAccessKeyId'] = $credentials->getAccessKeyId();
+        $query['Expires'] = $expires;
+        $query['Signature'] = $this->signString(
+            $this->createCanonicalizedString($request, $expires),
+            $credentials
+        );
 
         // Move X-Amz-* headers to the query string
         foreach ($request->getHeaders() as $name => $header) {

@@ -4,12 +4,9 @@ namespace Aws\S3;
 use Aws\AwsClient;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
-use Aws\S3\Multipart\AbstractTransfer as AbstractMulti;
 use Aws\S3\Multipart\UploadBuilder;
-use GuzzleHttp\Collection;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Stream\AppendStream;
-use GuzzleHttp\Stream\LimitStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Stream\StreamInterface;
@@ -229,37 +226,37 @@ class S3Client extends AwsClient
      */
     private function requiresMultipart(StreamInterface &$body, $threshold)
     {
-        // Handle the situation where the body size is unknown.
-        if ($body->getSize() === null) {
-            // Read up to 5MB into a buffer to determine how to upload the body.
-            $buffer = Stream::factory();
-            Utils::copyToStream($body, $buffer, 5242880);
-            if ($buffer->getSize() < 5242880) {
-                // If body < 5MB, use PutObject with the buffer.
-                $buffer->seek(0);
-                $body = $buffer;
-                return false;
-            } elseif ($body->isSeekable()) {
-                // If >= 5 MB, and seekable, use Multipart with rewound body.
-                $body->seek(0);
-                return true;
-            } else {
-                // If >= 5 MB, and non-seekable, use Multipart, but stitch the
-                // buffer and the body together into one stream. This avoids
-                // needing to seek and unnecessary disc usage, while requiring
-                // only the 5 MB buffer to be re-read by the Multipart system.
-                $buffer->seek(0);
-                $body = new AppendStream([$buffer, $body]);
-                return true;
-            }
+        // If body size known, compare to threshold to determine if Multipart.
+        if ($body->getSize() !== null) {
+            return $body->getSize() < $threshold ? false : true;
         }
 
-        // Body size known, so compare to threshold to determine if Multipart.
-        if ($body->getSize() < $threshold) {
+        // Handle the situation where the body size is unknown.
+        // Read up to 5MB into a buffer to determine how to upload the body.
+        $buffer = Stream::factory();
+        Utils::copyToStream($body, $buffer, 5242880);
+
+        // If body < 5MB, use PutObject with the buffer.
+        if ($buffer->getSize() < 5242880) {
+            $buffer->seek(0);
+            $body = $buffer;
             return false;
-        } else {
+        }
+
+        // If >= 5 MB, and seekable, use Multipart with rewound body.
+        if ($body->isSeekable()) {
+            $body->seek(0);
             return true;
         }
+
+        // If >= 5 MB, and non-seekable, use Multipart, but stitch the
+        // buffer and the body together into one stream. This avoids
+        // needing to seek and unnecessary disc usage, while requiring
+        // only the 5 MB buffer to be re-read by the Multipart system.
+        $buffer->seek(0);
+        $body = new AppendStream([$buffer, $body]);
+
+        return true;
     }
 
     /**

@@ -6,7 +6,7 @@ use Aws\CloudTrail\LogFileIterator;
 use Aws\S3\S3Client;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\CloudTrail\LogFileIterator
@@ -22,7 +22,7 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
             'region' => 'us-west-2',
         ]);
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
-        $mock = new Mock([new Response(200, [], Stream\create($json))]);
+        $mock = new Mock([new Response(200, [], Stream::factory($json))]);
         $cloudTrailClient->getHttpClient()->getEmitter()->attach($mock);
         $files = LogFileIterator::forTrail($s3Client, $cloudTrailClient);
         $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
@@ -37,7 +37,7 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
             'secret' => 'bar',
             'region' => 'us-west-2',
         ]);
-        $mock = new Mock([new Response(200, [], Stream\Create('{"trailList":[]}'))]);
+        $mock = new Mock([new Response(200, [], Stream::factory('{"trailList":[]}'))]);
         $cloudTrailClient->getHttpClient()->getEmitter()->attach($mock);
         $files = LogFileIterator::forTrail($s3Client, $cloudTrailClient);
     }
@@ -116,7 +116,7 @@ class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
 XML;
 
         $client = S3Client::factory(['key' => 'foo', 'secret' => 'bar']);
-        $mock = new Mock([new Response(200, [], Stream\create($xml))]);
+        $mock = new Mock([new Response(200, [], Stream::factory($xml))]);
         $client->getHttpClient()->getEmitter()->attach($mock);
 
         return $client;

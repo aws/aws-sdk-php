@@ -7,7 +7,6 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Stream\FnStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
-use GuzzleHttp\Subscriber\History;
 
 /**
  * @covers Aws\S3\S3Client
@@ -201,8 +200,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
     ) {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
-        //$history = new History();
-        //$client->getHttpClient()->getEmitter()->attach($history);
         $this->addMockResults($client, $mockedResults);
         $result = $client->upload('bucket', 'key', $body, 'private', $options);
         $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);

@@ -150,7 +150,7 @@ abstract class AbstractUploader
      */
     public function upload($concurrency = 1, callable $before = null)
     {
-        // 1. Ensure the upload is in a valid state for uploading parts.
+        // Ensure the upload is in a valid state for uploading parts.
         if (!$this->state->isInitiated()) {
             $this->initiate();
         } elseif ($this->state->isCompleted()) {
@@ -159,19 +159,19 @@ abstract class AbstractUploader
             throw new \LogicException('This upload has been aborted.');
         }
 
-        // 2. Create iterator that will yield UploadPart commands for each part.
+        // Create iterator that will yield UploadPart commands for each part.
         $commands = new MapIterator($this->parts, function (array $partData) {
             return $this->createCommand(static::UPLOAD, $partData);
         });
 
-        // 3. Execute the commands in parallel and process results. This
-        //    collects unhandled errors along the way and throws an exception
-        //    at the end that contains the state and a list of the failed parts.
+        // Execute the commands in parallel and process results. This collects
+        // unhandled errors along the way and throws an exception at the end
+        // that contains the state and a list of the failed parts.
         $errors = [];
         $this->client->executeAll($commands, [
-            'parallel' => $concurrency,
-            'prepare' => $before,
-            'process' => [
+            'pool_size' => $concurrency,
+            'prepare'   => $before,
+            'process'   => [
                 'fn' => function (ProcessEvent $event) use (&$errors) {
                     /** @var AwsCommandInterface $command */
                     $command = $event->getCommand();
@@ -188,11 +188,11 @@ abstract class AbstractUploader
                 'priority' => 'last'
             ]
         ]);
+
         if ($errors) {
             throw new MultipartUploadException($this->state, $errors);
         }
 
-        // 4. Complete the upload and return the results.
         return $this->complete();
     }
 

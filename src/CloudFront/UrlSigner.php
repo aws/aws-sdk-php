@@ -163,7 +163,8 @@ class UrlSigner
     {
         // Use a relative URL when creating Flash player URLs
         $url->getQuery()->setEncodingType(false);
-        $url->setScheme(null)->setHost(null);
+        $url->setScheme(null);
+        $url->setHost(null);
 
         return substr($url, 1);
     }

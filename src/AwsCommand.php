@@ -3,7 +3,6 @@ namespace Aws;
 
 use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Command;
-use GuzzleHttp\Event\EmitterInterface;
 
 /**
  * Default command implementation.
@@ -17,16 +16,18 @@ class AwsCommand extends Command implements AwsCommandInterface
      * @param string           $name    Name of the command
      * @param array            $args    Arguments of the command
      * @param Service          $api     Service description
-     * @param EmitterInterface $emitter Optional event emitter to use
+     * @param array            $options Array of options:
+     *                                  - emitter: Emitter to use
+     *                                  - future: True or false.
      */
     public function __construct(
         $name,
         array $args = [],
         Service $api,
-        EmitterInterface $emitter = null
+        array $options = []
     ) {
         $this->api = $api;
-        parent::__construct($name, $args, $emitter);
+        parent::__construct($name, $args, $options);
     }
 
     public function getOperation()

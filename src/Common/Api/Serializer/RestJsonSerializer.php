@@ -3,7 +3,7 @@ namespace Aws\Common\Api\Serializer;
 
 use Aws\Common\Api\Service;
 use Aws\Common\Api\StructureShape;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Message\RequestInterface;
 
 /**
@@ -39,7 +39,7 @@ class RestJsonSerializer extends RestSerializer
         array $value
     ) {
         $request->setHeader('Content-Type', $this->contentType);
-        $request->setBody(Stream\create(
+        $request->setBody(Stream::factory(
             $this->jsonFormatter->build($member, $value)
         ));
     }

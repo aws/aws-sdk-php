@@ -13,6 +13,8 @@ use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Ring\FutureInterface;
+use GuzzleHttp\Ring\Core;
 
 /**
  * Default AWS client implementation
@@ -172,11 +174,18 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             throw new \InvalidArgumentException("Operation not found: $name");
         }
 
+        if (isset($args['@future'])) {
+            $future = $args['@future'];
+            unset($args['@future']);
+        } else {
+            $future = false;
+        }
+
         return new AwsCommand(
             $name,
             $args + $this->defaults,
             $this->api,
-            clone $this->getEmitter()
+            ['emitter' => clone $this->getEmitter(), 'future' => $future]
         );
     }
 
@@ -215,11 +224,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
 
     public function waitUntil($name, array $args = [], array $config = [])
     {
-        if (is_callable($name)) {
-            $waiter = new Waiter($name, $config + $args);
-        } else {
-            $waiter = $this->getWaiter($name, $args, $config);
-        }
+        $waiter = is_callable($name)
+            ? new Waiter($name, $config + $args)
+            : $this->getWaiter($name, $args, $config);
 
         $waiter->wait();
     }
@@ -235,29 +242,53 @@ class AwsClient extends AbstractClient implements AwsClientInterface
         CommandTransaction $transaction,
         RequestException $previous
     ) {
+        // Throw AWS exceptions as-is
+        if ($previous instanceof AwsException) {
+            return $previous;
+        }
+
         $exceptionClass = $this->commandException;
         $response = $previous->getResponse();
 
         if (!$response) {
-            $transaction->getContext()->set('aws_error', []);
+            $transaction->context->set('aws_error', []);
             $serviceError = $previous->getMessage();
         } else {
             $parser = $this->errorParser;
-            $context = $transaction->getContext();
-            $context['aws_error'] = $parser($response);
-            $serviceError =  $context->getPath('aws_error/code')
-                . ' (' . $context->getPath('aws_error/type') . ' error): '
-                . $context->getPath('aws_error/message');
+            $transaction->context['aws_error'] = $parser($response);
+            $serviceError =  $transaction->context->getPath('aws_error/code')
+                . ' (' . $transaction->context->getPath('aws_error/type') . ' error): '
+                . $transaction->context->getPath('aws_error/message');
         }
 
         return new $exceptionClass(
             sprintf('Error executing %s::%s() on "%s"; %s',
                 get_class($this),
-                lcfirst($transaction->getCommand()->getName()),
+                lcfirst($transaction->command->getName()),
                 $previous->getRequest()->getUrl(),
                 $serviceError),
             $transaction,
             $previous
+        );
+    }
+
+    protected function createFutureResult(CommandTransaction $transaction)
+    {
+        if (!($transaction->response instanceof FutureInterface)) {
+            throw new \RuntimeException('Must be a FutureInterface. Found '
+                . Core::describeType($transaction->response));
+        }
+
+        return new FutureResult(
+            // Deref function derefs the response which populates the result.
+            function () use ($transaction) {
+                $transaction->response = $transaction->response->deref();
+                return $transaction->result;
+            },
+            // Cancel function just proxies to the response's cancel function.
+            function () use ($transaction) {
+                return $transaction->response->cancel();
+            }
         );
     }
 }

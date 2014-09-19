@@ -4,7 +4,7 @@ namespace Aws\Test\Common;
 use Aws\Common\InstanceMetadataClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Subscriber\History;
 use GuzzleHttp\Subscriber\Mock;
 
@@ -44,7 +44,7 @@ class InstanceMetadataClientTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->with('meta-data/iam/security-credentials/')
             ->will($this->returnValue(
-                new Response(200, [], Stream\create('foo'))
+                new Response(200, [], Stream::factory('foo'))
             ));
 
         $c = new InstanceMetadataClient($client);

@@ -2,11 +2,10 @@
 namespace Aws\Test;
 
 use Aws\AwsClientInterface;
-use Aws\AwsException;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Common\Api\Service;
-use GuzzleHttp\Adapter\MockAdapter;
+use GuzzleHttp\Ring\Client\MockAdapter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Command\Event\PrepareEvent;
@@ -50,7 +49,7 @@ trait UsesServiceTrait
         if (!isset($args['client']) && !isset($_SERVER['INTEGRATION'])) {
             $args['client'] = new Client([
                 'adapter' => new MockAdapter(function () {
-                    throw new \RuntimeException('No network access');
+                    return ['error' => new \RuntimeException('No network access')];
                 })
             ]);
         }
@@ -114,11 +113,15 @@ trait UsesServiceTrait
      *
      * @param string $code
      * @param string $type
+     * @param string|null $message
      *
      * @return CommandException
      */
-    private function createMockAwsException($code = 'ERROR', $type = 'Aws\AwsException')
-    {
+    private function createMockAwsException(
+        $code = 'ERROR',
+        $type = 'Aws\AwsException',
+        $message = null
+    ) {
         $client = $this->getMockBuilder('Aws\AwsClientInterface')
             ->setMethods(['getApi'])
             ->getMockForAbstractClass();
@@ -132,10 +135,15 @@ trait UsesServiceTrait
         $trans = new CommandTransaction(
             $client,
             $this->getMock('Aws\AwsCommandInterface'),
-            ['aws_error' => ['message' => 'Test error', 'code' => $code]]
+            [
+                'aws_error' => [
+                    'message' => $message ?: 'Test error',
+                    'code'    => $code
+                ]
+            ]
         );
 
-        return new $type('Test error', $trans);
+        return new $type($message ?: 'Test error', $trans);
     }
 
     private function createServiceApi(array $serviceData = [], &$api = null)

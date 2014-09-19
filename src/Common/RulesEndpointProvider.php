@@ -2,6 +2,7 @@
 namespace Aws\Common;
 
 use Aws\Common\Exception\UnresolvedEndpointException;
+use GuzzleHttp\Utils;
 
 /**
  * Provides endpoints for services based on a directory of rules files.
@@ -44,9 +45,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
             throw new \InvalidArgumentException("File not found: $path");
         }
 
-        return new self(
-            \GuzzleHttp\json_decode(file_get_contents($path), true)
-        );
+        return new self(Utils::jsonDecode(file_get_contents($path), true));
     }
 
 
@@ -70,7 +69,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
                     continue;
                 }
 
-                $rule['config']['endpoint'] = \GuzzleHttp\uri_template(
+                $rule['config']['endpoint'] = Utils::uriTemplate(
                     $rule['config']['endpoint'], $args
                 );
 

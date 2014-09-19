@@ -4,7 +4,6 @@ namespace Aws\Test\S3;
 use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\NoSeekStream;
 use GuzzleHttp\Stream\Stream;

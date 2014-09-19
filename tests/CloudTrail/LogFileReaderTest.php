@@ -6,7 +6,7 @@ use Aws\CloudTrail\LogFileReader;
 use Aws\S3\S3Client;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\CloudTrail\LogFileReader
@@ -18,7 +18,7 @@ class LogFileReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCorrectlyReadsLogFiles($responseBody, $recordCount)
     {
-        $mock = new Mock([new Response(200, [], Stream\create($responseBody))]);
+        $mock = new Mock([new Response(200, [], Stream::factory($responseBody))]);
         $s3Client = S3Client::factory([
             'key'    => 'foo',
             'secret' => 'bar',

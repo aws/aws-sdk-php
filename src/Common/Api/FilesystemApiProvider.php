@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Common\Api;
 
+use GuzzleHttp\Utils;
+
 /**
  * Provides service descriptions from a directory structure.
  */
@@ -38,7 +40,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, $this->apiSuffix);
 
-        return \GuzzleHttp\json_decode(file_get_contents($path), true);
+        return Utils::jsonDecode(file_get_contents($path), true);
     }
 
     public function getServiceNames()
@@ -78,7 +80,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, '.paginators.json');
 
-        return \GuzzleHttp\json_decode(file_get_contents($path), true);
+        return Utils::jsonDecode(file_get_contents($path), true);
     }
 
     public function getServiceWaiterConfig($service, $version)
@@ -89,7 +91,7 @@ class FilesystemApiProvider implements ApiProviderInterface
 
         $path = $this->getPath($service, $version, '.waiters.json');
 
-        return \GuzzleHttp\json_decode(file_get_contents($path), true);
+        return Utils::jsonDecode(file_get_contents($path), true);
     }
 
     private function getPath($service, $version, $extension)

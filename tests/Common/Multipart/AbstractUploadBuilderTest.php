@@ -3,6 +3,7 @@ namespace Aws\Test\Common\Multipart;
 
 use Aws\Common\Multipart\AbstractUploadBuilder;
 use Aws\Common\Multipart\UploadState;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * Concrete UploadBuilder for the purposes of the following test.
@@ -38,7 +39,7 @@ class AbstractUploadBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getMockForAbstractClass('Aws\\AwsClientInterface');
         $state = new UploadState([]);
-        $source = \GuzzleHttp\Stream\create();
+        $source = Stream::factory();
 
         $builder = (new TestUploadBuilder)
             ->setClient($client)

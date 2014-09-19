@@ -8,7 +8,7 @@ use Aws\CloudTrail\LogRecordIterator;
 use Aws\S3\S3Client;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\CloudTrail\LogRecordIterator
@@ -24,7 +24,7 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
             'region' => 'us-west-2',
         ]);
         $json = '{"trailList":[{"IncludeGlobalServiceEvents":true,"Name":"Default","S3BucketName":"log-bucket"}]}';
-        $mock = new Mock([new Response(200, [], Stream\create($json))]);
+        $mock = new Mock([new Response(200, [], Stream::factory($json))]);
         $cloudTrailClient->getHttpClient()->getEmitter()->attach($mock);
         $records = LogRecordIterator::forTrail($s3, $cloudTrailClient);
         $this->assertInstanceOf('Aws\CloudTrail\LogRecordIterator', $records);
@@ -75,9 +75,9 @@ class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
     private function getMockS3Client()
     {
         $mock = new Mock([
-            new Response(200, [], Stream\create('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')),
-            new Response(200, [], Stream\create('{}')),
-            new Response(200, [], Stream\create('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')),
+            new Response(200, [], Stream::factory('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')),
+            new Response(200, [], Stream::factory('{}')),
+            new Response(200, [], Stream::factory('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')),
         ]);
 
         $client = S3Client::factory([

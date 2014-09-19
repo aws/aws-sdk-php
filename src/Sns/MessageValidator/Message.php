@@ -2,6 +2,7 @@
 namespace Aws\Sns\MessageValidator;
 
 use GuzzleHttp\Collection;
+use GuzzleHttp\Utils;
 
 class Message
 {
@@ -61,7 +62,7 @@ class Message
             throw new \RuntimeException('SNS message type header not provided.');
         }
 
-        $data = \GuzzleHttp\json_decode(file_get_contents('php://input'), true);
+        $data = Utils::jsonDecode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
             throw new \RuntimeException('POST data invalid');

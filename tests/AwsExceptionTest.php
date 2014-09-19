@@ -3,6 +3,8 @@ namespace Aws\Test;
 
 use GuzzleHttp\Collection;
 use Aws\AwsException;
+use GuzzleHttp\Command\Command;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Message\Response;
 
 /**
@@ -15,36 +17,23 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
     public function testReturnsClient()
     {
         $client = $this->getTestClient('s3');
-        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
-            ->setMethods(['getClient'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $trans->expects($this->once())
-            ->method('getClient')
-            ->will($this->returnValue($client));
+        $trans = new CommandTransaction($client, new Command('foo'));
         $e = new AwsException('Foo', $trans);
         $this->assertSame($client, $e->getClient());
     }
 
     public function testProvidesContextShortcuts()
     {
-        $coll = new Collection([
+        $coll = [
             'aws_error' => [
                 'request_id' => '10',
                 'type'       => 'mytype',
                 'code'       => 'mycode'
             ]
-        ]);
+        ];
 
-        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
-            ->setMethods(['getContext'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $trans->expects($this->any())
-            ->method('getContext')
-            ->will($this->returnValue($coll));
-
+        $client = $this->getTestClient('s3');
+        $trans = new CommandTransaction($client, new Command('foo'), $coll);
         $e = new AwsException('Foo', $trans);
         $this->assertEquals('10', $e->getAwsRequestId());
         $this->assertEquals('10', $e->getRequestId());
@@ -59,13 +48,7 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
     public function testReturnsServiceName()
     {
         $client = $this->getTestClient('s3');
-        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
-            ->setMethods(['getClient'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $trans->expects($this->once())
-            ->method('getClient')
-            ->will($this->returnValue($client));
+        $trans = new CommandTransaction($client, new Command('foo'));
         $e = new AwsException('Foo', $trans);
         $this->assertSame('s3', $e->getServiceName());
     }
@@ -73,13 +56,8 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
     public function testReturnsStatusCode()
     {
         $client = $this->getTestClient('s3');
-        $trans = $this->getMockBuilder('GuzzleHttp\Command\CommandTransaction')
-            ->setMethods(['getResponse'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $trans->expects($this->once())
-            ->method('getResponse')
-            ->will($this->returnValue(new Response(400)));
+        $trans = new CommandTransaction($client, new Command('foo'));
+        $trans->response = new Response(400);
         $e = new AwsException('Foo', $trans);
         $this->assertSame('400', $e->getStatusCode());
     }

@@ -24,7 +24,7 @@ class AwsCommandTest extends \PHPUnit_Framework_TestCase
             'foo',
             ['baz' => 'bar'],
             $api,
-            $emitter
+            ['emitter' => $emitter]
         );
 
         $this->assertInstanceOf('Aws\Common\Api\Operation', $command->getOperation());

@@ -6,7 +6,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\NoSeekStream;
 
 /**
@@ -22,7 +22,7 @@ class ApplyMd5Test extends \PHPUnit_Framework_TestCase
         $command = $s3->getCommand('PutObject', [
             'Bucket' => 'foo',
             'Key'    => 'bar',
-            'Body'   => new NoSeekStream(Stream\create('foo')),
+            'Body'   => new NoSeekStream(Stream::factory('foo')),
         ]);
         try {
             $s3->execute($command);

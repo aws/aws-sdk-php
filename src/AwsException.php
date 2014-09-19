@@ -15,7 +15,7 @@ class AwsException extends CommandException
      */
     public function getClient()
     {
-        return $this->getTransaction()->getClient();
+        return $this->getTransaction()->client;
     }
 
     /**
@@ -35,7 +35,7 @@ class AwsException extends CommandException
      */
     public function getStatusCode()
     {
-        return $this->getTransaction()->getResponse()->getStatusCode();
+        return $this->getTransaction()->response->getStatusCode();
     }
 
     /**
@@ -47,9 +47,7 @@ class AwsException extends CommandException
      */
     public function getAwsRequestId()
     {
-        return $this->getTransaction()
-            ->getContext()
-            ->getPath('aws_error/request_id');
+        return $this->getTransaction()->context->getPath('aws_error/request_id');
     }
 
     /**
@@ -59,9 +57,7 @@ class AwsException extends CommandException
      */
     public function getAwsErrorType()
     {
-        return $this->getTransaction()
-            ->getContext()
-            ->getPath('aws_error/type');
+        return $this->getTransaction()->context->getPath('aws_error/type');
     }
 
     /**
@@ -71,9 +67,7 @@ class AwsException extends CommandException
      */
     public function getAwsErrorCode()
     {
-        return $this ->getTransaction()
-            ->getContext()
-            ->getPath('aws_error/code');
+        return $this->getTransaction()->context->getPath('aws_error/code');
     }
 
     /**

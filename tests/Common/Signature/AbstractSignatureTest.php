@@ -1,5 +1,6 @@
 <?php
 namespace Aws\Test\Common\Signature;
+
 use Aws\Common\Credentials\Credentials;
 use GuzzleHttp\Message\Request;
 

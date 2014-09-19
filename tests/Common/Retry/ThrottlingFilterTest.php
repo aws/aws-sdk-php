@@ -3,13 +3,13 @@ namespace Aws\Test\Common\Retry;
 
 use Aws\Common\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Common\Retry\ThrottlingFilter;
-use GuzzleHttp\Adapter\Transaction;
+use GuzzleHttp\Transaction;
 use GuzzleHttp\Client;
 use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Subscriber\Retry\RetrySubscriber;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers \Aws\Common\Retry\ThrottlingFilter
@@ -34,7 +34,7 @@ class ThrottlingFilterTest extends \PHPUnit_Framework_TestCase
     public function testRetriesWhenThrottled()
     {
         $ate = $this->getTrans();
-        $ate->intercept(new Response(401, [], Stream\create('{"__type":"RequestLimitExceeded"}')));
+        $ate->intercept(new Response(401, [], Stream::factory('{"__type":"RequestLimitExceeded"}')));
         $f = new ThrottlingFilter(new JsonRpcErrorParser());
         $this->assertEquals(RetrySubscriber::RETRY, $f(2, $ate));
     }
@@ -42,7 +42,7 @@ class ThrottlingFilterTest extends \PHPUnit_Framework_TestCase
     public function testDefersWhenNotThrottled()
     {
         $ate = $this->getTrans();
-        $ate->intercept(new Response(401, [], Stream\create('{}')));
+        $ate->intercept(new Response(401, [], Stream::factory('{}')));
         $f = new ThrottlingFilter(new JsonRpcErrorParser());
         $this->assertEquals(RetrySubscriber::DEFER, $f(2, $ate));
     }

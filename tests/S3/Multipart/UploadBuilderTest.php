@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Test\S3\Multipart;
 
 use Aws\Common\Multipart\UploadState;
@@ -24,9 +23,11 @@ class UploadBuilderTest extends \PHPUnit_Framework_TestCase
             ->setKey('bar')
             ->build();
 
-        $params = $this->readAttribute($uploader, 'params')[Uploader::INITIATE];
+        $params = $this->readAttribute($uploader, 'params');
+        $this->assertArrayHasKey(Uploader::INITIATE, $params);
+        $iparams = $params[Uploader::INITIATE];
         $this->assertInstanceOf('Aws\S3\Multipart\Uploader', $uploader);
-        $this->assertArrayHasKey('ContentType', $params);
+        $this->assertArrayHasKey('ContentType', $iparams);
     }
 
     public function testCanLoadStateFromUploadId()

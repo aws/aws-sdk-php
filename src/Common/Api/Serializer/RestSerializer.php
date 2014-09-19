@@ -10,7 +10,7 @@ use GuzzleHttp\Command\Event\PrepareEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Url;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * Serializes HTTP locations like header, uri, payload, etc...
@@ -123,7 +123,7 @@ abstract class RestSerializer implements SubscriberInterface
         ) {
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $request->setBody(Stream\create($args[$name]));
+            $request->setBody(Stream::factory($args[$name]));
         } else {
             $this->payload($request, $m, $args[$name]);
         }

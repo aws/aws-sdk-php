@@ -5,7 +5,7 @@ use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * @covers Aws\DynamoDb\WriteRequestBatch
@@ -127,8 +127,8 @@ class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
         // to be re-queued; then second and third should trigger the callback.
         $client = $this->getTestClient('dynamodb');
         $this->addMockResponses($client, [
-            new Response(400, [], Stream\create('{"__type":"ProvisionedThroughputExceededException","message":"foo"}')),
-            new Response(400, [], Stream\create('{"__type":"ValidationError","message":"foo"}')),
+            new Response(400, [], Stream::factory('{"__type":"ProvisionedThroughputExceededException","message":"foo"}')),
+            new Response(400, [], Stream::factory('{"__type":"ValidationError","message":"foo"}')),
             new Response(413),
         ]);
 

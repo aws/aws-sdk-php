@@ -291,12 +291,12 @@ class SignatureV4 extends AbstractSignature
         $credential = $credentials->getAccessKeyId() . '/' . $scope;
 
         // Set query params required for pre-signed URLs
-        $request->getQuery()
-            ->set('X-Amz-Algorithm', 'AWS4-HMAC-SHA256')
-            ->set('X-Amz-Credential', $credential)
-            ->set('X-Amz-Date', gmdate('Ymd\THis\Z', time()))
-            ->set('X-Amz-SignedHeaders', 'Host')
-            ->set('X-Amz-Expires', $this->convertExpires($expires));
+        $query = $request->getQuery();
+        $query['X-Amz-Algorithm'] = 'AWS4-HMAC-SHA256';
+        $query['X-Amz-Credential'] = $credential;
+        $query['X-Amz-Date'] = gmdate('Ymd\THis\Z', time());
+        $query['X-Amz-SignedHeaders']= 'Host';
+        $query['X-Amz-Expires'] = $this->convertExpires($expires);
     }
 
     private function moveHeadersToQuery(RequestInterface $request)
