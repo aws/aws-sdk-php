@@ -333,6 +333,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $c = $f->create([
             'service'      => 'sqs',
             'region'       => 'x',
+            'retries'      => 2,
             'retry_logger' => $logger,
             'endpoint'     => 'http://us-east-1.foo.amazonaws.com',
         ]);
@@ -369,6 +370,18 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
         ]);
         $this->assertTrue(SdkTest::hasListener(
+            $c->getEmitter(),
+            'GuzzleHttp\Command\Subscriber\Debug',
+            'prepare'
+        ));
+
+        $c = $f->create([
+            'service'  => 'sqs',
+            'region'   => 'x',
+            'debug'    => false,
+            'endpoint' => 'http://us-east-1.foo.amazonaws.com',
+        ]);
+        $this->assertFalse(SdkTest::hasListener(
             $c->getEmitter(),
             'GuzzleHttp\Command\Subscriber\Debug',
             'prepare'

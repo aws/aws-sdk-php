@@ -40,9 +40,6 @@ use GuzzleHttp\Command\Subscriber\Debug;
  */
 class ClientFactory
 {
-    /** @var int Default maximum number of retries for failed requests. */
-    const DEFAULT_MAX_RETRIES = 3;
-
     /**
      * Represents how provided key value pairs are processed.
      *
@@ -187,45 +184,61 @@ class ClientFactory
      *
      * @throws \InvalidArgumentException if the value provided is invalid.
      */
-    protected function handle_retries(
+    private function handle_retries(
         $value,
         array &$args,
         AwsClientInterface $client
     ) {
-        if ($value = $this->validateRetries($value)) {
-            $conf = [
-                'max' => $value,
-                'filter' => RetrySubscriber::createChainFilter([
-                    new ThrottlingFilter($args['error_parser']),
-                    RetrySubscriber::createStatusFilter(),
-                    RetrySubscriber::createCurlFilter()
-                ])
-            ];
-
-            $this->addRetryLogger($args, $conf);
-            $retry = new RetrySubscriber($conf);
-            $client->getHttpClient()->getEmitter()->attach($retry);
-        }
-    }
-
-    protected function addRetryLogger(array $args, array &$conf)
-    {
-        if (!isset($args['retry_logger'])) {
+        if (!$value) {
             return;
         }
 
-        $delay = isset($conf['delay'])
-            ? $conf['delay']
-            : 'GuzzleHttp\Subscriber\Retry\RetrySubscriber::exponentialDelay';
+        $conf = $this->getRetryOptions($args);
 
-        if ($args['retry_logger'] === 'debug') {
-            $args['retry_logger'] = new SimpleLogger();
+        if (is_int($value)) {
+            // Overwrite the max, if a retry value was provided.
+            $conf['max'] = $value;
+        } elseif ($value !== true) {
+            // If retry value was not an int or bool, throw an exception.
+            throw new \InvalidArgumentException('retries must be a boolean or'
+            . ' an integer');
         }
 
-        $conf['delay'] = RetrySubscriber::createLoggingDelay(
-            $delay,
-            $args['retry_logger']
-        );
+        // Add retry logger
+        if (isset($args['retry_logger'])) {
+            $conf['delay'] = RetrySubscriber::createLoggingDelay(
+                $conf['delay'],
+                ($args['retry_logger'] === 'debug')
+                    ? new SimpleLogger()
+                    : $args['retry_logger']
+            );
+        }
+
+        $retry = new RetrySubscriber($conf);
+        $client->getHttpClient()->getEmitter()->attach($retry);
+    }
+
+    /**
+     * Gets the options for use with the RetrySubscriber.
+     *
+     * This method can be overwritten by service-specific factories to easily
+     * change the options to suit the service's needs.
+     *
+     * @param array $args Factory args
+     *
+     * @return array
+     */
+    protected function getRetryOptions(array $args)
+    {
+        return [
+            'max' => 3,
+            'delay' => ['GuzzleHttp\Subscriber\Retry\RetrySubscriber', 'exponentialDelay'],
+            'filter' => RetrySubscriber::createChainFilter([
+                new ThrottlingFilter($args['error_parser']),
+                RetrySubscriber::createStatusFilter(),
+                RetrySubscriber::createCurlFilter()
+            ])
+        ];
     }
 
     /**
@@ -282,28 +295,6 @@ class ClientFactory
 
         throw new \InvalidArgumentException('Unknown service type '
             . $api->getMetadata('protocol'));
-    }
-
-    /**
-     * Validates the provided "retries" key and returns a number.
-     *
-     * @param mixed $value Value to validate and coerce
-     *
-     * @return bool|int Returns false to disable, or a number of retries.
-     * @throws \InvalidArgumentException if the setting is invalid.
-     */
-    protected function validateRetries($value)
-    {
-        if ($value === true) {
-            $value = static::DEFAULT_MAX_RETRIES;
-        } elseif (!$value) {
-            return false;
-        } elseif (!is_integer($value)) {
-            throw new \InvalidArgumentException('retries must be a boolean or'
-                . ' an integer');
-        }
-
-        return $value;
     }
 
     private function handle_class_name($value, array &$args)
