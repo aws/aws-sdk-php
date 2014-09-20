@@ -53,13 +53,15 @@ class PartGeneratorTest extends \PHPUnit_Framework_TestCase
         $stream = Stream::factory(str_repeat('.', 3146752)); // 3 MB + 1 KB
 
         return FnStream::decorate($stream, [
+            'seek' => function ($pos) use ($seekable, $stream) {
+                    return $seekable ? $stream->seek($pos) : false;
+                },
             'isSeekable' => function () use ($seekable) {return $seekable;},
             'getMetadata' => function ($key = null) use ($seekable, $stream) {
                 return ($seekable && $key === 'wrapper_type')
                     ? 'plainfile'
                     : $stream->getMetadata($key);
-            },
-            '__toString' => function () {return '[...]';},
+            }
         ]);
     }
 }
