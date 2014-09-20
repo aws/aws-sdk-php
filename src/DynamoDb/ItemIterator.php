@@ -34,24 +34,6 @@ class ItemIterator extends \IteratorIterator implements ToArrayInterface
     }
 
     /**
-     * Ensures that the inner iterator is both Traversable and Countable
-     *
-     * {@inheritdoc}
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function __construct(\Traversable $iterator)
-    {
-        if (!($iterator instanceof \Countable)) {
-            throw new \InvalidArgumentException(
-                'The inner iterator for an ItemIterator must be Countable.'
-            );
-        }
-
-        parent::__construct($iterator);
-    }
-
-    /**
      * Returns the first item in the iterator
      */
     public function getFirst()
