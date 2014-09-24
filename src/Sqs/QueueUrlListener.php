@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Sqs;
 
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Url;
@@ -13,10 +13,10 @@ class QueueUrlListener implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare', RequestEvents::LATE]];
+        return ['prepared' => ['onPrepared', RequestEvents::LATE]];
     }
 
-    public function onPrepare(PrepareEvent $event)
+    public function onPrepare(PreparedEvent $event)
     {
         $command = $event->getCommand();
 

@@ -2,14 +2,13 @@
 namespace Aws\Common\Api\Serializer;
 
 use Aws\Common\Api\Service;
-use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Event\SubscriberInterface;
+use GuzzleHttp\Command\CommandTransaction;
 
 /**
  * Prepares a JSON-RPC request for transfer.
  * @internal
  */
-class JsonRpcSerializer implements SubscriberInterface
+class JsonRpcSerializer
 {
     /** @var JsonBody */
     private $jsonFormatter;
@@ -39,33 +38,29 @@ class JsonRpcSerializer implements SubscriberInterface
         $this->contentType = JsonBody::getContentType($api);
     }
 
-    public function getEvents()
-    {
-        return ['prepare' => ['onPrepare']];
-    }
-
-    public function onPrepare(PrepareEvent $event)
+    public function __invoke(CommandTransaction $trans)
     {
         /** @var \Aws\AwsCommandInterface $command */
-        $command = $event->getCommand();
+        $command = $trans->command;
         $name = $command->getName();
         $operation = $this->api->getOperation($name);
 
-        $event->setRequest($event->getClient()->getHttpClient()->createRequest(
+        return $trans->client->createRequest(
             $operation['http']['method'],
             $this->endpoint,
             [
                 'headers' => [
-                    'X-Amz-Target' => $this->api->getMetadata('targetPrefix')
-                        . '.' . $name,
+                    'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $name,
                     'Content-Type' => $this->contentType
                 ],
                 'body' => $this->jsonFormatter->build(
                     $operation->getInput(),
                     $command->toArray()
                 ),
-                'config' => ['command' => $command]
+                'config' => [
+                    'command' => $command
+                ]
             ]
-        ));
+        );
     }
 }

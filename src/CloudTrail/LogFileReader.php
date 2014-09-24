@@ -3,7 +3,7 @@
 namespace Aws\CloudTrail;
 
 use Aws\S3\S3Client;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Utils;
 
@@ -48,7 +48,7 @@ class LogFileReader
 
         // Make sure gzip encoding header is sent and accepted in order to
         // inflate the response data.
-        $command->getEmitter()->on('prepare', function(PrepareEvent $e) {
+        $command->getEmitter()->on('prepared', function(PreparedEvent $e) {
             $e->getRequest()->setHeader('Accept-Encoding', 'gzip');
         }, RequestEvents::LATE);
 

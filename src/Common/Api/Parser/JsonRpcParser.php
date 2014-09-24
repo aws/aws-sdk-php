@@ -2,7 +2,7 @@
 namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
-use Aws\Result;
+use GuzzleHttp\Model\Model;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -26,7 +26,7 @@ class JsonRpcParser extends AbstractParser
     {
         $operation = $api->getOperation($event->getCommand()->getName());
 
-        return new Result($this->parser->parse(
+        return new Model($this->parser->parse(
             $operation->getOutput(),
             $event->getResponse()->json()
         ));

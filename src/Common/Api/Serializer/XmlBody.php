@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Common\Api\Serializer;
 
-use Aws\Common\Api\MapShape;
 use Aws\Common\Api\Service;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;

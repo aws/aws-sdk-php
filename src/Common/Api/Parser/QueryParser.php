@@ -2,7 +2,7 @@
 namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
-use Aws\Result;
+use GuzzleHttp\Model\Model;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -43,6 +43,6 @@ class QueryParser extends AbstractParser
             $xml = $xml->{$output['resultWrapper']};
         }
 
-        return new Result($this->xmlParser->parse($output, $xml));
+        return new Model($this->xmlParser->parse($output, $xml));
     }
 }

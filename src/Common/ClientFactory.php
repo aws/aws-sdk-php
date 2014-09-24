@@ -413,13 +413,13 @@ class ClientFactory
 
     private function handle_endpoint_provider($value, array &$args)
     {
-        if (!($value instanceof EndpointProviderInterface)) {
-            throw new \InvalidArgumentException('endpoint_provider must be an '
-                . 'instance of Aws\Common\Api\EndpointProviderInterface');
+        if (!is_callable($value)) {
+            throw new \InvalidArgumentException('endpoint_provider must be a '
+                . 'callable that returns an endpoint array.');
         }
 
         if (!isset($args['endpoint'])) {
-            $result = $value->getEndpoint([
+            $result = call_user_func($value, [
                 'service' => $args['service'],
                 'region'  => $args['region'],
                 'scheme'  => $args['scheme']

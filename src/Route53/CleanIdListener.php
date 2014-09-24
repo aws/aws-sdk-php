@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Route53;
 
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
@@ -12,10 +12,10 @@ class CleanIdListener implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare']];
+        return ['prepared' => ['onPrepared']];
     }
 
-    public function onPrepare(PrepareEvent $event)
+    public function onPrepared(PreparedEvent $event)
     {
         $c = $event->getCommand();
 

@@ -3,10 +3,10 @@ namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;
-use Aws\Result;
 use Aws\Common\Api\Service;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Model\Model;
 
 /**
  * @internal
@@ -58,7 +58,7 @@ abstract class AbstractRestParser extends AbstractParser
             $this->payload($response, $output, $result);
         }
 
-        return new Result($result);
+        return new Model($result);
     }
 
     private function extractPayload(

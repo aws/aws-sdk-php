@@ -2,7 +2,7 @@
 namespace Aws\Glacier;
 
 use Aws\Common\Exception\CouldNotCreateChecksumException;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\PreparedEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Subscriber\MessageIntegrity\HashingStream;
 use GuzzleHttp\Subscriber\MessageIntegrity\PhpHash;
@@ -16,17 +16,17 @@ class ApplyChecksums implements SubscriberInterface
 {
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare', 'last']];
+        return ['prepared' => ['onPrepared', 'last']];
     }
 
     /**
      * Update a command with the content and tree hash headers, as needed.
      *
-     * @param PrepareEvent $event Event emitted.
+     * @param PreparedEvent $event Event emitted.
      *
      * @throws \RuntimeException if the body is not seekable.
      */
-    public function onPrepare(PrepareEvent $event)
+    public function onPrepared(PreparedEvent $event)
     {
         $command = $event->getCommand();
         $name = $command->getName();

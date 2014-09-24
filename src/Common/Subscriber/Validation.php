@@ -2,7 +2,7 @@
 namespace Aws\Common\Subscriber;
 
 use Aws\Common\Api\Validator;
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
@@ -23,10 +23,10 @@ class Validation implements SubscriberInterface
 
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare']];
+        return ['init' => ['onInit']];
     }
 
-    public function onPrepare(PrepareEvent $event)
+    public function onInit(InitEvent $event)
     {
         /** @var \Aws\AwsCommandInterface $command */
         $command = $event->getCommand();

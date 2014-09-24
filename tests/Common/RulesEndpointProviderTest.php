@@ -15,7 +15,7 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
     public function testThrowsWhenEndpointIsNotResolved()
     {
         $e = new RulesEndpointProvider(['foo' => ['rules' => []]]);
-        $e->getEndpoint(['service' => 'foo', 'region' => 'bar']);
+        call_user_func($e, ['service' => 'foo', 'region' => 'bar']);
     }
 
     public function endpointProvider()
@@ -81,7 +81,7 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
     {
         // Use the default endpoints file
         $p = RulesEndpointProvider::fromDefaults();
-        $this->assertEquals($output, $p->getEndpoint($input));
+        $this->assertEquals($output, call_user_func($p, $input));
     }
 
     public function testCanLoadFromJson()
@@ -107,7 +107,7 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresService()
     {
         $p = RulesEndpointProvider::fromDefaults();
-        $p->getEndpoint(['region' => 'foo']);
+        call_user_func($p, ['region' => 'foo']);
     }
 
     /**
@@ -117,6 +117,6 @@ class RulesEndpointProviderTest extends \PHPUnit_Framework_TestCase
     public function testEnsuresVersion()
     {
         $p = RulesEndpointProvider::fromDefaults();
-        $p->getEndpoint(['service' => 'foo']);
+        call_user_func($p, ['service' => 'foo']);
     }
 }

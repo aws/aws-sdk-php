@@ -2,7 +2,7 @@
 namespace Aws\Common\Api\Parser;
 
 use Aws\Common\Api\Service;
-use Aws\Result;
+use GuzzleHttp\Model\Model;
 use GuzzleHttp\Command\Event\ProcessEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
@@ -45,7 +45,7 @@ abstract class AbstractParser implements SubscriberInterface
      * @param Service      $api
      * @param ProcessEvent $event
      *
-     * @return Result
+     * @return Model
      */
     abstract protected function createResult(Service $api, ProcessEvent $event);
 }

@@ -12,6 +12,7 @@ use Aws\Common\Waiter\Waiter;
 use GuzzleHttp\Command\AbstractClient;
 use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\CommandTransaction;
+use GuzzleHttp\Model\FutureModel;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Ring\FutureInterface;
 use GuzzleHttp\Ring\Core;
@@ -45,6 +46,9 @@ class AwsClient extends AbstractClient implements AwsClientInterface
     /** @var callable */
     private $errorParser;
 
+    /** @var callable */
+    private $serializer;
+
     /**
      * The AwsClient constructor requires the following constructor options:
      *
@@ -56,14 +60,18 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      * - error_parser: A callable that parses response exceptions
      * - exception_class: (optional) A specific exception class to throw that
      *   extends from {@see Aws\AwsException}.
+     * - serializer: callable used to serialize a request for a provided
+     *   CommandTransaction argument. The callable must return a
+     *   RequestInterface object.
      *
      * @param array $config Configuration options
+     *
      * @throws \InvalidArgumentException if any required options are missing
      */
     public function __construct(array $config)
     {
         static $required = ['api', 'credentials', 'client', 'signature',
-                            'error_parser', 'endpoint'];
+                            'error_parser', 'endpoint', 'serializer'];
 
         foreach ($required as $r) {
             if (!isset($config[$r])) {
@@ -71,6 +79,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             }
         }
 
+        $this->serializer = $config['serializer'];
         $this->api = $config['api'];
         $this->endpoint = $config['endpoint'];
         $this->credentials = $config['credentials'];
@@ -238,21 +247,21 @@ class AwsClient extends AbstractClient implements AwsClientInterface
      *
      * @return AwsException
      */
-    public function createCommandException(
-        CommandTransaction $transaction,
-        RequestException $previous
-    ) {
+    public function createCommandException(CommandTransaction $transaction)
+    {
         // Throw AWS exceptions as-is
-        if ($previous instanceof AwsException) {
-            return $previous;
+        if ($transaction->exception instanceof AwsException) {
+            return $transaction->exception;
         }
 
         $exceptionClass = $this->commandException;
-        $response = $previous->getResponse();
+        $response = $transaction->exception instanceof RequestException
+            ? $transaction->exception->getResponse()
+            : null;
 
         if (!$response) {
             $transaction->context->set('aws_error', []);
-            $serviceError = $previous->getMessage();
+            $serviceError = $transaction->exception->getMessage();
         } else {
             $parser = $this->errorParser;
             $transaction->context['aws_error'] = $parser($response);
@@ -265,10 +274,10 @@ class AwsClient extends AbstractClient implements AwsClientInterface
             sprintf('Error executing %s::%s() on "%s"; %s',
                 get_class($this),
                 lcfirst($transaction->command->getName()),
-                $previous->getRequest()->getUrl(),
+                $transaction->exception->getRequest()->getUrl(),
                 $serviceError),
             $transaction,
-            $previous
+            $transaction->exception
         );
     }
 
@@ -279,7 +288,7 @@ class AwsClient extends AbstractClient implements AwsClientInterface
                 . Core::describeType($transaction->response));
         }
 
-        return new FutureResult(
+        return new FutureModel(
             // Deref function derefs the response which populates the result.
             function () use ($transaction) {
                 $transaction->response = $transaction->response->deref();
@@ -290,5 +299,11 @@ class AwsClient extends AbstractClient implements AwsClientInterface
                 return $transaction->response->cancel();
             }
         );
+    }
+
+    protected function serializeRequest(CommandTransaction $trans)
+    {
+        $fn = $this->serializer;
+        return $fn($trans);
     }
 }

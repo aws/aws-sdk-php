@@ -7,7 +7,6 @@ use Aws\AwsException;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\Common\MapIterator;
 use Aws\Result;
-use GuzzleHttp\Command\Event\CommandErrorEvent;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -142,7 +141,7 @@ abstract class AbstractUploader
      *     to do some experimenting to find the most optimum concurrency value
      *     for your system, but using 20-25 usually yields decent results.
      * @param callable|null $before      Callback to execute before each upload.
-     *     This callback will receive a PrepareEvent object as its argument.
+     *     This callback will receive a PreparedEvent object as its argument.
      *
      * @return Result The result of the CompleteMultipartUpload operation.
      * @throws \LogicException if the upload is already complete or aborted.
@@ -173,20 +172,18 @@ abstract class AbstractUploader
         $errors = [];
         $this->client->executeAll($commands, [
             'pool_size' => $concurrency,
-            'prepare'   => $before,
+            'prepared'   => $before,
             'process'   => [
                 'fn' => function (ProcessEvent $event) use (&$errors) {
                     /** @var AwsCommandInterface $command */
                     $command = $event->getCommand();
-                    unset($errors[$command[static::$partNumberParam]]);
-                    $this->handleResult($command, $event->getResult());
-                },
-                'priority' => 'last'
-            ],
-            'error' => [
-                'fn' => function (CommandErrorEvent $event) use (&$errors) {
-                    $key = $event->getCommand()[static::$partNumberParam];
-                    $errors[$key] = $event->getException()->getMessage();
+                    if ($ex = $event->getException()) {
+                        $key = $event->getCommand()[static::$partNumberParam];
+                        $errors[$key] = $event->getException()->getMessage();
+                    } else {
+                        unset($errors[$command[static::$partNumberParam]]);
+                        $this->handleResult($command, $event->getResult());
+                    }
                 },
                 'priority' => 'last'
             ]

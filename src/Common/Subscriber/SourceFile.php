@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Common\Subscriber;
 
-use GuzzleHttp\Command\Event\PrepareEvent;
+use GuzzleHttp\Command\Event\InitEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Stream;
 use GuzzleHttp\Stream\LazyOpenStream;
@@ -32,10 +32,10 @@ class SourceFile implements SubscriberInterface
 
     public function getEvents()
     {
-        return ['prepare' => ['onPrepare']];
+        return ['init' => ['onInit']];
     }
 
-    public function onPrepare(PrepareEvent $event)
+    public function onPrepare(InitEvent $event)
     {
         /** @var $c \Aws\AwsCommandInterface $command */
         $c = $event->getCommand();

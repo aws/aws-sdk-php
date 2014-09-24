@@ -6,8 +6,7 @@ use Aws\Common\Api\Operation;
 use Aws\Common\Api\Shape;
 use Aws\Common\Api\StructureShape;
 use Aws\Common\Api\TimestampShape;
-use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Event\SubscriberInterface;
+use GuzzleHttp\Command\CommandTransaction;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Url;
 use GuzzleHttp\Stream\Stream;
@@ -16,7 +15,7 @@ use GuzzleHttp\Stream\Stream;
  * Serializes HTTP locations like header, uri, payload, etc...
  * @internal
  */
-abstract class RestSerializer implements SubscriberInterface
+abstract class RestSerializer
 {
     /** @var Service */
     private $api;
@@ -39,21 +38,21 @@ abstract class RestSerializer implements SubscriberInterface
         return ['prepare' => ['onPrepare']];
     }
 
-    public function onPrepare(PrepareEvent $event)
+    public function __invoke(CommandTransaction $trans)
     {
         /** @var \Aws\AwsCommandInterface $command */
-        $command = $event->getCommand();
+        $command = $trans->command;
         $api = $command->getApi();
         $operation = $api->getOperation($command->getName());
         $args = $command->toArray();
 
-        $request = $event->getClient()->getHttpClient()->createRequest(
+        $request = $trans->client->createRequest(
             $operation['http']['method'],
             $this->buildEndpoint($operation, $args),
             ['config' => ['command' => $command]]
         );
 
-        $event->setRequest($this->serialize($request, $operation, $args));
+        return $this->serialize($request, $operation, $args);
     }
 
     /**

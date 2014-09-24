@@ -3,7 +3,6 @@
 namespace Aws\DynamoDb;
 
 use Aws\AwsCommand;
-use GuzzleHttp\Command\Event\CommandErrorEvent;
 use GuzzleHttp\Command\Event\ProcessEvent;
 
 /**
@@ -153,19 +152,20 @@ class WriteRequestBatch
             $this->client->executeAll($commands, [
                 'parallel' => $this->config['parallel'],
                 'process' => function (ProcessEvent $e) {
-                    // Re-queue any unprocessed items
-                    $result = $e->getResult();
-                    if ($result->hasKey('UnprocessedItems')) {
-                        $this->retryUnprocessed($result['UnprocessedItems']);
+                    if ($e->getException()) {
+                        if ($e->getContext()['aws_error']['code'] === 'ProvisionedThroughputExceededException') {
+                            $this->retryUnprocessed($e->getCommand()['RequestItems']);
+                        } elseif (is_callable($this->config['error'])) {
+                            $this->config['error']($e);
+                        }
+                    } else {
+                        // Re-queue any unprocessed items
+                        $result = $e->getResult();
+                        if ($result->hasKey('UnprocessedItems')) {
+                            $this->retryUnprocessed($result['UnprocessedItems']);
+                        }
                     }
-                },
-                'error' => function (CommandErrorEvent $e) {
-                    if ($e->getContext()['aws_error']['code'] === 'ProvisionedThroughputExceededException') {
-                        $this->retryUnprocessed($e->getCommand()['RequestItems']);
-                    } elseif (is_callable($this->config['error'])) {
-                        $this->config['error']($e);
-                    }
-                },
+                }
             ]);
             $keepFlushing = (bool) $untilEmpty;
         }

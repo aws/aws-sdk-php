@@ -7,7 +7,7 @@ use GuzzleHttp\Utils;
 /**
  * Provides endpoints for services based on a directory of rules files.
  */
-class RulesEndpointProvider implements EndpointProviderInterface
+class RulesEndpointProvider
 {
     /** @var array */
     private $ruleSets;
@@ -48,8 +48,7 @@ class RulesEndpointProvider implements EndpointProviderInterface
         return new self(Utils::jsonDecode(file_get_contents($path), true));
     }
 
-
-    public function getEndpoint(array $args = [])
+    public function __invoke(array $args = [])
     {
         $this->prepareArguments($args);
 

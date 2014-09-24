@@ -2,14 +2,13 @@
 namespace Aws\Common\Api\Serializer;
 
 use Aws\Common\Api\Service;
-use GuzzleHttp\Command\Event\PrepareEvent;
-use GuzzleHttp\Event\SubscriberInterface;
+use GuzzleHttp\Command\CommandTransaction;
 
 /**
  * Serializes a query protocol request.
  * @internal
  */
-class QuerySerializer implements SubscriberInterface
+class QuerySerializer
 {
     private $endpoint;
     private $api;
@@ -25,15 +24,10 @@ class QuerySerializer implements SubscriberInterface
         $this->paramBuilder = $paramBuilder ?: new QueryParamBuilder();
     }
 
-    public function getEvents()
-    {
-        return ['prepare' => ['onPrepare']];
-    }
-
-    public function onPrepare(PrepareEvent $event)
+    public function __invoke(CommandTransaction $trans)
     {
         /** @var \Aws\AwsCommandInterface $command */
-        $command = $event->getCommand();
+        $command =  $trans->command;
         $api = $command->getApi();
         $operation = $api->getOperation($command->getName());
 
@@ -52,12 +46,10 @@ class QuerySerializer implements SubscriberInterface
             );
         }
 
-        $request = $event->getClient()->getHttpClient()->createRequest(
+        return $trans->client->createRequest(
             'POST',
             $this->endpoint,
             ['body' => $body, 'config' => ['command' => $command]]
         );
-
-        $event->setRequest($request);
     }
 }
