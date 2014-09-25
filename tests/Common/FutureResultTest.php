@@ -17,7 +17,7 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
             return ['a' => 1];
         });
         $this->assertFalse($called);
-        $this->assertEquals(['a' => 1], $c->deref());
+        $this->assertEquals(['a' => 1], $c->deref()->toArray());
         $this->assertTrue($called);
     }
 
@@ -66,9 +66,7 @@ class ResultModelTest extends \PHPUnit_Framework_TestCase
 
     public function testProxiesToUnderlyingData()
     {
-        $c = new FutureResult(function () {
-            return ['a' => 1];
-        });
+        $c = new FutureResult(function () { return ['a' => 1]; });
         $this->assertEquals(1, count($c));
         $this->assertEquals(['a' => 1], $c->toArray());
         $this->assertEquals(['a' => 1], $c->getIterator()->getArrayCopy());

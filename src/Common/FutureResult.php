@@ -5,9 +5,6 @@ use GuzzleHttp\Ring\FutureInterface;
 use GuzzleHttp\Ring\MagicFutureTrait;
 use GuzzleHttp\Ring\Core;
 use GuzzleHttp\HasDataTrait;
-use GuzzleHttp\ToArrayInterface;
-use GuzzleHttp\Utils as GuzzleUtils;
-use JmesPath\Env as JmesPath;
 
 /**
  * Future result that may not have finished.
@@ -18,62 +15,62 @@ class FutureResult implements ResultInterface, FutureInterface
 
     public function hasKey($name)
     {
-        return isset($this->result[$name]);
+        return $this->result->hasKey($name);
     }
 
     public function get($name)
     {
-        return $this->result[$name];
+        return $this->result->get($name);
     }
 
     public function getIterator()
     {
-        return new \ArrayIterator($this->result);
+        return $this->result->getIterator();
     }
 
     public function offsetGet($offset)
     {
-        return isset($this->result[$offset]) ? $this->result[$offset] : null;
+        return $this->result->offsetGet($offset);
     }
 
     public function offsetSet($offset, $value)
     {
-        $this->result[$offset] = $value;
+        $this->result->offsetSet($offset, $value);
     }
 
     public function offsetExists($offset)
     {
-        return isset($this->result[$offset]);
+        return $this->result->offsetExists($offset);
     }
 
     public function offsetUnset($offset)
     {
-        unset($this->result[$offset]);
+        $this->result->offsetUnset($offset);
     }
 
     public function toArray()
     {
-        return $this->result;
+        return $this->result->toArray();
     }
 
     public function count()
     {
-        return count($this->result);
+        return $this->result->count();
     }
 
     public function getPath($path)
     {
-        return GuzzleUtils::getPath($this->result, $path);
+        return $this->result->getPath($path);
     }
 
     public function setPath($path, $value)
     {
-        GuzzleUtils::setPath($this->result, $path, $value);
+        $this->result->setPath($path, $value);
     }
 
     public function search($expression)
     {
-        return JmesPath::search($expression, $this->result);
+        return $this->result->search($expression);
     }
 
     public function __toString()
@@ -88,12 +85,10 @@ class FutureResult implements ResultInterface, FutureInterface
 
     protected function processResult($result)
     {
-        if ($result instanceof ToArrayInterface) {
-            return $result->toArray();
-        }
-
-        if (is_array($result)) {
+        if ($result instanceof ResultInterface) {
             return $result;
+        } elseif (is_array($result)) {
+            return new Result($result);
         }
 
         throw new \RuntimeException('Future result must be an array. or '
